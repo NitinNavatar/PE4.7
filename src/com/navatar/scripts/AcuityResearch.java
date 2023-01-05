@@ -12,42 +12,26 @@ import static com.navatar.generic.SmokeCommonVariables.crmUser3Profile;
 import static com.navatar.generic.SmokeCommonVariables.superAdminUserName;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.apache.poi.hssf.record.RefreshAllRecord;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.server.handler.SwitchToParentFrame;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
-import com.navatar.generic.CommonVariables;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.EnumConstants.AppSetting;
-import com.navatar.generic.EnumConstants.BulkActions_DefaultValues;
-import com.navatar.generic.EnumConstants.Condition;
-import com.navatar.generic.EnumConstants.CreateNew_DefaultValues;
-import com.navatar.generic.EnumConstants.CreationPage;
-import com.navatar.generic.EnumConstants.DataImportType;
 import com.navatar.generic.EnumConstants.Environment;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.NavigationMenuItems;
-import com.navatar.generic.EnumConstants.NewInteractions_DefaultValues;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
-import com.navatar.generic.EnumConstants.ObjectName;
-import com.navatar.generic.EnumConstants.ObjectType;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.PermissionType;
-import com.navatar.generic.EnumConstants.PopUpName;
-import com.navatar.generic.EnumConstants.RecordType;
 import com.navatar.generic.EnumConstants.RelatedTab;
-import com.navatar.generic.EnumConstants.Stage;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
@@ -57,30 +41,21 @@ import com.navatar.generic.EnumConstants.recordTypeLabel;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
-import com.navatar.pageObjects.DataLoaderWizardPageBusinessLayer;
 import com.navatar.pageObjects.DealPageBusinessLayer;
-import com.navatar.pageObjects.FieldAndRelationshipPageBusinessLayer;
 import com.navatar.pageObjects.FundRaisingPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
 import com.navatar.pageObjects.InstitutionsPageBusinessLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
-import com.navatar.pageObjects.MarketingInitiativesPageBusinesslayer;
 import com.navatar.pageObjects.NavigationPageBusineesLayer;
 import com.navatar.pageObjects.ResearchPageBusinessLayer;
-import com.navatar.pageObjects.SDGPageBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.navatar.pageObjects.TaskPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class AcuityResearch extends BaseLib{
 	
-	String passwordResetLink = null;
 	String navigationMenuName=NavigationMenuItems.Navatar_Research.toString().replace("_", " ");
-	String filesName = "Enter one or more research terms";
-	String customNavigationMenu = "Custom Navigation Menu";
-	String recordTypeDescription = "Description Record Type";
-	String valueInAccountField,valueInContactField1,valueInContactField2,valueInDealField1,valueInDealField2,valueInFundField1,valueInFundField2,valueInFundraisingField1,valueInFundraisingField2;
 	
 	@Parameters({ "projectName"})
 	@Test
@@ -189,37 +164,35 @@ public class AcuityResearch extends BaseLib{
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(glUser1EmailID, adminPassword,appName);
 
 		// Verification on navigation menu
 		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 			if(clickUsingJavaScript(driver, rp.getTextAreaResearch(10),"Research Text Area", action.BOOLEAN)) {
-				log(LogStatus.INFO, "items verified "+filesName+" on "+navigationMenuName, YesNo.No);
+				log(LogStatus.INFO, "items verified "+bp.filesName+" on "+navigationMenuName, YesNo.No);
 			} else {
-				log(LogStatus.ERROR, "items not verified "+filesName+" on "+navigationMenuName, YesNo.Yes);
-				sa.assertTrue(false,"items not verified "+filesName+" on "+navigationMenuName);
+				log(LogStatus.ERROR, "items not verified "+bp.filesName+" on "+navigationMenuName, YesNo.Yes);
+				sa.assertTrue(false,"items not verified "+bp.filesName+" on "+navigationMenuName);
 			}
 		} else {
-			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName, YesNo.Yes);
-			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName);
+			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+bp.filesName, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+bp.filesName);
 		}
 		refresh(driver);
 		
 		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-//			xpath = "(//div[contains(@class,'DOCKED')]//div//button)[3]";
-//			ele = FindElement(driver, xpath,filesName, action.BOOLEAN, 10).getText();
-//			if (ele!=null) {
 			if(clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN)) {
-				log(LogStatus.INFO, "items verified "+filesName+" on "+navigationMenuName, YesNo.No);
+				log(LogStatus.INFO, "items verified "+bp.filesName+" on "+navigationMenuName, YesNo.No);
 			} else {
-				log(LogStatus.ERROR, "items not verified "+filesName+" on "+navigationMenuName, YesNo.Yes);
-				sa.assertTrue(false,"items not verified "+filesName+" on "+navigationMenuName);
+				log(LogStatus.ERROR, "items not verified "+bp.filesName+" on "+navigationMenuName, YesNo.Yes);
+				sa.assertTrue(false,"items not verified "+bp.filesName+" on "+navigationMenuName);
 			}
 		} else {
-			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName, YesNo.Yes);
-			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName);
+			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+bp.filesName, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+bp.filesName);
 		}
 		refresh(driver);
 		
@@ -232,8 +205,8 @@ public class AcuityResearch extends BaseLib{
 				sa.assertTrue(false,"Research popup not successfully minimized");
 			}
 		} else {
-			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName, YesNo.Yes);
-			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName);
+			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+bp.filesName, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+bp.filesName);
 		}
 		refresh(driver);
 		
@@ -241,10 +214,8 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 			clickUsingJavaScript(driver, rp.getResearchPopOut(10),"Research Pop out Button", action.BOOLEAN);
 			ThreadSleep(20000);
-//			CommonLib.switchToWindowOpenNextToParentWindow(driver);
 			clickUsingJavaScript(driver, rp.getResearchPopIn(10),"Research Pop In Button", action.BOOLEAN);
 			ThreadSleep(4000);
-//			CommonLib.switchToWindowOpenNextToParentWindow(driver);
 			switchToDefaultContent(driver);
 			if (rp.getResearchPopOut(10)!=null) {
 				log(LogStatus.INFO, "Research popup successfully pop-out closed", YesNo.No);
@@ -253,8 +224,8 @@ public class AcuityResearch extends BaseLib{
 				sa.assertTrue(false,"Research popup not successfully closed");
 			}
 		} else {
-			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName, YesNo.Yes);
-			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName);
+			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+bp.filesName, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+bp.filesName);
 		}
 		lp.CRMlogout();
 		sa.assertAll();
@@ -287,10 +258,10 @@ public class AcuityResearch extends BaseLib{
 						if (click(driver, setup.getResearchItem(10), "Research Item", action.BOOLEAN)) {
 							log(LogStatus.INFO, "Able to click on Research Item", YesNo.No);
 							ThreadSleep(2000);
-								if (sendKeys(driver, setup.commonInputElement(projectName, PageLabel.Panel_Height.toString(), action.BOOLEAN, 10),"450",PageLabel.Panel_Height.toString()+" textbox value : 340",action.BOOLEAN)) {
+								if (sendKeys(driver, setup.commonInputElement(projectName, PageLabel.Panel_Height.toString(), action.BOOLEAN, 10),"300",PageLabel.Panel_Height.toString()+" textbox value : 340",action.BOOLEAN)) {
 									ThreadSleep(2000);
 									log(LogStatus.INFO,"send value to "+PageLabel.Label.toString()+" textbox value : 340",YesNo.No);
-									if (sendKeys(driver, setup.commonInputElement(projectName, PageLabel.Panel_Width.toString(), action.BOOLEAN, 10),"240",PageLabel.Panel_Width.toString()+" textbox value : 300",action.BOOLEAN)) {
+									if (sendKeys(driver, setup.commonInputElement(projectName, PageLabel.Panel_Width.toString(), action.BOOLEAN, 10),"340",PageLabel.Panel_Width.toString()+" textbox value : 300",action.BOOLEAN)) {
 										ThreadSleep(2000);
 										log(LogStatus.INFO,"send value to "+PageLabel.Navigation_Type.toString()+" textbox value : 300",YesNo.No);
 										
@@ -302,12 +273,12 @@ public class AcuityResearch extends BaseLib{
 											log(LogStatus.FAIL,"Not Able to Click on Save Button",YesNo.Yes);
 										}
 									} else {
-										sa.assertTrue(false, "Not Able to send value to "+PageLabel.Panel_Width.toString()+" textbox value : 300");
-										log(LogStatus.FAIL,"Not Able to send value to "+PageLabel.Panel_Width.toString()+" textbox value : 300",YesNo.Yes);
+										sa.assertTrue(false, "Not Able to send value to "+PageLabel.Panel_Width.toString()+" textbox value : 340");
+										log(LogStatus.FAIL,"Not Able to send value to "+PageLabel.Panel_Width.toString()+" textbox value : 340",YesNo.Yes);
 									}
 								} else {
-									sa.assertTrue(false, "Not Able to send value to "+PageLabel.Panel_Height.toString()+" textbox value : 340");
-									log(LogStatus.FAIL,"Not Able to send value to "+PageLabel.Panel_Height.toString()+" textbox value : 340",YesNo.Yes);
+									sa.assertTrue(false, "Not Able to send value to "+PageLabel.Panel_Height.toString()+" textbox value : 300");
+									log(LogStatus.FAIL,"Not Able to send value to "+PageLabel.Panel_Height.toString()+" textbox value : 300",YesNo.Yes);
 								}
 
 						} else {
@@ -340,12 +311,11 @@ public class AcuityResearch extends BaseLib{
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
-	String errorName = "Your search term must have 2 or more characters.";
-	String errorName1 = "No results for";
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	
 	String xpath,ele;
 	int i = 1;
 	String searchValues[] = {"","a","zz","1234567890~!@#$%^&*()_+-=[]{}?|;':,.<>/"};
-	String[][] val = {{MRSD_1_ResearchFindings},{MRSD_2_ResearchFindings},{MRSD_3_ResearchFindings},{MRSD_4_ResearchFindings},{MRSD_5_ResearchFindings},{MRSD_6_ResearchFindings},{MRSD_7_ResearchFindings},{MRSD_8_ResearchFindings},{MRSD_9_ResearchFindings}};
 	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
 	ThreadSleep(2000);
 	for(String searchValue : searchValues) {
@@ -361,41 +331,36 @@ public class AcuityResearch extends BaseLib{
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue) || searchValue == null) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-			sa.assertTrue(true, ele +" is matched with " +searchValue);
 			}
 			ele = rp.getResearchFindings(10).getText();
 			if (ele!=null && ele.equalsIgnoreCase("Search Results")) {
 			log(LogStatus.PASS, ele +" is visible", YesNo.Yes);
-			sa.assertTrue(true, ele +" is visible");
 			}
 			
 			if(searchValue.length() < 2) {
 				ele =rp.getErrorValue(10).getText();
-				if(ele.equalsIgnoreCase("  "+ errorName)){
-					log(LogStatus.PASS, ele +" has been Matched with " +errorName, YesNo.No);
-					sa.assertTrue(true, ele +" has been Matched with " +errorName);
+				if(ele.equalsIgnoreCase("  "+ bp.errorName)){
+					log(LogStatus.PASS, ele +" has been Matched with " +bp.errorName, YesNo.No);
 				} else {
-					log(LogStatus.ERROR, ele +" is not Matched with " +errorName, YesNo.Yes);
-					sa.assertTrue(false, ele +" is not Matched with " +errorName);
+					log(LogStatus.ERROR, ele +" is not Matched with " +bp.errorName, YesNo.Yes);
+					sa.assertTrue(false, ele +" is not Matched with " +bp.errorName);
 				}
 				ThreadSleep(2000);
 				xpath = "(//lightning-icon[contains(@class,'utility-warning')])["+i+"]";
-				WebElement element = FindElement(driver, xpath, errorName, action.BOOLEAN, 10);
-				if(mouseOverGetTextOperation(driver, element).contains(errorName)){
-					log(LogStatus.PASS, ele +" on mouse hover has been Matched with " +errorName, YesNo.No);
-					sa.assertTrue(true, ele +" on mouse hover has been Matched with " +errorName);
+				WebElement element = FindElement(driver, xpath, bp.errorName, action.BOOLEAN, 10);
+				if(mouseOverGetTextOperation(driver, element).contains(bp.errorName)){
+					log(LogStatus.PASS, ele +" on mouse hover has been Matched with " +bp.errorName, YesNo.No);
 				}else {
-					log(LogStatus.ERROR, ele +" on mouse hover is not Matched with " +errorName, YesNo.Yes);
-					sa.assertTrue(false, ele +" on mouse hover is not Matched with " +errorName);
+					log(LogStatus.ERROR, ele +" on mouse hover is not Matched with " +bp.errorName, YesNo.Yes);
+					sa.assertTrue(false, ele +" on mouse hover is not Matched with " +bp.errorName);
 			}
 			} else {
 				ele = rp.getNoResult(10).getText();
-				if(ele.contains(errorName1)){
-					log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-					sa.assertTrue(true, ele +" has been Matched with " +errorName1);
+				if(ele.contains(bp.errorName1)){
+					log(LogStatus.PASS, ele +" has been Matched with " +bp.errorName1, YesNo.No);
 				} else {
-					log(LogStatus.ERROR, ele +" is not Matched with " +errorName1, YesNo.Yes);
-					sa.assertTrue(false, ele +" is not Matched with " +errorName1);
+					log(LogStatus.ERROR, ele +" is not Matched with " +bp.errorName1, YesNo.Yes);
+					sa.assertTrue(false, ele +" is not Matched with " +bp.errorName1);
 				}
 			}
 	} else {
@@ -417,6 +382,7 @@ public class AcuityResearch extends BaseLib{
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 	SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	lp.CRMLogin(superAdminUserName, adminPassword,appName);
 	
 	String contactRecordTypeList = AR_ContactRecordType1;
@@ -430,39 +396,39 @@ public class AcuityResearch extends BaseLib{
 
 	String[][][] contactrecordType = {
 			{ { recordTypeLabel.Record_Type_Label.toString(), contactRecordTypeArray[0] },
-					{ recordTypeLabel.Description.toString(), contactRecordTypeArray[0] + recordTypeDescription },
+					{ recordTypeLabel.Description.toString(), contactRecordTypeArray[0] + bp.recordTypeDescription },
 					{ recordTypeLabel.Active.toString(), "" } },
 			{ { recordTypeLabel.Record_Type_Label.toString(), contactRecordTypeArray[1] },
-					{ recordTypeLabel.Description.toString(), contactRecordTypeArray[1] + recordTypeDescription },
+					{ recordTypeLabel.Description.toString(), contactRecordTypeArray[1] + bp.recordTypeDescription },
 					{ recordTypeLabel.Active.toString(), "" } } };
 	
 	String[][][] dealRecordType = {
 			{ { recordTypeLabel.Record_Type_Label.toString(), dealRecordTypeArray[0] },
-					{ recordTypeLabel.Description.toString(), dealRecordTypeArray[0] + recordTypeDescription },
+					{ recordTypeLabel.Description.toString(), dealRecordTypeArray[0] + bp.recordTypeDescription },
 					{ recordTypeLabel.Active.toString(), "" } },
 			{ { recordTypeLabel.Record_Type_Label.toString(), dealRecordTypeArray[1] },
-					{ recordTypeLabel.Description.toString(), dealRecordTypeArray[1] + recordTypeDescription },
+					{ recordTypeLabel.Description.toString(), dealRecordTypeArray[1] + bp.recordTypeDescription },
 					{ recordTypeLabel.Active.toString(), "" } },
 			{ { recordTypeLabel.Record_Type_Label.toString(), dealRecordTypeArray[2] },
-						{ recordTypeLabel.Description.toString(), dealRecordTypeArray[2] + recordTypeDescription },
+						{ recordTypeLabel.Description.toString(), dealRecordTypeArray[2] + bp.recordTypeDescription },
 						{ recordTypeLabel.Active.toString(), "" } }};
 
 	String[][][] fundrecordType = {
 			{ { recordTypeLabel.Record_Type_Label.toString(), fundRecordTypeArray[0] },
-					{ recordTypeLabel.Description.toString(), fundRecordTypeArray[0] + recordTypeDescription },
+					{ recordTypeLabel.Description.toString(), fundRecordTypeArray[0] + bp.recordTypeDescription },
 					{ recordTypeLabel.Active.toString(), "" } },
 			{ { recordTypeLabel.Record_Type_Label.toString(), fundRecordTypeArray[1] },
-					{ recordTypeLabel.Description.toString(), fundRecordTypeArray[1] + recordTypeDescription },
+					{ recordTypeLabel.Description.toString(), fundRecordTypeArray[1] + bp.recordTypeDescription },
 					{ recordTypeLabel.Active.toString(), "" } } };
 
 	String[][][] fundraisingrecordType = {
 			{ { recordTypeLabel.Record_Type_Label.toString(), fundraisingRecordTypeArray[0] },
 					{ recordTypeLabel.Description.toString(),
-							fundraisingRecordTypeArray[0] + recordTypeDescription },
+							fundraisingRecordTypeArray[0] + bp.recordTypeDescription },
 					{ recordTypeLabel.Active.toString(), "" } },
 			{ { recordTypeLabel.Record_Type_Label.toString(), fundraisingRecordTypeArray[1] },
 					{ recordTypeLabel.Description.toString(),
-							fundraisingRecordTypeArray[1] + recordTypeDescription },
+							fundraisingRecordTypeArray[1] + bp.recordTypeDescription },
 					{ recordTypeLabel.Active.toString(), "" } } };
 
 	
@@ -473,7 +439,6 @@ public class AcuityResearch extends BaseLib{
 	String parentID=null;
 	
 	object[] objectsName = {object.Contact,object.Firm,object.Fund,object.Fundraising,object.Deal} ;
-	//String [][] fieldsType = {{"Email","Custom" + objectName[i]+ "Email",""},{"Phone","Custom Firm Phone",""},{"Text","Custom Firm Text","255"},{"Text Area","Custom Firm TA",""},{"Text Area (Long)","Custom Firm LTA","32768"},{"Text Area (Rich)","Custom Firm RTA","32768"}};
 	String a="",name = "" ,length = "", field = "";
 	
 	if (home.clickOnSetUpLink()) {
@@ -486,7 +451,6 @@ public class AcuityResearch extends BaseLib{
 				String TA = "Custom " + objectName+ " TA";
 				String LTA = "Custom " + objectName+ " LTA";
 				String RTA = "Custom " + objectName+ " RTA";
-				//System.out.println(" " + Email + " " +Phone + " " + Text + " " + TA + " " + LTA + " " + RTA);
 				String [][] fieldsType = {{"Email",Email,""},{"Phone",Phone,""},{"Text",Text,"255"},{"Text Area",TA,""},{"Text Area (Long)",LTA,"32768"},{"Text Area (Rich)",RTA,"32768"}};
 				for(String[] fieldType : fieldsType) {
 					field=fieldType[0];
@@ -499,7 +463,6 @@ public class AcuityResearch extends BaseLib{
 				if (sendKeys(driver, sp.getQuickSearchInObjectManager_Lighting(10),name+Keys.ENTER, "search", action.SCROLLANDBOOLEAN)) {
 					a=sp.returnAPINameOfField(projectName, name);
 						log(LogStatus.PASS, "found api name of "+name, YesNo.Yes);
-						sa.assertTrue(true, "found api name of "+name);
 				}else {
 					log(LogStatus.FAIL, "could not find api name of "+name, YesNo.Yes);
 					sa.assertTrue(false, "could not find api name of "+name);
@@ -963,8 +926,6 @@ public class AcuityResearch extends BaseLib{
 		}
 
 	}
-
-	
 	lp.switchToLighting();
 	switchToDefaultContent(driver);
 	lp.CRMlogout();
@@ -1004,7 +965,6 @@ public class AcuityResearch extends BaseLib{
 			System.out.println(ele);
 			if (ele.contains(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-			sa.assertTrue(true, ele +" is matched with " +searchValue);
 			}
 			
 	} else {
@@ -1020,7 +980,6 @@ public class AcuityResearch extends BaseLib{
 		refresh(driver);
 	if(rp.getNoResult(5) != null){
 		log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
-		sa.assertTrue(true, "There is no data retaled to " + searchValue);
 	} else 
 		if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 			log(LogStatus.INFO,
@@ -1112,7 +1071,7 @@ public class AcuityResearch extends BaseLib{
 	   if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 	
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm1, 10)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm1.replace("  ", ""), 10)) {
 	           if (ip.UpdateLegalNameAccount(projectName, AR_Research1, 5)) {
 	               log(LogStatus.INFO, "successfully update legal name " + AR_Research1, YesNo.Yes);
 	           } else {
@@ -1129,10 +1088,6 @@ public class AcuityResearch extends BaseLib{
 	   }
 	   
 	switchToDefaultContent(driver);
-//	lp.CRMlogout();
-//	sa.assertAll();
-//	ThreadSleep(5000);
-//	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
 	refresh(driver);
 	ThreadSleep(5000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 5)) {
@@ -1192,11 +1147,11 @@ public class AcuityResearch extends BaseLib{
 	
 	for(String searchValue : searchValues) {
 		
-		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, "'    "+ searchValue + "'", excelLabel.Variable_Name);
+		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, "'"+ searchValue + "'", excelLabel.Variable_Name);
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeys(driver, rp.getTextAreaResearch(10),"'"+ searchValue + "'", "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),"'  "+ searchValue + "'", "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
@@ -1205,7 +1160,6 @@ public class AcuityResearch extends BaseLib{
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-			sa.assertTrue(true, ele +" is matched with " +searchValue);
 			}
 		} else {
 			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -1294,7 +1248,7 @@ public class AcuityResearch extends BaseLib{
 	   if (fp.clickOnTab(environment, mode, TabName.ContactTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.ContactTab, YesNo.No);
 	
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm2, 10)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm2.replace("  ", ""), 10)) {
 	           if (cp.UpdateLastName(projectName, PageName.ContactPage,AR_Research2)) {
 	               log(LogStatus.INFO, "successfully update contact name " + AR_Research2, YesNo.Yes);
 	           } else {
@@ -1311,10 +1265,6 @@ public class AcuityResearch extends BaseLib{
 	   }
 	   
 	switchToDefaultContent(driver);
-//	lp.CRMlogout();
-//	sa.assertAll();
-//	ThreadSleep(5000);
-//	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	refresh(driver);
 	ThreadSleep(5000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
@@ -1373,7 +1323,7 @@ public class AcuityResearch extends BaseLib{
 	
 	for(String searchValue : searchValues) {
 		
-		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, "'    "+ searchValue + "'", excelLabel.Variable_Name);
+		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, "'"+ searchValue + "'", excelLabel.Variable_Name);
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
@@ -1386,7 +1336,6 @@ public class AcuityResearch extends BaseLib{
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-			sa.assertTrue(true, ele +" is matched with " +searchValue);
 			}
 		} else {
 			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -1399,7 +1348,6 @@ public class AcuityResearch extends BaseLib{
 				YesNo.No);
 		if(rp.getNoResult(5) != null){
 			log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
-			sa.assertTrue(true, "There is no data retaled to " + searchValue);
 		} else 
 			if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 				log(LogStatus.INFO,
@@ -1476,7 +1424,7 @@ public class AcuityResearch extends BaseLib{
    
 	   if (fp.clickOnTab(environment, mode, TabName.DealTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.DealTab, YesNo.No);
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm3, 10)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm3.replace("  ", ""), 10)) {
 	           if (dp.UpdateOtherLable(projectName, PageLabel.Deal_Name.toString().replace("_", " "), AR_Research3, 10)) {
 	               log(LogStatus.INFO, "successfully update contact name " + AR_Research3, YesNo.Yes);
 	           } else {
@@ -1493,10 +1441,6 @@ public class AcuityResearch extends BaseLib{
 	   }
 	   
 	switchToDefaultContent(driver);
-//	lp.CRMlogout();
-//	sa.assertAll();
-//	ThreadSleep(5000);
-//	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
 	ThreadSleep(5000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
@@ -1564,7 +1508,6 @@ public class AcuityResearch extends BaseLib{
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-			sa.assertTrue(true, ele +" is matched with " +searchValue);
 			}
 		} else {
 			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -1650,7 +1593,7 @@ public class AcuityResearch extends BaseLib{
    
 	   if (fp.clickOnTab(environment, mode, TabName.FundsTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.FundsTab, YesNo.No);
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm4, 10)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm4.replace("  ", ""), 10)) {
 	           if (fp.UpdateDealName(projectName, AR_Research4, 10)) {
 	               log(LogStatus.INFO, "successfully update contact name " + AR_Research4, YesNo.Yes);
 	           } else {
@@ -1667,10 +1610,6 @@ public class AcuityResearch extends BaseLib{
 	   }
 	   
 	switchToDefaultContent(driver);
-//	lp.CRMlogout();
-//	sa.assertAll();
-//	ThreadSleep(5000);
-//	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	ThreadSleep(5000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
@@ -1737,7 +1676,6 @@ public class AcuityResearch extends BaseLib{
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-			sa.assertTrue(true, ele +" is matched with " +searchValue);
 			}
 		} else {
 			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -1824,11 +1762,9 @@ public class AcuityResearch extends BaseLib{
    
 	   if (fp.clickOnTab(environment, mode, TabName.FundraisingsTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.FundraisingsTab, YesNo.No);
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm5, 10)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm5.replace("  ", ""), 10)) {
 	           if (frp.UpdateFundRaisingName(projectName, AR_Research5, 10)) {
 	               log(LogStatus.INFO, "successfully update Fundraising name " + AR_Research5, YesNo.Yes);
-//	               ExcelUtils.writeData(ResearchDataSheetFilePath, AR_Research5, "UpdatedData", excelLabel.Variable_Name,"AR_Up5",
-//	            		   excelLabel.ResearchFindings);
 	           } else {
 	               sa.assertTrue(false, "not able to update Fundraising name " + AR_Research5);
 	               log(LogStatus.SKIP, "not able to update Fundraising name " + AR_Research5, YesNo.Yes);
@@ -1842,10 +1778,6 @@ public class AcuityResearch extends BaseLib{
 	       sa.assertTrue(false, "Not able to click on " + tabObj9 + " tab");
 	   }
 	switchToDefaultContent(driver);
-//	lp.CRMlogout();
-//	sa.assertAll();
-//	ThreadSleep(5000);
-//	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	ThreadSleep(5000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
@@ -1912,7 +1844,6 @@ public class AcuityResearch extends BaseLib{
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-			sa.assertTrue(true, ele +" is matched with " +searchValue);
 			}
 		} else {
 			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -1999,7 +1930,7 @@ public class AcuityResearch extends BaseLib{
 	 String[][] task1BasicSection = { { excelLabel.Subject.toString(), AR_Research6} };
 		 lp.CRMLogin(superAdminUserName, adminPassword, appName);
    
-		 if (home.globalSearchAndNavigate(AR_Firm6, RelatedTab.Tasks.toString(), false)) {
+		 if (home.globalSearchAndNavigate(AR_Firm6.replace("  ", ""), RelatedTab.Tasks.toString(), false)) {
 
 				log(LogStatus.INFO,
 						"-----Verified Task named: " + AR_Firm6 + " found in Tasks Object-----",
@@ -2086,7 +2017,11 @@ public class AcuityResearch extends BaseLib{
 		} else {
 			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
 			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
-		}  
+		} 
+		
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
 	}
 
 @Parameters({ "projectName"})
@@ -2117,7 +2052,6 @@ public class AcuityResearch extends BaseLib{
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-			sa.assertTrue(true, ele +" is matched with " +searchValue);
 			}
 		} else {
 			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -2204,13 +2138,13 @@ public class AcuityResearch extends BaseLib{
 		 String[][] task1BasicSection = { { excelLabel.Subject.toString(), AR_Research7} };
 			 lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	   
-			 if (home.globalSearchAndNavigate(AR_Firm7, RelatedTab.Events.toString(), false)) {
+			 if (home.globalSearchAndNavigate(AR_Firm7.replace("  ", ""), RelatedTab.Events.toString(), false)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Task named: " + AR_Firm7 + " found in Events Object-----",
 							YesNo.No);
 
-						if (click(driver, taskBP.getEditButton(20),
+						if (click(driver, taskBP.getEditButtonOnEvent(20),
 								"Edit Button in downArrowButton", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Edit Button in  Down Arrow Button", YesNo.No);
 
@@ -2283,7 +2217,11 @@ public class AcuityResearch extends BaseLib{
 		} else {
 			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
 			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
-		}  
+		} 
+		
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
 	}
 
 @Parameters({ "projectName"})
@@ -2293,11 +2231,9 @@ public class AcuityResearch extends BaseLib{
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
-	String errorName = "Your search term must have 2 or more characters.";
-	String errorName1 = "No results for";
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	String xpath,ele,searchValue = null;
 	int i = 1;	
-	//String searchValues[] = {"","a","zz","~!@#$%^&*()_+=-[]{}|;':,.<>/?"};
 	String[][] val = {{MRSD_1_ResearchFindings},{MRSD_2_ResearchFindings},{MRSD_3_ResearchFindings},{MRSD_4_ResearchFindings},{MRSD_5_ResearchFindings},{MRSD_6_ResearchFindings},{MRSD_7_ResearchFindings},{MRSD_8_ResearchFindings},{MRSD_9_ResearchFindings}};
 	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
 	
@@ -2321,12 +2257,10 @@ public class AcuityResearch extends BaseLib{
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-			sa.assertTrue(true, ele +" is matched with " +searchValue);
 			}
 			ArrayList<String> Data = rp.verifyFieldonResearchPage(projectName, mode, val);
 			if (Data.isEmpty()) {
 				log(LogStatus.PASS, "Data has been Matched", YesNo.No);
-				sa.assertTrue(true, "Data has been Matched");
 			} else {
 				log(LogStatus.ERROR, "Data is not Matched", YesNo.Yes);
 				sa.assertTrue(false, "Data is not Matched : " + Data);
@@ -2334,31 +2268,28 @@ public class AcuityResearch extends BaseLib{
 			
 			if(searchValue.length() < 2) {
 				ele = rp.getErrorValue(10).getText();
-				if(ele.equalsIgnoreCase("  "+ errorName)){
-					log(LogStatus.PASS, ele +" has been Matched with " +errorName, YesNo.No);
-					sa.assertTrue(true, ele +" has been Matched with " +errorName);
+				if(ele.equalsIgnoreCase("  "+ bp.errorName)){
+					log(LogStatus.PASS, ele +" has been Matched with " +bp.errorName, YesNo.No);
 				} else {
-					log(LogStatus.ERROR, ele +" is not Matched with " +errorName, YesNo.Yes);
-					sa.assertTrue(false, ele +" is not Matched with " +errorName);
+					log(LogStatus.ERROR, ele +" is not Matched with " +bp.errorName, YesNo.Yes);
+					sa.assertTrue(false, ele +" is not Matched with " +bp.errorName);
 				}
 				ThreadSleep(2000);
 				xpath = "(//lightning-icon[contains(@class,'utility-warning')])["+i+"]";
-				WebElement element = FindElement(driver, xpath, errorName, action.BOOLEAN, 10);
-				if(mouseOverGetTextOperation(driver, element).contains(errorName)){
-					log(LogStatus.PASS, ele +" on mouse hover has been Matched with " +errorName, YesNo.No);
-					sa.assertTrue(true, ele +" on mouse hover has been Matched with " +errorName);
+				WebElement element = FindElement(driver, xpath, bp.errorName, action.BOOLEAN, 10);
+				if(mouseOverGetTextOperation(driver, element).contains(bp.errorName)){
+					log(LogStatus.PASS, ele +" on mouse hover has been Matched with " +bp.errorName, YesNo.No);
 				}else {
-					log(LogStatus.ERROR, ele +" on mouse hover is not Matched with " +errorName, YesNo.Yes);
-					sa.assertTrue(false, ele +" on mouse hover is not Matched with " +errorName);
+					log(LogStatus.ERROR, ele +" on mouse hover is not Matched with " +bp.errorName, YesNo.Yes);
+					sa.assertTrue(false, ele +" on mouse hover is not Matched with " +bp.errorName);
 			}
 			} else {
 				ele = rp.getNoResult(10).getText();
-				if(ele.contains(errorName1)){
-					log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-					sa.assertTrue(true, ele +" has been Matched with " +errorName1);
+				if(ele.contains(bp.errorName1)){
+					log(LogStatus.PASS, ele +" has been Matched with " +bp.errorName1, YesNo.No);
 				} else {
-					log(LogStatus.ERROR, ele +" is not Matched with " +errorName1, YesNo.Yes);
-					sa.assertTrue(false, ele +" is not Matched with " +errorName1);
+					log(LogStatus.ERROR, ele +" is not Matched with " +bp.errorName1, YesNo.Yes);
+					sa.assertTrue(false, ele +" is not Matched with " +bp.errorName1);
 				}
 			}
 	} else {
@@ -2386,7 +2317,6 @@ public class AcuityResearch extends BaseLib{
 	lp.CRMLogin(glUser1EmailID, adminPassword,appName);
 	String ele,headerName,RecordValue,searchValue = AR_Firm52;
 	int i = 1;	
-	//String searchValues[] = {"","a","zz","~!@#$%^&*()_+=-[]{}|;':,.<>/?"};
 	
 	if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
 		if (ip.clickOnCreatedContact(projectName, AR_Contact1FirstName, AR_Contact1LastName)) {
@@ -2416,7 +2346,6 @@ public class AcuityResearch extends BaseLib{
 				ele = rp.getResearchFindingsValue(10).getText();
 				if (ele.equals(searchValue)) {
 				log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-				sa.assertTrue(true, ele +" is matched with " +searchValue);
 				}
 				else
 				{
@@ -2438,7 +2367,6 @@ public class AcuityResearch extends BaseLib{
 					YesNo.No);
 			if(rp.getNoResult(10).getText() != null){
 				log(LogStatus.PASS, rp.getNoResult(10).getText() + " is visible", YesNo.No);
-				sa.assertTrue(true, rp.getNoResult(10).getText() + " is visible");
 			} else {
 				if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 					log(LogStatus.INFO,
@@ -2510,6 +2438,7 @@ public class AcuityResearch extends BaseLib{
 	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 	SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
 	ResearchPageBusinessLayer rp=new ResearchPageBusinessLayer(driver);
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	lp.CRMLogin(superAdminUserName, adminPassword,appName);
 	
 	String RecordTypeList = AR_RecordType1;
@@ -2523,10 +2452,10 @@ public class AcuityResearch extends BaseLib{
 	
 	String[][][] RecordType = {
 			{ { recordTypeLabel.Record_Type_Label.toString(), RecordTypeArray[0] },
-					{ recordTypeLabel.Description.toString(), RecordTypeArray[0] + recordTypeDescription },
+					{ recordTypeLabel.Description.toString(), RecordTypeArray[0] + bp.recordTypeDescription },
 					{ recordTypeLabel.Active.toString(), "" } },
 			{ { recordTypeLabel.Record_Type_Label.toString(), RecordTypeArray[1] },
-					{ recordTypeLabel.Description.toString(), RecordTypeArray[1] + recordTypeDescription },
+					{ recordTypeLabel.Description.toString(), RecordTypeArray[1] + bp.recordTypeDescription },
 					{ recordTypeLabel.Active.toString(), "" } } };
 	
 	String recordActive[][] = {{ recordTypeLabel.Active.toString(), "Checked" }};
@@ -2768,7 +2697,6 @@ public class AcuityResearch extends BaseLib{
 										action.SCROLLANDBOOLEAN)) {
 									appLog.error("clicked on add button");
 								} else {
-									//sa.assertTrue(false,"Not able to click on add button so cannot add custom tabs");
 									appLog.error("Not able to click on add button so cannot add custom tabs");
 								}
 							} else {
@@ -2855,7 +2783,6 @@ public class AcuityResearch extends BaseLib{
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-			sa.assertTrue(true, ele +" is matched with " +searchValue);
 			}
 		} else {
 			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -2977,7 +2904,6 @@ public class AcuityResearch extends BaseLib{
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-			sa.assertTrue(true, ele +" is matched with " +searchValue);
 			}
 		} else {
 			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -3284,7 +3210,6 @@ public class AcuityResearch extends BaseLib{
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-			sa.assertTrue(true, ele +" is matched with " +searchValue);
 			}
 		} else {
 			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -3591,7 +3516,6 @@ public class AcuityResearch extends BaseLib{
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-			sa.assertTrue(true, ele +" is matched with " +searchValue);
 			}
 		} else {
 			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -3941,7 +3865,6 @@ public class AcuityResearch extends BaseLib{
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-			sa.assertTrue(true, ele +" is matched with " +searchValue);
 			}
 		} else {
 			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -4101,7 +4024,6 @@ public class AcuityResearch extends BaseLib{
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-			sa.assertTrue(true, ele +" is matched with " +searchValue);
 			}
 		} else {
 			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -4237,7 +4159,6 @@ public class AcuityResearch extends BaseLib{
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-			sa.assertTrue(true, ele +" is matched with " +searchValue);
 			}
 		} else {
 			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -4354,7 +4275,6 @@ public class AcuityResearch extends BaseLib{
 	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
 	ThreadSleep(2000);
 	String ele, headerName;
-	String errorName1 = "No results for";
 	
 	String[] searchValues = {AR_Firm22};
 	
@@ -4372,7 +4292,6 @@ public class AcuityResearch extends BaseLib{
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-			sa.assertTrue(true, ele +" is matched with " +searchValue);
 			}
 		} else {
 			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -4480,9 +4399,6 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS,
 					"Phone field Permission is given from the Firm Object Manager for Institution Record Type",
 					YesNo.No);
-			sa.assertTrue(true,
-					"Phone field Permission is given from the Firm Object Manager for Institution Record Type");
-
 		} else {
 			log(LogStatus.ERROR,
 					"Annual Revenue field Permission is not given from the Firm Object Manager for Institution Record Type",
@@ -4502,7 +4418,6 @@ public class AcuityResearch extends BaseLib{
 				if (isDisplayed(driver, cp.getPhoneFieldOnContactPage(10), "Visibility", 10, "Phone") != null) {
 					System.out.println(isDisplayed(driver, cp.getPhoneFieldOnContactPage(10), "Visibility", 10, "Phone"));
 					log(LogStatus.PASS, "Phone Field is visible", YesNo.Yes);
-					sa.assertTrue(true, "Phone Field is visible");
 				} else {
 					log(LogStatus.ERROR, "Phone Field is not visible", YesNo.Yes);
 					sa.assertTrue(false, "Phone Field is not visible");
@@ -4534,7 +4449,6 @@ public class AcuityResearch extends BaseLib{
 				ele = rp.getResearchFindingsValue(10).getText();
 				if (ele.equals(searchValue)) {
 				log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-				sa.assertTrue(true, ele +" is matched with " +searchValue);
 				}
 			} else {
 				log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -4547,7 +4461,6 @@ public class AcuityResearch extends BaseLib{
 					YesNo.No);
 			if(rp.getNoResult(5) != null){
 				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
-				sa.assertTrue(true, "There is no data retaled to " + searchValue);
 			} else 
 				if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 					log(LogStatus.INFO,
@@ -4615,7 +4528,6 @@ public class AcuityResearch extends BaseLib{
 				if (cp.clickOnCreatedContact(projectName, contactName[0], contactName[1])) {
 					if (isDisplayed(driver, cp.getPhoneFieldOnContactPage(10), "Visibility", 10, "Phone") == null) {
 						log(LogStatus.PASS, "Phone Field is not visible", YesNo.Yes);
-						sa.assertTrue(true, "Phone Field is not visible");
 					} else {
 						log(LogStatus.ERROR, "Phone Field is visible", YesNo.Yes);
 						sa.assertTrue(false, "Phone Field is visible");
@@ -4646,7 +4558,6 @@ public class AcuityResearch extends BaseLib{
 					ele = rp.getResearchFindingsValue(10).getText();
 					if (ele.equals(searchValue)) {
 					log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-					sa.assertTrue(true, ele +" is matched with " +searchValue);
 					}
 				} else {
 					log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -4659,7 +4570,6 @@ public class AcuityResearch extends BaseLib{
 						YesNo.No);
 				if(rp.getNoResult(5) != null){
 					log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
-					sa.assertTrue(true, "There is no data retaled to " + searchValue);
 				} else
 					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 						log(LogStatus.INFO,
@@ -4757,9 +4667,6 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS,
 					"Phone field Permission is given from the Firm Object Manager for Institution Record Type",
 					YesNo.No);
-			sa.assertTrue(true,
-					"Phone field Permission is given from the Firm Object Manager for Institution Record Type");
-
 		} else {
 			log(LogStatus.ERROR,
 					"Annual Revenue field Permission is not given from the Firm Object Manager for Institution Record Type",
@@ -4779,7 +4686,6 @@ public class AcuityResearch extends BaseLib{
 				if (isDisplayed(driver, cp.getPhoneFieldOnContactPage(10), "Visibility", 10, "Phone") != null) {
 					System.out.println(isDisplayed(driver, cp.getPhoneFieldOnContactPage(10), "Visibility", 10, "Phone"));
 					log(LogStatus.PASS, "Phone Field is visible", YesNo.Yes);
-					sa.assertTrue(true, "Phone Field is visible");
 				} else {
 					log(LogStatus.ERROR, "Phone Field is not visible", YesNo.Yes);
 					sa.assertTrue(false, "Phone Field is not visible");
@@ -4804,7 +4710,6 @@ public class AcuityResearch extends BaseLib{
 				if (cp.clickOnCreatedContact(projectName, contactName[0], contactName[1])) {
 					if (isDisplayed(driver, cp.getPhoneFieldOnContactPage(10), "Visibility", 10, "Phone") == null) {
 						log(LogStatus.PASS, "Phone Field is visible", YesNo.Yes);
-						sa.assertTrue(true, "Phone Field is visible");
 					} else {
 						log(LogStatus.ERROR, "Phone Field is not visible", YesNo.Yes);
 						sa.assertTrue(false, "Phone Field is not visible");
@@ -4835,7 +4740,6 @@ public class AcuityResearch extends BaseLib{
 					ele = rp.getResearchFindingsValue(10).getText();
 					if (ele.equals(searchValue)) {
 					log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-					sa.assertTrue(true, ele +" is matched with " +searchValue);
 					}
 				} else {
 					log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -4848,7 +4752,6 @@ public class AcuityResearch extends BaseLib{
 						YesNo.No);
 				if(rp.getNoResult(5) != null){
 					log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
-					sa.assertTrue(true, "There is no data retaled to " + searchValue);
 				} else
 					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 						log(LogStatus.INFO,
@@ -4946,9 +4849,6 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS,
 					"Phone field Permission is given from the Firm Object Manager for Institution Record Type",
 					YesNo.No);
-			sa.assertTrue(true,
-					"Phone field Permission is given from the Firm Object Manager for Institution Record Type");
-
 		} else {
 			log(LogStatus.ERROR,
 					"Annual Revenue field Permission is not given from the Firm Object Manager for Institution Record Type",
@@ -4965,9 +4865,6 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS,
 					"Phone field Permission is given from the Firm Object Manager for Institution Record Type",
 					YesNo.No);
-			sa.assertTrue(true,
-					"Phone field Permission is given from the Firm Object Manager for Institution Record Type");
-
 		} else {
 			log(LogStatus.ERROR,
 					"Annual Revenue field Permission is not given from the Firm Object Manager for Institution Record Type",
@@ -4985,9 +4882,6 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS,
 					"Phone field Permission is given from the Firm Object Manager for Institution Record Type",
 					YesNo.No);
-			sa.assertTrue(true,
-					"Phone field Permission is given from the Firm Object Manager for Institution Record Type");
-
 		} else {
 			log(LogStatus.ERROR,
 					"Annual Revenue field Permission is not given from the Firm Object Manager for Institution Record Type",
@@ -5005,9 +4899,6 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS,
 					"Phone field Permission is given from the Firm Object Manager for Institution Record Type",
 					YesNo.No);
-			sa.assertTrue(true,
-					"Phone field Permission is given from the Firm Object Manager for Institution Record Type");
-
 		} else {
 			log(LogStatus.ERROR,
 					"Annual Revenue field Permission is not given from the Firm Object Manager for Institution Record Type",
@@ -5025,9 +4916,6 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS,
 					"Phone field Permission is given from the Firm Object Manager for Institution Record Type",
 					YesNo.No);
-			sa.assertTrue(true,
-					"Phone field Permission is given from the Firm Object Manager for Institution Record Type");
-
 		} else {
 			log(LogStatus.ERROR,
 					"Annual Revenue field Permission is not given from the Firm Object Manager for Institution Record Type",
@@ -5062,7 +4950,6 @@ public class AcuityResearch extends BaseLib{
 				ele = rp.getResearchFindingsValue(10).getText();
 				if (ele.equals(searchValue)) {
 				log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-				sa.assertTrue(true, ele +" is matched with " +searchValue);
 				}
 			} else {
 				log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -5076,7 +4963,6 @@ public class AcuityResearch extends BaseLib{
 			try {
 			if(rp.getNoResult(5) != null){
 				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
-				sa.assertTrue(true, "There is no data retaled to " + searchValue);
 			} else
 				if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 					log(LogStatus.INFO,
@@ -5180,9 +5066,6 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS,
 					"Phone field Permission is given from the Firm Object Manager for Institution Record Type",
 					YesNo.No);
-			sa.assertTrue(true,
-					"Phone field Permission is given from the Firm Object Manager for Institution Record Type");
-
 		} else {
 			log(LogStatus.ERROR,
 					"Annual Revenue field Permission is not given from the Firm Object Manager for Institution Record Type",
@@ -5199,9 +5082,6 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS,
 					"Phone field Permission is given from the Firm Object Manager for Institution Record Type",
 					YesNo.No);
-			sa.assertTrue(true,
-					"Phone field Permission is given from the Firm Object Manager for Institution Record Type");
-
 		} else {
 			log(LogStatus.ERROR,
 					"Annual Revenue field Permission is not given from the Firm Object Manager for Institution Record Type",
@@ -5219,9 +5099,6 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS,
 					"Phone field Permission is given from the Firm Object Manager for Institution Record Type",
 					YesNo.No);
-			sa.assertTrue(true,
-					"Phone field Permission is given from the Firm Object Manager for Institution Record Type");
-
 		} else {
 			log(LogStatus.ERROR,
 					"Annual Revenue field Permission is not given from the Firm Object Manager for Institution Record Type",
@@ -5239,9 +5116,6 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS,
 					"Phone field Permission is given from the Firm Object Manager for Institution Record Type",
 					YesNo.No);
-			sa.assertTrue(true,
-					"Phone field Permission is given from the Firm Object Manager for Institution Record Type");
-
 		} else {
 			log(LogStatus.ERROR,
 					"Annual Revenue field Permission is not given from the Firm Object Manager for Institution Record Type",
@@ -5259,9 +5133,6 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS,
 					"Phone field Permission is given from the Firm Object Manager for Institution Record Type",
 					YesNo.No);
-			sa.assertTrue(true,
-					"Phone field Permission is given from the Firm Object Manager for Institution Record Type");
-
 		} else {
 			log(LogStatus.ERROR,
 					"Annual Revenue field Permission is not given from the Firm Object Manager for Institution Record Type",
@@ -5292,7 +5163,6 @@ public class AcuityResearch extends BaseLib{
 				ele = rp.getResearchFindingsValue(10).getText();
 				if (ele.equals(searchValue)) {
 				log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-				sa.assertTrue(true, ele +" is matched with " +searchValue);
 				}
 			} else {
 				log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -5307,7 +5177,6 @@ public class AcuityResearch extends BaseLib{
 			try {
 			if(rp.getNoResult(5) != null){
 				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
-				sa.assertTrue(true, "There is no data retaled to " + searchValue);
 			} else
 				
 				if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
@@ -5378,26 +5247,6 @@ public class AcuityResearch extends BaseLib{
 		refresh(driver);		
 		lp.CRMLogin(glUser1EmailID, adminPassword, appName);
 		ThreadSleep(2000);
-//			if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
-//				if (cp.clickOnCreatedContact(projectName, contactName[0], contactName[1])) {
-//					if (isDisplayed(driver, cp.getPhoneFieldOnContactPage(10), "Visibility", 10, "Phone") == null) {
-//						log(LogStatus.PASS, "Phone Field is not visible", YesNo.Yes);
-//						sa.assertTrue(true, "Phone Field is not visible");
-//					} else {
-//						log(LogStatus.ERROR, "Phone Field is visible", YesNo.Yes);
-//						sa.assertTrue(false, "Phone Field is visible");
-//					}
-//				}
-//
-//				else {
-//					log(LogStatus.ERROR, "Could not click on the contact", YesNo.Yes);
-//					sa.assertTrue(false, "Could not click on the contact");
-//				}
-//			} else {
-//				log(LogStatus.ERROR, "Could not click Tab", YesNo.Yes);
-//				sa.assertTrue(false, "Could not click Tab");
-//
-//			}
 			
 			for(String searchValue : searchValues) {
 				String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
@@ -5413,7 +5262,6 @@ public class AcuityResearch extends BaseLib{
 					ele = rp.getResearchFindingsValue(10).getText();
 					if (ele.equals(searchValue)) {
 					log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-					sa.assertTrue(true, ele +" is matched with " +searchValue);
 					}
 				} else {
 					log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -5427,7 +5275,6 @@ public class AcuityResearch extends BaseLib{
 				try {
 				if(rp.getNoResult(5) != null){
 					log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
-					sa.assertTrue(true, "There is no data retaled to " + searchValue);
 				} else
 					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 						log(LogStatus.INFO,
@@ -5539,13 +5386,11 @@ public class AcuityResearch extends BaseLib{
 		if (setup.renameLabelsOfFields(driver, tabNames1, labelsWithValues1, 10)) {
 			flag1 = true;
 			log(LogStatus.PASS, labelsWithValues1[0] + " is updated as " +labelsWithValues1[1] , YesNo.Yes);
-			sa.assertTrue(true, labelsWithValues1[0] + " is updated as " +labelsWithValues1[1]);
 		}
 
 		if (setup.renameLabelsOfFields(driver, tabNames2, labelsWithValues2, 10)) {
 			flag1 = true;
 			log(LogStatus.PASS, labelsWithValues2[0] + " is updated as " +labelsWithValues2[1] , YesNo.Yes);
-			sa.assertTrue(true, labelsWithValues2[0] + " is updated as " +labelsWithValues2[1]);
 		}
 		} else {
 			log(LogStatus.ERROR, "Not able to search/click on " + object.Rename_Tabs_And_Labels, YesNo.Yes);
@@ -5664,7 +5509,6 @@ public class AcuityResearch extends BaseLib{
 				ele = rp.getResearchFindingsValue(10).getText();
 				if (ele.equals(searchValue)) {
 				log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-				sa.assertTrue(true, ele +" is matched with " +searchValue);
 				}
 			} else {
 				log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -5678,7 +5522,6 @@ public class AcuityResearch extends BaseLib{
 			try {
 				if(rp.getNoResult(5) != null){
 					log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
-					sa.assertTrue(true, "There is no data retaled to " + searchValue);
 				} else
 				if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 					log(LogStatus.INFO,
@@ -5788,13 +5631,11 @@ public class AcuityResearch extends BaseLib{
 		if (setup.renameLabelsOfFields(driver, tabNames1, labelsWithValues1, 10)) {
 			flag1 = true;
 			log(LogStatus.PASS, labelsWithValues1[0] + " is updated as " +labelsWithValues1[1] , YesNo.Yes);
-			sa.assertTrue(true, labelsWithValues1[0] + " is updated as " +labelsWithValues1[1]);
 		}
 
 		if (setup.renameLabelsOfFields(driver, tabNames2, labelsWithValues2, 10)) {
 			flag1 = true;
 			log(LogStatus.PASS, labelsWithValues2[0] + " is updated as " +labelsWithValues2[1] , YesNo.Yes);
-			sa.assertTrue(true, labelsWithValues2[0] + " is updated as " +labelsWithValues2[1]);
 		}
 		} else {
 			log(LogStatus.ERROR, "Not able to search/click on " + object.Rename_Tabs_And_Labels, YesNo.Yes);
@@ -5913,7 +5754,6 @@ public class AcuityResearch extends BaseLib{
 				ele = rp.getResearchFindingsValue(10).getText();
 				if (ele.equals(searchValue)) {
 				log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-				sa.assertTrue(true, ele +" is matched with " +searchValue);
 				}
 			} else {
 				log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -5928,7 +5768,6 @@ public class AcuityResearch extends BaseLib{
 			try {
 			if(rp.getNoResult(5) != null){
 				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
-				sa.assertTrue(true, "There is no data retaled to " + searchValue);
 			} else
 				if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 					log(LogStatus.INFO,
@@ -6038,13 +5877,11 @@ public class AcuityResearch extends BaseLib{
 		if (setup.renameLabelsOfFields(driver, tabNames1, labelsWithValues1, 10)) {
 			flag1 = true;
 			log(LogStatus.PASS, labelsWithValues1[0] + " is updated as " +labelsWithValues1[1] , YesNo.Yes);
-			sa.assertTrue(true, labelsWithValues1[0] + " is updated as " +labelsWithValues1[1]);
 		}
 
 		if (setup.renameLabelsOfFields(driver, tabNames2, labelsWithValues2, 10)) {
 			flag1 = true;
 			log(LogStatus.PASS, labelsWithValues2[0] + " is updated as " +labelsWithValues2[1] , YesNo.Yes);
-			sa.assertTrue(true, labelsWithValues2[0] + " is updated as " +labelsWithValues2[1]);
 		}
 		} else {
 			log(LogStatus.ERROR, "Not able to search/click on " + object.Rename_Tabs_And_Labels, YesNo.Yes);
@@ -6163,7 +6000,6 @@ public class AcuityResearch extends BaseLib{
 				ele = rp.getResearchFindingsValue(10).getText();
 				if (ele.equals(searchValue)) {
 				log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-				sa.assertTrue(true, ele +" is matched with " +searchValue);
 				}
 			} else {
 				log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -6177,7 +6013,6 @@ public class AcuityResearch extends BaseLib{
 			try {
 				if(rp.getNoResult(5) != null){
 					log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
-					sa.assertTrue(true, "There is no data retaled to " + searchValue);
 				} else
 				if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 					log(LogStatus.INFO,
@@ -6403,31 +6238,28 @@ public class AcuityResearch extends BaseLib{
 		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 			if(clickUsingJavaScript(driver, rp.getTextAreaResearch(10),"Research Text Area", action.BOOLEAN)) {
-				log(LogStatus.INFO, "items verified "+filesName+" on "+navigationMenuName, YesNo.No);
+				log(LogStatus.INFO, "items verified "+bp.filesName+" on "+navigationMenuName, YesNo.No);
 			} else {
-				log(LogStatus.ERROR, "items not verified "+filesName+" on "+navigationMenuName, YesNo.Yes);
-				sa.assertTrue(false,"items not verified "+filesName+" on "+navigationMenuName);
+				log(LogStatus.ERROR, "items not verified "+bp.filesName+" on "+navigationMenuName, YesNo.Yes);
+				sa.assertTrue(false,"items not verified "+bp.filesName+" on "+navigationMenuName);
 			}
 		} else {
-			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName, YesNo.Yes);
-			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName);
+			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+bp.filesName, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+bp.filesName);
 		}
 		refresh(driver);
 		
 		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-//			xpath = "(//div[contains(@class,'DOCKED')]//div//button)[3]";
-//			ele = FindElement(driver, xpath,filesName, action.BOOLEAN, 10).getText();
-//			if (ele!=null) {
 			if(clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN)) {
-				log(LogStatus.INFO, "items verified "+filesName+" on "+navigationMenuName, YesNo.No);
+				log(LogStatus.INFO, "items verified "+bp.filesName+" on "+navigationMenuName, YesNo.No);
 			} else {
-				log(LogStatus.ERROR, "items not verified "+filesName+" on "+navigationMenuName, YesNo.Yes);
-				sa.assertTrue(false,"items not verified "+filesName+" on "+navigationMenuName);
+				log(LogStatus.ERROR, "items not verified "+bp.filesName+" on "+navigationMenuName, YesNo.Yes);
+				sa.assertTrue(false,"items not verified "+bp.filesName+" on "+navigationMenuName);
 			}
 		} else {
-			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName, YesNo.Yes);
-			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName);
+			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+bp.filesName, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+bp.filesName);
 		}
 		refresh(driver);
 		
@@ -6440,32 +6272,10 @@ public class AcuityResearch extends BaseLib{
 				sa.assertTrue(false,"Research popup not successfully minimized");
 			}
 		} else {
-			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName, YesNo.Yes);
-			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName);
+			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+bp.filesName, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+bp.filesName);
 		}
 		refresh(driver);
-		
-//		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
-//			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-//			xpath = "(//div[contains(@class,'DOCKED')]//div//button)[2]";
-//			WebElement ele1 = FindElement(driver, xpath,filesName, action.BOOLEAN, 10);
-//			click(driver,ele1,"Pop-out",action.BOOLEAN);
-//			ThreadSleep(8000);
-//			xpath = "//div[contains(@class,'normal')]//button[@title='Pop-in']";
-//			WebElement ele2 = FindElement(driver, xpath,filesName, action.BOOLEAN, 10);
-//			click(driver,ele2,"Pop-in",action.BOOLEAN);
-//			ThreadSleep(4000);
-//			switchToDefaultContent(driver);
-//			if (ele2==null) {
-//				log(LogStatus.INFO, "Research popup successfully pop-out closed", YesNo.No);
-//			} else {
-//				log(LogStatus.ERROR, "Research popup not successfully closed", YesNo.Yes);
-//				sa.assertTrue(false,"Research popup not successfully closed");
-//			}
-//		} else {
-//			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName, YesNo.Yes);
-//			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName);
-//		}
 		
 		for(String searchValue : searchValues) {
 			if(searchValue.contains("ACR_")) {
@@ -6487,7 +6297,6 @@ public class AcuityResearch extends BaseLib{
 				ele = rp.getResearchFindingsValue(10).getText();
 				if (ele.equals(searchValue)) {
 				log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-				sa.assertTrue(true, ele +" is matched with " +searchValue);
 				}
 			} else {
 				log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -6501,7 +6310,6 @@ public class AcuityResearch extends BaseLib{
 			try {
 			if(rp.getNoResult(5) != null){
 				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
-				sa.assertTrue(true, "There is no data retaled to " + searchValue);
 			} else
 				if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 					log(LogStatus.INFO,
@@ -6636,7 +6444,6 @@ public class AcuityResearch extends BaseLib{
 				String ele = rp.getResearchFindingsValue(10).getText();
 					if (ele.equals(searchValue)) {
 					log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-					sa.assertTrue(true, ele +" is matched with " +searchValue);
 					}
 				} else {
 					log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -6651,7 +6458,6 @@ public class AcuityResearch extends BaseLib{
 				try {
 				if(rp.getNoResult(5) != null){
 					log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
-					sa.assertTrue(true, "There is no data retaled to " + searchValue);
 				} else
 					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 						log(LogStatus.INFO,
@@ -6785,7 +6591,6 @@ public class AcuityResearch extends BaseLib{
 				String ele = rp.getResearchFindingsValue(10).getText();
 					if (ele.equals(searchValue)) {
 					log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-					sa.assertTrue(true, ele +" is matched with " +searchValue);
 					}
 				} else {
 					log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -6799,7 +6604,6 @@ public class AcuityResearch extends BaseLib{
 				try {
 					if(rp.getNoResult(5) != null){
 						log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
-						sa.assertTrue(true, "There is no data retaled to " + searchValue);
 					} else
 					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 						log(LogStatus.INFO,
@@ -6933,7 +6737,6 @@ public class AcuityResearch extends BaseLib{
 				String ele = rp.getResearchFindingsValue(10).getText();
 					if (ele.equals(searchValue)) {
 					log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-					sa.assertTrue(true, ele +" is matched with " +searchValue);
 					}
 				} else {
 					log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -6947,7 +6750,6 @@ public class AcuityResearch extends BaseLib{
 				try {
 					if(rp.getNoResult(5) != null){
 						log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
-						sa.assertTrue(true, "There is no data retaled to " + searchValue);
 					} else	
 					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 						log(LogStatus.INFO,
@@ -7081,7 +6883,6 @@ public class AcuityResearch extends BaseLib{
 				String ele = rp.getResearchFindingsValue(10).getText();
 					if (ele.equals(searchValue)) {
 					log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-					sa.assertTrue(true, ele +" is matched with " +searchValue);
 					}
 				} else {
 					log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -7095,7 +6896,6 @@ public class AcuityResearch extends BaseLib{
 				try {
 					if(rp.getNoResult(5) != null){
 						log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
-						sa.assertTrue(true, "There is no data retaled to " + searchValue);
 					} else
 					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 						log(LogStatus.INFO,
@@ -7229,7 +7029,6 @@ public class AcuityResearch extends BaseLib{
 				String ele = rp.getResearchFindingsValue(10).getText();
 					if (ele.equals(searchValue)) {
 					log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-					sa.assertTrue(true, ele +" is matched with " +searchValue);
 					}
 				} else {
 					log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -7243,7 +7042,6 @@ public class AcuityResearch extends BaseLib{
 				try {
 					if(rp.getNoResult(5) != null){
 						log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
-						sa.assertTrue(true, "There is no data retaled to " + searchValue);
 					} else	
 					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 						log(LogStatus.INFO,
@@ -7442,7 +7240,6 @@ public class AcuityResearch extends BaseLib{
 				String ele = rp.getResearchFindingsValue(10).getText();
 					if (ele.equals(searchValue)) {
 					log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-					sa.assertTrue(true, ele +" is matched with " +searchValue);
 					}
 				} else {
 					log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
@@ -7456,7 +7253,6 @@ public class AcuityResearch extends BaseLib{
 				try {
 					if(rp.getNoResult(5) != null){
 						log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
-						sa.assertTrue(true, "There is no data retaled to " + searchValue);
 					} else
 					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 						log(LogStatus.INFO,
