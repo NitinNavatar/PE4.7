@@ -10964,37 +10964,40 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @author Ankur Huria
 	 * @param recordNameOfRecordPage
 	 * @param dealName
-	 * @param company
 	 * @param stage
+	 * @param highestStageReachedName
 	 * @param dateReceived
 	 * @return return Empty ArrayList if test case is passed
 	 */
 
 	public ArrayList<String> verifyRecordOnDealsSectionInAcuity(String recordNameOfRecordPage, String dealName,
-			String company, String stage, String dateReceived) {
+			String stage, String highestStageReachedName, String dateReceived) {
 
 		ArrayList<String> result = new ArrayList<String>();
 
 		if (dealAcuityDealName(dealName, 20) != null) {
 
-			if (company != null && company != "") {
+			if (highestStageReachedName != null && highestStageReachedName != "") {
 
-				String actualCompany = getText(driver, dealAcuityCompanyName(dealName, company, 20), "Title",
+				String actualCompany = getText(driver,
+						dealAcuityhighestStageReachedName(dealName, highestStageReachedName, 20), "Title",
 						action.SCROLLANDBOOLEAN);
-				if (actualCompany.equalsIgnoreCase(company)) {
+				if (actualCompany.equalsIgnoreCase(highestStageReachedName)) {
 					log(LogStatus.INFO,
-							"Actual result " + actualCompany + " of Company has been matched with Expected result : "
-									+ company + " of Deal Name: " + dealName + " under Record Page of "
+							"Actual result " + actualCompany
+									+ " of highestStageReachedName has been matched with Expected result : "
+									+ highestStageReachedName + " of Deal Name: " + dealName + " under Record Page of "
 									+ recordNameOfRecordPage,
 							YesNo.No);
 				} else {
 					log(LogStatus.ERROR,
-							"Actual result " + actualCompany + " of Company is not matched with Expected result : "
-									+ company + " of Deal Name: " + dealName + " under Record Page of "
+							"Actual result " + actualCompany
+									+ " of highestStageReachedName is not matched with Expected result : "
+									+ highestStageReachedName + " of Deal Name: " + dealName + " under Record Page of "
 									+ recordNameOfRecordPage,
 							YesNo.No);
 					result.add("Actual result " + actualCompany + " of Company is not matched with Expected result : "
-							+ company + " of Deal Name: " + dealName + " under Record Page of "
+							+ highestStageReachedName + " of Deal Name: " + dealName + " under Record Page of "
 							+ recordNameOfRecordPage);
 				}
 			}
@@ -11052,30 +11055,34 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	}
 
 	public ArrayList<String> verifyDealsSectionBoxInAcuity(String recordNameOfRecordPage, String dealName,
-			String company, String stage, String dateReceived) {
+			String highestStageReachedName, String stage, String dateReceived) {
 
 		ArrayList<String> result = new ArrayList<String>();
 
 		if (dealAcuityDealName(dealName, 20) != null) {
 
-			if (company != null && company != "") {
+			if (highestStageReachedName != null && highestStageReachedName != "") {
 
-				String actualCompany = getText(driver, dealAcuityCompanyName(dealName, company, 20), "Title",
+				String actualCompany = getText(driver,
+						dealAcuityhighestStageReachedName(dealName, highestStageReachedName, 20), "Title",
 						action.SCROLLANDBOOLEAN);
-				if (actualCompany.equalsIgnoreCase(company)) {
+				if (actualCompany.equalsIgnoreCase(highestStageReachedName)) {
 					log(LogStatus.INFO,
-							"Actual result " + actualCompany + " of Company has been matched with Expected result : "
-									+ company + " of Deal Name: " + dealName + " under Record Page of "
+							"Actual result " + actualCompany
+									+ " of highestStageReachedName has been matched with Expected result : "
+									+ highestStageReachedName + " of Deal Name: " + dealName + " under Record Page of "
 									+ recordNameOfRecordPage,
 							YesNo.No);
 				} else {
 					log(LogStatus.ERROR,
-							"Actual result " + actualCompany + " of Company is not matched with Expected result : "
-									+ company + " of Deal Name: " + dealName + " under Record Page of "
+							"Actual result " + actualCompany
+									+ " of highestStageReachedName is not matched with Expected result : "
+									+ highestStageReachedName + " of Deal Name: " + dealName + " under Record Page of "
 									+ recordNameOfRecordPage,
 							YesNo.No);
-					result.add("Actual result " + actualCompany + " of Company is not matched with Expected result : "
-							+ company + " of Deal Name: " + dealName + " under Record Page of "
+					result.add("Actual result " + actualCompany
+							+ " of highestStageReachedName is not matched with Expected result : "
+							+ highestStageReachedName + " of Deal Name: " + dealName + " under Record Page of "
 							+ recordNameOfRecordPage);
 				}
 			}
@@ -14422,8 +14429,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	}
 
 	public ArrayList<String> verifyRecordAndReferencedTypeOnTagged(String[] firmsTagName, String[] firmTimesReferenced,
-			String[] peopleTagName, String[] peopleTimesReferenced, String[] dealTagName,
-			String[] dealTimesReferenced, boolean isInstitutionRecordType) {
+			String[] peopleTagName, String[] peopleTimesReferenced, String[] dealTagName, String[] dealTimesReferenced,
+			boolean isInstitutionRecordType) {
 		ArrayList<String> result = new ArrayList<String>();
 		if (firmsTagName != null && firmTimesReferenced != null) {
 			if (firmsTagName.length == firmTimesReferenced.length) {
@@ -14508,9 +14515,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				result.add("The size of tagged people name and size of tagged time reference is not equal");
 			}
 		}
-		
-		if(isInstitutionRecordType==false)
-		{
+
+		if (isInstitutionRecordType == false) {
 			if (dealTagName != null && dealTimesReferenced != null) {
 				if (dealTagName.length == dealTimesReferenced.length) {
 					if (click(driver, getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
@@ -14523,16 +14529,18 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 								if (getTaggedRecordTimeReference("Deals", dealTagName[i], dealTimesReferenced[i],
 										6) != null) {
-									log(LogStatus.INFO, "Time Reference : " + dealTimesReferenced[i]
-											+ " is verified against " + dealTagName[i] + " record on deals tab of Tagged",
+									log(LogStatus.INFO,
+											"Time Reference : " + dealTimesReferenced[i] + " is verified against "
+													+ dealTagName[i] + " record on deals tab of Tagged",
 											YesNo.No);
 								} else {
 									log(LogStatus.ERROR,
 											"Time Reference : " + dealTimesReferenced[i] + " is not verified against "
 													+ dealTagName[i] + " record on deals tab of Tagged",
-													YesNo.No);
-									result.add("Time Reference : " + dealTimesReferenced[i] + " is not verified against "
-											+ dealTagName[i] + " record on deals tab of Tagged");
+											YesNo.No);
+									result.add(
+											"Time Reference : " + dealTimesReferenced[i] + " is not verified against "
+													+ dealTagName[i] + " record on deals tab of Tagged");
 								}
 
 							} else {
@@ -16127,8 +16135,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				result.add("The size of tagged people name and size of tagged time reference is not equal");
 			}
 		}
-		if(isInstitutionRecordType==false)
-		{
+		if (isInstitutionRecordType == false) {
 			if (dealTagName != null && dealTimesReferenced != null) {
 				if (dealTagName.length == dealTimesReferenced.length) {
 					if (click(driver, getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
@@ -16142,7 +16149,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 								String id = switchOnWindow(driver);
 								xPath = "//lightning-formatted-text[text()='" + dealTagName[i] + "']";
-								ele = FindElement(driver, xPath, dealTagName[i] + " record", action.SCROLLANDBOOLEAN, 40);
+								ele = FindElement(driver, xPath, dealTagName[i] + " record", action.SCROLLANDBOOLEAN,
+										40);
 								if (ele != null) {
 									log(LogStatus.INFO, dealTagName[i] + " record is redirecting to new tab", YesNo.No);
 								} else {
@@ -16168,7 +16176,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								ele = FindElement(driver, xPath, firmTagName[i] + " record's count",
 										action.SCROLLANDBOOLEAN, 40);
 								if (ele != null) {
-									log(LogStatus.INFO, firmTagName[i] + " time reference count is redirecting to new tab",
+									log(LogStatus.INFO,
+											firmTagName[i] + " time reference count is redirecting to new tab",
 											YesNo.No);
 								} else {
 									log(LogStatus.ERROR,
@@ -19215,25 +19224,25 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
 			result.add("Not able to click on People tab name");
 		}
-		if(isInstitutionRecord==false)
-		{
-		if (click(driver, getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
-			log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
-			xPath = "//span[text()='Deals']/ancestor::table//button[@name='timesRef']";
-			elements = FindElements(driver, xPath, "Time Reference Count");
-			if (CommonLib.checkSorting(driver, SortOrder.Decending, elements)) {
-				log(LogStatus.INFO, "Default Decending order of Time Referenced count have been verified on Deals tag",
-						YesNo.No);
-			} else {
-				log(LogStatus.ERROR, "Default Decending order of Time Referenced count are not verified on Deals tag",
-						YesNo.No);
-				result.add("Default Decending order of Time Referenced count are not verified on Deals tag");
-			}
+		if (isInstitutionRecord == false) {
+			if (click(driver, getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+				xPath = "//span[text()='Deals']/ancestor::table//button[@name='timesRef']";
+				elements = FindElements(driver, xPath, "Time Reference Count");
+				if (CommonLib.checkSorting(driver, SortOrder.Decending, elements)) {
+					log(LogStatus.INFO,
+							"Default Decending order of Time Referenced count have been verified on Deals tag",
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Default Decending order of Time Referenced count are not verified on Deals tag", YesNo.No);
+					result.add("Default Decending order of Time Referenced count are not verified on Deals tag");
+				}
 
-		} else {
-			log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
-			result.add("Not able to click on Deals tab name");
-		}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+				result.add("Not able to click on Deals tab name");
+			}
 		}
 		return result;
 	}
@@ -19993,8 +20002,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				result.add("Not able to click on People tab name");
 			}
 		}
-		if(isInstitutionRecord==false)
-		{
+		if (isInstitutionRecord == false) {
 			if (dealTag != null) {
 
 				if (click(driver, getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
@@ -20234,49 +20242,50 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			result.add("Not able to click on Companies tab name");
 		}
 
-		if(isInstitutionRecord==false)
-		{
-		if (click(driver, getTaggedRecordName(TaggedName.Deals.toString(), 30), TaggedName.Deals.toString() + " tab",
-				action.SCROLLANDBOOLEAN)) {
-			log(LogStatus.INFO, "Clicked on Deal tab name", YesNo.No);
-			ThreadSleep(5000);
-			if (CommonLib.clickUsingJavaScript(driver, recordsNameOnTaggedSection(TaggedName.Deals.toString(), 30),
-					"Records on Deal Tagged", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on record on deal tab", YesNo.No);
+		if (isInstitutionRecord == false) {
+			if (click(driver, getTaggedRecordName(TaggedName.Deals.toString(), 30),
+					TaggedName.Deals.toString() + " tab", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Deal tab name", YesNo.No);
+				ThreadSleep(5000);
+				if (CommonLib.clickUsingJavaScript(driver, recordsNameOnTaggedSection(TaggedName.Deals.toString(), 30),
+						"Records on Deal Tagged", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on record on deal tab", YesNo.No);
 
-				String id = switchOnWindow(driver);
-				if (id != null) {
-					if (getTabName("Deal", 20) != null) {
-						log(LogStatus.INFO, "The page is redirecting to deal tab after click on Entity type of deal",
-								YesNo.No);
+					String id = switchOnWindow(driver);
+					if (id != null) {
+						if (getTabName("Deal", 20) != null) {
+							log(LogStatus.INFO,
+									"The page is redirecting to deal tab after click on Entity type of deal", YesNo.No);
+						} else {
+							log(LogStatus.ERROR,
+									"The page is not redirecting to Deal tab after click on Entity type of deal",
+									YesNo.No);
+							result.add("The page is not redirecting to Deal tab after click on Entity type of deal");
+						}
+						driver.close();
+						driver.switchTo().window(id);
 					} else {
-						log(LogStatus.ERROR,
-								"The page is not redirecting to Deal tab after click on Entity type of deal", YesNo.No);
-						result.add("The page is not redirecting to Deal tab after click on Entity type of deal");
+						log(LogStatus.ERROR, "The new tab is not opening after clicking on entity type of Deal",
+								YesNo.No);
+						result.add("The new tab is not opening after clicking on entity type of Deal");
 					}
-					driver.close();
-					driver.switchTo().window(id);
-				} else {
-					log(LogStatus.ERROR, "The new tab is not opening after clicking on entity type of Deal", YesNo.No);
-					result.add("The new tab is not opening after clicking on entity type of Deal");
-				}
 
+				} else {
+					log(LogStatus.ERROR, "Not able to click on record of deal tab name", YesNo.No);
+					result.add("Not able to click on record of deal tab name");
+				}
 			} else {
-				log(LogStatus.ERROR, "Not able to click on record of deal tab name", YesNo.No);
-				result.add("Not able to click on record of deal tab name");
+				log(LogStatus.ERROR, "Not able to click on Deal tab name", YesNo.No);
+				result.add("Not able to click on Deal tab name");
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on Deal tab name", YesNo.No);
-			result.add("Not able to click on Deal tab name");
-		}
 		}
 		return result;
 	}
 
 	public ArrayList<String> verifyDescriptionShouldNotVisibleUnderDetailsOnInteractionSection(String[] subjectName,
 			String[] detailsMessage) {
-		
-		String id=switchOnWindow(driver);
+
+		String id = switchOnWindow(driver);
 		ArrayList<String> result = new ArrayList<String>();
 		if (subjectName.length == detailsMessage.length) {
 			for (int i = 0; i < subjectName.length; i++) {
@@ -20300,30 +20309,27 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 
 	}
-	
-	public ArrayList<String> verifyHighlightedCompanyNameOnCompanyTaggedSection(TaggedName tabName, String[] highlightedRecord)
-	{
-		ArrayList<String> result=new ArrayList<String>();
-		if (click(driver, getTaggedRecordName(tabName.toString(), 30), tabName.toString()+" tab", action.SCROLLANDBOOLEAN)) {
-			log(LogStatus.INFO, "Clicked on "+tabName.toString()+" tab name", YesNo.No);
-			
-			for(int i=0; i<highlightedRecord.length; i++)
-			{
-				if(getHighlightedCompanyName(highlightedRecord[i],15)!=null)
-				{
-					log(LogStatus.INFO, highlightedRecord[i]+" is highlighted in "+tabName.toString()+" list", YesNo.No);
+
+	public ArrayList<String> verifyHighlightedCompanyNameOnCompanyTaggedSection(TaggedName tabName,
+			String[] highlightedRecord) {
+		ArrayList<String> result = new ArrayList<String>();
+		if (click(driver, getTaggedRecordName(tabName.toString(), 30), tabName.toString() + " tab",
+				action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on " + tabName.toString() + " tab name", YesNo.No);
+
+			for (int i = 0; i < highlightedRecord.length; i++) {
+				if (getHighlightedCompanyName(highlightedRecord[i], 15) != null) {
+					log(LogStatus.INFO, highlightedRecord[i] + " is highlighted in " + tabName.toString() + " list",
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							highlightedRecord[i] + " is not highlighted in " + tabName.toString() + " list", YesNo.No);
+					result.add(highlightedRecord[i] + " is not highlighted in " + tabName.toString() + " list");
 				}
-				else
-				{
-					log(LogStatus.ERROR, highlightedRecord[i]+" is not highlighted in "+tabName.toString()+" list", YesNo.No);
-					result.add(highlightedRecord[i]+" is not highlighted in "+tabName.toString()+" list");
-				}
-			}			
-		}
-		else
-		{
-			log(LogStatus.ERROR, "Not able to click on "+tabName.toString()+" tab name", YesNo.No);
-			result.add("Not able to click on "+tabName.toString()+" tab name");
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + tabName.toString() + " tab name", YesNo.No);
+			result.add("Not able to click on " + tabName.toString() + " tab name");
 		}
 		return result;
 	}

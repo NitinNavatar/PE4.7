@@ -55,7 +55,8 @@ public class AcuitySmoke extends BaseLib {
 								YesNo.Yes);
 						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
 					}
-					if (setup.createPEUser(crmUser1FirstName, UserLastName, emailId, crmUserLience, crmUserProfile, null)) {
+					if (setup.createPEUser(crmUser1FirstName, UserLastName, emailId, crmUserLience, crmUserProfile,
+							null)) {
 						log(LogStatus.INFO,
 								"CRM User is created Successfully: " + crmUser1FirstName + " " + UserLastName,
 								YesNo.No);
@@ -300,8 +301,8 @@ public class AcuitySmoke extends BaseLib {
 											ThreadSleep(4000);
 											if (bp.clicktabOnPage("Acuity")) {
 												log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-												ArrayList<String> result = bp.verifyRecordOnInteractionCard(date,null,
-														AS_ATSubject1, AS_ATNotes1, true, false, null,null);
+												ArrayList<String> result = bp.verifyRecordOnInteractionCard(date, null,
+														AS_ATSubject1, AS_ATNotes1, true, false, null, null);
 												if (result.isEmpty()) {
 													log(LogStatus.PASS,
 															AS_ATSubject1 + " record has been verified on intraction",
@@ -485,8 +486,8 @@ public class AcuitySmoke extends BaseLib {
 						ThreadSleep(4000);
 						if (bp.clicktabOnPage("Acuity")) {
 							log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-							ArrayList<String> result = bp.verifyRecordOnInteractionCard(date, null,AS_ATSubject3,
-									AS_ATNotes3, true, false, null,null);
+							ArrayList<String> result = bp.verifyRecordOnInteractionCard(date, null, AS_ATSubject3,
+									AS_ATNotes3, true, false, null, null);
 							if (result.isEmpty()) {
 								log(LogStatus.PASS, subjectName + " record has been verified on intraction", YesNo.No);
 								sa.assertTrue(true, subjectName + " record has been verified on intraction");
@@ -762,8 +763,8 @@ public class AcuitySmoke extends BaseLib {
 
 							if (bp.clicktabOnPage("Acuity")) {
 								log(LogStatus.INFO, "clicked on Acuity Tab", YesNo.No);
-								ArrayList<String> result = bp.verifyRecordOnInteractionCard(date,null ,AS_ATSubject4,
-										AS_ATNotes6, false, false, null,null);
+								ArrayList<String> result = bp.verifyRecordOnInteractionCard(date, null, AS_ATSubject4,
+										AS_ATNotes6, false, false, null, null);
 								if (result.isEmpty()) {
 									log(LogStatus.PASS, AS_ATSubject4 + " record has been verified on intraction",
 											YesNo.No);
@@ -779,8 +780,8 @@ public class AcuitySmoke extends BaseLib {
 												sa.assertTrue(true, "Activity timeline has been created");
 												if (bp.clicktabOnPage("Acuity")) {
 													log(LogStatus.INFO, "clicked on Acuity Tab", YesNo.No);
-													ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(date1,null,
-															AS_ATSubject5, AS_ATNotes7, false, false, null,null);
+													ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(date1,
+															null, AS_ATSubject5, AS_ATNotes7, false, false, null, null);
 													if (result1.isEmpty()) {
 														log(LogStatus.PASS,
 																AS_ATSubject5
@@ -808,9 +809,10 @@ public class AcuitySmoke extends BaseLib {
 																		log(LogStatus.INFO, "clicked on Acuity Tab",
 																				YesNo.No);
 																		ArrayList<String> result2 = bp
-																				.verifyRecordOnInteractionCard(null,null,
-																						AS_ATSubject6, AS_ATNotes8,
-																						false, false, null,null);
+																				.verifyRecordOnInteractionCard(null,
+																						null, AS_ATSubject6,
+																						AS_ATNotes8, false, false, null,
+																						null);
 																		if (result2.isEmpty()) {
 																			log(LogStatus.PASS, AS_ATSubject6
 																					+ " record has been verified on intraction",
@@ -1562,8 +1564,8 @@ public class AcuitySmoke extends BaseLib {
 											ThreadSleep(4000);
 											if (bp.clicktabOnPage("Acuity")) {
 												log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-												ArrayList<String> result = bp.verifyRecordOnInteractionCard(null,null,
-														subjectName, notes, true, false, null,null);
+												ArrayList<String> result = bp.verifyRecordOnInteractionCard(null, null,
+														subjectName, notes, true, false, null, null);
 												if (result.isEmpty()) {
 													log(LogStatus.PASS,
 															subjectName + " record has been verified on intraction",
@@ -1599,9 +1601,9 @@ public class AcuitySmoke extends BaseLib {
 																		log(LogStatus.INFO, "clicked on Acuity tab",
 																				YesNo.No);
 																		ArrayList<String> result1 = bp
-																				.verifyRecordOnInteractionCard(null,null,
-																						subjectName1, notes1, true,
-																						false, null,null);
+																				.verifyRecordOnInteractionCard(null,
+																						null, subjectName1, notes1,
+																						true, false, null, null);
 																		if (result1.isEmpty()) {
 																			log(LogStatus.PASS, subjectName
 																					+ " record has been verified on intraction",
@@ -1816,8 +1818,8 @@ public class AcuitySmoke extends BaseLib {
 							"Meetings and call Count", action.BOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Meeting and call Count of Record: " + contactName, YesNo.No);
 
-						ArrayList<String> result2 = bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(null,null, call1,
-								null, null);
+						ArrayList<String> result2 = bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(null, null,
+								call1, null, null);
 						if (result2.isEmpty()) {
 							log(LogStatus.INFO, "Records on Meetings and call slot have been matched for :" + call1,
 									YesNo.No);
@@ -1837,8 +1839,8 @@ public class AcuitySmoke extends BaseLib {
 							"Meetings and call Count", action.BOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Meeting and call Count of Record: " + contactName, YesNo.No);
 
-						ArrayList<String> result3 = bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(null, null, call2,
-								null, null);
+						ArrayList<String> result3 = bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(null, null,
+								call2, null, null);
 						if (result3.isEmpty()) {
 							log(LogStatus.INFO, "Records on Meetings and call slot have been matched for :" + call2,
 									YesNo.No);
@@ -2343,7 +2345,8 @@ public class AcuitySmoke extends BaseLib {
 								YesNo.Yes);
 						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
 					}
-					if (setup.createPEUser(crmUser2FirstName, UserLastName, emailId, crmUserLience, crmUserProfile, null)) {
+					if (setup.createPEUser(crmUser2FirstName, UserLastName, emailId, crmUserLience, crmUserProfile,
+							null)) {
 						log(LogStatus.INFO,
 								"CRM User is created Successfully: " + crmUser2FirstName + " " + UserLastName,
 								YesNo.No);
@@ -3012,8 +3015,8 @@ public class AcuitySmoke extends BaseLib {
 									"Records on Connections of Contact slot are not matched, Reason" + result2);
 						}
 
-						ArrayList<String> result3 = BP.verifyRecordOnDealsSectionInAcuity(contactName, dealName,
-								company, stage, dateReceived);
+						ArrayList<String> result3 = BP.verifyRecordOnDealsSectionInAcuity(contactName, dealName, stage,
+								stage, dateReceived);
 						if (result3.isEmpty()) {
 							log(LogStatus.INFO, "Records on Deals slot have been matched", YesNo.No);
 
@@ -3907,8 +3910,8 @@ public class AcuitySmoke extends BaseLib {
 				if (BP.clicktabOnPage(subTabName)) {
 					log(LogStatus.PASS, "Clicked on Tab: " + subTabName, YesNo.No);
 
-					ArrayList<String> result1 = BP.verifyRecordOnInteractionCard(null, null,"Nav Call", null, false, false,
-							null,null);
+					ArrayList<String> result1 = BP.verifyRecordOnInteractionCard(null, null, "Nav Call", null, false,
+							false, null, null);
 					if (result1.isEmpty()) {
 						log(LogStatus.PASS, AS_ATSubject13 + " record has been verified on intraction", YesNo.No);
 
@@ -3918,8 +3921,8 @@ public class AcuitySmoke extends BaseLib {
 						sa.assertTrue(false,
 								AS_ATSubject13 + " record is not verified on intraction, Reason: " + result1);
 					}
-					ArrayList<String> result2 = BP.verifyRecordOnInteractionCard(null, null,"Nav Meeting", null, false,
-							false, null,null);
+					ArrayList<String> result2 = BP.verifyRecordOnInteractionCard(null, null, "Nav Meeting", null, false,
+							false, null, null);
 					if (result2.isEmpty()) {
 						log(LogStatus.PASS, "Nav Meeting" + " record has been verified on intraction", YesNo.No);
 
@@ -3929,8 +3932,8 @@ public class AcuitySmoke extends BaseLib {
 						sa.assertTrue(false,
 								"Nav Meeting" + " record is not verified on intraction, Reason: " + result1);
 					}
-					ArrayList<String> result3 = BP.verifyRecordOnInteractionCard(null, null,"Nav Task", null, false, false,
-							null,null);
+					ArrayList<String> result3 = BP.verifyRecordOnInteractionCard(null, null, "Nav Task", null, false,
+							false, null, null);
 					if (result3.isEmpty()) {
 						log(LogStatus.PASS, AS_ATSubject14 + " record has been verified on intraction", YesNo.No);
 
@@ -4785,7 +4788,8 @@ public class AcuitySmoke extends BaseLib {
 								YesNo.Yes);
 						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
 					}
-					if (setup.createPEUser(crmUser4FirstName, UserLastName, emailId, crmUserLience, crmUser4Profile, null)) {
+					if (setup.createPEUser(crmUser4FirstName, UserLastName, emailId, crmUserLience, crmUser4Profile,
+							null)) {
 						log(LogStatus.INFO,
 								"CRM User is created Successfully: " + crmUser4FirstName + " " + UserLastName,
 								YesNo.No);

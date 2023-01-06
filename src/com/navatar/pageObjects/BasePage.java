@@ -7083,14 +7083,14 @@ public abstract class BasePage extends BaseLib {
 
 	}
 
-	public WebElement dealAcuityCompanyName(String dealName, String company, int timeOut) {
+	public WebElement dealAcuityhighestStageReachedName(String dealName, String highestStageReached, int timeOut) {
 
 		String xpath = "//a[text()='" + dealName
-				+ "']/ancestor::th[@data-label='Deal Name']/following-sibling::td[@data-label='Company']//span";
+				+ "']/ancestor::th[@data-label='Deal Name']/following-sibling::td[@data-label='Highest Stage Reached']//span";
 		try {
-			return FindElement(driver, xpath, "Header: " + company, action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, "Header: " + highestStageReached, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, xpath, "Header: " + company, action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, "Header: " + highestStageReached, action.SCROLLANDBOOLEAN, timeOut);
 		}
 
 	}
