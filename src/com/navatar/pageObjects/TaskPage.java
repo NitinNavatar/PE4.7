@@ -196,11 +196,11 @@ public class TaskPage extends BasePageBusinessLayer {
 	}
 	
 	@FindBy(xpath = "//li//a//div[@title='Edit']")
-	private WebElement editButton;
+	private WebElement editButtonOnEvent;
 
-	public WebElement getEditButton(int timeOut) {
+	public WebElement getEditButtonOnEvent(int timeOut) {
 
-		return isDisplayed(driver, editButton, "Visibility", timeOut, "Edit Button");
+		return isDisplayed(driver, editButtonOnEvent, "Visibility", timeOut, "Edit Button");
 	}
 	
 
