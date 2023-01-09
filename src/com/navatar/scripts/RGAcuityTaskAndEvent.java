@@ -2414,7 +2414,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
 					}	
 					
-					if(bp.verifySubjectLinkRedirectionOnIntraction(driver, RGATE_Subject1))
+					if(bp.verifySubjectLinkPopUpOnIntraction(driver, RGATE_Subject1))
 					{
 						log(LogStatus.INFO,RGATE_Subject1+ " event is opeing in the new tab", YesNo.No);
 					}
@@ -2514,7 +2514,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					}	
 					
 
-					if(bp.verifySubjectLinkRedirectionOnIntraction(driver, RGATE_Subject1))
+					if(bp.verifySubjectLinkPopUpOnIntraction(driver, RGATE_Subject1))
 					{
 						log(LogStatus.INFO,RGATE_Subject1+ " event is opeing in the new tab", YesNo.No);
 					}

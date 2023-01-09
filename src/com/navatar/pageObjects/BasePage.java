@@ -8509,7 +8509,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, ComponentErrorMsg, "Visibility", timeOut, "Component Error Msg");
 	}
 
-	@FindBy(xpath = "//span[text()='This site can’t be reached']")
+	@FindBy(xpath = "//span[text()='This site canï¿½t be reached']")
 	private WebElement pageloadErrorMsg;
 
 	public WebElement getpageloadErrorMsg(int timeOut) {
@@ -8688,6 +8688,15 @@ public abstract class BasePage extends BaseLib {
 		} catch (StaleElementReferenceException e) {
 			return FindElement(driver, xpath, "subject name on Interaction page", action.SCROLLANDBOOLEAN, timeOut);
 		}
+	}
+	
+	public WebElement getNotePopUpSectionDetail(String sectionName, int timeOut) {
+		String xPath = "//span[@class=\"slds-accordion__summary-content\" and text()='" + sectionName
+				+ "']/ancestor::h3/../following-sibling::div";
+
+		return isDisplayed(driver,
+				FindElement(driver, xPath, sectionName + " section", action.SCROLLANDBOOLEAN, timeOut), "Visibility",
+				timeOut, sectionName + " section");
 	}
 
 }
