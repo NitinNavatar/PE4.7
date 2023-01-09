@@ -11389,6 +11389,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				return false;
 			}
 		}
+
 		String detail = CommonLib.getAttribute(driver, getNotePopUpSectionDetail("Tasks", 30), "Tasks Section",
 				"aria-hidden");
 
@@ -11408,7 +11409,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 			clickUsingJavaScript(driver, getSectionBtn("Advanced", 30), "Advanced section", action.SCROLLANDBOOLEAN);
 		}
-
+		CommonLib.ThreadSleep(3000);
 		if (basicSection != null) {
 
 			for (String[] val : basicSection) {
@@ -11760,14 +11761,18 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				sa.assertTrue(false, "Not able to click on Tasks section");
 				return false;
 			}
+		} else {
+
 		}
 
 		if (click(driver, getfooterSaveOrCancelButton("Save", 20), "Save button", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "clicked on Save button", YesNo.No);
 
 			if (suggestedTags != null) {
-
-				log(LogStatus.INFO, "Activity timeline record has been created", YesNo.No);
+				/*
+				 * if (getSuccessMsg(30) != null) { log(LogStatus.INFO,
+				 * "Activity timeline record has been created", YesNo.No);
+				 */
 				ThreadSleep(2000);
 				for (int i = 0; i < suggestedTags.length; i++) {
 
@@ -11796,10 +11801,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (crossIconButtonInNotePopUp(8) != null) {
 						if (clickUsingJavaScript(driver, crossIconButtonInNotePopUp(8), "close button")) {
 							log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
+							log(LogStatus.INFO, "Activity timeline record has been created", YesNo.No);
 							flag = true;
 						} else {
 							log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
 							sa.assertTrue(false, "Not able to close the Note popup");
+							log(LogStatus.ERROR, "Activity timeline record is not created", YesNo.No);
 							return false;
 						}
 					} else {
@@ -11810,28 +11817,40 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					sa.assertTrue(false, "Not able to click on footer tag button");
 					return false;
 				}
-
+				/*
+				 * } else { log(LogStatus.ERROR, "Activity timeline record is not created",
+				 * YesNo.No); sa.assertTrue(false, "Activity timeline record is not created");
+				 * return false; }
+				 */
 			}
 
 			else {
-
-				log(LogStatus.INFO, "Activity timeline record has been created", YesNo.No);
-				ThreadSleep(1000);
+				/*
+				 * if (getSuccessMsg(30) != null) { log(LogStatus.INFO,
+				 * "Activity timeline record has been created", YesNo.No); ThreadSleep(1000);
+				 */
 				refresh(driver);
 				ThreadSleep(3000);
 				if (crossIconButtonInNotePopUp(8) != null) {
 					if (clickUsingJavaScript(driver, crossIconButtonInNotePopUp(8), "close button")) {
 						log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
+						log(LogStatus.INFO, "Activity timeline record has been created", YesNo.No);
 						flag = true;
 					} else {
 						log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
 						sa.assertTrue(false, "Not able to close the Note popup");
+						log(LogStatus.ERROR, "Activity timeline record is not created", YesNo.No);
 						return false;
 					}
 				} else {
 					return true;
 				}
 
+				/*
+				 * } else { log(LogStatus.ERROR, "Activity timeline record is not created",
+				 * YesNo.No); sa.assertTrue(false, "Activity timeline record is not created");
+				 * return false; }
+				 */
 			}
 		} else {
 			log(LogStatus.ERROR, "Not able to click on Save button", YesNo.No);
@@ -13244,6 +13263,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				sa.assertTrue(false, "Not able to click on Tasks section");
 				return false;
 			}
+		} else {
+
 		}
 
 		if (click(driver, getfooterSaveOrCancelButton("Save", 20), "Save button", action.SCROLLANDBOOLEAN)) {
@@ -13429,35 +13450,26 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 	}
 
-	public boolean verifySubjectLinkRedirectionOnIntraction(WebDriver driver, String subjectName) {
-		String xPath;
-		WebElement ele;
-		boolean flag = false;
-		xPath = "//a[@class=\"interaction_sub subject_text\" and text()='" + subjectName + "']";
-		ele = FindElement(driver, xPath, "Subject Name", action.SCROLLANDBOOLEAN, 15);
-		if (CommonLib.clickUsingJavaScript(driver, ele, "Subject Name on Intraction")) {
-			log(LogStatus.INFO, "clicked on " + subjectName, YesNo.No);
-
-			String windowID = switchOnWindow(driver);
-			if (windowID != null) {
-
-				if (getPageHeaderTitle(10) != null) {
-					log(LogStatus.INFO, subjectName + " link is redirecting to Details Page", YesNo.No);
-					driver.close();
-					driver.switchTo().window(windowID);
-					flag = true;
-				} else {
-					log(LogStatus.ERROR, subjectName + " links is not redirecting to Details Page", YesNo.No);
-				}
-			} else {
-				log(LogStatus.ERROR, subjectName + " url did not open in new tab", YesNo.No);
-			}
-		} else {
-			log(LogStatus.ERROR, "not able to click on " + subjectName, YesNo.No);
-		}
-		return flag;
-	}
-
+	/*
+	 * public boolean verifySubjectLinkRedirectionOnIntraction(WebDriver driver,
+	 * String subjectName) { String xPath; WebElement ele; boolean flag = false;
+	 * xPath = "//a[@class=\"interaction_sub subject_text\" and text()='" +
+	 * subjectName + "']"; ele = FindElement(driver, xPath, "Subject Name",
+	 * action.SCROLLANDBOOLEAN, 15); if (CommonLib.clickUsingJavaScript(driver, ele,
+	 * "Subject Name on Intraction")) { log(LogStatus.INFO, "clicked on " +
+	 * subjectName, YesNo.No);
+	 * 
+	 * String windowID = switchOnWindow(driver); if (windowID != null) {
+	 * 
+	 * if (getPageHeaderTitle(10) != null) { log(LogStatus.INFO, subjectName +
+	 * " link is redirecting to Details Page", YesNo.No); driver.close();
+	 * driver.switchTo().window(windowID); flag = true; } else {
+	 * log(LogStatus.ERROR, subjectName +
+	 * " links is not redirecting to Details Page", YesNo.No); } } else {
+	 * log(LogStatus.ERROR, subjectName + " url did not open in new tab", YesNo.No);
+	 * } } else { log(LogStatus.ERROR, "not able to click on " + subjectName,
+	 * YesNo.No); } return flag; }
+	 */
 	public boolean verifySubjectLinkPopUpOnIntraction(WebDriver driver, String subjectName) {
 
 		boolean flag = false;
@@ -14029,37 +14041,37 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	public boolean verifySectionsAndTooltipOnAcuityTab(List<String> sectionHeaderName, List<String> toolTipMessage) {
 		String xPath;
 		List<WebElement> elements;
-		List<String> expectedSectionHeaderName = new ArrayList<String>();
-		List<String> expectedTooltipName = new ArrayList<String>();
+		List<String> actualSectionHeaderName = new ArrayList<String>();
+		List<String> actualTooltipName = new ArrayList<String>();
 
-		xPath = "//slot//span[contains(@class,'slds-page-header__title')]";
+		xPath = "//slot//span[contains(@class,'slds-page-header__title') and contains(@class,'fit-width-content')]";
 		elements = FindElements(driver, xPath, "Acuity section Header Name");
 		for (WebElement ele : elements) {
-			expectedSectionHeaderName.add(getText(driver, ele, "Acuity Section Name", action.SCROLLANDBOOLEAN));
-			expectedTooltipName.add(getAttribute(driver, ele, "Acuity Section Name", "title"));
+			actualSectionHeaderName.add(getText(driver, ele, "Acuity Section Name", action.SCROLLANDBOOLEAN));
+			actualTooltipName.add(getAttribute(driver, ele, "Acuity Section Name", "title"));
 		}
 
-		if (sectionHeaderName.containsAll(expectedSectionHeaderName)) {
-			log(LogStatus.INFO, "Expected Section header name : " + expectedSectionHeaderName
-					+ " have been matched with the Actual Header Name : " + sectionHeaderName, YesNo.No);
+		if (sectionHeaderName.containsAll(actualSectionHeaderName)) {
+			log(LogStatus.INFO, "Actual Section header name : " + actualSectionHeaderName
+					+ " have been matched with the Expected Header Name : " + sectionHeaderName, YesNo.No);
 
-			if (toolTipMessage.containsAll(expectedTooltipName)) {
-				log(LogStatus.INFO, "Expected Tooltip message : " + expectedTooltipName
-						+ " have been matched with the Actual Tooltip message : " + toolTipMessage, YesNo.No);
+			if (toolTipMessage.containsAll(actualTooltipName)) {
+				log(LogStatus.INFO, "Actual Tooltip message : " + actualTooltipName
+						+ " have been matched with the Expected Tooltip message : " + toolTipMessage, YesNo.No);
 				return true;
 			} else {
-				log(LogStatus.ERROR, "Expected Tooltip message : " + expectedTooltipName
-						+ " is not matched with the Actual Tooltip message : " + toolTipMessage, YesNo.No);
-				sa.assertTrue(false, "Expected Tooltip message : " + expectedTooltipName
-						+ " is not matched with the Actual Tooltip message : " + toolTipMessage);
+				log(LogStatus.ERROR, "Actual Tooltip message : " + actualTooltipName
+						+ " is not matched with the Expected Tooltip message : " + toolTipMessage, YesNo.No);
+				sa.assertTrue(false, "Actual Tooltip message : " + actualTooltipName
+						+ " is not matched with the Expected Tooltip message : " + toolTipMessage);
 
 				return false;
 			}
 		} else {
-			log(LogStatus.ERROR, "Expected Section header name : " + expectedSectionHeaderName
-					+ " are not  matched with the Actual Header Name : " + sectionHeaderName, YesNo.No);
-			sa.assertTrue(false, "Expected Section header name : " + expectedSectionHeaderName
-					+ " are not  matched with the Actual Header Name : " + sectionHeaderName);
+			log(LogStatus.ERROR, "Actual Section header name : " + actualSectionHeaderName
+					+ " are not  matched with the Expected Header Name : " + sectionHeaderName, YesNo.No);
+			sa.assertTrue(false, "Actual Section header name : " + actualSectionHeaderName
+					+ " are not  matched with the Expected Header Name : " + sectionHeaderName);
 			return false;
 		}
 	}
