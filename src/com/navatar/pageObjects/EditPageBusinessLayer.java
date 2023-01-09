@@ -857,7 +857,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 					}
 
 					List<WebElement> columns = FindElements(driver,
-							"//a[text()='" + Title + "']/ancestor::article//thead//th[contains(@class,'navpeI')]//span",
+							"//a[text()='" + Title + "']/ancestor::article//thead//th[contains(@class,'navpeI')]//span[contains(@class,'slds-truncate')]",
 							"Records");
 					List<String> columnsText = new ArrayList<String>();
 					for (WebElement column : columns) {
@@ -937,7 +937,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			}
 			if (flag) {
 				List<WebElement> columns = FindElements(driver,
-						"//a[text()='" + Title + "']/ancestor::article//thead//th[contains(@class,'navpeI')]//span",
+						"//a[text()='" + Title + "']/ancestor::article//thead//th[contains(@class,'navpeI')]//span[contains(@class,'slds-truncate')]",
 						"Records");
 				List<String> columnsText = new ArrayList<String>();
 				for (WebElement column : columns) {
