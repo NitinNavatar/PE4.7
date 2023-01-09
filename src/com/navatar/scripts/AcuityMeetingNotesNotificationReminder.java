@@ -594,7 +594,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Priority", priority } };
 
 		String[][] task1TaskSection = { { "Subject", taskSectionSubject },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", taskSectionStatus },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", taskSectionStatus },
 				{ "Due Date Only", taskSectionDueDateOnly } };
 
 		List<String> expectedFooterList = new ArrayList<String>();
@@ -1422,7 +1422,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				ThreadSleep(4000);
 				if (BP.clicktabOnPage("Acuity")) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, IconType.Call,
+					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, IconType.Task,
 							task1SubjectName, task1Notes, true, false, relatedToVerify, null);
 					if (result.isEmpty()) {
 						log(LogStatus.PASS,
@@ -1497,7 +1497,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 														ArrayList<String> updatedresult = BP
 																.verifyRecordOnInteractionCard(getAdvanceDueDate,
-																		IconType.Call, task1SubjectName,
+																		IconType.Task, task1SubjectName,
 																		updatedNotesOfTask, true, false,
 																		updatedRelatedToVerify, null);
 														if (updatedresult.isEmpty()) {
@@ -1674,7 +1674,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				ThreadSleep(4000);
 				if (BP.clicktabOnPage("Acuity")) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, IconType.Call,
+					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, IconType.Task,
 							task1SubjectName, task1Notes, true, false, relatedToVerify, null);
 					if (result.isEmpty()) {
 						log(LogStatus.PASS,
@@ -1749,7 +1749,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 														ArrayList<String> updatedresult = BP
 																.verifyRecordOnInteractionCard(getAdvanceDueDate,
-																		IconType.Call, task1SubjectName,
+																		IconType.Task, task1SubjectName,
 																		updatedNotesOfTask, true, false,
 																		updatedRelatedToVerify, null);
 														if (updatedresult.isEmpty()) {
@@ -2092,12 +2092,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Priority", priority } };
 
 		String[][] tasksSectionVerificationData = { { "Subject", task1SubjectName },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", "Not Started" },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", "Not Started" },
 				{ "Due Date Only", getAdvanceDueDateInTaskSection } };
 
 		String[][] followUpTask1AdvancedSectionVerificationInNotesPopup = {
 				{ "Due Date Only", getAdvanceDueDateInTaskSection },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", "Not Started" },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", "Not Started" },
 				{ "Priority", priority } };
 
 		String[][] task1UpdateBasicSectionVerification = { { "Subject", task1UpdatedSubjectName },
@@ -2151,7 +2151,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				if (BP.clicktabOnPage("Acuity")) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-					ArrayList<String> result2 = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, IconType.Call,
+					ArrayList<String> result2 = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, IconType.Task,
 							task1UpdatedSubjectName, task1Notes, true, false, relatedToVerify, null);
 					if (result2.isEmpty()) {
 
@@ -2390,15 +2390,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedTo } };
 
 		String[][] followUptask1AdvanceSectionVerification = { { "Due Date Only", task1UpdateTaskSection1DueDateOnly },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", "Not Started" },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", "Not Started" },
 				{ "Priority", priority } };
 
 		String[][] followUptask2AdvanceSectionVerification = { { "Due Date Only", task1UpdateTaskSection2DueDateOnly },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", "Not Started" },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", "Not Started" },
 				{ "Priority", priority } };
 
 		String[][] followUptask3AdvanceSectionVerification = { { "Due Date Only", task1UpdateTaskSection3DueDateOnly },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", "Not Started" },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", "Not Started" },
 				{ "Priority", priority } };
 
 		String[] updatedSuggestedTags = AMNNR_SuggestedTag21.split("<break>", -1);
@@ -2779,7 +2779,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName3;
@@ -3044,7 +3044,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName3;
@@ -3271,7 +3271,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName3;
@@ -3498,7 +3498,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName3;
@@ -3520,7 +3520,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -3734,7 +3734,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName2;
@@ -3756,7 +3756,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -3971,7 +3971,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_Contact4;
@@ -3993,7 +3993,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -4208,7 +4208,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName3;
@@ -4230,7 +4230,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -4449,7 +4449,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName4;
@@ -4473,7 +4473,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", updatedStatus },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", updatedStatus },
 				{ "Priority", priority } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -4687,7 +4687,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName4;
@@ -4711,7 +4711,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getUpdatedAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -4903,7 +4903,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName4;
@@ -4914,7 +4914,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedNotesOfTask = task1Notes;
 
 		String[][] task1UpdateBasicSection = null;
-		String[][] task1UpdateAdvancedSection = { { "Assigned To", crmUser2FirstName + " " + crmUser2LastName } };
+		String[][] task1UpdateAdvancedSection = { { "User", crmUser2FirstName + " " + crmUser2LastName } };
 
 		String[] updatedSuggestedTags = "".split("<break>", -1);
 
@@ -4927,7 +4927,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser2FirstName + " " + crmUser2LastName }, { "Status", status },
+				{ "User", crmUser2FirstName + " " + crmUser2LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -5119,7 +5119,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser2FirstName + " " + crmUser2LastName }, { "Status", status },
+				{ "User", crmUser2FirstName + " " + crmUser2LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName4;
@@ -5145,7 +5145,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser2FirstName + " " + crmUser2LastName }, { "Status", status },
+				{ "User", crmUser2FirstName + " " + crmUser2LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -5362,7 +5362,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName5;
@@ -5386,7 +5386,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -5602,7 +5602,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName3;
@@ -5626,7 +5626,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -5694,10 +5694,16 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 							refresh(driver);
 
+							if (BP.crossIconButtonInNotePopUp(5) != null) {
+								click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+										action.SCROLLANDBOOLEAN);
+							}
+
 							if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 									"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
-								ThreadSleep(10000);
+
+								ThreadSleep(1000);
 
 								if (BP.updateActivityTimelineRecordForMultipleFollowUpTasks(projectName,
 										task1UpdateBasicSection, null, null, updatedSuggestedTags, null, true, false)) {
@@ -5705,7 +5711,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 									CommonLib.refresh(driver);
 
-									ThreadSleep(10000);
+									if (BP.crossIconButtonInNotePopUp(5) != null) {
+										click(driver, BP.crossIconButtonInNotePopUp(20),
+												"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+									}
 
 									if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 											"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
@@ -5773,10 +5782,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 							refresh(driver);
 
+							if (BP.crossIconButtonInNotePopUp(5) != null) {
+								click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+										action.SCROLLANDBOOLEAN);
+							}
 							if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 									"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
-								ThreadSleep(10000);
+								ThreadSleep(1000);
 
 								if (BP.updateActivityTimelineRecordForMultipleFollowUpTasks(projectName,
 										task1UpdateBasicSection, null, null, updatedSuggestedTags, null, false, true)) {
@@ -5784,8 +5797,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 									CommonLib.refresh(driver);
 
-									ThreadSleep(10000);
+									ThreadSleep(1000);
 
+									if (BP.crossIconButtonInNotePopUp(5) != null) {
+										click(driver, BP.crossIconButtonInNotePopUp(20),
+												"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+									}
 									if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 											"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -6038,7 +6055,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String[][] listViewSheetData = { { AMNNR_ListViewMember1, AMNNR_ListViewTabName1, task1SubjectName,
@@ -6343,7 +6360,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1UpdatedBasicSectionVerificationExisting = { { "Subject updated", task1SubjectNameVerify },
 				{ "Notes", task1NotesVerify }, { "Related_To", verificationUpdatedRelatedTo } };
 		String[][] task1AdvancedSectionVerificationExisting = { { "Due Date Only updated", getAdvanceDueDateExisting },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status updated", statusVerify },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status updated", statusVerify },
 				{ "Priority updated", priorityVerify } };
 
 		String recordNameExisting = AMNNR_FirmLegalName6;
@@ -6373,9 +6390,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only updated", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status updated", status } };
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status updated", status } };
 
-		String[] labelAndValueSeprateByBreak = { "Assigned To" + "<break>" + crmUser1FirstName + " " + crmUser1LastName,
+		String[] labelAndValueSeprateByBreak = { "User" + "<break>" + crmUser1FirstName + " " + crmUser1LastName,
 				"Status updated" + "<break>" + status, "Subject updated" + "<break>" + task1SubjectName,
 				"Due Date Only updated" + "<break>" + getAdvanceDueDate,
 				"Related Associations" + "<break>" + "Sumo Logic, Vertica, Demo Deal" };
@@ -6428,8 +6445,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 									+ " record is not verified on intraction, Reason: " + result + "------");
 						}
 						CommonLib.refresh(driver);
-						CommonLib.ThreadSleep(8000);
+						CommonLib.ThreadSleep(800);
 
+						if (BP.crossIconButtonInNotePopUp(5) != null) {
+							click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+									action.SCROLLANDBOOLEAN);
+						}
 						if (clickUsingJavaScript(driver, BP.editButtonOnInteractionCard(task1SubjectNameVerify, 20),
 								"Edit Note Button of: " + task1SubjectNameVerify, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit Note button for: " + task1SubjectNameVerify, YesNo.No);
@@ -6518,7 +6539,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								}
 
 								CommonLib.refresh(driver);
-								CommonLib.ThreadSleep(8000);
+								CommonLib.ThreadSleep(800);
+								if (BP.crossIconButtonInNotePopUp(5) != null) {
+									click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+											action.SCROLLANDBOOLEAN);
+								}
 								if (clickUsingJavaScript(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -6692,7 +6717,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status } };
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status } };
 
 		String relatedToNotContains = AMNNR_RelatedTo53;
 		String[][] relatedAssociationNotContains = { { "Related_To", relatedToNotContains } };
@@ -6990,7 +7015,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes } };
 
 		String[][] task1AdvancedSection = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String[][] task1TaskSection = { { "Subject", taskSectionSubject }, { "Status", taskSectionStatus },
@@ -7244,6 +7269,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										String url2 = getURL(driver, 10);
 
+										if (BP.crossIconButtonInNotePopUp(5) != null) {
+											click(driver, BP.crossIconButtonInNotePopUp(20),
+													"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+										}
 										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -7446,11 +7475,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 						String url = getURL(driver, 10);
 
+						if (BP.crossIconButtonInNotePopUp(5) != null) {
+							click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+									action.SCROLLANDBOOLEAN);
+						}
 						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
-							ThreadSleep(10000);
+							ThreadSleep(1000);
 							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
 									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1SubjectName, task1Notes,
 											relatedToArray);
@@ -7461,6 +7494,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								refresh(driver);
 								ThreadSleep(2000);
+								if (BP.crossIconButtonInNotePopUp(5) != null) {
+									click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+											action.SCROLLANDBOOLEAN);
+								}
 								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -7480,6 +7517,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 											String url2 = getURL(driver, 10);
 
+											if (BP.crossIconButtonInNotePopUp(5) != null) {
+												click(driver, BP.crossIconButtonInNotePopUp(20),
+														"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+											}
 											if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 													"Edit Note Button of: " + task1SubjectName,
 													action.SCROLLANDBOOLEAN)) {
@@ -7660,11 +7701,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 						String url = getURL(driver, 10);
 
+						if (BP.crossIconButtonInNotePopUp(5) != null) {
+							click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+									action.SCROLLANDBOOLEAN);
+						}
 						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
-							ThreadSleep(10000);
+							ThreadSleep(1000);
 							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
 									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1SubjectName, task1Notes,
 											relatedToArray);
@@ -7677,6 +7722,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 												+ NotesPopUpPrefilledNegativeResult);
 								refresh(driver);
 								ThreadSleep(2000);
+								if (BP.crossIconButtonInNotePopUp(5) != null) {
+									click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+											action.SCROLLANDBOOLEAN);
+								}
 								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -8343,11 +8392,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 						String url = getURL(driver, 10);
 
+						if (BP.crossIconButtonInNotePopUp(5) != null) {
+							click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+									action.SCROLLANDBOOLEAN);
+						}
 						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
-							ThreadSleep(10000);
+							ThreadSleep(1000);
 							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
 									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSection,
 											task1AdvancedSection, null);
@@ -8358,6 +8411,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								refresh(driver);
 								ThreadSleep(2000);
+								if (BP.crossIconButtonInNotePopUp(5) != null) {
+									click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+											action.SCROLLANDBOOLEAN);
+								}
 								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -8389,11 +8446,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										String url2 = getURL(driver, 10);
 
+										if (BP.crossIconButtonInNotePopUp(5) != null) {
+											click(driver, BP.crossIconButtonInNotePopUp(20),
+													"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+										}
 										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
-											ThreadSleep(10000);
+											ThreadSleep(1000);
 											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
 													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
 															task1UpdateBasicSectionVerification, task1AdvancedSection,
@@ -8494,12 +8555,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Priority", priority } };
 
 		String[][] tasksSectionVerificationData = { { "Subject", task1SubjectName },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", "Not Started" },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", "Not Started" },
 				{ "Due Date Only", getAdvanceDueDateInTaskSection } };
 
 		String[][] followUpTask1AdvancedSectionVerificationInNotesPopup = {
 				{ "Due Date Only", getAdvanceDueDateInTaskSection },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", "Not Started" },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", "Not Started" },
 				{ "Priority", priority } };
 
 		String[][] task1UpdateBasicSectionVerification = { { "Subject", task1UpdatedSubjectName },
@@ -8654,11 +8715,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								String url2 = getURL(driver, 10);
 
+								if (BP.crossIconButtonInNotePopUp(5) != null) {
+									click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+											action.SCROLLANDBOOLEAN);
+								}
 								if (click(driver, BP.editButtonOnInteractionCard(task1UpdatedSubjectName, 20),
 										"Edit Note Button of: " + task1UpdatedSubjectName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
-									ThreadSleep(10000);
+									ThreadSleep(1000);
 									ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
 											.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
 													task1UpdateBasicSectionVerification, task1AdvancedSection, null);
@@ -8791,15 +8856,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedTo } };
 
 		String[][] followUptask1AdvanceSectionVerification = { { "Due Date Only", task1UpdateTaskSection1DueDateOnly },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", "Not Started" },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", "Not Started" },
 				{ "Priority", priority } };
 
 		String[][] followUptask2AdvanceSectionVerification = { { "Due Date Only", task1UpdateTaskSection2DueDateOnly },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", "Not Started" },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", "Not Started" },
 				{ "Priority", priority } };
 
 		String[][] followUptask3AdvanceSectionVerification = { { "Due Date Only", task1UpdateTaskSection3DueDateOnly },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", "Not Started" },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", "Not Started" },
 				{ "Priority", priority } };
 
 		String[] updatedSuggestedTags = AMNNR_SuggestedTag21.split("<break>", -1);
@@ -8862,11 +8927,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 						String url = getURL(driver, 10);
 
+						if (BP.crossIconButtonInNotePopUp(5) != null) {
+							click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+									action.SCROLLANDBOOLEAN);
+						}
 						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
-							ThreadSleep(10000);
+							ThreadSleep(1000);
 							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
 									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSection,
 											task1AdvancedSection, null);
@@ -8877,6 +8946,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								refresh(driver);
 								ThreadSleep(2000);
+								if (BP.crossIconButtonInNotePopUp(5) != null) {
+									click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+											action.SCROLLANDBOOLEAN);
+								}
 								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -8975,11 +9048,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										String url2 = getURL(driver, 10);
 
+										if (BP.crossIconButtonInNotePopUp(5) != null) {
+											click(driver, BP.crossIconButtonInNotePopUp(20),
+													"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+										}
 										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
-											ThreadSleep(10000);
+											ThreadSleep(1000);
 											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated1 = BP
 													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
 															task1UpdateBasicSectionVerification, task1AdvancedSection,
@@ -9007,13 +9084,18 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 										}
 
 										CommonLib.refresh(driver);
+
+										if (BP.crossIconButtonInNotePopUp(5) != null) {
+											click(driver, BP.crossIconButtonInNotePopUp(20),
+													"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+										}
 										if (click(driver,
 												BP.editButtonOnInteractionCard(task1UpdateTaskSection1Subject, 20),
 												"Edit Note Button of: " + task1UpdateTaskSection1Subject,
 												action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
-											ThreadSleep(10000);
+											ThreadSleep(1000);
 											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated2 = BP
 													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
 															followUptask1BasicSectionVerification,
@@ -9040,13 +9122,17 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 										}
 
 										CommonLib.refresh(driver);
+										if (BP.crossIconButtonInNotePopUp(5) != null) {
+											click(driver, BP.crossIconButtonInNotePopUp(20),
+													"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+										}
 										if (click(driver,
 												BP.editButtonOnInteractionCard(task1UpdateTaskSection2Subject, 20),
 												"Edit Note Button of: " + task1UpdateTaskSection2Subject,
 												action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
-											ThreadSleep(10000);
+											ThreadSleep(1000);
 											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated3 = BP
 													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
 															followUptask2BasicSectionVerification,
@@ -9073,6 +9159,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 										}
 
 										CommonLib.refresh(driver);
+										if (BP.crossIconButtonInNotePopUp(5) != null) {
+											click(driver, BP.crossIconButtonInNotePopUp(20),
+													"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+										}
 										if (click(driver,
 												BP.editButtonOnInteractionCard(task1UpdateTaskSection3Subject, 20),
 												"Edit Note Button of: " + task1UpdateTaskSection3Subject,
@@ -9178,7 +9268,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName3;
@@ -9279,7 +9369,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 														+ verifyRelatedToNotContainsNegativeResults);
 									}
 									refresh(driver);
-									ThreadSleep(10000);
+									ThreadSleep(1000);
 
 									if (BP.updateActivityTimelineRecord(projectName, task1UpdatedBasicSection, null,
 											null, updatedSuggestedTags, null)) {
@@ -9445,7 +9535,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName3;
@@ -9507,11 +9597,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								YesNo.No);
 						String url = getURL(driver, 10);
 
+						if (BP.crossIconButtonInNotePopUp(5) != null) {
+							click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+									action.SCROLLANDBOOLEAN);
+						}
 						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
-							ThreadSleep(10000);
+							ThreadSleep(1000);
 							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
 									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
 											task1AdvancedSectionVerification, null);
@@ -9521,8 +9615,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 										YesNo.No);
 
 								refresh(driver);
-								ThreadSleep(10000);
+								ThreadSleep(1000);
 
+								if (BP.crossIconButtonInNotePopUp(5) != null) {
+									click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+											action.SCROLLANDBOOLEAN);
+								}
 								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -9533,51 +9631,42 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										CommonLib.refresh(driver);
 										CommonLib.ThreadSleep(3000);
-										
-										
-										
-										
 
 										String url2 = getURL(driver, 10);
-										
+
+										if (BP.crossIconButtonInNotePopUp(5) != null) {
+											click(driver, BP.crossIconButtonInNotePopUp(20),
+													"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+										}
 										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
-										ThreadSleep(1000);
-										ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
-												.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
-														task1UpdatedBasicSectionVerification,
-														task1AdvancedSectionVerification, null);
-										if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
-											log(LogStatus.INFO,
-													"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
-													YesNo.No);
+											ThreadSleep(1000);
+											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
+													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
+															task1UpdatedBasicSectionVerification,
+															task1AdvancedSectionVerification, null);
+											if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
+												log(LogStatus.INFO,
+														"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+														YesNo.No);
 
-										} else {
-											log(LogStatus.ERROR,
-													"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-															+ NotesPopUpPrefilledNegativeResultUpdated,
-													YesNo.No);
-											sa.assertTrue(false,
-													"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-															+ NotesPopUpPrefilledNegativeResultUpdated);
+											} else {
+												log(LogStatus.ERROR,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated,
+														YesNo.No);
+												sa.assertTrue(false,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated);
 
-										}
-										
+											}
+
 										} else {
 											log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
 											sa.assertTrue(false, "Not able to click on Edit Note button");
 										}
-
-										
-										
-										
-										
-										
-										
-										
-										
 
 										CommonLib.refresh(driver);
 										CommonLib.ThreadSleep(5000);
@@ -9686,7 +9775,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName3;
@@ -9739,6 +9828,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.PASS,
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
+						if (BP.crossIconButtonInNotePopUp(5) != null) {
+							click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+									action.SCROLLANDBOOLEAN);
+						}
 						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -9756,6 +9849,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								refresh(driver);
 
+								if (BP.crossIconButtonInNotePopUp(5) != null) {
+									click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+											action.SCROLLANDBOOLEAN);
+								}
 								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -9786,13 +9883,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								refresh(driver);
 								ThreadSleep(3000);
 								String url2 = getURL(driver, 10);
+								if (BP.crossIconButtonInNotePopUp(5) != null) {
+									click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+											action.SCROLLANDBOOLEAN);
+								}
 								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
-
-								
-
-									ThreadSleep(10000);
+									ThreadSleep(1000);
 									ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
 											.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
 													task1BasicSectionVerification, task1AdvancedSectionVerification,
@@ -9913,7 +10011,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName3;
@@ -9935,7 +10033,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -9980,13 +10078,17 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.PASS,
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
+						if (BP.crossIconButtonInNotePopUp(5) != null) {
+							click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+									action.SCROLLANDBOOLEAN);
+						}
 						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
 							String url = getURL(driver, 10);
 
-							ThreadSleep(10000);
+							ThreadSleep(1000);
 							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
 									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
 											task1AdvancedSectionVerification, null);
@@ -9997,6 +10099,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								refresh(driver);
 
+								if (BP.crossIconButtonInNotePopUp(5) != null) {
+									click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+											action.SCROLLANDBOOLEAN);
+								}
 								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -10008,15 +10114,18 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										CommonLib.refresh(driver);
 
-										ThreadSleep(10000);
-
+										ThreadSleep(1000);
+										if (BP.crossIconButtonInNotePopUp(5) != null) {
+											click(driver, BP.crossIconButtonInNotePopUp(20),
+													"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+										}
 										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
 											String url2 = getURL(driver, 10);
 
-											ThreadSleep(10000);
+											ThreadSleep(1000);
 											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
 													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
 															updatedTask1BasicSectionVerification,
@@ -10150,7 +10259,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName2;
@@ -10172,7 +10281,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -10217,13 +10326,17 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.PASS,
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
+						if (BP.crossIconButtonInNotePopUp(5) != null) {
+							click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+									action.SCROLLANDBOOLEAN);
+						}
 						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
 							String url = getURL(driver, 10);
 
-							ThreadSleep(10000);
+							ThreadSleep(1000);
 							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
 									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
 											task1AdvancedSectionVerification, null);
@@ -10234,6 +10347,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								refresh(driver);
 
+								if (BP.crossIconButtonInNotePopUp(5) != null) {
+									click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+											action.SCROLLANDBOOLEAN);
+								}
 								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -10245,8 +10362,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										CommonLib.refresh(driver);
 
-										ThreadSleep(10000);
+										ThreadSleep(1000);
 
+										if (BP.crossIconButtonInNotePopUp(5) != null) {
+											click(driver, BP.crossIconButtonInNotePopUp(20),
+													"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+										}
 										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -10387,7 +10508,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_Contact4;
@@ -10409,7 +10530,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -10454,13 +10575,17 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.PASS,
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
+						if (BP.crossIconButtonInNotePopUp(5) != null) {
+							click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+									action.SCROLLANDBOOLEAN);
+						}
 						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
 							String url = getURL(driver, 10);
 
-							ThreadSleep(10000);
+							ThreadSleep(1000);
 							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
 									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
 											task1AdvancedSectionVerification, null);
@@ -10471,6 +10596,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								refresh(driver);
 
+								if (BP.crossIconButtonInNotePopUp(5) != null) {
+									click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+											action.SCROLLANDBOOLEAN);
+								}
 								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -10482,15 +10611,19 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										CommonLib.refresh(driver);
 
-										ThreadSleep(10000);
+										ThreadSleep(1000);
 
+										if (BP.crossIconButtonInNotePopUp(5) != null) {
+											click(driver, BP.crossIconButtonInNotePopUp(20),
+													"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+										}
 										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
 											String url2 = getURL(driver, 10);
 
-											ThreadSleep(10000);
+											ThreadSleep(1000);
 											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
 													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
 															updatedTask1BasicSectionVerification,
@@ -10624,7 +10757,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName3;
@@ -10646,7 +10779,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -10691,13 +10824,17 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.PASS,
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
+						if (BP.crossIconButtonInNotePopUp(5) != null) {
+							click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+									action.SCROLLANDBOOLEAN);
+						}
 						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
 							String url = getURL(driver, 10);
 
-							ThreadSleep(10000);
+							ThreadSleep(1000);
 							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
 									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
 											task1AdvancedSectionVerification, null);
@@ -10708,10 +10845,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								refresh(driver);
 
+								if (BP.crossIconButtonInNotePopUp(5) != null) {
+									click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+											action.SCROLLANDBOOLEAN);
+								}
 								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
-									ThreadSleep(10000);
+									ThreadSleep(1000);
 
 									if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection, null,
 											null, updatedSuggestedTags, updatedRemoveRelatedAssociation)) {
@@ -10719,15 +10860,19 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										CommonLib.refresh(driver);
 
-										ThreadSleep(10000);
+										ThreadSleep(1000);
 
+										if (BP.crossIconButtonInNotePopUp(5) != null) {
+											click(driver, BP.crossIconButtonInNotePopUp(20),
+													"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+										}
 										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
 											String url2 = getURL(driver, 10);
 
-											ThreadSleep(10000);
+											ThreadSleep(1000);
 											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
 													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
 															updatedTask1BasicSectionVerification,
@@ -10864,7 +11009,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName4;
@@ -10888,7 +11033,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", updatedStatus },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", updatedStatus },
 				{ "Priority", priority } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -10933,13 +11078,17 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.PASS,
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
+						if (BP.crossIconButtonInNotePopUp(5) != null) {
+							click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+									action.SCROLLANDBOOLEAN);
+						}
 						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
 							String url = getURL(driver, 10);
 
-							ThreadSleep(10000);
+							ThreadSleep(1000);
 							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
 									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
 											task1AdvancedSectionVerification, null);
@@ -10950,10 +11099,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								refresh(driver);
 
+								if (BP.crossIconButtonInNotePopUp(5) != null) {
+									click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+											action.SCROLLANDBOOLEAN);
+								}
 								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
-									ThreadSleep(10000);
+									ThreadSleep(1000);
 
 									if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection,
 											task1UpdateAdvancedSection, null, updatedSuggestedTags, null)) {
@@ -10961,15 +11114,19 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										CommonLib.refresh(driver);
 
-										ThreadSleep(10000);
+										ThreadSleep(1000);
 
+										if (BP.crossIconButtonInNotePopUp(5) != null) {
+											click(driver, BP.crossIconButtonInNotePopUp(20),
+													"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+										}
 										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
 											String url2 = getURL(driver, 10);
 
-											ThreadSleep(10000);
+											ThreadSleep(1000);
 											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
 													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
 															updatedTask1BasicSectionVerification,
@@ -11103,7 +11260,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName4;
@@ -11127,7 +11284,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getUpdatedAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -11153,6 +11310,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.PASS,
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
+						if (BP.crossIconButtonInNotePopUp(5) != null) {
+							click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+									action.SCROLLANDBOOLEAN);
+						}
 						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -11170,6 +11331,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								refresh(driver);
 
+								if (BP.crossIconButtonInNotePopUp(5) != null) {
+									click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+											action.SCROLLANDBOOLEAN);
+								}
 								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -11181,8 +11346,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										CommonLib.refresh(driver);
 
-										ThreadSleep(10000);
+										ThreadSleep(1000);
 
+										if (BP.crossIconButtonInNotePopUp(5) != null) {
+											click(driver, BP.crossIconButtonInNotePopUp(20),
+													"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+										}
 										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -11319,7 +11488,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName4;
@@ -11330,7 +11499,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedNotesOfTask = task1Notes;
 
 		String[][] task1UpdateBasicSection = null;
-		String[][] task1UpdateAdvancedSection = { { "Assigned To", crmUser2FirstName + " " + crmUser2LastName } };
+		String[][] task1UpdateAdvancedSection = { { "User", crmUser2FirstName + " " + crmUser2LastName } };
 
 		String[] updatedSuggestedTags = "".split("<break>", -1);
 
@@ -11343,7 +11512,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser2FirstName + " " + crmUser2LastName }, { "Status", status },
+				{ "User", crmUser2FirstName + " " + crmUser2LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -11369,6 +11538,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.PASS,
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
+						if (BP.crossIconButtonInNotePopUp(5) != null) {
+							click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+									action.SCROLLANDBOOLEAN);
+						}
 						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -11386,6 +11559,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								refresh(driver);
 
+								if (BP.crossIconButtonInNotePopUp(5) != null) {
+									click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+											action.SCROLLANDBOOLEAN);
+								}
 								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -11397,7 +11574,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										CommonLib.refresh(driver);
 
-										ThreadSleep(10000);
+										ThreadSleep(1000);
+										if (BP.crossIconButtonInNotePopUp(5) != null) {
+											click(driver, BP.crossIconButtonInNotePopUp(20),
+													"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+										}
 
 										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
@@ -11535,7 +11716,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser2FirstName + " " + crmUser2LastName }, { "Status", status },
+				{ "User", crmUser2FirstName + " " + crmUser2LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName4;
@@ -11545,7 +11726,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String updatedNotesOfTask = task1Notes;
 
-		String task1UpdatedSubjectName = AMNNR_Subject44;
+		String task1UpdatedSubjectName = AMNNR_Subject44+ " " + AMNNR_ActivityType54;
 		String[][] task1UpdateBasicSection = { { "Subject", task1UpdatedSubjectName } };
 		;
 		String[][] task1UpdateAdvancedSection = null;
@@ -11561,7 +11742,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser2FirstName + " " + crmUser2LastName }, { "Status", status },
+				{ "User", crmUser2FirstName + " " + crmUser2LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -11594,6 +11775,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "------" + task1SubjectName
 								+ " record is not verified on intraction, Reason: " + result + "------");
 					}
+					if (BP.crossIconButtonInNotePopUp(5) != null) {
+						click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+								action.SCROLLANDBOOLEAN);
+					}
 
 					if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
@@ -11601,7 +11786,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 						String url = getURL(driver, 10);
 
-						ThreadSleep(10000);
+						ThreadSleep(1000);
 						ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
 								.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
 										task1AdvancedSectionVerification, null);
@@ -11621,7 +11806,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						}
 
 						refresh(driver);
-
+						if (BP.crossIconButtonInNotePopUp(5) != null) {
+							click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+									action.SCROLLANDBOOLEAN);
+						}
 						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -11633,7 +11821,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								CommonLib.refresh(driver);
 
-								ThreadSleep(10000);
+								ThreadSleep(1000);
+								if (BP.crossIconButtonInNotePopUp(5) != null) {
+									click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+											action.SCROLLANDBOOLEAN);
+								}
 
 								if (click(driver, BP.editButtonOnInteractionCard(task1UpdatedSubjectName, 20),
 										"Edit Note Button of: " + task1UpdatedSubjectName, action.SCROLLANDBOOLEAN)) {
@@ -11641,7 +11833,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 									String url2 = getURL(driver, 10);
 
-									ThreadSleep(10000);
+									ThreadSleep(1000);
 									ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
 											.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
 													updatedTask1BasicSectionVerification,
@@ -11779,7 +11971,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName5;
@@ -11803,7 +11995,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -11851,13 +12043,17 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.PASS,
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
+						if (BP.crossIconButtonInNotePopUp(5) != null) {
+							click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+									action.SCROLLANDBOOLEAN);
+						}
 						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
 							String url = getURL(driver, 10);
 
-							ThreadSleep(10000);
+							ThreadSleep(1000);
 							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
 									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
 											task1AdvancedSectionVerification, null);
@@ -11878,10 +12074,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 							refresh(driver);
 
+							if (BP.crossIconButtonInNotePopUp(5) != null) {
+								click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+										action.SCROLLANDBOOLEAN);
+							}
 							if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 									"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
-								ThreadSleep(10000);
+								ThreadSleep(1000);
 
 								if (BP.updateActivityTimelineRecordForMultipleFollowUpTasksAndVerifyUIOfSuggestedTags(
 										projectName, task1UpdateBasicSection, null, null, updatedSuggestedTags, null)) {
@@ -11889,7 +12089,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 									CommonLib.refresh(driver);
 
-									ThreadSleep(10000);
+									ThreadSleep(1000);
+									if (BP.crossIconButtonInNotePopUp(5) != null) {
+										click(driver, BP.crossIconButtonInNotePopUp(20),
+												"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+									}
 
 									if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 											"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
@@ -11897,7 +12101,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										String url2 = getURL(driver, 10);
 
-										ThreadSleep(10000);
+										ThreadSleep(1000);
 										ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
 												.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
 														updatedTask1BasicSectionVerification,
@@ -12019,7 +12223,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", verificationRelatedTo } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String recordName = AMNNR_FirmLegalName3;
@@ -12043,7 +12247,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -12094,13 +12298,18 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "------" + task1SubjectName
 								+ " record is not verified on intraction, Reason: " + result + "------");
 					}
+
+					if (BP.crossIconButtonInNotePopUp(5) != null) {
+						click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+								action.SCROLLANDBOOLEAN);
+					}
 					if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
 						String url = getURL(driver, 10);
 
-						ThreadSleep(10000);
+						ThreadSleep(1000);
 						ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
 								.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
 										task1AdvancedSectionVerification, null);
@@ -12111,10 +12320,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 							refresh(driver);
 
+							if (BP.crossIconButtonInNotePopUp(5) != null) {
+								click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+										action.SCROLLANDBOOLEAN);
+							}
 							if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 									"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
-								ThreadSleep(10000);
+								ThreadSleep(1000);
 
 								if (BP.updateActivityTimelineRecordForMultipleFollowUpTasks(projectName,
 										task1UpdateBasicSection, null, null, updatedSuggestedTags, null, true, false)) {
@@ -12122,8 +12335,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 									CommonLib.refresh(driver);
 
-									ThreadSleep(10000);
+									ThreadSleep(1000);
 
+									if (BP.crossIconButtonInNotePopUp(5) != null) {
+										click(driver, BP.crossIconButtonInNotePopUp(20),
+												"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+									}
 									if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 											"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -12190,10 +12407,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 							refresh(driver);
 
+							if (BP.crossIconButtonInNotePopUp(5) != null) {
+								click(driver, BP.crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp",
+										action.SCROLLANDBOOLEAN);
+							}
 							if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 									"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
-								ThreadSleep(10000);
+								ThreadSleep(1000);
 
 								if (BP.updateActivityTimelineRecordForMultipleFollowUpTasks(projectName,
 										task1UpdateBasicSection, null, null, updatedSuggestedTags, null, false, true)) {
@@ -12201,7 +12422,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 									CommonLib.refresh(driver);
 
-									ThreadSleep(10000);
+									ThreadSleep(1000);
+									if (BP.crossIconButtonInNotePopUp(5) != null) {
+										click(driver, BP.crossIconButtonInNotePopUp(20),
+												"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+									}
 
 									if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 											"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
@@ -12455,7 +12680,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Related_To", updatedRelatedToVerifyInNotes } };
 
 		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
-				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
 		String[][] listViewSheetData = { { AMNNR_ListViewMember1, AMNNR_ListViewTabName1, task1SubjectName,
@@ -12647,7 +12872,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
 				{ "Related_To", relatedTo } };
 
-		String[] labelAndValueSeprateByBreak = { "Assigned To" + "<break>" + crmUser1FirstName + " " + crmUser1LastName,
+		String[] labelAndValueSeprateByBreak = { "User" + "<break>" + crmUser1FirstName + " " + crmUser1LastName,
 				"Subject" + "<break>" + task1SubjectName,
 
 				"Name" + "<break>" + relatedTo };
