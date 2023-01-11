@@ -824,7 +824,14 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 				if (alreadyAddedComponentToHomePage != null) {
 
 					log(LogStatus.INFO, "Component Title Matched to Home Page " + Title, YesNo.Yes);
-
+					
+					String xPath="//a[text()='Fund - First SDG Grid']/ancestor::article/preceding-sibling::lightning-icon";
+					WebElement ele=FindElement(driver, xPath, "Expend or Collaps icon", action.BOOLEAN, 20);
+					String text=getAttribute(driver, ele, "Expend or Collaps icon", "title");
+					if(text.equals("Expand"))
+					{
+						clickUsingJavaScript(driver, ele, "Expend icon");
+					}
 					WebElement pageSizeSelect = FindElement(driver,
 							"//a[text()='" + Title
 									+ "']/ancestor::article//span[text()='Page Size']/../parent::div//select",
@@ -1197,7 +1204,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			ThreadSleep(10000);
 
 			if (AddComponentLinkButton(30) != null) {
-				if (CommonLib.click(driver, AddComponentLinkButton(50), "Add to component", action.SCROLLANDBOOLEAN)) {
+				if (CommonLib.clickUsingJavaScript(driver, AddComponentLinkButton(50), "Add to component", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Add to component button has been clicked", YesNo.No);
 				} else {
 					log(LogStatus.ERROR, "Could not be click on the Add to component button", YesNo.Yes);

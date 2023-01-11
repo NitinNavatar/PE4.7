@@ -2260,6 +2260,8 @@ public class Module9 extends BaseLib {
 				log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
 				if (CommonLib.isElementPresent(edit.getcustomFilterComponent(50))) {
 					log(LogStatus.INFO, "Filter has been added in the the SDG", YesNo.No);
+					CommonLib.refresh(driver);
+					ThreadSleep(4000);
 					if (AppBuilder.selectFilter("Show", "My Records")) {
 						log(LogStatus.INFO, "Filter has been selected: ", YesNo.No);
 						CommonLib.ThreadSleep(8000);
@@ -3481,6 +3483,7 @@ public class Module9 extends BaseLib {
 							log(LogStatus.PASS, "-----------Switched to Open SDG Record Window of SDG: " + TitleOfSDG
 									+ "--------------", YesNo.No);
 							lp.CRMlogout();
+							ThreadSleep(10000);
 							if (lp.CRMLogin(superAdminUserName, adminPassword, appName)) {
 								if (lp.openAppFromAppLauchner(40, SDG)) {
 
@@ -3492,6 +3495,7 @@ public class Module9 extends BaseLib {
 												"-----------Edit/Verify SDG: " + TitleOfSDG + "--------------",
 												YesNo.No);
 										lp.CRMlogout();
+										CommonLib.ThreadSleep(10000);
 										driver.switchTo().window(parentId);
 										CommonLib.refresh(driver);
 										CommonLib.ThreadSleep(8000);
@@ -6931,7 +6935,7 @@ public class Module9 extends BaseLib {
 																			} else {
 																				appLog.error("---------Columns of SDG: "
 																						+ tablename + " & " + TitleOfSDG
-																						+ " gets matched---------");
+																						+ " not gets matched---------");
 																				sa.assertTrue(false,
 																						"---------Columns of SDG: "
 																								+ tablename + " & "
@@ -10875,14 +10879,17 @@ public class Module9 extends BaseLib {
 								log(LogStatus.INFO, "\"Annual Revenue - 70000\" data has been matched", YesNo.No);
 							} else {
 								log(LogStatus.ERROR, "\"Annual Revenue - 70000\" data is not matched", YesNo.No);
+								sa.assertTrue(false, "\"Annual Revenue - 70000\" data is not matched");
 
 							}
 
 						} else {
 							log(LogStatus.ERROR, "Could not click on the Account 2 name", YesNo.No);
+							sa.assertTrue(false, "Could not click on the Account 2 name");
 						}
 					} else {
 						log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " is not open", YesNo.No);
+						sa.assertTrue(false, TabName.InstituitonsTab.toString() + " is not open");
 					}
 
 				} else {
@@ -10910,14 +10917,17 @@ public class Module9 extends BaseLib {
 								log(LogStatus.INFO, "\"Phone - (987) 456-3215\" data has been matched", YesNo.No);
 							} else {
 								log(LogStatus.ERROR, "\"Phone - (987) 456-3215\" data is not matched", YesNo.No);
+								sa.assertTrue(false, "\"Phone - (987) 456-3215\" data is not matched");
 
 							}
 
 						} else {
 							log(LogStatus.ERROR, "Could not clicks on the Account 8 name", YesNo.No);
+							sa.assertTrue(false, "Could not clicks on the Account 8 name");
 						}
 					} else {
 						log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " is not open", YesNo.No);
+						sa.assertTrue(false, TabName.InstituitonsTab.toString() + " is not open");
 					}
 
 				} else {
@@ -10985,7 +10995,6 @@ public class Module9 extends BaseLib {
 								log(LogStatus.INFO, "\"Location - Asia\" data has been matched", YesNo.No);
 							} else {
 								log(LogStatus.ERROR, "\"Location - Asia\" data is not matched", YesNo.No);
-
 							}
 
 						} else {
