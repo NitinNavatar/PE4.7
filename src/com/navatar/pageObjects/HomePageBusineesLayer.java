@@ -3236,7 +3236,9 @@ public class HomePageBusineesLayer extends HomePage {
 	 */
 	public boolean numberOfRecordsMatch(String Title, int NoOfRecordsLessThanEqualHundred) {
 		boolean flag = false;
-		List<WebElement> records = FindElements(driver, "//a[text()='" + Title + "']/ancestor::article//tbody/tr",
+		List<WebElement> records = FindElements(driver,
+				"//a[text()=\"" + Title
+						+ "\"]/ancestor::article//tbody/tr//span[not(text()=\"No data returned\")]/ancestor::tr",
 				"Records");
 		System.out.println("No. of Records Present: " + records.size());
 		if (records.size() == NoOfRecordsLessThanEqualHundred) {
@@ -3319,7 +3321,9 @@ public class HomePageBusineesLayer extends HomePage {
 	 */
 	public int numberOfRecordsInComponent(String Title) {
 
-		List<WebElement> records = FindElements(driver, "//a[text()='" + Title + "']/ancestor::article//tbody/tr",
+		List<WebElement> records = FindElements(driver,
+				"//a[text()=\"" + Title
+						+ "\"]/ancestor::article//tbody/tr//span[not(text()=\"No data returned\")]/ancestor::tr",
 				"Records");
 		System.out.println("No. of Records Present: " + records.size());
 		if (records.size() != 0) {
@@ -4887,8 +4891,9 @@ public class HomePageBusineesLayer extends HomePage {
 			if (pageSizeSelect(Title, pageSize)) {
 				log(LogStatus.INFO, "Page size " + pageSize + " has been selected", YesNo.No);
 				CommonLib.ThreadSleep(30000);
-				List<WebElement> records = FindElements(driver,
-						"//a[text()='" + Title + "']/ancestor::article//tbody/tr", "Records");
+				List<WebElement> records = FindElements(driver, "//a[text()=\"" + Title
+						+ "\"]/ancestor::article//tbody/tr//span[not(text()=\"No data returned\")]/ancestor::tr",
+						"Records");
 				System.out.println("No. of Records Present: " + records.size());
 				size = records.size();
 				flag = true;
@@ -5703,7 +5708,7 @@ public class HomePageBusineesLayer extends HomePage {
 
 		} else {
 			log(LogStatus.FAIL, "Notification Header is not present there in Home Page", YesNo.No);
-			
+
 		}
 		List<String> notificationOptionsListInText = notificationOptionsList.stream()
 				.map(x -> CommonLib.getText(driver, x, "Event Name", action.BOOLEAN)).collect(Collectors.toList());
@@ -5728,7 +5733,7 @@ public class HomePageBusineesLayer extends HomePage {
 		} else {
 
 			log(LogStatus.FAIL, "Either Notification Pane is not open or might be Locator gets changed", YesNo.No);
-			
+
 		}
 
 		return negativeResults;
@@ -5822,10 +5827,10 @@ public class HomePageBusineesLayer extends HomePage {
 										}
 
 									} else {
-										log(LogStatus.ERROR, "No Record found in side nav: "+sideNavOption+" for record: " + recordName,
-												YesNo.Yes);
-										sa.assertTrue(false,
-												"No Record found in side nav: "+sideNavOption+" for record: " + recordName);
+										log(LogStatus.ERROR, "No Record found in side nav: " + sideNavOption
+												+ " for record: " + recordName, YesNo.Yes);
+										sa.assertTrue(false, "No Record found in side nav: " + sideNavOption
+												+ " for record: " + recordName);
 									}
 
 								}

@@ -122,7 +122,8 @@ public class Module9 extends BaseLib {
 								YesNo.Yes);
 						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
 					}
-					if (setup.createPEUser(crmUser1FirstName, UserLastName, emailId, crmUserLience, crmUserProfile, null)) {
+					if (setup.createPEUser(crmUser1FirstName, UserLastName, emailId, crmUserLience, crmUserProfile,
+							null)) {
 						log(LogStatus.INFO,
 								"CRM User is created Successfully: " + crmUser1FirstName + " " + UserLastName,
 								YesNo.No);
@@ -222,7 +223,8 @@ public class Module9 extends BaseLib {
 								YesNo.Yes);
 						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
 					}
-					if (setup.createPEUser(crmUser2FirstName, UserLastName, emailId, crmUserLience, crmUserProfile, null)) {
+					if (setup.createPEUser(crmUser2FirstName, UserLastName, emailId, crmUserLience, crmUserProfile,
+							null)) {
 						log(LogStatus.INFO,
 								"CRM User is created Successfully: " + crmUser2FirstName + " " + UserLastName,
 								YesNo.No);
@@ -2261,6 +2263,9 @@ public class Module9 extends BaseLib {
 				log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
 				if (CommonLib.isElementPresent(edit.getcustomFilterComponent(50))) {
 					log(LogStatus.INFO, "Filter has been added in the the SDG", YesNo.No);
+
+					CommonLib.refresh(driver);
+					ThreadSleep(4000);
 					if (AppBuilder.selectFilter("Show", "My Records")) {
 						log(LogStatus.INFO, "Filter has been selected: ", YesNo.No);
 						CommonLib.ThreadSleep(8000);
@@ -3482,6 +3487,7 @@ public class Module9 extends BaseLib {
 							log(LogStatus.PASS, "-----------Switched to Open SDG Record Window of SDG: " + TitleOfSDG
 									+ "--------------", YesNo.No);
 							lp.CRMlogout();
+							ThreadSleep(10000);
 							if (lp.CRMLogin(superAdminUserName, adminPassword, appName)) {
 								if (lp.openAppFromAppLauchner(40, SDG)) {
 
@@ -3493,6 +3499,7 @@ public class Module9 extends BaseLib {
 												"-----------Edit/Verify SDG: " + TitleOfSDG + "--------------",
 												YesNo.No);
 										lp.CRMlogout();
+										CommonLib.ThreadSleep(10000);
 										driver.switchTo().window(parentId);
 										CommonLib.refresh(driver);
 										CommonLib.ThreadSleep(8000);
@@ -6281,8 +6288,8 @@ public class Module9 extends BaseLib {
 												"--------Added SDG: " + TitleOfSDG + " to the Firm Page----------",
 												YesNo.No);
 
-										List<WebElement> columns = FindElements(driver, "//a[text()='" + TitleOfSDG
-												+ "']/ancestor::article//thead//th[contains(@class,'navpeI')]//span",
+										List<WebElement> columns = FindElements(driver, "//a[text()=\"" + TitleOfSDG
+												+ "\"]/ancestor::article//thead//th[contains(@class,\"navpeI\")]//span[contains(@class,\"slds-truncate\")]",
 												"Records");
 										List<String> columnsText = new ArrayList<String>();
 										for (WebElement column : columns) {
@@ -6321,10 +6328,12 @@ public class Module9 extends BaseLib {
 															+ rowCountAfterFilter + "----------------");
 
 										}
-											ThreadSleep(2000);
-											WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.SDG_Tab.toString().replace("_", " "), 10);
-							                click(driver, ele1, RelatedTab.SDG_Tab.toString().replace("_", " "), action.BOOLEAN);
-							                ThreadSleep(2000);
+										ThreadSleep(2000);
+										WebElement ele1 = BP.getRelatedTab(projectName,
+												RelatedTab.SDG_Tab.toString().replace("_", " "), 10);
+										click(driver, ele1, RelatedTab.SDG_Tab.toString().replace("_", " "),
+												action.BOOLEAN);
+										ThreadSleep(2000);
 										if (home.verifyColumnRecordsRedirecting(SDGGridName.Firm_with_Primary_Member,
 												columnInSDG)) {
 											log(LogStatus.FAIL, columnInSDG + " Column contains the Redirect URL for : "
@@ -6338,7 +6347,7 @@ public class Module9 extends BaseLib {
 													YesNo.No);
 
 										}
-											ThreadSleep(2000);
+										ThreadSleep(2000);
 										if (home.verifyBlankDataCorrespondingToBlankData(TitleOfSDG, 3, 4)) {
 											log(LogStatus.INFO,
 													"Primary Member column will appear blank in case of no primary contact against that account",
@@ -6438,6 +6447,12 @@ public class Module9 extends BaseLib {
 											log(LogStatus.INFO,
 													"-------Tab Name: " + tabName + " is already Present----------",
 													YesNo.No);
+
+											ThreadSleep(2000);
+											WebElement ele1 = BP.getRelatedTab(projectName,
+													RelatedTab.SDG_Tab.toString().replace("_", " "), 10);
+											click(driver, ele1, RelatedTab.SDG_Tab.toString().replace("_", " "),
+													action.BOOLEAN);
 
 											if (home.sdgGridExpandedByDefaultIfNotThenExpand(TitleOfSDG)) {
 												log(LogStatus.INFO,
@@ -6583,10 +6598,10 @@ public class Module9 extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
 		String TitleOfSDG = M9_TC003_SDGName;
-		String[][] sdgLabels = {{SDGCreationLabel.Override_Label.toString(), M9_TC045_SDGFieldData } };
+		String[][] sdgLabels = { { SDGCreationLabel.Override_Label.toString(), M9_TC045_SDGFieldData } };
 
 		String fieldToSelect = M9_TC045_SDGFieldData;
-		
+
 		List<String> FundFistSDGList = new ArrayList<String>();
 
 		String parentId;
@@ -11012,8 +11027,8 @@ public class Module9 extends BaseLib {
 				val1.add("Far East");
 				val1.add("Global");
 				val1.add("Middle East");
-				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 8", "Location Preferences", null, "Multipicklist",
-						val1)) {
+				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 8", "Location Preferences", null,
+						"Multipicklist", val1)) {
 					log(LogStatus.INFO,
 							"\"Account 8\" Location record has been updated to Far East, Global, Middle East",
 							YesNo.No);
@@ -11253,8 +11268,8 @@ public class Module9 extends BaseLib {
 
 				ArrayList<String> val = new ArrayList<String>();
 				val.add("Far East");
-				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated", "Location Preferences", "null",
-						"Multipicklist", val)) {
+				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated", "Location Preferences",
+						"null", "Multipicklist", val)) {
 					log(LogStatus.INFO, "\"Account 1 Updated\" Location record has been updated to Far East", YesNo.No);
 					sa.assertTrue(true, "\"Account Updated\" Location record has been updated to Far East");
 
@@ -11293,8 +11308,8 @@ public class Module9 extends BaseLib {
 				val1.add("Asia");
 				val1.add("Middle East");
 				val1.add("Global");
-				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated", "Location Preferences", null,
-						"Multipicklist", val1)) {
+				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated", "Location Preferences",
+						null, "Multipicklist", val1)) {
 					log(LogStatus.INFO,
 							"\"Account 1 Updated\" Location record has been updated to Far Asia, Global, Middle East",
 							YesNo.No);
