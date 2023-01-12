@@ -577,7 +577,7 @@ public abstract class BasePage extends BaseLib {
 	}
 
 	public WebElement getCustomTabSaveBtn(String projectName, int timeOut) {
-		List<WebElement> eleList = FindElements(driver, "//button[@title='Save' or text()='Save']", "Save Button");
+		List<WebElement> eleList = FindElements(driver, "//input[@title='Save' or text()='Save']", "Save Button");
 		for (WebElement webElement : eleList) {
 			webElement = isDisplayed(driver, webElement, "Visibility", 2, "Custom Tab Save Button lightning");
 			if (webElement != null) {
