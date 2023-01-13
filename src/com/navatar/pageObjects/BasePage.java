@@ -4037,7 +4037,7 @@ public abstract class BasePage extends BaseLib {
 	@FindBy(xpath = "//span[text()='Due Date']/..//following-sibling::div//input")
 	private WebElement dueDateTextBoxInNewTask;
 
-	@FindBy(xpath = "//label[text()='Due Date']/..//input")
+	@FindBy(xpath = "//label[text()='Due Date Only']/..//input")
 	private WebElement dueDateTextBoxInNewTask1;
 
 	public WebElement getdueDateTextBoxInNewTask(String projectName, int timeOut) {
