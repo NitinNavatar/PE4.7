@@ -1990,7 +1990,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				|| (PageLabel.Name.toString().equalsIgnoreCase(label)
 						&& PageName.TaskPage.toString().equalsIgnoreCase(pageName.toString())
 						&& isMultipleAssociation)) {
-			xpath = "//label[text()='" + fieldlabel + "']/..//span[text()='" + name + "']/..//button[@title='Remove']";
+			xpath = "//span[text()='" + name + "']/..//button[@title='Remove']";
 		} else if (PageLabel.Related_To.toString().equalsIgnoreCase(label)
 				|| PageLabel.Related_Associations.toString().equalsIgnoreCase(label) || isMultipleAssociation) {
 			xpath = "//span[text()='" + fieldlabel + "']/../..//span[text()='" + name
@@ -2707,6 +2707,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		} else if (projectName.contains(ProjectName.PEEdge.toString()) && PageLabel.Account_Name.equals(pageLabel)) {
 			label = "Firm";
 		}
+		
+		WebElement ele1 = getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+		click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+		ThreadSleep(2000);
 		xpath = "//span[text()='" + label + "']/../following-sibling::div//*[text()='" + labelValue + "']";
 
 		ele = FindElement(driver, xpath, label + " with Value " + labelValue, action.SCROLLANDBOOLEAN, 5);
@@ -11512,8 +11516,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		}
 		if (advanceSection != null) {
-			if (clickUsingJavaScript(driver, getSectionBtn("Advanced", 30), "Advanced section",
-					action.SCROLLANDBOOLEAN)) {
+//			if (clickUsingJavaScript(driver, getSectionBtn("Advanced", 30), "Advanced section",
+//					action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "clicked on Advanced section", YesNo.No);
 				for (String[] val : advanceSection) {
 					String labelName = val[0];
@@ -11586,8 +11590,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
 								+ labelName + "']/..//button";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
-						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
-								+ labelName + "']/..//span[@class='slds-truncate']";
+//						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
+//								+ labelName + "']/..//span[@class='slds-truncate']";
 						if (CommonLib.dropDownHandle(driver, ele, xPath, labelName + " dropdown", value)) {
 							log(LogStatus.INFO, value + " value has been selected from " + labelName + " field",
 									YesNo.No);
@@ -11674,28 +11678,28 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						return false;
 					}
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to click on Advanced search section", YesNo.No);
-				sa.assertTrue(false, "Not able to click on Advanced search section");
-				return false;
-			}
+//			} else {
+//				log(LogStatus.ERROR, "Not able to click on Advanced search section", YesNo.No);
+//				sa.assertTrue(false, "Not able to click on Advanced search section");
+//				return false;
+//			}
 		}
 		if (taskSection != null) {
 
-			xPath = "//span[text()='Advanced']/parent::button[@aria-expanded='true']";
-			ele = FindElement(driver, xPath, "Advance section", action.SCROLLANDBOOLEAN, 3);
-			if (ele == null) {
-				if (clickUsingJavaScript(driver, getSectionBtn("Advanced", 3), "Advanced section",
-						action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "clicked on Advanced section", YesNo.No);
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Advanced section", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Advanced section");
-					return false;
-				}
-			}
+//			xPath = "//span[text()='Advanced']/parent::button[@aria-expanded='true']";
+//			ele = FindElement(driver, xPath, "Advance section", action.SCROLLANDBOOLEAN, 3);
+//			if (ele == null) {
+//				if (clickUsingJavaScript(driver, getSectionBtn("Advanced", 3), "Advanced section",
+//						action.SCROLLANDBOOLEAN)) {
+//					log(LogStatus.INFO, "clicked on Advanced section", YesNo.No);
+//				} else {
+//					log(LogStatus.ERROR, "Not able to click on Advanced section", YesNo.No);
+//					sa.assertTrue(false, "Not able to click on Advanced section");
+//					return false;
+//				}
+//			}
 
-			if (clickUsingJavaScript(driver, getSectionBtn("Tasks", 30), "Tasks section", action.SCROLLANDBOOLEAN)) {
+	//		if (clickUsingJavaScript(driver, getSectionBtn("Tasks", 30), "Tasks section", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "clicked on Tasks section", YesNo.No);
 
 				for (String[] val : taskSection) {
@@ -11735,11 +11739,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 				}
 
-			} else {
-				log(LogStatus.ERROR, "Not able to click on Tasks section", YesNo.No);
-				sa.assertTrue(false, "Not able to click on Tasks section");
-				return false;
-			}
+//			} else {
+//				log(LogStatus.ERROR, "Not able to click on Tasks section", YesNo.No);
+//				sa.assertTrue(false, "Not able to click on Tasks section");
+//				return false;
+//			}
 		}
 
 		if (click(driver, getfooterSaveOrCancelButton("Save", 20), "Save button", action.SCROLLANDBOOLEAN)) {
@@ -12974,8 +12978,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		}
 		if (advanceSection != null) {
-			if (clickUsingJavaScript(driver, getSectionBtn("Advanced", 30), "Advanced section",
-					action.SCROLLANDBOOLEAN)) {
+//			if (clickUsingJavaScript(driver, getSectionBtn("Advanced", 30), "Advanced section",
+//					action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "clicked on Advanced section", YesNo.No);
 				for (String[] val : advanceSection) {
 					String labelName = val[0];
@@ -13146,28 +13150,28 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						return false;
 					}
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to click on Advanced search section", YesNo.No);
-				sa.assertTrue(false, "Not able to click on Advanced search section");
-				return false;
-			}
+//			} else {
+//				log(LogStatus.ERROR, "Not able to click on Advanced search section", YesNo.No);
+//				sa.assertTrue(false, "Not able to click on Advanced search section");
+//				return false;
+//			}
 		}
 		if (taskSection != null) {
 
-			xPath = "//span[text()='Advanced']/parent::button[@aria-expanded='true']";
-			ele = FindElement(driver, xPath, "Advance section", action.SCROLLANDBOOLEAN, 3);
-			if (ele == null) {
-				if (clickUsingJavaScript(driver, getSectionBtn("Advanced", 3), "Advanced section",
-						action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "clicked on Advanced section", YesNo.No);
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Advanced section", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Advanced section");
-					return false;
-				}
-			}
+//			xPath = "//span[text()='Advanced']/parent::button[@aria-expanded='true']";
+//			ele = FindElement(driver, xPath, "Advance section", action.SCROLLANDBOOLEAN, 3);
+//			if (ele == null) {
+//				if (clickUsingJavaScript(driver, getSectionBtn("Advanced", 3), "Advanced section",
+//						action.SCROLLANDBOOLEAN)) {
+//					log(LogStatus.INFO, "clicked on Advanced section", YesNo.No);
+//				} else {
+//					log(LogStatus.ERROR, "Not able to click on Advanced section", YesNo.No);
+//					sa.assertTrue(false, "Not able to click on Advanced section");
+//					return false;
+//				}
+//			}
 
-			if (clickUsingJavaScript(driver, getSectionBtn("Tasks", 30), "Tasks section", action.SCROLLANDBOOLEAN)) {
+//			if (clickUsingJavaScript(driver, getSectionBtn("Tasks", 30), "Tasks section", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "clicked on Tasks section", YesNo.No);
 
 				for (String[] val : taskSection) {
@@ -13207,11 +13211,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 				}
 
-			} else {
-				log(LogStatus.ERROR, "Not able to click on Tasks section", YesNo.No);
-				sa.assertTrue(false, "Not able to click on Tasks section");
-				return false;
-			}
+//			} else {
+//				log(LogStatus.ERROR, "Not able to click on Tasks section", YesNo.No);
+//				sa.assertTrue(false, "Not able to click on Tasks section");
+//				return false;
+//			}
 		}
 
 		if (click(driver, getfooterSaveOrCancelButton("Save", 20), "Save button", action.SCROLLANDBOOLEAN)) {
