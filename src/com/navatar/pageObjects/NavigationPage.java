@@ -197,7 +197,7 @@ public class NavigationPage extends BasePageBusinessLayer {
 		}
 		return navItems;
 	}
-	
+
 	@FindBy(xpath = "//button[@title='Minimize']")
 	private WebElement createNavPopUpMinimizeButton;
 
@@ -206,7 +206,5 @@ public class NavigationPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, createNavPopUpMinimizeButton, "Visibility", timeOut, "createNavPopUpMinimizeButton");
 
 	}
-	
-	
 
 }

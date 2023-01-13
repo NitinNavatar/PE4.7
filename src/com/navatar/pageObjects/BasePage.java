@@ -577,7 +577,7 @@ public abstract class BasePage extends BaseLib {
 	}
 
 	public WebElement getCustomTabSaveBtn(String projectName, int timeOut) {
-		List<WebElement> eleList = FindElements(driver, "//button[@title='Save' or text()='Save']", "Save Button");
+		List<WebElement> eleList = FindElements(driver, "//input[@title='Save' or text()='Save']", "Save Button");
 		for (WebElement webElement : eleList) {
 			webElement = isDisplayed(driver, webElement, "Visibility", 2, "Custom Tab Save Button lightning");
 			if (webElement != null) {
@@ -7302,6 +7302,15 @@ public abstract class BasePage extends BaseLib {
 				timeOut, sectionName + " section");
 	}
 
+	public WebElement getNotePopUpSectionDetail(String sectionName, int timeOut) {
+		String xPath = "//span[@class=\"slds-accordion__summary-content\" and text()='" + sectionName
+				+ "']/ancestor::h3/../following-sibling::div";
+
+		return isDisplayed(driver,
+				FindElement(driver, xPath, sectionName + " section", action.SCROLLANDBOOLEAN, timeOut), "Visibility",
+				timeOut, sectionName + " section");
+	}
+
 	public WebElement getfooterSaveOrCancelButton(String btnName, int timeOut) {
 		String xPath = "//footer//button[text()='" + btnName + "']";
 
@@ -8509,7 +8518,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, ComponentErrorMsg, "Visibility", timeOut, "Component Error Msg");
 	}
 
-	@FindBy(xpath = "//span[text()='This site can’t be reached']")
+	@FindBy(xpath = "//span[text()='This site canï¿½t be reached']")
 	private WebElement pageloadErrorMsg;
 
 	public WebElement getpageloadErrorMsg(int timeOut) {

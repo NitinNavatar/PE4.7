@@ -843,7 +843,7 @@ public class AcuitySmoke extends BaseLib {
 																								YesNo.No);
 																						refresh(driver);
 																						ThreadSleep(2000);
-																						if (bp.verifySubjectLinkRedirectionOnIntraction(
+																						if (bp.verifySubjectLinkPopUpOnIntraction(
 																								driver,
 																								AS_ATSubject1)) {
 																							log(LogStatus.INFO,
