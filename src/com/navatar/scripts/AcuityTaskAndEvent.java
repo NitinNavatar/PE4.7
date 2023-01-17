@@ -434,17 +434,10 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String taskDueDate=ATE_AdvanceDueDate1;
 		String taskStatus=ATE_AdvanceStatus1;
 		String taskPriority=ATE_AdvancePriority1;
-
-		/*
-		 * String[] relatedToData=ATE_ARelatedTo1.split("<break>"); String[]
-		 * verifyRelatedToField=
-		 * {relatedToData[0],crmUser6FirstName+" "+crmUser6LastName,relatedToData[1]};
-		 * String[] relatedAssociation=ATE_ARelatedAsso1.split("<break>");
-		 */	
-		String[] verifyRelatedToField=null;
-
-		String[] relatedAssociation=null;
-
+		  String[] relatedToData=ATE_ARelatedTo1.split("<break>"); String[]
+		  verifyRelatedToField=
+		  {relatedToData[0],crmUser6FirstName+" "+crmUser6LastName,relatedToData[1]};
+		  String[] relatedAssociation=ATE_ARelatedAsso1.split("<break>");
 
 		String contactSectionName=ATE_ContactName2;
 		String contactSectionTitle=ATE_ContactTitle2;
@@ -526,7 +519,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result4);
 						}
 
-						if (bp.verifySubjectLinkRedirectionOnIntraction(driver,taskSubject)) {
+						if (bp.verifySubjectLinkPopUpOnIntraction(driver,taskSubject)) {
 							log(LogStatus.INFO, "page successfully redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);			
 						}
 						else
@@ -675,13 +668,10 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String subject=ATE_ATSubject1;
 		String notes=ATE_ATNotes1;
+			String[] relatedToData=ATE_ARelatedTo1.split("<break>");
+			String[] relatedTo= {relatedToData[0],crmUser6FirstName+" "+crmUser6LastName,relatedToData[1]};
 
-		String[] relatedTo=null;
-		String[] relatedAssociation=null;
-		//	String[] relatedToData=ATE_ARelatedTo1.split("<break>");
-		//	String[] relatedTo= {relatedToData[0],crmUser6FirstName+" "+crmUser6LastName,relatedToData[1]};
-
-		//	String[] relatedAssociation=ATE_ARelatedAsso1.split("<break>");
+			String[] relatedAssociation=ATE_ARelatedAsso1.split("<break>");
 
 		ArrayList<String> tabName=new ArrayList<String>();
 		tabName.add("People");
@@ -907,7 +897,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 
 
-					if (bp.verifySubjectLinkRedirectionOnIntraction(driver,taskSubject)) {
+					if (bp.verifySubjectLinkPopUpOnIntraction(driver,taskSubject)) {
 						log(LogStatus.INFO, "page successfully redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);			
 					}
 					else
@@ -1242,7 +1232,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The redirection on click of record name and count of time referenced is not working properly. "+result3);
 					}
 
-					if (bp.verifySubjectLinkRedirectionOnIntraction(driver,taskSubject)) {
+					if (bp.verifySubjectLinkPopUpOnIntraction(driver,taskSubject)) {
 						log(LogStatus.INFO, "page successfully redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);			
 					}
 					else
@@ -1404,7 +1394,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Start Date", advanceStartDate },{"End Date",advanceEndDate}, {"Assigned To",assignedToUser}};	
+		String[][] advanceSection = { { "Start Date", advanceStartDate },{"End Date",advanceEndDate}, {"User",assignedToUser}};	
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 		int k=0; 
@@ -1463,7 +1453,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed. "+result1);
 						}
 
-						if (bp.verifySubjectLinkRedirectionOnIntraction(driver,taskSubject)) {
+						if (bp.verifySubjectLinkPopUpOnIntraction(driver,taskSubject)) {
 							log(LogStatus.INFO, "page successfully redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);			
 						}
 						else
@@ -1795,7 +1785,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
 					}
 
-					if (bp.verifySubjectLinkRedirectionOnIntraction(driver,taskSubject1)) {
+					if (bp.verifySubjectLinkPopUpOnIntraction(driver,taskSubject1)) {
 						log(LogStatus.INFO, "page successfully redirecting to the "+ taskSubject1+ " page on new tab",	YesNo.No);			
 					}
 					else

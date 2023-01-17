@@ -293,9 +293,9 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS2Name, 20)) {
-				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
-				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
-				scrollThroughOutWindow(driver);
+//				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+//				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
+//				scrollThroughOutWindow(driver);
 				ThreadSleep(3000);
 				WebElement ele;
 				String[][] basicsection= {{"Subject",TWTask1Subject},{"Related_To",Smoke_TWContact3FName+" "+Smoke_TWContact3LName}};
@@ -363,16 +363,17 @@ public class Module2 extends BaseLib{
 //						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
 //					}
 		        
-		        bp.createActivityTimeline(projectName,false,"New Task", basicsection, advanceSection,null,null);
+		        bp.createActivityTimeline(projectName,true,"Task", basicsection, advanceSection,null,null);
 				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 				CommonLib.ThreadSleep(50000);
 					
 					refresh(driver);
 					ThreadSleep(2000);
-					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
-					click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
-					ThreadSleep(2000);
-					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.Object3Page,ActivityType.Next, TWTask1Subject, SubjectElement.SubjectLink, 10);
+//					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+//					click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
+//					ThreadSleep(2000);
+					ip.clickOnTab(projectName, TabName.TaskTab);
+					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.TaskPage,null, TWTask1Subject, SubjectElement.SubjectLink, 10);
 					ThreadSleep(2000);
 					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
 						String[][] fieldsWithValues= {{PageLabel.Subject_updated.toString(),TWTask1Subject},
@@ -417,8 +418,8 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS1Name, 20)) {
-				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
-				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
+//				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+//				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
 				scrollThroughOutWindow(driver);
 				ThreadSleep(3000);
 				WebElement ele;
@@ -428,7 +429,7 @@ public class Module2 extends BaseLib{
 
 
 
-               bp.createActivityTimeline(projectName,false,"New Task", basicsection, advanceSection,null,null);
+               bp.createActivityTimeline(projectName,true,"Task", basicsection, advanceSection,null,null);
 				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 				CommonLib.ThreadSleep(50000);
 					
@@ -545,9 +546,9 @@ public class Module2 extends BaseLib{
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS2Name, 20)) {
 				
-				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
-				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
-				scrollThroughOutWindow(driver);
+//				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+//				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
+//				scrollThroughOutWindow(driver);
 				ThreadSleep(3000);
 				WebElement ele;
 				String[][] basicsection= {{"Subject",TWTask3Subject},{"Related_To",Smoke_TWContact3FName+" "+Smoke_TWContact3LName}};
@@ -556,15 +557,15 @@ public class Module2 extends BaseLib{
 
 
 
-            bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null);
+            bp.createActivityTimeline(projectName,true,"Call", basicsection, advanceSection,null,null);
 				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 				CommonLib.ThreadSleep(50000);
 					
 					refresh(driver);
 					ThreadSleep(2000);
-					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
-					click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
-					ThreadSleep(2000);
+//					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+//					click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
+//					ThreadSleep(2000);
 					
 					//out of scopr
 //				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Call , 10);
@@ -607,7 +608,7 @@ public class Module2 extends BaseLib{
 //					ThreadSleep(2000);
 //					refresh(driver);
 //					ThreadSleep(2000);
-					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.Object3Page,ActivityType.Past, TWTask3Subject, SubjectElement.SubjectLink, 10);
+					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.TaskPage,null, TWTask3Subject, SubjectElement.SubjectLink, 10);
 					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
 						String[][] fieldsWithValues= {{PageLabel.Subject_updated.toString(),TWTask3Subject},
 								{PageLabel.Watchlist.toString(),Watchlist.True.toString()}};
@@ -647,9 +648,9 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS1Name, 20)) {
-				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
-				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
-				scrollThroughOutWindow(driver);
+//				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+//				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
+//				scrollThroughOutWindow(driver);
 				ThreadSleep(3000);
 				WebElement ele;
 				String[][] basicsection= {{"Subject",TWTask4Subject},{"Related_To",Smoke_TWContact1FName+" "+Smoke_TWContact1LName}};
@@ -658,14 +659,14 @@ public class Module2 extends BaseLib{
 
 
 
-            bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null);
+            bp.createActivityTimeline(projectName,true,"Call", basicsection, advanceSection,null,null);
 				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 				CommonLib.ThreadSleep(50000);
 					
 					refresh(driver);
-					ThreadSleep(2000);
-					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
-					click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
+//					ThreadSleep(2000);
+//					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+//					click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
 					ThreadSleep(2000);
 					//out of scope
 //				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Call , 10);
@@ -710,7 +711,7 @@ public class Module2 extends BaseLib{
 //					ThreadSleep(2000);
 //					refresh(driver);
 //					ThreadSleep(2000);
-					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.Object3Page,ActivityType.Past, TWTask4Subject, SubjectElement.SubjectLink, 10);
+					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.TaskPage,ActivityType.Past, TWTask4Subject, SubjectElement.SubjectLink, 10);
 					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
 						String[][] fieldsWithValues= {{PageLabel.Subject_updated.toString(),TWTask4Subject},
 								{PageLabel.Watchlist.toString(),Watchlist.False.toString()}};
@@ -750,9 +751,9 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS2Name, 20)) {
-				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
-				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
-				scrollThroughOutWindow(driver);
+//				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+//				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
+//				scrollThroughOutWindow(driver);
 				ThreadSleep(3000);
 				WebElement ele;
 				String[][] basicsection= {{"Subject",TWTask5Subject},{"Related_To",Smoke_TWContact1FName+" "+Smoke_TWContact1LName},{"Related_To",Smoke_TWContact3FName+" "+Smoke_TWContact3LName}};
@@ -761,15 +762,15 @@ public class Module2 extends BaseLib{
 
 
 
-                bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null);
+                bp.createActivityTimeline(projectName,true,"Call", basicsection, advanceSection,null,null);
 				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 				CommonLib.ThreadSleep(50000);
 					
 					refresh(driver);
 					ThreadSleep(2000);
-					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
-					click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
-					ThreadSleep(2000);
+//					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+//					click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
+//					ThreadSleep(2000);
 					//out of scope 2
 //				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task , 10);
 //				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task.toString(), action.BOOLEAN)) {
@@ -886,9 +887,9 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS2Name, 20)) {
-				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
-				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
-				scrollThroughOutWindow(driver);
+//				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+//				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
+//				scrollThroughOutWindow(driver);
 				ThreadSleep(3000);
 				WebElement ele;
 				String[][] basicsection= {{"Subject",TWTask6Subject},{"Related_To",Smoke_TWContact3FName+" "+Smoke_TWContact3LName},{"Related_To",Smoke_TWContact1FName+" "+Smoke_TWContact1LName}};
@@ -897,14 +898,14 @@ public class Module2 extends BaseLib{
 
 
 
-                 bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null);
+                 bp.createActivityTimeline(projectName,true,"Call", basicsection, advanceSection,null,null);
 				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 				CommonLib.ThreadSleep(50000);
 					
 					refresh(driver);
 					ThreadSleep(2000);
-					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
-					click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
+//					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+//					click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
 					ThreadSleep(2000);
 				//out of scope 2
 //				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Call , 10);
@@ -1148,8 +1149,10 @@ public class Module2 extends BaseLib{
 	public void M2tc012_AddContactFromWatchlistContactAndVerifyImpact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-
+		String relatedTo = Smoke_TWContact3FName+" "+Smoke_TWContact3LName;
+		String[][] task1UpdateBasicSection = {{ "Related_To", relatedTo } };
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.TaskTab)) {
 			WebElement ele=tp.getTaskNameLinkInSideMMenu(projectName, TWTask5Subject, 15);
@@ -1161,7 +1164,9 @@ public class Module2 extends BaseLib{
 			ThreadSleep(3000);
 			if (lp.clickOnShowMoreActionDownArrow(projectName, PageName.TaskPage, ShowMoreActionDropDownList.Edit, 20)) {
 				ThreadSleep(3000);
-				boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Name.toString(), TabName.TaskTab, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 10);		
+				boolean flag=BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection, null,
+						null, null, null);
+						//ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Name.toString(), TabName.TaskTab, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 10);		
 				if (flag) {
 					log(LogStatus.SKIP,"Selected "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.No);
 
@@ -1214,7 +1219,10 @@ public class Module2 extends BaseLib{
 	public void M2tc013_AddContactFromWatchlistContactAndVerifyImpact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		String relatedTo = Smoke_TWContact3FName+" "+Smoke_TWContact3LName;
+		String[][] task1UpdateBasicSection = {{ "Related_To", relatedTo } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.TaskTab)) {
@@ -1226,7 +1234,9 @@ public class Module2 extends BaseLib{
 			tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
 			ThreadSleep(3000);
 			if (lp.clickOnShowMoreActionDownArrow(projectName, PageName.TaskPage, ShowMoreActionDropDownList.Edit, 20)) {
-				boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 10);		
+				boolean flag=BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection, null,
+						null, null, null);
+						//ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 10);		
 				if (flag) {
 					log(LogStatus.SKIP,"Selected "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.No);
 
@@ -1350,8 +1360,9 @@ public class Module2 extends BaseLib{
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-
-
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		String[][] task1AdvancedSection = { { "Due Date Only", todaysDate } };
+		String[][] task1Section = { { "Due Date Only", todaysDate } };
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.TaskTab)) {
 			WebElement ele=tp.getTaskNameLinkInSideMMenu(projectName, TWTask2Subject, 15);
@@ -1370,6 +1381,9 @@ public class Module2 extends BaseLib{
 			ThreadSleep(3000);
 			scrollDownThroughWebelement(driver, ip.getEditButton(environment,  mode,10), "edit");
 			if (lp.clickOnShowMoreActionDownArrow(projectName, PageName.TaskPage, ShowMoreActionDropDownList.Edit, 20)) {
+				ThreadSleep(3000);
+//				if (BP.updateActivityTimelineRecord(projectName, null, task1AdvancedSection,
+//						task1Section, null, null)) {
 				if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), todaysDate, PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Entered value to Due Date Text Box", YesNo.Yes);
 					ThreadSleep(1000);
@@ -1426,22 +1440,25 @@ public class Module2 extends BaseLib{
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver); 
+		String[][] task1BasicSection = { { "Subject", TWTask8Subject },{ "Related_To", Smoke_TWINS2Name } };
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		if (ip.clickOnTab(projectName, TabName.TaskTab)) {
+//		if (ip.clickOnTab(projectName, TabName.TaskTab)) {
 
-			if (cp.clickOnShowMoreActionDownArrow(projectName, PageName.TaskPage, ShowMoreActionDropDownList.New_Task, 15)) {
-				log(LogStatus.INFO,"Clicked on New Task Button for show more action",YesNo.No);
-				ThreadSleep(1000);
-				if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask8Subject, "Subject", action.SCROLLANDBOOLEAN)) {
-					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Related_To.toString(), TabName.Object1Tab, Smoke_TWINS2Name, action.SCROLLANDBOOLEAN, 10);		
-					if (flag) {
-						log(LogStatus.SKIP,"Selected "+Smoke_TWINS2Name+" For Label "+PageLabel.Related_To,YesNo.No);
-
-					} else {
-						sa.assertTrue(false,"Not Able to Select "+Smoke_TWINS2Name+" For Label "+PageLabel.Related_To);
-						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWINS2Name+" For Label "+PageLabel.Related_To,YesNo.Yes);
-					}
+			if (BP.createActivityTimeline(projectName, true, "Task", task1BasicSection, null,
+					null, null)) {
+//			if (cp.clickOnShowMoreActionDownArrow(projectName, PageName.TaskPage, ShowMoreActionDropDownList.New_Task, 15)) {
+//				log(LogStatus.INFO,"Clicked on New Task Button for show more action",YesNo.No);
+//				ThreadSleep(1000);
+				//if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask8Subject, "Subject", action.SCROLLANDBOOLEAN)) {
+					//boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Related_To.toString(), TabName.Object1Tab, Smoke_TWINS2Name, action.SCROLLANDBOOLEAN, 10);		
+//					if (flag) {
+//						log(LogStatus.SKIP,"Selected "+Smoke_TWINS2Name+" For Label "+PageLabel.Related_To,YesNo.No);
+//
+//					} else {
+//						sa.assertTrue(false,"Not Able to Select "+Smoke_TWINS2Name+" For Label "+PageLabel.Related_To);
+//						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWINS2Name+" For Label "+PageLabel.Related_To,YesNo.Yes);
+//					}
 
 					ThreadSleep(3000);
 					if  (click(driver, ip.getCustomTabSaveBtn(projectName,10), "save", action.BOOLEAN)) {
@@ -1470,14 +1487,14 @@ public class Module2 extends BaseLib{
 						sa.assertTrue(false, "save button is not clickable so cannot verify watchlist checkbox functionality");
 					}
 
-				}else {
-					appLog.error("edit button is not clickable so cannot verify watchlist checkbox functionality");
-					sa.assertTrue(false, "edit button is not clickable so cannot verify watchlist checkbox functionality");
-				}
-			}else {
-				appLog.error("task name is not clickable so cannot verify watchlist checkbox functionality");
-				sa.assertTrue(false, "task name is not clickable so cannot verify watchlist checkbox functionality");
-			}
+//				}else {
+//					appLog.error("edit button is not clickable so cannot verify watchlist checkbox functionality");
+//					sa.assertTrue(false, "edit button is not clickable so cannot verify watchlist checkbox functionality");
+//				}
+//			}else {
+//				appLog.error("task name is not clickable so cannot verify watchlist checkbox functionality");
+//				sa.assertTrue(false, "task name is not clickable so cannot verify watchlist checkbox functionality");
+//			}
 		}else {
 			appLog.error("task tab is not clickable");
 			sa.assertTrue(false, "task tab is not clickable");
@@ -1486,13 +1503,17 @@ public class Module2 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "projectName"})
 	@Test
+	@Parameters({ "projectName"})
 	public void M2tc017_AddWatchlistContactInStandardTask(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		
+		String[][] task1UpdateBasicSection = {{ "Related_To", Smoke_TWContact4FName+" "+Smoke_TWContact4LName } };
 
+		String[][] task1AdvancedSection = { { "Due Date Only", todaysDate },};
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.TaskTab)) {
 			WebElement ele=tp.getTaskNameLinkInSideMMenu(projectName, TWTask8Subject, 15);
@@ -1510,18 +1531,20 @@ public class Module2 extends BaseLib{
 				}
 				ThreadSleep(3000);
 				if (lp.clickOnShowMoreActionDownArrow(projectName, PageName.TaskPage, ShowMoreActionDropDownList.Edit, 20)) {
-					if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), todaysDate, PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Entered value to Due Date Text Box", YesNo.Yes);
-						ThreadSleep(1000);
-					}else {
-						log(LogStatus.ERROR, "duedate textbox is not visible so task could not be created", YesNo.Yes);
-						sa.assertTrue(false,"duedate textbox is not visible so task could not be created" );
-					}
-
-					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact4FName+" "+Smoke_TWContact4LName, action.SCROLLANDBOOLEAN, 10);		
-					if (flag) {
-						log(LogStatus.SKIP,"Selected "+Smoke_TWContact4FName+" "+Smoke_TWContact4LName+" For Label "+PageLabel.Name,YesNo.No);
-
+					if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection, task1AdvancedSection,
+							task1AdvancedSection, null, null)) {
+//					if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), todaysDate, PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
+//						log(LogStatus.INFO, "Entered value to Due Date Text Box", YesNo.Yes);
+//						ThreadSleep(1000);
+//					}else {
+//						log(LogStatus.ERROR, "duedate textbox is not visible so task could not be created", YesNo.Yes);
+//						sa.assertTrue(false,"duedate textbox is not visible so task could not be created" );
+//					}
+//
+//					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact4FName+" "+Smoke_TWContact4LName, action.SCROLLANDBOOLEAN, 10);		
+//					if (flag) {
+//						log(LogStatus.SKIP,"Selected "+Smoke_TWContact4FName+" "+Smoke_TWContact4LName+" For Label "+PageLabel.Name,YesNo.No);
+//
 					} else {
 						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact4FName+" "+Smoke_TWContact4LName+" For Label "+PageLabel.Name);
 						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact4FName+" "+Smoke_TWContact4LName+" For Label "+PageLabel.Name,YesNo.Yes);
@@ -1657,26 +1680,26 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object2Tab, Smoke_TWContact5FName+" "+Smoke_TWContact5LName, 20)) {
-				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
-				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
-				scrollThroughOutWindow(driver);
+//				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+//				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
+//				scrollThroughOutWindow(driver);
 				ThreadSleep(3000);
 				WebElement ele;
-				String[][] basicsection= {{"Subject",TWTaskCR1Subject}};
+				String[][] basicsection= {{"Subject",TWTaskCR1Subject}, {"Related_To", Smoke_TWContact5FName+" "+Smoke_TWContact5LName}};
 				String[][] advanceSection= {{"Priority","Normal"},{"Due Date Only",todaysDate}};
 		        String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
 
 
 
-                bp.createActivityTimeline(projectName,false,"New Task", basicsection, advanceSection,null,null);
+                bp.createActivityTimeline(projectName,true,"Task", basicsection, advanceSection,null,null);
 				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 				CommonLib.ThreadSleep(50000);
 					
 					refresh(driver);
 					ThreadSleep(2000);
-					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
-					click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
-					ThreadSleep(2000);
+//					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+//					click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
+//					ThreadSleep(2000);
 //				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task , 10);
 //				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task.toString(), action.BOOLEAN)) {
 //					
@@ -1865,42 +1888,51 @@ public class Module2 extends BaseLib{
 	public void M2tc020_2_UpdateWatchlistLabels_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		String[][] task1BasicSection = { { "Subject", TWTaskUpdateLabelSubject },
+				{ "Related_To", Smoke_TWContact3FName+" "+Smoke_TWContact3LName }, 
+				{ "Related_To", Smoke_TWContact1FName+" "+Smoke_TWContact1LName }};
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS2Name, 20)) {
-				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.TaskPage,ActivityTimeLineItem.New_Task , 10);
 				
-				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task_with_Multiple_Associations.toString(), action.BOOLEAN)) {
-					ele=lp.getActivityTimeLineItem(projectName,PageName.TaskPage,ActivityTimeLineItem.Add , 10);
+				if (BP.createActivityTimeline(projectName, true, "Task", task1BasicSection, null,
+						null, null)) {
 					
-					if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.Add.toString(), action.BOOLEAN)) {
-						log(LogStatus.ERROR,"able to click on add button", YesNo.Yes);
-					}else {
-						log(LogStatus.ERROR,"could not click on add button", YesNo.Yes);
-						sa.assertTrue(false,"could not click on add button" );
-					}
-					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTaskUpdateLabelSubject, "Subject", action.SCROLLANDBOOLEAN)) {
+				}
+//				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.TaskPage,ActivityTimeLineItem.New_Task , 10);
+//				
+//				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task_with_Multiple_Associations.toString(), action.BOOLEAN)) {
+//					ele=lp.getActivityTimeLineItem(projectName,PageName.TaskPage,ActivityTimeLineItem.Add , 10);
+					
+//					if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.Add.toString(), action.BOOLEAN)) {
+//						log(LogStatus.ERROR,"able to click on add button", YesNo.Yes);
+//					}else {
+//						log(LogStatus.ERROR,"could not click on add button", YesNo.Yes);
+//						sa.assertTrue(false,"could not click on add button" );
+//					}
+					//if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTaskUpdateLabelSubject, "Subject", action.SCROLLANDBOOLEAN)) {
 
-						boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object2Tab, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 10);		
-						if (flag) {
-							log(LogStatus.SKIP,"Selected "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.No);
+//						boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object2Tab, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 10);		
+//						if (flag) {
+//							log(LogStatus.SKIP,"Selected "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.No);
+//
+//						} else {
+//							sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name);
+//							log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.Yes);
+//
+//						}
 
-						} else {
-							sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name);
-							log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.Yes);
-
-						}
-
-						flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object2Tab, Smoke_TWContact1FName+" "+Smoke_TWContact1LName, action.SCROLLANDBOOLEAN, 10);		
-						if (flag) {
-							log(LogStatus.SKIP,"Selected "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.No);
-
-						} else {
-							sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name);
-							log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.Yes);
-
-						}
+//						flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object2Tab, Smoke_TWContact1FName+" "+Smoke_TWContact1LName, action.SCROLLANDBOOLEAN, 10);		
+//						if (flag) {
+//							log(LogStatus.SKIP,"Selected "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.No);
+//
+//						} else {
+//							sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name);
+//							log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.Yes);
+//
+//						}
 						if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,10), "save", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
 						}
@@ -1908,14 +1940,14 @@ public class Module2 extends BaseLib{
 							log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
 							sa.assertTrue(false,"save button is not clickable so task not created" );
 						}
-					}else {
-						log(LogStatus.ERROR, "subject textbox is not visible, so cannot create task", YesNo.Yes);
-						sa.assertTrue(false,"subject textbox is not visible, so cannot create task" );
-					}
-				}else {
-					log(LogStatus.ERROR, "could not click on new task button", YesNo.Yes);
-					sa.assertTrue(false,"could not click on new task button" );
-				}
+//					}else {
+//						log(LogStatus.ERROR, "subject textbox is not visible, so cannot create task", YesNo.Yes);
+//						sa.assertTrue(false,"subject textbox is not visible, so cannot create task" );
+//					}
+//				}else {
+//					log(LogStatus.ERROR, "could not click on new task button", YesNo.Yes);
+//					sa.assertTrue(false,"could not click on new task button" );
+//				}
 			}else {
 				log(LogStatus.ERROR, "could not click on ins "+Smoke_TWINS2Name, YesNo.Yes);
 				sa.assertTrue(false,"could not click on ins " +Smoke_TWINS2Name);
@@ -2763,6 +2795,7 @@ public class Module2 extends BaseLib{
 	public void M2tc031_ChangeStageDealReceivedToNDASigned_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		dealQualityScore=1;
@@ -2812,7 +2845,9 @@ public class Module2 extends BaseLib{
 				
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline1SourceFirm,YesNo.No);	
 				
-
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				for (int i =0;i<labelName1.length;i++) {
 					if (fp.FieldValueVerificationOnFundPage(projectName, labelName1[i],labelValues1[i])) {
 						log(LogStatus.INFO,"successfully verified "+labelName1[i],YesNo.Yes);
@@ -2841,6 +2876,9 @@ public class Module2 extends BaseLib{
 			
 			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline1SourceContact, 30)){
 				
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline1SourceContact,YesNo.No);	
 				
 
@@ -2875,6 +2913,7 @@ public class Module2 extends BaseLib{
 	public void M2tc032_ChangeStageNDASignedToManagementMeeting_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		dealQualityScore=3;
@@ -2921,6 +2960,9 @@ public class Module2 extends BaseLib{
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
 			
 			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline1SourceFirm, 30)){
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline1SourceFirm,YesNo.No);	
 				
@@ -2952,7 +2994,9 @@ public class Module2 extends BaseLib{
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
 			
 			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline1SourceContact, 30)){
-				
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline1SourceContact,YesNo.No);	
 				
 
@@ -2986,6 +3030,7 @@ public class Module2 extends BaseLib{
 	@Test
 	public void M2tc033_ChangeStageManagementMeetingToIOI_Action(String projectName){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
@@ -3033,6 +3078,9 @@ public class Module2 extends BaseLib{
 			
 			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline1SourceFirm, 30)){
 				
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline1SourceFirm,YesNo.No);	
 				
 
@@ -3063,7 +3111,9 @@ public class Module2 extends BaseLib{
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
 			
 			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline1SourceContact, 30)){
-				
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline1SourceContact,YesNo.No);	
 				
 
@@ -3098,6 +3148,7 @@ public class Module2 extends BaseLib{
 	public void M2tc034_ChangeStageIOIToLOI_Action(String projectName){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		dealQualityScore=5;
@@ -3144,6 +3195,9 @@ public class Module2 extends BaseLib{
 			
 			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline1SourceFirm, 30)){
 				
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline1SourceFirm,YesNo.No);	
 				
 
@@ -3174,7 +3228,9 @@ public class Module2 extends BaseLib{
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
 			
 			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline1SourceContact, 30)){
-				
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline1SourceContact,YesNo.No);	
 				
 
@@ -3210,6 +3266,7 @@ public class Module2 extends BaseLib{
 	public void M2tc035_ChangeStageLOIToDueDiligence_Action(String projectName){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		dealQualityScore=5;
@@ -3255,7 +3312,9 @@ public class Module2 extends BaseLib{
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
 			
 			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline1SourceFirm, 30)){
-				
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline1SourceFirm,YesNo.No);	
 				
 
@@ -3286,7 +3345,9 @@ public class Module2 extends BaseLib{
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
 			
 			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline1SourceContact, 30)){
-				
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline1SourceContact,YesNo.No);	
 				
 
@@ -3322,6 +3383,7 @@ public class Module2 extends BaseLib{
 	public void M2tc036_ChangeStageDueDiligenceToParked_Action(String projectName){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		dealQualityScore=5;
@@ -3367,7 +3429,9 @@ public class Module2 extends BaseLib{
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
 			
 			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline1SourceFirm, 30)){
-				
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline1SourceFirm,YesNo.No);	
 				
 
@@ -3398,7 +3462,9 @@ public class Module2 extends BaseLib{
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
 			
 			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline1SourceContact, 30)){
-				
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline1SourceContact,YesNo.No);	
 				
 
@@ -3434,6 +3500,7 @@ public class Module2 extends BaseLib{
 	public void M2tc037_CreateDealData(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
@@ -3463,6 +3530,9 @@ public class Module2 extends BaseLib{
 			
 			if(fp.createDeal(projectName, "", M2_HSRPipeline2Name, M2_HSRPipeline2Company, M2_HSRPipeline2Stage, otherlabel, 30)){
 				
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				log(LogStatus.INFO,"successfully Created deal : "+M2_HSRPipeline2Name,YesNo.No);	
 
 			}else{
@@ -3502,7 +3572,9 @@ public class Module2 extends BaseLib{
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
 			
 			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline2SourceFirm, 30)){
-				
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline2SourceFirm,YesNo.No);	
 				
 
@@ -3535,7 +3607,9 @@ public class Module2 extends BaseLib{
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
 			
 			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline2SourceContact, 30)){
-				
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline2SourceContact,YesNo.No);	
 				
 
@@ -3574,6 +3648,7 @@ public class Module2 extends BaseLib{
 	public void M2tc038_ChangeStageDealReceivedToLOIAction(String projectName){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		dealQualityScore=5;
@@ -3619,7 +3694,9 @@ public class Module2 extends BaseLib{
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
 			
 			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline2SourceFirm, 30)){
-				
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline2SourceFirm,YesNo.No);	
 				
 
@@ -3650,7 +3727,9 @@ public class Module2 extends BaseLib{
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
 			
 			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline2SourceContact, 30)){
-				
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline2SourceContact,YesNo.No);	
 				
 
@@ -3686,6 +3765,7 @@ public class Module2 extends BaseLib{
 	public void M2tc039_ChangeStageLOIToParked_Action(String projectName){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		dealQualityScore=5;
@@ -3731,7 +3811,9 @@ public class Module2 extends BaseLib{
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
 			
 			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline2SourceFirm, 30)){
-				
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline2SourceFirm,YesNo.No);	
 				
 
@@ -3762,7 +3844,9 @@ public class Module2 extends BaseLib{
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
 			
 			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline2SourceContact, 30)){
-				
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline2SourceContact,YesNo.No);	
 				
 
@@ -3798,6 +3882,7 @@ public class Module2 extends BaseLib{
 	public void M2tc040_ChangeStageParkedToDeclined_Action(String projectName){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		dealQualityScore=5;
@@ -3843,7 +3928,9 @@ public class Module2 extends BaseLib{
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
 			
 			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline2SourceFirm, 30)){
-				
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline2SourceFirm,YesNo.No);	
 				
 
@@ -3874,7 +3961,9 @@ public class Module2 extends BaseLib{
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
 			
 			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline2SourceContact, 30)){
-				
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline2SourceContact,YesNo.No);	
 				
 
@@ -3910,6 +3999,7 @@ public class Module2 extends BaseLib{
 	public void M2tc041_ChangeStageDeclinedToClosed_Action(String projectName){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		dealQualityScore=5;
@@ -3955,7 +4045,9 @@ public class Module2 extends BaseLib{
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
 			
 			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline2SourceFirm, 30)){
-				
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline2SourceFirm,YesNo.No);	
 				
 
@@ -3986,7 +4078,9 @@ public class Module2 extends BaseLib{
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
 			
 			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline2SourceContact, 30)){
-				
+				WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				ThreadSleep(2000);
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline2SourceContact,YesNo.No);	
 				
 
@@ -4020,6 +4114,7 @@ public class Module2 extends BaseLib{
 	@Test
 	public void M2tc042_CreateInstitutionData(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
@@ -4196,6 +4291,7 @@ public class Module2 extends BaseLib{
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		
@@ -4378,7 +4474,7 @@ public class Module2 extends BaseLib{
 				if (click(driver, ele, "details tab", action.SCROLLANDBOOLEAN)) {
 					for (int i =0;i<labelName.length;i++) {
 						if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i])) {
-							log(LogStatus.SKIP,"successfully verified "+labelName[i],YesNo.No);
+							log(LogStatus.PASS,"successfully verified "+labelName[i],YesNo.No);
 							
 						}else {
 							sa.assertTrue(false,"Not Able to verify "+labelName[i]);
@@ -4420,7 +4516,7 @@ public class Module2 extends BaseLib{
 						}
 						for (int i =0;i<labelName1.length;i++) {
 							if (ip.fieldValueVerificationOnInstitutionPage(environment,mode,TabName.Object1Tab, labelName1[i],temp[i])) {
-								log(LogStatus.SKIP,"successfully verified "+labelName1[i],YesNo.No);
+								log(LogStatus.PASS,"successfully verified "+labelName1[i],YesNo.No);
 
 							}else {
 								sa.assertTrue(false,"Not Able to verify "+labelName1[i]);
@@ -5063,7 +5159,7 @@ public class Module2 extends BaseLib{
 				if (click(driver, ele, "details tab", action.SCROLLANDBOOLEAN)) {
 					for (int i =0;i<labelName.length;i++) {
 						if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i])) {
-							log(LogStatus.SKIP,"successfully verified "+labelName[i],YesNo.No);
+							log(LogStatus.PASS,"successfully verified "+labelName[i],YesNo.No);
 							
 						}else {
 							sa.assertTrue(false,"Not Able to verify "+labelName[i]);
@@ -5095,7 +5191,7 @@ public class Module2 extends BaseLib{
 						if (j==1) {
 							for (int i =0;i<labelName1.length;i++) {
 								if (ip.fieldValueVerificationOnInstitutionPage(environment,mode,TabName.Object1Tab, labelName1[i],labelValues1[i])) {
-									log(LogStatus.SKIP,"successfully verified "+labelName1[i],YesNo.No);
+									log(LogStatus.PASS,"successfully verified "+labelName1[i],YesNo.No);
 
 								}else {
 									sa.assertTrue(false,"Not Able to verify "+labelName1[i]);
@@ -5111,7 +5207,7 @@ public class Module2 extends BaseLib{
 									sa.assertTrue(false,"Following value present but should not be "+labelName1[i]);
 									log(LogStatus.SKIP,"Following value present but should not be "+labelName1[i],YesNo.Yes);
 								}else {
-									log(LogStatus.SKIP,"successfully verified absence of "+labelName1[i],YesNo.No);
+									log(LogStatus.PASS,"successfully verified absence of "+labelName1[i],YesNo.No);
 								}
 
 							}
