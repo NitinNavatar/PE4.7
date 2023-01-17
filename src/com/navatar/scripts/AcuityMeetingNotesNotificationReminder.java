@@ -1087,6 +1087,23 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 												log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
 												ThreadSleep(10000);
+
+												String expectedHeaderName = "Task";
+												if (BP.notePopUpHeading(expectedHeaderName, 15) != null) {
+													log(LogStatus.INFO,
+															"PopUp Name has been verified to: " + expectedHeaderName,
+															YesNo.No);
+												}
+
+												else {
+													log(LogStatus.ERROR,
+															"PopUp Name has been not been verified, Expected: "
+																	+ expectedHeaderName,
+															YesNo.No);
+													sa.assertTrue(false,
+															"PopUp Name has been not been verified, Expected: "
+																	+ expectedHeaderName);
+												}
 												ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
 														.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
 																task1SubjectName, updatedNotesOfTask,
@@ -6333,6 +6350,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 
 		String[] tabNames = { "Activities" };
 		String[][] labelsWithValues2d = {
@@ -6342,6 +6360,29 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] labelsWithValues2dRevertBack = {
 				"Subject<break>Subject<Section>Status<break>Status<Section>Due Date Only<break>Due Date Only<Section>Priority<break>Priority"
 						.split("<Section>", -1) };
+
+		String task1SubjectNameVerifyAfterLabelChange = "";
+		String task1NotesVerifyAfterLabelChange = "";
+
+		String getAdvanceDueDateVerifyAfterLabelChange = "";
+		String priorityAfterLabelChange = "Normal";
+		String statusAfterLabelChange = "Not Started";
+
+		String taskSectionSubjectAfterLabelChange = "";
+		String taskSectionStatusAfterLabelChange = "Not Started";
+		String taskSectionDueDateOnlyAfterLabelChange = "";
+
+		String[][] task1BasicSectionAfterLabelChange = { { "Subject updated", task1SubjectNameVerifyAfterLabelChange },
+				{ "Notes", task1NotesVerifyAfterLabelChange } };
+
+		String[][] task1AdvancedSectionAfterLabelChange = {
+				{ "Due Date Only updated", getAdvanceDueDateVerifyAfterLabelChange },
+				{ "Status updated", statusAfterLabelChange }, { "Priority updated", priorityAfterLabelChange } };
+
+		String[][] task1TaskSectionAfterLabelChange = { { "Subject updated", taskSectionSubjectAfterLabelChange },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName },
+				{ "Status updated", taskSectionStatusAfterLabelChange },
+				{ "Due Date Only updated", taskSectionDueDateOnlyAfterLabelChange } };
 
 		String AdvanceDueDate = ExcelUtils.readData(AcuityDataSheetFilePath, "Activity Timeline",
 				excelLabel.Variable_Name, "AMNNR_Activity023", excelLabel.Advance_Due_Date);
@@ -6412,6 +6453,76 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		if (flag1) {
 
 			lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+			if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+				log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+				home.notificationPopUpClose();
+
+				WebElement ele;
+				if (npbl.createNavPopUpMinimizeButton(5) != null) {
+					CommonLib.click(driver, npbl.createNavPopUpMinimizeButton(5), "Minimize", action.BOOLEAN);
+				}
+				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, NavigationMenuItems.Create.toString(),
+						action.BOOLEAN, 30)) {
+					log(LogStatus.INFO, "Able to Click on " + task1ButtonName + " Going to click on : "
+							+ NavigationMenuItems.Create.toString() + " for creation ", YesNo.No);
+					ele = npbl.getNavigationLabel(projectName, task1ButtonName, action.BOOLEAN, 10);
+					if (ele != null && CommonLib.click(driver, ele, task1ButtonName, action.BOOLEAN)) {
+						log(LogStatus.INFO, "Click on " + task1ButtonName + " so going for creation", YesNo.No);
+						String url = getURL(driver, 10);
+
+						ThreadSleep(10000);
+
+						String expectedHeaderName = "Task";
+						if (BP.notePopUpHeading(expectedHeaderName, 15) != null) {
+							log(LogStatus.INFO, "PopUp Name has been verified to: " + expectedHeaderName, YesNo.No);
+						}
+
+						else {
+							log(LogStatus.ERROR,
+									"PopUp Name has been not been verified, Expected: " + expectedHeaderName, YesNo.No);
+							sa.assertTrue(false,
+									"PopUp Name has been not been verified, Expected: " + expectedHeaderName);
+						}
+
+						ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
+								.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionAfterLabelChange,
+										task1AdvancedSectionAfterLabelChange, task1TaskSectionAfterLabelChange);
+						if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+							log(LogStatus.INFO,
+									"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+									YesNo.No);
+
+						} else {
+							log(LogStatus.ERROR,
+									"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+											+ NotesPopUpPrefilledNegativeResult,
+									YesNo.No);
+							sa.assertTrue(false,
+									"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+											+ NotesPopUpPrefilledNegativeResult);
+						}
+
+					} else {
+						log(LogStatus.ERROR,
+								"Not Able to Click on " + task1ButtonName + " so cannot create data related to this ",
+								YesNo.Yes);
+						sa.assertTrue(false,
+								"Not Able to Click on " + task1ButtonName + " so cannot create data related to this ");
+
+					}
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Create.toString()
+							+ " so cannot click on : " + task1ButtonName + " for creation ", YesNo.Yes);
+					sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Create.toString()
+							+ " so cannot click on : " + task1ButtonName + " for creation ");
+
+				}
+
+			} else {
+				sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
+				log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
+			}
 
 			log(LogStatus.INFO,
 					"---------Now Going to Verify Task: " + task1SubjectNameVerify + " in Interaction Section---------",
@@ -7710,6 +7821,19 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
 							ThreadSleep(1000);
+
+							String expectedHeaderName = "Call Notes";
+							if (BP.notePopUpHeading(expectedHeaderName, 15) != null) {
+								log(LogStatus.INFO, "PopUp Name has been verified to: " + expectedHeaderName, YesNo.No);
+							}
+
+							else {
+								log(LogStatus.ERROR,
+										"PopUp Name has been not been verified, Expected: " + expectedHeaderName,
+										YesNo.No);
+								sa.assertTrue(false,
+										"PopUp Name has been not been verified, Expected: " + expectedHeaderName);
+							}
 							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
 									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1SubjectName, task1Notes,
 											relatedToArray);
@@ -11726,7 +11850,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String updatedNotesOfTask = task1Notes;
 
-		String task1UpdatedSubjectName = AMNNR_Subject44+ " " + AMNNR_ActivityType54;
+		String task1UpdatedSubjectName = AMNNR_Subject44 + " " + AMNNR_ActivityType54;
 		String[][] task1UpdateBasicSection = { { "Subject", task1UpdatedSubjectName } };
 		;
 		String[][] task1UpdateAdvancedSection = null;

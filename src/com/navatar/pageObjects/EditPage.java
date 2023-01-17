@@ -713,10 +713,10 @@ public class EditPage extends BasePageBusinessLayer {
 	public WebElement tabNameElementInEditPage(String tabName, int timeOut) {
 
 		try {
-			return FindElement(driver, "//span[text()=\""+tabName+"\" and @class=\"uiOutputText\"]/parent::a",
+			return FindElement(driver, "//span[text()=\"" + tabName + "\" and @class=\"uiOutputText\"]/parent::a",
 					"Tab Name: " + tabName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, "//span[text()=\""+tabName+"\" and @class=\"uiOutputText\"]/parent::a",
+			return FindElement(driver, "//span[text()=\"" + tabName + "\" and @class=\"uiOutputText\"]/parent::a",
 					"Tab Name: " + tabName, action.SCROLLANDBOOLEAN, timeOut);
 		}
 
@@ -730,7 +730,7 @@ public class EditPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "(//span[text()='Details' and @class='uiOutputText'])[2]/parent::a")
+	@FindBy(xpath = "(//span[text()=\"Details\" and @class=\"uiOutputText\"])[2]/parent::a")
 	private WebElement detailTabCreatedAfterAddTab;
 
 	public WebElement detailTabCreatedAfterAddTab(int timeOut) {
@@ -778,17 +778,17 @@ public class EditPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "//div[contains(@class,'uiTabset--default')]//a[text()='Add Component(s) Here']")
+	@FindBy(xpath = "//div[contains(@class,\"uiTabset--default\")]//a[text()=\"Add Component(s) Here\"]")
 	private WebElement addComponentLinkInTabSection;
 
 	public WebElement addComponentLinkInTabSection(int timeOut) {
 		return isDisplayed(driver, addComponentLinkInTabSection, "Visibility", timeOut, "addComponentLinkInTabSection");
 	}
-	
+
 	public WebElement customFilterComponent(int timeOut) {
 		String xpath = "//div[@class='navpeIICustomFilterCompForSDG']";
 		return FindElement(driver, xpath, "Custom Filter Component", action.SCROLLANDBOOLEAN, timeOut);
-		
+
 	}
 
 }

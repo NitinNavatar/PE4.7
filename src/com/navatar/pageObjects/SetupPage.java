@@ -1173,7 +1173,7 @@ public class SetupPage extends BasePageBusinessLayer {
 	 */
 
 	public WebElement EditButtonOfAcuitySettings(String SettingName, int timeOut) {
-		String xpath = "//td[text()='" + SettingName + "']/ancestor::tr//a[text()='Edit']";
+		String xpath = "//a[text()='" + SettingName + "']/ancestor::tr//a[text()='Edit']";
 
 		try {
 			return FindElement(driver, xpath, "EditButtonOfAcuitySettings", action.SCROLLANDBOOLEAN, timeOut);

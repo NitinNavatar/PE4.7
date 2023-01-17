@@ -825,6 +825,13 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 					log(LogStatus.INFO, "Component Title Matched to Home Page " + Title, YesNo.Yes);
 
+					String xPath = "//a[text()=\"" + Title + "\"]/ancestor::article/preceding-sibling::lightning-icon";
+					WebElement ele = FindElement(driver, xPath, "Expend or Collaps icon", action.BOOLEAN, 20);
+					String text = getAttribute(driver, ele, "Expend or Collaps icon", "title");
+					if (text.equals("Expand")) {
+						clickUsingJavaScript(driver, ele, "Expend icon");
+					}
+
 					WebElement pageSizeSelect = FindElement(driver,
 							"//a[text()='" + Title
 									+ "']/ancestor::article//span[text()='Page Size']/../parent::div//select",
@@ -856,8 +863,8 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 					}
 
-					List<WebElement> columns = FindElements(driver,
-							"//a[text()='" + Title + "']/ancestor::article//thead//th[contains(@class,'navpeI')]//span",
+					List<WebElement> columns = FindElements(driver, "//a[text()=\"" + Title
+							+ "\"]/ancestor::article//thead//th[contains(@class,\"navpeI\")]//span[contains(@class,\"slds-truncate\")]",
 							"Records");
 					List<String> columnsText = new ArrayList<String>();
 					for (WebElement column : columns) {
@@ -936,18 +943,18 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 			}
 			if (flag) {
-				List<WebElement> columns = FindElements(driver,
-						"//a[text()='" + Title + "']/ancestor::article//thead//th[contains(@class,'navpeI')]//span",
+				List<WebElement> columns = FindElements(driver, "//a[text()=\"" + Title
+						+ "\"]/ancestor::article//thead//th[contains(@class,\"navpeI\")]//span[contains(@class,\"slds-truncate\")]",
 						"Records");
 				List<String> columnsText = new ArrayList<String>();
 				for (WebElement column : columns) {
 					columnsText.add(column.getText().toLowerCase());
 				}
 				System.out.println(columnsText);
-				fieldsInComponent = fieldsInComponent.stream().map(x->x.toLowerCase()).collect(Collectors.toList());
+				fieldsInComponent = fieldsInComponent.stream().map(x -> x.toLowerCase()).collect(Collectors.toList());
 				if (CommonLib.compareList(columnsText, fieldsInComponent)) {
 					log(LogStatus.INFO, "All Fields are Matched ", YesNo.No);
-					resultFlag=true;
+					resultFlag = true;
 
 				} else {
 					log(LogStatus.ERROR, "All Fields are not Matched", YesNo.No);
@@ -1197,7 +1204,8 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			ThreadSleep(10000);
 
 			if (AddComponentLinkButton(30) != null) {
-				if (CommonLib.click(driver, AddComponentLinkButton(50), "Add to component", action.SCROLLANDBOOLEAN)) {
+				if (CommonLib.clickUsingJavaScript(driver, AddComponentLinkButton(50), "Add to component",
+						action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Add to component button has been clicked", YesNo.No);
 				} else {
 					log(LogStatus.ERROR, "Could not be click on the Add to component button", YesNo.Yes);
@@ -1589,6 +1597,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 										action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "Clicked on Done Button", YesNo.No);
 
+									CommonLib.ThreadSleep(4000);
 									if (CommonLib.dragNDropField(driver, tabNameElementInEditPage(tabName, 30),
 											tabNameElementInEditPage(dropTabTo, 30))) {
 										log(LogStatus.INFO, "Successfully Drag the Tab: " + tabName + " And Drop it to "
@@ -1597,11 +1606,12 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 										if (CommonLib.switchToFrame(driver, 50, getAppBuilderIframe(50))) {
 											log(LogStatus.INFO, "Successfully Switched to the Frame", YesNo.No);
-											if (CommonLib.click(driver, tabNameElementInEditPageComponent(tabName, 50),
+											if (CommonLib.clickUsingJavaScript(driver, tabNameElementInEditPageComponent(tabName, 50),
 													"Tab: " + tabName, action.SCROLLANDBOOLEAN)) {
 												log(LogStatus.INFO, "Clicked on Tab: " + tabName + " Inside Page",
 														YesNo.No);
 
+												CommonLib.ThreadSleep(4000);
 												if (CommonLib.clickUsingJavaScript(driver,
 														addComponentLinkInTabSection(50),
 														"Add Component Here Link in Tab: " + tabName,
@@ -1769,8 +1779,8 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 					action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on Edit Page Back Button", YesNo.No);
 				WebElement ele1 = getRelatedTab(projectName, RelatedTab.SDG_Tab.toString().replace("_", " "), 10);
-                click(driver, ele1, RelatedTab.SDG_Tab.toString().replace("_", " "), action.BOOLEAN);
-                ThreadSleep(2000);
+				click(driver, ele1, RelatedTab.SDG_Tab.toString().replace("_", " "), action.BOOLEAN);
+				ThreadSleep(2000);
 				WebElement alreadyAddedComponentToHomePage = FindElement(driver, "//a[text()='" + Title + "']",
 						"Component Title ", action.SCROLLANDBOOLEAN, 10);
 				if (alreadyAddedComponentToHomePage != null) {

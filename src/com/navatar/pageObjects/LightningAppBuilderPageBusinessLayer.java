@@ -65,8 +65,8 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 							CommonLib.switchToFrame(driver, 50, getAppBuilderIframe(80));
 							CommonLib.ThreadSleep(20000);
 							if (CommonLib.isElementPresent(getAddComponentButton(50))) {
-								if (CommonLib.click(driver, getAddComponentButton(50), "Add to component",
-										action.SCROLLANDBOOLEAN)) {
+								if (CommonLib.clickUsingJavaScript(driver, getAddComponentButton(50),
+										"Add to component", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "Add to component button has been clicked", YesNo.No);
 								} else {
 									log(LogStatus.ERROR, "Could not be click on the Add to component button",
@@ -334,7 +334,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 								CommonLib.switchToFrame(driver, 50, getAppBuilderIframe(80));
 								CommonLib.ThreadSleep(5000);
 								if (getAddComponentButton(50) != null) {
-									if (CommonLib.click(driver, getAddComponentButton(50), "Add to component",
+									if (CommonLib.clickUsingJavaScript(driver, getAddComponentButton(50), "Add to component",
 											action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.INFO, "Add to component button has been clicked", YesNo.No);
 									} else {
@@ -598,7 +598,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		if (pageSizeSelect != null) {
 			if (CommonLib.selectVisibleTextFromDropDown(driver, pageSizeSelect, "Page Size Select", pageSize)) {
 				log(LogStatus.INFO, "Selected the Page Size", YesNo.No);
-				CommonLib.ThreadSleep(25000);
+				CommonLib.ThreadSleep(15000);
 				flag = true;
 			} else {
 				log(LogStatus.ERROR, "Not Able To Select Page Size ", YesNo.No);
@@ -629,7 +629,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 
 			if (pageSizeSelect(Title, pageSize)) {
 				log(LogStatus.INFO, "Page size " + pageSize + " has been selected", YesNo.No);
-				CommonLib.ThreadSleep(30000);
+				CommonLib.ThreadSleep(20000);
 				List<WebElement> records = FindElements(driver,
 						"//a[text()='" + Title + "']/ancestor::article//tbody/tr", "Records");
 				System.out.println("No. of Records Present: " + records.size());

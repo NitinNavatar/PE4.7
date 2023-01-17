@@ -2302,7 +2302,7 @@ public class HomePage extends BasePageBusinessLayer {
 
 	public List<WebElement> getFundFirstSDGColumns(String TitleOfSDG, int timeOut) {
 		String xpath = "//h2/span/a[text()='" + TitleOfSDG
-				+ "']/../../../../../following-sibling::div/div/following-sibling::div//tr/th/following-sibling::th//span";
+				+ "']/../../../../../following-sibling::div/div/following-sibling::div//tr/th/following-sibling::th//span[contains(@class,'slds-truncate')]";
 		List<WebElement> FundFirst = FindElements(driver, xpath, "Fund First SDG Columns");
 		return FundFirst;
 	}
