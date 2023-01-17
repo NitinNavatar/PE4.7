@@ -5511,7 +5511,7 @@ public abstract class BasePage extends BaseLib {
 			return ele;
 	}
 
-	@FindBy(xpath = "//div[@class='container']//li")
+	@FindBy(xpath = "//h2[@title='We hit a snag.']")
 	private WebElement hitASnagElement;
 
 	/**
@@ -7074,7 +7074,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement dealAcuityHSR(String HSR, int timeOut) {
 
-		String xpath = "//a[text()='" + HSR + "']/ancestor::th[@data-label='Highest Stage Reached']";
+		String xpath = "//a[text()='" + HSR + "']/ancestor::td[@data-label='Highest Stage Reached']";
 		try {
 			return FindElement(driver, xpath, "Header: " + HSR, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7122,7 +7122,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement dealAcuity2StageName(String dealName, String stage, int timeOut) {
 
 		String xpath = "//a[text()='" + dealName
-				+ "']/ancestor::th[@data-label='Deal']/following-sibling::td[@data-label='Status']//span";
+				+ "']/ancestor::th[@data-label='Deal']/following-sibling::td[@data-label='Stage']//span";
 		try {
 			return FindElement(driver, xpath, "Header: " + stage, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -8060,7 +8060,7 @@ public abstract class BasePage extends BaseLib {
 		}
 	}
 
-	@FindBy(xpath = "//div[@class='slds-modal__container']//p[text()='No item display']")
+	@FindBy(xpath = "//p[text()='No items to display']")
 	private WebElement ErrorMsg;
 
 	/**
@@ -8370,7 +8370,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement contactPopUpTO(String subject, String Toname, int timeOut) {
 
-		String xpath = "//a[text()='" + subject + "']/ancestor::tr//button[@name = 'toEmailNames' and text()='" + Toname
+		String xpath = "//a[text()='" + subject + "']/ancestor::tr//button[@name = 'to' and text()='" + Toname
 				+ "']";
 		try {
 			return FindElement(driver, xpath, "for to: " + Toname, action.SCROLLANDBOOLEAN, timeOut);
@@ -8398,7 +8398,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, Contactpopupheader, "Visibility", timeOut, "Contactpopupheader");
 	}
 
-	@FindBy(xpath = "//div[@class='slds-modal__container']//h2")
+	@FindBy(xpath = "//div[@class='slds-page-header__name-title']//h1")
 	private WebElement Connectionpopupheader;
 
 	public WebElement getConnectionpopupheader(int timeOut) {
@@ -8418,7 +8418,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement contactPopUpCC(String subject, String CCname, int timeOut) {
 
-		String xpath = "//a[text()='" + subject + "']/ancestor::tr//button[@name = 'ccEmailNames' and text()='" + CCname
+		String xpath = "//a[text()='" + subject + "']/ancestor::tr//button[@name = 'cc' and text()='" + CCname
 				+ "']";
 		try {
 			return FindElement(driver, xpath, "for CC: " + CCname, action.SCROLLANDBOOLEAN, timeOut);
@@ -8459,8 +8459,8 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement contactEmailCountAcuity(String contactName, int timeOut) {
 
-		String xpath = "//a[text()='" + contactName
-				+ "']/ancestor::th[@data-label='Team Member']/..//td[@data-label='Emails']//span//button";
+		String xpath = "//*[text()='" + contactName
+				+ "']/ancestor::th[@data-label='Team Member']/..//span//button[@name='emailRef']";
 		try {
 			return FindElement(driver, xpath, "Contact Header: " + contactName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -8470,7 +8470,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement contactPopUpEmailsubject(String subject, int timeOut) {
 
-		String xpath = "//div[@class='slds-modal__container']//a[text()='" + subject + "']";
+		String xpath = "//a[text()='" + subject + "']";
 		try {
 			return FindElement(driver, xpath, "Header: " + subject, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -8529,7 +8529,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement Componenterrormsg(int timeOut) {
 
-		String xpath = "//div[contains(@class,'slds-theme--error')]//span[text()='Error Occured While Loading Component Attempt to de-reference a null object']";
+		String xpath = "//div[contains(@class,'slds-theme--error')]//span[contains(@class,'toastMessage')]";
 		try {
 			return FindElement(driver, xpath, "component error msg", action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {

@@ -33,8 +33,8 @@ public class SmokeCommonVariables {
 	public static String crmUser1FirstName,crmUser1LastName,crmUser1EmailID,crmUserProfile,crmUserLience;
 	public static String crmUser3FirstName,crmUser3LastName,crmUser3EmailID,crmUser3Profile,crmUser3Lience;
 	public static String gmailUserName,gmailUserName2,gmailPassword;
-	public static String rgUser1,rgUser2,rgUserPassword,rgOrgPassword;
-	public static String rgContact1,rgContact2,rgContact3,rgContact4;
+	public static String rgUser1,rgUser2,rgUser3,rgUserPassword,rgOrgPassword;
+	public static String rgContact1,rgContact2,rgContact3,rgContact4,rgContactPassword;
 
 	public static String SmokeINS1, SmokeINS1_RecordType;
 	public static String SmokeINS2, SmokeINS2_RecordType, SmokeINS2_Street, SmokeINS2_City, SmokeINS2_State,
@@ -382,6 +382,7 @@ public class SmokeCommonVariables {
 			
 			rgUser1=ExcelUtils.readData(testCasesFilePath,"RG User",excelLabel.Variable_Name, "RGUser1", excelLabel.User_Name);
 			rgUser2=ExcelUtils.readData(testCasesFilePath,"RG User",excelLabel.Variable_Name, "RGUser2", excelLabel.User_Name);
+			rgUser3=ExcelUtils.readData(testCasesFilePath,"RG User",excelLabel.Variable_Name, "RGUser3", excelLabel.User_Name);
 			rgUserPassword=ExcelUtils.readData(testCasesFilePath,"RG User",excelLabel.Variable_Name, "RGUser1", excelLabel.Password);
 			rgOrgPassword=ExcelUtils.readData(testCasesFilePath,"RG User",excelLabel.Variable_Name, "RGUser1", excelLabel.OrgPassword);
 			
@@ -389,6 +390,7 @@ public class SmokeCommonVariables {
 			rgContact2=ExcelUtils.readData(testCasesFilePath,"RG User",excelLabel.Variable_Name, "RGContact2", excelLabel.User_Name);
 			rgContact3=ExcelUtils.readData(testCasesFilePath,"RG User",excelLabel.Variable_Name, "RGContact3", excelLabel.User_Name);
 			rgContact4=ExcelUtils.readData(testCasesFilePath,"RG User",excelLabel.Variable_Name, "RGContact4", excelLabel.User_Name);
+			rgContactPassword=ExcelUtils.readData(testCasesFilePath,"RG User",excelLabel.Variable_Name, "RGContact1", excelLabel.Password);
 			
 			crmUser3FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User3", excelLabel.User_First_Name);
 			crmUser3LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User3", excelLabel.User_Last_Name);

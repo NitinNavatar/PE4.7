@@ -14197,7 +14197,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		if (!dealsSectionHeaderName.isEmpty()) {
 			ArrayList<String> actualDealsSectionHeaderName = new ArrayList<String>();
-			xPath = "//span[@title='Deals']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//span[@class='slds-truncate' and text()!='']";
+			xPath = "//span[@title='Deals']/../../../..//span[text()=@title]";
+//					"//span[@title='Deals']/ancestor::div/following-sibling::div//span[text()='']";
+			//span[@title='Deals']/ancestor::div//th[contains(@data-col-key-value,'field')]//span[text()='Deal Name']
 			elements = FindElements(driver, xPath, "Deal section headers");
 			for (WebElement el : elements) {
 				actualDealsSectionHeaderName.add(getText(driver, el, "deal section headers", action.SCROLLANDBOOLEAN));
@@ -14241,14 +14243,16 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		if (!connectionsSectionHeaderName.isEmpty()) {
 			ArrayList<String> actualConnectionsSectionHeaderName = new ArrayList<String>();
-			xPath = "//span[@title='Connections']/ancestor::div[@class='slds-m-bottom_xx-small']//span[@class='slds-truncate' and @title!='']";
+//			xPath = "//span[@title='Connections']/ancestor::div[@class='slds-m-bottom_xx-small']//span[@class='slds-truncate' and @title!='']";
+			xPath = "//span[contains(@title,'Connection')]/ancestor::div//span[@class='slds-truncate' and @title!='']";
 			elements = FindElements(driver, xPath, "Connections section headers");
 			for (WebElement el : elements) {
 				actualConnectionsSectionHeaderName
 						.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
 			}
 
-			xPath = "//span[@title='Connections']/ancestor::div[@class='slds-m-bottom_xx-small']//lightning-icon";
+//			xPath = "//span[@title='Connections']/ancestor::div[@class='slds-m-bottom_xx-small']//lightning-icon";
+			xPath = "//span[contains(@title,'Connection')]/ancestor::div//div[@class='slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate']//lightning-icon";
 			elements = FindElements(driver, xPath, "Connections section headers");
 			for (WebElement el : elements) {
 				actualConnectionsSectionHeaderName

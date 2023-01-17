@@ -1162,7 +1162,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	}
 	
 	public String EmailcountonPopup( int timeOut) {
-		String xpath = "//h2[contains(@class,'text-heading')]/../..//table";
+		String xpath = "//table";
 		WebElement emailElement = FindElement(driver, xpath,"EmailcountonPopup", action.BOOLEAN, 10);
 		return isDisplayed(driver, emailElement, xpath, 10, "").getAttribute("data-last-rendered-row");
 	}
