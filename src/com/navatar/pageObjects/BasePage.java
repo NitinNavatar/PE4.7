@@ -8573,7 +8573,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement getDetailsOnInteractionPage(String subjectName, int timeOut) {
 
-		String xpath = "//h2[contains(text(),'All Interactions with')]/../..//a[text()='" + subjectName
+		String xpath = "//button[text()='" + subjectName
 				+ "']/ancestor::tr/td[@data-label='Details']//button";
 		try {
 			return FindElement(driver, xpath, "Tab name: " + subjectName, action.SCROLLANDBOOLEAN, timeOut);
@@ -8698,5 +8698,36 @@ public abstract class BasePage extends BaseLib {
 			return FindElement(driver, xpath, "subject name on Interaction page", action.SCROLLANDBOOLEAN, timeOut);
 		}
 	}
+	
+	public WebElement getEditButtonOnPopup(String subjectName, int timeOut) {
+
+		String xpath = "//h2[text()='"+subjectName+"']/ancestor::slot//button[@title='Edit']";
+		try {
+			return FindElement(driver, xpath, "edit button Interaction page", action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "edit button on Interaction page", action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+	
+	@FindBy(xpath = "//h2[contains(@class,'slds-text-heading_medium')]/ancestor::div[@class='slds-modal__container']//button[@title='Cancel']")
+	private WebElement cancelButtonPopup;
+
+	public WebElement getCancelButtonPopup(int timeOut) {
+		return isDisplayed(driver, cancelButtonPopup, "Visibility", timeOut,
+				"cancel button on popup");
+	}
+	
+	public WebElement getDetailsOnInteractionCard(String subjectName, int timeOut) {
+
+		String xpath = "//a[text()='"+subjectName+"']/ancestor::lightning-card//div[contains(@class,'slds-text-title')]";
+		try {
+			return FindElement(driver, xpath, "Tab name: " + subjectName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Tab name: " + subjectName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+	
+	
 
 }

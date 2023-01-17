@@ -20395,7 +20395,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	public ArrayList<String> verifyDescriptionShouldNotVisibleUnderDetailsOnInteractionSection(String[] subjectName,
 			String[] detailsMessage) {
-
 		String id = switchOnWindow(driver);
 		ArrayList<String> result = new ArrayList<String>();
 		if (subjectName.length == detailsMessage.length) {
@@ -20505,6 +20504,24 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				log(LogStatus.ERROR, "View All Button is not present, So not able to Click on Subject: " + subjectName,
 						YesNo.Yes);
 			}
+		}
+		return flag;
+	}
+	
+	public boolean verifyDescriptionShouldNotVisibleOnInteractionCard(String subjectName,
+			String detailsMessage) {
+		boolean flag=false;
+		String actualDetails = getText(driver, getDetailsOnInteractionCard(subjectName, 30),
+				" details of subject : " + subjectName, action.SCROLLANDBOOLEAN);
+		if (!actualDetails.contains(detailsMessage)) {
+			log(LogStatus.INFO, "Details : " + detailsMessage
+					+ " is not available on Interaction popup for subject " + subjectName, YesNo.No);
+			flag=true;
+
+		} else {
+			log(LogStatus.ERROR, "Details : " + detailsMessage
+					+ " is available on Interaction popup for subject " + subjectName, YesNo.No);
+
 		}
 		return flag;
 	}
