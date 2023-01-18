@@ -164,7 +164,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 				|| labelName.equalsIgnoreCase(ContactPageFieldLabelText.Mailing_Street.toString())
 				|| labelName.equalsIgnoreCase(ContactPageFieldLabelText.Other_Street.toString())) {
 			finalXpath = xpath + textAreaXpath;
-		} else if (labelName.equalsIgnoreCase(excelLabel.Phone.toString())) {
+		} else if (labelName.equalsIgnoreCase(excelLabel.Phone.toString()) || labelName.equalsIgnoreCase(excelLabel.Fax.toString())) {
 			xpath = "//*[starts-with(text(),'" + finalLabelName + "')]/following-sibling::div//input";
 			finalXpath = xpath;
 		} else if (labelName.equalsIgnoreCase(excelLabel.Region.toString())
