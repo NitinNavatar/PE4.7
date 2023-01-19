@@ -8379,8 +8379,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement contactPopUpTO(String subject, String Toname, int timeOut) {
 
-		String xpath = "//a[text()='" + subject + "']/ancestor::tr//button[@name = 'to' and text()='" + Toname
-				+ "']";
+		String xpath = "//a[text()='" + subject + "']/ancestor::tr//button[@name = 'to' and text()='" + Toname + "']";
 		try {
 			return FindElement(driver, xpath, "for to: " + Toname, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -8427,8 +8426,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement contactPopUpCC(String subject, String CCname, int timeOut) {
 
-		String xpath = "//a[text()='" + subject + "']/ancestor::tr//button[@name = 'cc' and text()='" + CCname
-				+ "']";
+		String xpath = "//a[text()='" + subject + "']/ancestor::tr//button[@name = 'cc' and text()='" + CCname + "']";
 		try {
 			return FindElement(driver, xpath, "for CC: " + CCname, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -8573,8 +8571,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement getDetailsOnInteractionPage(String subjectName, int timeOut) {
 
-		String xpath = "//button[text()='" + subjectName
-				+ "']/ancestor::tr/td[@data-label='Details']//button";
+		String xpath = "//button[text()='" + subjectName + "']/ancestor::tr/td[@data-label='Details']//button";
 		try {
 			return FindElement(driver, xpath, "Tab name: " + subjectName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -8698,28 +8695,28 @@ public abstract class BasePage extends BaseLib {
 			return FindElement(driver, xpath, "subject name on Interaction page", action.SCROLLANDBOOLEAN, timeOut);
 		}
 	}
-	
+
 	public WebElement getEditButtonOnPopup(String subjectName, int timeOut) {
 
-		String xpath = "//h2[text()='"+subjectName+"']/ancestor::slot//button[@title='Edit']";
+		String xpath = "//h2[text()='" + subjectName + "']/ancestor::slot//button[@title='Edit']";
 		try {
 			return FindElement(driver, xpath, "edit button Interaction page", action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
 			return FindElement(driver, xpath, "edit button on Interaction page", action.SCROLLANDBOOLEAN, timeOut);
 		}
 	}
-	
+
 	@FindBy(xpath = "//h2[contains(@class,'slds-text-heading_medium')]/ancestor::div[@class='slds-modal__container']//button[@title='Cancel']")
 	private WebElement cancelButtonPopup;
 
 	public WebElement getCancelButtonPopup(int timeOut) {
-		return isDisplayed(driver, cancelButtonPopup, "Visibility", timeOut,
-				"cancel button on popup");
+		return isDisplayed(driver, cancelButtonPopup, "Visibility", timeOut, "cancel button on popup");
 	}
-	
+
 	public WebElement getDetailsOnInteractionCard(String subjectName, int timeOut) {
 
-		String xpath = "//a[text()='"+subjectName+"']/ancestor::lightning-card//div[contains(@class,'slds-text-title')]";
+		String xpath = "//a[text()='" + subjectName
+				+ "']/ancestor::lightning-card//div[contains(@class,'slds-text-title')]";
 		try {
 			return FindElement(driver, xpath, "Tab name: " + subjectName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -8727,7 +8724,184 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
-	
-	
+
+	public WebElement valueOfLabelInSubjectLinkPopUpInInteractionSection(String labelName, int timeOut) {
+
+		String xpath = "//section//div[@class=\"slds-carousel\"]/lightning-layout//label[text()=\"" + labelName
+				+ "\"]/following-sibling::*";
+		try {
+			return FindElement(driver, xpath, "Label name: " + labelName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Label name: " + labelName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+
+	public List<String> valueOfTagsInSubjectLinkPopUpInInteractionSection(String labelName) {
+
+		String xpath = "//section//div[@class=\"slds-carousel\"]/lightning-layout//label[text()=\"" + labelName
+				+ "\"]/following-sibling::*//lightning-pill//span/span/following-sibling::span";
+		return FindElements(driver, xpath).stream().map(x -> x.getText()).collect(Collectors.toList());
+
+	}
+
+	public List<String> iconOfTagsInSubjectLinkPopUpInInteractionSection(String labelName) {
+
+		String xpath = "//section//div[@class=\"slds-carousel\"]/lightning-layout//label[text()=\"" + labelName
+				+ "\"]/following-sibling::*//lightning-pill/span/span//lightning-primitive-icon/*";
+		return FindElements(driver, xpath).stream().map(x -> CommonLib.getAttribute(driver, x, "Icon", "data-key"))
+				.collect(Collectors.toList());
+
+	}
+
+	public WebElement iconOfTagsInSubjectLinkPopUpInInteractionSection(String labelName, String relatedAssociationName,
+			String recordType, int timeOut) {
+
+		if (recordType.equalsIgnoreCase("Firm") || recordType.equalsIgnoreCase("Account")) {
+
+			String xpath = "//section//div[@class=\"slds-carousel\"]/lightning-layout//label[text()=\"" + labelName
+					+ "\"]/following-sibling::*//lightning-pill/span/span/following-sibling::span[text()=\""
+					+ relatedAssociationName + "\"]/..//lightning-primitive-icon/*[@data-key=\"account\"]";
+			try {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			}
+		} else if (recordType.equalsIgnoreCase("Deal")) {
+
+			String xpath = "//section//div[@class=\"slds-carousel\"]/lightning-layout//label[text()=\"" + labelName
+					+ "\"]/following-sibling::*//lightning-pill/span/span/following-sibling::span[text()=\""
+					+ relatedAssociationName + "\"]/..//lightning-primitive-icon/*[@data-key=\"custom47\"]";
+			try {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			}
+		} else if (recordType.equalsIgnoreCase("Contact")) {
+
+			String xpath = "//section//div[@class=\"slds-carousel\"]/lightning-layout//label[text()=\"" + labelName
+					+ "\"]/following-sibling::*//lightning-pill/span/span/following-sibling::span[text()=\""
+					+ relatedAssociationName + "\"]/..//lightning-primitive-icon/*[@data-key=\"contact\"]";
+			try {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			}
+
+		} else if (recordType.equalsIgnoreCase("Fund")) {
+
+			String xpath = "//section//div[@class=\"slds-carousel\"]/lightning-layout//label[text()=\"" + labelName
+					+ "\"]/following-sibling::*//lightning-pill/span/span/following-sibling::span[text()=\""
+					+ relatedAssociationName + "\"]/..//lightning-primitive-icon/*[@data-key=\"custom34\"]";
+			try {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			}
+
+		} else if (recordType.equalsIgnoreCase("Fundraising")) {
+
+			String xpath = "//section//div[@class=\"slds-carousel\"]/lightning-layout//label[text()=\"" + labelName
+					+ "\"]/following-sibling::*//lightning-pill/span/span/following-sibling::span[text()=\""
+					+ relatedAssociationName + "\"]/..//lightning-primitive-icon/*[@data-key=\"custom3\"]";
+			try {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			}
+
+		} else if (recordType.equalsIgnoreCase("User")) {
+
+			String xpath = "//section//div[@class=\"slds-carousel\"]/lightning-layout//label[text()=\"" + labelName
+					+ "\"]/following-sibling::*//lightning-pill/span/span/following-sibling::span[text()=\""
+					+ relatedAssociationName + "\"]/..//lightning-primitive-icon/*[@data-key=\"user\"]";
+			try {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			}
+
+		}
+
+		else if (recordType.equalsIgnoreCase("CustomObject")) {
+
+			String xpath = "//section//div[@class=\"slds-carousel\"]/lightning-layout//label[text()=\"" + labelName
+					+ "\"]/following-sibling::*//lightning-pill/span/span/following-sibling::span[text()=\""
+					+ relatedAssociationName + "\"]/..//lightning-primitive-icon/*[@data-key=\"custom20\"]";
+			try {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			}
+
+		}
+
+		else {
+
+			log(LogStatus.ERROR, "Please Provide the correct Icon Name, Provided by you: " + recordType, YesNo.No);
+			sa.assertTrue(false, "Please Provide the correct Icon Name, Provided by you: " + recordType);
+			return null;
+		}
+
+	}
+
+	public WebElement iconOfSubjectLinkPopUpInInteractionSection(int timeOut) {
+
+		String xpath = "//section//h2[contains(@class,\"slds-text-heading_small slds-hyphenate\")]/ancestor:: lightning-layout-item/preceding-sibling::lightning-layout-item//lightning-primitive-icon/*";
+		WebElement iconLocator = FindElement(driver, xpath, "Icon", action.SCROLLANDBOOLEAN, timeOut);
+
+		return iconLocator;
+
+	}
+
+	public WebElement attachmentIconOfSubjectLinkPopUpInInteractionSection(int timeOut) {
+
+		String xpath = "//section//lightning-layout-item[contains(@class,\"slds-carousel__panel\")]//lightning-icon//lightning-primitive-icon/*[@data-key=\"attach\"]";
+		WebElement attachmentIconLocator = FindElement(driver, xpath, "Icon", action.SCROLLANDBOOLEAN, timeOut);
+
+		return attachmentIconLocator;
+
+	}
+
+	public WebElement editButtonOfSubjectLinkPopUpInInteractionSection(int timeOut) {
+
+		String xpath = "//section//lightning-layout-item[contains(@class,\"slds-carousel__panel\")]//lightning-button/button[text()=\"Edit\"]";
+		WebElement editButton = FindElement(driver, xpath, "editButton", action.SCROLLANDBOOLEAN, timeOut);
+
+		return editButton;
+
+	}
+
+	public WebElement typeOfSubjectLinkPopUpInInteractionSection(int timeOut) {
+
+		String xpath = "//section//lightning-layout-item[contains(@class,\"slds-carousel__panel\")]//h2/span[1]";
+		WebElement type = FindElement(driver, xpath, "type", action.SCROLLANDBOOLEAN, timeOut);
+
+		return type;
+
+	}
+
+	public WebElement crossButtonOfSubjectLinkPopUpInInteractionSection(int timeOut) {
+
+		String xpath = "//section//button[@title='Close']";
+		WebElement crossButton = FindElement(driver, xpath, "Close", action.SCROLLANDBOOLEAN, timeOut);
+
+		return crossButton;
+
+	}
 
 }

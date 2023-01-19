@@ -204,7 +204,7 @@ Fundraising_ContactPage, Financing, Financial_Performance, Marketing_Initiative,
 	}
 	
 	public static enum IconType{
-		updatePhoto,DeletePhoto,Edit,Locked,Task,Call,Meeting,Event;
+		updatePhoto,DeletePhoto,Edit,Locked,Task,Call,Meeting,Event, Email;
 	}
 	
 	public static enum NavatarSetupSideMenuTab{

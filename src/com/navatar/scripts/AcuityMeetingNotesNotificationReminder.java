@@ -9,6 +9,7 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -18,6 +19,7 @@ import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.EnumConstants.Environment;
+import com.navatar.generic.EnumConstants.IconType;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
@@ -991,6 +993,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		}
 
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
+				{ "Notes", updatedNotesOfTask }, { "Related_To", AMNNR_ATRelatedTo3 + "<break>" + AMNNR_RelatedTo4 } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Status", status }, { "Priority", priority } };
+
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		log(LogStatus.INFO,
@@ -1034,15 +1042,24 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.PASS,
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
-						if (BP.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName)) {
+
+						ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
+								task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Task);
+
+						if (subjectLinkPopUpNegativeResult.isEmpty()) {
 							log(LogStatus.PASS, "------" + task1SubjectName
-									+ " record is able to open popup after click on it" + "------", YesNo.No);
+									+ " record is able to open popup after click on it and verify its data" + "------",
+									YesNo.No);
 
 						} else {
-							log(LogStatus.ERROR, "------" + task1SubjectName
-									+ " record is not able to open popup after click on it" + "------", YesNo.Yes);
-							sa.assertTrue(false, "------" + task1SubjectName
-									+ " record is not able to open popup after click on it" + "------");
+							log(LogStatus.ERROR,
+									"------" + task1SubjectName + " record link popup is not verified, Reason: "
+											+ subjectLinkPopUpNegativeResult + "------",
+									YesNo.Yes);
+							sa.assertTrue(false,
+									"------" + task1SubjectName + " record link popup is not verified, Reason: "
+											+ subjectLinkPopUpNegativeResult + "------");
+
 						}
 
 						String url = getURL(driver, 10);
@@ -1079,6 +1096,29 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 															+ " record has been verified on intraction------",
 													YesNo.No);
 
+											ArrayList<String> subjectLinkPopUpNegativeResultUpdated = BP
+													.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName,
+															updatedTask1BasicSectionVerification,
+															updatedTask1AdvancedSectionVerification, IconType.Task);
+
+											if (subjectLinkPopUpNegativeResultUpdated.isEmpty()) {
+												log(LogStatus.PASS, "------" + task1SubjectName
+														+ " record is able to open popup after click on it and verify its data"
+														+ "------", YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"------" + task1SubjectName
+																+ " record link popup is not verified, Reason: "
+																+ subjectLinkPopUpNegativeResultUpdated + "------",
+														YesNo.Yes);
+												sa.assertTrue(false,
+														"------" + task1SubjectName
+																+ " record link popup is not verified, Reason: "
+																+ subjectLinkPopUpNegativeResultUpdated + "------");
+
+											}
+
 											String url2 = getURL(driver, 10);
 
 											if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
@@ -1104,6 +1144,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 															"PopUp Name has been not been verified, Expected: "
 																	+ expectedHeaderName);
 												}
+
 												ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
 														.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
 																task1SubjectName, updatedNotesOfTask,
@@ -1264,15 +1305,24 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.PASS,
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
-						if (BP.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName)) {
+
+						ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
+								task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Task);
+
+						if (subjectLinkPopUpNegativeResult.isEmpty()) {
 							log(LogStatus.PASS, "------" + task1SubjectName
-									+ " record is able to open popup after click on it" + "------", YesNo.No);
+									+ " record is able to open popup after click on it and verify its data" + "------",
+									YesNo.No);
 
 						} else {
-							log(LogStatus.ERROR, "------" + task1SubjectName
-									+ " record is not able to open popup after click on it" + "------", YesNo.Yes);
-							sa.assertTrue(false, "------" + task1SubjectName
-									+ " record is not able to open popup after click on it" + "------");
+							log(LogStatus.ERROR,
+									"------" + task1SubjectName + " record link popup is not verified, Reason: "
+											+ subjectLinkPopUpNegativeResult + "------",
+									YesNo.Yes);
+							sa.assertTrue(false,
+									"------" + task1SubjectName + " record link popup is not verified, Reason: "
+											+ subjectLinkPopUpNegativeResult + "------");
+
 						}
 
 						String url = getURL(driver, 10);
@@ -1944,15 +1994,24 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.PASS,
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
-						if (BP.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName)) {
+
+						ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
+								task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Task);
+
+						if (subjectLinkPopUpNegativeResult.isEmpty()) {
 							log(LogStatus.PASS, "------" + task1SubjectName
-									+ " record is able to open popup after click on it" + "------", YesNo.No);
+									+ " record is able to open popup after click on it and verify its data" + "------",
+									YesNo.No);
 
 						} else {
-							log(LogStatus.ERROR, "------" + task1SubjectName
-									+ " record is not able to open popup after click on it" + "------", YesNo.Yes);
-							sa.assertTrue(false, "------" + task1SubjectName
-									+ " record is not able to open popup after click on it" + "------");
+							log(LogStatus.ERROR,
+									"------" + task1SubjectName + " record link popup is not verified, Reason: "
+											+ subjectLinkPopUpNegativeResult + "------",
+									YesNo.Yes);
+							sa.assertTrue(false,
+									"------" + task1SubjectName + " record link popup is not verified, Reason: "
+											+ subjectLinkPopUpNegativeResult + "------");
+
 						}
 
 						String url = getURL(driver, 10);
@@ -2465,15 +2524,24 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.PASS,
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
-						if (BP.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName)) {
+
+						ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
+								task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Task);
+
+						if (subjectLinkPopUpNegativeResult.isEmpty()) {
 							log(LogStatus.PASS, "------" + task1SubjectName
-									+ " record is able to open popup after click on it" + "------", YesNo.No);
+									+ " record is able to open popup after click on it and verify its data" + "------",
+									YesNo.No);
 
 						} else {
-							log(LogStatus.ERROR, "------" + task1SubjectName
-									+ " record is not able to open popup after click on it" + "------", YesNo.Yes);
-							sa.assertTrue(false, "------" + task1SubjectName
-									+ " record is not able to open popup after click on it" + "------");
+							log(LogStatus.ERROR,
+									"------" + task1SubjectName + " record link popup is not verified, Reason: "
+											+ subjectLinkPopUpNegativeResult + "------",
+									YesNo.Yes);
+							sa.assertTrue(false,
+									"------" + task1SubjectName + " record link popup is not verified, Reason: "
+											+ subjectLinkPopUpNegativeResult + "------");
+
 						}
 
 						String url = getURL(driver, 10);
@@ -3848,6 +3916,29 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										ThreadSleep(10000);
 
+										ArrayList<String> subjectLinkPopUpNegativeResult = BP
+												.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName,
+														updatedTask1BasicSectionVerification,
+														updatedTask1AdvancedSectionVerification, IconType.Task);
+
+										if (subjectLinkPopUpNegativeResult.isEmpty()) {
+											log(LogStatus.PASS, "------" + task1SubjectName
+													+ " record is able to open popup after click on it and verify its data"
+													+ "------", YesNo.No);
+
+										} else {
+											log(LogStatus.ERROR,
+													"------" + task1SubjectName
+															+ " record link popup is not verified, Reason: "
+															+ subjectLinkPopUpNegativeResult + "------",
+													YesNo.Yes);
+											sa.assertTrue(false,
+													"------" + task1SubjectName
+															+ " record link popup is not verified, Reason: "
+															+ subjectLinkPopUpNegativeResult + "------");
+
+										}
+
 										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -4048,6 +4139,27 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				ThreadSleep(4000);
 				if (BP.clicktabOnPage("Acuity")) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					ArrayList<String> subjectLinkPopUpNegativeResultBeforeUpdate = BP
+							.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName, task1BasicSectionVerification,
+									task1AdvancedSectionVerification, IconType.Task);
+
+					if (subjectLinkPopUpNegativeResultBeforeUpdate.isEmpty()) {
+						log(LogStatus.PASS, "------" + task1SubjectName
+								+ " record is able to open popup after click on it and verify its data" + "------",
+								YesNo.No);
+
+					} else {
+						log(LogStatus.ERROR,
+								"------" + task1SubjectName + " record link popup is not verified, Reason: "
+										+ subjectLinkPopUpNegativeResultBeforeUpdate + "------",
+								YesNo.Yes);
+						sa.assertTrue(false,
+								"------" + task1SubjectName + " record link popup is not verified, Reason: "
+										+ subjectLinkPopUpNegativeResultBeforeUpdate + "------");
+
+					}
+
 					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, IconType.Task,
 							task1SubjectName, task1Notes, true, false, RelatedToVerifyInInteraction,
 							RelatedAssociationVerifyInInteraction);
@@ -4084,6 +4196,29 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 										CommonLib.refresh(driver);
 
 										ThreadSleep(10000);
+
+										ArrayList<String> subjectLinkPopUpNegativeResult = BP
+												.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName,
+														updatedTask1BasicSectionVerification,
+														updatedTask1AdvancedSectionVerification, IconType.Task);
+
+										if (subjectLinkPopUpNegativeResult.isEmpty()) {
+											log(LogStatus.PASS, "------" + task1SubjectName
+													+ " record is able to open popup after click on it and verify its data"
+													+ "------", YesNo.No);
+
+										} else {
+											log(LogStatus.ERROR,
+													"------" + task1SubjectName
+															+ " record link popup is not verified, Reason: "
+															+ subjectLinkPopUpNegativeResult + "------",
+													YesNo.Yes);
+											sa.assertTrue(false,
+													"------" + task1SubjectName
+															+ " record link popup is not verified, Reason: "
+															+ subjectLinkPopUpNegativeResult + "------");
+
+										}
 
 										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
@@ -5490,6 +5625,29 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 									CommonLib.refresh(driver);
 
 									ThreadSleep(10000);
+
+									ArrayList<String> subjectLinkPopUpNegativeResult = BP
+											.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName,
+													updatedTask1BasicSectionVerification,
+													updatedTask1AdvancedSectionVerification, IconType.Task);
+
+									if (subjectLinkPopUpNegativeResult.isEmpty()) {
+										log(LogStatus.PASS, "------" + task1SubjectName
+												+ " record is able to open popup after click on it and verify its data"
+												+ "------", YesNo.No);
+
+									} else {
+										log(LogStatus.ERROR,
+												"------" + task1SubjectName
+														+ " record link popup is not verified, Reason: "
+														+ subjectLinkPopUpNegativeResult + "------",
+												YesNo.Yes);
+										sa.assertTrue(false,
+												"------" + task1SubjectName
+														+ " record link popup is not verified, Reason: "
+														+ subjectLinkPopUpNegativeResult + "------");
+
+									}
 
 									if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 											"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
@@ -7573,17 +7731,25 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.PASS,
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
-						if (BP.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName)) {
+
+						ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
+								task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Call);
+
+						if (subjectLinkPopUpNegativeResult.isEmpty()) {
 							log(LogStatus.PASS, "------" + task1SubjectName
-									+ " record is able to open popup after click on it" + "------", YesNo.No);
+									+ " record is able to open popup after click on it and verify its data" + "------",
+									YesNo.No);
 
 						} else {
-							log(LogStatus.ERROR, "------" + task1SubjectName
-									+ " record is not able to open popup after click on it" + "------", YesNo.Yes);
-							sa.assertTrue(false, "------" + task1SubjectName
-									+ " record is not able to open popup after click on it" + "------");
-						}
+							log(LogStatus.ERROR,
+									"------" + task1SubjectName + " record link popup is not verified, Reason: "
+											+ subjectLinkPopUpNegativeResult + "------",
+									YesNo.Yes);
+							sa.assertTrue(false,
+									"------" + task1SubjectName + " record link popup is not verified, Reason: "
+											+ subjectLinkPopUpNegativeResult + "------");
 
+						}
 						String url = getURL(driver, 10);
 
 						if (BP.crossIconButtonInNotePopUp(5) != null) {
@@ -7799,6 +7965,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.PASS,
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
+
 						if (BP.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName)) {
 							log(LogStatus.PASS, "------" + task1SubjectName
 									+ " record is able to open popup after click on it" + "------", YesNo.No);
@@ -8503,15 +8670,24 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.PASS,
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
-						if (BP.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName)) {
+
+						ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
+								task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Call);
+
+						if (subjectLinkPopUpNegativeResult.isEmpty()) {
 							log(LogStatus.PASS, "------" + task1SubjectName
-									+ " record is able to open popup after click on it" + "------", YesNo.No);
+									+ " record is able to open popup after click on it and verify its data" + "------",
+									YesNo.No);
 
 						} else {
-							log(LogStatus.ERROR, "------" + task1SubjectName
-									+ " record is not able to open popup after click on it" + "------", YesNo.Yes);
-							sa.assertTrue(false, "------" + task1SubjectName
-									+ " record is not able to open popup after click on it" + "------");
+							log(LogStatus.ERROR,
+									"------" + task1SubjectName + " record link popup is not verified, Reason: "
+											+ subjectLinkPopUpNegativeResult + "------",
+									YesNo.Yes);
+							sa.assertTrue(false,
+									"------" + task1SubjectName + " record link popup is not verified, Reason: "
+											+ subjectLinkPopUpNegativeResult + "------");
+
 						}
 
 						String url = getURL(driver, 10);
@@ -9038,15 +9214,24 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.PASS,
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
-						if (BP.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName)) {
+
+						ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
+								task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Call);
+
+						if (subjectLinkPopUpNegativeResult.isEmpty()) {
 							log(LogStatus.PASS, "------" + task1SubjectName
-									+ " record is able to open popup after click on it" + "------", YesNo.No);
+									+ " record is able to open popup after click on it and verify its data" + "------",
+									YesNo.No);
 
 						} else {
-							log(LogStatus.ERROR, "------" + task1SubjectName
-									+ " record is not able to open popup after click on it" + "------", YesNo.Yes);
-							sa.assertTrue(false, "------" + task1SubjectName
-									+ " record is not able to open popup after click on it" + "------");
+							log(LogStatus.ERROR,
+									"------" + task1SubjectName + " record link popup is not verified, Reason: "
+											+ subjectLinkPopUpNegativeResult + "------",
+									YesNo.Yes);
+							sa.assertTrue(false,
+									"------" + task1SubjectName + " record link popup is not verified, Reason: "
+											+ subjectLinkPopUpNegativeResult + "------");
+
 						}
 
 						String url = getURL(driver, 10);
@@ -10492,6 +10677,30 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 											click(driver, BP.crossIconButtonInNotePopUp(20),
 													"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
 										}
+
+										ArrayList<String> subjectLinkPopUpNegativeResult = BP
+												.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName,
+														updatedTask1BasicSectionVerification,
+														updatedTask1AdvancedSectionVerification, IconType.Call);
+
+										if (subjectLinkPopUpNegativeResult.isEmpty()) {
+											log(LogStatus.PASS, "------" + task1SubjectName
+													+ " record is able to open popup after click on it and verify its data"
+													+ "------", YesNo.No);
+
+										} else {
+											log(LogStatus.ERROR,
+													"------" + task1SubjectName
+															+ " record link popup is not verified, Reason: "
+															+ subjectLinkPopUpNegativeResult + "------",
+													YesNo.Yes);
+											sa.assertTrue(false,
+													"------" + task1SubjectName
+															+ " record link popup is not verified, Reason: "
+															+ subjectLinkPopUpNegativeResult + "------");
+
+										}
+
 										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -10692,6 +10901,27 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				ThreadSleep(4000);
 				if (BP.clicktabOnPage("Acuity")) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					ArrayList<String> subjectLinkPopUpNegativeResultBeforeUpdate = BP
+							.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName, task1BasicSectionVerification,
+									task1AdvancedSectionVerification, IconType.Call);
+
+					if (subjectLinkPopUpNegativeResultBeforeUpdate.isEmpty()) {
+						log(LogStatus.PASS, "------" + task1SubjectName
+								+ " record is able to open popup after click on it and verify its data" + "------",
+								YesNo.No);
+
+					} else {
+						log(LogStatus.ERROR,
+								"------" + task1SubjectName + " record link popup is not verified, Reason: "
+										+ subjectLinkPopUpNegativeResultBeforeUpdate + "------",
+								YesNo.Yes);
+						sa.assertTrue(false,
+								"------" + task1SubjectName + " record link popup is not verified, Reason: "
+										+ subjectLinkPopUpNegativeResultBeforeUpdate + "------");
+
+					}
+
 					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, IconType.Call,
 							task1SubjectName, task1Notes, true, false, RelatedToVerifyInInteraction,
 							RelatedAssociationVerifyInInteraction);
@@ -10741,6 +10971,30 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 											click(driver, BP.crossIconButtonInNotePopUp(20),
 													"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
 										}
+
+										ArrayList<String> subjectLinkPopUpNegativeResult = BP
+												.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName,
+														updatedTask1BasicSectionVerification,
+														updatedTask1AdvancedSectionVerification, IconType.Task);
+
+										if (subjectLinkPopUpNegativeResult.isEmpty()) {
+											log(LogStatus.PASS, "------" + task1SubjectName
+													+ " record is able to open popup after click on it and verify its data"
+													+ "------", YesNo.No);
+
+										} else {
+											log(LogStatus.ERROR,
+													"------" + task1SubjectName
+															+ " record link popup is not verified, Reason: "
+															+ subjectLinkPopUpNegativeResult + "------",
+													YesNo.Yes);
+											sa.assertTrue(false,
+													"------" + task1SubjectName
+															+ " record link popup is not verified, Reason: "
+															+ subjectLinkPopUpNegativeResult + "------");
+
+										}
+
 										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
@@ -12217,6 +12471,29 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 									if (BP.crossIconButtonInNotePopUp(5) != null) {
 										click(driver, BP.crossIconButtonInNotePopUp(20),
 												"Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+									}
+
+									ArrayList<String> subjectLinkPopUpNegativeResult = BP
+											.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName,
+													updatedTask1BasicSectionVerification,
+													updatedTask1AdvancedSectionVerification, IconType.Task);
+
+									if (subjectLinkPopUpNegativeResult.isEmpty()) {
+										log(LogStatus.PASS, "------" + task1SubjectName
+												+ " record is able to open popup after click on it and verify its data"
+												+ "------", YesNo.No);
+
+									} else {
+										log(LogStatus.ERROR,
+												"------" + task1SubjectName
+														+ " record link popup is not verified, Reason: "
+														+ subjectLinkPopUpNegativeResult + "------",
+												YesNo.Yes);
+										sa.assertTrue(false,
+												"------" + task1SubjectName
+														+ " record link popup is not verified, Reason: "
+														+ subjectLinkPopUpNegativeResult + "------");
+
 									}
 
 									if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
