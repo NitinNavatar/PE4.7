@@ -2469,7 +2469,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 		for (String[] labelValue : labelWithValue) {
 			// xpath = "//*[text()='" + labelValue[0] +
 			// "']/..//following-sibling::td[text()='" + labelValue[1] + "']";
-			xpath = "//*[text()='" + labelValue[0] + "']/..//following-sibling::td/img[@title='" + labelValue[1] + "']";
+			//xpath = "//*[text()='" + labelValue[0] + "']/..//following-sibling::td/img[@title='" + labelValue[1] + "']";
+			xpath = "//*[text()='" + labelValue[0] + "']/..//td[@title='" + labelValue[1] + "']";
 			ele = FindElement(driver, xpath, labelValue[0] + " with Value " + labelValue[1], action.BOOLEAN, 10);
 			if (ele != null) {
 				log(LogStatus.PASS, labelValue[0] + " with Value " + labelValue[1] + " verified", YesNo.No);
@@ -6785,7 +6786,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 	public boolean UpdateValueInCustomMetaData(String type, String fieldName, String valueField, int timeOut) {
 		boolean flag = false;
-		String Name = fieldName.replace(" ", "_");
+		String Name = fieldName.replace("_", " ");
 		String SettingType = type.replace("_", " ");
 		if (searchStandardOrCustomObject(environment, mode, object.Custom_Metadata_Types)) {
 			log(LogStatus.INFO, "click on Object : " + object.Custom_Metadata_Types, YesNo.No);
@@ -6796,16 +6797,16 @@ public class SetupPageBusinessLayer extends SetupPage {
 				log(LogStatus.INFO, "able to click on Manage Records link", YesNo.No);
 				ThreadSleep(1000);
 				switchToFrame(driver, 60, getSetUpPageIframe(60));
-				if(LabelNameInCustomMetaData(fieldName, 10) != null) {
-					log(LogStatus.INFO, "yes, we can find " + fieldName + "on Custom Meta Data Setup Page", YesNo.No);
+				if(LabelNameInCustomMetaData(Name, 10) != null) {
+					log(LogStatus.INFO, "yes, we can find " + Name + "on Custom Meta Data Setup Page", YesNo.No);
 				if (clickUsingJavaScript(driver, EditButtonOfAcuitySettings(Name, 30), "Edit button",
 						action.SCROLLANDBOOLEAN)) {
 
-					log(LogStatus.INFO, "click on edit button of " + fieldName, YesNo.No);
+					log(LogStatus.INFO, "click on edit button of " + Name, YesNo.No);
 					ThreadSleep(5000);
 					switchToFrame(driver, 60, getSetUpPageIframe(60));
 					ExcelUtils.writeData(AcuityDataSheetFilePath, GetDataFromValueFieldInCustomMetaData(10),
-							"CustomMetaData", excelLabel.FieldName, fieldName, excelLabel.Value);
+							"CustomMetaData", excelLabel.FieldName, Name, excelLabel.Value);
 					System.out.println(GetDataFromValueFieldInCustomMetaData(10));
 					ThreadSleep(2000);
 					if (sendKeys(driver, getValueTextBoxInAcuitySetting(30), valueField, "Value Text Box",
@@ -6826,12 +6827,12 @@ public class SetupPageBusinessLayer extends SetupPage {
 						sa.assertTrue(false, "not able to enter the value in description : " + valueField);
 					}
 				} else {
-					log(LogStatus.INFO, "not able to click on edit button of " + fieldName, YesNo.No);
-					sa.assertTrue(false, "not able to click on edit button of " + fieldName);
+					log(LogStatus.INFO, "not able to click on edit button of " + Name, YesNo.No);
+					sa.assertTrue(false, "not able to click on edit button of " + Name);
 				}
 			}
 			else {
-				log(LogStatus.INFO, "not able to find " + fieldName, YesNo.No);
+				log(LogStatus.INFO, "not able to find " + Name, YesNo.No);
 				refresh(driver);
 			}
 			} else {

@@ -50,7 +50,7 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 
 		boolean flag = false; 
 		
-		if (clickUsingJavaScript(driver, clickOnRecordUsingGridName(headerName, 30),
+		if (clickUsingJavaScript(driver, clickOnRecordUsingGridName(headerName, 10),
 				"Grid Name: " + headerName, action.BOOLEAN)) {
 			log(LogStatus.PASS, "Clicked on Grid Name: " + headerName, YesNo.No);
 			try {
@@ -60,7 +60,7 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 							YesNo.No);
 					flag = true;
 					refresh(driver);
-					if (RecordPagesHeader(recordName, 20) != null) {//need to update according to Research
+					if (RecordPagesHeader(recordName, 10) != null) {//need to update according to Research
 						log(LogStatus.PASS, "----Detail Page is redirecting for Record: "
 								+ recordName + "-----", YesNo.No);
 						driver.close();
@@ -319,7 +319,7 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 		}
 
 		for (int i = 0; i < DataFromExcel.size(); i++) {
-			if (DataFromOrg.get(i).equals(DataFromExcel.get(i))) {
+			if ((DataFromOrg.get(i).equals(DataFromExcel.get(i)) || (DataFromOrg.get(i) == "" && DataFromExcel.get(i) == null))) {
 				log(LogStatus.INFO, "Data from Excel : " + DataFromExcel.get(i)
 						+ " has been matched with the Org Data : " + DataFromOrg.get(i), YesNo.No);
 			} else {

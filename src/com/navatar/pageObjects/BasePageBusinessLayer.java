@@ -34,6 +34,7 @@ import com.navatar.generic.CommonVariables;
 import static com.navatar.generic.AppListeners.*;
 import static com.navatar.generic.BaseLib.sa;
 import static com.navatar.generic.CommonLib.*;
+import static com.navatar.generic.CommonVariables.AR_Research2;
 import static com.navatar.generic.CommonVariables.ATE_AdvanceDueDate1;
 import static com.navatar.generic.CommonVariables.environment;
 import static com.navatar.generic.CommonVariables.mode;
@@ -12187,12 +12188,15 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				CommonLib.click(driver, npbl.createNavPopUpMinimizeButton(5), "Minimize", action.BOOLEAN);
 			}
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName,
-					NavigationMenuItems.Navatar_Research.toString().replace("_", " "), action.BOOLEAN, 30)) {
+					NavigationMenuItems.Research.toString().replace("_", " "), action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on Research Going to click on : "
 						+ NavigationMenuItems.Research.toString() + " for Research an Item", YesNo.No);
 
 				if (CommonLib.sendKeys(driver, npbl.researchSearchBox(20), searchString, "Research Search Box",
 						action.BOOLEAN)) {
+//				if (CommonLib.sendKeys(driver, npbl.researchSearchBox(20), searchString, "Research Search Box",
+//						action.BOOLEAN)) {
+				
 					log(LogStatus.INFO, "Enter Value in Research Search Box: " + searchString, YesNo.No);
 
 					if (click(driver, npbl.researchButton(20), "Research Button", action.SCROLLANDBOOLEAN)) {
