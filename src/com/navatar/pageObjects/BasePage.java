@@ -8379,8 +8379,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement contactPopUpTO(String subject, String Toname, int timeOut) {
 
-		String xpath = "//a[text()='" + subject + "']/ancestor::tr//button[@name = 'to' and text()='" + Toname
-				+ "']";
+		String xpath = "//a[text()='" + subject + "']/ancestor::tr//button[@name = 'to' and text()='" + Toname + "']";
 		try {
 			return FindElement(driver, xpath, "for to: " + Toname, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -8427,8 +8426,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement contactPopUpCC(String subject, String CCname, int timeOut) {
 
-		String xpath = "//a[text()='" + subject + "']/ancestor::tr//button[@name = 'cc' and text()='" + CCname
-				+ "']";
+		String xpath = "//a[text()='" + subject + "']/ancestor::tr//button[@name = 'cc' and text()='" + CCname + "']";
 		try {
 			return FindElement(driver, xpath, "for CC: " + CCname, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -8573,8 +8571,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement getDetailsOnInteractionPage(String subjectName, int timeOut) {
 
-		String xpath = "//button[text()='" + subjectName
-				+ "']/ancestor::tr/td[@data-label='Details']//button";
+		String xpath = "//button[text()='" + subjectName + "']/ancestor::tr/td[@data-label='Details']//button";
 		try {
 			return FindElement(driver, xpath, "Tab name: " + subjectName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -8698,28 +8695,28 @@ public abstract class BasePage extends BaseLib {
 			return FindElement(driver, xpath, "subject name on Interaction page", action.SCROLLANDBOOLEAN, timeOut);
 		}
 	}
-	
+
 	public WebElement getEditButtonOnPopup(String subjectName, int timeOut) {
 
-		String xpath = "//h2[text()='"+subjectName+"']/ancestor::slot//button[@title='Edit']";
+		String xpath = "//h2[text()='" + subjectName + "']/ancestor::slot//button[@title='Edit']";
 		try {
 			return FindElement(driver, xpath, "edit button Interaction page", action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
 			return FindElement(driver, xpath, "edit button on Interaction page", action.SCROLLANDBOOLEAN, timeOut);
 		}
 	}
-	
+
 	@FindBy(xpath = "//h2[contains(@class,'slds-text-heading_medium')]/ancestor::div[@class='slds-modal__container']//button[@title='Cancel']")
 	private WebElement cancelButtonPopup;
 
 	public WebElement getCancelButtonPopup(int timeOut) {
-		return isDisplayed(driver, cancelButtonPopup, "Visibility", timeOut,
-				"cancel button on popup");
+		return isDisplayed(driver, cancelButtonPopup, "Visibility", timeOut, "cancel button on popup");
 	}
-	
+
 	public WebElement getDetailsOnInteractionCard(String subjectName, int timeOut) {
 
-		String xpath = "//a[text()='"+subjectName+"']/ancestor::lightning-card//div[contains(@class,'slds-text-title')]";
+		String xpath = "//a[text()='" + subjectName
+				+ "']/ancestor::lightning-card//div[contains(@class,'slds-text-title')]";
 		try {
 			return FindElement(driver, xpath, "Tab name: " + subjectName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -8727,7 +8724,10 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
-	
-	
+
+	public List<String> getAllValuesOfSubjectInTaskPopUp() {
+		return FindElements(driver, "//section//div/ul[contains(@class,\"slds-listbox\")]/li[@data-id]",
+				"getAllValuesOfSubjectInTaskPopUp").stream().map(x -> x.getText()).collect(Collectors.toList());
+	}
 
 }
