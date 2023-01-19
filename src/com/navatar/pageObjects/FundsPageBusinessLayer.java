@@ -306,6 +306,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	 * @description this method is used to verify fields present on fund page
 	 */
 	public boolean FieldValueVerificationOnFundPage(String projectName, String labelName, String labelValue) {
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		String xpath = "";
 		WebElement ele = null;
 		labelValue = labelValue.replace("_", " ");
@@ -330,30 +331,39 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 					+ "')]/../following-sibling::div//*[contains(@class,'field-value')]";
 		}
 
-		ele = isDisplayed(driver,
-				FindElement(driver, xpath, labelName + " label text in " + projectName, action.SCROLLANDBOOLEAN, 60),
-				"Visibility", 30, labelName + " label text in " + projectName);
-		if (ele != null) {
-			String aa = ele.getText().trim();
-			appLog.info("Lable Value is: " + aa);
-			if (labelName.contains("Date")) {
-				if (verifyDate(aa, null, labelName)) {
-					appLog.info("Dtae is verified Successfully");
-					return true;
+		if (BP.clicktabOnPage("Details")) {
+			log(LogStatus.INFO, "clicked on Details tab", YesNo.No);
+			ele = isDisplayed(
+					driver, FindElement(driver, xpath, labelName + " label text in " + projectName,
+							action.SCROLLANDBOOLEAN, 60),
+					"Visibility", 30, labelName + " label text in " + projectName);
+			if (ele != null) {
+				String aa = ele.getText().trim();
+				appLog.info("Lable Value is: " + aa);
+				if (labelName.contains("Date")) {
+					if (verifyDate(aa, null, labelName)) {
+						appLog.info("Dtae is verified Successfully");
+						return true;
+					} else {
+						appLog.error(labelName + " Date is not verified. /t Actual Result: " + aa);
+					}
 				} else {
-					appLog.error(labelName + " Date is not verified. /t Actual Result: " + aa);
+					if (aa.contains(labelValue)) {
+						appLog.info(labelValue + " Value is matched successfully.");
+						return true;
+
+					} else {
+						appLog.error(
+								labelValue + " Value is not matched. Expected: " + labelValue + " /t Actual : " + aa);
+					}
 				}
 			} else {
-				if (aa.contains(labelValue)) {
-					appLog.info(labelValue + " Value is matched successfully.");
-					return true;
-
-				} else {
-					appLog.error(labelValue + " Value is not matched. Expected: " + labelValue + " /t Actual : " + aa);
-				}
+				appLog.error(labelName + " Value is not visible so cannot matched  label Value " + labelValue);
 			}
+
 		} else {
-			appLog.error(labelName + " Value is not visible so cannot matched  label Value " + labelValue);
+			log(LogStatus.ERROR, "Not able to click on Details Tab", YesNo.No);
+			sa.assertTrue(false, "Not able to click on Details Tab");
 		}
 		return false;
 
@@ -361,6 +371,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 
 	public boolean FieldValueVerificationOnFundPage(String projectName, String labelName, String labelValue,
 			boolean removeUnderscore) {
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		String xpath = "";
 		WebElement ele = null;
 		if (removeUnderscore)
@@ -378,31 +389,42 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		else if (labelName.equalsIgnoreCase(excelLabel.Company_Name.toString()))
 			xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
 					+ "']/../following-sibling::div//a//span";
-		ele = isDisplayed(driver,
-				FindElement(driver, xpath, labelName + " label text in " + projectName, action.SCROLLANDBOOLEAN, 60),
-				"Visibility", 30, labelName + " label text in " + projectName);
-		if (ele != null) {
-			String aa = ele.getText().trim();
-			appLog.info("Lable Value is: " + aa);
-			if (labelName.contains("Date")) {
-				if (verifyDate(aa, null, labelName)) {
-					appLog.info("Dtae is verified Successfully");
-					return true;
+
+		if (BP.clicktabOnPage("Details")) {
+			log(LogStatus.INFO, "clicked on Details tab", YesNo.No);
+
+			ele = isDisplayed(
+					driver, FindElement(driver, xpath, labelName + " label text in " + projectName,
+							action.SCROLLANDBOOLEAN, 60),
+					"Visibility", 30, labelName + " label text in " + projectName);
+			if (ele != null) {
+				String aa = ele.getText().trim();
+				appLog.info("Lable Value is: " + aa);
+				if (labelName.contains("Date")) {
+					if (verifyDate(aa, null, labelName)) {
+						appLog.info("Dtae is verified Successfully");
+						return true;
+					} else {
+						appLog.error(labelName + " Date is not verified. /t Actual Result: " + aa);
+					}
 				} else {
-					appLog.error(labelName + " Date is not verified. /t Actual Result: " + aa);
+					if (aa.contains(labelValue)) {
+						appLog.info(labelValue + " Value is matched successfully.");
+						return true;
+
+					} else {
+						appLog.error(
+								labelValue + " Value is not matched. Expected: " + labelValue + " /t Actual : " + aa);
+					}
 				}
 			} else {
-				if (aa.contains(labelValue)) {
-					appLog.info(labelValue + " Value is matched successfully.");
-					return true;
-
-				} else {
-					appLog.error(labelValue + " Value is not matched. Expected: " + labelValue + " /t Actual : " + aa);
-				}
+				appLog.error(labelName + " Value is not visible so cannot matched  label Value " + labelValue);
 			}
 		} else {
-			appLog.error(labelName + " Value is not visible so cannot matched  label Value " + labelValue);
+			log(LogStatus.ERROR, "Not able to click on Details Tab", YesNo.No);
+			sa.assertTrue(false, "Not able to click on Details Tab");
 		}
+
 		return false;
 
 	}
@@ -1379,6 +1401,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 //		}
 		return false;
 	}
+
 	/**
 	 * @author sahil bansal
 	 * @param projectName
@@ -1398,7 +1421,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			} else {
 				appLog.error("Not Able to Entered value on Deal Name TextBox : " + dealname);
 			}
-				ThreadSleep(1000);
+			ThreadSleep(1000);
 			ThreadSleep(2000);
 			if (click(driver, getCustomTabSaveBtn(projectName, 30), "Save Button", action.SCROLLANDBOOLEAN)) {
 				appLog.error("Click on save Button");
@@ -1449,7 +1472,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	 */
 	public boolean UpdateCompanyName(String projectName, String companyname, int timeOut) {
 		boolean flag = true;
-		
+
 		ThreadSleep(2000);
 		if (clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Edit, 10)) {
 			ThreadSleep(2000);

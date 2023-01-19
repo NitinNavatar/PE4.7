@@ -51,7 +51,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 public class AcuityTaskAndEvent extends BaseLib {
 	
-	public boolean isInstitutionRecord=true;
+	public boolean isInstitutionRecord=false;
 	
 	@Parameters({ "projectName" })
 	@Test
@@ -434,17 +434,10 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String taskDueDate=ATE_AdvanceDueDate1;
 		String taskStatus=ATE_AdvanceStatus1;
 		String taskPriority=ATE_AdvancePriority1;
-
-		/*
-		 * String[] relatedToData=ATE_ARelatedTo1.split("<break>"); String[]
-		 * verifyRelatedToField=
-		 * {relatedToData[0],crmUser6FirstName+" "+crmUser6LastName,relatedToData[1]};
-		 * String[] relatedAssociation=ATE_ARelatedAsso1.split("<break>");
-		 */	
-		String[] verifyRelatedToField=null;
-
-		String[] relatedAssociation=null;
-
+		  String[] relatedToData=ATE_ARelatedTo1.split("<break>"); String[]
+		  verifyRelatedToField=
+		  {relatedToData[0],crmUser6FirstName+" "+crmUser6LastName,relatedToData[1]};
+		  String[] relatedAssociation=ATE_ARelatedAsso1.split("<break>");
 
 		String contactSectionName=ATE_ContactName2;
 		String contactSectionTitle=ATE_ContactTitle2;
@@ -526,7 +519,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result4);
 						}
 
-						if (bp.verifySubjectLinkRedirectionOnIntraction(driver,taskSubject)) {
+						if (bp.verifySubjectLinkPopUpOnIntraction(driver,taskSubject)) {
 							log(LogStatus.INFO, "page successfully redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);			
 						}
 						else
@@ -675,13 +668,10 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String subject=ATE_ATSubject1;
 		String notes=ATE_ATNotes1;
+			String[] relatedToData=ATE_ARelatedTo1.split("<break>");
+			String[] relatedTo= {relatedToData[0],crmUser6FirstName+" "+crmUser6LastName,relatedToData[1]};
 
-		String[] relatedTo=null;
-		String[] relatedAssociation=null;
-		//	String[] relatedToData=ATE_ARelatedTo1.split("<break>");
-		//	String[] relatedTo= {relatedToData[0],crmUser6FirstName+" "+crmUser6LastName,relatedToData[1]};
-
-		//	String[] relatedAssociation=ATE_ARelatedAsso1.split("<break>");
+			String[] relatedAssociation=ATE_ARelatedAsso1.split("<break>");
 
 		ArrayList<String> tabName=new ArrayList<String>();
 		tabName.add("People");
@@ -907,7 +897,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 
 
-					if (bp.verifySubjectLinkRedirectionOnIntraction(driver,taskSubject)) {
+					if (bp.verifySubjectLinkPopUpOnIntraction(driver,taskSubject)) {
 						log(LogStatus.INFO, "page successfully redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);			
 					}
 					else
@@ -1242,7 +1232,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The redirection on click of record name and count of time referenced is not working properly. "+result3);
 					}
 
-					if (bp.verifySubjectLinkRedirectionOnIntraction(driver,taskSubject)) {
+					if (bp.verifySubjectLinkPopUpOnIntraction(driver,taskSubject)) {
 						log(LogStatus.INFO, "page successfully redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);			
 					}
 					else
@@ -1404,7 +1394,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Start Date", advanceStartDate },{"End Date",advanceEndDate}, {"Assigned To",assignedToUser}};	
+		String[][] advanceSection = { { "Start Date", advanceStartDate },{"End Date",advanceEndDate}, {"User",assignedToUser}};	
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 		int k=0; 
@@ -1463,7 +1453,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed. "+result1);
 						}
 
-						if (bp.verifySubjectLinkRedirectionOnIntraction(driver,taskSubject)) {
+						if (bp.verifySubjectLinkPopUpOnIntraction(driver,taskSubject)) {
 							log(LogStatus.INFO, "page successfully redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);			
 						}
 						else
@@ -1795,7 +1785,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
 					}
 
-					if (bp.verifySubjectLinkRedirectionOnIntraction(driver,taskSubject1)) {
+					if (bp.verifySubjectLinkPopUpOnIntraction(driver,taskSubject1)) {
 						log(LogStatus.INFO, "page successfully redirecting to the "+ taskSubject1+ " page on new tab",	YesNo.No);			
 					}
 					else
@@ -8473,6 +8463,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
 
 		String recordName=ATE_Contact2;
+		String xPath;
+		WebElement ele;
 
 		String task1SubjectNameNavigation = ATE_ATSubject79;
 
@@ -8504,54 +8496,75 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if (BP.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-					if (BP.clickOnSubjectOfInteractionEitherOnCardOrInViewAllPopUp(task1SubjectNameNavigation)) {
-						log(LogStatus.INFO, "Task Detail Page has been open for Record: " + task1SubjectNameNavigation,
+					if(click(driver, BP.getViewAllBtnOnIntration(20), "View all button", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "Clicked on view all button on interaction section",
 								YesNo.No);
+						String parentID=switchOnWindow(driver);
+						if(click(driver, BP.getSubjectNameOnInteractionPage(task1SubjectNameNavigation,20), task1SubjectNameNavigation+ " subject", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on subject name "+task1SubjectNameNavigation , YesNo.No);
 
-						if (click(driver, taskBP.downArrowButton(20), "downArrowButton", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
+							if(click(driver, BP.getEditButtonOnPopup(task1SubjectNameNavigation,20), task1SubjectNameNavigation+ " subject edit buttn", action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on edit button of "+task1SubjectNameNavigation , YesNo.No);
+								CommonLib.ThreadSleep(10000);
+								if(click(driver, BP.getCancelButtonPopup(20), "cancel button", action.BOOLEAN))
+								{
+									log(LogStatus.INFO, "clicked on cancel button" , YesNo.No);
+									CommonLib.ThreadSleep(5000);
+									xPath="//li[@class='slds-button slds-button--neutral']//div[@title='Create Follow-Up Task']";
+									ele=FindElement(driver, xPath, "followup", action.SCROLLANDBOOLEAN, 20);
 
-							if (click(driver, taskBP.buttonInTheDownArrowList("Create Follow-Up Task", 20),
-									"Create Follow-Up Task Button in downArrowButton", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO, "Clicked on Create Follow-Up Task Button in  Down Arrow Button",
-										YesNo.No);
+									if(click(dDriver, ele, "followup task", action.SCROLLANDBOOLEAN))
+									{
 
-								CommonLib.ThreadSleep(5000);
-								if (BP.updateActivityTimelineRecord(projectName, basicsection, advanceSection, null, null,
-										null)) {
-									log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
-									driver.close();
-									driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+										log(LogStatus.INFO, "clicked on followup button" , YesNo.No);
+										CommonLib.ThreadSleep(7000);
+										if (BP.updateActivityTimelineRecord(projectName, basicsection, advanceSection, null, null,
+												null)) {
+											log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
+										
+										} else {
+											log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
+											sa.assertTrue(false, "Activity timeline record has not Updated");
 
-								} else {
-									log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
-									sa.assertTrue(false, "Activity timeline record has not Updated");
-
-									driver.close();
-									driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+										}
+									}
+									else
+									{
+										log(LogStatus.INFO, "Not able to click on followup button" , YesNo.No);
+										sa.assertTrue(false, "Not able to click on followup button");
+									}
 								}
-
-							} else {
-								log(LogStatus.ERROR,
-										"Not Able Click on Create Follow-Up Task button in Down Arrow Button",
-										YesNo.Yes);
-								sa.assertTrue(false,
-										"Not Able Click on Create Follow-Up Task button in Down Arrow Button");
-								driver.close();
-								driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+								else
+								{
+									log(LogStatus.INFO, "Not able to click on cancel button",
+											YesNo.No);
+									sa.assertTrue(false, "Not able to click on cancel button");
+								}
 							}
-
-						} else {
-							log(LogStatus.ERROR, "Not Able Click on Down Arrow Button", YesNo.Yes);
-							sa.assertTrue(false, "Not Able Click on Down Arrow Button");
-							driver.close();
-							driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+							else
+							{
+								log(LogStatus.INFO, "Not able to click on edit button",
+										YesNo.No);
+								sa.assertTrue(false, "Not able to click on edit button");
+							}
 						}
-
-					} else {
-						log(LogStatus.ERROR, "Task Detail Page has not open for Record: " + task1SubjectNameNavigation,
-								YesNo.Yes);
-						sa.assertTrue(false, "Task Detail Page has not open for Record: " + task1SubjectNameNavigation);
+						else
+						{
+							log(LogStatus.INFO, "Not able to click on subject name",
+									YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name");
+						}
+						driver.close();
+						driver.switchTo().window(parentID);
+						}
+					else
+					{
+						log(LogStatus.INFO, "Not able to click on view all button on interaction section",
+								YesNo.No);
+						sa.assertTrue(false, "Not able to click on view all button on interaction section");
 					}
 
 				} else {
@@ -9678,9 +9691,10 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String UserLastName = ATE_CRMUserLastName1;
 
 		String emailId = crmUser8EmailID;
+		boolean flag=true;
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		boolean flag = false;
+		
 		if (home.clickOnSetUpLink()) {
 			flag = true;
 			parentWindow = switchOnWindow(driver);
@@ -10066,41 +10080,55 @@ public class AcuityTaskAndEvent extends BaseLib {
 				ThreadSleep(4000);
 				if (BP.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-
-					if (BP.clickOnSubjectOfInteractionEitherOnCardOrInViewAllPopUp(task1SubjectNameNavigation)) {
-						log(LogStatus.INFO, "Task Detail Page has been open for Record: " + task1SubjectNameNavigation,
+                    
+					if(click(driver, BP.getViewAllBtnOnIntration(20), "View all button", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "Clicked on view all button on interaction section",
 								YesNo.No);
+						String parentId=switchOnWindow(driver);
+						if(click(driver, BP.getSubjectNameOnInteractionPage(task1SubjectNameNavigation,20), task1SubjectNameNavigation+ " subject", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on subject name "+task1SubjectNameNavigation , YesNo.No);
 
-						if (click(driver, BP.getEditButtonOnActivityPage(20), "downArrowButton", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on Edit Button", YesNo.No);
+							if(click(driver, BP.getEditButtonOnPopup(task1SubjectNameNavigation,20), task1SubjectNameNavigation+ " subject edit buttn", action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on edit button of "+task1SubjectNameNavigation , YesNo.No);
+								CommonLib.ThreadSleep(10000);
+								if (BP.updateActivityTimelineRecord(projectName, basicsection, advanceSection, null, null,
+										null)) {
+									log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
+									driver.close();
+									driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 
-							CommonLib.ThreadSleep(5000);
-							if (BP.updateActivityTimelineRecord(projectName, basicsection, advanceSection, null, null,
-									null)) {
-								log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
-								driver.close();
-								driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+								} else {
+									log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
+									sa.assertTrue(false, "Activity timeline record has not Updated");
+									driver.close();
+									driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+								}
 
-							} else {
-								log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
-								sa.assertTrue(false, "Activity timeline record has not Updated");
-
+							}
+							else
+							{
+								log(LogStatus.INFO, "Not able to click on edit button",YesNo.No);
+								sa.assertTrue(false, "Not able to click on edit button");
 								driver.close();
 								driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 							}
-
-
-						} else {
-							log(LogStatus.ERROR, "Not Able Click on edit Button", YesNo.Yes);
-							sa.assertTrue(false, "Not Able Click on edit Button");
+						}
+						else
+						{
+							log(LogStatus.INFO, "Not able to click on subject name",YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name");
 							driver.close();
 							driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 						}
-
-					} else {
-						log(LogStatus.ERROR, "Task Detail Page has not open for Record: " + task1SubjectNameNavigation,
-								YesNo.Yes);
-						sa.assertTrue(false, "Task Detail Page has not open for Record: " + task1SubjectNameNavigation);
+					}
+					else
+					{
+						log(LogStatus.INFO, "Not able to click on view all button on interaction section",
+								YesNo.No);
+						sa.assertTrue(false, "Not able to click on view all button on interaction section");
 					}
 
 				} else {
@@ -10127,20 +10155,21 @@ public class AcuityTaskAndEvent extends BaseLib {
 				ThreadSleep(4000);
 				if (BP.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-
-					if (BP.clickOnSubjectOfInteractionEitherOnCardOrInViewAllPopUp(task2SubjectNameNavigation)) {
-						log(LogStatus.INFO, "Task Detail Page has been open for Record: " + task2SubjectNameNavigation,
+					
+					if(click(driver, BP.getViewAllBtnOnIntration(20), "View all button", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "Clicked on view all button on interaction section",
 								YesNo.No);
+						String parentID=switchOnWindow(driver);
+						if(click(driver, BP.getSubjectNameOnInteractionPage(task2SubjectNameNavigation,20), task2SubjectNameNavigation+ " subject", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on subject name "+task2SubjectNameNavigation , YesNo.No);
 
-						if (click(driver, taskBP.downArrowButton(20), "downArrowButton", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
+							if(click(driver, BP.getEditButtonOnPopup(task2SubjectNameNavigation,20), task2SubjectNameNavigation+ " subject edit buttn", action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on edit button of "+task2SubjectNameNavigation , YesNo.No);
+								CommonLib.ThreadSleep(10000);
 
-							if (click(driver, taskBP.buttonInTheDownArrowList("Edit", 20),
-									"Create Follow-Up Task Button in downArrowButton", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO, "Clicked on Edit Button in  Down Arrow Button",
-										YesNo.No);
-
-								CommonLib.ThreadSleep(5000);
 								if (BP.updateActivityTimelineRecord(projectName, basicsection1, advanceSection1, null, null,
 										null)) {
 									log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
@@ -10155,26 +10184,28 @@ public class AcuityTaskAndEvent extends BaseLib {
 									driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 								}
 
-							} else {
-								log(LogStatus.ERROR,
-										"Not Able Click on Edit button in Down Arrow Button",
-										YesNo.Yes);
-								sa.assertTrue(false,
-										"Not Able Click on Edit button in Down Arrow Button");
+							}
+							else
+							{
+								log(LogStatus.INFO, "Not able to click on edit button",YesNo.No);
+								sa.assertTrue(false, "Not able to click on edit button");
 								driver.close();
 								driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 							}
-
-						} else {
-							log(LogStatus.ERROR, "Not Able Click on Down Arrow Button", YesNo.Yes);
-							sa.assertTrue(false, "Not Able Click on Down Arrow Button");
+						}
+						else
+						{
+							log(LogStatus.INFO, "Not able to click on subject name",YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name");
 							driver.close();
 							driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-						}
-					} else {
-						log(LogStatus.ERROR, "Task Detail Page has not open for Record: " + task2SubjectNameNavigation,
-								YesNo.Yes);
-						sa.assertTrue(false, "Task Detail Page has not open for Record: " + task2SubjectNameNavigation);
+						}						
+					}
+					else
+					{
+						log(LogStatus.INFO, "Not able to click on view all button on interaction section",
+								YesNo.No);
+						sa.assertTrue(false, "Not able to click on view all button on interaction section");
 					}
 
 				} else {
@@ -10190,7 +10221,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 			log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj2, YesNo.No);
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj2);
 		}
-
+		
+	
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}

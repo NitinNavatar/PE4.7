@@ -1792,9 +1792,9 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 						if (click(driver, getOutlookCalendarMonth(partialMonthName, action, timeout), "month name list",
 								action)) {
 							log(LogStatus.INFO, "Clicked on month  name button", YesNo.No);
-							ThreadSleep(2000);
+							ThreadSleep(4000);
 
-							if (click(driver, getOutlookCalendarDay(day, fullMonthName, year, action, timeout),
+							if (clickUsingJavaScript(driver, getOutlookCalendarDay(day, fullMonthName, year, action, timeout),
 									"day of the calenadr", action)) {
 								log(LogStatus.INFO, "Clicked on day of the calendar", YesNo.No);
 								ThreadSleep(2000);

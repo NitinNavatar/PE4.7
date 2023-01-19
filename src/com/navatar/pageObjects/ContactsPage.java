@@ -487,7 +487,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "//button[text()='New Referral']/ancestor::li/following-sibling::li//button")
+	@FindBy(xpath = "//lightning-button-menu/button[contains(@class,\"slds-button_icon-border-filled\")]")
 	private WebElement contactPageOnProfileEroButton;
 
 	public WebElement getcontactPageOnProfileEroButton(String projectName, int timeOut) {
@@ -611,7 +611,6 @@ public class ContactsPage extends BasePageBusinessLayer {
 
 	}
 
-	
 	@FindBy(xpath = "//ul[@role='tablist']//a[text()='Contacts']")
 	private WebElement contactTab;
 
@@ -619,8 +618,6 @@ public class ContactsPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, contactTab, "Visibility", timeOut, "Contact tab");
 
 	}
-	
-
 
 	public WebElement getContactFullNameEle(String contactFullName, int timeOut) {
 
@@ -970,25 +967,22 @@ public class ContactsPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, TierDropdown, "Visibility", timeOut, "TierDropdown");
 	}
 
-	
-	
 	public WebElement dropDownWithLabelName(String labelName, int timeOut) {
-		String xpath = "//*[text()='"+labelName+"']/..//button";
+		String xpath = "//*[text()='" + labelName + "']/..//button";
 
 		try {
-			return FindElement(driver, xpath, "dropDownWithLabelName: "+labelName, action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, "dropDownWithLabelName: " + labelName, action.SCROLLANDBOOLEAN, timeOut);
 
 		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, xpath, "dropDownWithLabelName: "+labelName, action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, "dropDownWithLabelName: " + labelName, action.SCROLLANDBOOLEAN, timeOut);
 		}
 	}
-	
+
 	@FindBy(xpath = "//p[@title='Phone']")
 	private WebElement phoneFieldOnContactPage;
 
 	public WebElement getPhoneFieldOnContactPage(int timeOut) {
 		return isDisplayed(driver, phoneFieldOnContactPage, "Visibility", timeOut, "Phone Field On Contact Page");
 	}
-	
 
 }

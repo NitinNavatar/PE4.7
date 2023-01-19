@@ -1090,7 +1090,7 @@ public class HomePage extends BasePageBusinessLayer {
 	/**
 	 * @return the navatarQuickLinkMinimize_Lighting
 	 */
-	public WebElement getNavatarQuickLinkMinimize_Lighting(String environment, int timeOut) {
+	public WebElement getNavatarQuickLinkMinimize_Lighting(String projectName, int timeOut) {
 		return isDisplayed(driver, navatarQuickLinkMinimize_Lighting, "Visibility", timeOut,
 				"Navatar Quick Link Minimize Lighting");
 	}
@@ -2302,7 +2302,7 @@ public class HomePage extends BasePageBusinessLayer {
 
 	public List<WebElement> getFundFirstSDGColumns(String TitleOfSDG, int timeOut) {
 		String xpath = "//h2/span/a[text()='" + TitleOfSDG
-				+ "']/../../../../../following-sibling::div/div/following-sibling::div//tr/th/following-sibling::th//span";
+				+ "']/../../../../../following-sibling::div/div/following-sibling::div//tr/th/following-sibling::th//span[contains(@class,'slds-truncate')]";
 		List<WebElement> FundFirst = FindElements(driver, xpath, "Fund First SDG Columns");
 		return FundFirst;
 	}
@@ -2478,11 +2478,9 @@ public class HomePage extends BasePageBusinessLayer {
 
 		String xpath = "//lightning-layout//lightning-layout-item//a/b[text()=\"" + eventName + "\"]/parent::a";
 		try {
-			return FindElement(driver, xpath, "Event Link in HomePage: " + eventName,
-					action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, "Event Link in HomePage: " + eventName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, xpath, "Event Link in HomePage: " + eventName,
-					action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, "Event Link in HomePage: " + eventName, action.SCROLLANDBOOLEAN, timeOut);
 		}
 
 	}
@@ -2514,7 +2512,7 @@ public class HomePage extends BasePageBusinessLayer {
 	}
 
 	public WebElement globalSearchRecord(String recordName, int timeOut) {
-		
+
 		String xpath = "//*/span/a[text()=\"" + recordName + "\"][not(contains(@data-aura-class,\"uiOutputURL\"))]";
 		try {
 			return isDisplayed(driver,
@@ -2526,44 +2524,33 @@ public class HomePage extends BasePageBusinessLayer {
 					"Visibility", timeOut, "textToSearch");
 		}
 	}
-	
-	
+
 	public WebElement globalSearchSideNavOptionLink(String globalSearchSideNavOptionName, int timeOut) {
 
-		String xpath = "//li//a[contains(@class,\"slds-nav-vertical__action\")]//span[text()=\""+globalSearchSideNavOptionName+"\"]/ancestor::a";
+		String xpath = "//li//a[contains(@class,\"slds-nav-vertical__action\")]//span[text()=\""
+				+ globalSearchSideNavOptionName + "\"]/ancestor::a";
 		try {
-			return isDisplayed(driver,
-					FindElement(driver, xpath, "Text Found: " + globalSearchSideNavOptionName, action.SCROLLANDBOOLEAN, timeOut),
-					"Visibility", timeOut, "textToSearch");
+			return isDisplayed(driver, FindElement(driver, xpath, "Text Found: " + globalSearchSideNavOptionName,
+					action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "textToSearch");
 		} catch (StaleElementReferenceException e) {
-			return isDisplayed(driver,
-					FindElement(driver, xpath, "Text Found: " + globalSearchSideNavOptionName, action.SCROLLANDBOOLEAN, timeOut),
-					"Visibility", timeOut, "textToSearch");
+			return isDisplayed(driver, FindElement(driver, xpath, "Text Found: " + globalSearchSideNavOptionName,
+					action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "textToSearch");
 		}
 	}
 
-
-	
 	@FindBy(xpath = "//button[@title=\"Show more searchable objects\"]")
 	private WebElement globalSearchSideNavShowMoreButton;
 
 	public WebElement globalSearchSideNavShowMoreButton(int timeOut) {
-		return isDisplayed(driver, globalSearchSideNavShowMoreButton, "Visibility", timeOut, "globalSearchSideNavShowMoreButton");
+		return isDisplayed(driver, globalSearchSideNavShowMoreButton, "Visibility", timeOut,
+				"globalSearchSideNavShowMoreButton");
 	}
-	
+
 	@FindBy(xpath = "//div[contains(@class,\"noResultsTitle\")]")
 	private WebElement globalSearchNoResultMsg;
 
 	public WebElement globalSearchNoResultMsg(int timeOut) {
 		return isDisplayed(driver, globalSearchNoResultMsg, "Visibility", timeOut, "globalSearchNoResultMsg");
 	}
-	
-	
-	
-
-	
-	
-	
-	
 
 }

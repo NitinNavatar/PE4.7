@@ -1384,12 +1384,13 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 						if (CommonLib.doubleClickUsingAction(driver, ele)) {
 							log(LogStatus.INFO, "Clicked on the " + sdgName + " body", YesNo.Yes);
 
+							CommonLib.ThreadSleep(8000);
 							xPath = "//a[text()='" + sdgName + "']//ancestor::article//button[text()='Save']";
-							ele = FindElement(driver, xPath, "Save button of " + sdgName, action.BOOLEAN, 50);
+							ele = FindElement(driver, xPath, "Save button of " + sdgName, action.BOOLEAN, 10);
 							if (click(driver, ele, "Clicked on the Save button", action.BOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on the save button", YesNo.Yes);
 								if (CommonLib.checkElementVisibility(driver, geterrorMessageAfterSaveBlankRecord(50),
-										"Error Message", 50)) {
+										"Error Message", 10)) {
 									log(LogStatus.INFO,
 											"\"1 record has error. Kindly resolve them and try again.\" Error Message is visible",
 											YesNo.Yes);
@@ -1439,7 +1440,8 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		mouseOverOperation(driver, ele);
 		ThreadSleep(3000);
 
-		xPath = "//a[text()='" + sdgName + "']/ancestor::article//button[@class='slds-button slds-button_icon']";
+		xPath = "//a[text()=\"" + sdgName
+				+ "\"]/ancestor::article//button[@class=\"slds-button slds-button_icon slds-button_icon-bare\" and @title=\"Help\"]";
 		ele = FindElement(driver, xPath, "Error triangle icon", action.BOOLEAN, 50);
 		if (mouseOverOperation(driver, ele)) {
 			log(LogStatus.INFO, "Mouse has been moved to error triangle icon", YesNo.No);
@@ -2250,7 +2252,8 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		WebElement ele = null;
 		ThreadSleep(5000);
 
-		xPath = "//a[text()='" + sdgName + "']/ancestor::article//button[@class='slds-button slds-button_icon']";
+		xPath = "//a[text()=\"" + sdgName
+				+ "\"]/ancestor::article//button[@class=\"slds-button slds-button_icon slds-button_icon-bare\" and @title=\"Help\"]";
 		ele = FindElement(driver, xPath, "Error triangle icon", action.BOOLEAN, 50);
 		scrollDownThroughWebelementInCenter(driver, ele, recordName + " Triangle error message");
 
@@ -3186,7 +3189,8 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		WebElement ele = null;
 		ThreadSleep(5000);
 
-		xPath = "//a[text()='" + sdgName + "']/ancestor::article//button[@class='slds-button slds-button_icon']";
+		xPath = "//a[text()=\"" + sdgName
+				+ "\"]/ancestor::article//button[@class=\"slds-button slds-button_icon slds-button_icon-bare\" and @title=\"Help\"]";
 		ele = FindElement(driver, xPath, "Error triangle icon", action.BOOLEAN, 50);
 		scrollDownThroughWebelementInCenter(driver, ele, recordName + " Triangle error message");
 
@@ -3629,7 +3633,8 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		WebElement ele = null;
 		ThreadSleep(5000);
 
-		xPath = "//a[text()='" + sdgName + "']/ancestor::article//button[@class='slds-button slds-button_icon']";
+		xPath = "//a[text()=\"" + sdgName
+				+ "\"]/ancestor::article//button[@class=\"slds-button slds-button_icon slds-button_icon-bare\" and @title=\"Help\"]";
 		ele = FindElement(driver, xPath, "Error triangle icon", action.BOOLEAN, 50);
 		scrollDownThroughWebelementInCenter(driver, ele, recordName + " Triangle error message");
 

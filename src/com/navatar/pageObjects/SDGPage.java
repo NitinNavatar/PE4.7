@@ -286,6 +286,9 @@ public class SDGPage extends BasePageBusinessLayer {
 	@FindBy(xpath = "//span[text()='1 record has error. Kindly resolve them and try again.']")
 	private WebElement errorMessageAfterSaveBlankRecord;
 
+	
+	
+	
 	public WebElement geterrorMessageAfterSaveBlankRecord(int timeOut) {
 		return isDisplayed(driver, errorMessageAfterSaveBlankRecord, "Visibility", timeOut, "Error Message");
 	}

@@ -28,9 +28,9 @@ import com.navatar.scripts.PECloudSmoke;
 import com.navatar.scripts.Module6;
 import com.navatar.scripts.Module7WithMeetingTypeDepricated;
 import com.navatar.scripts.Module1FieldSetDepricated;
-import com.navatar.scripts.Module2;
+
 import com.navatar.scripts.Module3New;
-import com.navatar.scripts.Module4AccordionOutOfScopeDepricated;
+
 
 
 /**
@@ -1623,8 +1623,8 @@ public class CommonVariables {
 	 		public static String RGATE_TaggedCompany1,RGATE_TaggedCompany2,RGATE_TaggedCompany3,RGATE_TaggedCompany4,RGATE_TaggedCompany5,RGATE_TaggedCompany6,RGATE_TaggedCompany7,RGATE_TaggedCompany8;
 	 		public static String RGATE_TaggedCompanyReferenceCount1,RGATE_TaggedCompanyReferenceCount2,RGATE_TaggedCompanyReferenceCount3,RGATE_TaggedCompanyReferenceCount4,RGATE_TaggedCompanyReferenceCount5,RGATE_TaggedCompanyReferenceCount6,RGATE_TaggedCompanyReferenceCount7,RGATE_TaggedCompanyReferenceCount8;
 	 		
-	 		public static String RGATE_TaggedPeople1,RGATE_TaggedPeople2,RGATE_TaggedPeople3,RGATE_TaggedPeople4,RGATE_TaggedPeople5,RGATE_TaggedPeople6,RGATE_TaggedPeople7;
-	 		public static String RGATE_TaggedPeopleReferenceCount1,RGATE_TaggedPeopleReferenceCount2,RGATE_TaggedPeopleReferenceCount3,RGATE_TaggedPeopleReferenceCount4,RGATE_TaggedPeopleReferenceCount5,RGATE_TaggedPeopleReferenceCount6,RGATE_TaggedPeopleReferenceCount7;
+	 		public static String RGATE_TaggedPeople1,RGATE_TaggedPeople2,RGATE_TaggedPeople3,RGATE_TaggedPeople4,RGATE_TaggedPeople5,RGATE_TaggedPeople6,RGATE_TaggedPeople7,RGATE_TaggedPeople8;
+	 		public static String RGATE_TaggedPeopleReferenceCount1,RGATE_TaggedPeopleReferenceCount2,RGATE_TaggedPeopleReferenceCount3,RGATE_TaggedPeopleReferenceCount4,RGATE_TaggedPeopleReferenceCount5,RGATE_TaggedPeopleReferenceCount6,RGATE_TaggedPeopleReferenceCount7,RGATE_TaggedPeopleReferenceCount8;
 	 		
 	 		
 	 		//Contact section
@@ -8469,6 +8469,7 @@ public class CommonVariables {
 		 		RGATE_TaggedPeople5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE005", excelLabel.People); 		
 		 		RGATE_TaggedPeople6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE006", excelLabel.People); 		
 		 		RGATE_TaggedPeople7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE007", excelLabel.People); 		
+		 		RGATE_TaggedPeople8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE008", excelLabel.People); 		
 			 	
 		 		RGATE_TaggedPeopleReferenceCount1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE001", excelLabel.People_Count);
 		 		RGATE_TaggedPeopleReferenceCount2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE002", excelLabel.People_Count);
@@ -8477,6 +8478,7 @@ public class CommonVariables {
 		 		RGATE_TaggedPeopleReferenceCount5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE005", excelLabel.People_Count);
 		 		RGATE_TaggedPeopleReferenceCount6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE006", excelLabel.People_Count);
 		 		RGATE_TaggedPeopleReferenceCount7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE007", excelLabel.People_Count);
+		 		RGATE_TaggedPeopleReferenceCount8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE008", excelLabel.People_Count);
 		 		
 		 		
 		 		
