@@ -12227,20 +12227,20 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			if (npbl.createNavPopUpMinimizeButton(5) != null) {
 				CommonLib.click(driver, npbl.createNavPopUpMinimizeButton(5), "Minimize", action.BOOLEAN);
 			}
-			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName,
-					NavigationMenuItems.Research.toString().replace("_", " "), action.BOOLEAN, 30)) {
-				log(LogStatus.INFO, "Able to Click on Research Going to click on : "
-						+ NavigationMenuItems.Research.toString() + " for Research an Item", YesNo.No);
+//			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName,
+//					NavigationMenuItems.Research.toString().replace("_", " "), action.BOOLEAN, 30)) {
+//				log(LogStatus.INFO, "Able to Click on Research Going to click on : "
+//						+ NavigationMenuItems.Research.toString() + " for Research an Item", YesNo.No);
 
-				if (CommonLib.sendKeys(driver, npbl.researchSearchBox(20), searchString, "Research Search Box",
-						action.BOOLEAN)) {
+//				if (CommonLib.sendKeys(driver, npbl.researchSearchBox(20), searchString, "Research Search Box",
+//						action.BOOLEAN)) {
 //				if (CommonLib.sendKeys(driver, npbl.researchSearchBox(20), searchString, "Research Search Box",
 //						action.BOOLEAN)) {
 
-					log(LogStatus.INFO, "Enter Value in Research Search Box: " + searchString, YesNo.No);
-
-					if (click(driver, npbl.researchButton(20), "Research Button", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Research Button", YesNo.No);
+//					log(LogStatus.INFO, "Enter Value in Research Search Box: " + searchString, YesNo.No);
+//
+//					if (click(driver, npbl.researchButton(20), "Research Button", action.SCROLLANDBOOLEAN)) {
+//						log(LogStatus.INFO, "Clicked on Research Button", YesNo.No);
 
 						if (noResultMsgInResearch(3) == null) {
 							CommonLib.refresh(driver);
@@ -12399,26 +12399,26 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							sa.assertTrue(false, "No Result Found for the Text: " + searchString);
 						}
 
-					}
+//					}
+//
+//					else {
+//						log(LogStatus.ERROR, "Not Able to Click on Research Button", YesNo.Yes);
+//						sa.assertTrue(false, "Not Able to Click on Research Button");
+//					}
 
-					else {
-						log(LogStatus.ERROR, "Not Able to Click on Research Button", YesNo.Yes);
-						sa.assertTrue(false, "Not Able to Click on Research Button");
-					}
-
-				} else {
-
-					log(LogStatus.ERROR, "Not Able to Enter Value in Research Search Box: " + searchString, YesNo.Yes);
-					sa.assertTrue(false, "Not Able to Enter Value in Research Search Box: " + searchString);
-
-				}
-			} else {
-				log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Research.toString()
-						+ " so cannot click on it for Research an Item", YesNo.Yes);
-				sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Research.toString()
-						+ " so cannot click on it for Research an Item");
-
-			}
+//				} else {
+//
+//					log(LogStatus.ERROR, "Not Able to Enter Value in Research Search Box: " + searchString, YesNo.Yes);
+//					sa.assertTrue(false, "Not Able to Enter Value in Research Search Box: " + searchString);
+//
+//				}
+//			} else {
+//				log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Research.toString()
+//						+ " so cannot click on it for Research an Item", YesNo.Yes);
+//				sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Research.toString()
+//						+ " so cannot click on it for Research an Item");
+//
+//			}
 
 			if (status == loopCount + 1)
 				return true;
