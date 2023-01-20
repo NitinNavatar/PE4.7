@@ -994,7 +994,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		}
 
 		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
-				{ "Notes", updatedNotesOfTask }, { "Related_To", AMNNR_ATRelatedTo3 + "<break>" + AMNNR_RelatedTo4 } };
+				{ "Notes", updatedNotesOfTask }, { "Related_To", AMNNR_SuggestedTag4 } };
 
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
 				{ "Status", status }, { "Priority", priority } };

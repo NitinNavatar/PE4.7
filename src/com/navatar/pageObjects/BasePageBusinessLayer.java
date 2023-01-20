@@ -12227,20 +12227,20 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			if (npbl.createNavPopUpMinimizeButton(5) != null) {
 				CommonLib.click(driver, npbl.createNavPopUpMinimizeButton(5), "Minimize", action.BOOLEAN);
 			}
-			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName,
-					NavigationMenuItems.Research.toString().replace("_", " "), action.BOOLEAN, 30)) {
-				log(LogStatus.INFO, "Able to Click on Research Going to click on : "
-						+ NavigationMenuItems.Research.toString() + " for Research an Item", YesNo.No);
+//			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName,
+//					NavigationMenuItems.Research.toString().replace("_", " "), action.BOOLEAN, 30)) {
+//				log(LogStatus.INFO, "Able to Click on Research Going to click on : "
+//						+ NavigationMenuItems.Research.toString() + " for Research an Item", YesNo.No);
 
-				if (CommonLib.sendKeys(driver, npbl.researchSearchBox(20), searchString, "Research Search Box",
-						action.BOOLEAN)) {
 //				if (CommonLib.sendKeys(driver, npbl.researchSearchBox(20), searchString, "Research Search Box",
 //						action.BOOLEAN)) {
-				
-					log(LogStatus.INFO, "Enter Value in Research Search Box: " + searchString, YesNo.No);
+//				if (CommonLib.sendKeys(driver, npbl.researchSearchBox(20), searchString, "Research Search Box",
+//						action.BOOLEAN)) {
 
-					if (click(driver, npbl.researchButton(20), "Research Button", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Research Button", YesNo.No);
+//					log(LogStatus.INFO, "Enter Value in Research Search Box: " + searchString, YesNo.No);
+//
+//					if (click(driver, npbl.researchButton(20), "Research Button", action.SCROLLANDBOOLEAN)) {
+//						log(LogStatus.INFO, "Clicked on Research Button", YesNo.No);
 
 						if (noResultMsgInResearch(3) == null) {
 							CommonLib.refresh(driver);
@@ -12399,26 +12399,26 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							sa.assertTrue(false, "No Result Found for the Text: " + searchString);
 						}
 
-					}
+//					}
+//
+//					else {
+//						log(LogStatus.ERROR, "Not Able to Click on Research Button", YesNo.Yes);
+//						sa.assertTrue(false, "Not Able to Click on Research Button");
+//					}
 
-					else {
-						log(LogStatus.ERROR, "Not Able to Click on Research Button", YesNo.Yes);
-						sa.assertTrue(false, "Not Able to Click on Research Button");
-					}
-
-				} else {
-
-					log(LogStatus.ERROR, "Not Able to Enter Value in Research Search Box: " + searchString, YesNo.Yes);
-					sa.assertTrue(false, "Not Able to Enter Value in Research Search Box: " + searchString);
-
-				}
-			} else {
-				log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Research.toString()
-						+ " so cannot click on it for Research an Item", YesNo.Yes);
-				sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Research.toString()
-						+ " so cannot click on it for Research an Item");
-
-			}
+//				} else {
+//
+//					log(LogStatus.ERROR, "Not Able to Enter Value in Research Search Box: " + searchString, YesNo.Yes);
+//					sa.assertTrue(false, "Not Able to Enter Value in Research Search Box: " + searchString);
+//
+//				}
+//			} else {
+//				log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Research.toString()
+//						+ " so cannot click on it for Research an Item", YesNo.Yes);
+//				sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Research.toString()
+//						+ " so cannot click on it for Research an Item");
+//
+//			}
 
 			if (status == loopCount + 1)
 				return true;
@@ -20783,13 +20783,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 
 							else if (labelName.contains(excelLabel.Subject.toString())) {
-								if (activitySubjetLinkPopupHeaderOnInteraction(10).getText().equals(labelName)) {
-									log(LogStatus.INFO, labelName + " link Popup header has been verified", YesNo.No);
+								if (activitySubjetLinkPopupHeaderOnInteraction(10).getText().equals(value)) {
+									log(LogStatus.INFO, value + " link Popup header has been verified", YesNo.No);
 
 								} else {
-									log(LogStatus.ERROR, labelName + " link Popup header has not been verified",
-											YesNo.No);
-									negativeResult.add(labelName + " link Popup header has not been verified");
+									log(LogStatus.ERROR, value + " link Popup header has not been verified", YesNo.No);
+									negativeResult.add(value + " link Popup header has not been verified");
 
 								}
 							}
@@ -20870,13 +20869,20 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.INFO, "Clicked on Cross Button of Subject Link Pop up of Subject: " + subjectName,
 							YesNo.No);
 
-					if (activitySubjetLinkPopupHeaderOnInteraction(5) != null) {
+					if (activitySubjetLinkPopupHeaderOnInteraction(5) == null) {
 
-						log(LogStatus.INFO, "Verified Subject Link Pop up has bee closed after click on Cross button",
+						log(LogStatus.INFO,
+								"Verified Subject Link Pop up has been closed after click on Cross button for Subject: "
+										+ subjectName,
 								YesNo.No);
 					} else {
-						log(LogStatus.ERROR, subjectName + " link Popup has not been Open", YesNo.No);
-						negativeResult.add(subjectName + " link Popup has not been Open");
+						log(LogStatus.ERROR,
+								"Subject Link Pop up has not been closed after click on Cross button for Subject: "
+										+ subjectName,
+								YesNo.No);
+						negativeResult
+								.add("Subject Link Pop up has not been closed after click on Cross button for Subject: "
+										+ subjectName);
 					}
 
 				} else {

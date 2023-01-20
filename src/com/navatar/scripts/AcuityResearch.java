@@ -1066,12 +1066,12 @@ public class AcuityResearch extends BaseLib{
     InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
 	 
-		 lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+		 lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
    
 	   if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 	
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm1.replace("  ", ""), 10)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm1.replace("  ", "").replace("\"", ""), 10)) {
 	           if (ip.UpdateLegalNameAccount(projectName, AR_Research1, 5)) {
 	               log(LogStatus.INFO, "successfully update legal name " + AR_Research1, YesNo.Yes);
 	           } else {
@@ -1092,7 +1092,7 @@ public class AcuityResearch extends BaseLib{
 	ThreadSleep(5000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 5)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeys(driver, rp.getTextAreaResearch(5), "\"" + AR_Research1 + "\"", "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(5), AR_Research1, "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
 				click(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 				ThreadSleep(8000);
@@ -1118,7 +1118,7 @@ public class AcuityResearch extends BaseLib{
 				}
 		}  
 		
-	   String variable =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.ResearchFindings, "'" + AR_Research1 + "'", excelLabel.Variable_Name);
+	   String variable =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.ResearchFindings, AR_Research1, excelLabel.Variable_Name);
 	   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(variable, action.SCROLLANDBOOLEAN, 5);
 		if(list.isEmpty()) {
 			
@@ -1138,7 +1138,7 @@ public class AcuityResearch extends BaseLib{
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
-	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 	ThreadSleep(2000);
 	String ele;
 	String headerName;
@@ -1147,11 +1147,11 @@ public class AcuityResearch extends BaseLib{
 	
 	for(String searchValue : searchValues) {
 		
-		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, "\"" + searchValue + "\"", excelLabel.Variable_Name);
+		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeys(driver, rp.getTextAreaResearch(10),"\"" + searchValue + "\"", "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
@@ -1248,7 +1248,7 @@ public class AcuityResearch extends BaseLib{
 	   if (fp.clickOnTab(environment, mode, TabName.ContactTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.ContactTab, YesNo.No);
 	
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm2.replace("  ", ""), 10)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm2.replace("  ", "").replace("\"", ""), 10)) {
 	           if (cp.UpdateLastName(projectName, PageName.ContactPage,AR_Research2)) {
 	               log(LogStatus.INFO, "successfully update contact name " + AR_Research2, YesNo.Yes);
 	           } else {
@@ -1269,7 +1269,7 @@ public class AcuityResearch extends BaseLib{
 	ThreadSleep(5000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeys(driver, rp.getTextAreaResearch(10),"\"" + AR_Research2 + "\"", "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(10),AR_Research2, "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
 				clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 				ThreadSleep(8000);
@@ -1327,7 +1327,7 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeys(driver, rp.getTextAreaResearch(10),"\"" + searchValue + "\"", "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
@@ -1425,7 +1425,7 @@ public class AcuityResearch extends BaseLib{
 	   if (fp.clickOnTab(environment, mode, TabName.DealTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.DealTab, YesNo.No);
 	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm3.replace("  ", ""), 10)) {
-	           if (dp.UpdateOtherLable(projectName, PageLabel.Deal_Name.toString().replace("_", " "), AR_Research3, 10)) {
+	           if (dp.UpdateOtherLable(projectName, PageLabel.Deal_Name.toString().replace("  ", "").replace("\"", ""), AR_Research3, 10)) {
 	               log(LogStatus.INFO, "successfully update contact name " + AR_Research3, YesNo.Yes);
 	           } else {
 	               sa.assertTrue(false, "not able to update deal name " + AR_Research3);
@@ -1444,7 +1444,7 @@ public class AcuityResearch extends BaseLib{
 	ThreadSleep(5000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeys(driver, rp.getTextAreaResearch(10),"\"" + AR_Research3 + "\"", "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(10),AR_Research3, "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
 				clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 				ThreadSleep(8000);
@@ -1499,7 +1499,7 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeys(driver, rp.getTextAreaResearch(10),"\"" + searchValue + "\"", "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
@@ -1593,7 +1593,7 @@ public class AcuityResearch extends BaseLib{
    
 	   if (fp.clickOnTab(environment, mode, TabName.FundsTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.FundsTab, YesNo.No);
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm4.replace("  ", ""), 10)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm4.replace("  ", "").replace("\"", ""), 10)) {
 	           if (fp.UpdateFundName(projectName, AR_Research4, 10)) {
 	               log(LogStatus.INFO, "successfully update contact name " + AR_Research4, YesNo.Yes);
 	           } else {
@@ -1613,7 +1613,7 @@ public class AcuityResearch extends BaseLib{
 	ThreadSleep(5000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeys(driver, rp.getTextAreaResearch(10),"\"" + AR_Research4 + "\"", "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(10),AR_Research4, "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
 				clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 				ThreadSleep(8000);
@@ -1667,7 +1667,7 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeys(driver, rp.getTextAreaResearch(10),"\"" + searchValue + "\"", "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
@@ -1762,7 +1762,7 @@ public class AcuityResearch extends BaseLib{
    
 	   if (fp.clickOnTab(environment, mode, TabName.FundraisingsTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.FundraisingsTab, YesNo.No);
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm5.replace("  ", ""), 10)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm5.replace("  ", "").replace("\"", ""), 10)) {
 	           if (frp.UpdateFundRaisingName(projectName, AR_Research5, 10)) {
 	               log(LogStatus.INFO, "successfully update Fundraising name " + AR_Research5, YesNo.Yes);
 	           } else {
@@ -1781,7 +1781,7 @@ public class AcuityResearch extends BaseLib{
 	ThreadSleep(5000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeys(driver, rp.getTextAreaResearch(10),"\"" + AR_Research5 + "\"", "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(10),AR_Research5, "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
 				clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 				ThreadSleep(8000);
@@ -1835,7 +1835,7 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeys(driver, rp.getTextAreaResearch(10),"\"" + searchValue + "\"", "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
@@ -1930,7 +1930,7 @@ public class AcuityResearch extends BaseLib{
 	 String[][] task1BasicSection = { { excelLabel.Subject.toString(), AR_Research6} };
 		 lp.CRMLogin(superAdminUserName, adminPassword, appName);
    
-		 if (home.globalSearchAndNavigate(AR_Firm6.replace("    ", ""), RelatedTab.Tasks.toString(), false)) {
+		 if (home.globalSearchAndNavigate(AR_Firm6.replace("  ", "").replace("\"", ""), RelatedTab.Tasks.toString(), false)) {
 
 				log(LogStatus.INFO,
 						"-----Verified Task named: " + AR_Firm6 + " found in Tasks Object-----",
@@ -1985,7 +1985,7 @@ public class AcuityResearch extends BaseLib{
 	ThreadSleep(5000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeys(driver, rp.getTextAreaResearch(10),"\"" + AR_Research6 + "\"", "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(10),AR_Research6, "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
 				clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 				ThreadSleep(8000);
@@ -2043,7 +2043,7 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeys(driver, rp.getTextAreaResearch(10),"\"" + searchValue + "\"", "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
@@ -2138,7 +2138,7 @@ public class AcuityResearch extends BaseLib{
 		 String[][] task1BasicSection = { { excelLabel.Subject.toString(), AR_Research7} };
 			 lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	   
-			 if (home.globalSearchAndNavigate(AR_Firm7.replace("    ", ""), RelatedTab.Events.toString(), false)) {
+			 if (home.globalSearchAndNavigate(AR_Firm7.replace("  ", "").replace("\"", ""), RelatedTab.Events.toString(), false)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Task named: " + AR_Firm7 + " found in Events Object-----",
@@ -2185,7 +2185,7 @@ public class AcuityResearch extends BaseLib{
 	ThreadSleep(5000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeys(driver, rp.getTextAreaResearch(10),"\"" + AR_Research7 + "\"", "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(10),AR_Research7, "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
 				clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 				ThreadSleep(8000);
