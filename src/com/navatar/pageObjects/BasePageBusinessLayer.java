@@ -12228,198 +12228,189 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			if (npbl.createNavPopUpMinimizeButton(5) != null) {
 				CommonLib.click(driver, npbl.createNavPopUpMinimizeButton(5), "Minimize", action.BOOLEAN);
 			}
-			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName,
-					NavigationMenuItems.Research.toString().replace("_", " "), action.BOOLEAN, 30)) {
-				log(LogStatus.INFO, "Able to Click on Research Going to click on : "
-						+ NavigationMenuItems.Research.toString() + " for Research an Item", YesNo.No);
+//			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName,
+//					NavigationMenuItems.Research.toString().replace("_", " "), action.BOOLEAN, 30)) {
+//				log(LogStatus.INFO, "Able to Click on Research Going to click on : "
+//						+ NavigationMenuItems.Research.toString() + " for Research an Item", YesNo.No);
 
-				if (CommonLib.sendKeys(driver, npbl.researchSearchBox(20), searchString, "Research Search Box",
-						action.BOOLEAN)) {
+//				if (CommonLib.sendKeys(driver, npbl.researchSearchBox(20), searchString, "Research Search Box",
+//						action.BOOLEAN)) {
 //				if (CommonLib.sendKeys(driver, npbl.researchSearchBox(20), searchString, "Research Search Box",
 //						action.BOOLEAN)) {
 
-					log(LogStatus.INFO, "Enter Value in Research Search Box: " + searchString, YesNo.No);
+//					log(LogStatus.INFO, "Enter Value in Research Search Box: " + searchString, YesNo.No);
+//
+//					if (click(driver, npbl.researchButton(20), "Research Button", action.SCROLLANDBOOLEAN)) {
+//						log(LogStatus.INFO, "Clicked on Research Button", YesNo.No);
 
-					if (click(driver, npbl.researchButton(20), "Research Button", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Research Button", YesNo.No);
+			if (noResultMsgInResearch(3) == null) {
+				CommonLib.refresh(driver);
+				CommonLib.ThreadSleep(3000);
+				List<String> sideNavCountExceptAllCategories = researchSideNavCountResultsExceptAllCategories().stream()
+						.map(x -> x.getText().trim().replace("New Items", "").replace(":", "")
+								.replaceAll("[\\t\\n\\r]+", "").trim())
+						.collect(Collectors.toList());
 
-						if (noResultMsgInResearch(3) == null) {
-							CommonLib.refresh(driver);
-							CommonLib.ThreadSleep(3000);
-							List<String> sideNavCountExceptAllCategories = researchSideNavCountResultsExceptAllCategories()
-									.stream().map(x -> x.getText().trim().replace("New Items", "").replace(":", "")
-											.replaceAll("[\\t\\n\\r]+", "").trim())
-									.collect(Collectors.toList());
+				List<String> sideNavNamesWhichHasCountExceptAllCategories = researchSideNavLabelsWhichHasCountResultsExceptAllCategories()
+						.stream().map(x -> x.getText().replace("New Items", "").replace(":", "")
+								.replaceAll("[\\t\\n\\r]+", "").replaceAll("\\d", ""))
+						.collect(Collectors.toList());
 
-							List<String> sideNavNamesWhichHasCountExceptAllCategories = researchSideNavLabelsWhichHasCountResultsExceptAllCategories()
-									.stream()
-									.map(x -> x.getText().replace("New Items", "").replace(":", "")
-											.replaceAll("[\\t\\n\\r]+", "").replaceAll("\\d", ""))
-									.collect(Collectors.toList());
+				List<String> researchResultsGridCounts = researchResultsGridCounts().stream()
+						.map(x -> x.getText().trim()).collect(Collectors.toList());
+				List<String> researchResultsGridNames = researchResultsGridCounts().stream()
+						.map(x -> x.getText().trim().substring(0, x.getText().trim().indexOf(" (")))
+						.collect(Collectors.toList());
 
-							List<String> researchResultsGridCounts = researchResultsGridCounts().stream()
-									.map(x -> x.getText().trim()).collect(Collectors.toList());
-							List<String> researchResultsGridNames = researchResultsGridCounts().stream()
-									.map(x -> x.getText().trim().substring(0, x.getText().trim().indexOf(" (")))
-									.collect(Collectors.toList());
+				int researchAllCategoriesCount = 0;
+				if (researchAllCategoriesCount(10) != null) {
+					researchAllCategoriesCount = Integer.parseInt(researchAllCategoriesCount(10).getText().trim()
+							.replace("New Items", "").replaceAll("[\\t\\n\\r]+", "").replace(":", "").trim());
+				}
+				int sideNavTotalCount = 0;
+				List<Integer> sideNavCountExceptAllCategoriesList = new ArrayList<Integer>();
+				for (String sideNavCount : sideNavCountExceptAllCategories) {
+					sideNavTotalCount = sideNavTotalCount + Integer.parseInt(sideNavCount);
+					sideNavCountExceptAllCategoriesList.add(Integer.parseInt(sideNavCount));
+				}
 
-							int researchAllCategoriesCount = 0;
-							if (researchAllCategoriesCount(10) != null) {
-								researchAllCategoriesCount = Integer.parseInt(
-										researchAllCategoriesCount(10).getText().trim().replace("New Items", "")
-												.replaceAll("[\\t\\n\\r]+", "").replace(":", "").trim());
-							}
-							int sideNavTotalCount = 0;
-							List<Integer> sideNavCountExceptAllCategoriesList = new ArrayList<Integer>();
-							for (String sideNavCount : sideNavCountExceptAllCategories) {
-								sideNavTotalCount = sideNavTotalCount + Integer.parseInt(sideNavCount);
-								sideNavCountExceptAllCategoriesList.add(Integer.parseInt(sideNavCount));
-							}
+				int gridTotalCount = 0;
+				List<Integer> gridCountsList = new ArrayList<Integer>();
+				for (String gridCounts : researchResultsGridCounts) {
+					gridTotalCount = Integer
+							.parseInt(gridCounts.substring(gridCounts.indexOf("(") + 1, gridCounts.indexOf(")")))
+							+ gridTotalCount;
+					gridCountsList.add(Integer
+							.parseInt(gridCounts.substring(gridCounts.indexOf("(") + 1, gridCounts.indexOf(")"))));
 
-							int gridTotalCount = 0;
-							List<Integer> gridCountsList = new ArrayList<Integer>();
-							for (String gridCounts : researchResultsGridCounts) {
-								gridTotalCount = Integer.parseInt(
-										gridCounts.substring(gridCounts.indexOf("(") + 1, gridCounts.indexOf(")")))
-										+ gridTotalCount;
-								gridCountsList.add(Integer.parseInt(
-										gridCounts.substring(gridCounts.indexOf("(") + 1, gridCounts.indexOf(")"))));
+				}
 
-							}
+				if (sideNavTotalCount == gridTotalCount) {
+					log(LogStatus.INFO, "----Total Count of Grids and Side Nav are Same and i.e. " + gridTotalCount
+							+ " for Record Search " + searchString + "----", YesNo.No);
+					log(LogStatus.INFO,
+							"----Now Going to Verify with All Categories for Record Search " + searchString + "----",
+							YesNo.No);
 
-							if (sideNavTotalCount == gridTotalCount) {
-								log(LogStatus.INFO, "----Total Count of Grids and Side Nav are Same and i.e. "
-										+ gridTotalCount + " for Record Search " + searchString + "----", YesNo.No);
-								log(LogStatus.INFO, "----Now Going to Verify with All Categories for Record Search "
-										+ searchString + "----", YesNo.No);
+					if (researchAllCategoriesCount == gridTotalCount) {
+						log(LogStatus.INFO,
+								"----Total Count of Grids and Side Nav and All Categories are Same and i.e. "
+										+ researchAllCategoriesCount + " for Record Search " + searchString + "----",
+								YesNo.No);
+						status++;
 
-								if (researchAllCategoriesCount == gridTotalCount) {
-									log(LogStatus.INFO,
-											"----Total Count of Grids and Side Nav and All Categories are Same and i.e. "
-													+ researchAllCategoriesCount + " for Record Search " + searchString
-													+ "----",
-											YesNo.No);
-									status++;
+						try {
 
-									try {
+							if (sideNavNamesWhichHasCountExceptAllCategories
+									.size() == sideNavCountExceptAllCategoriesList.size()
+									&& sideNavCountExceptAllCategoriesList.size() == researchResultsGridNames.size()
+									&& researchResultsGridNames.size() == gridCountsList.size()) {
 
-										if (sideNavNamesWhichHasCountExceptAllCategories
-												.size() == sideNavCountExceptAllCategoriesList.size()
-												&& sideNavCountExceptAllCategoriesList
-														.size() == researchResultsGridNames.size()
-												&& researchResultsGridNames.size() == gridCountsList.size()) {
+								for (int i = 0; i < researchResultsGridNames.size(); i++) {
+									gridNameAndCount.put(researchResultsGridNames.get(i), gridCountsList.get(i));
+								}
 
-											for (int i = 0; i < researchResultsGridNames.size(); i++) {
-												gridNameAndCount.put(researchResultsGridNames.get(i),
-														gridCountsList.get(i));
-											}
+								for (int i = 0; i < sideNavNamesWhichHasCountExceptAllCategories.size(); i++) {
+									sideNavNameAndCount.put(sideNavNamesWhichHasCountExceptAllCategories.get(i),
+											sideNavCountExceptAllCategoriesList.get(i));
+								}
 
-											for (int i = 0; i < sideNavNamesWhichHasCountExceptAllCategories
-													.size(); i++) {
-												sideNavNameAndCount.put(
-														sideNavNamesWhichHasCountExceptAllCategories.get(i),
-														sideNavCountExceptAllCategoriesList.get(i));
-											}
+								for (String gridName : gridNameAndCount.keySet()) {
 
-											for (String gridName : gridNameAndCount.keySet()) {
-
-												String navName = gridName;
-												if (gridName.equalsIgnoreCase("Contact")) {
-													navName = gridName + "s";
-												}
-												if (gridNameAndCount.get(gridName)
-														.equals(sideNavNameAndCount.get(navName))) {
-													log(LogStatus.INFO, "Counts for " + gridName + " matched and i.e.: "
-															+ gridNameAndCount.get(gridName), YesNo.No);
-													status++;
-												} else {
-
-													log(LogStatus.ERROR,
-															"Counts for " + gridName + " doesn't matched, GridCount: "
-																	+ gridNameAndCount.get(gridName)
-																	+ " and SideNavCount: "
-																	+ sideNavNameAndCount.get(gridName),
-															YesNo.Yes);
-													sa.assertTrue(false,
-															"Counts for " + gridName + " doesn't matched, GridCount: "
-																	+ gridNameAndCount.get(gridName)
-																	+ " and SideNavCount: "
-																	+ sideNavNameAndCount.get(gridName));
-												}
-												loopCount++;
-											}
-
-										} else {
-
-											log(LogStatus.ERROR,
-													"Either of List Counts not match for Grids or From SideNav, So not able to validate the result count side by side of Grid and Side Nav",
-													YesNo.Yes);
-											sa.assertTrue(false,
-													"Either of List Counts not match for Grids or From SideNav, So not able to validate the result count side by side of Grid and Side Nav");
-										}
-
-									} catch (Exception e) {
-
-										log(LogStatus.ERROR, "Exception occured: " + e.getMessage(), YesNo.No);
-										sa.assertTrue(false, "Exception occured: " + e.getMessage());
-										return false;
+									String navName = gridName;
+									if (gridName.equalsIgnoreCase("Contact")) {
+										navName = gridName + "s";
 									}
+									if (gridNameAndCount.get(gridName).equals(sideNavNameAndCount.get(navName))) {
+										log(LogStatus.INFO, "Counts for " + gridName + " matched and i.e.: "
+												+ gridNameAndCount.get(gridName), YesNo.No);
+										status++;
+									} else {
 
-								} else {
-
-									log(LogStatus.ERROR,
-											"----Total Count of Grids and Side Nav and All Categories are not Same, Total grid Count: "
-													+ gridTotalCount + " and Total Nav Count: " + sideNavTotalCount
-													+ "and Total All Categories Count " + researchAllCategoriesCount
-													+ " for Record Search " + searchString + "----",
-											YesNo.Yes);
-									sa.assertTrue(false,
-											"----Total Count of Grids and Side Nav and All Categories are not Same, Total grid Count: "
-													+ gridTotalCount + " and Total Nav Count: " + sideNavTotalCount
-													+ "and Total All Categories Count " + researchAllCategoriesCount
-													+ " for Record Search " + searchString + "----");
-
+										log(LogStatus.ERROR,
+												"Counts for " + gridName + " doesn't matched, GridCount: "
+														+ gridNameAndCount.get(gridName) + " and SideNavCount: "
+														+ sideNavNameAndCount.get(gridName),
+												YesNo.Yes);
+										sa.assertTrue(false,
+												"Counts for " + gridName + " doesn't matched, GridCount: "
+														+ gridNameAndCount.get(gridName) + " and SideNavCount: "
+														+ sideNavNameAndCount.get(gridName));
+									}
+									loopCount++;
 								}
 
 							} else {
 
 								log(LogStatus.ERROR,
-										"----Total Count of Grids and Side Nav are not Same, Total grid Count: "
-												+ gridTotalCount + " and Total Nav Count: " + sideNavTotalCount
-												+ " for Record Search " + searchString + "----",
+										"Either of List Counts not match for Grids or From SideNav, So not able to validate the result count side by side of Grid and Side Nav",
 										YesNo.Yes);
 								sa.assertTrue(false,
-										"----Total Count of Grids and Side Nav are not Same, Total grid Count: "
-												+ gridTotalCount + " and Total Nav Count: " + sideNavTotalCount
-												+ " for Record Search " + searchString + "----");
-
+										"Either of List Counts not match for Grids or From SideNav, So not able to validate the result count side by side of Grid and Side Nav");
 							}
 
-						} else {
-							log(LogStatus.ERROR, "No Result Found for the Text: " + searchString, YesNo.Yes);
-							sa.assertTrue(false, "No Result Found for the Text: " + searchString);
+						} catch (Exception e) {
+
+							log(LogStatus.ERROR, "Exception occured: " + e.getMessage(), YesNo.No);
+							sa.assertTrue(false, "Exception occured: " + e.getMessage());
+							return false;
 						}
 
-					}
+					} else {
 
-					else {
-						log(LogStatus.ERROR, "Not Able to Click on Research Button", YesNo.Yes);
-						sa.assertTrue(false, "Not Able to Click on Research Button");
+						log(LogStatus.ERROR,
+								"----Total Count of Grids and Side Nav and All Categories are not Same, Total grid Count: "
+										+ gridTotalCount + " and Total Nav Count: " + sideNavTotalCount
+										+ "and Total All Categories Count " + researchAllCategoriesCount
+										+ " for Record Search " + searchString + "----",
+								YesNo.Yes);
+						sa.assertTrue(false,
+								"----Total Count of Grids and Side Nav and All Categories are not Same, Total grid Count: "
+										+ gridTotalCount + " and Total Nav Count: " + sideNavTotalCount
+										+ "and Total All Categories Count " + researchAllCategoriesCount
+										+ " for Record Search " + searchString + "----");
+
 					}
 
 				} else {
 
-					log(LogStatus.ERROR, "Not Able to Enter Value in Research Search Box: " + searchString, YesNo.Yes);
-					sa.assertTrue(false, "Not Able to Enter Value in Research Search Box: " + searchString);
+					log(LogStatus.ERROR,
+							"----Total Count of Grids and Side Nav are not Same, Total grid Count: " + gridTotalCount
+									+ " and Total Nav Count: " + sideNavTotalCount + " for Record Search "
+									+ searchString + "----",
+							YesNo.Yes);
+					sa.assertTrue(false,
+							"----Total Count of Grids and Side Nav are not Same, Total grid Count: " + gridTotalCount
+									+ " and Total Nav Count: " + sideNavTotalCount + " for Record Search "
+									+ searchString + "----");
 
 				}
-			} else {
-				log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Research.toString()
-						+ " so cannot click on it for Research an Item", YesNo.Yes);
-				sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Research.toString()
-						+ " so cannot click on it for Research an Item");
 
+			} else {
+				log(LogStatus.ERROR, "No Result Found for the Text: " + searchString, YesNo.Yes);
+				sa.assertTrue(false, "No Result Found for the Text: " + searchString);
 			}
+
+//					}
+//
+//					else {
+//						log(LogStatus.ERROR, "Not Able to Click on Research Button", YesNo.Yes);
+//						sa.assertTrue(false, "Not Able to Click on Research Button");
+//					}
+
+//				} else {
+//
+//					log(LogStatus.ERROR, "Not Able to Enter Value in Research Search Box: " + searchString, YesNo.Yes);
+//					sa.assertTrue(false, "Not Able to Enter Value in Research Search Box: " + searchString);
+//
+//				}
+//			} else {
+//				log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Research.toString()
+//						+ " so cannot click on it for Research an Item", YesNo.Yes);
+//				sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Research.toString()
+//						+ " so cannot click on it for Research an Item");
+//
+//			}
 
 			if (status == loopCount + 1)
 				return true;

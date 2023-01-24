@@ -24,6 +24,7 @@ public class NavigationPage extends BasePageBusinessLayer {
 	}
 
 	@FindBy(xpath = "//div[@class=\"flexipagePage\"]//div[contains(@class,\"slds-is-open\")]//button[@title=\"Minimize\"]//span[text()=\"Minimize\"]")
+
 	private WebElement navatarQuickLinkMinimize_Lighting;
 
 	/**
