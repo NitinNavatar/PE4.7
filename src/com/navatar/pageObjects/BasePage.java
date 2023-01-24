@@ -577,7 +577,7 @@ public abstract class BasePage extends BaseLib {
 	}
 
 	public WebElement getCustomTabSaveBtn(String projectName, int timeOut) {
-		List<WebElement> eleList = FindElements(driver, "//input[@title='Save' or text()='Save']", "Save Button");
+		List<WebElement> eleList = FindElements(driver, "//button[@title='Save' or text()='Save']", "Save Button");
 		for (WebElement webElement : eleList) {
 			webElement = isDisplayed(driver, webElement, "Visibility", 2, "Custom Tab Save Button lightning");
 			if (webElement != null) {
@@ -587,6 +587,22 @@ public abstract class BasePage extends BaseLib {
 			}
 		}
 		return isDisplayed(driver, save_Lightning, "Visibility", timeOut, "Custom Tab Save Button lightning");
+
+	}
+
+	@FindBy(xpath = "//input[@name=\"save\"]")
+	private WebElement pageLayoutSaveButton;
+
+	public WebElement pageLayoutSaveButton(String projectName, int timeOut) {
+		return isDisplayed(driver, pageLayoutSaveButton, "Visibility", timeOut, "pageLayoutSaveButton");
+
+	}
+
+	@FindBy(xpath = "//button[@name=\"SaveEdit\"]")
+	private WebElement fundRaisingSaveButton;
+
+	public WebElement fundRaisingSaveButton(String projectName, int timeOut) {
+		return isDisplayed(driver, fundRaisingSaveButton, "Visibility", timeOut, "fundRaisingSaveButton");
 
 	}
 
@@ -8901,6 +8917,24 @@ public abstract class BasePage extends BaseLib {
 		WebElement crossButton = FindElement(driver, xpath, "Close", action.SCROLLANDBOOLEAN, timeOut);
 
 		return crossButton;
+
+	}
+
+	public WebElement popUpSaveButton(int timeOut) {
+
+		String xpath = "//button[@name=\"SaveEdit\"]";
+		WebElement type = FindElement(driver, xpath, "popUpSaveButton", action.SCROLLANDBOOLEAN, timeOut);
+
+		return type;
+
+	}
+
+	public WebElement pickListSaveButton(int timeOut) {
+
+		String xpath = "//td[@id=\"bottomButtonRow\"]/input[@name=\"save\"]";
+		WebElement type = FindElement(driver, xpath, "pickListSaveButton", action.SCROLLANDBOOLEAN, timeOut);
+
+		return type;
 
 	}
 

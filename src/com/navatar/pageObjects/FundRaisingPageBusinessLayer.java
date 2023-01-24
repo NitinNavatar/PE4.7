@@ -392,7 +392,7 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage {
 							e.printStackTrace();
 						}
 
-						if (click(driver, getCustomTabSaveBtn("", 60), "Save Button", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, fundRaisingSaveButton("", 60), "Save Button", action.SCROLLANDBOOLEAN)) {
 							ThreadSleep(500);
 
 							ThreadSleep(2000);

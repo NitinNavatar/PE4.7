@@ -9,6 +9,8 @@ import com.navatar.generic.EnumConstants.action;
 
 import static com.navatar.generic.CommonLib.*;
 
+import java.util.List;
+
 public class TaskPage extends BasePageBusinessLayer {
 
 	public TaskPage(WebDriver driver) {
@@ -178,6 +180,7 @@ public class TaskPage extends BasePageBusinessLayer {
 
 		return isDisplayed(driver, taskDeletedMsg, "Visibility", timeOut, "taskDeletedMsg");
 	}
+
 	@FindBy(xpath = "//button[@title=\"Display as Split View\"]")
 	private WebElement buttonDisplayAsSplitView;
 
@@ -185,8 +188,7 @@ public class TaskPage extends BasePageBusinessLayer {
 
 		return isDisplayed(driver, buttonDisplayAsSplitView, "Visibility", timeOut, "buttonDisplayAsSplitView");
 	}
-	
-	
+
 	@FindBy(xpath = "//li[@title=\"Table\"]//a")
 	private WebElement tableViewDropDownButton;
 
@@ -194,7 +196,7 @@ public class TaskPage extends BasePageBusinessLayer {
 
 		return isDisplayed(driver, tableViewDropDownButton, "Visibility", timeOut, "tableViewDropDownButton");
 	}
-	
+
 	@FindBy(xpath = "//li//a//div[@title='Edit']")
 	private WebElement editButtonOnEvent;
 
@@ -202,6 +204,31 @@ public class TaskPage extends BasePageBusinessLayer {
 
 		return isDisplayed(driver, editButtonOnEvent, "Visibility", timeOut, "Edit Button");
 	}
-	
+
+	public WebElement recordDetailPageButton(String buttonName, int timeOut) {
+		String xpath = "//div[text()=\"" + buttonName + "\"]/ancestor::a";
+		WebElement ele = FindElement(driver, xpath, "buttonInTheDownArrowList: " + buttonName, action.SCROLLANDBOOLEAN,
+				timeOut);
+		try {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "recordDetailPageButton: " + buttonName);
+
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "recordDetailPageButton: " + buttonName);
+		}
+	}
+
+	@FindBy(xpath = "//ul[contains(@class,\"oneActionsRibbon\")]//a[@title=\"Show 21 more actions\"]")
+	private WebElement recordDetailPageDownArrowButton;
+
+	public WebElement recordDetailPageDownArrowButton(int timeOut) {
+
+		return isDisplayed(driver, recordDetailPageDownArrowButton, "Visibility", timeOut,
+				"recordDetailPageDownArrowButton");
+	}
+
+	public List<WebElement> downArrowButtonList() {
+		return FindElements(driver, "//div[contains(@class,\"actionMenu\")]//ul//a[@role=\"menuitem\"]",
+				"downArrowButtonList");
+	}
 
 }

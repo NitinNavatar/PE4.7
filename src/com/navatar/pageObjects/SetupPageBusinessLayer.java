@@ -2469,7 +2469,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 		for (String[] labelValue : labelWithValue) {
 			// xpath = "//*[text()='" + labelValue[0] +
 			// "']/..//following-sibling::td[text()='" + labelValue[1] + "']";
-			//xpath = "//*[text()='" + labelValue[0] + "']/..//following-sibling::td/img[@title='" + labelValue[1] + "']";
+			// xpath = "//*[text()='" + labelValue[0] +
+			// "']/..//following-sibling::td/img[@title='" + labelValue[1] + "']";
 			xpath = "//*[text()='" + labelValue[0] + "']/..//td[@title='" + labelValue[1] + "']";
 			ele = FindElement(driver, xpath, labelValue[0] + " with Value " + labelValue[1], action.BOOLEAN, 10);
 			if (ele != null) {
@@ -3206,7 +3207,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 				log(LogStatus.INFO, "Select Existing Page Layout drop down " + existingPageLayout, YesNo.No);
 				ThreadSleep(1000);
 
-				if (click(driver, getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
+				if (click(driver, pageLayoutSaveButton(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.ERROR, "Click on save Button ", YesNo.No);
 					ThreadSleep(5000);
 					ThreadSleep(5000);
@@ -6753,7 +6754,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 							appLog.error("Not able to pass user Title in text box: " + title);
 							return false;
 						}
-						
+
 					}
 
 					if (clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
@@ -6797,44 +6798,43 @@ public class SetupPageBusinessLayer extends SetupPage {
 				log(LogStatus.INFO, "able to click on Manage Records link", YesNo.No);
 				ThreadSleep(1000);
 				switchToFrame(driver, 60, getSetUpPageIframe(60));
-				if(LabelNameInCustomMetaData(Name, 10) != null) {
+				if (LabelNameInCustomMetaData(Name, 10) != null) {
 					log(LogStatus.INFO, "yes, we can find " + Name + "on Custom Meta Data Setup Page", YesNo.No);
-				if (clickUsingJavaScript(driver, EditButtonOfAcuitySettings(Name, 30), "Edit button",
-						action.SCROLLANDBOOLEAN)) {
-
-					log(LogStatus.INFO, "click on edit button of " + Name, YesNo.No);
-					ThreadSleep(5000);
-					switchToFrame(driver, 60, getSetUpPageIframe(60));
-					ExcelUtils.writeData(AcuityDataSheetFilePath, GetDataFromValueFieldInCustomMetaData(10),
-							"CustomMetaData", excelLabel.FieldName, Name, excelLabel.Value);
-					System.out.println(GetDataFromValueFieldInCustomMetaData(10));
-					ThreadSleep(2000);
-					if (sendKeys(driver, getValueTextBoxInAcuitySetting(30), valueField, "Value Text Box",
+					if (clickUsingJavaScript(driver, EditButtonOfAcuitySettings(Name, 30), "Edit button",
 							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.PASS, "enter the value in description : " + valueField, YesNo.No);
-						if (click(driver, getViewAccessbilityDropDownSaveButton(20), "save button",
+
+						log(LogStatus.INFO, "click on edit button of " + Name, YesNo.No);
+						ThreadSleep(5000);
+						switchToFrame(driver, 60, getSetUpPageIframe(60));
+						ExcelUtils.writeData(AcuityDataSheetFilePath, GetDataFromValueFieldInCustomMetaData(10),
+								"CustomMetaData", excelLabel.FieldName, Name, excelLabel.Value);
+						System.out.println(GetDataFromValueFieldInCustomMetaData(10));
+						ThreadSleep(2000);
+						if (sendKeys(driver, getValueTextBoxInAcuitySetting(30), valueField, "Value Text Box",
 								action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.PASS, "clicked on save button", YesNo.No);
-							flag = true;
+							log(LogStatus.PASS, "enter the value in description : " + valueField, YesNo.No);
+							if (click(driver, getViewAccessbilityDropDownSaveButton(20), "save button",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.PASS, "clicked on save button", YesNo.No);
+								flag = true;
+							} else {
+								log(LogStatus.PASS, "not able to clicked on save button ", YesNo.No);
+								sa.assertTrue(false, "not able to clicked on save button ");
+							}
+							switchToDefaultContent(driver);
+							refresh(driver);
 						} else {
-							log(LogStatus.PASS, "not able to clicked on save button ", YesNo.No);
-							sa.assertTrue(false, "not able to clicked on save button ");
+							log(LogStatus.PASS, "not able to enter the value in description : " + valueField, YesNo.No);
+							sa.assertTrue(false, "not able to enter the value in description : " + valueField);
 						}
-						switchToDefaultContent(driver);
-						refresh(driver);
 					} else {
-						log(LogStatus.PASS, "not able to enter the value in description : " + valueField, YesNo.No);
-						sa.assertTrue(false, "not able to enter the value in description : " + valueField);
+						log(LogStatus.INFO, "not able to click on edit button of " + Name, YesNo.No);
+						sa.assertTrue(false, "not able to click on edit button of " + Name);
 					}
 				} else {
-					log(LogStatus.INFO, "not able to click on edit button of " + Name, YesNo.No);
-					sa.assertTrue(false, "not able to click on edit button of " + Name);
+					log(LogStatus.INFO, "not able to find " + Name, YesNo.No);
+					refresh(driver);
 				}
-			}
-			else {
-				log(LogStatus.INFO, "not able to find " + Name, YesNo.No);
-				refresh(driver);
-			}
 			} else {
 				log(LogStatus.INFO, "not able to click on Manage Records link", YesNo.No);
 				sa.assertTrue(false, "not able to click on Manage Records link");
