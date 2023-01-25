@@ -46,6 +46,7 @@ import org.openqa.selenium.WebElement;
 import com.navatar.generic.SmokeCommonVariables;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
+import com.navatar.generic.EnumConstants.PermissionType;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.customObjectLabel;
@@ -211,6 +212,7 @@ public class CustomObjPageBusinessLayer extends CustomObjPage {
 		String permission1 = "Create";
 		String permission2 = "Delete";
 		parentID = null;
+
 		for (String userName : userTypesToGivePermissions) {
 			switchToDefaultContent(driver);
 			if (home.clickOnSetUpLink()) {
@@ -224,7 +226,9 @@ public class CustomObjPageBusinessLayer extends CustomObjPage {
 						log(LogStatus.INFO, "click on Object : " + object.Profiles, YesNo.No);
 						ThreadSleep(2000);
 						if (setup.permissionChangeOfUserONObject(driver, userName,
-								new String[][] { { onObject, permission1 }, { onObject, permission2 } }, 20)) {
+								new String[][] { { onObject, permission1, PermissionType.givePermission.toString() },
+										{ onObject, permission2, PermissionType.givePermission.toString() } },
+								20)) {
 							log(LogStatus.PASS,
 									permission1 + " permission change for " + userName + " on object " + onObject,
 									YesNo.No);
@@ -330,7 +334,10 @@ public class CustomObjPageBusinessLayer extends CustomObjPage {
 							log(LogStatus.INFO, "click on Object : " + object.Profiles, YesNo.No);
 							ThreadSleep(2000);
 							if (setup.permissionChangeOfUserONObject(driver, userName,
-									new String[][] { { onObject, permission1 }, { onObject, permission2 } }, 20)) {
+									new String[][] {
+											{ onObject, permission1, PermissionType.givePermission.toString() },
+											{ onObject, permission2, PermissionType.givePermission.toString() } },
+									20)) {
 								log(LogStatus.PASS,
 										permission1 + " permission change for " + userName + " on object " + onObject,
 										YesNo.No);
