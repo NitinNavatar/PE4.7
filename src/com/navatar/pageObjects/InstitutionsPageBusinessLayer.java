@@ -1135,7 +1135,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 					}
 
 				}
-				if (click(driver, getCustomTabSaveBtn(projectName, 30), "save button", action.SCROLLANDBOOLEAN)) {
+				if (click(driver, popUpSaveButton(30), "save button", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on save button");
 
 					ThreadSleep(8000);

@@ -3209,7 +3209,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 				log(LogStatus.INFO, "Select Existing Page Layout drop down " + existingPageLayout, YesNo.No);
 				ThreadSleep(1000);
 
-				if (click(driver, getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
+				if (click(driver, pageLayoutSaveButton(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.ERROR, "Click on save Button ", YesNo.No);
 					ThreadSleep(5000);
 					ThreadSleep(5000);
