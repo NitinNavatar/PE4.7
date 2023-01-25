@@ -7034,9 +7034,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								log(LogStatus.INFO, "---------Now Going to Verify Task: " + task1SubjectName
 
 										+ " in Interaction Section---------", YesNo.No);
-								if (BP.openAppFromAppLauchner("Tasks", 50)) {
 
-									log(LogStatus.INFO, "Tasks" + " has been open from the App launcher", YesNo.No);
+								if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+
+									log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName
+											+ " found in Tasks Object-----", YesNo.No);
 
 									if (taskBP.buttonDisplayAsSplitView(8) != null) {
 										CommonLib.click(driver, taskBP.buttonDisplayAsSplitView(8),
@@ -7046,62 +7048,54 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 									}
 
-									if (BP.clickOnAlreadyCreatedItem(projectName, TabName.TaskTab, task1SubjectName,
-											30)) {
-										log(LogStatus.INFO, task1SubjectName + " record has been open", YesNo.No);
-										ThreadSleep(4000);
-										CommonLib.refresh(driver);
+									if (click(driver, taskBP.downArrowButton(20), "downArrowButton",
+											action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
 
-										if (click(driver, taskBP.downArrowButton(20), "downArrowButton",
-												action.SCROLLANDBOOLEAN)) {
-											log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
+										if (click(driver, taskBP.buttonInTheDownArrowList("Edit", 20),
+												"Edit Button in downArrowButton", action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "Clicked on Edit Button in  Down Arrow Button",
+													YesNo.No);
 
-											if (click(driver, taskBP.buttonInTheDownArrowList("Edit", 20),
-													"Edit Button in downArrowButton", action.SCROLLANDBOOLEAN)) {
-												log(LogStatus.INFO, "Clicked on Edit Button in  Down Arrow Button",
+											String url = getURL(driver, 10);
+
+											ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
+													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url,
+															task1BasicSectionVerification,
+															task1AdvancedSectionVerification, null);
+											if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+												log(LogStatus.INFO,
+														"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
 														YesNo.No);
-
-												String url = getURL(driver, 10);
-
-												ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
-														.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url,
-																task1BasicSectionVerification,
-																task1AdvancedSectionVerification, null);
-												if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
-													log(LogStatus.INFO,
-															"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
-															YesNo.No);
-
-												} else {
-													log(LogStatus.ERROR,
-															"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value",
-															YesNo.No);
-													sa.assertTrue(false,
-															"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value");
-												}
 
 											} else {
 												log(LogStatus.ERROR,
-														"Not Able Click on Edit button in Down Arrow Button",
-														YesNo.Yes);
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value",
+														YesNo.No);
 												sa.assertTrue(false,
-														"Not Able Click on Edit button in Down Arrow Button");
-
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value");
 											}
 
 										} else {
-											log(LogStatus.ERROR, "Not Able Click on Down Arrow Button", YesNo.Yes);
-											sa.assertTrue(false, "Not Able Click on Down Arrow Button");
+											log(LogStatus.ERROR, "Not Able Click on Edit button in Down Arrow Button",
+													YesNo.Yes);
+											sa.assertTrue(false, "Not Able Click on Edit button in Down Arrow Button");
+
 										}
 
 									} else {
-										log(LogStatus.ERROR, "Not able to open " + task1SubjectName + " record",
-												YesNo.No);
-										sa.assertTrue(false, "Not able to open " + task1SubjectName + " record");
+										log(LogStatus.ERROR, "Not Able Click on Down Arrow Button", YesNo.Yes);
+										sa.assertTrue(false, "Not Able Click on Down Arrow Button");
 									}
+
 								} else {
-									log(LogStatus.ERROR, "Not able to Open Tasks Tab", YesNo.No);
-									sa.assertTrue(false, "Not able to Open Tasks Tab");
+
+									log(LogStatus.ERROR,
+											"-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
+											YesNo.Yes);
+									BaseLib.sa.assertTrue(false,
+											"-----Task named: " + task1SubjectName + " not found in Tasks Object-----");
+
 								}
 
 							} else {
@@ -13234,9 +13228,19 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String recordName = AMNNR_Contact5;
 		String recordNameVerify = AMNNR_RelatedTo55;
+		
+		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
+
+		String getAdvanceDueDate = AdvanceDueDate;
+		String priority = "Normal";
+		String status = "Not Started";
+
 
 		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
 				{ "Related_To", relatedTo } };
+		
+		String[][] task1AdvancedSection = { { "Due Date", getAdvanceDueDate }, { "Status", status },
+				{ "Priority", priority } };
 
 		String[] labelAndValueSeprateByBreak = { "User" + "<break>" + crmUser1FirstName + " " + crmUser1LastName,
 				"Subject" + "<break>" + task1SubjectName,
@@ -13254,7 +13258,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.INFO, "Clicked on Create Follow-Up Task Button", YesNo.No);
 
 				CommonLib.ThreadSleep(5000);
-				if (BP.updateActivityTimelineRecord(projectName, task1BasicSection, null, null, null, null)) {
+				if (BP.updateActivityTimelineRecord(projectName, task1BasicSection, task1AdvancedSection, null, null, null)) {
 					log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
 
 					if (lp.clickOnTab(projectName, tabObj2)) {
