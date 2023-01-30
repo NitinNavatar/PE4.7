@@ -13031,8 +13031,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		}
 		if (advanceSection != null) {
-//			if (clickUsingJavaScript(driver, getSectionBtn("Advanced", 30), "Advanced section",
-//					action.SCROLLANDBOOLEAN)) {
+			if (clickUsingJavaScript(driver, getSectionBtn("Advanced", 30), "Advanced section",
+					action.SCROLLANDBOOLEAN)) {
 
 			log(LogStatus.INFO, "clicked on Advanced section", YesNo.No);
 			for (String[] val : advanceSection) {
@@ -13093,7 +13093,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 				}
 
-				else if (labelName.contains(excelLabel.Location.toString()) || labelName.contains("Due Date Only")) {
+				else if (labelName.contains(excelLabel.Location.toString()) || labelName.contains("Due Date Only") || labelName.contains("Due Date") || labelName.contains("Date")) {
 
 					xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='" + labelName
 							+ "']/..//input";
@@ -13199,11 +13199,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					return false;
 				}
 			}
-//			} else {
-//				log(LogStatus.ERROR, "Not able to click on Advanced search section", YesNo.No);
-//				sa.assertTrue(false, "Not able to click on Advanced search section");
-//				return false;
-//			}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on Advanced search section", YesNo.No);
+				sa.assertTrue(false, "Not able to click on Advanced search section");
+				return false;
+			}
 		}
 		if (taskSection != null) {
 

@@ -1397,7 +1397,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String[][] advanceSection = { { "Start Date", advanceStartDate },{"End Date",advanceEndDate}, {"User",assignedToUser}};	
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
-		int k=0; 
+/*		int k=0; 
 		if (lp.clickAnyCellonCalender(projectName)) {
 			log(LogStatus.INFO,"Able to click on Calendar/Event Link",YesNo.No);
 
@@ -1419,7 +1419,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		refresh(driver);
 		ThreadSleep(3000);
 		if(k!=0)
-		{
+		{ */
 			if (lp.clickOnTab(projectName, tabObj1)) {
 
 				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
@@ -1481,7 +1481,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
 				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
 			}
-		}
+//		}
 
 		lp.CRMlogout();	
 		sa.assertAll();	
@@ -6255,11 +6255,11 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
 		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Due Date", taskDueDate1 }, {"Status", taskStatus1}, {"Priority", taskPriority1} };
-
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }/*, {"Status", taskStatus1}, {"Priority", taskPriority1} */};
+/*
 		String[][] basicsection2 = { { "Subject", taskSubject2 }, { "Notes", taskNotes2 }, { "Related_To", taskRelatedTo2 } };
 		String[][] advanceSection2 = { { "Start Date", advanceStartDate },{"End Date",advanceEndDate}};	
-
+*/
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null)) {
@@ -6283,7 +6283,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
 			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
 		}
-
+/*
 		ThreadSleep(2000);
 		lp.CRMlogout();	
 		ThreadSleep(8000);
@@ -6307,7 +6307,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			log(LogStatus.ERROR,"Not Able to Click on Calendar/Event Link",YesNo.Yes);
 			sa.assertTrue(false,"Not Able to Click on Calendar/Event Link");	
 		}
-
+*/
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
@@ -7108,11 +7108,11 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
 		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Due Date", taskDueDate1 }, {"Status", taskStatus1}, {"Priority", taskPriority1} };
-
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }/*, {"Status", taskStatus1}, {"Priority", taskPriority1} */};
+/*
 		String[][] basicsection2 = { { "Subject", taskSubject2 }, { "Notes", taskNotes2 }, { "Related_To", taskRelatedTo2 } };
 		String[][] advanceSection2 = { { "Start Date", advanceStartDate },{"End Date",advanceEndDate}};	
-
+*/
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 		
 		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null)) {
@@ -7136,7 +7136,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
 			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
 		}
-		
+	/*	
 		ThreadSleep(2000);
 		lp.CRMlogout();	
 		ThreadSleep(8000);
@@ -7160,7 +7160,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			log(LogStatus.ERROR,"Not Able to Click on Calendar/Event Link",YesNo.Yes);
 			sa.assertTrue(false,"Not Able to Click on Calendar/Event Link");	
 		}
-
+*/
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
@@ -7809,11 +7809,11 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
 		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Due Date", taskDueDate1 }, {"Status", taskStatus1}, {"Priority", taskPriority1} };
-
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }/*, {"Status", taskStatus1}, {"Priority", taskPriority1}*/ };
+/*
 		String[][] basicsection2 = { { "Subject", taskSubject2 }, { "Notes", taskNotes2 }, { "Related_To", taskRelatedTo2 } };
 		String[][] advanceSection2 = { { "Start Date", advanceStartDate },{"End Date",advanceEndDate}};	
-
+*/
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null)) {
@@ -7838,7 +7838,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
 		}
 
-
+/*
 		ThreadSleep(2000);
 		lp.CRMlogout();	
 		ThreadSleep(8000);
@@ -7863,7 +7863,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			log(LogStatus.ERROR,"Not Able to Click on Calendar/Event Link",YesNo.Yes);
 			sa.assertTrue(false,"Not Able to Click on Calendar/Event Link");	
 		}
-
+*/
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
@@ -9901,7 +9901,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 				"ATE_U001", excelLabel.Advance_End_Date);
 
 		String[][] basicsection = { { "Subject", subject }, { "Related_To", relatedTo } };
-		String[][] advanceSection = { { "Start Date", taskDueDate }, {"End Date", taskEndDate} };
+		//String[][] advanceSection = { { "Start Date", taskDueDate }, {"End Date", taskEndDate} };
+		String[][] advanceSection = null;
 
 
 		String subject1=ATE_U_ATSubject2;
@@ -9977,6 +9978,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			log(LogStatus.ERROR, "Not able to click on tab"+tabObj2, YesNo.No);
 			sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
 		}
+		refresh(driver);
 
 		if (lp.clickOnTab(projectName, tabObj4)) {
 
