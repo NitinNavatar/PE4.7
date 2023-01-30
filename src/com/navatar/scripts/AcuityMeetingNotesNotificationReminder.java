@@ -1044,7 +1044,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								YesNo.No);
 
 						ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-								task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Task);
+								task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Task, PageName.AcuityDetails);
 
 						if (subjectLinkPopUpNegativeResult.isEmpty()) {
 							log(LogStatus.PASS, "------" + task1SubjectName
@@ -1099,7 +1099,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 											ArrayList<String> subjectLinkPopUpNegativeResultUpdated = BP
 													.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName,
 															updatedTask1BasicSectionVerification,
-															updatedTask1AdvancedSectionVerification, IconType.Task);
+															updatedTask1AdvancedSectionVerification, IconType.Task, PageName.AcuityDetails);
 
 											if (subjectLinkPopUpNegativeResultUpdated.isEmpty()) {
 												log(LogStatus.PASS, "------" + task1SubjectName
@@ -1307,7 +1307,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								YesNo.No);
 
 						ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-								task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Task);
+								task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Task, PageName.AcuityDetails);
 
 						if (subjectLinkPopUpNegativeResult.isEmpty()) {
 							log(LogStatus.PASS, "------" + task1SubjectName
@@ -1996,7 +1996,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								YesNo.No);
 
 						ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-								task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Task);
+								task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Task, PageName.AcuityDetails);
 
 						if (subjectLinkPopUpNegativeResult.isEmpty()) {
 							log(LogStatus.PASS, "------" + task1SubjectName
@@ -2525,7 +2525,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								YesNo.No);
 
 						ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-								task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Task);
+								task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Task, PageName.AcuityDetails);
 
 						if (subjectLinkPopUpNegativeResult.isEmpty()) {
 							log(LogStatus.PASS, "------" + task1SubjectName
@@ -3918,7 +3918,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 										ArrayList<String> subjectLinkPopUpNegativeResult = BP
 												.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName,
 														updatedTask1BasicSectionVerification,
-														updatedTask1AdvancedSectionVerification, IconType.Task);
+														updatedTask1AdvancedSectionVerification, IconType.Task, PageName.AcuityDetails);
 
 										if (subjectLinkPopUpNegativeResult.isEmpty()) {
 											log(LogStatus.PASS, "------" + task1SubjectName
@@ -4141,7 +4141,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 					ArrayList<String> subjectLinkPopUpNegativeResultBeforeUpdate = BP
 							.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName, task1BasicSectionVerification,
-									task1AdvancedSectionVerification, IconType.Task);
+									task1AdvancedSectionVerification, IconType.Task, PageName.AcuityDetails);
 
 					if (subjectLinkPopUpNegativeResultBeforeUpdate.isEmpty()) {
 						log(LogStatus.PASS, "------" + task1SubjectName
@@ -4199,7 +4199,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 										ArrayList<String> subjectLinkPopUpNegativeResult = BP
 												.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName,
 														updatedTask1BasicSectionVerification,
-														updatedTask1AdvancedSectionVerification, IconType.Task);
+														updatedTask1AdvancedSectionVerification, IconType.Task, PageName.AcuityDetails);
 
 										if (subjectLinkPopUpNegativeResult.isEmpty()) {
 											log(LogStatus.PASS, "------" + task1SubjectName
@@ -5628,7 +5628,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 									ArrayList<String> subjectLinkPopUpNegativeResult = BP
 											.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName,
 													updatedTask1BasicSectionVerification,
-													updatedTask1AdvancedSectionVerification, IconType.Task);
+													updatedTask1AdvancedSectionVerification, IconType.Task, PageName.AcuityDetails);
 
 									if (subjectLinkPopUpNegativeResult.isEmpty()) {
 										log(LogStatus.PASS, "------" + task1SubjectName
@@ -7728,7 +7728,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								YesNo.No);
 
 						ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-								task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Call);
+								task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Call, PageName.AcuityDetails);
 
 						if (subjectLinkPopUpNegativeResult.isEmpty()) {
 							log(LogStatus.PASS, "------" + task1SubjectName
@@ -7782,7 +7782,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 										ArrayList<String> subjectLinkPopUpNegativeResultUpdated = BP
 												.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName,
 														updatedTask1BasicSectionVerification,
-														updatedTask1AdvancedSectionVerification, IconType.Call);
+														updatedTask1AdvancedSectionVerification, IconType.Call, PageName.AcuityDetails);
 
 										if (subjectLinkPopUpNegativeResultUpdated.isEmpty()) {
 											log(LogStatus.PASS, "------" + task1SubjectName
@@ -8687,7 +8687,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								YesNo.No);
 
 						ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-								task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Call);
+								task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Call, PageName.AcuityDetails);
 
 						if (subjectLinkPopUpNegativeResult.isEmpty()) {
 							log(LogStatus.PASS, "------" + task1SubjectName
@@ -9228,7 +9228,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								YesNo.No);
 
 						ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-								task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Call);
+								task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Call, PageName.AcuityDetails);
 
 						if (subjectLinkPopUpNegativeResult.isEmpty()) {
 							log(LogStatus.PASS, "------" + task1SubjectName
@@ -10682,7 +10682,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 										ArrayList<String> subjectLinkPopUpNegativeResult = BP
 												.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName,
 														updatedTask1BasicSectionVerification,
-														updatedTask1AdvancedSectionVerification, IconType.Call);
+														updatedTask1AdvancedSectionVerification, IconType.Call, PageName.AcuityDetails);
 
 										if (subjectLinkPopUpNegativeResult.isEmpty()) {
 											log(LogStatus.PASS, "------" + task1SubjectName
@@ -10902,7 +10902,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 					ArrayList<String> subjectLinkPopUpNegativeResultBeforeUpdate = BP
 							.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName, task1BasicSectionVerification,
-									task1AdvancedSectionVerification, IconType.Call);
+									task1AdvancedSectionVerification, IconType.Call, PageName.AcuityDetails);
 
 					if (subjectLinkPopUpNegativeResultBeforeUpdate.isEmpty()) {
 						log(LogStatus.PASS, "------" + task1SubjectName
@@ -10973,7 +10973,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 										ArrayList<String> subjectLinkPopUpNegativeResult = BP
 												.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName,
 														updatedTask1BasicSectionVerification,
-														updatedTask1AdvancedSectionVerification, IconType.Call);
+														updatedTask1AdvancedSectionVerification, IconType.Call, PageName.AcuityDetails);
 
 										if (subjectLinkPopUpNegativeResult.isEmpty()) {
 											log(LogStatus.PASS, "------" + task1SubjectName
@@ -12439,7 +12439,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 									ArrayList<String> subjectLinkPopUpNegativeResult = BP
 											.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName,
 													updatedTask1BasicSectionVerification,
-													updatedTask1AdvancedSectionVerification, IconType.Call);
+													updatedTask1AdvancedSectionVerification, IconType.Call, PageName.AcuityDetails);
 
 									if (subjectLinkPopUpNegativeResult.isEmpty()) {
 										log(LogStatus.PASS, "------" + task1SubjectName

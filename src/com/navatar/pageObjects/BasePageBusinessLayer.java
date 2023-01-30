@@ -20541,370 +20541,380 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @param timeOut
 	 */
 	public ArrayList<String> verifySubjectLinkPopUpOnIntraction(WebDriver driver, String subjectName,
-			String[][] basicSectionVerificationData, String[][] advancedSectionVerificationData, IconType icon) {
+			String[][] basicSectionVerificationData, String[][] advancedSectionVerificationData, IconType icon, PageName pageName) {
 		ArrayList<String> negativeResult = new ArrayList<String>();
 
-		if (CommonLib.click(driver, subjectOfInteractionCard(subjectName, 15), "Subject Name on Intraction",
-				action.BOOLEAN)) {
-			log(LogStatus.INFO, "clicked on " + subjectName, YesNo.No);
+		if(pageName.toString().equals("AcuityDetails"))
+		{
+			if (CommonLib.click(driver, subjectOfInteractionCard(subjectName, 15), "Subject Name on Intraction",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "clicked on " + subjectName, YesNo.No);
 
-			if (activitySubjetLinkPopupHeaderOnInteraction(5) != null) {
+			} else {
+				log(LogStatus.ERROR, "not able to click on " + subjectName, YesNo.No);
+				negativeResult.add("not able to click on " + subjectName);
+			}
+		}
+		else if(pageName.toString().equals("Interaction"))
+		{
+			if (CommonLib.click(driver, subjectOfInteractionPage(subjectName, 15), "Subject Name on Intraction",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "clicked on " + subjectName, YesNo.No);
 
-				/*
-				 * if (attachmentIconOfSubjectLinkPopUpInInteractionSection(5) != null) {
-				 * 
-				 * log(LogStatus.INFO, "Attachment Icon Verified", YesNo.No); } else {
-				 * log(LogStatus.ERROR, "Attachment Icon not Verified", YesNo.No);
-				 * negativeResult.add("Attachment Icon not Verified"); }
-				 */
+			} else {
+				log(LogStatus.ERROR, "not able to click on " + subjectName, YesNo.No);
+				negativeResult.add("not able to click on " + subjectName);
+			}
+		}
 
-				if (editButtonOfSubjectLinkPopUpInInteractionSection(5) != null) {
 
-					log(LogStatus.INFO, "Edit Button Verified", YesNo.No);
+		if (activitySubjetLinkPopupHeaderOnInteraction(5) != null) {
+
+
+			if (editButtonOfSubjectLinkPopUpInInteractionSection(5) != null) {
+
+				log(LogStatus.INFO, "Edit Button Verified", YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Edit Button not Verified", YesNo.No);
+				negativeResult.add("Edit Button not Verified");
+			}
+
+			if (icon.equals(IconType.Task)) {
+
+				String type = CommonLib.getText(driver, typeOfSubjectLinkPopUpInInteractionSection(5), "Type",
+						action.BOOLEAN);
+
+				if (type.equals(IconType.Task.toString())) {
+
+					log(LogStatus.INFO, "Type has been verified and i.e.: " + type, YesNo.No);
 				} else {
-					log(LogStatus.ERROR, "Edit Button not Verified", YesNo.No);
-					negativeResult.add("Edit Button not Verified");
+					log(LogStatus.ERROR, "Type has not been verified, Expected: " + IconType.Task.toString()
+					+ " but Actual: " + type, YesNo.No);
+					negativeResult.add("Type has not been verified, Expected: " + IconType.Task.toString()
+					+ " but Actual: " + type);
 				}
 
-				if (icon.equals(IconType.Task)) {
+				WebElement iconLocator = iconOfSubjectLinkPopUpInInteractionSection(7);
+				if (iconLocator != null) {
+					String attribute = iconLocator.getAttribute("data-key");
+					if (attribute.equalsIgnoreCase("task")) {
 
-					String type = CommonLib.getText(driver, typeOfSubjectLinkPopUpInInteractionSection(5), "Type",
-							action.BOOLEAN);
-
-					if (type.equals(IconType.Task.toString())) {
-
-						log(LogStatus.INFO, "Type has been verified and i.e.: " + type, YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "Type has not been verified, Expected: " + IconType.Task.toString()
-								+ " but Actual: " + type, YesNo.No);
-						negativeResult.add("Type has not been verified, Expected: " + IconType.Task.toString()
-								+ " but Actual: " + type);
-					}
-
-					WebElement iconLocator = iconOfSubjectLinkPopUpInInteractionSection(7);
-					if (iconLocator != null) {
-						String attribute = iconLocator.getAttribute("data-key");
-						if (attribute.equalsIgnoreCase("task")) {
-
-							log(LogStatus.INFO, "Icon verified for Subject link Popup & i.e.: " + attribute, YesNo.No);
-						}
-
-						else {
-							log(LogStatus.ERROR, "Icon not verified for Subject link Popup Expected: " + icon.toString()
-									+ " but Actual: " + attribute, YesNo.No);
-							negativeResult.add("Icon not verified for Subject link Popup Expected: " + icon.toString()
-									+ " but Actual: " + attribute);
-						}
+						log(LogStatus.INFO, "Icon verified for Subject link Popup & i.e.: " + attribute, YesNo.No);
 					}
 
 					else {
-						log(LogStatus.ERROR, " Locator of Icon is not correct", YesNo.No);
-						negativeResult.add(" Locator of Icon is not correct");
+						log(LogStatus.ERROR, "Icon not verified for Subject link Popup Expected: " + icon.toString()
+						+ " but Actual: " + attribute, YesNo.No);
+						negativeResult.add("Icon not verified for Subject link Popup Expected: " + icon.toString()
+						+ " but Actual: " + attribute);
 					}
-
-				} else if (icon.equals(IconType.Call)) {
-
-					String type = CommonLib.getText(driver, typeOfSubjectLinkPopUpInInteractionSection(5), "Type",
-							action.BOOLEAN);
-
-					if (type.equals(IconType.Call.toString())) {
-
-						log(LogStatus.INFO, "Type has been verified and i.e.: " + type, YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "Type has not been verified, Expected: " + IconType.Call.toString()
-								+ " but Actual: " + type, YesNo.No);
-						negativeResult.add("Type has not been verified, Expected: " + IconType.Call.toString()
-								+ " but Actual: " + type);
-					}
-
-					WebElement iconLocator = iconOfSubjectLinkPopUpInInteractionSection(7);
-					if (iconLocator != null) {
-						String attribute = iconLocator.getAttribute("data-key");
-						if (attribute.equalsIgnoreCase("log_a_call")) {
-
-							log(LogStatus.INFO, "Icon verified for Subject link Popup & i.e.: " + attribute, YesNo.No);
-						}
-
-						else {
-							log(LogStatus.ERROR, "Icon not verified for Subject link Popup Expected: " + icon.toString()
-									+ " but Actual: " + attribute, YesNo.No);
-							negativeResult.add("Icon not verified for Subject link Popup Expected: " + icon.toString()
-									+ " but Actual: " + attribute);
-						}
-					}
-
-					else {
-						log(LogStatus.ERROR, " Locator of Icon is not correct", YesNo.No);
-						negativeResult.add(" Locator of Icon is not correct");
-					}
-
-				} else if (icon.equals(IconType.Event) || icon.equals(IconType.Meeting)) {
-
-					String type = CommonLib.getText(driver, typeOfSubjectLinkPopUpInInteractionSection(5), "Type",
-							action.BOOLEAN);
-
-					if (type.equals(IconType.Meeting.toString())) {
-
-						log(LogStatus.INFO, "Type has been verified and i.e.: " + type, YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "Type has not been verified, Expected: " + IconType.Meeting.toString()
-								+ " but Actual: " + type, YesNo.No);
-						negativeResult.add("Type has not been verified, Expected: " + IconType.Meeting.toString()
-								+ " but Actual: " + type);
-					}
-
-					WebElement iconLocator = iconOfSubjectLinkPopUpInInteractionSection(7);
-					if (iconLocator != null) {
-						String attribute = iconLocator.getAttribute("data-key");
-						if (attribute.equalsIgnoreCase("event")) {
-
-							log(LogStatus.INFO, "Icon verified for Subject link Popup & i.e.: " + attribute, YesNo.No);
-						}
-
-						else {
-							log(LogStatus.ERROR, "Icon not verified for Subject link Popup Expected: " + icon.toString()
-									+ " but Actual: " + attribute, YesNo.No);
-							negativeResult.add("Icon not verified for Subject link Popup Expected: " + icon.toString()
-									+ " but Actual: " + attribute);
-						}
-					}
-
-					else {
-						log(LogStatus.ERROR, " Locator of Icon is not correct", YesNo.No);
-						negativeResult.add(" Locator of Icon is not correct");
-					}
-
 				}
 
-				else if (icon.equals(IconType.Email)) {
+				else {
+					log(LogStatus.ERROR, " Locator of Icon is not correct", YesNo.No);
+					negativeResult.add(" Locator of Icon is not correct");
+				}
 
-					String type = CommonLib.getText(driver, typeOfSubjectLinkPopUpInInteractionSection(5), "Type",
-							action.BOOLEAN);
+			} else if (icon.equals(IconType.Call)) {
 
-					if (type.equals(IconType.Email.toString())) {
+				String type = CommonLib.getText(driver, typeOfSubjectLinkPopUpInInteractionSection(5), "Type",
+						action.BOOLEAN);
 
-						log(LogStatus.INFO, "Type has been verified and i.e.: " + type, YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "Type has not been verified, Expected: " + IconType.Email.toString()
-								+ " but Actual: " + type, YesNo.No);
-						negativeResult.add("Type has not been verified, Expected: " + IconType.Email.toString()
-								+ " but Actual: " + type);
-					}
+				if (type.equals(IconType.Call.toString())) {
 
-					WebElement iconLocator = iconOfSubjectLinkPopUpInInteractionSection(7);
-					if (iconLocator != null) {
-						String attribute = iconLocator.getAttribute("data-key");
-						if (attribute.equalsIgnoreCase("email")) {
-
-							log(LogStatus.INFO, "Icon verified for Subject link Popup & i.e.: " + attribute, YesNo.No);
-						}
-
-						else {
-							log(LogStatus.ERROR, "Icon not verified for Subject link Popup Expected: " + icon.toString()
-									+ " but Actual: " + attribute, YesNo.No);
-							negativeResult.add("Icon not verified for Subject link Popup Expected: " + icon.toString()
-									+ " but Actual: " + attribute);
-						}
-					}
-
-					else {
-						log(LogStatus.ERROR, " Locator of Icon is not correct", YesNo.No);
-						negativeResult.add(" Locator of Icon is not correct");
-					}
-
+					log(LogStatus.INFO, "Type has been verified and i.e.: " + type, YesNo.No);
 				} else {
-					log(LogStatus.ERROR, "Please provide correct Icon Type of Subject Link popup as it is mandatory",
-							YesNo.No);
-					negativeResult.add("Please provide correct Icon Type of Subject Link popup as it is mandatory");
+					log(LogStatus.ERROR, "Type has not been verified, Expected: " + IconType.Call.toString()
+					+ " but Actual: " + type, YesNo.No);
+					negativeResult.add("Type has not been verified, Expected: " + IconType.Call.toString()
+					+ " but Actual: " + type);
 				}
 
-				if (basicSectionVerificationData != null) {
+				WebElement iconLocator = iconOfSubjectLinkPopUpInInteractionSection(7);
+				if (iconLocator != null) {
+					String attribute = iconLocator.getAttribute("data-key");
+					if (attribute.equalsIgnoreCase("log_a_call")) {
 
-					for (String[] val : basicSectionVerificationData) {
-						String labelName = val[0];
-						String value = val[1];
-
-						if (labelName.contains(excelLabel.Notes.toString())
-								|| labelName.equalsIgnoreCase(excelLabel.Related_To.toString())
-								|| labelName.equalsIgnoreCase("Tags")
-								|| labelName.contains(excelLabel.Subject.toString())) {
-
-							if (labelName.equalsIgnoreCase(excelLabel.Related_To.toString())) {
-								labelName = "Tags";
-							}
-
-							if (labelName.equalsIgnoreCase("Tags")) {
-
-								if (!value.contains("==")) {
-
-									String[] tag = value.split("<break>", -1);
-									List<String> taggedRelatedToListInNotePopUp = valueOfTagsInSubjectLinkPopUpInInteractionSection(
-											labelName);
-									for (int i = 0; i < tag.length; i++) {
-
-										if (taggedRelatedToListInNotePopUp.contains(tag[i])) {
-											log(LogStatus.INFO, tag[i]
-													+ " tag has been verified in Subject Link PopUp of Interaction",
-													YesNo.No);
-										} else {
-											log(LogStatus.ERROR, tag[i]
-													+ " tag has not been verified in Subject Link PopUp of Interaction",
-													YesNo.No);
-											negativeResult.add(tag[i]
-													+ " tag has not been verified in Subject Link PopUp of Interaction");
-										}
-									}
-								} else {
-
-									String[] tag = value.split("<break>", -1);
-
-									for (int i = 0; i < tag.length; i++) {
-										String[] relatedAndIcon = tag[i].split("==", -1);
-										String relatedAssociation = relatedAndIcon[0];
-										String relatedAssociationIcon = relatedAndIcon[1];
-
-										if (iconOfTagsInSubjectLinkPopUpInInteractionSection(labelName,
-												relatedAssociation, relatedAssociationIcon, 4) != null) {
-											log(LogStatus.INFO,
-
-													relatedAssociation
-															+ " tag has been verified in Subject Link PopUp of Interaction with Icon: "
-															+ relatedAssociationIcon,
-													YesNo.No);
-										} else {
-											log(LogStatus.ERROR, relatedAssociation
-													+ " tag has not been verified in Subject Link PopUp of Interaction with Icon: "
-													+ relatedAssociationIcon, YesNo.No);
-											negativeResult.add(relatedAssociation
-													+ " tag has not been verified in Subject Link PopUp of Interaction with Icon: "
-													+ relatedAssociationIcon);
-										}
-									}
-
-								}
-
-							}
-
-							else if (labelName.contains(excelLabel.Subject.toString())) {
-								if (activitySubjetLinkPopupHeaderOnInteraction(10).getText().equals(value)) {
-									log(LogStatus.INFO, value + " link Popup header has been verified", YesNo.No);
-
-								} else {
-									log(LogStatus.ERROR, value + " link Popup header has not been verified", YesNo.No);
-									negativeResult.add(value + " link Popup header has not been verified");
-
-								}
-							}
-
-							else {
-								String actualValue = getText(driver,
-										valueOfLabelInSubjectLinkPopUpInInteractionSection(labelName, 7), labelName,
-										action.SCROLLANDBOOLEAN);
-
-								log(LogStatus.INFO, "Successfully get the value from " + labelName + " field",
-										YesNo.No);
-								if (value.equals(actualValue)) {
-									log(LogStatus.INFO, labelName
-											+ " label's value has been verify in Subject link Popup and i.e. :" + value,
-											YesNo.No);
-								} else {
-									log(LogStatus.ERROR, labelName + " label's value is not verify, Expected: " + value
-											+ " but Actual: " + actualValue, YesNo.No);
-									negativeResult.add(labelName + " label's value is not verify, Expected: " + value
-											+ " but Actual: " + actualValue);
-								}
-
-							}
-
-						} else {
-							log(LogStatus.ERROR, "Please Provide the Correct Label Name: " + labelName, YesNo.No);
-							negativeResult.add("Please Provide the Correct Label Name: " + labelName);
-						}
-
+						log(LogStatus.INFO, "Icon verified for Subject link Popup & i.e.: " + attribute, YesNo.No);
 					}
 
+					else {
+						log(LogStatus.ERROR, "Icon not verified for Subject link Popup Expected: " + icon.toString()
+						+ " but Actual: " + attribute, YesNo.No);
+						negativeResult.add("Icon not verified for Subject link Popup Expected: " + icon.toString()
+						+ " but Actual: " + attribute);
+					}
 				}
 
-				if (advancedSectionVerificationData != null) {
-
-					for (String[] val : advancedSectionVerificationData) {
-						String labelName = val[0];
-						String value = val[1];
-
-						if (labelName.contains("User") || labelName.contains(excelLabel.Status.toString())
-								|| labelName.contains("Due Date") || labelName.contains("Date")
-								|| labelName.contains(excelLabel.Priority.toString())) {
-
-							if (icon.equals(IconType.Task) && (labelName.contains(excelLabel.Status.toString())
-									|| labelName.contains(excelLabel.Priority.toString()))) {
-
-								String actualValue = getText(driver,
-										valueOfLabelInSubjectLinkPopUpInInteractionSection(labelName, 7), labelName,
-										action.SCROLLANDBOOLEAN);
-
-								log(LogStatus.INFO, "Successfully get the value from " + labelName + " field",
-										YesNo.No);
-								if (value.equals(actualValue)) {
-									log(LogStatus.INFO, labelName
-											+ " label's value has been verify in Subject link Popup and i.e. :" + value,
-											YesNo.No);
-								} else {
-									log(LogStatus.ERROR, labelName + " label's value is not verify, Expected: " + value
-											+ " but Actual: " + actualValue, YesNo.No);
-									negativeResult.add(labelName + " label's value is not verify, Expected: " + value
-											+ " but Actual: " + actualValue);
-								}
-
-							}
-
-						}
-
-						else {
-							log(LogStatus.ERROR, "Please Provide the Correct Label Name: " + labelName, YesNo.No);
-							negativeResult.add("Please Provide the Correct Label Name: " + labelName);
-						}
-					}
-
+				else {
+					log(LogStatus.ERROR, " Locator of Icon is not correct", YesNo.No);
+					negativeResult.add(" Locator of Icon is not correct");
 				}
 
-				if (click(driver, crossButtonOfSubjectLinkPopUpInInteractionSection(8),
-						"crossButtonOfSubjectLinkPopUpInInteractionSection", action.BOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on Cross Button of Subject Link Pop up of Subject: " + subjectName,
-							YesNo.No);
+			} else if (icon.equals(IconType.Event) || icon.equals(IconType.Meeting)) {
 
-					if (activitySubjetLinkPopupHeaderOnInteraction(5) == null) {
+				String type = CommonLib.getText(driver, typeOfSubjectLinkPopUpInInteractionSection(5), "Type",
+						action.BOOLEAN);
 
-						log(LogStatus.INFO,
-								"Verified Subject Link Pop up has been closed after click on Cross button for Subject: "
-										+ subjectName,
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"Subject Link Pop up has not been closed after click on Cross button for Subject: "
-										+ subjectName,
-								YesNo.No);
-						negativeResult
-								.add("Subject Link Pop up has not been closed after click on Cross button for Subject: "
-										+ subjectName);
-					}
+				if (type.equals(IconType.Meeting.toString())) {
 
+					log(LogStatus.INFO, "Type has been verified and i.e.: " + type, YesNo.No);
 				} else {
-					log(LogStatus.ERROR,
-							"Not able to Click on Cross Button of Subject Link Pop up of Subject: " + subjectName,
-							YesNo.No);
-					negativeResult
-							.add("Not able to Click on Cross Button of Subject Link Pop up of Subject: " + subjectName);
+					log(LogStatus.ERROR, "Type has not been verified, Expected: " + IconType.Meeting.toString()
+					+ " but Actual: " + type, YesNo.No);
+					negativeResult.add("Type has not been verified, Expected: " + IconType.Meeting.toString()
+					+ " but Actual: " + type);
+				}
+
+				WebElement iconLocator = iconOfSubjectLinkPopUpInInteractionSection(7);
+				if (iconLocator != null) {
+					String attribute = iconLocator.getAttribute("data-key");
+					if (attribute.equalsIgnoreCase("event")) {
+
+						log(LogStatus.INFO, "Icon verified for Subject link Popup & i.e.: " + attribute, YesNo.No);
+					}
+
+					else {
+						log(LogStatus.ERROR, "Icon not verified for Subject link Popup Expected: " + icon.toString()
+						+ " but Actual: " + attribute, YesNo.No);
+						negativeResult.add("Icon not verified for Subject link Popup Expected: " + icon.toString()
+						+ " but Actual: " + attribute);
+					}
+				}
+
+				else {
+					log(LogStatus.ERROR, " Locator of Icon is not correct", YesNo.No);
+					negativeResult.add(" Locator of Icon is not correct");
+				}
+
+			}
+
+			else if (icon.equals(IconType.Email)) {
+
+				String type = CommonLib.getText(driver, typeOfSubjectLinkPopUpInInteractionSection(5), "Type",
+						action.BOOLEAN);
+
+				if (type.equals(IconType.Email.toString())) {
+
+					log(LogStatus.INFO, "Type has been verified and i.e.: " + type, YesNo.No);
+				} else {
+					log(LogStatus.ERROR, "Type has not been verified, Expected: " + IconType.Email.toString()
+					+ " but Actual: " + type, YesNo.No);
+					negativeResult.add("Type has not been verified, Expected: " + IconType.Email.toString()
+					+ " but Actual: " + type);
+				}
+
+				WebElement iconLocator = iconOfSubjectLinkPopUpInInteractionSection(7);
+				if (iconLocator != null) {
+					String attribute = iconLocator.getAttribute("data-key");
+					if (attribute.equalsIgnoreCase("email")) {
+
+						log(LogStatus.INFO, "Icon verified for Subject link Popup & i.e.: " + attribute, YesNo.No);
+					}
+
+					else {
+						log(LogStatus.ERROR, "Icon not verified for Subject link Popup Expected: " + icon.toString()
+						+ " but Actual: " + attribute, YesNo.No);
+						negativeResult.add("Icon not verified for Subject link Popup Expected: " + icon.toString()
+						+ " but Actual: " + attribute);
+					}
+				}
+
+				else {
+					log(LogStatus.ERROR, " Locator of Icon is not correct", YesNo.No);
+					negativeResult.add(" Locator of Icon is not correct");
 				}
 
 			} else {
-				log(LogStatus.ERROR, subjectName + " link Popup has not been Open", YesNo.No);
-				negativeResult.add(subjectName + " link Popup has not been Open");
+				log(LogStatus.ERROR, "Please provide correct Icon Type of Subject Link popup as it is mandatory",
+						YesNo.No);
+				negativeResult.add("Please provide correct Icon Type of Subject Link popup as it is mandatory");
+			}
+
+			if (basicSectionVerificationData != null) {
+
+				for (String[] val : basicSectionVerificationData) {
+					String labelName = val[0];
+					String value = val[1];
+
+					if (labelName.contains(excelLabel.Notes.toString())
+							|| labelName.equalsIgnoreCase(excelLabel.Related_To.toString())
+							|| labelName.equalsIgnoreCase("Tags")
+							|| labelName.contains(excelLabel.Subject.toString())) {
+
+						if (labelName.equalsIgnoreCase(excelLabel.Related_To.toString())) {
+							labelName = "Tags";
+						}
+
+						if (labelName.equalsIgnoreCase("Tags")) {
+
+							if (!value.contains("==")) {
+
+								String[] tag = value.split("<break>", -1);
+								List<String> taggedRelatedToListInNotePopUp = valueOfTagsInSubjectLinkPopUpInInteractionSection(
+										labelName);
+								for (int i = 0; i < tag.length; i++) {
+
+									if (taggedRelatedToListInNotePopUp.contains(tag[i])) {
+										log(LogStatus.INFO, tag[i]
+												+ " tag has been verified in Subject Link PopUp of Interaction",
+												YesNo.No);
+									} else {
+										log(LogStatus.ERROR, tag[i]
+												+ " tag has not been verified in Subject Link PopUp of Interaction",
+												YesNo.No);
+										negativeResult.add(tag[i]
+												+ " tag has not been verified in Subject Link PopUp of Interaction");
+									}
+								}
+							} else {
+
+								String[] tag = value.split("<break>", -1);
+
+								for (int i = 0; i < tag.length; i++) {
+									String[] relatedAndIcon = tag[i].split("==", -1);
+									String relatedAssociation = relatedAndIcon[0];
+									String relatedAssociationIcon = relatedAndIcon[1];
+
+									if (iconOfTagsInSubjectLinkPopUpInInteractionSection(labelName,
+											relatedAssociation, relatedAssociationIcon, 4) != null) {
+										log(LogStatus.INFO,
+
+												relatedAssociation
+												+ " tag has been verified in Subject Link PopUp of Interaction with Icon: "
+												+ relatedAssociationIcon,
+												YesNo.No);
+									} else {
+										log(LogStatus.ERROR, relatedAssociation
+												+ " tag has not been verified in Subject Link PopUp of Interaction with Icon: "
+												+ relatedAssociationIcon, YesNo.No);
+										negativeResult.add(relatedAssociation
+												+ " tag has not been verified in Subject Link PopUp of Interaction with Icon: "
+												+ relatedAssociationIcon);
+									}
+								}
+
+							}
+
+						}
+
+						else if (labelName.contains(excelLabel.Subject.toString())) {
+							if (activitySubjetLinkPopupHeaderOnInteraction(10).getText().equals(value)) {
+								log(LogStatus.INFO, value + " link Popup header has been verified", YesNo.No);
+
+							} else {
+								log(LogStatus.ERROR, value + " link Popup header has not been verified", YesNo.No);
+								negativeResult.add(value + " link Popup header has not been verified");
+
+							}
+						}
+
+						else {
+							String actualValue = getText(driver,
+									valueOfLabelInSubjectLinkPopUpInInteractionSection(labelName, 7), labelName,
+									action.SCROLLANDBOOLEAN);
+
+							log(LogStatus.INFO, "Successfully get the value from " + labelName + " field",
+									YesNo.No);
+							if (value.equals(actualValue)) {
+								log(LogStatus.INFO, labelName
+										+ " label's value has been verify in Subject link Popup and i.e. :" + value,
+										YesNo.No);
+							} else {
+								log(LogStatus.ERROR, labelName + " label's value is not verify, Expected: " + value
+										+ " but Actual: " + actualValue, YesNo.No);
+								negativeResult.add(labelName + " label's value is not verify, Expected: " + value
+										+ " but Actual: " + actualValue);
+							}
+
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Please Provide the Correct Label Name: " + labelName, YesNo.No);
+						negativeResult.add("Please Provide the Correct Label Name: " + labelName);
+					}
+
+				}
+
+			}
+
+			if (advancedSectionVerificationData != null) {
+
+				for (String[] val : advancedSectionVerificationData) {
+					String labelName = val[0];
+					String value = val[1];
+
+					if (labelName.contains("User") || labelName.contains(excelLabel.Status.toString())
+							|| labelName.contains("Due Date") || labelName.contains("Date")
+							|| labelName.contains(excelLabel.Priority.toString())) {
+
+						if (icon.equals(IconType.Task) && (labelName.contains(excelLabel.Status.toString())
+								|| labelName.contains(excelLabel.Priority.toString()))) {
+
+							String actualValue = getText(driver,
+									valueOfLabelInSubjectLinkPopUpInInteractionSection(labelName, 7), labelName,
+									action.SCROLLANDBOOLEAN);
+
+							log(LogStatus.INFO, "Successfully get the value from " + labelName + " field",
+									YesNo.No);
+							if (value.equals(actualValue)) {
+								log(LogStatus.INFO, labelName
+										+ " label's value has been verify in Subject link Popup and i.e. :" + value,
+										YesNo.No);
+							} else {
+								log(LogStatus.ERROR, labelName + " label's value is not verify, Expected: " + value
+										+ " but Actual: " + actualValue, YesNo.No);
+								negativeResult.add(labelName + " label's value is not verify, Expected: " + value
+										+ " but Actual: " + actualValue);
+							}
+
+						}
+
+					}
+
+					else {
+						log(LogStatus.ERROR, "Please Provide the Correct Label Name: " + labelName, YesNo.No);
+						negativeResult.add("Please Provide the Correct Label Name: " + labelName);
+					}
+				}
+
+			}
+
+			if (click(driver, crossButtonOfSubjectLinkPopUpInInteractionSection(8),
+					"crossButtonOfSubjectLinkPopUpInInteractionSection", action.BOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Cross Button of Subject Link Pop up of Subject: " + subjectName,
+						YesNo.No);
+
+				if (activitySubjetLinkPopupHeaderOnInteraction(5) == null) {
+
+					log(LogStatus.INFO,
+							"Verified Subject Link Pop up has been closed after click on Cross button for Subject: "
+									+ subjectName,
+									YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Subject Link Pop up has not been closed after click on Cross button for Subject: "
+									+ subjectName,
+									YesNo.No);
+					negativeResult
+					.add("Subject Link Pop up has not been closed after click on Cross button for Subject: "
+							+ subjectName);
+				}
+
+			} else {
+				log(LogStatus.ERROR,
+						"Not able to Click on Cross Button of Subject Link Pop up of Subject: " + subjectName,
+						YesNo.No);
+				negativeResult
+				.add("Not able to Click on Cross Button of Subject Link Pop up of Subject: " + subjectName);
 			}
 
 		} else {
-			log(LogStatus.ERROR, "not able to click on " + subjectName, YesNo.No);
-			negativeResult.add("not able to click on " + subjectName);
+			log(LogStatus.ERROR, subjectName + " link Popup has not been Open", YesNo.No);
+			negativeResult.add(subjectName + " link Popup has not been Open");
 		}
+
+
 		return negativeResult;
 	}
 

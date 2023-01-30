@@ -434,10 +434,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String taskDueDate=ATE_AdvanceDueDate1;
 		String taskStatus=ATE_AdvanceStatus1;
 		String taskPriority=ATE_AdvancePriority1;
-		  String[] relatedToData=ATE_ARelatedTo1.split("<break>"); String[]
-		  verifyRelatedToField=
-		  {relatedToData[0],crmUser6FirstName+" "+crmUser6LastName,relatedToData[1]};
-		  String[] relatedAssociation=ATE_ARelatedAsso1.split("<break>");
+		String[] relatedToData=ATE_ARelatedTo1.split("<break>"); String[]
+		verifyRelatedToField= {relatedToData[0],crmUser6FirstName+" "+crmUser6LastName,relatedToData[1]};
+		String[] relatedAssociation=ATE_ARelatedAsso1.split("<break>");
 
 		String contactSectionName=ATE_ContactName2;
 		String contactSectionTitle=ATE_ContactTitle2;
@@ -558,7 +557,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc005_VerifyConnectionPopupOnAccountPage(String projectName) {
@@ -632,7 +630,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -756,7 +753,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -1487,7 +1483,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc011_VerifyConnectionPopupOnIntermediaryAccountPageAndCountVerification(String projectName) {
@@ -1623,7 +1618,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -1817,7 +1811,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc013_Creating1MoreNewTasks(String projectName) {
@@ -1855,7 +1848,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -1956,7 +1948,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -2165,7 +2156,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -2849,7 +2839,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -3647,7 +3636,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc023_LoginWithPEUser1AndVerifyAcuityTabOnReferencedAccountsWhichIsTaggedFromRelatedAssociationFieldAndReferencedAccountIsOfIntermediaryRecordType(String projectName) {
@@ -4034,7 +4022,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -4717,7 +4704,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc029_VerifyConnectionPopupOnIntermediaryAccountPage(String projectName) {
@@ -5019,7 +5005,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -5904,7 +5889,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -7165,7 +7149,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc038_VerifyImpactOnIntermediaryAccountAcuityTab(String projectName) {
@@ -7369,7 +7352,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -8586,7 +8568,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc046_VerifyImpactOnIntermediaryAccountAcuityTab(String projectName) {
@@ -8793,7 +8774,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc047_VerifyConnectionPopupOnIntermediaryAccountPage(String projectName) {
@@ -8918,7 +8898,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -9107,8 +9086,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -9412,7 +9389,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc050_VerifyUIOfFilterSectionOnContactAcuityTab(String projectName) {
@@ -9669,7 +9645,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc051_VerifyInactiveUsersWillDisplayInTheConnectionPopupForIntermediaryAccountPage(String projectName) {
@@ -9785,7 +9760,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc052_VerifyInactiveUsersWillDisplayInTheConnectionSectionForIntermediaryAccountContactPage(String projectName) {
@@ -9849,7 +9823,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -10229,7 +10202,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc054_VerifyRecordUpdateImpactsOnIntermedairyAccountPage(String projectName) {
@@ -10437,7 +10409,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc055_VerifyUpdatedNamesOnTaskPopupDetailsPage(String projectName) {
@@ -10628,7 +10599,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -10878,7 +10848,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -11236,7 +11205,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc059_VerifyRecordDeleteImpactsOnIntermedairyAccountPage(String projectName) {
@@ -11361,7 +11329,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc061_RestoreTheDeletedRecordsFromRecycleBinAndVerify(String projectName) {
@@ -11467,7 +11434,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc062_VerifyRecordRestoreImpactsOnIntermedairyAccountPage(String projectName) {
@@ -11534,7 +11500,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -11724,8 +11689,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -11975,7 +11938,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc066_CreateSomeEventsAndVerifyCountsSwitchVerificationOnIntermediaryAccountPage(String projectName) {
@@ -12026,7 +11988,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -12103,7 +12064,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc068_VerifyOnIntermediaryContactPage(String projectName) {
@@ -12177,7 +12137,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -12386,7 +12345,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
