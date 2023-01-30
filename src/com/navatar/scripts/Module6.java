@@ -2253,9 +2253,11 @@ public class Module6 extends BaseLib {
 									ThreadSleep(2000);
 									// driver.switchTo().alert().accept();
 									switchToDefaultContent(driver);
+									switchToDefaultContent(driver);
 									WebDriverWait wait = new WebDriverWait(driver, 20);
 									wait.until(ExpectedConditions.alertIsPresent());
-									switchToAlertAndAcceptOrDecline(driver, 18, action.ACCEPT);
+									driver.switchTo().alert().accept();
+									// switchToAlertAndAcceptOrDecline(driver, 18, action.ACCEPT);
 									switchToDefaultContent(driver);
 									CommonLib.refresh(driver);
 									ThreadSleep(2000);
@@ -5462,7 +5464,7 @@ public class Module6 extends BaseLib {
 									ThreadSleep(5000);
 									if (sendKeys(driver, dp.getTextArea(20), stage, stage, action.BOOLEAN)) {
 										log(LogStatus.INFO, "enter value on textarea " + stage, YesNo.No);
-										if (click(driver, sp.getCustomTabSaveBtn(projectName, 10), "save button",
+										if (click(driver, sp.pickListSaveButton(10), "save button",
 												action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.ERROR, "Click on save Button : ", YesNo.No);
 											ThreadSleep(2000);

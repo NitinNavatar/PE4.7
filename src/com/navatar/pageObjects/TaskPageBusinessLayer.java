@@ -437,7 +437,6 @@ public class TaskPageBusinessLayer extends TaskPage {
 	public boolean editCommentsIntask(String task, String updatedValue) {
 		boolean flag = false;
 
-		
 		if (click(driver, editCommentsButton(30), "", action.BOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Edit Comments Button", YesNo.No);
 			if (CommonLib.clearTextBox(commentTextArea(20))) {
@@ -487,6 +486,83 @@ public class TaskPageBusinessLayer extends TaskPage {
 		}
 		return flag;
 
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param buttonName
+	 * @param timeOut
+	 * @return true if able to click on button
+	 */
+	public boolean clickOnRecordPageButtonOrInDownArrowButton(String buttonName, int timeOut) {
+		boolean flag = false;
+		if (recordDetailPageButton(buttonName, timeOut) != null) {
+			if (click(driver, recordDetailPageButton(buttonName, timeOut), "Button " + buttonName,
+					action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Button: " + buttonName + " on Record Form Page", YesNo.No);
+				flag = true;
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on Button: " + buttonName + " on Record Form Page", YesNo.Yes);
+
+			}
+		}
+
+		else if (recordDetailPageDownArrowButton(timeOut) != null) {
+			log(LogStatus.INFO, "Down Arrow Button is Present", YesNo.No);
+			if (click(driver, recordDetailPageDownArrowButton(timeOut), "DownArrowButton", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
+				CommonLib.ThreadSleep(2000);
+
+				List<String> dropDownButtonsList = downArrowButtonList().stream()
+						.map(x -> x.getAttribute("title").trim()).collect(Collectors.toList());
+
+				if (!dropDownButtonsList.isEmpty()) {
+					log(LogStatus.INFO, "No. of Buttons Present on DownArrow Button are: " + dropDownButtonsList.size(),
+							YesNo.No);
+
+					int i = 0;
+					for (String button : dropDownButtonsList) {
+						if (button.equalsIgnoreCase(buttonName)) {
+							log(LogStatus.INFO, "Button Found in Down Arrow Button", YesNo.No);
+
+							if (click(driver, downArrowButtonList().get(i), "DownArrowButton",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
+								flag = true;
+								break;
+							}
+
+							else {
+								log(LogStatus.ERROR,
+										"Not Able to Click on Button: " + buttonName + " on Record Form Page",
+										YesNo.Yes);
+
+							}
+
+						}
+
+						i++;
+
+					}
+
+				}
+
+				else {
+					log(LogStatus.ERROR, "No Buttons Are Present in DownArrow Button", YesNo.Yes);
+
+				}
+
+			} else {
+				log(LogStatus.INFO, "Not able to Click on Down Arrow Button", YesNo.No);
+			}
+		}
+
+		else {
+			log(LogStatus.ERROR, "Down Arrow Button is not Present on this Page, So No button: " + buttonName
+					+ " present on this Page", YesNo.Yes);
+
+		}
+		return flag;
 	}
 
 }

@@ -854,7 +854,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 						}
 					}
 				}
-				if (click(driver, getCustomTabSaveBtn(projectName, 30), "Save Button", action.SCROLLANDBOOLEAN)) {
+				if (click(driver, popUpSaveButton(30), "Save Button", action.SCROLLANDBOOLEAN)) {
 					appLog.error("Click on save Button");
 
 					ThreadSleep(3000);
@@ -1436,7 +1436,6 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		return flag;
 	}
 
-	
 	public boolean UpdateFundName(String projectName, String fundname, int timeOut) {
 		boolean flag = true;
 		WebElement ele;
@@ -1449,7 +1448,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			} else {
 				appLog.error("Not Able to Entered value on Deal Name TextBox : " + fundname);
 			}
-				ThreadSleep(1000);
+			ThreadSleep(1000);
 			ThreadSleep(2000);
 			if (click(driver, getCustomTabSaveBtn(projectName, 30), "Save Button", action.SCROLLANDBOOLEAN)) {
 				appLog.error("Click on save Button");
@@ -1463,6 +1462,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		}
 		return flag;
 	}
+
 	/**
 	 * @author sahil bansal
 	 * @param projectName

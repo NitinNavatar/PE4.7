@@ -2260,9 +2260,9 @@ public class HomePage extends BasePageBusinessLayer {
 		return isDisplayed(driver, FindElement(driver, xpath, "Export Wizard Button", action.SCROLLANDBOOLEAN, 30),
 				"Visibility", timeOut, "Clicked on Export Wizard");
 	}
-
+	
 	public WebElement getFundFirstSDG_ExportTextArea(int timeOut) {
-		String xpath = "//textarea[@class='slds-textarea']";
+		String xpath = "//p[contains(text(),\"Copy this text\")]/..//textarea[@class=\"slds-textarea\"]";
 
 		return isDisplayed(driver, FindElement(driver, xpath, "Text Area", action.SCROLLANDBOOLEAN, 30), "Visibility",
 				timeOut, "Clicked on Select Area");

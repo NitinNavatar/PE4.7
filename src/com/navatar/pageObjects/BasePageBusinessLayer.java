@@ -6368,6 +6368,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				log(LogStatus.INFO, "List View already Present, Now Deleting List View: " + viewList, YesNo.No);
 				if (click(driver, selectListView, "List View: " + viewList, action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Selected the List View: " + viewList, YesNo.No);
+					CommonLib.ThreadSleep(4000);
 					if (click(driver, getlistViewControlsButton(projectName, timeOut), "list view", action.BOOLEAN)) {
 						log(LogStatus.INFO, "successfully click on list view setting Icon", YesNo.No);
 
@@ -11590,8 +11591,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					}
 
-					else if (labelName.contains(excelLabel.Location.toString())
-							|| labelName.contains("Due Date") || labelName.contains("Date")) {
+					else if (labelName.contains(excelLabel.Location.toString()) || labelName.contains("Due Date")
+							|| labelName.contains("Date")) {
 
 						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
 								+ labelName + "']/..//input";
@@ -11728,7 +11729,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					String labelName = val[0];
 					String value = val[1];
 
-					if (labelName.contains(excelLabel.Subject.toString()) || labelName.contains("Due Date Only")) {
+					if (labelName.contains(excelLabel.Subject.toString()) || labelName.contains("Due Date")
+							|| labelName.contains("Date")) {
 						xPath = "//span[text()='Tasks']/ancestor::lightning-accordion[1]//label[text()='" + labelName
 								+ "']/..//input";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
@@ -12242,162 +12244,153 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 //					if (click(driver, npbl.researchButton(20), "Research Button", action.SCROLLANDBOOLEAN)) {
 //						log(LogStatus.INFO, "Clicked on Research Button", YesNo.No);
 
-						if (noResultMsgInResearch(3) == null) {
-							CommonLib.refresh(driver);
-							CommonLib.ThreadSleep(3000);
-							List<String> sideNavCountExceptAllCategories = researchSideNavCountResultsExceptAllCategories()
-									.stream().map(x -> x.getText().trim().replace("New Items", "").replace(":", "")
-											.replaceAll("[\\t\\n\\r]+", "").trim())
-									.collect(Collectors.toList());
+			if (noResultMsgInResearch(3) == null) {
+				CommonLib.refresh(driver);
+				CommonLib.ThreadSleep(3000);
+				List<String> sideNavCountExceptAllCategories = researchSideNavCountResultsExceptAllCategories().stream()
+						.map(x -> x.getText().trim().replace("New Items", "").replace(":", "")
+								.replaceAll("[\\t\\n\\r]+", "").trim())
+						.collect(Collectors.toList());
 
-							List<String> sideNavNamesWhichHasCountExceptAllCategories = researchSideNavLabelsWhichHasCountResultsExceptAllCategories()
-									.stream()
-									.map(x -> x.getText().replace("New Items", "").replace(":", "")
-											.replaceAll("[\\t\\n\\r]+", "").replaceAll("\\d", ""))
-									.collect(Collectors.toList());
+				List<String> sideNavNamesWhichHasCountExceptAllCategories = researchSideNavLabelsWhichHasCountResultsExceptAllCategories()
+						.stream().map(x -> x.getText().replace("New Items", "").replace(":", "")
+								.replaceAll("[\\t\\n\\r]+", "").replaceAll("\\d", ""))
+						.collect(Collectors.toList());
 
-							List<String> researchResultsGridCounts = researchResultsGridCounts().stream()
-									.map(x -> x.getText().trim()).collect(Collectors.toList());
-							List<String> researchResultsGridNames = researchResultsGridCounts().stream()
-									.map(x -> x.getText().trim().substring(0, x.getText().trim().indexOf(" (")))
-									.collect(Collectors.toList());
+				List<String> researchResultsGridCounts = researchResultsGridCounts().stream()
+						.map(x -> x.getText().trim()).collect(Collectors.toList());
+				List<String> researchResultsGridNames = researchResultsGridCounts().stream()
+						.map(x -> x.getText().trim().substring(0, x.getText().trim().indexOf(" (")))
+						.collect(Collectors.toList());
 
-							int researchAllCategoriesCount = 0;
-							if (researchAllCategoriesCount(10) != null) {
-								researchAllCategoriesCount = Integer.parseInt(
-										researchAllCategoriesCount(10).getText().trim().replace("New Items", "")
-												.replaceAll("[\\t\\n\\r]+", "").replace(":", "").trim());
-							}
-							int sideNavTotalCount = 0;
-							List<Integer> sideNavCountExceptAllCategoriesList = new ArrayList<Integer>();
-							for (String sideNavCount : sideNavCountExceptAllCategories) {
-								sideNavTotalCount = sideNavTotalCount + Integer.parseInt(sideNavCount);
-								sideNavCountExceptAllCategoriesList.add(Integer.parseInt(sideNavCount));
-							}
+				int researchAllCategoriesCount = 0;
+				if (researchAllCategoriesCount(10) != null) {
+					researchAllCategoriesCount = Integer.parseInt(researchAllCategoriesCount(10).getText().trim()
+							.replace("New Items", "").replaceAll("[\\t\\n\\r]+", "").replace(":", "").trim());
+				}
+				int sideNavTotalCount = 0;
+				List<Integer> sideNavCountExceptAllCategoriesList = new ArrayList<Integer>();
+				for (String sideNavCount : sideNavCountExceptAllCategories) {
+					sideNavTotalCount = sideNavTotalCount + Integer.parseInt(sideNavCount);
+					sideNavCountExceptAllCategoriesList.add(Integer.parseInt(sideNavCount));
+				}
 
-							int gridTotalCount = 0;
-							List<Integer> gridCountsList = new ArrayList<Integer>();
-							for (String gridCounts : researchResultsGridCounts) {
-								gridTotalCount = Integer.parseInt(
-										gridCounts.substring(gridCounts.indexOf("(") + 1, gridCounts.indexOf(")")))
-										+ gridTotalCount;
-								gridCountsList.add(Integer.parseInt(
-										gridCounts.substring(gridCounts.indexOf("(") + 1, gridCounts.indexOf(")"))));
+				int gridTotalCount = 0;
+				List<Integer> gridCountsList = new ArrayList<Integer>();
+				for (String gridCounts : researchResultsGridCounts) {
+					gridTotalCount = Integer
+							.parseInt(gridCounts.substring(gridCounts.indexOf("(") + 1, gridCounts.indexOf(")")))
+							+ gridTotalCount;
+					gridCountsList.add(Integer
+							.parseInt(gridCounts.substring(gridCounts.indexOf("(") + 1, gridCounts.indexOf(")"))));
 
-							}
+				}
 
-							if (sideNavTotalCount == gridTotalCount) {
-								log(LogStatus.INFO, "----Total Count of Grids and Side Nav are Same and i.e. "
-										+ gridTotalCount + " for Record Search " + searchString + "----", YesNo.No);
-								log(LogStatus.INFO, "----Now Going to Verify with All Categories for Record Search "
-										+ searchString + "----", YesNo.No);
+				if (sideNavTotalCount == gridTotalCount) {
+					log(LogStatus.INFO, "----Total Count of Grids and Side Nav are Same and i.e. " + gridTotalCount
+							+ " for Record Search " + searchString + "----", YesNo.No);
+					log(LogStatus.INFO,
+							"----Now Going to Verify with All Categories for Record Search " + searchString + "----",
+							YesNo.No);
 
-								if (researchAllCategoriesCount == gridTotalCount) {
-									log(LogStatus.INFO,
-											"----Total Count of Grids and Side Nav and All Categories are Same and i.e. "
-													+ researchAllCategoriesCount + " for Record Search " + searchString
-													+ "----",
-											YesNo.No);
-									status++;
+					if (researchAllCategoriesCount == gridTotalCount) {
+						log(LogStatus.INFO,
+								"----Total Count of Grids and Side Nav and All Categories are Same and i.e. "
+										+ researchAllCategoriesCount + " for Record Search " + searchString + "----",
+								YesNo.No);
+						status++;
 
-									try {
+						try {
 
-										if (sideNavNamesWhichHasCountExceptAllCategories
-												.size() == sideNavCountExceptAllCategoriesList.size()
-												&& sideNavCountExceptAllCategoriesList
-														.size() == researchResultsGridNames.size()
-												&& researchResultsGridNames.size() == gridCountsList.size()) {
+							if (sideNavNamesWhichHasCountExceptAllCategories
+									.size() == sideNavCountExceptAllCategoriesList.size()
+									&& sideNavCountExceptAllCategoriesList.size() == researchResultsGridNames.size()
+									&& researchResultsGridNames.size() == gridCountsList.size()) {
 
-											for (int i = 0; i < researchResultsGridNames.size(); i++) {
-												gridNameAndCount.put(researchResultsGridNames.get(i),
-														gridCountsList.get(i));
-											}
+								for (int i = 0; i < researchResultsGridNames.size(); i++) {
+									gridNameAndCount.put(researchResultsGridNames.get(i), gridCountsList.get(i));
+								}
 
-											for (int i = 0; i < sideNavNamesWhichHasCountExceptAllCategories
-													.size(); i++) {
-												sideNavNameAndCount.put(
-														sideNavNamesWhichHasCountExceptAllCategories.get(i),
-														sideNavCountExceptAllCategoriesList.get(i));
-											}
+								for (int i = 0; i < sideNavNamesWhichHasCountExceptAllCategories.size(); i++) {
+									sideNavNameAndCount.put(sideNavNamesWhichHasCountExceptAllCategories.get(i),
+											sideNavCountExceptAllCategoriesList.get(i));
+								}
 
-											for (String gridName : gridNameAndCount.keySet()) {
+								for (String gridName : gridNameAndCount.keySet()) {
 
-												String navName = gridName;
-												if (gridName.equalsIgnoreCase("Contact")) {
-													navName = gridName + "s";
-												}
-												if (gridNameAndCount.get(gridName)
-														.equals(sideNavNameAndCount.get(navName))) {
-													log(LogStatus.INFO, "Counts for " + gridName + " matched and i.e.: "
-															+ gridNameAndCount.get(gridName), YesNo.No);
-													status++;
-												} else {
-
-													log(LogStatus.ERROR,
-															"Counts for " + gridName + " doesn't matched, GridCount: "
-																	+ gridNameAndCount.get(gridName)
-																	+ " and SideNavCount: "
-																	+ sideNavNameAndCount.get(gridName),
-															YesNo.Yes);
-													sa.assertTrue(false,
-															"Counts for " + gridName + " doesn't matched, GridCount: "
-																	+ gridNameAndCount.get(gridName)
-																	+ " and SideNavCount: "
-																	+ sideNavNameAndCount.get(gridName));
-												}
-												loopCount++;
-											}
-
-										} else {
-
-											log(LogStatus.ERROR,
-													"Either of List Counts not match for Grids or From SideNav, So not able to validate the result count side by side of Grid and Side Nav",
-													YesNo.Yes);
-											sa.assertTrue(false,
-													"Either of List Counts not match for Grids or From SideNav, So not able to validate the result count side by side of Grid and Side Nav");
-										}
-
-									} catch (Exception e) {
-
-										log(LogStatus.ERROR, "Exception occured: " + e.getMessage(), YesNo.No);
-										sa.assertTrue(false, "Exception occured: " + e.getMessage());
-										return false;
+									String navName = gridName;
+									if (gridName.equalsIgnoreCase("Contact")) {
+										navName = gridName + "s";
 									}
+									if (gridNameAndCount.get(gridName).equals(sideNavNameAndCount.get(navName))) {
+										log(LogStatus.INFO, "Counts for " + gridName + " matched and i.e.: "
+												+ gridNameAndCount.get(gridName), YesNo.No);
+										status++;
+									} else {
 
-								} else {
-
-									log(LogStatus.ERROR,
-											"----Total Count of Grids and Side Nav and All Categories are not Same, Total grid Count: "
-													+ gridTotalCount + " and Total Nav Count: " + sideNavTotalCount
-													+ "and Total All Categories Count " + researchAllCategoriesCount
-													+ " for Record Search " + searchString + "----",
-											YesNo.Yes);
-									sa.assertTrue(false,
-											"----Total Count of Grids and Side Nav and All Categories are not Same, Total grid Count: "
-													+ gridTotalCount + " and Total Nav Count: " + sideNavTotalCount
-													+ "and Total All Categories Count " + researchAllCategoriesCount
-													+ " for Record Search " + searchString + "----");
-
+										log(LogStatus.ERROR,
+												"Counts for " + gridName + " doesn't matched, GridCount: "
+														+ gridNameAndCount.get(gridName) + " and SideNavCount: "
+														+ sideNavNameAndCount.get(gridName),
+												YesNo.Yes);
+										sa.assertTrue(false,
+												"Counts for " + gridName + " doesn't matched, GridCount: "
+														+ gridNameAndCount.get(gridName) + " and SideNavCount: "
+														+ sideNavNameAndCount.get(gridName));
+									}
+									loopCount++;
 								}
 
 							} else {
 
 								log(LogStatus.ERROR,
-										"----Total Count of Grids and Side Nav are not Same, Total grid Count: "
-												+ gridTotalCount + " and Total Nav Count: " + sideNavTotalCount
-												+ " for Record Search " + searchString + "----",
+										"Either of List Counts not match for Grids or From SideNav, So not able to validate the result count side by side of Grid and Side Nav",
 										YesNo.Yes);
 								sa.assertTrue(false,
-										"----Total Count of Grids and Side Nav are not Same, Total grid Count: "
-												+ gridTotalCount + " and Total Nav Count: " + sideNavTotalCount
-												+ " for Record Search " + searchString + "----");
-
+										"Either of List Counts not match for Grids or From SideNav, So not able to validate the result count side by side of Grid and Side Nav");
 							}
 
-						} else {
-							log(LogStatus.ERROR, "No Result Found for the Text: " + searchString, YesNo.Yes);
-							sa.assertTrue(false, "No Result Found for the Text: " + searchString);
+						} catch (Exception e) {
+
+							log(LogStatus.ERROR, "Exception occured: " + e.getMessage(), YesNo.No);
+							sa.assertTrue(false, "Exception occured: " + e.getMessage());
+							return false;
 						}
+
+					} else {
+
+						log(LogStatus.ERROR,
+								"----Total Count of Grids and Side Nav and All Categories are not Same, Total grid Count: "
+										+ gridTotalCount + " and Total Nav Count: " + sideNavTotalCount
+										+ "and Total All Categories Count " + researchAllCategoriesCount
+										+ " for Record Search " + searchString + "----",
+								YesNo.Yes);
+						sa.assertTrue(false,
+								"----Total Count of Grids and Side Nav and All Categories are not Same, Total grid Count: "
+										+ gridTotalCount + " and Total Nav Count: " + sideNavTotalCount
+										+ "and Total All Categories Count " + researchAllCategoriesCount
+										+ " for Record Search " + searchString + "----");
+
+					}
+
+				} else {
+
+					log(LogStatus.ERROR,
+							"----Total Count of Grids and Side Nav are not Same, Total grid Count: " + gridTotalCount
+									+ " and Total Nav Count: " + sideNavTotalCount + " for Record Search "
+									+ searchString + "----",
+							YesNo.Yes);
+					sa.assertTrue(false,
+							"----Total Count of Grids and Side Nav are not Same, Total grid Count: " + gridTotalCount
+									+ " and Total Nav Count: " + sideNavTotalCount + " for Record Search "
+									+ searchString + "----");
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "No Result Found for the Text: " + searchString, YesNo.Yes);
+				sa.assertTrue(false, "No Result Found for the Text: " + searchString);
+			}
 
 //					}
 //
@@ -13034,171 +13027,176 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			if (clickUsingJavaScript(driver, getSectionBtn("Advanced", 30), "Advanced section",
 					action.SCROLLANDBOOLEAN)) {
 
-			log(LogStatus.INFO, "clicked on Advanced section", YesNo.No);
-			for (String[] val : advanceSection) {
-				String labelName = val[0];
-				String value = val[1];
-				// String fieldType=val[2];
+				log(LogStatus.INFO, "clicked on Advanced section", YesNo.No);
+				for (String[] val : advanceSection) {
+					String labelName = val[0];
+					String value = val[1];
+					// String fieldType=val[2];
 
-				if (labelName.contains("Start Date")) {
-					xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='Start']/..//label[text()='Date']/..//input";
-					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
-					ele.sendKeys(Keys.CONTROL + "A");
-					ele.sendKeys(Keys.BACK_SPACE);
-					if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, value + " value is not passed in " + labelName + " field", YesNo.No);
-						sa.assertTrue(false, value + " value is not passed in " + labelName + " field");
-						return false;
-					}
-				} else if (labelName.contains("Start Time")) {
-					xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='Start']/..//label[text()='Time']/..//input";
-					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
-					ele.sendKeys(Keys.CONTROL + "A");
-					ele.sendKeys(Keys.BACK_SPACE);
-					if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, value + " value is not passed in " + labelName + " field", YesNo.No);
-						sa.assertTrue(false, value + " value is not passed in " + labelName + " field");
-						return false;
-					}
-
-				} else if (labelName.contains("End Date")) {
-					xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='End']/..//label[text()='Date']/..//input";
-					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
-					ele.sendKeys(Keys.CONTROL + "A");
-					ele.sendKeys(Keys.BACK_SPACE);
-					if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, value + " value is not passed in " + labelName + " field", YesNo.No);
-						sa.assertTrue(false, value + " value is not passed in " + labelName + " field");
-						return false;
-					}
-
-				} else if (labelName.contains("End Time")) {
-					xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='End']/..//label[text()='Time']/..//input";
-					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
-					ele.sendKeys(Keys.CONTROL + "A");
-					ele.sendKeys(Keys.BACK_SPACE);
-					if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, value + " value is not passed in " + labelName + " field", YesNo.No);
-						sa.assertTrue(false, value + " value is not passed in " + labelName + " field");
-						return false;
-					}
-
-				}
-
-				else if (labelName.contains(excelLabel.Location.toString()) || labelName.contains("Due Date Only") || labelName.contains("Due Date") || labelName.contains("Date")) {
-
-					xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='" + labelName
-							+ "']/..//input";
-					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
-					if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, value + " value is not passed in " + labelName + " field", YesNo.No);
-						sa.assertTrue(false, value + " value is not passed in " + labelName + " field");
-						return false;
-					}
-
-				}
-
-				else if (labelName.contains(excelLabel.Status.toString())
-						|| labelName.contains(excelLabel.Priority.toString())) {
-					xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='" + labelName
-							+ "']/..//button";
-					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
-					xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='" + labelName
-							+ "']/..//span[@class='slds-truncate']";
-					if (CommonLib.dropDownHandle(driver, ele, xPath, labelName + " dropdown", value)) {
-						log(LogStatus.INFO, value + " value has been selected from " + labelName + " field", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, value + " value is not selected from " + labelName + " field", YesNo.No);
-						sa.assertTrue(false, value + " value is not selected from " + labelName + " field");
-						return false;
-					}
-				} else if (labelName.equalsIgnoreCase("All-Day Event")) {
-
-					if (value.equals("true")) {
-						xPath = "//span[text()='All-Day Event']/../../input";
-						ele = FindElement(driver, xPath, labelName + " name", action.SCROLLANDBOOLEAN, 30);
-						if (isSelected(driver, ele, labelName + " checkbox")) {
-							log(LogStatus.INFO, labelName + " checkbox is already selected", YesNo.No);
-
+					if (labelName.contains("Start Date")) {
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='Start']/..//label[text()='Date']/..//input";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						ele.sendKeys(Keys.CONTROL + "A");
+						ele.sendKeys(Keys.BACK_SPACE);
+						if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
 						} else {
-							if (click(driver, ele, labelName + " checkbox", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO, labelName + " checkbox has been selected", YesNo.No);
-							} else {
-								log(LogStatus.ERROR, labelName + " checkbox is not selected", YesNo.No);
-								sa.assertTrue(false, labelName + " checkbox is not selected");
-								return false;
-							}
+							log(LogStatus.ERROR, value + " value is not passed in " + labelName + " field", YesNo.No);
+							sa.assertTrue(false, value + " value is not passed in " + labelName + " field");
+							return false;
 						}
-
-					} else {
-						xPath = "//span[text()='All-Day Event']/../../input";
-						ele = FindElement(driver, xPath, labelName + " name", action.SCROLLANDBOOLEAN, 30);
-						if (!isSelected(driver, ele, labelName + " checkbox")) {
-							log(LogStatus.INFO, labelName + " checkbox is not selected", YesNo.No);
-
+					} else if (labelName.contains("Start Time")) {
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='Start']/..//label[text()='Time']/..//input";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						ele.sendKeys(Keys.CONTROL + "A");
+						ele.sendKeys(Keys.BACK_SPACE);
+						if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
 						} else {
-							if (click(driver, ele, labelName + " checkbox", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO, labelName + " checkbox has been unselected", YesNo.No);
-							} else {
-								log(LogStatus.ERROR, labelName + " checkbox is not unselected", YesNo.No);
-								sa.assertTrue(false, labelName + " checkbox is not unselected");
-								return false;
-							}
-						}
-					}
-				}
-
-				else if (labelName.contains("User")) {
-					xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='" + labelName
-							+ "']/..//button";
-					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
-					if (click(driver, ele, labelName, action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on cross icon of value of " + labelName, YesNo.No);
-						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
-								+ labelName + "']/..//input";
-						ele = CommonLib.FindElement(driver, xPath, labelName + " input", action.SCROLLANDBOOLEAN, 30);
-						if (sendKeys(driver, ele, value, labelName + " input", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, value + " has been passed in " + labelName, YesNo.No);
-							xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
-									+ labelName + "']/../..//ul//li[text()='" + value + "']";
-							ele = CommonLib.FindElement(driver, xPath, value + " list", action.SCROLLANDBOOLEAN, 30);
-							if (clickUsingJavaScript(driver, ele, value + " list element")) {
-								log(LogStatus.INFO, "click on the list element of " + value, YesNo.No);
-							} else {
-								log(LogStatus.ERROR, "Not able to click on the list element of " + value, YesNo.No);
-								sa.assertTrue(false, "Not able to click on the list element of " + value);
-								return false;
-							}
-
-						} else {
-							log(LogStatus.ERROR, value + " is not passed in " + labelName, YesNo.No);
-							sa.assertTrue(false, value + " is not passed in " + labelName);
+							log(LogStatus.ERROR, value + " value is not passed in " + labelName + " field", YesNo.No);
+							sa.assertTrue(false, value + " value is not passed in " + labelName + " field");
 							return false;
 						}
 
-					} else {
-						log(LogStatus.ERROR, "Not able to click on cross icon of value of " + labelName, YesNo.No);
-						sa.assertTrue(false, "Not able to click on cross icon of value of " + labelName);
+					} else if (labelName.contains("End Date")) {
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='End']/..//label[text()='Date']/..//input";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						ele.sendKeys(Keys.CONTROL + "A");
+						ele.sendKeys(Keys.BACK_SPACE);
+						if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, value + " value is not passed in " + labelName + " field", YesNo.No);
+							sa.assertTrue(false, value + " value is not passed in " + labelName + " field");
+							return false;
+						}
+
+					} else if (labelName.contains("End Time")) {
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='End']/..//label[text()='Time']/..//input";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						ele.sendKeys(Keys.CONTROL + "A");
+						ele.sendKeys(Keys.BACK_SPACE);
+						if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, value + " value is not passed in " + labelName + " field", YesNo.No);
+							sa.assertTrue(false, value + " value is not passed in " + labelName + " field");
+							return false;
+						}
+
+					}
+
+					else if (labelName.contains(excelLabel.Location.toString()) || labelName.contains("Due Date")
+							|| labelName.contains("Date")) {
+
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
+								+ labelName + "']/..//input";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, value + " value is not passed in " + labelName + " field", YesNo.No);
+							sa.assertTrue(false, value + " value is not passed in " + labelName + " field");
+							return false;
+						}
+
+					}
+
+					else if (labelName.contains(excelLabel.Status.toString())
+							|| labelName.contains(excelLabel.Priority.toString())) {
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
+								+ labelName + "']/..//button";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
+								+ labelName + "']/..//span[@class='slds-truncate']";
+						if (CommonLib.dropDownHandle(driver, ele, xPath, labelName + " dropdown", value)) {
+							log(LogStatus.INFO, value + " value has been selected from " + labelName + " field",
+									YesNo.No);
+						} else {
+							log(LogStatus.ERROR, value + " value is not selected from " + labelName + " field",
+									YesNo.No);
+							sa.assertTrue(false, value + " value is not selected from " + labelName + " field");
+							return false;
+						}
+					} else if (labelName.equalsIgnoreCase("All-Day Event")) {
+
+						if (value.equals("true")) {
+							xPath = "//span[text()='All-Day Event']/../../input";
+							ele = FindElement(driver, xPath, labelName + " name", action.SCROLLANDBOOLEAN, 30);
+							if (isSelected(driver, ele, labelName + " checkbox")) {
+								log(LogStatus.INFO, labelName + " checkbox is already selected", YesNo.No);
+
+							} else {
+								if (click(driver, ele, labelName + " checkbox", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, labelName + " checkbox has been selected", YesNo.No);
+								} else {
+									log(LogStatus.ERROR, labelName + " checkbox is not selected", YesNo.No);
+									sa.assertTrue(false, labelName + " checkbox is not selected");
+									return false;
+								}
+							}
+
+						} else {
+							xPath = "//span[text()='All-Day Event']/../../input";
+							ele = FindElement(driver, xPath, labelName + " name", action.SCROLLANDBOOLEAN, 30);
+							if (!isSelected(driver, ele, labelName + " checkbox")) {
+								log(LogStatus.INFO, labelName + " checkbox is not selected", YesNo.No);
+
+							} else {
+								if (click(driver, ele, labelName + " checkbox", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, labelName + " checkbox has been unselected", YesNo.No);
+								} else {
+									log(LogStatus.ERROR, labelName + " checkbox is not unselected", YesNo.No);
+									sa.assertTrue(false, labelName + " checkbox is not unselected");
+									return false;
+								}
+							}
+						}
+					}
+
+					else if (labelName.contains("User")) {
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
+								+ labelName + "']/..//button";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						if (click(driver, ele, labelName, action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on cross icon of value of " + labelName, YesNo.No);
+							xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
+									+ labelName + "']/..//input";
+							ele = CommonLib.FindElement(driver, xPath, labelName + " input", action.SCROLLANDBOOLEAN,
+									30);
+							if (sendKeys(driver, ele, value, labelName + " input", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, value + " has been passed in " + labelName, YesNo.No);
+								xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
+										+ labelName + "']/../..//ul//li[text()='" + value + "']";
+								ele = CommonLib.FindElement(driver, xPath, value + " list", action.SCROLLANDBOOLEAN,
+										30);
+								if (clickUsingJavaScript(driver, ele, value + " list element")) {
+									log(LogStatus.INFO, "click on the list element of " + value, YesNo.No);
+								} else {
+									log(LogStatus.ERROR, "Not able to click on the list element of " + value, YesNo.No);
+									sa.assertTrue(false, "Not able to click on the list element of " + value);
+									return false;
+								}
+
+							} else {
+								log(LogStatus.ERROR, value + " is not passed in " + labelName, YesNo.No);
+								sa.assertTrue(false, value + " is not passed in " + labelName);
+								return false;
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to click on cross icon of value of " + labelName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on cross icon of value of " + labelName);
+							return false;
+						}
+					}
+
+					else {
+						log(LogStatus.ERROR, "label name is not correct", YesNo.No);
+						sa.assertTrue(false, "label name is not correct");
 						return false;
 					}
 				}
-
-				else {
-					log(LogStatus.ERROR, "label name is not correct", YesNo.No);
-					sa.assertTrue(false, "label name is not correct");
-					return false;
-				}
-			}
 			} else {
 				log(LogStatus.ERROR, "Not able to click on Advanced search section", YesNo.No);
 				sa.assertTrue(false, "Not able to click on Advanced search section");
@@ -13207,62 +13205,65 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		if (taskSection != null) {
 
-//			xPath = "//span[text()='Advanced']/parent::button[@aria-expanded='true']";
-//			ele = FindElement(driver, xPath, "Advance section", action.SCROLLANDBOOLEAN, 3);
-//			if (ele == null) {
-//				if (clickUsingJavaScript(driver, getSectionBtn("Advanced", 3), "Advanced section",
-//						action.SCROLLANDBOOLEAN)) {
-//					log(LogStatus.INFO, "clicked on Advanced section", YesNo.No);
-//				} else {
-//					log(LogStatus.ERROR, "Not able to click on Advanced section", YesNo.No);
-//					sa.assertTrue(false, "Not able to click on Advanced section");
-//					return false;
-//				}
-//			}
-
-//			if (clickUsingJavaScript(driver, getSectionBtn("Tasks", 30), "Tasks section", action.SCROLLANDBOOLEAN)) {
-			log(LogStatus.INFO, "clicked on Tasks section", YesNo.No);
-
-			for (String[] val : taskSection) {
-				String labelName = val[0];
-				String value = val[1];
-
-				if (labelName.contains(excelLabel.Subject.toString()) || labelName.contains("Due Date Only")) {
-					xPath = "//span[text()='Tasks']/ancestor::lightning-accordion[1]//label[text()='" + labelName
-							+ "']/..//input";
-					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
-					if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, value + " value is not passed in " + labelName + " field", YesNo.No);
-						sa.assertTrue(false, value + " value is not passed in " + labelName + " field");
-						return false;
-					}
-				} else if (labelName.contains(excelLabel.Status.toString())) {
-					xPath = "//span[text()='Tasks']/ancestor::lightning-accordion[1]//label[text()='" + labelName
-							+ "']/..//button";
-					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
-					xPath = "//span[text()='Tasks']/ancestor::lightning-accordion[1]//label[text()='" + labelName
-							+ "']/..//span[@class='slds-truncate']";
-					if (CommonLib.dropDownHandle(driver, ele, xPath, labelName + " dropdown", value)) {
-						log(LogStatus.INFO, value + " value has been selected from " + labelName + " field", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, value + " value is not selected from " + labelName + " field", YesNo.No);
-						sa.assertTrue(false, value + " value is not selected from " + labelName + " field");
-						return false;
-					}
+			xPath = "//span[text()='Advanced']/parent::button[@aria-expanded='true']";
+			ele = FindElement(driver, xPath, "Advance section", action.SCROLLANDBOOLEAN, 3);
+			if (ele == null) {
+				if (clickUsingJavaScript(driver, getSectionBtn("Advanced", 3), "Advanced section",
+						action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "clicked on Advanced section", YesNo.No);
 				} else {
-					log(LogStatus.ERROR, "Label name is not correct", YesNo.No);
-					sa.assertTrue(false, "Label name is not correct");
+					log(LogStatus.ERROR, "Not able to click on Advanced section", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Advanced section");
 					return false;
 				}
 			}
 
-//			} else {
-//				log(LogStatus.ERROR, "Not able to click on Tasks section", YesNo.No);
-//				sa.assertTrue(false, "Not able to click on Tasks section");
-//				return false;
-//			}
+			if (clickUsingJavaScript(driver, getSectionBtn("Tasks", 30), "Tasks section", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "clicked on Tasks section", YesNo.No);
+
+				for (String[] val : taskSection) {
+					String labelName = val[0];
+					String value = val[1];
+
+					if (labelName.contains(excelLabel.Subject.toString()) || labelName.contains("Due Date")
+							|| labelName.contains("Date")) {
+						xPath = "//span[text()='Tasks']/ancestor::lightning-accordion[1]//label[text()='" + labelName
+								+ "']/..//input";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, value + " value is not passed in " + labelName + " field", YesNo.No);
+							sa.assertTrue(false, value + " value is not passed in " + labelName + " field");
+							return false;
+						}
+					} else if (labelName.contains(excelLabel.Status.toString())) {
+						xPath = "//span[text()='Tasks']/ancestor::lightning-accordion[1]//label[text()='" + labelName
+								+ "']/..//button";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						xPath = "//span[text()='Tasks']/ancestor::lightning-accordion[1]//label[text()='" + labelName
+								+ "']/..//span[@class='slds-truncate']";
+						if (CommonLib.dropDownHandle(driver, ele, xPath, labelName + " dropdown", value)) {
+							log(LogStatus.INFO, value + " value has been selected from " + labelName + " field",
+									YesNo.No);
+						} else {
+							log(LogStatus.ERROR, value + " value is not selected from " + labelName + " field",
+									YesNo.No);
+							sa.assertTrue(false, value + " value is not selected from " + labelName + " field");
+							return false;
+						}
+					} else {
+						log(LogStatus.ERROR, "Label name is not correct", YesNo.No);
+						sa.assertTrue(false, "Label name is not correct");
+						return false;
+					}
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to click on Tasks section", YesNo.No);
+				sa.assertTrue(false, "Not able to click on Tasks section");
+				return false;
+			}
 
 		}
 
@@ -15399,8 +15400,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					}
 
-					else if (labelName.contains(excelLabel.Location.toString())
-							|| labelName.contains("Due Date Only")) {
+					else if (labelName.contains(excelLabel.Location.toString()) || labelName.contains("Due Date")
+							|| labelName.contains("Date")) {
 
 						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
 								+ labelName + "']/..//input";
@@ -15536,7 +15537,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					String labelName = val[0];
 					String value = val[1];
 
-					if (labelName.contains(excelLabel.Subject.toString()) || labelName.contains("Due Date Only")) {
+					if (labelName.contains(excelLabel.Subject.toString()) || labelName.contains("Due Date")
+							|| labelName.contains("Date")) {
 						xPath = "//span[text()='Tasks']/ancestor::lightning-accordion[1]//label[text()='" + labelName
 								+ "']/..//input";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
@@ -15850,10 +15852,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 						}
 
-						else if (labelName.contains("Due Date Only")) {
+						else if (labelName.contains("Due Date") || labelName.contains("Date")) {
 
 							String actualDueDateOnly = getAttribute(driver,
-									dueDateOnlyVerificationInAdvanced(labelName, 10), "Due Date Only", "value");
+									dueDateOnlyVerificationInAdvanced(labelName, 10), "Due Date", "value");
 							String tempvalue = CommonLib.convertDateFromOneFormatToAnother(value, "M/d/yyyy",
 									"MMM d, yyyy");
 							if (tempvalue != null) {
@@ -15861,12 +15863,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 
 							if (value.equals(actualDueDateOnly)) {
-								log(LogStatus.INFO, "Due Date Only value has been verified  and i.e. :" + value,
-										YesNo.No);
+								log(LogStatus.INFO, "Due Date value has been verified  and i.e. :" + value, YesNo.No);
 							} else {
-								log(LogStatus.ERROR, "Due Date Only value is not verified, Expected: " + value
+								log(LogStatus.ERROR, "Due Date value is not verified, Expected: " + value
 										+ " but Actual: " + actualDueDateOnly, YesNo.No);
-								result.add("Due Date Only value is not verified, Expected: " + value + " but Actual: "
+								result.add("Due Date value is not verified, Expected: " + value + " but Actual: "
 										+ actualDueDateOnly);
 							}
 						}
@@ -16016,10 +16017,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 						}
 
-						else if (labelName.contains("Due Date Only")) {
+						else if (labelName.contains("Due Date") || labelName.contains("Date")) {
 
 							String actualDueDateOnly = getAttribute(driver,
-									dueDateOnlyVerificationInTasks(labelName, 10), "Due Date Only", "value");
+									dueDateOnlyVerificationInTasks(labelName, 10), "Due Date", "value");
 							String tempvalue = CommonLib.convertDateFromOneFormatToAnother(value, "M/d/yyyy",
 									"MMM d, yyyy");
 
@@ -16028,12 +16029,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 
 							if (value.equals(actualDueDateOnly)) {
-								log(LogStatus.INFO, "Due Date Only value has been verified and i.e. :" + value,
-										YesNo.No);
+								log(LogStatus.INFO, "Due Date value has been verified and i.e. :" + value, YesNo.No);
 							} else {
-								log(LogStatus.ERROR, "Due Date Only value is not verified, Expected: " + value
+								log(LogStatus.ERROR, "Due Date value is not verified, Expected: " + value
 										+ " but Actual: " + actualDueDateOnly, YesNo.No);
-								result.add("Due Date Only value is not verified, Expected: " + value + " but Actual: "
+								result.add("Due Date value is not verified, Expected: " + value + " but Actual: "
 										+ actualDueDateOnly);
 							}
 						}
@@ -16736,8 +16736,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					}
 
-					else if (labelName.contains(excelLabel.Location.toString())
-							|| labelName.contains("Due Date Only")) {
+					else if (labelName.contains(excelLabel.Location.toString()) || labelName.contains("Due Date")
+							|| labelName.contains("Date")) {
 
 						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
 								+ labelName + "']/..//input";
@@ -16920,10 +16920,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 					}
 
-					else if (labelName.contains("Due Date Only")) {
+					else if (labelName.contains("Due Date") || labelName.contains("Date")) {
 
 						String actualDueDateOnly = getAttribute(driver, dueDateOnlyVerificationInTasks(labelName, 10),
-								"Due Date Only", "value");
+								"Due Date", "value");
 						String tempvalue = CommonLib.convertDateFromOneFormatToAnother(value, "M/d/yyyy",
 								"MMM d, yyyy");
 
@@ -16932,12 +16932,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 
 						if (value.equals(actualDueDateOnly)) {
-							log(LogStatus.INFO, "Due Date Only value has been verified and i.e. :" + value, YesNo.No);
+							log(LogStatus.INFO, "Due Date value has been verified and i.e. :" + value, YesNo.No);
 						} else {
-							log(LogStatus.ERROR, "Due Date Only value is not verified, Expected: " + value
-									+ " but Actual: " + actualDueDateOnly, YesNo.No);
-							sa.assertTrue(false, "Due Date Only value is not verified, Expected: " + value
-									+ " but Actual: " + actualDueDateOnly);
+							log(LogStatus.ERROR, "Due Date value is not verified, Expected: " + value + " but Actual: "
+									+ actualDueDateOnly, YesNo.No);
+							sa.assertTrue(false, "Due Date value is not verified, Expected: " + value + " but Actual: "
+									+ actualDueDateOnly);
 						}
 					}
 				}
@@ -17020,10 +17020,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 					}
 
-					else if (labelName.equalsIgnoreCase("Due Date Only")) {
+					else if (labelName.contains("Due Date") || labelName.contains("Date")) {
 
 						String actualDueDateOnly = getAttribute(driver, dueDateOnlyVerificationInTasks(labelName, 10),
-								"Due Date Only", "value");
+								"Due Date", "value");
 						String tempvalue = CommonLib.convertDateFromOneFormatToAnother(value, "M/d/yyyy",
 								"MMM d, yyyy");
 
@@ -17032,12 +17032,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 
 						if (value.equals(actualDueDateOnly)) {
-							log(LogStatus.INFO, "Due Date Only value has been verified and i.e. :" + value, YesNo.No);
+							log(LogStatus.INFO, "Due Date value has been verified and i.e. :" + value, YesNo.No);
 						} else {
-							log(LogStatus.ERROR, "Due Date Only value is not verified, Expected: " + value
-									+ " but Actual: " + actualDueDateOnly, YesNo.No);
-							sa.assertTrue(false, "Due Date Only value is not verified, Expected: " + value
-									+ " but Actual: " + actualDueDateOnly);
+							log(LogStatus.ERROR, "Due Date value is not verified, Expected: " + value + " but Actual: "
+									+ actualDueDateOnly, YesNo.No);
+							sa.assertTrue(false, "Due Date value is not verified, Expected: " + value + " but Actual: "
+									+ actualDueDateOnly);
 						}
 					}
 				}
@@ -17343,8 +17343,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					}
 
-					else if (labelName.contains(excelLabel.Location.toString())
-							|| labelName.contains("Due Date Only")) {
+					else if (labelName.contains(excelLabel.Location.toString()) || labelName.contains("Due Date")
+							|| labelName.contains("Date")) {
 
 						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
 								+ labelName + "']/..//input";
@@ -17506,7 +17506,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					String labelName = val[0];
 					String value = val[1];
 
-					if (labelName.contains(excelLabel.Subject.toString()) || labelName.equals("Due Date Only")) {
+					if (labelName.contains(excelLabel.Subject.toString()) || labelName.contains("Due Date")
+							|| labelName.contains("Date")) {
 						xPath = "//span[text()='Tasks']/ancestor::lightning-accordion[1]//div[contains(@class,'slds-m-top_x-small')]["
 								+ followUpTaskCount + "]//div[@class='slds-grid']//label[text()='" + labelName
 								+ "']/..//input";
@@ -17835,8 +17836,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					}
 
-					else if (labelName.contains(excelLabel.Location.toString())
-							|| labelName.contains("Due Date Only")) {
+					else if (labelName.contains(excelLabel.Location.toString()) || labelName.contains("Due Date")
+							|| labelName.contains("Date")) {
 
 						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
 								+ labelName + "']/..//input";
@@ -17960,7 +17961,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					String labelName = val[0];
 					String value = val[1];
 
-					if (labelName.contains(excelLabel.Subject.toString()) || labelName.contains("Due Date Only")) {
+					if (labelName.contains(excelLabel.Subject.toString()) || labelName.contains("Due Date")
+							|| labelName.contains("Date")) {
 						xPath = "//span[text()='Tasks']/ancestor::lightning-accordion[1]//div[contains(@class,'slds-m-top_x-small')]["
 								+ followUpTaskCount + "]//div[@class='slds-grid']//label[text()='" + labelName
 								+ "']/..//input";
@@ -18413,8 +18415,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					}
 
-					else if (labelName.contains(excelLabel.Location.toString())
-							|| labelName.contains("Due Date Only")) {
+					else if (labelName.contains(excelLabel.Location.toString()) || labelName.contains("Due Date")
+							|| labelName.contains("Date")) {
 
 						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
 								+ labelName + "']/..//input";
@@ -18538,7 +18540,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					String labelName = val[0];
 					String value = val[1];
 
-					if (labelName.contains(excelLabel.Subject.toString()) || labelName.equals("Due Date Only")) {
+					if (labelName.contains(excelLabel.Subject.toString()) || labelName.contains("Due Date")
+							|| labelName.contains("Date")) {
 						xPath = "//span[text()='Tasks']/ancestor::lightning-accordion[1]//div[contains(@class,'slds-m-top_x-small')]["
 								+ followUpTaskCount + "]//div[@class='slds-grid']//label[text()='" + labelName
 								+ "']/..//input";
@@ -20547,13 +20550,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 			if (activitySubjetLinkPopupHeaderOnInteraction(5) != null) {
 
-				if (attachmentIconOfSubjectLinkPopUpInInteractionSection(5) != null) {
-
-					log(LogStatus.INFO, "Attachment Icon Verified", YesNo.No);
-				} else {
-					log(LogStatus.ERROR, "Attachment Icon not Verified", YesNo.No);
-					negativeResult.add("Attachment Icon not Verified");
-				}
+				/*
+				 * if (attachmentIconOfSubjectLinkPopUpInInteractionSection(5) != null) {
+				 * 
+				 * log(LogStatus.INFO, "Attachment Icon Verified", YesNo.No); } else {
+				 * log(LogStatus.ERROR, "Attachment Icon not Verified", YesNo.No);
+				 * negativeResult.add("Attachment Icon not Verified"); }
+				 */
 
 				if (editButtonOfSubjectLinkPopUpInInteractionSection(5) != null) {
 
@@ -20829,7 +20832,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						String value = val[1];
 
 						if (labelName.contains("User") || labelName.contains(excelLabel.Status.toString())
-								|| labelName.contains("Due Date")
+								|| labelName.contains("Due Date") || labelName.contains("Date")
 								|| labelName.contains(excelLabel.Priority.toString())) {
 
 							if (icon.equals(IconType.Task) && (labelName.contains(excelLabel.Status.toString())
