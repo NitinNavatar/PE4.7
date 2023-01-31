@@ -1746,6 +1746,8 @@ public class CommonVariables {
 		 	
 		 	public static String AMNNR_Subject55, AMNNR_Notes55, AMNNR_RelatedTo55, AMNNR_Contact5;
 		 	
+		 	public static String AMNNR_TaskLabel1, AMNNR_TaskLabel2, AMNNR_TaskLabel3, AMNNR_TaskLabel4, AMNNR_TaskLabel5, AMNNR_TaskLabel6, AMNNR_TaskLabel7;
+		 	public static String AMNNR_CallLabel1, AMNNR_CallLabel2, AMNNR_CallLabel3, AMNNR_CallLabel4, AMNNR_CallLabel5;
 	 	
 		 	
 		 	//--------RGAcuityMeetingNotesNotificationReminder-------------
@@ -9264,6 +9266,22 @@ public class CommonVariables {
     			 	AMNNR_RelatedTo55=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity055", excelLabel.Related_To);
     			 	AMNNR_Contact5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AMNNR_Con5", excelLabel.ContactName);
     			 	
+    			 	
+    			 	
+    			 	AMNNR_TaskLabel1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel001", excelLabel.Field_Label);	
+    			 	AMNNR_TaskLabel2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel002", excelLabel.Field_Label);	 	
+    			 	AMNNR_TaskLabel3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel003", excelLabel.Field_Label);	 	
+    			 	AMNNR_TaskLabel4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel004", excelLabel.Field_Label);	 	
+    			 	AMNNR_TaskLabel5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel005", excelLabel.Field_Label);	 	
+    			 	AMNNR_TaskLabel6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel006", excelLabel.Field_Label);	 	
+    			 	AMNNR_TaskLabel7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel007", excelLabel.Field_Label);
+    			 	
+    			 		 	
+    			 	AMNNR_CallLabel1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_CallLabel001", excelLabel.Field_Label);	
+    			 	AMNNR_CallLabel2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_CallLabel002", excelLabel.Field_Label);	 	
+    			 	AMNNR_CallLabel3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_CallLabel003", excelLabel.Field_Label);	 	
+    			 	AMNNR_CallLabel4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_CallLabel004", excelLabel.Field_Label);	 	
+    			 	AMNNR_CallLabel5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_CallLabel005", excelLabel.Field_Label);	 	
     			 	
     			 	
     			 	
