@@ -450,6 +450,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		FundsPageBusinessLayer fund = new FundsPageBusinessLayer(driver);
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		FundRaisingPageBusinessLayer fr = new FundRaisingPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 
 		String[] fundNames = AMNNR_FundNames1.split("<Break>", -1);
 		String[] fundTypes = AMNNR_FundTypes1.split("<Break>", -1);
@@ -470,7 +471,48 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String textBoxRecordLabel = AMNNR_CustomObjectField1;
 		String[] textBoxRecordNames = AMNNR_CustomObjectRecord1.split("<Break>", -1);
 
+		String[][] contacts = {
+				{ AP2NT_Con1FirstName, AP2NT_Con1LastName, AP2NT_Con1InstitutionName, AP2NT_Con1ContactEmail,
+						AP2NT_Con1OtherLabelsNames, AP2NT_Con1OtherLabelsValues },
+				{ AP2NT_Con2FirstName, AP2NT_Con2LastName, AP2NT_Con2InstitutionName, AP2NT_Con2ContactEmail,
+						AP2NT_Con2OtherLabelsNames, AP2NT_Con2OtherLabelsValues } };
+
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		// contact
+		for (String[] contact : contacts) {
+
+			if (BP.clickOnTab(environment, mode, TabName.ContactTab)) {
+				log(LogStatus.INFO, "Click on Tab : " + TabName.ContactTab, YesNo.No);
+
+				String firstName = "";
+				String lastName = "";
+				String legalName = "";
+				String email = "";
+				String contactOtherLabelNames = "";
+				String contactOtherLabelValues = "";
+				firstName = contact[0];
+				lastName = contact[1];
+				legalName = contact[2];
+				email = contact[3];
+				contactOtherLabelNames = contact[4];
+				contactOtherLabelValues = contact[5];
+				log(LogStatus.INFO, "---------Now Going to Create " + TabName.ContactTab + " : " + firstName + " "
+						+ lastName + "---------", YesNo.No);
+				if (cp.createContact(projectName, firstName, lastName, legalName, email, "", contactOtherLabelNames,
+						contactOtherLabelValues, CreationPage.ContactPage, null, null)) {
+					log(LogStatus.INFO, "successfully Created Contact : " + firstName + " " + lastName, YesNo.No);
+				} else {
+					sa.assertTrue(false, "Not Able to Create Contact : " + firstName + " " + lastName);
+					log(LogStatus.SKIP, "Not Able to Create Contact: " + firstName + " " + lastName, YesNo.Yes);
+				}
+
+			} else {
+				sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.ContactTab);
+				log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.ContactTab, YesNo.Yes);
+			}
+
+		}
 
 		int fundStatus = 0;
 		int fundLoopCount = 0;

@@ -558,9 +558,9 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		}
 		return false;
 	}
-	
-	public boolean createContactAcuity(String projectName, String contactFirstName, String contactLastName, String legalName,
-			String emailID, String recordType, String otherLabelFields, String otherLabelValues,
+
+	public boolean createContactAcuity(String projectName, String contactFirstName, String contactLastName,
+			String legalName, String emailID, String recordType, String otherLabelFields, String otherLabelValues,
 			CreationPage creationPage, String title, String tier) {
 		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
 		String labelNames[] = null;
@@ -754,9 +754,9 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 						if (getNavigationTabSaveBtn(projectName, 5) != null) {
 							click(driver, getNavigationTabSaveBtn(projectName, 60), "save", action.BOOLEAN);
 						}
-						
+
 						ThreadSleep(3000);
-						
+
 						if (creationPage.toString().equalsIgnoreCase(CreationPage.AccountPage.toString())) {
 							if (clickOnGridSection_Lightning(projectName, RelatedList.Contacts, 30)) {
 								ele = isDisplayed(driver,
@@ -771,7 +771,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 									if (contactFullName.contains(contactFirstName + " " + contactLastName)) {
 										appLog.info("Contact Created Successfully :" + contactFirstName + " "
 												+ contactLastName);
-										flag= true;
+										flag = true;
 									} else {
 										appLog.error("Contact did not get created successfully :" + contactFirstName
 												+ " " + contactLastName);
@@ -831,7 +831,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 								appLog.error("Not able to find contact name label");
 							}
 
-					}
+						}
 
 					} else {
 						appLog.info("Not able to click on save button");
@@ -849,8 +849,6 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		}
 		return false;
 	}
-
-	
 
 	/**
 	 * @author Ravi Kumar
@@ -3309,6 +3307,5 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 
 		return false;
 	}
-	
-	
+
 }
