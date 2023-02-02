@@ -579,7 +579,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getCustomTabSaveBtn(String projectName, int timeOut) {
 
 		List<WebElement> eleList = FindElements(driver, "//button[text()='Save' and @name='SaveEdit']", "Save Button");
-		
+
 		for (WebElement webElement : eleList) {
 			webElement = isDisplayed(driver, webElement, "Visibility", 2, "Custom Tab Save Button lightning");
 			if (webElement != null) {
@@ -8025,11 +8025,11 @@ public abstract class BasePage extends BaseLib {
 			return isDisplayed(driver, ele, "Visibility", timeOut, "subjectOfInteractionCard: " + subjectName);
 		}
 	}
-	
+
 	public WebElement subjectOfInteractionPage(String subjectName, int timeOut) {
-		String xpath = "//td[@data-label='Subject']//button[@name='subject' and text()='"+subjectName+"']";
-		WebElement ele = FindElement(driver, xpath, "subject of Interaction page: " + subjectName, action.SCROLLANDBOOLEAN,
-				timeOut);
+		String xpath = "//td[@data-label='Subject']//button[@name='subject' and text()='" + subjectName + "']";
+		WebElement ele = FindElement(driver, xpath, "subject of Interaction page: " + subjectName,
+				action.SCROLLANDBOOLEAN, timeOut);
 		try {
 			return isDisplayed(driver, ele, "Visibility", timeOut, "subject of Interaction page: " + subjectName);
 
@@ -8037,8 +8037,6 @@ public abstract class BasePage extends BaseLib {
 			return isDisplayed(driver, ele, "Visibility", timeOut, "subject of Interaction page: " + subjectName);
 		}
 	}
-	
-	
 
 	public WebElement popupCloseButton(String popupName, int timeOut) {
 		String xpath = "//h2[contains(text(),'" + popupName + "')]/..//lightning-icon[@title='Close']/parent::button";
@@ -8644,7 +8642,8 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement getMessageOnTaggedSection(String tabName, String message, int timeOut) {
 
-		String xpath = "//input[@value='"+tabName+"']/ancestor::div[@class=\"slds-p-right_small\"]//div[text()='"+message+"']";
+		String xpath = "//input[@value='" + tabName + "']/ancestor::div[@class=\"slds-p-right_small\"]//div[text()='"
+				+ message + "']";
 		try {
 			return FindElement(driver, xpath, "message on tab : " + tabName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -8951,6 +8950,11 @@ public abstract class BasePage extends BaseLib {
 
 		return type;
 
+	}
+
+	public List<String> getAllValuesOfSubjectInTaskPopUp() {
+		return FindElements(driver, "//section//div/ul[contains(@class,\"slds-listbox\")]/li[@data-id]",
+				"getAllValuesOfSubjectInTaskPopUp").stream().map(x -> x.getText()).collect(Collectors.toList());
 	}
 
 }

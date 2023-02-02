@@ -20541,11 +20541,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @param timeOut
 	 */
 	public ArrayList<String> verifySubjectLinkPopUpOnIntraction(WebDriver driver, String subjectName,
-			String[][] basicSectionVerificationData, String[][] advancedSectionVerificationData, IconType icon, PageName pageName) {
+			String[][] basicSectionVerificationData, String[][] advancedSectionVerificationData, IconType icon,
+			PageName pageName) {
 		ArrayList<String> negativeResult = new ArrayList<String>();
 
-		if(pageName.toString().equals("AcuityDetails"))
-		{
+		if (pageName.toString().equals("AcuityDetails")) {
 			if (CommonLib.click(driver, subjectOfInteractionCard(subjectName, 15), "Subject Name on Intraction",
 					action.BOOLEAN)) {
 				log(LogStatus.INFO, "clicked on " + subjectName, YesNo.No);
@@ -20554,9 +20554,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				log(LogStatus.ERROR, "not able to click on " + subjectName, YesNo.No);
 				negativeResult.add("not able to click on " + subjectName);
 			}
-		}
-		else if(pageName.toString().equals("Interaction"))
-		{
+		} else if (pageName.toString().equals("Interaction")) {
 			if (CommonLib.click(driver, subjectOfInteractionPage(subjectName, 15), "Subject Name on Intraction",
 					action.BOOLEAN)) {
 				log(LogStatus.INFO, "clicked on " + subjectName, YesNo.No);
@@ -20567,9 +20565,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		}
 
-
 		if (activitySubjetLinkPopupHeaderOnInteraction(5) != null) {
-
 
 			if (editButtonOfSubjectLinkPopUpInInteractionSection(5) != null) {
 
@@ -20589,9 +20585,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.INFO, "Type has been verified and i.e.: " + type, YesNo.No);
 				} else {
 					log(LogStatus.ERROR, "Type has not been verified, Expected: " + IconType.Task.toString()
-					+ " but Actual: " + type, YesNo.No);
+							+ " but Actual: " + type, YesNo.No);
 					negativeResult.add("Type has not been verified, Expected: " + IconType.Task.toString()
-					+ " but Actual: " + type);
+							+ " but Actual: " + type);
 				}
 
 				WebElement iconLocator = iconOfSubjectLinkPopUpInInteractionSection(7);
@@ -20604,9 +20600,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					else {
 						log(LogStatus.ERROR, "Icon not verified for Subject link Popup Expected: " + icon.toString()
-						+ " but Actual: " + attribute, YesNo.No);
+								+ " but Actual: " + attribute, YesNo.No);
 						negativeResult.add("Icon not verified for Subject link Popup Expected: " + icon.toString()
-						+ " but Actual: " + attribute);
+								+ " but Actual: " + attribute);
 					}
 				}
 
@@ -20625,9 +20621,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.INFO, "Type has been verified and i.e.: " + type, YesNo.No);
 				} else {
 					log(LogStatus.ERROR, "Type has not been verified, Expected: " + IconType.Call.toString()
-					+ " but Actual: " + type, YesNo.No);
+							+ " but Actual: " + type, YesNo.No);
 					negativeResult.add("Type has not been verified, Expected: " + IconType.Call.toString()
-					+ " but Actual: " + type);
+							+ " but Actual: " + type);
 				}
 
 				WebElement iconLocator = iconOfSubjectLinkPopUpInInteractionSection(7);
@@ -20640,9 +20636,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					else {
 						log(LogStatus.ERROR, "Icon not verified for Subject link Popup Expected: " + icon.toString()
-						+ " but Actual: " + attribute, YesNo.No);
+								+ " but Actual: " + attribute, YesNo.No);
 						negativeResult.add("Icon not verified for Subject link Popup Expected: " + icon.toString()
-						+ " but Actual: " + attribute);
+								+ " but Actual: " + attribute);
 					}
 				}
 
@@ -20661,9 +20657,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.INFO, "Type has been verified and i.e.: " + type, YesNo.No);
 				} else {
 					log(LogStatus.ERROR, "Type has not been verified, Expected: " + IconType.Meeting.toString()
-					+ " but Actual: " + type, YesNo.No);
+							+ " but Actual: " + type, YesNo.No);
 					negativeResult.add("Type has not been verified, Expected: " + IconType.Meeting.toString()
-					+ " but Actual: " + type);
+							+ " but Actual: " + type);
 				}
 
 				WebElement iconLocator = iconOfSubjectLinkPopUpInInteractionSection(7);
@@ -20676,9 +20672,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					else {
 						log(LogStatus.ERROR, "Icon not verified for Subject link Popup Expected: " + icon.toString()
-						+ " but Actual: " + attribute, YesNo.No);
+								+ " but Actual: " + attribute, YesNo.No);
 						negativeResult.add("Icon not verified for Subject link Popup Expected: " + icon.toString()
-						+ " but Actual: " + attribute);
+								+ " but Actual: " + attribute);
 					}
 				}
 
@@ -20699,9 +20695,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.INFO, "Type has been verified and i.e.: " + type, YesNo.No);
 				} else {
 					log(LogStatus.ERROR, "Type has not been verified, Expected: " + IconType.Email.toString()
-					+ " but Actual: " + type, YesNo.No);
+							+ " but Actual: " + type, YesNo.No);
 					negativeResult.add("Type has not been verified, Expected: " + IconType.Email.toString()
-					+ " but Actual: " + type);
+							+ " but Actual: " + type);
 				}
 
 				WebElement iconLocator = iconOfSubjectLinkPopUpInInteractionSection(7);
@@ -20714,9 +20710,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					else {
 						log(LogStatus.ERROR, "Icon not verified for Subject link Popup Expected: " + icon.toString()
-						+ " but Actual: " + attribute, YesNo.No);
+								+ " but Actual: " + attribute, YesNo.No);
 						negativeResult.add("Icon not verified for Subject link Popup Expected: " + icon.toString()
-						+ " but Actual: " + attribute);
+								+ " but Actual: " + attribute);
 					}
 				}
 
@@ -20756,8 +20752,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								for (int i = 0; i < tag.length; i++) {
 
 									if (taggedRelatedToListInNotePopUp.contains(tag[i])) {
-										log(LogStatus.INFO, tag[i]
-												+ " tag has been verified in Subject Link PopUp of Interaction",
+										log(LogStatus.INFO,
+												tag[i] + " tag has been verified in Subject Link PopUp of Interaction",
 												YesNo.No);
 									} else {
 										log(LogStatus.ERROR, tag[i]
@@ -20776,13 +20772,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									String relatedAssociation = relatedAndIcon[0];
 									String relatedAssociationIcon = relatedAndIcon[1];
 
-									if (iconOfTagsInSubjectLinkPopUpInInteractionSection(labelName,
-											relatedAssociation, relatedAssociationIcon, 4) != null) {
+									if (iconOfTagsInSubjectLinkPopUpInInteractionSection(labelName, relatedAssociation,
+											relatedAssociationIcon, 4) != null) {
 										log(LogStatus.INFO,
 
 												relatedAssociation
-												+ " tag has been verified in Subject Link PopUp of Interaction with Icon: "
-												+ relatedAssociationIcon,
+														+ " tag has been verified in Subject Link PopUp of Interaction with Icon: "
+														+ relatedAssociationIcon,
 												YesNo.No);
 									} else {
 										log(LogStatus.ERROR, relatedAssociation
@@ -20814,8 +20810,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									valueOfLabelInSubjectLinkPopUpInInteractionSection(labelName, 7), labelName,
 									action.SCROLLANDBOOLEAN);
 
-							log(LogStatus.INFO, "Successfully get the value from " + labelName + " field",
-									YesNo.No);
+							log(LogStatus.INFO, "Successfully get the value from " + labelName + " field", YesNo.No);
 							if (value.equals(actualValue)) {
 								log(LogStatus.INFO, labelName
 										+ " label's value has been verify in Subject link Popup and i.e. :" + value,
@@ -20855,8 +20850,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									valueOfLabelInSubjectLinkPopUpInInteractionSection(labelName, 7), labelName,
 									action.SCROLLANDBOOLEAN);
 
-							log(LogStatus.INFO, "Successfully get the value from " + labelName + " field",
-									YesNo.No);
+							log(LogStatus.INFO, "Successfully get the value from " + labelName + " field", YesNo.No);
 							if (value.equals(actualValue)) {
 								log(LogStatus.INFO, labelName
 										+ " label's value has been verify in Subject link Popup and i.e. :" + value,
@@ -20890,15 +20884,15 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.INFO,
 							"Verified Subject Link Pop up has been closed after click on Cross button for Subject: "
 									+ subjectName,
-									YesNo.No);
+							YesNo.No);
 				} else {
 					log(LogStatus.ERROR,
 							"Subject Link Pop up has not been closed after click on Cross button for Subject: "
 									+ subjectName,
-									YesNo.No);
+							YesNo.No);
 					negativeResult
-					.add("Subject Link Pop up has not been closed after click on Cross button for Subject: "
-							+ subjectName);
+							.add("Subject Link Pop up has not been closed after click on Cross button for Subject: "
+									+ subjectName);
 				}
 
 			} else {
@@ -20906,7 +20900,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						"Not able to Click on Cross Button of Subject Link Pop up of Subject: " + subjectName,
 						YesNo.No);
 				negativeResult
-				.add("Not able to Click on Cross Button of Subject Link Pop up of Subject: " + subjectName);
+						.add("Not able to Click on Cross Button of Subject Link Pop up of Subject: " + subjectName);
 			}
 
 		} else {
@@ -20914,8 +20908,173 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			negativeResult.add(subjectName + " link Popup has not been Open");
 		}
 
-
 		return negativeResult;
+	}
+
+	public boolean navigateToRecordAndClickOnSubTab(String projectName, String tabName, String recordName,
+			String subTabName) {
+		boolean flag = false;
+
+		if (tabName.equalsIgnoreCase(tabObj1))
+			if (clickOnTab(projectName, tabName)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabName, YesNo.No);
+
+				if (clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
+					log(LogStatus.INFO, recordName + " record of Firm has been open", YesNo.No);
+
+					if (!"".equalsIgnoreCase(subTabName) && subTabName != null) {
+						if (clicktabOnPage(subTabName)) {
+							log(LogStatus.PASS, "Clicked on SubTab: " + subTabName, YesNo.No);
+							flag = true;
+						} else {
+							log(LogStatus.ERROR, "Not able to click on SubTab: " + subTabName, YesNo.No);
+
+						}
+					} else {
+						flag = true;
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not able to open " + recordName + " record of Firm", YesNo.No);
+
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on Tab : " + tabName, YesNo.No);
+
+			}
+		else if (tabName.equalsIgnoreCase(tabObj2))
+			if (clickOnTab(projectName, tabName)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabName, YesNo.No);
+
+				if (clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, recordName, 30)) {
+					log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
+					if (!"".equalsIgnoreCase(subTabName) && subTabName != null) {
+						if (clicktabOnPage(subTabName)) {
+							log(LogStatus.PASS, "Clicked on SubTab: " + subTabName, YesNo.No);
+							flag = true;
+						} else {
+							log(LogStatus.ERROR, "Not able to click on SubTab: " + subTabName, YesNo.No);
+
+						}
+					} else {
+						flag = true;
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not able to open " + recordName + " record", YesNo.No);
+
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on Tab : " + tabName, YesNo.No);
+
+			}
+
+		return flag;
+	}
+
+	public void verifyUIOfTaskPopUp(String url, String[][] basicSectionVerificationData,
+			String[][] advancedSectionVerificationData, String[][] tasksSectionVerificationData) {
+		String expectedHeaderName = "Task";
+		List<String> expectedFooterList = new ArrayList<String>();
+		expectedFooterList.add("Cancel");
+		expectedFooterList.add("Save");
+		List<String> expectedSubjectList = new ArrayList<String>();
+		expectedSubjectList.add("-None-");
+		expectedSubjectList.add("Call");
+		expectedSubjectList.add("Send Letter");
+		expectedSubjectList.add("Send Quote");
+		expectedSubjectList.add("Other");
+		if (notePopUpHeading(expectedHeaderName, 15) != null) {
+			log(LogStatus.INFO, "PopUp Name has been verified to: " + expectedHeaderName, YesNo.No);
+		}
+
+		else {
+			log(LogStatus.ERROR, "PopUp Name has been not been verified, Expected: " + expectedHeaderName, YesNo.No);
+			sa.assertTrue(false, "PopUp Name has been not been verified, Expected: " + expectedHeaderName);
+		}
+
+		if (notePopUpCrossButton(7) != null) {
+			log(LogStatus.INFO, "Cross Button is visible in " + expectedHeaderName + " Popup", YesNo.No);
+		}
+
+		else {
+			log(LogStatus.ERROR, "Cross Button is not visible in " + expectedHeaderName + " Popup", YesNo.No);
+			sa.assertTrue(false, "Cross Button is not visible in " + expectedHeaderName + " Popup");
+		}
+
+		if (notePopUpAddMoreButton(7) != null) {
+			log(LogStatus.INFO, "Add More Button is present in " + expectedHeaderName + " Popup", YesNo.No);
+		}
+
+		else {
+			log(LogStatus.ERROR, "Add More Button is not present in " + expectedHeaderName + " Popup", YesNo.No);
+			sa.assertTrue(false, "Add More Button is not present in " + expectedHeaderName + " Popup");
+		}
+
+		List<String> actualFooterList = notePopUpFooterButtons().stream()
+				.map(x -> CommonLib.getText(driver, x, "Footer", action.BOOLEAN)).collect(Collectors.toList());
+
+		if (actualFooterList.containsAll(expectedFooterList)) {
+			log(LogStatus.INFO, "Footer List Matched: " + expectedFooterList, YesNo.No);
+
+		} else {
+			log(LogStatus.ERROR,
+					"Footer List not Matched, Expected: " + expectedFooterList + ", Actual: " + expectedFooterList,
+					YesNo.No);
+			sa.assertTrue(false,
+					"Footer List not Matched, Expected: " + expectedFooterList + ", Actual: " + expectedFooterList);
+		}
+
+		if (basicSectionVerificationData != null) {
+
+			for (String[] val : basicSectionVerificationData) {
+				String labelName = val[0];
+
+				if (labelName.contains(excelLabel.Subject.toString())) {
+
+					if (click(driver, getSubjectInput(labelName, 10), "Subject Input", action.BOOLEAN)) {
+						log(LogStatus.INFO, "successfully click on " + labelName, YesNo.No);
+
+						List<String> actualSubjectValues = getAllValuesOfSubjectInTaskPopUp();
+						if (actualSubjectValues.containsAll(expectedSubjectList)) {
+							log(LogStatus.INFO,
+									"All Values comes under Subject has been matched: " + expectedSubjectList,
+									YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "All Values comes under Subject has not been matched, Expected: "
+									+ expectedSubjectList + " but Actual: " + actualSubjectValues, YesNo.Yes);
+							sa.assertTrue(false, "All Values comes under Subject has not been matched, Expected: "
+									+ expectedSubjectList + " but Actual: " + actualSubjectValues);
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not successfully click on " + labelName, YesNo.Yes);
+						sa.assertTrue(false, "Not successfully click on " + labelName);
+					}
+				}
+
+			}
+
+		}
+
+		ArrayList<String> NotesPopUpPrefilledNegativeResult = verifyNotesPopupWithPrefilledValueAndOnSameUrl(url,
+				basicSectionVerificationData, advancedSectionVerificationData, tasksSectionVerificationData);
+		if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+			log(LogStatus.INFO,
+					"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+					YesNo.No);
+
+		} else {
+			log(LogStatus.ERROR,
+					"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+							+ NotesPopUpPrefilledNegativeResult,
+					YesNo.No);
+			sa.assertTrue(false,
+					"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+							+ NotesPopUpPrefilledNegativeResult);
+		}
 	}
 
 }

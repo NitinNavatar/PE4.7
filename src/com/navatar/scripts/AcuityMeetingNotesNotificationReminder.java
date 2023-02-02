@@ -23,6 +23,7 @@ import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.pageObjects.BasePageBusinessLayer;
+import com.navatar.pageObjects.ContactsPageBusinessLayer;
 import com.navatar.pageObjects.CustomObjPageBusinessLayer;
 import com.navatar.pageObjects.DealPageBusinessLayer;
 import com.navatar.pageObjects.FundRaisingPageBusinessLayer;
@@ -598,118 +599,36 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel7, crmUser1FirstName + " " + crmUser1LastName },
 				{ AMNNR_TaskLabel5, taskSectionStatus }, { AMNNR_TaskLabel4, taskSectionDueDateOnly } };
 
-		List<String> expectedFooterList = new ArrayList<String>();
-		expectedFooterList.add("Cancel");
-		expectedFooterList.add("Save");
+		String recordPageButtonName = "";
+
+		String recordName = AMNNR_FirmLegalName1;
+		String url = "";
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		log(LogStatus.INFO, "---------Now Going to Verify UI of Task: " + task1SubjectName
 				+ " in Activity Timeline Section---------", YesNo.No);
 
-		CommonLib.refresh(driver);
+		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
+			log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
 
-		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
-			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
-			home.notificationPopUpClose();
+			url = getURL(driver, 10);
+			if (BP.clickOnRecordPageButtonForNewRecordCreation(recordPageButtonName, 30)) {
+				log(LogStatus.INFO, "Clicked on Button: " + recordPageButtonName + " of Record Page: " + recordName,
+						YesNo.No);
+				BP.verifyUIOfTaskPopUp(url, task1BasicSection, task1AdvancedSection, task1TaskSection);
 
-			WebElement ele;
-			if (npbl.createNavPopUpMinimizeButton(5) != null) {
-				CommonLib.click(driver, npbl.createNavPopUpMinimizeButton(5), "Minimize", action.BOOLEAN);
-			}
-			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, NavigationMenuItems.Create.toString(), action.BOOLEAN,
-					30)) {
-				log(LogStatus.INFO, "Able to Click on " + task1ButtonName + " Going to click on : "
-						+ NavigationMenuItems.Create.toString() + " for creation ", YesNo.No);
-				ele = npbl.getNavigationLabel(projectName, task1ButtonName, action.BOOLEAN, 10);
-				if (ele != null && CommonLib.click(driver, ele, task1ButtonName, action.BOOLEAN)) {
-					log(LogStatus.INFO, "Click on " + task1ButtonName + " so going for creation", YesNo.No);
-					String url = getURL(driver, 10);
-
-					ThreadSleep(10000);
-
-					String expectedHeaderName = "Task";
-					if (BP.notePopUpHeading(expectedHeaderName, 15) != null) {
-						log(LogStatus.INFO, "PopUp Name has been verified to: " + expectedHeaderName, YesNo.No);
-					}
-
-					else {
-						log(LogStatus.ERROR, "PopUp Name has been not been verified, Expected: " + expectedHeaderName,
-								YesNo.No);
-						sa.assertTrue(false, "PopUp Name has been not been verified, Expected: " + expectedHeaderName);
-					}
-
-					if (BP.notePopUpCrossButton(7) != null) {
-						log(LogStatus.INFO, "Cross Button is visible in " + expectedHeaderName + " Popup", YesNo.No);
-					}
-
-					else {
-						log(LogStatus.ERROR, "Cross Button is not visible in " + expectedHeaderName + " Popup",
-								YesNo.No);
-						sa.assertTrue(false, "Cross Button is not visible in " + expectedHeaderName + " Popup");
-					}
-
-					if (BP.notePopUpAddMoreButton(7) != null) {
-						log(LogStatus.INFO, "Add More Button is present in " + expectedHeaderName + " Popup", YesNo.No);
-					}
-
-					else {
-						log(LogStatus.ERROR, "Add More Button is not present in " + expectedHeaderName + " Popup",
-								YesNo.No);
-						sa.assertTrue(false, "Add More Button is not present in " + expectedHeaderName + " Popup");
-					}
-
-					List<String> actualFooterList = BP.notePopUpFooterButtons().stream()
-							.map(x -> CommonLib.getText(driver, x, "Footer", action.BOOLEAN))
-							.collect(Collectors.toList());
-
-					if (actualFooterList.containsAll(expectedFooterList)) {
-						log(LogStatus.INFO, "Footer List Matched: " + expectedFooterList, YesNo.No);
-
-					} else {
-						log(LogStatus.ERROR, "Footer List not Matched, Expected: " + expectedFooterList + ", Actual: "
-								+ expectedFooterList, YesNo.No);
-						sa.assertTrue(false, "Footer List not Matched, Expected: " + expectedFooterList + ", Actual: "
-								+ expectedFooterList);
-					}
-
-					ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
-							.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSection,
-									task1AdvancedSection, task1TaskSection);
-					if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
-						log(LogStatus.INFO,
-								"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
-								YesNo.No);
-
-					} else {
-						log(LogStatus.ERROR,
-								"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-										+ NotesPopUpPrefilledNegativeResult,
-								YesNo.No);
-						sa.assertTrue(false,
-								"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-										+ NotesPopUpPrefilledNegativeResult);
-					}
-
-				} else {
-					log(LogStatus.ERROR,
-							"Not Able to Click on " + task1ButtonName + " so cannot create data related to this ",
-							YesNo.Yes);
-					sa.assertTrue(false,
-							"Not Able to Click on " + task1ButtonName + " so cannot create data related to this ");
-
-				}
 			} else {
-				log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Create.toString()
-						+ " so cannot click on : " + task1ButtonName + " for creation ", YesNo.Yes);
-				sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Create.toString()
-						+ " so cannot click on : " + task1ButtonName + " for creation ");
-
+				log(LogStatus.ERROR,
+						"Not able to Click on Button: " + recordPageButtonName + " of Record Page: " + recordName,
+						YesNo.No);
+				sa.assertTrue(false,
+						"Not able to Click on Button: " + recordPageButtonName + " of Record Page: " + recordName);
 			}
 
 		} else {
-			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
-			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
+			log(LogStatus.ERROR, "Not able to Open the Record: " + recordName, YesNo.No);
+			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
 		ThreadSleep(5000);
@@ -13363,4 +13282,5 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+
 }
