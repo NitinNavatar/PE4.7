@@ -1375,6 +1375,11 @@ public class CommonVariables {
 			public static String ADEFieldname3,ADEvalue3,ADENewValue3;
 			public static String ADEFieldname4,ADEvalue4,ADENewValue4;
 			public static String ADEFieldname5,ADEvalue5,ADENewValue5;
+			
+			
+		   /***************************** Acuity (Task Call & Event) ******************************/
+			public static String ATCERecord1,ATCERecord2,ATCERecord3,ATCERecord4,ATCERecord5,ATCERecord6,ATCERecord7,ATCERecord8,ATCERecord9;
+			
 	    
 	    
 	    /***************************** Acuity (Task & Event) ******************************/
@@ -8294,6 +8299,49 @@ public class CommonVariables {
 				
 				break;
 				
+             case "AcuityTaskCallAndEvent" :
+					
+					try {
+						dataFile=new FileInputStream(new File(AcuityDataSheetFilePath));
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					try {
+						dataWb=WorkbookFactory.create(dataFile);
+					} catch (EncryptedDocumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InvalidFormatException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}	
+					
+					 ATCERecord1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ATCERecord001", excelLabel.Legal_Name);
+					   
+				
+			 		try {
+						dataFile.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+						dataWb.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+
+					}
+					
+					
+					break;
+				
+				
               case "RGAcuityTaskAndEvent" :
 					
 					try {
@@ -9643,11 +9691,7 @@ public class CommonVariables {
     			 	RGAMNNR_FirmLegalName11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGAMNNR_Record011", excelLabel.Legal_Name);
     			 	RGAMNNR_FirmLegalName12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGAMNNR_Record012", excelLabel.Legal_Name);
     			 	
-    			 	
-    			 	
-    			 	
-    			 	
-    			 	
+  			 	
 				try {
 					dataFile.close();
 				} catch (IOException e) {
