@@ -69,7 +69,7 @@ public class ThemePage extends BasePageBusinessLayer {
 		String xpath = "//lightning-primitive-cell-factory//lightning-formatted-url/a[text()=\"" + recordName + "\"]";
 		WebElement type = FindElement(driver, xpath, "recordInTableOfTheme", action.SCROLLANDBOOLEAN, timeOut);
 
-		return type;
+		return isDisplayed(driver, type, "Visibility", timeOut, recordName);
 
 	}
 

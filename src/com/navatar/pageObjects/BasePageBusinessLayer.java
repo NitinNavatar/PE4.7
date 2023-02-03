@@ -15872,18 +15872,20 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 						}
 
-						else if (labelName.contains(excelLabel.Priority.toString())) {
+						else if (labelName.contains(excelLabel.Priority.toString())
+								|| labelName.equals("Classification")) {
 
-							String actualPriority = getText(driver, priorityVerificationInAdvanced(labelName, 10),
-									excelLabel.Priority.toString(), action.SCROLLANDBOOLEAN);
+							String actualValue = getText(driver, priorityVerificationInAdvanced(labelName, 10),
+									labelName, action.SCROLLANDBOOLEAN);
 
-							if (value.contains(actualPriority)) {
-								log(LogStatus.INFO, "Priority value has been verified and i.e. :" + value, YesNo.No);
+							if (value.contains(actualValue)) {
+								log(LogStatus.INFO, labelName + " value has been verified and i.e. :" + value,
+										YesNo.No);
 							} else {
-								log(LogStatus.ERROR, "Priority value is not verified, Expected: " + value
-										+ " but Actual: " + actualPriority, YesNo.No);
-								result.add("Priority value is not verified, Expected: " + value + " but Actual: "
-										+ actualPriority);
+								log(LogStatus.ERROR, labelName + " value is not verified, Expected: " + value
+										+ " but Actual: " + actualValue, YesNo.No);
+								result.add(labelName + " value is not verified, Expected: " + value + " but Actual: "
+										+ actualValue);
 							}
 						}
 
@@ -20995,6 +20997,15 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			sa.assertTrue(false, "PopUp Name has been not been verified, Expected: " + expectedHeaderName);
 		}
 
+		if (notePopupExpandCollapseButton(5) != null) {
+			log(LogStatus.INFO, "PopUp Expand/Collapse Icon is present", YesNo.No);
+		}
+
+		else {
+			log(LogStatus.ERROR, "PopUp Expand/Collapse Icon is not present", YesNo.No);
+			sa.assertTrue(false, "PopUp Expand/Collapse Icon is not present");
+		}
+
 		if (notePopUpCrossButton(7) != null) {
 			log(LogStatus.INFO, "Cross Button is visible in " + expectedHeaderName + " Popup", YesNo.No);
 		}
@@ -21075,6 +21086,24 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
 							+ NotesPopUpPrefilledNegativeResult);
 		}
+
+		if (click(driver, notePopUpCrossButton(7), "Note Popup Cross Button", action.BOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on Note Popup Cross button", YesNo.No);
+
+			if (notePopUpHeading(expectedHeaderName, 3) == null) {
+				log(LogStatus.INFO, "PopUp has been closed", YesNo.No);
+			}
+
+			else {
+				log(LogStatus.ERROR, "PopUp has not been closed after click on Cross icon", YesNo.No);
+				sa.assertTrue(false, "PopUp has not been closed after click on Cross icon");
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not able to Click on Note Popup Cross button", YesNo.Yes);
+			sa.assertTrue(false, "Not able to Click on Note Popup Cross button");
+		}
+
 	}
 
 }

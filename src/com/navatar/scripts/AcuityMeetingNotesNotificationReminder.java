@@ -36,7 +36,7 @@ import com.navatar.pageObjects.NavigationPageBusineesLayer;
 import com.navatar.pageObjects.OutlookPageBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.navatar.pageObjects.TaskPageBusinessLayer;
-
+import com.navatar.pageObjects.ThemePageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class AcuityMeetingNotesNotificationReminder extends BaseLib {
@@ -451,6 +451,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		FundRaisingPageBusinessLayer fr = new FundRaisingPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
 
 		String[] fundNames = AMNNR_FundNames1.split("<Break>", -1);
 		String[] fundTypes = AMNNR_FundTypes1.split("<Break>", -1);
@@ -471,11 +472,22 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String textBoxRecordLabel = AMNNR_CustomObjectField1;
 		String[] textBoxRecordNames = AMNNR_CustomObjectRecord1.split("<Break>", -1);
 
-		String[][] contacts = {
-				{ AP2NT_Con1FirstName, AP2NT_Con1LastName, AP2NT_Con1InstitutionName, AP2NT_Con1ContactEmail,
-						AP2NT_Con1OtherLabelsNames, AP2NT_Con1OtherLabelsValues },
-				{ AP2NT_Con2FirstName, AP2NT_Con2LastName, AP2NT_Con2InstitutionName, AP2NT_Con2ContactEmail,
-						AP2NT_Con2OtherLabelsNames, AP2NT_Con2OtherLabelsValues } };
+		String themeTabName = "Themes";
+
+		/*
+		 * String[][] contacts = { { AP2NT_Con1FirstName, AP2NT_Con1LastName,
+		 * AP2NT_Con1InstitutionName, AP2NT_Con1ContactEmail,
+		 * AP2NT_Con1OtherLabelsNames, AP2NT_Con1OtherLabelsValues }, {
+		 * AP2NT_Con2FirstName, AP2NT_Con2LastName, AP2NT_Con2InstitutionName,
+		 * AP2NT_Con2ContactEmail, AP2NT_Con2OtherLabelsNames,
+		 * AP2NT_Con2OtherLabelsValues } };
+		 */
+
+		String[][] contacts = { { AP2NT_Con1FirstName, AP2NT_Con1LastName, AP2NT_Con1InstitutionName,
+				AP2NT_Con1ContactEmail, AP2NT_Con1OtherLabelsNames, AP2NT_Con1OtherLabelsValues } };
+
+		String[] themeNameAndDescriptions = "Theme A<Break><Section>Theme B<Break><Section>Theme C<Break><Section>Theme D<Break><Section>Theme E<Break><Section>Theme F<Break><Section>Sumo kInd Theme<Break>"
+				.split("<Section>", -1);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -602,6 +614,21 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				sa.assertTrue(false, "Record: " + textBoxRecordName + " has not been Created under: " + tabName);
 			}
 		}
+
+		for (String themeNameAndDescription : themeNameAndDescriptions) {
+
+			String[] themeNameAndDescriptionList = themeNameAndDescription.split("<Break>", -1);
+
+			String themeName = themeNameAndDescriptionList[0];
+			String themeDescription = themeNameAndDescriptionList[1];
+			if (theme.createTheme(projectName, themeTabName, themeName, themeDescription)) {
+				log(LogStatus.INFO, "Record: " + themeName + " has been Created under: " + themeTabName, YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Record: " + themeName + " has not been Created under: " + themeTabName, YesNo.No);
+				sa.assertTrue(false, "Record: " + themeName + " has not been Created under: " + themeTabName);
+			}
+
+		}
 		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
@@ -635,13 +662,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority } };
+				{ AMNNR_TaskLabel6, priority, "Classification", "A" } };
 
 		String[][] task1TaskSection = { { AMNNR_TaskLabel1, taskSectionSubject },
 				{ AMNNR_TaskLabel7, crmUser1FirstName + " " + crmUser1LastName },
 				{ AMNNR_TaskLabel5, taskSectionStatus }, { AMNNR_TaskLabel4, taskSectionDueDateOnly } };
 
-		String recordPageButtonName = "";
+		String recordPageButtonName = "New Task";
 
 		String recordName = AMNNR_FirmLegalName1;
 		String url = "";
