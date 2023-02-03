@@ -8956,5 +8956,15 @@ public abstract class BasePage extends BaseLib {
 		return FindElements(driver, "//section//div/ul[contains(@class,\"slds-listbox\")]/li[@data-id]",
 				"getAllValuesOfSubjectInTaskPopUp").stream().map(x -> x.getText()).collect(Collectors.toList());
 	}
+	
+	
+	@FindBy(xpath = "//header//h2/following-sibling::lightning-icon")
+	private WebElement notePopupExpandCollapseButton;
+
+	public WebElement notePopupExpandCollapseButton(int timeOut) {
+		return isDisplayed(driver, notePopupExpandCollapseButton, "Visibility", timeOut, "notePopupExpandCollapseButton");
+	}
+	
+	
 
 }
