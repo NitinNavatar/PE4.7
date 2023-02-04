@@ -41,7 +41,6 @@ public class Module2 extends BaseLib{
 	//postcondition:
 	//ioi, nda signed revert
 	//watch list rename to watchlist
-	private String TWTask1Subject;
 	
 	// Highest Stage Reached
 	
@@ -342,7 +341,6 @@ public class Module2 extends BaseLib{
 						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.Yes);
 
 					}
-
 					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask1Subject, "Subject", action.SCROLLANDBOOLEAN)) {
 								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
@@ -1032,7 +1030,7 @@ public class Module2 extends BaseLib{
 			ThreadSleep(3000);
 			if (lp.clickOnShowMoreActionDownArrow(projectName, PageName.TaskPage, ShowMoreActionDropDownList.Edit, 20)) {
 				ThreadSleep(3000);
-				boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 10);		
+				boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Name.toString(), TabName.TaskTab, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 10);		
 				if (flag) {
 					log(LogStatus.SKIP,"Selected "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.No);
 
@@ -1988,12 +1986,13 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String labels[]={PageLabel.Status.toString(),PageLabel.Deal_Conversion_Date.toString()};
 		int i=0;
-		String values1[]={PageLabel.Under_Evaluation.toString().replace("_", " "),todaysDateSingleDigit};
-		String values2[]={PageLabel.Watchlist.toString(),todaysDateSingleDigit};
+		String values1[]={PageLabel.Under_Evaluation.toString().replace("_", " "),todaysDate};
+		String values2[]={PageLabel.Watchlist.toString(),todaysDate};
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 		if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_CDINS1Name, 10)) {
 			if (ip.changeStatus(projectName, PageLabel.Under_Evaluation.toString())) {
 				for (String s:labels) {
+					ThreadSleep(1000);
 				if (ip.fieldValueVerificationOnInstitutionPage("", mode, TabName.Object1Tab, s, values1[i])) {
 					log(LogStatus.INFO,"successfully verified "+s+" : "+values1[i],YesNo.No);	
 				}else {
@@ -2047,8 +2046,8 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String values1[]={PageLabel.Under_Evaluation.toString(),""};
 		String values2[]={PageLabel.Watchlist.toString(),""};
-		String values3[]={PageLabel.Under_Evaluation.toString(),todaysDateSingleDigit};
-		String values4[]={PageLabel.Portfolio_Company.toString(),todaysDateSingleDigit};
+		String values3[]={PageLabel.Under_Evaluation.toString(),todaysDate};
+		String values4[]={PageLabel.Portfolio_Company.toString(),todaysDate};
 		
 		String labels[]={PageLabel.Status.toString(),PageLabel.Deal_Conversion_Date.toString()};
 		int i=0;
@@ -2248,7 +2247,7 @@ public class Module2 extends BaseLib{
 		String labels[]={PageLabel.Status.toString(),PageLabel.Deal_Conversion_Date.toString()};
 		int i=0;
 		String values1[]={PageLabel.RenameWatchlist.toString(),""};
-		String values2[]={PageLabel.RenameUnder_Evaluation.toString(),todaysDateSingleDigit};
+		String values2[]={PageLabel.RenameUnder_Evaluation.toString(),todaysDate};
 		
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.createEntityOrAccount(projectName, mode, Smoke_CDINS3Name, Smoke_CDINS3RecordType, null, new String[][] {{PageLabel.Status.toString(),status}}, 10)) {
@@ -2309,7 +2308,9 @@ public class Module2 extends BaseLib{
 						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), PageLabel.Status.toString()+Keys.ENTER, "status", action.BOOLEAN)) {
 							if (sp.clickOnAlreadyCreatedLayout(PageLabel.Status.toString())) {
 								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
+								ThreadSleep(3000);
 								WebElement ele=sp.clickOnEditInFrontOfFieldValues(projectName, PageLabel.RenameWatchlist.toString());
+								ThreadSleep(3000);
 								if (click(driver, ele, "watchlist", action.BOOLEAN)) {
 									switchToDefaultContent(driver);
 									switchToFrame(driver, 10, sp.getstatusPicklistFrame(10));
@@ -4112,12 +4113,12 @@ public class Module2 extends BaseLib{
 				if (j==0){
 					totalDealsshown=1;
 					averageDealQualityScore=closedScore/totalDealsshown;
-					String labelValues1[]={String.valueOf(dealQualityScore),String.valueOf(totalDealsshown)};
+					String labelValues1[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
 					temp=labelValues1;
 				}else{
 					totalDealsshown=2;
 					averageDealQualityScore=(closedScore+loiScore)/totalDealsshown;
-					String labelValues2[]={String.valueOf(dealQualityScore),"2"};
+					String labelValues2[]={String.valueOf(averageDealQualityScore),"2"};
 					temp=labelValues2;
 				}
 				for (int i =0;i<labelName1.length;i++) {

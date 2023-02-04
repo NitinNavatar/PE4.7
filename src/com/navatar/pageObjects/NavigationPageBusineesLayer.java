@@ -292,7 +292,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 					}
 
 				} else {
-					xpath = xpath+"/../following-sibling::*//*[text()='"+parentLabel+"']";
+					xpath = xpath+"/ancestor::ul//*[text()='"+parentLabel+"']";
 					ele = FindElement(driver, xpath, parentLabel, action, timeOut);
 					if (ele!=null) {
 						log(LogStatus.INFO, "Navigation Link Find "+parentLabel, YesNo.No);
@@ -330,7 +330,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 //					log(LogStatus.INFO, "Able to Click on Navigation Label : "+parent+" so going to check child label : "+parentwithChild.get(parent), YesNo.No);
 //					ThreadSleep(2000);
 					for (int i = 0; i < childs.length; i++) {
-						xpath = xpath+"/../following-sibling::*//*[text()='"+childs[i]+"']";;
+						xpath = xpath+"/ancestor::ul//*[text()='"+childs[i]+"']";;
 						ele = FindElement(driver, xpath, childs[i], action, timeOut);
 						ele = isDisplayed(driver, ele, "Visibility", timeOut, childs[i]);
 						if (ele!=null) {

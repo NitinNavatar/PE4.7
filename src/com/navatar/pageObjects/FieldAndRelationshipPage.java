@@ -28,7 +28,7 @@ public class FieldAndRelationshipPage extends BasePageBusinessLayer {
 	}
 	
 	
-	@FindBy(xpath="//iframe[@title='Firm Field: Industry ~ Salesforce - Enterprise Edition']")
+	@FindBy(xpath="//iframe[contains(@title,'Salesforce - Enterprise Edition')]")
 	private WebElement fieldsAndRelationshipsIframe;
 
 	
@@ -169,6 +169,18 @@ public class FieldAndRelationshipPage extends BasePageBusinessLayer {
 	public WebElement getReplacePicklistConfirmationiframe(int timeOut) {	
 		return isDisplayed(driver, ReplacePicklistConfirmationiframe, "Visibility", timeOut, "Replace Picklist Confirmation Iframe");
 	}
+
+	@FindBy(xpath="//a[text()='Deactivate']/ancestor::tr//th")
+	private WebElement activePicklist;
+
+	public WebElement getactivePicklist(int timeOut) {	
+		return isDisplayed(driver, activePicklist, "Visibility", timeOut, "Active Picklist");
+	}
+	
+
+	
+	
+	
 	
 	
 	

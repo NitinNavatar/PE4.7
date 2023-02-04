@@ -35,13 +35,13 @@ public class CorrespondenceListPageBusinessLayer extends CorrespondenceListPage{
 	public boolean createNewCorrList(String projectName,String mode, String environment, String contactFirstName, String contactLastName, String commitmentID, List<String> corrReceived) {
 		boolean flag = true;
 		
-		if(click(driver, getNewButton(projectName, 30), "new contact button in "+projectName, action.SCROLLANDBOOLEAN)) {
-			appLog.info("clicked on new contact button in institution page");
-			
-		}else {
-			appLog.error("Not able to click on new button on correspondence list page so cannot create contact: "+contactFirstName+" "+contactLastName);
-			return false;
-		}
+//		if(click(driver, getNewButton(projectName, 30), "new contact button in "+projectName, action.SCROLLANDBOOLEAN)) {
+//			appLog.info("clicked on new contact button in institution page");
+//			
+//		}else {
+//			appLog.error("Not able to click on new button on correspondence list page so cannot create contact: "+contactFirstName+" "+contactLastName);
+//			return false;
+//		}
 		if (mode.equalsIgnoreCase(Mode.Classic.toString())){
 			sendKeys(driver, getContactValue(30), contactFirstName+" "+contactLastName, "contact text box", action.SCROLLANDBOOLEAN);
 		}
@@ -75,7 +75,7 @@ public class CorrespondenceListPageBusinessLayer extends CorrespondenceListPage{
 			click(driver, getAddButtonMultipleBox(environment, mode, 30), "add button", action.SCROLLANDBOOLEAN);
 		}
 
-		if (click(driver, getCustomTabSaveBtn(30), "SaveBtn", action.SCROLLANDBOOLEAN)) {
+		if (click(driver, getSaveButton(environment, mode, 20), "SaveBtn", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.PASS, "clicked on save button", YesNo.No);
 	
 		}

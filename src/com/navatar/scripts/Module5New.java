@@ -568,7 +568,7 @@ public class Module5New extends BaseLib {
 
 		String toggleButtons[] = {ToggleCheck1ToggleButtons,ToggleCheck2ToggleButtons,ToggleCheck3ToggleButtons};
 
-		String fileLocation[] = {".\\AutoIT\\EditPage\\EventTab.PNG",".\\AutoIT\\EditPage\\EventTab.PNG",".\\AutoIT\\EditPage\\MECreatedBy.PNG"};
+		String fileLocation[] = {".\\AutoIT\\EditPage\\EventTab.PNG",".\\AutoIT\\EditPage\\Q&ATab.PNG",".\\AutoIT\\EditPage\\MECreatedBy.PNG"};
 
 		String EnhanceLightningGridImg = ".\\AutoIT\\EditPage\\NavatarSDG.PNG";
 
@@ -1028,6 +1028,7 @@ public class Module5New extends BaseLib {
 								
 								ele=ip.toggleButton(projectName, toggleButton, action.BOOLEAN, 30);
 								if (ele!=null) {
+									
 									log(LogStatus.INFO,"Toggle is present : "+toggleButton,YesNo.No);
 									ThreadSleep(2000);
 								} else {
@@ -1392,7 +1393,7 @@ public class Module5New extends BaseLib {
 								switchToDefaultContent(driver);
 								ThreadSleep(20000);
 								/////////////////////////////////////////////////////
-								String sValue = EditPageErrorMessage.EnhancedLightningGrid;
+								String sValue = EditPageErrorMessage.NavatarSDG;
 								if (sendKeys(driver, edit.getEditPageSeachTextBox(projectName, 10),sValue,"Search TextBox",action.BOOLEAN)) {
 									ThreadSleep(2000);
 									log(LogStatus.INFO,"send value to Search TextBox : "+sValue,YesNo.No);

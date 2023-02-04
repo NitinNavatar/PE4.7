@@ -177,7 +177,7 @@ public class DataLoaderWizardPageBusinessLayer extends DataLoaderWizardPage {
 									} else if (objectName.toString()
 											.equalsIgnoreCase(ObjectName.Navigation.toString())) {
 										if (selectVisibleTextFromDropDown(driver,
-												getFundNameLookUpFieldDropDownInFundRaising(20),
+												getNavigationNameLookUpFieldDropDownInNavigation(20),
 												"Navigation Field Name drop down list", "Navigation Name")) {
 											appLog.info("select Navigation Field Name from drop down ");
 
@@ -972,7 +972,7 @@ public class DataLoaderWizardPageBusinessLayer extends DataLoaderWizardPage {
 
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 
-		List<String> abc = setup.DragNDrop("", mode, obj, ObjectFeatureName.pageLayouts, pageLayoutsName,
+		List<String> abc = setup.DragNDropIfNoDestination("", mode, obj, ObjectFeatureName.pageLayouts, pageLayoutsName,
 				sourceANDDestination);
 		ThreadSleep(10000);
 

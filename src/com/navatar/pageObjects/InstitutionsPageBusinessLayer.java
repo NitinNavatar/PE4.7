@@ -115,7 +115,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 
 				}
 				FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
-				if (labelsWithValues!=null) {
+				if (labelsWithValues!=null ) {
 					for (String[] strings : labelsWithValues) {
 						if (click(driver, fp.getDealStatus(projectName, timeOut), "Status : "+strings[1], action.SCROLLANDBOOLEAN)) {
 							ThreadSleep(2000);
@@ -170,14 +170,26 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 	}
 	
 	
-	
+public boolean clickOnCreatedOfficeLocation(String environment,String mode,String officeLocation) {
+		
+
+			if(clickOnAlreadyCreated_Lighting(environment, mode, TabName.OfficeLocations, officeLocation, 30)){
+				appLog.info("Clicked on office location name : " + officeLocation);
+				return true;
+			}else{
+				appLog.error("office location Not Available : " + officeLocation);
+			}	
+		
+		return false;
+	}
+
 	
 public boolean clickOnCreatedInstitution(String environment,String mode,String inst_name) {
 		
 
 		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
 
-			List<WebElement> optionsInDropDown = FindElements(driver, "//select[@id='fcf']/option[text()='All Institutions']", "");
+			List<WebElement> optionsInDropDown = FindElements(driver, "//select[@id='fcf']/option[text()='All Firms']", "");
 			String[] options = {};
 			if(optionsInDropDown.size()>1){
 				String[] o = {optionsInDropDown.get(0).getAttribute("value"), optionsInDropDown.get(1).getAttribute("value")};
@@ -626,7 +638,7 @@ public boolean clickOnCreatedInstitution(String environment,String mode,String i
 				if (finalLabelName.contains("Street")) {
 					xpath = "//*[text()='Street']//following-sibling::div/textarea";
 				}else if(finalLabelName.contains("Organization Name")) {
-					xpath = "//*[text()='Organization Name']//following-sibling::div";
+					xpath = "//*[text()='Organization Name']//following-sibling::div//input";
 				}else if(finalLabelName.contains("Primary"))
 					xpath="//label/span[text()='Primary']/..//following-sibling::div//input";
 				else{
@@ -649,6 +661,24 @@ public boolean clickOnCreatedInstitution(String environment,String mode,String i
 
 				} 
 
+			}else if(finalLabelName.contains("Organization Name")){
+
+				if (sendKeysWithoutClearingTextBox(driver, ele, labelWithValue[1], labelWithValue[1], action.BOOLEAN)) {
+					log(LogStatus.INFO, "Enter value : "+labelWithValue[1]+" For Label : "+labelWithValue[0], YesNo.No);
+					ThreadSleep(2000);
+				WebElement element=	FindElement(driver, "//*[@title='"+labelWithValue[1]+"']", "", action.BOOLEAN, 10);
+				if (click(driver, element, finalLabelName, action.BOOLEAN)) {
+					log(LogStatus.INFO, "able to select organization:"+labelWithValue[1], YesNo.No);
+				}else{
+					saa.assertTrue(false, "Not able to select organization:"+labelWithValue[1]);
+					log(LogStatus.FAIL, "Not able to select organization:"+labelWithValue[1], YesNo.Yes);
+				}
+
+					
+				}else{
+					saa.assertTrue(false, "Not Enter value : "+labelWithValue[1]+" For Label : "+labelWithValue[0]);
+					log(LogStatus.FAIL, "Not Enter value : "+labelWithValue[1]+" For Label : "+labelWithValue[0], YesNo.Yes);
+				}
 			}else{
 
 				if (sendKeys(driver, ele, labelWithValue[1], labelWithValue[1], action.BOOLEAN)) {
@@ -1009,6 +1039,7 @@ public boolean clickOnCreatedInstitution(String environment,String mode,String i
 				appLog.info("passed data in text box: " + institutionName);
 				if(labelNames!=null && labelValue!=null) {
 					for(int i=0; i<labelNames.length; i++) {
+						if(labelNames[i]!="") {
 						WebElement ele = getInstitutionPageTextBoxOrRichTextBoxWebElement(environment, mode, labelNames[i].trim(), 30);
 						if(sendKeys(driver, ele, labelValue[i], labelNames[i]+" text box", action.SCROLLANDBOOLEAN)) {
 							appLog.info("passed value "+labelValue[i]+" in "+labelNames[i]+" field");
@@ -1033,14 +1064,19 @@ public boolean clickOnCreatedInstitution(String environment,String mode,String i
 							BaseLib.sa.assertTrue(false, "Not able to pass value "+labelValue[i]+" in "+labelNames[i]+" field");
 						}
 					}
+					}
 
 				}
 				if (click(driver, getCustomTabSaveBtn(projectName,30), "save button", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on save button");
+					
+					ThreadSleep(8000);
+					CommonLib.refresh(driver);
+					ThreadSleep(5000);
+					WebElement ele = verifyCreatedItemOnPage(Header.Company, institutionName);
 					ThreadSleep(5000);
 					//							String	xpath="//span[@class='custom-truncate uiOutputText'][text()='"+institutionName+"']";
 					//							WebElement ele = FindElement(driver, xpath, "Header : "+institutionName, action.BOOLEAN, 30);
-					WebElement ele = verifyCreatedItemOnPage(Header.Company, institutionName);
 					if (ele != null) {
 						appLog.info("created institution " + institutionName + " is verified successfully.");
 						appLog.info(institutionName + " is created successfully.");
@@ -1239,6 +1275,127 @@ public boolean clickOnCreatedInstitution(String environment,String mode,String i
 			appLog.error(finalLabelName + " Value is not visible so cannot matched  label Value "+labelValue);
 		}
 		return false;
+
+	}
+	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param environment
+	 * @param mode
+	 * @param tabName
+	 * @param labelName
+	 * @param labelValue
+	 * @return true if field Value Verified On Institution Page successfully
+	 */
+	public boolean fieldValueVerificationOnOfficeLocationPage(String environment, String mode, 
+			String labelName,String labelValue) {
+		String finalLabelName;
+		labelValue=labelValue.replace("_", " ");
+
+		if (labelName.contains("_")) {
+			finalLabelName = labelName.replace("_", " ");
+		} else {
+			finalLabelName = labelName;
+		}
+		String xpath = "";
+		WebElement ele = null;
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			if(finalLabelName.equalsIgnoreCase(excelLabel.Institution_Type.toString().replace("_", " "))) {
+
+				xpath = "(//span[text()='" + finalLabelName + "']/../following-sibling::td/div)[1]";
+			}else {
+				xpath = "//td[text()='"+finalLabelName+"']/following-sibling::td/div";
+			}
+
+		} else {
+			/////////////////  Lighting New Start /////////////////////////////////////
+			if(labelName.equalsIgnoreCase(excelLabel.Phone.toString()) || labelName.equalsIgnoreCase(excelLabel.Fax.toString())|| labelName.equalsIgnoreCase("Organization Name")) {
+				xpath="//span[text()='"+finalLabelName+"']/../following-sibling::div//a";
+
+			}
+			else if(labelName.equalsIgnoreCase(excelLabel.Primary.toString()) ){
+
+				xpath="//div[contains(@class,'windowViewMode-normal')]//span[text()='"+finalLabelName+"']/../following-sibling::div//input";
+			}
+			else{
+
+				xpath="//span[text()='"+finalLabelName+"']/../following-sibling::div//lightning-formatted-text";
+			}
+			
+			if (labelValue.isEmpty() || labelValue.equals("")) {
+				xpath = "//span[text()='"+finalLabelName+"']/../following-sibling::div//*";
+				ele = 		FindElement(driver, xpath, finalLabelName + " label text with  " + labelValue, action.SCROLLANDBOOLEAN, 10);
+				scrollDownThroughWebelement(driver, ele, finalLabelName + " label text with  " + labelValue);
+				if (ele!=null) {
+					String aa = ele.getText().trim();
+					System.err.println("Value  "+aa);
+
+					if (aa.isEmpty() || aa.equals(labelValue)) {
+
+						return true;	
+					}else {
+						return false;
+					}
+
+				}else {
+					return false;
+				}
+
+			}
+			List<WebElement> list =new ArrayList<>();
+
+			list = FindElements(driver, xpath, "");
+			for(WebElement element:list){
+
+				element=isDisplayed(driver,element,"Visibility", 10, "");
+				if(element!=null){
+					ele =element;
+					break;
+				}
+			}
+			scrollDownThroughWebelement(driver, ele, finalLabelName + " label text with  " + labelValue);
+			ele = 	isDisplayed(driver,ele,"Visibility", 10, finalLabelName + " label text with  " + labelValue);
+			if (ele != null) {
+				if(labelName.equalsIgnoreCase("primary")) {
+					boolean status=isSelected(driver, ele, "");
+					if(labelValue.equalsIgnoreCase("checked")) {
+						if(status) {
+							appLog.info(finalLabelName + " label text with  " + labelValue+" verified");
+
+							return true;
+						}else {
+							
+							appLog.info(finalLabelName + " label text with  " + labelValue+"not matched verified");
+	
+						}
+					}else {
+						if(!status) {
+							appLog.info(finalLabelName + " label text with  " + labelValue+" verified");
+
+							return true;
+						}else {
+							
+							appLog.info(finalLabelName + " label text with  " + labelValue+"not matched verified");
+	
+						}
+					}
+					return true;
+				}
+				String aa = ele.getText().trim();
+				System.err.println("Value  "+aa);
+
+				appLog.info(finalLabelName + " label text with  " + labelValue+" verified");
+				return true;
+
+			} else {
+				appLog.error("<<<<<<   "+finalLabelName + " label text with  " + labelValue+" not verified "+"   >>>>>>");
+			}
+			return false;
+
+
+			/////////////////  Lighting New End /////////////////////////////////////
+		}
+	return false;
 
 	}
 
@@ -2001,20 +2158,30 @@ public boolean clickOnCreatedInstitution(String environment,String mode,String i
 		boolean flag=false;
 		String xPath="";
 		WebElement ele=null;
-		xPath="//a[text()='Details']/ancestor::div[@class='slds-tabs_default']//span[text()='"+labelName+"']/parent::div/following-sibling::div";
-		ele =FindElement(driver, xPath, "field Value", action.SCROLLANDBOOLEAN, 50);
 
-		CommonLib.scrollDownThroughWebelementInCenter(driver, ele, labelName);
-		String val=CommonLib.getText(driver, ele, "field Value", action.SCROLLANDBOOLEAN);
+		if (click(driver, getdetailsTab(60), "Detals Tab", action.SCROLLANDBOOLEAN)) {
+			appLog.info("clicked on Details Tab button");
 
-		if(val.trim().toLowerCase().contains(value.toLowerCase()))
-		{
-			log(LogStatus.INFO, value+" has been matched", YesNo.No);
-			flag=true;
+
+			xPath="//a[text()='Details']/ancestor::div[@class='slds-tabs_default']//span[text()='"+labelName+"']/parent::div/following-sibling::div";
+			ele =FindElement(driver, xPath, "field Value", action.SCROLLANDBOOLEAN, 50);
+
+			CommonLib.scrollDownThroughWebelementInCenter(driver, ele, labelName);
+			String val=CommonLib.getText(driver, ele, "field Value", action.SCROLLANDBOOLEAN);
+
+			if(val.trim().toLowerCase().contains(value.toLowerCase()))
+			{
+				log(LogStatus.INFO, value+" has been matched", YesNo.No);
+				flag=true;
+			}
+			else
+			{
+				log(LogStatus.ERROR, value+" is not matched", YesNo.Yes);
+			}
 		}
 		else
 		{
-			log(LogStatus.ERROR, value+" is not matched", YesNo.Yes);
+			log(LogStatus.ERROR, "Could not click on the Details Tab", YesNo.Yes);
 		}
 
 
@@ -2034,22 +2201,30 @@ public boolean clickOnCreatedInstitution(String environment,String mode,String i
 		{
 			for(int i=0; i<labelName.size();i++)
 			{
-				xPath="//a[text()='Details']/ancestor::div[@class='slds-tabs_default']//span[text()='"+labelName.get(i)+"']/parent::div/following-sibling::div";
-				ele =FindElement(driver, xPath, "field Value", action.SCROLLANDBOOLEAN, 50);
+				if (click(driver, getdetailsTab(60), "Detals Tab", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on Details Tab button");
 
-				CommonLib.scrollDownThroughWebelementInCenter(driver, ele, labelName.get(i));
-				String val=CommonLib.getText(driver, ele, "field Value", action.SCROLLANDBOOLEAN);
+					xPath="//a[text()='Details']/ancestor::div[@class='slds-tabs_default']//span[text()='"+labelName.get(i)+"']/parent::div/following-sibling::div";
+					ele =FindElement(driver, xPath, "field Value", action.SCROLLANDBOOLEAN, 50);
 
-				if(val.trim().toLowerCase().contains(value.get(i).toLowerCase()))
-				{
-					log(LogStatus.INFO, value.get(i)+" has been matched", YesNo.No);
+					CommonLib.scrollDownThroughWebelementInCenter(driver, ele, labelName.get(i));
+					String val=CommonLib.getText(driver, ele, "field Value", action.SCROLLANDBOOLEAN);
 
+					if(val.trim().toLowerCase().contains(value.get(i).toLowerCase()))
+					{
+						log(LogStatus.INFO, value.get(i)+" has been matched", YesNo.No);
+
+					}
+					else
+					{
+
+						log(LogStatus.ERROR, value.get(i)+" is not matched", YesNo.Yes);
+						status++;
+					}
 				}
 				else
 				{
-
-					log(LogStatus.ERROR, value.get(i)+" is not matched", YesNo.Yes);
-					status++;
+					log(LogStatus.ERROR, "Could not click on the Details Tab", YesNo.Yes);
 				}
 			}
 			if(status==0)
