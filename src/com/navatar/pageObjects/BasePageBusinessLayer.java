@@ -38,6 +38,8 @@ import static com.navatar.generic.CommonVariables.AR_Research2;
 import static com.navatar.generic.CommonVariables.ATE_AdvanceDueDate1;
 import static com.navatar.generic.CommonVariables.environment;
 import static com.navatar.generic.CommonVariables.mode;
+import static com.navatar.generic.CommonVariables.tabObj1;
+import static com.navatar.generic.CommonVariables.tabObj2;
 import static com.navatar.generic.CommonVariables.tabObj4;
 
 import java.util.Random;
@@ -14465,7 +14467,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	public ArrayList<String> verifyRecordAndReferencedTypeOnTagged(String[] firmsTagName, String[] firmTimesReferenced,
 			String[] peopleTagName, String[] peopleTimesReferenced, String[] dealTagName, String[] dealTimesReferenced,
-			boolean isInstitutionRecordType) {
+			boolean isInstitutionRecordType, String[] fundTagName, String[] fundTimesReferenced) {
 		ArrayList<String> result = new ArrayList<String>();
 		if (firmsTagName != null && firmTimesReferenced != null) {
 			if (firmsTagName.length == firmTimesReferenced.length) {
@@ -14593,6 +14595,53 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				}
 			}
 		}
+		
+		if (isInstitutionRecordType == true) {
+			if (fundTagName != null && fundTimesReferenced != null) {
+				if (fundTagName.length == fundTimesReferenced.length) {
+					if (click(driver, getTaggedRecordName("F", 30), "Funds tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Funds tab name", YesNo.No);
+
+						for (int i = 0; i < fundTagName.length; i++) {
+							if (getTaggedRecordName("Funds", fundTagName[i], 6) != null) {
+								log(LogStatus.INFO, fundTagName[i] + " record is available on fund tab of tagged",
+										YesNo.No);
+
+								if (getTaggedRecordTimeReference("Funds", fundTagName[i], fundTimesReferenced[i],
+										6) != null) {
+									log(LogStatus.INFO,
+											"Time Reference : " + fundTimesReferenced[i] + " is verified against "
+													+ fundTagName[i] + " record on Funds tab of Tagged",
+											YesNo.No);
+								} else {
+									log(LogStatus.ERROR,
+											"Time Reference : " + fundTimesReferenced[i] + " is not verified against "
+													+ fundTagName[i] + " record on Funds tab of Tagged",
+											YesNo.No);
+									result.add(
+											"Time Reference : " + fundTimesReferenced[i] + " is not verified against "
+													+ fundTagName[i] + " record on Funds tab of Tagged");
+								}
+
+							} else {
+								log(LogStatus.ERROR, fundTagName[i] + " record is not available on fund tab of tagged",
+										YesNo.No);
+								result.add(fundTagName[i] + " record is not available on fund tab of tagged");
+							}
+
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not able to click on Funds tab name", YesNo.No);
+						result.add("Not able to click on Funds tab name");
+					}
+				}
+			}
+		}
+		
+		
+		
+		
 		return result;
 	}
 
@@ -16065,7 +16114,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	public ArrayList<String> verifyRedirectionOnClickRecordAndReferencedTypeOnTagged(String[] firmTagName,
 			String[] firmTimesReferenced, String[] peopleTagName, String[] peopleTimesReferenced, String[] dealTagName,
-			String[] dealTimesReferenced, boolean isInstitutionRecordType) {
+			String[] dealTimesReferenced, boolean isInstitutionRecordType, String[] fundTagName,
+			String[] fundTimesReferenced) {
 		String xPath;
 		WebElement ele;
 		ArrayList<String> result = new ArrayList<String>();
@@ -16268,6 +16318,73 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				}
 			}
 		}
+		
+		if (isInstitutionRecordType == true) {
+			if (fundTagName != null && fundTimesReferenced != null) {
+				if (fundTagName.length == fundTimesReferenced.length) {
+					if (click(driver, getTaggedRecordName("Funds", 30), "Funds tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Funds tab name", YesNo.No);
+
+						for (int i = 0; i < fundTagName.length; i++) {
+							ThreadSleep(5000);
+							if (clickUsingJavaScript(driver, getTaggedRecordName("Funds", fundTagName[i], 30),
+									fundTagName[i] + " on Funds Tagged", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on " + fundTagName[i] + " record on Funds tab", YesNo.No);
+
+								String id = switchOnWindow(driver);
+								xPath = "//lightning-formatted-text[text()='" + fundTagName[i] + "']";
+								ele = FindElement(driver, xPath, fundTagName[i] + " record", action.SCROLLANDBOOLEAN,
+										40);
+								if (ele != null) {
+									log(LogStatus.INFO, fundTagName[i] + " record is redirecting to new tab", YesNo.No);
+								} else {
+									log(LogStatus.ERROR, fundTagName[i] + " is not redirecting to new tab", YesNo.No);
+									result.add(fundTagName[i] + " is not redirecting to new tab");
+								}
+								driver.close();
+								driver.switchTo().window(id);
+
+							} else {
+								log(LogStatus.ERROR, "Not able to click on " + fundTagName[i] + " record on Funds tab",
+										YesNo.No);
+								result.add("Not able to click on " + fundTagName[i] + " record on Funds tab");
+							}
+
+							if (click(driver,
+									getTaggedRecordTimeReference("Funds", fundTagName[i], fundTimesReferenced[i], 30),
+									fundTagName[i] + " on Funds Tagged", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of " + fundTagName[i], YesNo.No);
+
+								String id = switchOnWindow(driver);
+								xPath = "//span[@class='slds-page-header__title slds-truncate']";
+								ele = FindElement(driver, xPath, firmTagName[i] + " record's count",
+										action.SCROLLANDBOOLEAN, 40);
+								if (ele != null) {
+									log(LogStatus.INFO,
+											firmTagName[i] + " time reference count is redirecting to new tab",
+											YesNo.No);
+								} else {
+									log(LogStatus.ERROR,
+											firmTagName[i] + " time reference count is not redirecting to new tab",
+											YesNo.No);
+									result.add(firmTagName[i] + " time reference count is not redirecting to new tab");
+								}
+								driver.close();
+								driver.switchTo().window(id);
+							} else {
+								log(LogStatus.ERROR, "Not able to click on Time reference count of " + fundTagName[i],
+										YesNo.No);
+								result.add("Not able to click on Time reference count of " + fundTagName[i]);
+							}
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on Funds tab name", YesNo.No);
+						result.add("Not able to click on Funds tab name");
+					}
+				}
+			}
+		}
+		
 		return result;
 	}
 
@@ -19364,6 +19481,28 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				result.add("Not able to click on Deals tab name");
 			}
 		}
+		
+		if (isInstitutionRecord == true) {
+			if (click(driver, getTaggedRecordName("Funds", 30), "Funds tab", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Funds tab name", YesNo.No);
+				xPath = "//span[text()='Funds']/ancestor::table//button[@name='timesRef']";
+				elements = FindElements(driver, xPath, "Time Reference Count");
+				if (CommonLib.checkSorting(driver, SortOrder.Decending, elements)) {
+					log(LogStatus.INFO,
+							"Default Decending order of Time Referenced count have been verified on Funds tag",
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Default Decending order of Time Referenced count are not verified on Funds tag", YesNo.No);
+					result.add("Default Decending order of Time Referenced count are not verified on Funds tag");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to click on Funds tab name", YesNo.No);
+				result.add("Not able to click on Funds tab name");
+			}
+		}
+		
 		return result;
 	}
 
@@ -20085,7 +20224,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	}
 
 	public ArrayList<String> verifyRecordShouldNotVisibleOnTagged(String[] companyTag, String peopleTag[],
-			String dealTag[], boolean isInstitutionRecord) {
+			String dealTag[], boolean isInstitutionRecord, String[] fundTag) {
 		ArrayList<String> result = new ArrayList<String>();
 		if (companyTag != null) {
 
@@ -20139,6 +20278,26 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				} else {
 					log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
 					result.add("Not able to click on Deals tab name");
+				}
+			}
+		}
+		if (isInstitutionRecord == true) {
+			if (fundTag != null) {
+
+				if (click(driver, getTaggedRecordName("Funds", 30), "Funds tab", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Funds tab name", YesNo.No);
+
+					for (int i = 0; i < dealTag.length; i++) {
+						if (getTaggedRecordName("Funds", dealTag[i], 10) == null) {
+							log(LogStatus.INFO, dealTag[i] + " record is not available on deal tab", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, dealTag[i] + " record is available on deal tab", YesNo.No);
+							result.add(dealTag[i] + " record is available on deal tab");
+						}
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on Funds tab name", YesNo.No);
+					result.add("Not able to click on Funds tab name");
 				}
 			}
 		}
@@ -20363,40 +20522,40 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 		if (isInstitutionRecord == false) {
-			if (click(driver, getTaggedRecordName(TaggedName.Deals.toString(), 30),
-					TaggedName.Deals.toString() + " tab", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on Deal tab name", YesNo.No);
+			if (click(driver, getTaggedRecordName(TaggedName.Funds.toString(), 30),
+					TaggedName.Funds.toString() + " tab", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Fund tab name", YesNo.No);
 				ThreadSleep(5000);
-				if (CommonLib.clickUsingJavaScript(driver, recordsNameOnTaggedSection(TaggedName.Deals.toString(), 30),
-						"Records on Deal Tagged", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on record on deal tab", YesNo.No);
+				if (CommonLib.clickUsingJavaScript(driver, recordsNameOnTaggedSection(TaggedName.Funds.toString(), 30),
+						"Records on Fund Tagged", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on record on fund tab", YesNo.No);
 
 					String id = switchOnWindow(driver);
 					if (id != null) {
-						if (getTabName("Deal", 20) != null) {
+						if (getTabName("Fund", 20) != null) {
 							log(LogStatus.INFO,
-									"The page is redirecting to deal tab after click on Entity type of deal", YesNo.No);
+									"The page is redirecting to fund tab after click on Entity type of fund", YesNo.No);
 						} else {
 							log(LogStatus.ERROR,
-									"The page is not redirecting to Deal tab after click on Entity type of deal",
+									"The page is not redirecting to Fund tab after click on Entity type of fund",
 									YesNo.No);
-							result.add("The page is not redirecting to Deal tab after click on Entity type of deal");
+							result.add("The page is not redirecting to Fund tab after click on Entity type of fund");
 						}
 						driver.close();
 						driver.switchTo().window(id);
 					} else {
-						log(LogStatus.ERROR, "The new tab is not opening after clicking on entity type of Deal",
+						log(LogStatus.ERROR, "The new tab is not opening after clicking on entity type of Fund",
 								YesNo.No);
-						result.add("The new tab is not opening after clicking on entity type of Deal");
+						result.add("The new tab is not opening after clicking on entity type of Fund");
 					}
 
 				} else {
-					log(LogStatus.ERROR, "Not able to click on record of deal tab name", YesNo.No);
-					result.add("Not able to click on record of deal tab name");
+					log(LogStatus.ERROR, "Not able to click on record of fund tab name", YesNo.No);
+					result.add("Not able to click on record of fund tab name");
 				}
 			} else {
-				log(LogStatus.ERROR, "Not able to click on Deal tab name", YesNo.No);
-				result.add("Not able to click on Deal tab name");
+				log(LogStatus.ERROR, "Not able to click on Fund tab name", YesNo.No);
+				result.add("Not able to click on Fund tab name");
 			}
 		}
 		return result;
@@ -20531,6 +20690,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			log(LogStatus.ERROR,
 					"Details : " + detailsMessage + " is available on Interaction popup for subject " + subjectName,
 					YesNo.No);
+
 
 		}
 		return flag;
@@ -20976,6 +21136,70 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return flag;
 	}
 
+	public boolean navigateToRecordAndClickOnSubTab(String projectName, String tabName, String recordName,
+			String subTabName) {
+		boolean flag = false;
+
+		if (tabName.equalsIgnoreCase(tabObj1))
+			if (clickOnTab(projectName, tabName)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabName, YesNo.No);
+
+				if (clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
+					log(LogStatus.INFO, recordName + " record of Firm has been open", YesNo.No);
+
+					if (!"".equalsIgnoreCase(subTabName) && subTabName != null) {
+						if (clicktabOnPage(subTabName)) {
+							log(LogStatus.PASS, "Clicked on SubTab: " + subTabName, YesNo.No);
+							flag = true;
+						} else {
+							log(LogStatus.ERROR, "Not able to click on SubTab: " + subTabName, YesNo.No);
+
+						}
+					} else {
+						flag = true;
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not able to open " + recordName + " record of Firm", YesNo.No);
+
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on Tab : " + tabName, YesNo.No);
+
+			}
+		else if (tabName.equalsIgnoreCase(tabObj2))
+			if (clickOnTab(projectName, tabName)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabName, YesNo.No);
+
+				if (clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, recordName, 30)) {
+					log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
+					if (!"".equalsIgnoreCase(subTabName) && subTabName != null) {
+						if (clicktabOnPage(subTabName)) {
+							log(LogStatus.PASS, "Clicked on SubTab: " + subTabName, YesNo.No);
+							flag = true;
+						} else {
+							log(LogStatus.ERROR, "Not able to click on SubTab: " + subTabName, YesNo.No);
+
+						}
+					} else {
+						flag = true;
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not able to open " + recordName + " record", YesNo.No);
+
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on Tab : " + tabName, YesNo.No);
+
+			}
+
+		return flag;
+	}
+
+
 	public void verifyUIOfTaskPopUp(String url, String[][] basicSectionVerificationData,
 			String[][] advancedSectionVerificationData, String[][] tasksSectionVerificationData) {
 		String expectedHeaderName = "Task";
@@ -21005,6 +21229,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			log(LogStatus.ERROR, "PopUp Expand/Collapse Icon is not present", YesNo.No);
 			sa.assertTrue(false, "PopUp Expand/Collapse Icon is not present");
 		}
+
 
 		if (notePopUpCrossButton(7) != null) {
 			log(LogStatus.INFO, "Cross Button is visible in " + expectedHeaderName + " Popup", YesNo.No);
@@ -21087,6 +21312,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							+ NotesPopUpPrefilledNegativeResult);
 		}
 
+
 		if (click(driver, notePopUpCrossButton(7), "Note Popup Cross Button", action.BOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Note Popup Cross button", YesNo.No);
 
@@ -21103,6 +21329,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			log(LogStatus.ERROR, "Not able to Click on Note Popup Cross button", YesNo.Yes);
 			sa.assertTrue(false, "Not able to Click on Note Popup Cross button");
 		}
+
 
 	}
 

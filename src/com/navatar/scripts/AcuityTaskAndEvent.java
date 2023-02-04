@@ -507,7 +507,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							sa.assertTrue(false, contactSectionName1+" record on Contact section is not verified for "+recordName+". "+result2);
 						}
 
-						ArrayList<String> result4=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, null, null, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord);
+						ArrayList<String> result4=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, null, null, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
 						if(result4.isEmpty())
 						{
 							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -519,13 +519,12 @@ public class AcuityTaskAndEvent extends BaseLib {
 						}
 
 						if (bp.verifySubjectLinkPopUpOnIntraction(driver,taskSubject)) {
-							log(LogStatus.INFO, "page successfully redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);			
+							log(LogStatus.INFO, "The popup of Subject "+ taskSubject+ " is opening", YesNo.No);			
 						}
 						else
 						{
-							log(LogStatus.ERROR, "page is not redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);		
-							sa.assertTrue(false,  "page is not redirecting to the "+ taskSubject+ " page on new tab");
-
+							log(LogStatus.ERROR, "The popup of Subject "+ taskSubject+ " is not opening",	YesNo.No);		
+							sa.assertTrue(false, "The popup of Subject "+ taskSubject+ " is not opening");
 						}
 					}
 					else
@@ -699,7 +698,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 
 
-					ArrayList<String> result2=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, null, null, dealsTaggedName, dealsTaggedTimeReference,false);
+					ArrayList<String> result2=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, null, null, dealsTaggedName, dealsTaggedTimeReference,isInstitutionRecord,null,null);
 					if(result2.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Referenced type count have been matched on Company and Deal tab", YesNo.No);
@@ -870,7 +869,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, contactSectionName1+" record on Contact section is not verified for "+recordName+". "+result2);
 					}
 
-					ArrayList<String> result4=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord);
+					ArrayList<String> result4=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord,null,null);
 					if(result4.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -881,7 +880,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The record name and Time reference are not verifed. "+result4);
 					}
 
-					ArrayList<String> result6=bp.verifyRedirectionOnClickRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord);
+					ArrayList<String> result6=bp.verifyRedirectionOnClickRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord,null,null);
 					if(result6.isEmpty())
 					{
 						log(LogStatus.INFO, "The redirection on click of record name and count of Time referenced have been verified", YesNo.No);
@@ -894,13 +893,14 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 
 					if (bp.verifySubjectLinkPopUpOnIntraction(driver,taskSubject)) {
-						log(LogStatus.INFO, "page successfully redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);			
+						log(LogStatus.INFO, "The popup of Subject "+ taskSubject+ " is opening", YesNo.No);			
 					}
 					else
 					{
-						log(LogStatus.ERROR, "page is not redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);		
-						sa.assertTrue(false,  "page is not redirecting to the "+ taskSubject+ " page on new tab");
+						log(LogStatus.ERROR, "The popup of Subject "+ taskSubject+ " is not opening",	YesNo.No);		
+						sa.assertTrue(false, "The popup of Subject "+ taskSubject+ " is not opening");
 					}
+					
 					refresh(driver);
 					ThreadSleep(4000);
 
@@ -1206,7 +1206,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 
 
-					ArrayList<String> result2=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference, false);
+					ArrayList<String> result2=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference, isInstitutionRecord,null,null);
 					if(result2.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -1217,7 +1217,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The record name and Time reference are not verifed. "+result2);
 					}
 
-					ArrayList<String> result3=bp.verifyRedirectionOnClickRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference, false);
+					ArrayList<String> result3=bp.verifyRedirectionOnClickRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference, isInstitutionRecord,null,null);
 					if(result3.isEmpty())
 					{
 						log(LogStatus.INFO, "The redirection on click of record name and count of Time referenced have been verified", YesNo.No);
@@ -1229,13 +1229,13 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 
 					if (bp.verifySubjectLinkPopUpOnIntraction(driver,taskSubject)) {
-						log(LogStatus.INFO, "page successfully redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);			
+						log(LogStatus.INFO, "The popup of Subject "+ taskSubject+ " is opening", YesNo.No);			
 					}
 					else
 					{
-						log(LogStatus.ERROR, "page is not redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);		
-						sa.assertTrue(false,  "page is not redirecting to the "+ taskSubject+ " page on new tab");
-					}						
+						log(LogStatus.ERROR, "The popup of Subject "+ taskSubject+ " is not opening",	YesNo.No);		
+						sa.assertTrue(false, "The popup of Subject "+ taskSubject+ " is not opening");
+					}					
 
 					if(click(driver, bp.getMeetingAndCallCount(userName, 20), recordName, action.SCROLLANDBOOLEAN))
 					{
@@ -1438,7 +1438,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The task is not verified on Interaction card. subject name: "+taskSubject+". "+result);
 						}
 
-						ArrayList<String> result1=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord);
+						ArrayList<String> result1=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord,null,null);
 						if(result1.isEmpty())
 						{
 							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -1450,13 +1450,12 @@ public class AcuityTaskAndEvent extends BaseLib {
 						}
 
 						if (bp.verifySubjectLinkPopUpOnIntraction(driver,taskSubject)) {
-							log(LogStatus.INFO, "page successfully redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);			
+							log(LogStatus.INFO, "The popup of Subject "+ taskSubject+ " is opening", YesNo.No);			
 						}
 						else
 						{
-							log(LogStatus.ERROR, "page is not redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);		
-							sa.assertTrue(false,  "page is not redirecting to the "+ taskSubject+ " page on new tab");
-
+							log(LogStatus.ERROR, "The popup of Subject "+ taskSubject+ " is not opening",	YesNo.No);		
+							sa.assertTrue(false, "The popup of Subject "+ taskSubject+ " is not opening");
 						}
 
 					}
@@ -1702,7 +1701,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 
 
-					ArrayList<String> result2=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference, false);
+					ArrayList<String> result2=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference, isInstitutionRecord,null,null);
 					if(result2.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference count have been verifed", YesNo.No);
@@ -1780,13 +1779,12 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 
 					if (bp.verifySubjectLinkPopUpOnIntraction(driver,taskSubject1)) {
-						log(LogStatus.INFO, "page successfully redirecting to the "+ taskSubject1+ " page on new tab",	YesNo.No);			
+						log(LogStatus.INFO, "The popup of Subject "+ taskSubject+ " is opening", YesNo.No);			
 					}
 					else
 					{
-						log(LogStatus.ERROR, "page is not redirecting to the "+ taskSubject1+ " page on new tab",	YesNo.No);		
-						sa.assertTrue(false,  "page is not redirecting to the "+ taskSubject1+ " page on new tab");
-
+						log(LogStatus.ERROR, "The popup of Subject "+ taskSubject1+ " is not opening",	YesNo.No);		
+						sa.assertTrue(false, "The popup of Subject "+ taskSubject1+ " is not opening");
 					}
 				}
 				else
@@ -3287,7 +3285,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 
 
-					ArrayList<String> result1=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference, isInstitutionRecord);
+					ArrayList<String> result1=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference, isInstitutionRecord,null,null);
 					if(result1.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -3537,7 +3535,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 
 
-					ArrayList<String> result1=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference, false);
+					ArrayList<String> result1=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference, isInstitutionRecord, null,null);
 					if(result1.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -3750,7 +3748,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The task is not verified on Interaction card. subject name: "+taskSubject+". "+result1);
 					}
 
-					ArrayList<String> result2=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord);
+					ArrayList<String> result2=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord,null,null);
 					if(result2.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -3937,7 +3935,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 
 
-					ArrayList<String> result1=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord);
+					ArrayList<String> result1=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord,null,null);
 					if(result1.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -4129,7 +4127,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The task is not verified on Interaction card. subject name: "+taskSubject1+". "+result1);
 					}
 
-					ArrayList<String> result2=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord);
+					ArrayList<String> result2=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord,null,null);
 					if(result1.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -4302,7 +4300,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The task is not verified on Interaction card. subject name: "+taskSubject+". "+result);
 					}
 
-					ArrayList<String> result1=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord);
+					ArrayList<String> result1=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord,null,null);
 					if(result1.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -4606,7 +4604,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
 
-					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord);
+					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord,null,null);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -5316,7 +5314,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 					ThreadSleep(5000);
 
-					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference, false);
+					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference, isInstitutionRecord,null,null);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -5339,7 +5337,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 					}
 
-					ArrayList<String>result3= bp.verifyRecordShouldNotVisibleOnTagged(null, notVisibleRecord, null, false);
+					ArrayList<String>result3= bp.verifyRecordShouldNotVisibleOnTagged(null, notVisibleRecord, null, isInstitutionRecord,null);
 					if(result3.isEmpty())
 					{
 						log(LogStatus.INFO, "The results are not visible on Tagged section. "+notVisibleRecord, YesNo.No);
@@ -6402,7 +6400,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
 
-					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, null, null, isInstitutionRecord);
+					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, null, null, isInstitutionRecord,null,null);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -6928,7 +6926,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
 
-					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, null, null, false);
+					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, null, null, isInstitutionRecord, null,null);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -7255,7 +7253,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
 
-					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, null, null, isInstitutionRecord);
+					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, null, null, isInstitutionRecord,null,null);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -7638,7 +7636,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, null, null, false);
+					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, null, null, isInstitutionRecord,null,null);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -7959,7 +7957,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
 
-					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTagName, dealTaggedTimeReference, isInstitutionRecord);
+					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTagName, dealTaggedTimeReference, isInstitutionRecord,null,null);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -8341,7 +8339,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, null, null, false);
+					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, null, null, isInstitutionRecord,null,null);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -8676,7 +8674,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTagName, dealTaggedTimeReference,isInstitutionRecord);
+					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTagName, dealTaggedTimeReference,isInstitutionRecord,null,null);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -8995,7 +8993,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, null, null, false);
+					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, null, null, isInstitutionRecord,null,null);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -10311,7 +10309,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
 
-					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTagName, dealTaggedTimeReference, isInstitutionRecord);
+					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTagName, dealTaggedTimeReference, isInstitutionRecord,null,null);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -10757,7 +10755,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTagName, dealTaggedTimeReference, false);
+					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTagName, dealTaggedTimeReference, isInstitutionRecord,null,null);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -11233,7 +11231,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					ArrayList<String> result=bp.verifyRecordShouldNotVisibleOnTagged(companyTagName, peopleTagName, dealTagName, isInstitutionRecord);
+					ArrayList<String> result=bp.verifyRecordShouldNotVisibleOnTagged(companyTagName, peopleTagName, dealTagName, isInstitutionRecord,null);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "Deleted records are not available on Tagged Section", YesNo.No);	
@@ -11295,7 +11293,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					ArrayList<String> result=bp.verifyRecordShouldNotVisibleOnTagged(companyTagName, peopleTagName, dealTagName, false);
+					ArrayList<String> result=bp.verifyRecordShouldNotVisibleOnTagged(companyTagName, peopleTagName, dealTagName, isInstitutionRecord,null);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "Deleted records are not available on Tagged Section", YesNo.No);	
@@ -11466,7 +11464,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
 
-					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTagName, dealTaggedTimeReference,isInstitutionRecord);
+					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTagName, dealTaggedTimeReference,isInstitutionRecord,null,null);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -11721,7 +11719,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTagName, dealTaggedTimeReference, false);
+					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTagName, dealTaggedTimeReference, isInstitutionRecord,null,null);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -12020,7 +12018,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTagName, dealTaggedTimeReference, isInstitutionRecord);
+					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTagName, dealTaggedTimeReference, isInstitutionRecord,null,null);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -12094,7 +12092,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTagName, dealTaggedTimeReference, false);
+					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTagName, dealTaggedTimeReference, isInstitutionRecord,null,null);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
