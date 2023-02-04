@@ -279,8 +279,21 @@ public class DealPage extends BasePageBusinessLayer {
 					timeOut);
 
 		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, xpath, "dropDownWitextBoxBasedOnLabelNamethLabelName: " + labelName,
-					action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, "textBoxBasedOnLabelName: " + labelName, action.SCROLLANDBOOLEAN,
+					timeOut);
+		}
+	}
+
+	public WebElement textAreaBoxBasedOnLabelName(String labelName, int timeOut) {
+		String xpath = "//label[text()=\"" + labelName + "\"]/..//div/textarea";
+
+		try {
+			return FindElement(driver, xpath, "textAreaBoxBasedOnLabelName: " + labelName, action.SCROLLANDBOOLEAN,
+					timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "textAreaBoxBasedOnLabelName: " + labelName, action.SCROLLANDBOOLEAN,
+					timeOut);
 		}
 	}
 
@@ -291,18 +304,21 @@ public class DealPage extends BasePageBusinessLayer {
 
 		return isDisplayed(driver, cancelButton, "Visibility", timeOut, "Cancel button ");
 	}
+
 	@FindBy(xpath = "//label[text()='Source Firm']/following-sibling::div//button")
 	private WebElement SourceFirmCrossIcon;
 
 	public WebElement getSourceFirmCrossIcon(String projectName, int timeOut) {
 		return isDisplayed(driver, SourceFirmCrossIcon, "Visibility", timeOut, "SourceFirmCrossIcon");
 	}
+
 	@FindBy(xpath = "//*[text()='Replace value on records with ']/../..//select")
 	private WebElement replacevalueforstage;
 
 	public WebElement getreplacevalueforstage(String projectName, int timeOut) {
 		return isDisplayed(driver, replacevalueforstage, "Visibility", timeOut, "replacevalueforstage");
 	}
+
 	@FindBy(xpath = "//input[@id='ReplaceValueWithNullValue']")
 	private WebElement replacevaluewithNullforstage;
 

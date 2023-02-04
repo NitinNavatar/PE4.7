@@ -504,40 +504,57 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 							ele = getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 							click(driver, ele, RelatedTab.Details.toString(), action.SCROLLANDBOOLEAN);
 
-							ele = isDisplayed(driver, FindElement(driver,
-									"//*[text()='Contact']/following-sibling::*//*[text()='" + contactFirstName + " "
-											+ contactLastName + "']",
-									"Contact Name Text", action.SCROLLANDBOOLEAN, 30), "visibility", 20, "");
+							String expectedContactFullName = "";
+							if (contactFirstName == null || "".equals(contactFirstName))
+								expectedContactFullName = contactLastName;
+							else
+								expectedContactFullName = contactFirstName + " " + contactLastName;
 
-							if (ele != null) {
+							if (clicktabOnPage("Details")) {
+								log(LogStatus.PASS, "Clicked on SubTab: " + "Details", YesNo.No);
 
-								String contactFullName = getText(driver, ele, "Contact Name", action.SCROLLANDBOOLEAN);
-								System.err.println("Contact Name : " + contactFullName);
-								if (contactFullName.contains(contactFirstName + " " + contactLastName)) {
-									appLog.info("Contact Created Successfully :" + contactFirstName + " "
-											+ contactLastName);
-									ThreadSleep(5000);
-									if (labelNames != null && labelValue != null) {
-										for (int i = 0; i < labelNames.length; i++) {
-											if (fieldValueVerificationOnContactPage(projectName, null,
-													labelNames[i].replace("_", " ").trim(), labelValue[i])) {
-												appLog.info(labelNames[i] + " label value " + labelValue[i]
-														+ " is matched successfully.");
-											} else {
-												appLog.info(labelNames[i] + " label value " + labelValue[i]
-														+ " is not matched successfully.");
-												BaseLib.sa.assertTrue(false, labelNames[i] + " label value "
-														+ labelValue[i] + " is not matched.");
+								ele = isDisplayed(driver,
+										FindElement(driver,
+												"//*[text()='Contact']/following-sibling::*//*[text()='"
+														+ expectedContactFullName + "']",
+												"Contact Name Text", action.SCROLLANDBOOLEAN, 30),
+										"visibility", 20, "");
+
+								if (ele != null) {
+
+									String contactFullName = getText(driver, ele, "Contact Name",
+											action.SCROLLANDBOOLEAN);
+									System.err.println("Contact Name : " + contactFullName);
+									if (contactFullName.contains(expectedContactFullName)) {
+										appLog.info("Contact Created Successfully :" + contactFirstName + " "
+												+ contactLastName);
+										ThreadSleep(5000);
+										if (labelNames != null && labelValue != null) {
+											for (int i = 0; i < labelNames.length; i++) {
+												if (fieldValueVerificationOnContactPage(projectName, null,
+														labelNames[i].replace("_", " ").trim(), labelValue[i])) {
+													appLog.info(labelNames[i] + " label value " + labelValue[i]
+															+ " is matched successfully.");
+												} else {
+													appLog.info(labelNames[i] + " label value " + labelValue[i]
+															+ " is not matched successfully.");
+													BaseLib.sa.assertTrue(false, labelNames[i] + " label value "
+															+ labelValue[i] + " is not matched.");
+												}
 											}
 										}
+										return true;
+									} else {
+										appLog.error("Contact did not get created successfully :" + contactFirstName
+												+ " " + contactLastName);
 									}
-									return true;
 								} else {
-									appLog.error("Contact did not get created successfully :" + contactFirstName + " "
-											+ contactLastName);
+									appLog.error("Not able to find contact name label");
 								}
+
 							} else {
-								appLog.error("Not able to find contact name label");
+								log(LogStatus.ERROR, "Not able to click on SubTab: " + "Details", YesNo.No);
+
 							}
 
 						}
@@ -558,9 +575,9 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		}
 		return false;
 	}
-	
-	public boolean createContactAcuity(String projectName, String contactFirstName, String contactLastName, String legalName,
-			String emailID, String recordType, String otherLabelFields, String otherLabelValues,
+
+	public boolean createContactAcuity(String projectName, String contactFirstName, String contactLastName,
+			String legalName, String emailID, String recordType, String otherLabelFields, String otherLabelValues,
 			CreationPage creationPage, String title, String tier) {
 		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
 		String labelNames[] = null;
@@ -754,9 +771,9 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 						if (getNavigationTabSaveBtn(projectName, 5) != null) {
 							click(driver, getNavigationTabSaveBtn(projectName, 60), "save", action.BOOLEAN);
 						}
-						
+
 						ThreadSleep(3000);
-						
+
 						if (creationPage.toString().equalsIgnoreCase(CreationPage.AccountPage.toString())) {
 							if (clickOnGridSection_Lightning(projectName, RelatedList.Contacts, 30)) {
 								ele = isDisplayed(driver,
@@ -771,7 +788,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 									if (contactFullName.contains(contactFirstName + " " + contactLastName)) {
 										appLog.info("Contact Created Successfully :" + contactFirstName + " "
 												+ contactLastName);
-										flag= true;
+										flag = true;
 									} else {
 										appLog.error("Contact did not get created successfully :" + contactFirstName
 												+ " " + contactLastName);
@@ -831,7 +848,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 								appLog.error("Not able to find contact name label");
 							}
 
-					}
+						}
 
 					} else {
 						appLog.info("Not able to click on save button");
@@ -849,8 +866,6 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		}
 		return false;
 	}
-
-	
 
 	/**
 	 * @author Ravi Kumar
@@ -3309,6 +3324,5 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 
 		return false;
 	}
-	
-	
+
 }
