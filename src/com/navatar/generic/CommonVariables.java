@@ -1375,6 +1375,11 @@ public class CommonVariables {
 			public static String ADEFieldname3,ADEvalue3,ADENewValue3;
 			public static String ADEFieldname4,ADEvalue4,ADENewValue4;
 			public static String ADEFieldname5,ADEvalue5,ADENewValue5;
+			
+			
+		   /***************************** Acuity (Task Call & Event) ******************************/
+			public static String ATCERecord1,ATCERecord2,ATCERecord3,ATCERecord4,ATCERecord5,ATCERecord6,ATCERecord7,ATCERecord8,ATCERecord9;
+			
 	    
 	    
 	    /***************************** Acuity (Task & Event) ******************************/
@@ -1746,6 +1751,8 @@ public class CommonVariables {
 		 	
 		 	public static String AMNNR_Subject55, AMNNR_Notes55, AMNNR_RelatedTo55, AMNNR_Contact5;
 		 	
+		 	public static String AMNNR_TaskLabel1, AMNNR_TaskLabel2, AMNNR_TaskLabel3, AMNNR_TaskLabel4, AMNNR_TaskLabel5, AMNNR_TaskLabel6, AMNNR_TaskLabel7;
+		 	public static String AMNNR_CallLabel1, AMNNR_CallLabel2, AMNNR_CallLabel3, AMNNR_CallLabel4, AMNNR_CallLabel5;
 	 	
 		 	
 		 	//--------RGAcuityMeetingNotesNotificationReminder-------------
@@ -1825,6 +1832,16 @@ public class CommonVariables {
 		
 		 	
 		 	
+			//Acuity Phase 2 Notes Tagging
+			public static String AP2NT_Con1FirstName, AP2NT_Con1LastName, AP2NT_Con1InstitutionName, AP2NT_Con1ContactEmail, AP2NT_Con1OtherLabelsNames, AP2NT_Con1OtherLabelsValues;
+			public static String AP2NT_Con2FirstName, AP2NT_Con2LastName, AP2NT_Con2InstitutionName, AP2NT_Con2ContactEmail, AP2NT_Con2OtherLabelsNames, AP2NT_Con2OtherLabelsValues;
+			
+			public static String AP2NT_FundraisingNames1 , AP2NT_FundraisingFundName1, AP2NT_FundraisingInstitutionName1;
+	 		public static String AP2NT_DealName1, AP2NT_DealCompany1, AP2NT_DealStage1, AP2NT_DealOtherLabelName1, AP2NT_DealOtherLabelValue1;
+	 		public static String AP2NT_CustomObjectTab1,  AP2NT_CustomObjectField1, AP2NT_CustomObjectRecord1;  
+	 		public static String AP2NT_FundNames1, AP2NT_FundTypes1, AP2NT_FundInvestmentCategories1;
+			
+			
             
 
 	    
@@ -8292,6 +8309,49 @@ public class CommonVariables {
 				
 				break;
 				
+             case "AcuityTaskCallAndEvent" :
+					
+					try {
+						dataFile=new FileInputStream(new File(AcuityDataSheetFilePath));
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					try {
+						dataWb=WorkbookFactory.create(dataFile);
+					} catch (EncryptedDocumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InvalidFormatException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}	
+					
+					 ATCERecord1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ATCERecord001", excelLabel.Legal_Name);
+					   
+				
+			 		try {
+						dataFile.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+						dataWb.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+
+					}
+					
+					
+					break;
+				
+				
               case "RGAcuityTaskAndEvent" :
 					
 					try {
@@ -9276,6 +9336,63 @@ public class CommonVariables {
     			 	
     			 	
     			 	
+    			 	AMNNR_TaskLabel1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel001", excelLabel.Field_Label);	
+    			 	AMNNR_TaskLabel2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel002", excelLabel.Field_Label);	 	
+    			 	AMNNR_TaskLabel3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel003", excelLabel.Field_Label);	 	
+    			 	AMNNR_TaskLabel4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel004", excelLabel.Field_Label);	 	
+    			 	AMNNR_TaskLabel5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel005", excelLabel.Field_Label);	 	
+    			 	AMNNR_TaskLabel6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel006", excelLabel.Field_Label);	 	
+    			 	AMNNR_TaskLabel7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel007", excelLabel.Field_Label);
+    			 	
+    			 		 	
+    			 	AMNNR_CallLabel1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_CallLabel001", excelLabel.Field_Label);	
+    			 	AMNNR_CallLabel2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_CallLabel002", excelLabel.Field_Label);	 	
+    			 	AMNNR_CallLabel3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_CallLabel003", excelLabel.Field_Label);	 	
+    			 	AMNNR_CallLabel4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_CallLabel004", excelLabel.Field_Label);	 	
+    			 	AMNNR_CallLabel5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_CallLabel005", excelLabel.Field_Label);	 	
+    			 	
+    			 	
+    			 	AP2NT_Con1FirstName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AP2NT_Con1", excelLabel.Contact_FirstName);
+    			 	AP2NT_Con1LastName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AP2NT_Con1", excelLabel.Contact_LastName);
+    			 	AP2NT_Con1InstitutionName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AP2NT_Con1", excelLabel.Legal_Name);
+    			 	AP2NT_Con1ContactEmail=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AP2NT_Con1", excelLabel.Contact_EmailId);
+    			 	AP2NT_Con1OtherLabelsNames=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AP2NT_Con1", excelLabel.Other_LabelNames);
+    			 	AP2NT_Con1OtherLabelsValues=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AP2NT_Con1", excelLabel.Other_LabelValues);
+    			 	
+    			 	AP2NT_Con2FirstName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AP2NT_Con2", excelLabel.Contact_FirstName);
+    			 	AP2NT_Con2LastName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AP2NT_Con2", excelLabel.Contact_LastName);
+    			 	AP2NT_Con2InstitutionName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AP2NT_Con2", excelLabel.Legal_Name);
+    			 	AP2NT_Con2ContactEmail=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AP2NT_Con2", excelLabel.Contact_EmailId);
+    			 	AP2NT_Con2OtherLabelsNames=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AP2NT_Con2", excelLabel.Other_LabelNames);
+    			 	AP2NT_Con2OtherLabelsValues=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AP2NT_Con2", excelLabel.Other_LabelValues);
+    			 
+    			 	
+    			 	AP2NT_FundNames1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "AP2NT_Fund1", excelLabel.Fund_Name);
+    			 	AP2NT_FundTypes1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "AP2NT_Fund1", excelLabel.Fund_Type);
+    			 	AP2NT_FundInvestmentCategories1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "AP2NT_Fund1", excelLabel.Fund_Investment_Category);
+    				
+    			 	AP2NT_FundraisingNames1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "AP2NT_Fundraising1", excelLabel.FundRaising_Name);
+    			 	AP2NT_FundraisingFundName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "AP2NT_Fundraising1", excelLabel.Fund_Name);
+    			 	AP2NT_FundraisingInstitutionName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "AP2NT_Fundraising1", excelLabel.Institutions_Name);
+    				
+    			 	AP2NT_DealName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "AP2NT_Deal1", excelLabel.Deal_Name);        
+    				    //deal Company
+    			 	AP2NT_DealCompany1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "AP2NT_Deal1", excelLabel.Company);
+    				    //deal stage
+    			 	AP2NT_DealStage1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "AP2NT_Deal1", excelLabel.Stage);
+    			 	AP2NT_DealOtherLabelName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "AP2NT_Deal1", excelLabel.Other_LabelNames);
+    			 	AP2NT_DealOtherLabelValue1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "AP2NT_Deal1", excelLabel.Other_LabelValues);
+    			 	
+    		        
+    			 	AP2NT_CustomObjectTab1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Test Custom Object",excelLabel.Variable_Name, "AP2NT_CustomObjectRecord1", excelLabel.TabName);        
+    			    //deal Company
+    			 	AP2NT_CustomObjectField1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Test Custom Object",excelLabel.Variable_Name, "AP2NT_CustomObjectRecord1", excelLabel.Field);
+    			    //deal stage
+    			 	AP2NT_CustomObjectRecord1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Test Custom Object",excelLabel.Variable_Name, "AP2NT_CustomObjectRecord1", excelLabel.Test_Custom_Object_Name);
+    			 	
+    			 	
+    			 	
+    			 	
     			 	
     			 	
     			 	
@@ -9583,15 +9700,6 @@ public class CommonVariables {
     			 	RGAMNNR_Contact13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGAMNNR_Con13", excelLabel.ContactName);
     			 	RGAMNNR_FirmLegalName11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGAMNNR_Record011", excelLabel.Legal_Name);
     			 	RGAMNNR_FirmLegalName12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGAMNNR_Record012", excelLabel.Legal_Name);
-    			 	
-    			 	
-    			 	
-    			 	
-    			 	
-    			 	
-    			
-    			 	
-    			 	
     			 	
 				try {
 					dataFile.close();

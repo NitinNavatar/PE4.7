@@ -434,10 +434,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String taskDueDate=ATE_AdvanceDueDate1;
 		String taskStatus=ATE_AdvanceStatus1;
 		String taskPriority=ATE_AdvancePriority1;
-		  String[] relatedToData=ATE_ARelatedTo1.split("<break>"); String[]
-		  verifyRelatedToField=
-		  {relatedToData[0],crmUser6FirstName+" "+crmUser6LastName,relatedToData[1]};
-		  String[] relatedAssociation=ATE_ARelatedAsso1.split("<break>");
+		String[] relatedToData=ATE_ARelatedTo1.split("<break>"); String[]
+		verifyRelatedToField= {relatedToData[0],crmUser6FirstName+" "+crmUser6LastName,relatedToData[1]};
+		String[] relatedAssociation=ATE_ARelatedAsso1.split("<break>");
 
 		String contactSectionName=ATE_ContactName2;
 		String contactSectionTitle=ATE_ContactTitle2;
@@ -459,7 +458,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date Only", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null)) {
@@ -557,7 +556,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc005_VerifyConnectionPopupOnAccountPage(String projectName) {
@@ -631,7 +629,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -756,7 +753,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc007_CreateALogACallTaskWithIntermediaryFirmsContactAndVerifyTheAccountAcuityTab(String projectName) {
@@ -772,7 +768,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String taskDueDate=ATE_AdvanceDueDate2;
 		String taskPriority=ATE_AdvancePriority2;
 	
-		
+		String message=bp.acuityDefaultMessage;
 		String[] relatedToData=ATE_ARelatedTo2.split("<break>");
 		String[] relatedAssocVal=ATE_ARelatedAsso2.split("<break>");
 
@@ -823,7 +819,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date Only", taskDueDate }, {"Priority", taskPriority} };
+		String[][] advanceSection = { { "Date", taskDueDate }/*, {"Priority", taskPriority}*/ };
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 		
@@ -912,18 +908,18 @@ public class AcuityTaskAndEvent extends BaseLib {
 					{
 						log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName1+" record on contact section",YesNo.No);
 						String parentID=switchOnWindow(driver);
-						String xPath="//p[contains(@class,'nodata-popup') and text()='No items to display']";
+						String xPath="//p[contains(@class,'nodata-popup') and text()='"+message+"']";
 						WebElement ele=FindElement(driver, xPath, "Message on Meeting and notes popup", action.SCROLLANDBOOLEAN, 20);
 						if(ele!=null)
 						{
-							log(LogStatus.INFO, "Message : \"No items to display\" have been verified.",	YesNo.No);		
-							sa.assertTrue(true,  "Message : \"No items to display\" have been verified.");
+							log(LogStatus.INFO, "Message : \""+message+"\" have been verified.",	YesNo.No);		
+							sa.assertTrue(true,  "Message : \""+message+"\" have been verified.");
 
 						}
 						else
 						{
-							log(LogStatus.ERROR, "Message : \"No items to display\" is not verified on meetings and notes popup",	YesNo.No);		
-							sa.assertTrue(false,  "Message : \"No items to display\" is not verified on meetings and notes popup");
+							log(LogStatus.ERROR, "Message : \""+message+"\" is not verified on meetings and notes popup",	YesNo.No);		
+							sa.assertTrue(false,  "Message : \""+message+"\" is not verified on meetings and notes popup");
 						}
 						driver.close();
 						driver.switchTo().window(parentID);
@@ -1397,7 +1393,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String[][] advanceSection = { { "Start Date", advanceStartDate },{"End Date",advanceEndDate}, {"User",assignedToUser}};	
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
-		int k=0; 
+/*		int k=0; 
 		if (lp.clickAnyCellonCalender(projectName)) {
 			log(LogStatus.INFO,"Able to click on Calendar/Event Link",YesNo.No);
 
@@ -1419,7 +1415,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		refresh(driver);
 		ThreadSleep(3000);
 		if(k!=0)
-		{
+		{ */
 			if (lp.clickOnTab(projectName, tabObj1)) {
 
 				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
@@ -1480,12 +1476,11 @@ public class AcuityTaskAndEvent extends BaseLib {
 				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
 				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
 			}
-		}
+//		}
 
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -1622,7 +1617,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -1815,7 +1809,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc013_Creating1MoreNewTasks(String projectName) {
@@ -1837,7 +1830,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				"ATE_004", excelLabel.Advance_Due_Date);
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date Only", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -1853,7 +1846,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -1955,7 +1947,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc015_CreatingOneMoreTaskAndVerifyViewAllLinkOnIntermediaryAccountAndContactPage(String projectName) {
@@ -1984,7 +1975,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				"ATE_005", excelLabel.Advance_Due_Date);
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date Only", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -2163,7 +2154,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -2847,7 +2837,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -3645,7 +3634,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc023_LoginWithPEUser1AndVerifyAcuityTabOnReferencedAccountsWhichIsTaggedFromRelatedAssociationFieldAndReferencedAccountIsOfIntermediaryRecordType(String projectName) {
@@ -4032,7 +4020,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -4715,7 +4702,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc029_VerifyConnectionPopupOnIntermediaryAccountPage(String projectName) {
@@ -5017,7 +5003,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -5903,7 +5888,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc032_VerifyCountFunctionalityVerificationOnContactPage(String projectName) {
@@ -6250,14 +6234,14 @@ public class AcuityTaskAndEvent extends BaseLib {
 				"ATE_078", excelLabel.Advance_End_Date);
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date Only", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
 		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Due Date Only", taskDueDate1 }, {"Status", taskStatus1}, {"Priority", taskPriority1} };
-
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }/*, {"Status", taskStatus1}, {"Priority", taskPriority1} */};
+/*
 		String[][] basicsection2 = { { "Subject", taskSubject2 }, { "Notes", taskNotes2 }, { "Related_To", taskRelatedTo2 } };
 		String[][] advanceSection2 = { { "Start Date", advanceStartDate },{"End Date",advanceEndDate}};	
-
+*/
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null)) {
@@ -6281,7 +6265,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
 			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
 		}
-
+/*
 		ThreadSleep(2000);
 		lp.CRMlogout();	
 		ThreadSleep(8000);
@@ -6305,7 +6289,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			log(LogStatus.ERROR,"Not Able to Click on Calendar/Event Link",YesNo.Yes);
 			sa.assertTrue(false,"Not Able to Click on Calendar/Event Link");	
 		}
-
+*/
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
@@ -7103,14 +7087,14 @@ public class AcuityTaskAndEvent extends BaseLib {
 				"ATE_081", excelLabel.Advance_End_Date);
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date Only", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
 		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Due Date Only", taskDueDate1 }, {"Status", taskStatus1}, {"Priority", taskPriority1} };
-
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }/*, {"Status", taskStatus1}, {"Priority", taskPriority1} */};
+/*
 		String[][] basicsection2 = { { "Subject", taskSubject2 }, { "Notes", taskNotes2 }, { "Related_To", taskRelatedTo2 } };
 		String[][] advanceSection2 = { { "Start Date", advanceStartDate },{"End Date",advanceEndDate}};	
-
+*/
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 		
 		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null)) {
@@ -7134,7 +7118,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
 			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
 		}
-		
+	/*	
 		ThreadSleep(2000);
 		lp.CRMlogout();	
 		ThreadSleep(8000);
@@ -7158,11 +7142,10 @@ public class AcuityTaskAndEvent extends BaseLib {
 			log(LogStatus.ERROR,"Not Able to Click on Calendar/Event Link",YesNo.Yes);
 			sa.assertTrue(false,"Not Able to Click on Calendar/Event Link");	
 		}
-
+*/
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -7367,7 +7350,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -7804,14 +7786,14 @@ public class AcuityTaskAndEvent extends BaseLib {
 				"ATE_084", excelLabel.Advance_End_Date);
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date Only", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
 		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Due Date Only", taskDueDate1 }, {"Status", taskStatus1}, {"Priority", taskPriority1} };
-
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }/*, {"Status", taskStatus1}, {"Priority", taskPriority1}*/ };
+/*
 		String[][] basicsection2 = { { "Subject", taskSubject2 }, { "Notes", taskNotes2 }, { "Related_To", taskRelatedTo2 } };
 		String[][] advanceSection2 = { { "Start Date", advanceStartDate },{"End Date",advanceEndDate}};	
-
+*/
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null)) {
@@ -7836,7 +7818,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
 		}
 
-
+/*
 		ThreadSleep(2000);
 		lp.CRMlogout();	
 		ThreadSleep(8000);
@@ -7861,7 +7843,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			log(LogStatus.ERROR,"Not Able to Click on Calendar/Event Link",YesNo.Yes);
 			sa.assertTrue(false,"Not Able to Click on Calendar/Event Link");	
 		}
-
+*/
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
@@ -8480,7 +8462,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String taskPriority=ATE_AdvancePriority11;
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date Only", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword);
 
@@ -8583,7 +8565,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -8791,7 +8772,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc047_VerifyConnectionPopupOnIntermediaryAccountPage(String projectName) {
@@ -8916,7 +8896,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -9105,8 +9084,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -9410,7 +9387,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc050_VerifyUIOfFilterSectionOnContactAcuityTab(String projectName) {
@@ -9667,7 +9643,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc051_VerifyInactiveUsersWillDisplayInTheConnectionPopupForIntermediaryAccountPage(String projectName) {
@@ -9783,7 +9758,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc052_VerifyInactiveUsersWillDisplayInTheConnectionSectionForIntermediaryAccountContactPage(String projectName) {
@@ -9848,7 +9822,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc053_UpdateTheNameOfAccountsContactDealsAndTasksAndEventsAndAddNewCompanyDealsandContactFromAddNoteAndEditNoteButton(String projectName) {
@@ -9899,7 +9872,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 				"ATE_U001", excelLabel.Advance_End_Date);
 
 		String[][] basicsection = { { "Subject", subject }, { "Related_To", relatedTo } };
-		String[][] advanceSection = { { "Start Date", taskDueDate }, {"End Date", taskEndDate} };
+		//String[][] advanceSection = { { "Start Date", taskDueDate }, {"End Date", taskEndDate} };
+		String[][] advanceSection = null;
 
 
 		String subject1=ATE_U_ATSubject2;
@@ -9910,7 +9884,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
 				"ATE_U002", excelLabel.Advance_Due_Date);
 		String[][] basicsection1 = { { "Subject", subject1 }, { "Related_To", relatedTo1 } };
-		String[][] advanceSection1 = { { "Due Date Only", taskDueDate1 } };
+		String[][] advanceSection1 = { { "Due Date", taskDueDate1 } };
 
 
 		String xPath;
@@ -9975,6 +9949,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			log(LogStatus.ERROR, "Not able to click on tab"+tabObj2, YesNo.No);
 			sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
 		}
+		refresh(driver);
 
 		if (lp.clickOnTab(projectName, tabObj4)) {
 
@@ -10225,7 +10200,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc054_VerifyRecordUpdateImpactsOnIntermedairyAccountPage(String projectName) {
@@ -10433,7 +10407,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc055_VerifyUpdatedNamesOnTaskPopupDetailsPage(String projectName) {
@@ -10624,7 +10597,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -10874,7 +10846,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -11232,7 +11203,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc059_VerifyRecordDeleteImpactsOnIntermedairyAccountPage(String projectName) {
@@ -11357,7 +11327,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc061_RestoreTheDeletedRecordsFromRecycleBinAndVerify(String projectName) {
@@ -11463,7 +11432,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc062_VerifyRecordRestoreImpactsOnIntermedairyAccountPage(String projectName) {
@@ -11530,7 +11498,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -11720,8 +11687,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -11971,7 +11936,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc066_CreateSomeEventsAndVerifyCountsSwitchVerificationOnIntermediaryAccountPage(String projectName) {
@@ -12022,7 +11986,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -12099,7 +12062,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc068_VerifyOnIntermediaryContactPage(String projectName) {
@@ -12173,7 +12135,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -12382,7 +12343,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test

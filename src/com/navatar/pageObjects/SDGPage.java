@@ -112,7 +112,7 @@ public class SDGPage extends BasePageBusinessLayer {
 		return allRowCheckbox;
 	}
 
-	@FindBy(xpath = "//button[text()='Save']")
+	@FindBy(xpath = "//button[@name='SaveEdit']")
 	private WebElement saveButton;
 
 	public WebElement getSaveButton(String projectName, int timeOut) {
@@ -168,7 +168,7 @@ public class SDGPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, sdgSaveConfirmationMsg, "Visibility", timeOut, "SDG save button");
 	}
 
-	@FindBy(xpath = "//button[text()='Save']")
+	@FindBy(xpath = "//button[@name='SaveEdit']")
 	private WebElement sdgSaveBtn;
 
 	public WebElement getsdgSaveBtn(int timeOut) {

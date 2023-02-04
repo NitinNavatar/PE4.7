@@ -228,7 +228,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	 * @return true if able to click on Navatar Edge
 	 */
 	public boolean clickOnNavatarEdgeLinkHomePage(String projectName,String searchValue,action action,int timeOut) {
-		boolean flag=false;;
+		boolean flag=false;
 		verifyingNavigationMenuLink(projectName, null, null, action, timeOut);
 		String xpath = "//div[@class='flexipagePage']//span[text()='"+searchValue+"']";
 		WebElement ele = FindElement(driver, xpath, searchValue, action, timeOut);

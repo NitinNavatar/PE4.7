@@ -30,13 +30,14 @@ public class ResearchPage extends BasePageBusinessLayer {
 	
 	public WebElement clickOnRecordUsingGridName(String gridName, int timeOut) {
 
-		try {
-			return FindElement(driver, "(//span[contains(text(),'"+ gridName+"')]/ancestor::div/following-sibling::div//a)[1]",
-					"Grid Name: " + gridName, action.SCROLLANDBOOLEAN, timeOut);
-		} catch (StaleElementReferenceException e) {
-			return FindElement(driver,
-					"(//span[contains(text(),'"+ gridName+"')]/ancestor::div/following-sibling::div//a)[1]",
-					"Grid Name: " + gridName, action.SCROLLANDBOOLEAN, timeOut);
+		if(isDisplayed(driver,  FindElement(driver, "(//span[contains(text(),'"+ gridName+"')]/ancestor::div/following-sibling::div//a)[1]",
+				"Grid Name: " + gridName, action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "Grid Name: " + gridName) != null)
+		return isDisplayed(driver,  FindElement(driver, "(//span[contains(text(),'"+ gridName+"')]/ancestor::div/following-sibling::div//a)[1]",
+				"Grid Name: " + gridName, action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "Grid Name: " + gridName);
+		else
+		{
+			return isDisplayed(driver,  FindElement(driver, "(//span[contains(text(),'"+ gridName+"')]/ancestor::div/following-sibling::div//tbody//button)[1]",
+					"Grid Name: " + gridName, action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "Grid Name: " + gridName);
 		}
 
 	}
@@ -92,10 +93,10 @@ public class ResearchPage extends BasePageBusinessLayer {
 	public WebElement getViewMoreOptionUsingHeaderName(String headerName, int timeOut) {
 
 		try {
-			return FindElement(driver,"//span[text()='" + headerName +"']/ancestor::ul/..//following-sibling::div//button[text()='View more']",
+			return FindElement(driver,"//span[text()='" + headerName +"']/ancestor::ul/..//following-sibling::div//button[text()='View More']",
 					"Record Header: " + headerName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
-			return FindElement(driver,"//span[text()='" + headerName +"']/ancestor::ul/..//following-sibling::div//button[text()='View more']",
+			return FindElement(driver,"//span[text()='" + headerName +"']/ancestor::ul/..//following-sibling::div//button[text()='View More']",
 					"Record Header: " + headerName, action.SCROLLANDBOOLEAN, timeOut);
 		}
 

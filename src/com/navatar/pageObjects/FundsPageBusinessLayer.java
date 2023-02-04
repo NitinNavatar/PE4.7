@@ -854,7 +854,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 						}
 					}
 				}
-				if (click(driver, getCustomTabSaveBtn(projectName, 30), "Save Button", action.SCROLLANDBOOLEAN)) {
+				if (click(driver, popUpSaveButton(30), "Save Button", action.SCROLLANDBOOLEAN)) {
 					appLog.error("Click on save Button");
 
 					ThreadSleep(3000);
@@ -1420,6 +1420,33 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 				appLog.info("Successfully Entered value on Deal Name TextBox : " + dealname);
 			} else {
 				appLog.error("Not Able to Entered value on Deal Name TextBox : " + dealname);
+			}
+			ThreadSleep(1000);
+			ThreadSleep(2000);
+			if (click(driver, getCustomTabSaveBtn(projectName, 30), "Save Button", action.SCROLLANDBOOLEAN)) {
+				appLog.error("Click on save Button");
+				flag = true;
+				ThreadSleep(2000);
+			} else {
+				appLog.error("Not Able to Click on save Button");
+			}
+		} else {
+			appLog.error("Not Able to Click on edit Button");
+		}
+		return flag;
+	}
+
+	public boolean UpdateFundName(String projectName, String fundname, int timeOut) {
+		boolean flag = true;
+		WebElement ele;
+		ThreadSleep(2000);
+		if (clickOnShowMoreActionDownArrow(projectName, PageName.FundsPage, ShowMoreActionDropDownList.Edit, 10)) {
+			ThreadSleep(2000);
+			ele = getLabelTextBox(projectName, PageName.FundsPage.toString(), PageLabel.Fund_Name.toString(), timeOut);
+			if (sendKeys(driver, ele, fundname, "Deal Name", action.BOOLEAN)) {
+				appLog.info("Successfully Entered value on Deal Name TextBox : " + fundname);
+			} else {
+				appLog.error("Not Able to Entered value on Deal Name TextBox : " + fundname);
 			}
 			ThreadSleep(1000);
 			ThreadSleep(2000);

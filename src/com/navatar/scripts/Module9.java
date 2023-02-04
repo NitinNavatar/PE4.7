@@ -1022,11 +1022,13 @@ public class Module9 extends BaseLib {
 		HomePage hp = new HomePage(driver);
 
 		String[] fieldsInSDG = { M9_TC005_SDGField1, M9_TC005_SDGField2, M9_TC005_SDGField3, M9_TC005_SDGField4,
-				M9_TC005_SDGField5, M9_TC005_SDGField6, M9_TC005_SDGField7 };
+				M9_TC005_SDGField5, M9_TC005_SDGField6, M9_TC005_SDGField7, M9_TC005_SDGField9 };
 		String[] datefieldsInSDG = { M9_TC005_SDGField5 };
+		String[] amountfieldsInSDG = { M9_TC005_SDGField9 };
 
 		List<String> columnInSDG = Arrays.asList(fieldsInSDG);
 		List<String> dateColumnInSDG = Arrays.asList(datefieldsInSDG);
+		List<String> amountColumnInSDG = Arrays.asList(amountfieldsInSDG);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
@@ -1086,7 +1088,8 @@ public class Module9 extends BaseLib {
 					sa.assertTrue(false, "-----------Not able to Expand SDG Grid --------------");
 				}
 
-				home.verifyColumnAscendingDescendingOrder(SDGGridName.Fund_First_SDG, columnInSDG, dateColumnInSDG);
+				home.verifyColumnAscendingDescendingOrder(TitleOfSDG, columnInSDG, dateColumnInSDG, amountColumnInSDG,
+						"No");
 
 			} else {
 				log(LogStatus.ERROR, "-----------Component Not Added to Home Page: " + TitleOfSDG + " -------------",
@@ -7094,6 +7097,8 @@ public class Module9 extends BaseLib {
 		String[] fieldsInSDG = { M9_TC005_SDGField1, M9_TC005_SDGField2, M9_TC005_SDGField3, M9_TC005_SDGField4,
 				M9_TC005_SDGField5, M9_TC005_SDGField6, M9_TC005_SDGField7 };
 		String[] datefieldsInSDG = { M9_TC005_SDGField5 };
+		String[] amountfieldsInSDG = { M9_TC005_SDGField9 };
+		List<String> amountColumnInSDG = Arrays.asList(amountfieldsInSDG);
 
 		List<String> columnInSDG = Arrays.asList(fieldsInSDG);
 		List<String> dateColumnInSDG = Arrays.asList(datefieldsInSDG);
@@ -7177,7 +7182,8 @@ public class Module9 extends BaseLib {
 					log(LogStatus.PASS, "-----------Page Size has selected to" + pageSize + " --------------",
 							YesNo.No);
 					CommonLib.ThreadSleep(25000);
-					home.verifyColumnAscendingDescendingOrder(SDGGridName.Clonned_SDG, columnInSDG, dateColumnInSDG);
+					home.verifyColumnAscendingDescendingOrder(TitleOfSDG, columnInSDG, dateColumnInSDG,
+							amountColumnInSDG, "No");
 				} else {
 					log(LogStatus.FAIL, "-----------Not able to Select Page Size: " + pageSize + "--------------",
 							YesNo.No);

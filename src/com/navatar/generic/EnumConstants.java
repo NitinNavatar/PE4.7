@@ -197,14 +197,15 @@ public class EnumConstants {
 		,CompanyPage,CreateFundraisingPage,CreateCommitmentFundType,CreateCommitmentCoInvestmentType,FundraisingPage,PartnershipsPage, DealPage,TaskRayPage, LimitedPartnerPage, BuildStep2Of3,PipelinesPage,NewTaskPage,
 	CRMUserPage,   TaskPage, NewTaskPopUP,TestCustomObjectPage,ContactPage ,NewEventPopUp,ActivitiesOrMeetings,SearchActivitiesAttachment,EmailUploadPage,Object1Page,Object1PagePopup,Object2Page,Object3Page,Object4Page,ListEmail,
 CompactLayout, MeetingType, AddPickListMeetingType,ActivityLayoutPage, SDGPage,Object5Page,AccountCustomFieldStatusPage,MEPageFromCalender,SharingSettingsPage,DashboardDeadDeals,AccountReferral,VisualForcePage, WarningPopUp, RecordTypePortfolioCompany,CustomNavigationPage,NavigationPickListPage,CallPopUp,MeetingPopUp,ConvertToPortfolioFrame,TaskPopUp,GlobalActtion_TaskPOpUp, AffiliationPage, 
-Fundraising_ContactPage, Financing, Financial_Performance, Marketing_Initiative, FundDrawdown,Marketing_Prospect, Advisor, MarketingInitiatives, emailFundraisingContact, emailProspects, pastFundraisingAccountPopUp, EmailTargets, pastFundraisingContactPopUp, Send_Distribution_Notices, ManageTarget, ContactsPage, BulkEmail, emailCapitalCallNotice, BulkDownload, CapitalCall, FundDistribution, InvestorDistribution;
+Fundraising_ContactPage, Financing, Financial_Performance, Marketing_Initiative, FundDrawdown,Marketing_Prospect, Advisor, MarketingInitiatives, emailFundraisingContact, emailProspects, pastFundraisingAccountPopUp, EmailTargets, pastFundraisingContactPopUp, Send_Distribution_Notices, ManageTarget, ContactsPage, BulkEmail, emailCapitalCallNotice, BulkDownload, CapitalCall, FundDistribution, InvestorDistribution
+,AcuityDetails, Interaction;
 
 
 
 	}
 	
 	public static enum IconType{
-		updatePhoto,DeletePhoto,Edit,Locked,Task,Call,Meeting,Event;
+		updatePhoto,DeletePhoto,Edit,Locked,Task,Call,Meeting,Event, Email;
 	}
 	
 	public static enum NavatarSetupSideMenuTab{

@@ -110,6 +110,7 @@ public class BaseLib extends AppListeners {
 			WebDriverManager.chromedriver().setup();
 			ChromeOptions options = new ChromeOptions();
 			String OsName= System.getProperty("os.name");
+
 //			options.setBinary("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
 			options.addArguments("disable-infobars");
 			options.addArguments("--disable-notifications");

@@ -272,7 +272,7 @@ public class DealPage extends BasePageBusinessLayer {
 	}
 
 	public WebElement textBoxBasedOnLabelName(String labelName, int timeOut) {
-		String xpath = "//label[text()='" + labelName + "']/parent::lightning-input/div/input";
+		String xpath = "//label[text()='" + labelName + "']/ancestor::lightning-input/div//input";
 
 		try {
 			return FindElement(driver, xpath, "textBoxBasedOnLabelName: " + labelName, action.SCROLLANDBOOLEAN,

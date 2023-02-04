@@ -1813,6 +1813,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 	public boolean editPageAndAddFilter(String label1, String query1, String label2, String query2, String label3,
 			String query3, Condition myRecordCheckbox) {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		CommonLib.refresh(driver);
 		if (clickOnEditPageLink()) {
 			CommonLib.switchToFrame(driver, 50, getAppBuilderIframe(90));
 			ThreadSleep(20000);

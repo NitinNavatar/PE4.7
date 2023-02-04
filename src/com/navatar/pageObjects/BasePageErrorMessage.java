@@ -154,7 +154,7 @@ public interface BasePageErrorMessage {
 	public static String updatePhotoErrorMsg="You can upload a JPG, JPEG, GIF or PNG file. Maximum file size is 16 MB.";
 	public static String currentPhotoTextMsg="Current Photo:";
 	
-	public static String acuityDefaultMessage="No items to display";
+	public static String acuityDefaultMessage="No items to display.";
 	
 	
 }
