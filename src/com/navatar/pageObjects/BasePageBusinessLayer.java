@@ -11398,25 +11398,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		}
 
-		String detail = CommonLib.getAttribute(driver, getNotePopUpSectionDetail("Tasks", 30), "Tasks Section",
-				"aria-hidden");
+		String detail2 = CommonLib.getAttribute(driver, getNotePopUpSectionDetail("Advanced", 5),"Advanced Section", "aria-hidden");
+		if ("true".equals(detail2) || detail2 == null) {
 
-		if (detail.equals("true")) {
-
+		} else {String detail = CommonLib.getAttribute(driver, getNotePopUpSectionDetail("Tasks", 5), "Tasks Section","aria-hidden");
+		if ("true".equals(detail) || detail == null) {
+			
 		} else {
-
-			clickUsingJavaScript(driver, getSectionBtn("Tasks", 30), "Tasks section", action.SCROLLANDBOOLEAN);
-		}
-
-		String detail2 = CommonLib.getAttribute(driver, getNotePopUpSectionDetail("Advanced", 30), "Advanced Section",
-				"aria-hidden");
-
-		if (detail2.equals("true")) {
-
-		} else {
-
-			clickUsingJavaScript(driver, getSectionBtn("Advanced", 30), "Advanced section", action.SCROLLANDBOOLEAN);
-		}
+        clickUsingJavaScript(driver, getSectionBtn("Tasks", 30), "Tasks section", action.SCROLLANDBOOLEAN);
+        }
+		clickUsingJavaScript(driver, getSectionBtn("Advanced", 30), "Advanced section",action.SCROLLANDBOOLEAN);
+	    }
 		CommonLib.ThreadSleep(3000);
 		if (basicSection != null) {
 
@@ -11487,9 +11479,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 
 						} else {
-							xPath = "//input[@placeholder='Search Firm, People or Deals']";
-							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
-									2);
+							
+							ele = getSearchRelatedRecord(20);
 							if (ele == null) {
 								xPath = "//h2[contains(text(),'" + buttonName + "')]/../..//*[@title='Tag']";
 								ele = CommonLib.FindElement(driver, xPath, labelName + " label",
@@ -11503,10 +11494,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								}
 
 							}
-
-							xPath = "//input[@placeholder='Search Firm, People or Deals']";
-							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
-									2);
+			
+							ele = getSearchRelatedRecord(20);
 							if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO,
 										tagList.get(i) + " value has been passed in " + labelName + " field", YesNo.No);
@@ -12901,26 +12890,18 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		}
 
-		String detail = CommonLib.getAttribute(driver, getNotePopUpSectionDetail("Tasks", 30), "Tasks Section",
-				"aria-hidden");
+		String detail2 = CommonLib.getAttribute(driver, getNotePopUpSectionDetail("Advanced", 5),"Advanced Section", "aria-hidden");
+		if ("true".equals(detail2) || detail2 == null) {
 
-		if (detail.equals("true")) {
-
+		} else {String detail = CommonLib.getAttribute(driver, getNotePopUpSectionDetail("Tasks", 5), "Tasks Section","aria-hidden");
+		if ("true".equals(detail) || detail == null) {
+			
 		} else {
-
-			clickUsingJavaScript(driver, getSectionBtn("Tasks", 30), "Tasks section", action.SCROLLANDBOOLEAN);
-		}
-
-		String detail2 = CommonLib.getAttribute(driver, getNotePopUpSectionDetail("Advanced", 30), "Advanced Section",
-				"aria-hidden");
-
-		if (detail2.equals("true")) {
-
-		} else {
-
-			clickUsingJavaScript(driver, getSectionBtn("Advanced", 30), "Advanced section", action.SCROLLANDBOOLEAN);
-		}
-
+        clickUsingJavaScript(driver, getSectionBtn("Tasks", 30), "Tasks section", action.SCROLLANDBOOLEAN);
+        }
+		clickUsingJavaScript(driver, getSectionBtn("Advanced", 30), "Advanced section",action.SCROLLANDBOOLEAN);
+	    }
+		
 		if (basicSection != null) {
 
 			for (String[] val : basicSection) {
@@ -12978,8 +12959,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					for (int i = 0; i < tagList.size(); i++) {
 
-						xPath = "//input[@placeholder='Search Firm, People or Deals']";
-						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 2);
+						
+						ele = getSearchRelatedRecord(20);
 						if (ele == null) {
 							xPath = "//lightning-icon[@title=\"Tag\" and contains(@class,'mt15')]//lightning-primitive-icon";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
@@ -12993,9 +12974,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 
 						}
-
-						xPath = "//input[@placeholder='Search Firm, People or Deals']";
-						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 2);
+			
+						ele = getSearchRelatedRecord(20);
 						if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, tagList.get(i) + " value has been passed in " + labelName + " field",
 									YesNo.No);

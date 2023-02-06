@@ -8959,13 +8959,19 @@ public abstract class BasePage extends BaseLib {
 				"getAllValuesOfSubjectInTaskPopUp").stream().map(x -> x.getText()).collect(Collectors.toList());
 	}
 
-	
-	
+		
 	@FindBy(xpath = "//header//h2/following-sibling::lightning-icon")
 	private WebElement notePopupExpandCollapseButton;
 
 	public WebElement notePopupExpandCollapseButton(int timeOut) {
 		return isDisplayed(driver, notePopupExpandCollapseButton, "Visibility", timeOut, "notePopupExpandCollapseButton");
+	}
+	
+	@FindBy(xpath = "//input[@class='slds-input' and @type='search']")
+	private WebElement searchRelatedRecord;
+
+	public WebElement getSearchRelatedRecord(int timeOut) {
+		return isDisplayed(driver, searchRelatedRecord, "Visibility", timeOut, "search related record");
 	}
 	
 	
