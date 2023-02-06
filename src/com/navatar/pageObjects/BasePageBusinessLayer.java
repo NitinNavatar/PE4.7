@@ -21073,69 +21073,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return negativeResult;
 	}
 
-	public boolean navigateToRecordAndClickOnSubTab(String projectName, String tabName, String recordName,
-			String subTabName) {
-		boolean flag = false;
-
-		if (tabName.equalsIgnoreCase(tabObj1))
-			if (clickOnTab(projectName, tabName)) {
-
-				log(LogStatus.INFO, "Clicked on Tab : " + tabName, YesNo.No);
-
-				if (clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
-					log(LogStatus.INFO, recordName + " record of Firm has been open", YesNo.No);
-
-					if (!"".equalsIgnoreCase(subTabName) && subTabName != null) {
-						if (clicktabOnPage(subTabName)) {
-							log(LogStatus.PASS, "Clicked on SubTab: " + subTabName, YesNo.No);
-							flag = true;
-						} else {
-							log(LogStatus.ERROR, "Not able to click on SubTab: " + subTabName, YesNo.No);
-
-						}
-					} else {
-						flag = true;
-					}
-
-				} else {
-					log(LogStatus.ERROR, "Not able to open " + recordName + " record of Firm", YesNo.No);
-
-				}
-			} else {
-				log(LogStatus.ERROR, "Not able to click on Tab : " + tabName, YesNo.No);
-
-			}
-		else if (tabName.equalsIgnoreCase(tabObj2))
-			if (clickOnTab(projectName, tabName)) {
-
-				log(LogStatus.INFO, "Clicked on Tab : " + tabName, YesNo.No);
-
-				if (clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, recordName, 30)) {
-					log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
-					if (!"".equalsIgnoreCase(subTabName) && subTabName != null) {
-						if (clicktabOnPage(subTabName)) {
-							log(LogStatus.PASS, "Clicked on SubTab: " + subTabName, YesNo.No);
-							flag = true;
-						} else {
-							log(LogStatus.ERROR, "Not able to click on SubTab: " + subTabName, YesNo.No);
-
-						}
-					} else {
-						flag = true;
-					}
-
-				} else {
-					log(LogStatus.ERROR, "Not able to open " + recordName + " record", YesNo.No);
-
-				}
-			} else {
-				log(LogStatus.ERROR, "Not able to click on Tab : " + tabName, YesNo.No);
-
-			}
-
-		return flag;
-	}
-
+	
 	public boolean navigateToRecordAndClickOnSubTab(String projectName, String tabName, String recordName,
 			String subTabName) {
 		boolean flag = false;

@@ -1821,15 +1821,7 @@ public class CommonVariables {
 			public static String RGAMNNR_Subject36, RGAMNNR_RelatedTo36, RGAMNNR_EventStartTime36, RGAMNNR_EventEndTime36, RGAMNNR_EventDescription36, RGAMNNR_DetailPageRecord6,
 		 	RGAMNNR_DetailPageRecord7, RGAMNNR_DetailPageRecord8, RGAMNNR_Contact12, RGAMNNR_Contact13, RGAMNNR_FirmLegalName11, RGAMNNR_FirmLegalName12;
 			
-			//Acuity Phase 2 Nte Tagging
-			public static String AP2NT_Con1FirstName, AP2NT_Con1LastName, AP2NT_Con1InstitutionName, AP2NT_Con1ContactEmail, AP2NT_Con1OtherLabelsNames, AP2NT_Con1OtherLabelsValues;
-			public static String AP2NT_Con2FirstName, AP2NT_Con2LastName, AP2NT_Con2InstitutionName, AP2NT_Con2ContactEmail, AP2NT_Con2OtherLabelsNames, AP2NT_Con2OtherLabelsValues;
-			
-			public static String AP2NT_FundraisingNames1 , AP2NT_FundraisingFundName1, AP2NT_FundraisingInstitutionName1;
-	 		public static String AP2NT_DealName1, AP2NT_DealCompany1, AP2NT_DealStage1, AP2NT_DealOtherLabelName1, AP2NT_DealOtherLabelValue1;
-	 		public static String AP2NT_CustomObjectTab1,  AP2NT_CustomObjectField1, AP2NT_CustomObjectRecord1;  
-	 		public static String AP2NT_FundNames1, AP2NT_FundTypes1, AP2NT_FundInvestmentCategories1;
-		
+
 		 	
 		 	
 			//Acuity Phase 2 Notes Tagging
