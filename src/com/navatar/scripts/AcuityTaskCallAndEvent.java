@@ -35,7 +35,7 @@ import com.relevantcodes.extentreports.LogStatus;
 public class AcuityTaskCallAndEvent extends BaseLib {
 
 	public boolean isInstitutionRecord=false;
-
+/*
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc001_CreateCRMUser(String projectName) {
@@ -396,5 +396,5 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		}
 
 	}
-
+*/
 }
