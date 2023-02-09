@@ -11489,6 +11489,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						} else {
 
 							ele = getSearchRelatedRecord(2);
+
 							if (ele == null) {
 								xPath = "//h2[contains(text(),'" + buttonName + "')]/../..//*[@title='Tag']";
 								ele = CommonLib.FindElement(driver, xPath, labelName + " label",
@@ -11504,6 +11505,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 
 							ele = getSearchRelatedRecord(2);
+
 							if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO,
 										tagList.get(i) + " value has been passed in " + labelName + " field", YesNo.No);
@@ -12975,6 +12977,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					for (int i = 0; i < tagList.size(); i++) {
 
 						ele = getSearchRelatedRecord(2);
+
 						if (ele == null) {
 							xPath = "//lightning-icon[@title=\"Tag\" and contains(@class,'mt15')]//lightning-primitive-icon";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
@@ -12990,6 +12993,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 
 						ele = getSearchRelatedRecord(2);
+
 						if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, tagList.get(i) + " value has been passed in " + labelName + " field",
 									YesNo.No);

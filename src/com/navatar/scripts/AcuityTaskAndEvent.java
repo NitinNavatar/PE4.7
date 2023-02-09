@@ -51,7 +51,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 public class AcuityTaskAndEvent extends BaseLib {
 	
-	public boolean isInstitutionRecord=false;
+	public boolean isInstitutionRecord=true;
 	
 	@Parameters({ "projectName" })
 	@Test
@@ -458,7 +458,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		String[][] advanceSection = { { "Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null)) {
