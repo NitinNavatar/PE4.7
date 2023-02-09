@@ -8755,7 +8755,6 @@ public abstract class BasePage extends BaseLib {
 
 	}
 
-
 	public WebElement valueOfLabelInSubjectLinkPopUpInInteractionSection(String labelName, int timeOut) {
 
 		String xpath = "//section//div[@class=\"slds-carousel\"]/lightning-layout//label[text()=\"" + labelName
@@ -8953,21 +8952,24 @@ public abstract class BasePage extends BaseLib {
 
 	}
 
-
 	public List<String> getAllValuesOfSubjectInTaskPopUp() {
 		return FindElements(driver, "//section//div/ul[contains(@class,\"slds-listbox\")]/li[@data-id]",
 				"getAllValuesOfSubjectInTaskPopUp").stream().map(x -> x.getText()).collect(Collectors.toList());
 	}
 
-	
-	
 	@FindBy(xpath = "//header//h2/following-sibling::lightning-icon")
 	private WebElement notePopupExpandCollapseButton;
 
 	public WebElement notePopupExpandCollapseButton(int timeOut) {
-		return isDisplayed(driver, notePopupExpandCollapseButton, "Visibility", timeOut, "notePopupExpandCollapseButton");
+		return isDisplayed(driver, notePopupExpandCollapseButton, "Visibility", timeOut,
+				"notePopupExpandCollapseButton");
 	}
-	
-	
+
+	@FindBy(xpath = "//input[@class=\"slds-input\" and @type=\"search\" and @placeholder=\"Search\"]")
+	private WebElement searchRelatedRecord;
+
+	public WebElement getSearchRelatedRecord(int timeOut) {
+		return isDisplayed(driver, searchRelatedRecord, "Visibility", timeOut, "search related record");
+	}
 
 }
