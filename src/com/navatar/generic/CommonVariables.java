@@ -1379,9 +1379,17 @@ public class CommonVariables {
 			
 			
 		   /***************************** Acuity (Task Call & Event) ******************************/
-			public static String ATCERecord1,ATCERecord2,ATCERecord3,ATCERecord4,ATCERecord5,ATCERecord6,ATCERecord7,ATCERecord8,ATCERecord9;
+		//firm 
+		public static String ATCERecord1,ATCERecord2,ATCERecord3,ATCERecord4,ATCERecord5,ATCERecord6,ATCERecord7,ATCERecord8,ATCERecord9;
 			
+		//Acuity sections
+	    public static String ATCE_Section1;
 	    
+	    //Acuity Tabs
+	    public static String ATCE_Tabs1;
+	    
+	  //Acuity Contact Header
+	    public static String ATCE_ContactHeader1;
 	    
 	    /***************************** Acuity (Task & Event) ******************************/
 	    
@@ -8324,9 +8332,22 @@ public class CommonVariables {
 						e.printStackTrace();
 					}	
 					
+					/********Firm********/
 					 ATCERecord1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ATCERecord001", excelLabel.Legal_Name);
 					   
 				
+					 /*******Section**********/
+					 ATCE_Section1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.Section);
+					 
+					 /*****Tag********/
+					 ATCE_Tabs1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.TabName);
+					 
+					 /*****Contact Header*****/
+					 //Acuity Contact Header
+					 ATCE_ContactHeader1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.ContactHeader);
+					  
+					 
+					 
 			 		try {
 						dataFile.close();
 					} catch (IOException e) {

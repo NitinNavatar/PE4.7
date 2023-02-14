@@ -14038,75 +14038,107 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	}
 
-	public boolean verifySectionsAndTooltipOnAcuityTab(List<String> sectionHeaderName, List<String> toolTipMessage) {
+	public ArrayList<String> verifySectionsAndTooltipOnAcuityTab(List<String> sectionHeaderName, List<String> toolTipMessage) {
 		String xPath;
 		List<WebElement> elements;
 		List<String> actualSectionHeaderName = new ArrayList<String>();
 		List<String> actualTooltipName = new ArrayList<String>();
+		ArrayList<String> result=new ArrayList<String>();
 
-		xPath = "//slot//span[contains(@class,'slds-page-header__title') and contains(@class,'fit-width-content')]";
+		xPath = "//slot//span[contains(@class,'slds-page-header__title slds-text')]";
 		elements = FindElements(driver, xPath, "Acuity section Header Name");
 		for (WebElement ele : elements) {
 			actualSectionHeaderName.add(getText(driver, ele, "Acuity Section Name", action.SCROLLANDBOOLEAN));
 			actualTooltipName.add(getAttribute(driver, ele, "Acuity Section Name", "title"));
 		}
+		if(sectionHeaderName.size()==toolTipMessage.size()) {
 
-		if (sectionHeaderName.containsAll(actualSectionHeaderName)) {
-			log(LogStatus.INFO, "Actual Section header name : " + actualSectionHeaderName
-					+ " have been matched with the Expected Header Name : " + sectionHeaderName, YesNo.No);
-
-			if (toolTipMessage.containsAll(actualTooltipName)) {
-				log(LogStatus.INFO, "Actual Tooltip message : " + actualTooltipName
-						+ " have been matched with the Expected Tooltip message : " + toolTipMessage, YesNo.No);
-				return true;
-			} else {
-				log(LogStatus.ERROR, "Actual Tooltip message : " + actualTooltipName
-						+ " is not matched with the Expected Tooltip message : " + toolTipMessage, YesNo.No);
-				sa.assertTrue(false, "Actual Tooltip message : " + actualTooltipName
-						+ " is not matched with the Expected Tooltip message : " + toolTipMessage);
-
-				return false;
+			for(int i=0; i<sectionHeaderName.size(); i++)
+			{
+				int k=0;
+				for(int j=0; j<sectionHeaderName.size(); j++)
+				{
+					if (sectionHeaderName.get(i).equals(actualSectionHeaderName.get(j))) {
+						log(LogStatus.INFO, "Actual Section header name : " + actualSectionHeaderName.get(j)
+						+ " have been matched with the Expected Header Name : " + sectionHeaderName.get(i), YesNo.No);
+						k++;
+					}
+				}
+				if(k==0)
+				{
+					log(LogStatus.ERROR, "Expected Header Name : " + sectionHeaderName.get(i)+" is not matched", YesNo.No);
+					result.add("Expected Header Name : " + sectionHeaderName.get(i)+" is not matched");
+				}
 			}
-		} else {
-			log(LogStatus.ERROR, "Actual Section header name : " + actualSectionHeaderName
-					+ " are not  matched with the Expected Header Name : " + sectionHeaderName, YesNo.No);
-			sa.assertTrue(false, "Actual Section header name : " + actualSectionHeaderName
-					+ " are not  matched with the Expected Header Name : " + sectionHeaderName);
-			return false;
+
+			for(int i=0; i<toolTipMessage.size(); i++)
+			{
+				int k=0;
+				for(int j=0; j<toolTipMessage.size(); j++)
+				{
+					if (toolTipMessage.get(i).equals(actualTooltipName.get(j))) {
+						log(LogStatus.INFO, "Actual Tooltip of section : " + actualTooltipName.get(j)
+						+ " have been matched with the Expected tooltip  : " + toolTipMessage.get(i), YesNo.No);
+						k++;
+					}
+				}
+				if(k==0)
+				{
+					log(LogStatus.ERROR, "Expected tooltip of header Name : " + sectionHeaderName.get(i)+" is not matched", YesNo.No);
+					result.add("Expected tooltip of header Name : " + sectionHeaderName.get(i)+" is not matched");
+				}
+			}			
 		}
+		else
+		{
+			log(LogStatus.ERROR, "The size of Header name list and tooltip list are now equal", YesNo.No);
+		    result.add("The size of Header name list and tooltip list are now equal");
+		}
+		return result;
 	}
 
-	public boolean verifyTabsOnTaggedSection(List<String> tabName, String defaultSelectedTab) {
-		boolean flag = false;
+	public ArrayList<String> verifyTabsOnTaggedSection(List<String> tabName, String defaultSelectedTab) {
 		String xPath;
 		List<WebElement> elements;
 		WebElement ele;
-		List<String> expectedTabName = new ArrayList<String>();
+		List<String> actualTabName = new ArrayList<String>();
+		ArrayList<String> result=new ArrayList<String>();
 
 		xPath = "//slot//span[@title='Tagged']/ancestor::div//span[@class='slds-radio_faux']";
 		elements = FindElements(driver, xPath, "Tabs name");
 		for (WebElement el : elements) {
-			expectedTabName.add(getText(driver, el, "TabsName", action.SCROLLANDBOOLEAN));
+			actualTabName.add(getText(driver, el, "TabsName", action.SCROLLANDBOOLEAN));
 		}
-		if (expectedTabName.containsAll(expectedTabName)) {
-			log(LogStatus.INFO, "Expected tab name : " + expectedTabName
-					+ " have been matched with the Actual tab Name : " + tabName + " on Tagged section", YesNo.No);
 
-			xPath = "//span[@class=\"slds-truncate\" and @title='" + defaultSelectedTab + "']";
-			ele = FindElement(driver, xPath, "header of selected tag", action.SCROLLANDBOOLEAN, 15);
-			if (ele != null) {
-				log(LogStatus.INFO, defaultSelectedTab + " tab is default selected on Tagged", YesNo.No);
-				flag = true;
-			} else {
-				log(LogStatus.ERROR, defaultSelectedTab + " tab is not default selected on Tagged", YesNo.No);
+		for(int i=0; i<tabName.size(); i++)
+		{
+			int k=0;
+
+			for(int j=0; j<actualTabName.size(); j++)
+			{
+				if (tabName.get(i).equals(actualTabName.get(j))) {
+					log(LogStatus.INFO, "Expected tab name : " + tabName.get(i)
+					+ " have been matched with the Actual tab Name : " + actualTabName.get(j) + " on Tagged section", YesNo.No);
+					k++;
+				}
 			}
-		} else {
-			log(LogStatus.ERROR,
-					"Expected Section header name : " + expectedTabName
-							+ " are not  matched with the Actual Header Name : " + tabName + " on Tagged section",
-					YesNo.No);
+			if(k==0)
+			{
+				log(LogStatus.ERROR, "Expected tab name: " + tabName.get(i)+ " is not matched on Tagged section",YesNo.No);
+				result.add("Expected tab name: " + tabName.get(i)+ " is not matched on Tagged section");
+			}
 		}
-		return flag;
+
+		xPath = "//span[@class=\"slds-truncate\" and @title='" + defaultSelectedTab + "']";
+		ele = FindElement(driver, xPath, "header of selected tag", action.SCROLLANDBOOLEAN, 15);
+		if (ele != null) {
+			log(LogStatus.INFO, defaultSelectedTab + " tab is default selected on Tagged section", YesNo.No);
+			
+		} else {
+			log(LogStatus.ERROR, defaultSelectedTab + " tab is not default selected on Tagged section", YesNo.No);
+			result.add(defaultSelectedTab + " tab is not default selected on Tagged section");
+		}
+		return result;
 	}
 
 	public ArrayList<String> verifyColumnsAndMessageOnTabsOfTagged(List<String> tabName, String message) {
@@ -14117,29 +14149,72 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			if (click(driver, getTaggedRecordName(val, 25), val + " tab", action.BOOLEAN)) {
 				log(LogStatus.INFO, "clicked on " + val + " tab", YesNo.No);
 
-				if (getHeadingNameOfTabOnTaggedSection(val, 15) != null) {
-					log(LogStatus.INFO,
-							"First column " + val + " has been verified on " + val + " tab of Tagged section",
-							YesNo.No);
-				} else {
-					log(LogStatus.ERROR,
-							"First column " + val + " is not verified verified on " + val + " tab of Tagged section",
-							YesNo.No);
-					result.add(
-							"First column " + val + " is not verified verified on " + val + " tab of Tagged section");
+				if(val.equals("Themes"))
+				{
+					if (getHeadingNameOfTabOnTaggedSection(val, 15) != null) {
+						log(LogStatus.INFO,
+								"First column " + val + " has been verified on " + val + " tab of Tagged section",
+								YesNo.No);
+					} else {
+						log(LogStatus.ERROR,
+								"First column " + val + " is not verified verified on " + val + " tab of Tagged section",
+								YesNo.No);
+						result.add(
+								"First column " + val + " is not verified verified on " + val + " tab of Tagged section");
+					}
 				}
 
-				if (getTimeReferenceIconOnTaggedSection(15) != null) {
-					log(LogStatus.INFO,
-							"Second column Times Referenced has been verified on " + val + " tab of Tagged section",
-							YesNo.No);
-				} else {
-					log(LogStatus.ERROR, "Second column Times Referenced is not verified verified on " + val
-							+ " tab of Tagged section", YesNo.No);
-					result.add("Second column Times Referenced is not verified verified on " + val
-							+ " tab of Tagged section");
-				}
+				else if(val.equals("Clips"))
+				{
+					if (getHeadingNameOfTabOnTaggedSection(val, 15) != null) {
+						log(LogStatus.INFO,
+								"First column " + val + " has been verified on " + val + " tab of Tagged section",
+								YesNo.No);
+					} else {
+						log(LogStatus.ERROR,
+								"First column " + val + " is not verified verified on " + val + " tab of Tagged section",
+								YesNo.No);
+						result.add(
+								"First column " + val + " is not verified verified on " + val + " tab of Tagged section");
+					}
 
+					if (getSummaryColumn(15) != null) {
+						log(LogStatus.INFO,
+								"Second column Summary has been verified on " + val + " tab of Tagged section",
+								YesNo.No);
+					} else {
+						log(LogStatus.ERROR, "Second column Summary is not verified verified on " + val
+								+ " tab of Tagged section", YesNo.No);
+						result.add("Second column Summary is not verified verified on " + val
+								+ " tab of Tagged section");
+					}
+
+				}
+				else
+				{
+					if (getHeadingNameOfTabOnTaggedSection(val, 15) != null) {
+						log(LogStatus.INFO,
+								"First column " + val + " has been verified on " + val + " tab of Tagged section",
+								YesNo.No);
+					} else {
+						log(LogStatus.ERROR,
+								"First column " + val + " is not verified verified on " + val + " tab of Tagged section",
+								YesNo.No);
+						result.add(
+								"First column " + val + " is not verified verified on " + val + " tab of Tagged section");
+					}
+
+					if (getTimeReferenceIconOnTaggedSection(15) != null) {
+						log(LogStatus.INFO,
+								"Second column Times Referenced has been verified on " + val + " tab of Tagged section",
+								YesNo.No);
+					} else {
+						log(LogStatus.ERROR, "Second column Times Referenced is not verified verified on " + val
+								+ " tab of Tagged section", YesNo.No);
+						result.add("Second column Times Referenced is not verified verified on " + val
+								+ " tab of Tagged section");
+					}
+				}
 				if (getMessageOnTaggedSection(val, message, 15) != null) {
 					log(LogStatus.INFO, message + " message is visible on Tagged section", YesNo.No);
 				} else {
@@ -14235,9 +14310,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (!dealsSectionHeaderName.isEmpty()) {
 			ArrayList<String> actualDealsSectionHeaderName = new ArrayList<String>();
 			xPath = "//span[@title='Deals']/../../../..//span[text()=@title]";
-//					"//span[@title='Deals']/ancestor::div/following-sibling::div//span[text()='']";
-			// span[@title='Deals']/ancestor::div//th[contains(@data-col-key-value,'field')]//span[text()='Deal
-			// Name']
+//					
 			elements = FindElements(driver, xPath, "Deal section headers");
 			for (WebElement el : elements) {
 				actualDealsSectionHeaderName.add(getText(driver, el, "deal section headers", action.SCROLLANDBOOLEAN));
@@ -14281,15 +14354,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		if (!connectionsSectionHeaderName.isEmpty()) {
 			ArrayList<String> actualConnectionsSectionHeaderName = new ArrayList<String>();
-//			xPath = "//span[@title='Connections']/ancestor::div[@class='slds-m-bottom_xx-small']//span[@class='slds-truncate' and @title!='']";
 			xPath = "//span[contains(@title,'Connection')]/ancestor::div//span[@class='slds-truncate' and @title!='']";
 			elements = FindElements(driver, xPath, "Connections section headers");
 			for (WebElement el : elements) {
 				actualConnectionsSectionHeaderName
 						.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
 			}
-
-//			xPath = "//span[@title='Connections']/ancestor::div[@class='slds-m-bottom_xx-small']//lightning-icon";
 			xPath = "//span[contains(@title,'Connection')]/ancestor::div//div[@class='slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate']//lightning-icon";
 			elements = FindElements(driver, xPath, "Connections section headers");
 			for (WebElement el : elements) {
@@ -14395,62 +14465,93 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			for (WebElement el : elements) {
 				actualDealsSectionHeaderTooltip.add(getAttribute(driver, el, "deal section headers", "title"));
 			}
-			if (dealSectionHeaderTooltip.containsAll(actualDealsSectionHeaderTooltip)) {
-				log(LogStatus.INFO, "The Tooltip on Headers name of deal section have been verified "
-						+ actualDealsSectionHeaderTooltip, YesNo.No);
-			} else {
-				log(LogStatus.ERROR, "The Tooltip on Headers name of deal section are not verified "
-						+ actualDealsSectionHeaderTooltip, YesNo.No);
-				result.add("The Tooltip on Headers name of deal section are not verified "
-						+ actualDealsSectionHeaderTooltip);
+			for(int i=0; i<dealSectionHeaderTooltip.size(); i++)
+			{
+				int k=0;
+				for(int j=0; j<actualDealsSectionHeaderTooltip.size(); j++)
+				{
+					if (dealSectionHeaderTooltip.get(i).equals(actualDealsSectionHeaderTooltip.get(j))) {
+						log(LogStatus.INFO, "Expected tooltip "+dealSectionHeaderTooltip.get(i)+" have been matched with actual tooltip "+actualDealsSectionHeaderTooltip.get(j)+" on Headers name of deal section ", YesNo.No);
+					    k++;
+					}
+				}
+				if(k==0)
+				{
+					log(LogStatus.ERROR, "Expected tooltip "+dealSectionHeaderTooltip.get(i)+" is not matched with actual tooltip on Headers name of deal section ", YesNo.No);
+					result.add("Expected tooltip "+dealSectionHeaderTooltip.get(i)+" is not matched with actual tooltip on Headers name of deal section ");
+				}
 			}
 		}
 
 		if (!contactsSectionHeaderTooltip.isEmpty()) {
-			ArrayList<String> ExpectedTooltip = new ArrayList<String>();
+			ArrayList<String> actualTooltip = new ArrayList<String>();
 
-			xPath = "//span[@title='Contacts']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//span[@class='slds-truncate' and @title!='']";
+			xPath = "(//span[@title='Contacts']/ancestor::ul/../../following-sibling::div//tr)[1]//span[@class='slds-truncate' and @title!='']";
 			elements = FindElements(driver, xPath, "Contact section headers");
 
 			for (WebElement el : elements) {
-				ExpectedTooltip.add(getAttribute(driver, el, "Contact section headers Tooltip", "title"));
+				actualTooltip.add(getAttribute(driver, el, "Contact section headers Tooltip", "title"));
 			}
 
-			xPath = "//span[@title='Contacts']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//lightning-icon";
+			xPath = "(//span[@title='Contacts']/ancestor::ul/../../following-sibling::div//tr)[1]//lightning-icon";
 			elements = FindElements(driver, xPath, "Contact section headers");
 			for (WebElement el : elements) {
-				ExpectedTooltip.add(getAttribute(driver, el, "Contact section headers Tooltip", "title"));
+				actualTooltip.add(getAttribute(driver, el, "Contact section headers Tooltip", "title"));
 			}
-
-			if (contactsSectionHeaderTooltip.containsAll(ExpectedTooltip)) {
-				log(LogStatus.INFO,
-						"The Tooltip on Header of contact section have been verified " + contactsSectionHeaderTooltip,
-						YesNo.No);
-			} else {
-				log(LogStatus.ERROR,
-						"The Tooltip on Header of contact section are not verified " + contactsSectionHeaderTooltip,
-						YesNo.No);
-				result.add("The Tooltip on Header of contact section are not verified " + contactsSectionHeaderTooltip);
+			
+			for(int i=0; i<contactsSectionHeaderTooltip.size(); i++)
+			{
+				int k=0;
+				for(int j=0; j<actualTooltip.size(); j++)
+				{
+					if (contactsSectionHeaderTooltip.get(i).equals(actualTooltip.get(j))) {
+						log(LogStatus.INFO, "Expected tooltip "+contactsSectionHeaderTooltip.get(i)+" have been matched with actual tooltip " + actualTooltip.get(j)+" on header of contact section.", YesNo.No);
+						k++;
+					} 
+				}
+				if(k==0)
+				{
+					log(LogStatus.ERROR,"Expected tooltip "+contactsSectionHeaderTooltip.get(i)+" is not matched with actual tooltip",YesNo.No);
+					result.add("Expected tooltip "+contactsSectionHeaderTooltip.get(i)+" is not matched with actual tooltip");		
+				}
 			}
 		}
 
 		if (!connectionsSectionHeaderTooltip.isEmpty()) {
-			ArrayList<String> ExpectedTooltip = new ArrayList<String>();
+			ArrayList<String> actualTooltip = new ArrayList<String>();
 
 			xPath = "//span[@title='Connections']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//span[@class='slds-truncate' and @title!='']";
 			elements = FindElements(driver, xPath, "Connections section headers");
 
 			for (WebElement el : elements) {
-				ExpectedTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
+				actualTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
 			}
 
 			xPath = "//span[@title='Connections']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//lightning-icon";
 			elements = FindElements(driver, xPath, "Connections section headers");
 			for (WebElement el : elements) {
-				ExpectedTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
+				actualTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
 			}
+			
+			for(int i=0; i<connectionsSectionHeaderTooltip.size(); i++)
+			{
+				int k=0;
+				for(int j=0; j<actualTooltip.size(); j++)
+				{
+					if (connectionsSectionHeaderTooltip.get(i).equals(actualTooltip.get(j))) {
+						log(LogStatus.INFO, "Expected header tooltip "+connectionsSectionHeaderTooltip.get(i)+" have been verified with actual header tooltip "+actualTooltip.get(j), YesNo.No);
+					    k++;
+					}
+				}
+				if(k==0)
+				{
+					log(LogStatus.ERROR, "Expected header tooltip "+connectionsSectionHeaderTooltip.get(i)+" is not matched with the acutual tooltip", YesNo.No);
+					result.add("Expected header tooltip "+connectionsSectionHeaderTooltip.get(i)+" is not matched with the acutual tooltip");   
+				}
+			}
+			
 
-			if (connectionsSectionHeaderTooltip.containsAll(ExpectedTooltip)) {
+			if (connectionsSectionHeaderTooltip.containsAll(actualTooltip)) {
 				log(LogStatus.INFO, "The Tooltip on Header of Connections section have been verified "
 						+ connectionsSectionHeaderTooltip, YesNo.No);
 			} else {
@@ -21265,6 +21366,57 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			sa.assertTrue(false, "Not able to Click on Note Popup Cross button");
 		}
 
+	}
+	
+	public boolean verifyUIOfLogACallAndCreateTaskButtonOnAcuity(boolean logACallButton, boolean createTaskButton, boolean addContactIcon )
+	{
+		int k=0;
+		boolean flag=false;
+		if(logACallButton)
+		{
+			if(getCreateTaskButton(20)!=null)
+			{
+				log(LogStatus.INFO, "Create task button is visible on acuity details page", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Create task button is not visible on acuity details page", YesNo.No);
+				sa.assertTrue(false, "Create task button is not visible on acuity details page");
+				k++;
+			}
+		}
+		if(createTaskButton)
+		{
+			if(getCreateLogaCallButton(20)!=null)
+			{
+				log(LogStatus.INFO, "Log a Call button is visible on acuity details page", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Log a Call button is not visible on acuity details page", YesNo.No);
+				sa.assertTrue(false, "Log a Call button is not visible on acuity details page");
+				k++;
+			}
+		}
+		if(addContactIcon)
+		{
+			if(getAddContactIcon(20)!=null)
+			{
+				log(LogStatus.INFO, "Add contact icon is visible on acuity details page", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Add contact icon is not visible on acuity details page", YesNo.No);
+				sa.assertTrue(false, "Add contact icon is not visible on acuity details page");
+				k++;
+			}
+		}
+		
+		if(k==0)
+		{
+			flag=true;
+		}
+		return flag;
 	}
 
 }

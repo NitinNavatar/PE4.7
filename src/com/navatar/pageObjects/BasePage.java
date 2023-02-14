@@ -8637,6 +8637,15 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, timeReferenceIconOnTaggedSection, "Visibility", timeOut,
 				"time reference icon on tagged section");
 	}
+	
+	@FindBy(xpath = "//span[@class='slds-th__action']//span[@title='Summary']")
+	private WebElement summaryColumn;
+
+	public WebElement getSummaryColumn(int timeOut) {
+		return isDisplayed(driver, summaryColumn, "Visibility", timeOut,
+				"summary column");
+	}
+	
 
 	public WebElement getMessageOnTaggedSection(String tabName, String message, int timeOut) {
 
@@ -8969,5 +8978,27 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getSearchRelatedRecord(int timeOut) {
 		return isDisplayed(driver, searchRelatedRecord, "Visibility", timeOut, "search related record");
 	}
+	
+	@FindBy(xpath = "//ul[@class='slds-button-group-list']//button[text()='Create Task']")
+	private WebElement createTaskButton;
+
+	public WebElement getCreateTaskButton(int timeOut) {
+		return isDisplayed(driver, createTaskButton, "Visibility", timeOut, "create task button");
+	}
+	
+	@FindBy(xpath = "//lightning-icon[@title='Log a Call']//lightning-primitive-icon")
+	private WebElement createLogaCallButton;
+
+	public WebElement getCreateLogaCallButton(int timeOut) {
+		return isDisplayed(driver, createLogaCallButton, "Visibility", timeOut, "Log a Call button");
+	}
+	
+	@FindBy(xpath = "//lightning-icon[@title='Add Contact']")
+	private WebElement addContactIcon;
+
+	public WebElement getAddContactIcon(int timeOut) {
+		return isDisplayed(driver, addContactIcon, "Visibility", timeOut, "Add contact icon");
+	}
+	
 
 }

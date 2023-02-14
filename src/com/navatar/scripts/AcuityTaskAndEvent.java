@@ -206,71 +206,74 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if(bp.clicktabOnPage(TabName.Acuity.toString()))
 				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
+					ArrayList<String> result3=bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,sectionHeaderName);
 
-					if(bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,sectionHeaderName))
+					if(result3.isEmpty())
 					{
 						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
-
-						if(bp.verifyTabsOnTaggedSection(tabNameOnTagged,defaultTabOntagged))
-						{
-							log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section ", YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Default selected Tab and Tabs are not verified on Tagged section ", YesNo.No);
-							sa.assertTrue(false, "Default selected Tab and Tabs are not verified on Tagged section ");
-						}
-						refresh(driver);
-
-						ArrayList<String> result= bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
-						if(result.isEmpty())
-						{
-							log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ", YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. "+result, YesNo.No);
-							sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
-						}
-
-						ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, contactHeaders, message, blankList, null,connectionHeaders,null);
-
-						if(result1.isEmpty())
-						{
-							log(LogStatus.INFO, "The header name and message have been verified on Interaction and Contacts ", YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "The header name and message are not verified on Interaction and Contacts. "+result1, YesNo.No);
-							sa.assertTrue(false, "The header name and message are not verified on Interaction and Contacts "+result1);
-						}
-
-						ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, contactHeaders, connectionTooltips);
-						if(result2.isEmpty())
-						{
-							log(LogStatus.INFO, "The Tooltip on Contact header have been verified", YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "The Tooltip on Contact header are not verified. "+result2, YesNo.No);
-							sa.assertTrue(false, "The Tooltip on Contact header are not verified. "+result2);
-						}
-
-
-						if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
-							log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "view All Button is visible on Interaction section", YesNo.No);
-							sa.assertTrue(false, "view All Button is visible on Interaction section");
-						}
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab", YesNo.No);
-						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab");
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result3, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result3);
 					}
+
+					ArrayList<String> result4=bp.verifyTabsOnTaggedSection(tabNameOnTagged,defaultTabOntagged);
+					if(result4.isEmpty())
+					{
+						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Default selected Tab and Tabs are not verified on Tagged section. "+result4, YesNo.No);
+						sa.assertTrue(false, "Default selected Tab and Tabs are not verified on Tagged section. "+result4);
+					}
+					refresh(driver);
+
+					ArrayList<String> result= bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. "+result, YesNo.No);
+						sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
+					}
+
+					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, contactHeaders, message, blankList, null,connectionHeaders,null);
+
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The header name and message have been verified on Interaction and Contacts ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The header name and message are not verified on Interaction and Contacts. "+result1, YesNo.No);
+						sa.assertTrue(false, "The header name and message are not verified on Interaction and Contacts "+result1);
+					}
+
+					ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, contactHeaders, connectionTooltips);
+					if(result2.isEmpty())
+					{
+						log(LogStatus.INFO, "The Tooltip on Contact header have been verified", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Tooltip on Contact header are not verified. "+result2, YesNo.No);
+						sa.assertTrue(false, "The Tooltip on Contact header are not verified. "+result2);
+					}
+
+
+					if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
+						log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "view All Button is visible on Interaction section", YesNo.No);
+						sa.assertTrue(false, "view All Button is visible on Interaction section");
+					}
+
 				}
 				else
 				{
@@ -333,19 +336,27 @@ public class AcuityTaskAndEvent extends BaseLib {
 				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
 
-					if(bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,sectionHeaderName))
+					ArrayList<String> result3=bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,sectionHeaderName);
+					if(result3.isEmpty())
 					{
-						log(LogStatus.INFO, "Tagged Section Headers have been verified on acuity tab", YesNo.No);
+						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
 
-						if(bp.verifyTabsOnTaggedSection(tabNameOnTagged,defaultTabOntagged))
-						{
-							log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section ", YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Default selected Tab and Tabs are not verified on Tagged section ", YesNo.No);
-							sa.assertTrue(false, "Default selected Tab and Tabs are not verified on Tagged section ");
-						}
+					}					
+					else
+					{
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result3, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result3);
+					}
+					ArrayList<String> result4=bp.verifyTabsOnTaggedSection(tabNameOnTagged,defaultTabOntagged);
+					if(result4.isEmpty())
+					{
+						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Default selected Tab and Tabs are not verified on Tagged section. "+result4, YesNo.No);
+						sa.assertTrue(false, "Default selected Tab and Tabs are not verified on Tagged section. "+result4);
+					}
 						refresh(driver);
 
 						ArrayList<String> result= bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
@@ -390,12 +401,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "view All Button is visible on Interaction section", YesNo.No);
 							sa.assertTrue(false, "view All Button is visible on Interaction section");
 						}
-					}
-					else
-					{
-						log(LogStatus.ERROR, "Tagged section headers and Tooltip are not verified on acuity tab", YesNo.No);
-						sa.assertTrue(false, "Tagged section headers and Tooltip are not verified on acuity tab");
-					}
+					
 				}
 				else
 				{
