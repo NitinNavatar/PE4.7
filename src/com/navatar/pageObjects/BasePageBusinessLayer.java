@@ -20501,7 +20501,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			result.add("Not able to click on Companies tab name");
 		}
 
-		if (isInstitutionRecord == false) {
+		if (isInstitutionRecord == true) {
 			if (click(driver, getTaggedRecordName(TaggedName.Funds.toString(), 30),
 					TaggedName.Funds.toString() + " tab", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on Fund tab name", YesNo.No);

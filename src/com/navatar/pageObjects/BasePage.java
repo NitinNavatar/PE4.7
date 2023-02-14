@@ -8967,7 +8967,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, notePopupExpandCollapseButton, "Visibility", timeOut, "notePopupExpandCollapseButton");
 	}
 	
-	@FindBy(xpath = "//input[@class='slds-input' and @type='search']")
+	@FindBy(xpath = "//input[@class=\"slds-input\" and @type=\"search\" and @placeholder=\"Search\"]")
 	private WebElement searchRelatedRecord;
 
 	public WebElement getSearchRelatedRecord(int timeOut) {
