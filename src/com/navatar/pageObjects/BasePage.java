@@ -9014,6 +9014,39 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, internalTabOnConnectionSection, "Visibility", timeOut, "Internal tab on connection section");
 	}
 	
+
+	@FindBy(xpath = "//input[@class='slds-input' and @type='search']")
+	private WebElement searchBoxOnTheme;
+
+	public WebElement getSearchBoxOnTheme(int timeOut) {
+		return isDisplayed(driver, searchBoxOnTheme, "Visibility", timeOut, "Search box on theme");
+	}
+	
+	
+	public WebElement getThemeName(String themeName, int timeOut) {
+
+		String xpath = "//th[@data-label='Theme Name']//a[text()='"+themeName+"']";
+		WebElement type = FindElement(driver, xpath, "Theme name", action.SCROLLANDBOOLEAN, timeOut);
+
+		return type;
+
+	}
+	
+	public WebElement getThemeNameOnDetailsPage(String themeName, int timeOut) {
+
+		String xpath = "//lightning-formatted-text[text()='PE Theme 1']";
+		WebElement type = FindElement(driver, xpath, "Theme name", action.SCROLLANDBOOLEAN, timeOut);
+
+		return type;
+
+	}
+		
+	
+	
+
+	
+	
+	
 	
 
 }

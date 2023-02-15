@@ -21579,5 +21579,39 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return flag;
 	}
+	
+	public String clickOnThemeRecord(String themeName)
+	{
+		boolean flag=false;
+		String parentID=null;
+		if(sendKeysAndPressEnter(driver, getSearchBoxOnTheme(20), themeName, "Theme name", action.SCROLLANDBOOLEAN))
+		{
+			log(LogStatus.INFO, "The value : "+themeName+" has been in search box of theme", YesNo.No);
+			ThreadSleep(3000);
+			if(clickUsingJavaScript(driver, getThemeName(themeName,20), "Theme name", action.SCROLLANDBOOLEAN))
+			{
+				log(LogStatus.INFO, "Clicked on the Theme name : "+themeName, YesNo.No);
+				parentID=switchOnWindow(driver);
+				if(getThemeNameOnDetailsPage(themeName,30)!=null)
+				{
+					log(LogStatus.INFO, themeName+" theme record has been open", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, themeName+" theme record is not open", YesNo.No);
+					parentID=null;
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on the Theme name : "+themeName, YesNo.No);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "The value : "+themeName+" not passed in search box of theme", YesNo.No);
+		}
+		return parentID;
+	}
 
 }

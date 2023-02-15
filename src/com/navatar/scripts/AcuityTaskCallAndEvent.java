@@ -1615,29 +1615,27 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName=ATCE_Fundraising1;		
+		String recordName=ATCE_Theme1;		
 			
-		String sectionHeader=ATCE_Section4;
-		String tabsOnTagged=ATCE_Tabs3;
-		String defaultTabOntagged="Firms";
+		String sectionHeader=ATCE_Section5;
+		
 		String message=bp.acuityDefaultMessage;
 
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
 
-		String[] arrTabName= tabsOnTagged.split("<break>");		
-		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
-
+		
 		List<String> blankList=new ArrayList<String>();
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
+		if (lp.clickOnTab(projectName, TabName.Themes.toString())) {
 
-			log(LogStatus.INFO, "Clicked on Tab : "+TabName.Fundraising.toString(), YesNo.No);
+			log(LogStatus.INFO, "Clicked on Tab : "+TabName.Themes.toString(), YesNo.No);
+			
+			String parentWindowID=bp.clickOnThemeRecord(recordName);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
-					recordName, 30)) {
+			if (parentWindowID!=null) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 				if(bp.clicktabOnPage(TabName.Acuity.toString()))
 				{
@@ -1652,29 +1650,6 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result3, YesNo.No);
 						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result3);
 					}
-					ArrayList<String> result4=bp.verifyTabsOnTaggedSection(tabNameOnTagged,defaultTabOntagged);
-					if(result4.isEmpty())
-					{
-						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ", YesNo.No);
-					}
-					else
-					{
-						log(LogStatus.ERROR, "Default selected Tab and Tabs are not verified on Tagged section. "+result4, YesNo.No);
-						sa.assertTrue(false, "Default selected Tab and Tabs are not verified on Tagged section. "+result4);
-					}
-					refresh(driver);
-
-					ArrayList<String> result= bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
-					if(result.isEmpty())
-					{
-						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ", YesNo.No);
-					}
-					else
-					{
-						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. "+result, YesNo.No);
-						sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
-					}
-
 					
 					if(bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, false, true, false, false))
 					{
@@ -1719,11 +1694,13 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
 				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
 			}
+			driver.close();
+			driver.switchTo().window(parentWindowID);
 		}
 		else
 		{
-			log(LogStatus.ERROR, "Not able to click on tab : "+TabName.Fundraising.toString(), YesNo.No);
-			sa.assertTrue(false,  "Not able to click on tab : "+TabName.Fundraising.toString());
+			log(LogStatus.ERROR, "Not able to click on tab : "+TabName.Themes.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+TabName.Themes.toString());
 		}
 		lp.CRMlogout();	
 		sa.assertAll();	

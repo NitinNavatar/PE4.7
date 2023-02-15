@@ -1394,9 +1394,12 @@ public class CommonVariables {
 		// Fundraising
 		public static String ATCE_Fundraising1;
 		
+		// Theme
+		public static String ATCE_Theme1;
+		
 		
 		//Acuity sections
-	    public static String ATCE_Section1,ATCE_Section2,ATCE_Section3,ATCE_Section4;
+	    public static String ATCE_Section1,ATCE_Section2,ATCE_Section3,ATCE_Section4,ATCE_Section5;
 	    
 	    //Acuity Tabs
 	    public static String ATCE_Tabs1,ATCE_Tabs2,ATCE_Tabs3;
@@ -8379,6 +8382,9 @@ public class CommonVariables {
 					 /*************Fundraisng **********/
 					 ATCE_Fundraising1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ATCE_Fundraising01", excelLabel.FundRaising_Name);
 					
+					 /********* Theme ***********/
+					 ATCE_Theme1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Themes",excelLabel.Variable_Name, "ATCE_Theme01", excelLabel.Theme_Name);
+					 	
 					 
 					 
 					 /*******Section**********/
@@ -8386,6 +8392,7 @@ public class CommonVariables {
 					 ATCE_Section2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.Section);
 					 ATCE_Section3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE003", excelLabel.Section);
 					 ATCE_Section4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE004", excelLabel.Section);
+					 ATCE_Section5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE005", excelLabel.Section);
 					 
 					 /*****Tag********/
 					 ATCE_Tabs1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.TabName);
