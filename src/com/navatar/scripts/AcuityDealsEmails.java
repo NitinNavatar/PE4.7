@@ -481,7 +481,7 @@ public class AcuityDealsEmails extends BaseLib {
 				ArrayList<String> result1 = bp
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 								contactsSectionHeaderName, null, dealHeaders, message, connectionsSectionHeaderName,
-								null);
+								null,contactsSectionHeaderName, null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 				} else {
@@ -509,7 +509,7 @@ public class AcuityDealsEmails extends BaseLib {
 				ArrayList<String> result1 = bp
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 								contactsSectionHeaderName, null, dealHeaders, message, connectionsSectionHeaderName,
-								null);
+								null,contactsSectionHeaderName, null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 				} else {
@@ -1547,7 +1547,7 @@ public class AcuityDealsEmails extends BaseLib {
 
 				ArrayList<String> result1 = BP
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
-								contactsSectionHeaderName, null, dealHeaders, null, connectionsSectionHeaderName, null);
+								contactsSectionHeaderName, null, dealHeaders, null, connectionsSectionHeaderName, null,contactsSectionHeaderName, null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 				} else {
@@ -1606,7 +1606,7 @@ public class AcuityDealsEmails extends BaseLib {
 
 				ArrayList<String> result1 = BP
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
-								contactsSectionHeaderName, null, dealHeaders, null, connectionsSectionHeaderName, null);
+								contactsSectionHeaderName, null, dealHeaders, null, connectionsSectionHeaderName, null,contactsSectionHeaderName, null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 				} else {
@@ -2729,7 +2729,7 @@ public class AcuityDealsEmails extends BaseLib {
 				ThreadSleep(2000);
 				ArrayList<String> result1 = bp
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
-								contactsSectionHeaderName, null, dealHeaders, null, connectionsSectionHeaderName, null);
+								contactsSectionHeaderName, null, dealHeaders, null, connectionsSectionHeaderName, null,contactsSectionHeaderName, null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 				} else {
@@ -2755,7 +2755,7 @@ public class AcuityDealsEmails extends BaseLib {
 				ThreadSleep(2000);
 				ArrayList<String> result1 = bp
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
-								contactsSectionHeaderName, null, dealHeaders, null, connectionsSectionHeaderName, null);
+								contactsSectionHeaderName, null, dealHeaders, null, connectionsSectionHeaderName, null,contactsSectionHeaderName, null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 				} else {
@@ -3921,7 +3921,7 @@ public class AcuityDealsEmails extends BaseLib {
 				ThreadSleep(2000);
 				ArrayList<String> result1 = bp
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
-								contactsSectionHeader, null, DealHeaderName, null, connectionsSectionHeaderName, null);
+								contactsSectionHeader, null, DealHeaderName, null, connectionsSectionHeaderName, null,contactsSectionHeader, null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Contact Section ", YesNo.No);
 				} else {
@@ -3949,7 +3949,7 @@ public class AcuityDealsEmails extends BaseLib {
 				ArrayList<String> result1 = bp
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 								contactsSectionHeader, null, DealHeaderName, null, connectionsSectionHeaderName,
-								null);
+								null,contactsSectionHeader, null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Contact Section ", YesNo.No);
 
@@ -5734,7 +5734,7 @@ public void ADETc043_VerifyConnectionsCardSectionVisibilityAcuityTabforExistingC
 			ArrayList<String> result1 = bp
 					.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 							contactsSectionHeaderName, null, dealsSectionHeaderName,null, connectionsHeaders,
-							null);
+							null,contactsSectionHeaderName, null);
 			if (result1.isEmpty()) {
 				log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 			} else {
@@ -5809,7 +5809,7 @@ public void ADETc044_VerifyConnectionSectionWhencontactsConnectionCardPopupRespe
 				ArrayList<String> result1 = bp
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 								contactsSectionHeaderName, null, dealsSectionHeaderName,null, connectionsHeaders,
-								message);
+								message,contactsSectionHeaderName,null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Connection Section ", YesNo.No);
 				} else {
@@ -5884,7 +5884,7 @@ public void ADETc044_VerifyConnectionSectionWhencontactsConnectionCardPopupRespe
 						ArrayList<String> result1 = bp
 								.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 										contactsSectionHeaderName, null, dealsSectionHeaderName,null, connectionsHeaders,
-										message);
+										message,contactsSectionHeaderName, null);
 						if (result1.isEmpty()) {
 							log(LogStatus.INFO, "The header name and message have been verified  Connection Section ", YesNo.No);
 						} else {
@@ -8047,7 +8047,7 @@ public void ADETc065_VerifyContactCardsectionvisibilityinAcuitytabforexistingAcc
 			ThreadSleep(2000);
 			ArrayList<String> result1 = bp
 					.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
-							contactsSectionHeader, null, DealHeaderName, null, connectionsSectionHeaderName, null);
+							contactsSectionHeader, null, DealHeaderName, null, connectionsSectionHeaderName, null,contactsSectionHeader, null);
 			if (result1.isEmpty()) {
 				log(LogStatus.INFO, "The header name and message have been verified  Contact Section ", YesNo.No);
 			} else {
@@ -10343,7 +10343,7 @@ public void ADETc095_VerifyofUserConnectionPopupConnectionCardRespectively(Strin
 				ArrayList<String> result1 = BP
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 								contactsSectionHeaderName, null, dealsSectionHeaderName,null, connectionsHeaders,
-								null);
+								null,contactsSectionHeaderName, null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 				} else {
@@ -10713,7 +10713,7 @@ public void ADETc099_VerifyWhenThereInternalUserforaContactandUserIconisClicked(
 				ArrayList<String> result1 = BP
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 								contactsSectionHeaderName, null, dealsSectionHeaderName,null, connectionsHeaders,
-								connectionsSectionHeaderMessage);
+								connectionsSectionHeaderMessage,contactsSectionHeaderName, null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 				} else {
@@ -12336,7 +12336,7 @@ String dealsSectionHeaderMessage = "No items to display.";
 		ArrayList<String> result1 = BP
 				.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 						contactsSectionHeaderName, null, dealsSectionHeaderName,dealsSectionHeaderMessage, connectionsHeaders,
-						null);
+						null,contactsSectionHeaderName, null);
 		if (result1.isEmpty()) {
 			log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 		} else {
@@ -12355,7 +12355,7 @@ String dealsSectionHeaderMessage = "No items to display.";
 			ArrayList<String> result1 = BP
 					.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 							contactsSectionHeaderName, null, dealsSectionHeaderName,dealsSectionHeaderMessage, connectionsHeaders,
-							null);
+							null,contactsSectionHeaderName, null);
 			if (result1.isEmpty()) {
 				log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 			} else {

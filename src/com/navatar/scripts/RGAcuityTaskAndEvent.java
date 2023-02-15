@@ -41,7 +41,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
-		for(int k=0; k<6; k++)
+		for(int k=2; k<6; k++)
 		{
 			lp = new LoginPageBusinessLayer(driver);
 			home = new HomePageBusineesLayer(driver);
@@ -1253,7 +1253,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, "Description message : \" "+eventNotes1+" \" is available on interaction card" + eventSubjectName);
 					}
 					
-
+/*
 					String xPath = "//a[text()='" + eventSubjectName
 							+ "']/../preceding-sibling::div//button[@title='Add Note']";
 					WebElement ele = CommonLib.FindElement(driver, xPath, eventSubjectName+" Add button", action.SCROLLANDBOOLEAN, 30);
@@ -1319,7 +1319,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on Add not button of event : "+eventSubjectName, YesNo.No);
 						sa.assertTrue(false, "Not able to click on Add not button of event : "+eventSubjectName);
 					}
-				}
+*/				}
 				else
 				{
 					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);

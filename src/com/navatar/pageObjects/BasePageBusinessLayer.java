@@ -356,7 +356,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	public boolean verifyGridErrorMessage1(String environment, String mode, RelatedList gridSectionName,
 			String expectedMsg, int timeOut) {
 		String xpath = "//*[text()='" + gridSectionName.toString()
-				+ "']/ancestor::article//*[text()='No data returned']";
+		+ "']/ancestor::article//*[text()='No data returned']";
 		WebElement ele = isDisplayed(driver,
 				FindElement(driver, xpath, gridSectionName.toString(), action.SCROLLANDBOOLEAN, timeOut), "visiblity",
 				30, gridSectionName.toString());
@@ -1136,7 +1136,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ele = FindElement(driver,
 							"//a[contains(@href,'lightning')]/span[@class='slds-truncate']/span[contains(text(),'"
 									+ tabName + "')]",
-							tabName, action.SCROLLANDBOOLEAN, 10);
+									tabName, action.SCROLLANDBOOLEAN, 10);
 					ele = isDisplayed(driver, ele, "visibility", 10, tabName);
 					if (ele != null) {
 						if (clickUsingJavaScript(driver, ele, tabName + " :Tab")) {
@@ -1167,6 +1167,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case InstituitonsTab:
 			viewList = "All Firms";
 			break;
+		case DealTab:
+			viewList = "All";
+			break;		
 		case CompaniesTab:
 			viewList = "All Companies";
 			break;
@@ -1234,7 +1237,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ele = FindElement(driver,
 							"//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//a[text()='"
 									+ alreadyCreated + "']",
-							alreadyCreated, action.BOOLEAN, 30);
+									alreadyCreated, action.BOOLEAN, 30);
 					ThreadSleep(2000);
 					if (click(driver, ele, alreadyCreated, action.BOOLEAN)) {
 						ThreadSleep(3000);
@@ -1681,7 +1684,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.INFO,
 							"successfully verified dueDate textbox "
 									+ subjectMeetingAssociationsCommentsDatePriorityName[4] + " contains " + name,
-							YesNo.No);
+									YesNo.No);
 				} else {
 					log(LogStatus.ERROR, "could not verify dueDate textbox, found: " + name, YesNo.No);
 					flag = false;
@@ -1772,7 +1775,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.INFO,
 							"successfully verified dueDate textbox "
 									+ subjectMeetingAssociationsCommentsDatePriorityName[4] + " contains " + name,
-							YesNo.No);
+									YesNo.No);
 				} else {
 					log(LogStatus.ERROR, "could not verify dueDate textbox, found: " + name, YesNo.No);
 					flag = false;
@@ -1909,7 +1912,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	public WebElement removeButtonInRelatedAssociations(String projectName, String record) {
 		return isDisplayed(driver, FindElement(driver,
 				"//div[@id='relatedAssociation']//span[text()='" + record
-						+ "']/../following-sibling::button[@title='Remove']",
+				+ "']/../following-sibling::button[@title='Remove']",
 				"removeButton", action.BOOLEAN, 10), "visibility", 5, "removeButton");
 	}
 
@@ -2061,7 +2064,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				|| PageName.GlobalActtion_TaskPOpUp.toString().equals(pageName.toString())) {
 			if (labelFieldTextBox.equalsIgnoreCase(PageLabel.Name.toString()))
 				xpath = "//span[text()='" + labelTextBox
-						+ "']/..//following-sibling::div//input[@title='Search Contacts']";
+				+ "']/..//following-sibling::div//input[@title='Search Contacts']";
 			else
 				xpath = "//span[text()='" + labelTextBox + "']/..//following-sibling::div//input";
 		} else {
@@ -2349,14 +2352,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				// sa.assertTrue(false,"Not Able to Select Drown Down Value :
 				// "+getTabName(projectName, tabName)+" For Label "+label);
 				log(LogStatus.SKIP, "Not Able to Select Drown Down Value : " + getTabName(projectName, tabName)
-						+ " For Label " + label, YesNo.Yes);
+				+ " For Label " + label, YesNo.Yes);
 				return flag;
 			}
 		}
 
 		if (label.replaceAll("_", " ").equalsIgnoreCase(PageLabel.Name.toString())) {
 			String xpath = "//span[text()='" + label.replaceAll("_", " ")
-					+ "']/..//following-sibling::div//input[@title='Search Contacts']";
+			+ "']/..//following-sibling::div//input[@title='Search Contacts']";
 			doubleClickUsingAction(driver, FindElement(driver, xpath, "", action.BOOLEAN, 30));
 			log(LogStatus.INFO, "click on name text box", YesNo.No);
 
@@ -3269,7 +3272,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									meetingTypeValue + " not Verified for subject : " + subject + " For item : "
 											+ createdItemValue + " Actual : " + actualValue + " \t Expected : "
 											+ meetingTypeValue,
-									YesNo.Yes);
+											YesNo.Yes);
 						}
 
 					} else {
@@ -3319,7 +3322,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									descriptionValue + " not Verified for subject : " + subject + " For item : "
 											+ createdItemValue + " Actual : " + actualValue + " \t Expected : "
 											+ descriptionValue,
-									YesNo.Yes);
+											YesNo.Yes);
 						}
 
 					} else {
@@ -3399,7 +3402,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ele = FindElement(driver,
 							"//a[contains(@href,'lightning')]/span[@class='slds-truncate']/span[contains(text(),'"
 									+ tabName + "')]",
-							tabName, action.SCROLLANDBOOLEAN, 10);
+									tabName, action.SCROLLANDBOOLEAN, 10);
 					ele = isDisplayed(driver, ele, "visibility", 10, tabName);
 					if (ele != null) {
 						if (clickUsingJavaScript(driver, ele, tabName + " :Tab")) {
@@ -3849,7 +3852,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							} else {
 								log(LogStatus.PASS,
 										"Not able to click on save button and so cannot updtaed image from path " + path
-												+ " on " + pageName,
+										+ " on " + pageName,
 										YesNo.No);
 							}
 						} else {
@@ -4266,7 +4269,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					+ toggleOneOrTwo + "]";
 		else if (pageName == PageName.Object4Page)
 			xpath = "(//*[text()='" + record + "']/../following-sibling::span//button[@title='Edit'])[" + toggleOneOrTwo
-					+ "]";
+			+ "]";
 		WebElement ele = FindElement(driver, xpath, "edit Button : " + record, action.BOOLEAN, timeOut);
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("return arguments[0].setAttribute('Styles','display: inline-block;')", ele);
@@ -4552,7 +4555,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ele = isDisplayed(driver, FindElement(driver,
 							"//a[contains(@href,'lightning')]/span[@class='slds-truncate']/span[contains(text(),'"
 									+ tabName + "')]",
-							tabName, action.SCROLLANDBOOLEAN, 10), "visibility", 10, tabName);
+									tabName, action.SCROLLANDBOOLEAN, 10), "visibility", 10, tabName);
 					if (ele != null) {
 						if (clickUsingJavaScript(driver, ele, tabName + " :Tab")) {
 							appLog.info("Clicked on Tab on More Icon: " + tabName);
@@ -4654,7 +4657,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (tabName != null) {
 			ele = FindElement(driver,
 					"//a[@title='" + tabName
-							+ "']/parent::*[@class='navItem slds-context-bar__item slds-shrink-none slds-is-active']",
+					+ "']/parent::*[@class='navItem slds-context-bar__item slds-shrink-none slds-is-active']",
 					tabName, action.SCROLLANDBOOLEAN, 30);
 			ele = isDisplayed(driver, ele, "visibility", 30, tabName);
 			if (ele != null) {
@@ -5280,7 +5283,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					return flag;
 				} else {
 					log(LogStatus.ERROR, "Not able to click on " + gridSectionName.toString()
-							+ " link so cannot verify error message", YesNo.Yes);
+					+ " link so cannot verify error message", YesNo.Yes);
 				}
 			}
 
@@ -5904,7 +5907,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				} else {
 
 					AppListeners.appLog
-							.info("after clicking select list icon is should be in expand mode on:" + objectName);
+					.info("after clicking select list icon is should be in expand mode on:" + objectName);
 					result.add("after clicking select list icon is should be in expand mode on:" + objectName);
 				}
 
@@ -5987,7 +5990,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 							} else {
 								AppListeners.appLog
-										.info("Filter value is not present in filter panel size:" + filterName.size());
+								.info("Filter value is not present in filter panel size:" + filterName.size());
 								result.add("Filter value is not present in filter panel size:" + filterName.size());
 
 							}
@@ -6001,7 +6004,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					} else {
 
 						AppListeners.appLog
-								.info("after clicking select list icon is should be in expand mode on:" + objectName);
+						.info("after clicking select list icon is should be in expand mode on:" + objectName);
 						result.add("after clicking select list icon is should be in expand mode on:" + objectName);
 					}
 
@@ -6390,13 +6393,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									if (selectListViewAfterDelete != null) {
 										log(LogStatus.FAIL,
 												"List View:" + viewList
-														+ " again present after delete, So Test Case is going to fail ",
+												+ " again present after delete, So Test Case is going to fail ",
 												YesNo.No);
 
 									} else {
 										log(LogStatus.PASS,
 												"List View:" + viewList
-														+ " not present after delete, So Confirmed delete of List View",
+												+ " not present after delete, So Confirmed delete of List View",
 												YesNo.No);
 										flag = true;
 									}
@@ -6598,7 +6601,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ele = FindElement(driver,
 							"//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//a[text()='"
 									+ alreadyCreated + "']",
-							alreadyCreated, action.BOOLEAN, 30);
+									alreadyCreated, action.BOOLEAN, 30);
 					ThreadSleep(2000);
 					if (click(driver, ele, alreadyCreated, action.BOOLEAN)) {
 						ThreadSleep(3000);
@@ -7044,7 +7047,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 											System.out.println("Inside the loop.");
 											sa.assertTrue(false,
 													list.get(j) + " :Target not found for field value " + fieldValue
-															+ " operator " + operator + " and value " + operatorValue);
+													+ " operator " + operator + " and value " + operatorValue);
 										}
 									}
 								} else {
@@ -7067,7 +7070,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 											System.out.println("Inside the loop.");
 											sa.assertTrue(false,
 													list.get(j) + " :Target not found for field value " + fieldValue
-															+ " operator " + operator + " and value " + operatorValue);
+													+ " operator " + operator + " and value " + operatorValue);
 										}
 									}
 								}
@@ -7104,7 +7107,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									List<String> listResult = new ArrayList<String>();
 									listResult.addAll(checkResultOnManageInvestor(expectedResult, timeOut));
 									System.out.println("\n\n\nis list empty: " + listResult.isEmpty()
-											+ "\n\n\nList Size: " + listResult.size());
+									+ "\n\n\nList Size: " + listResult.size());
 									if (!listResult.isEmpty()) {
 										System.out.println("Inside the condition\n\n\n");
 										for (int j = 0; j < listResult.size(); j++) {
@@ -7128,7 +7131,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									List<String> listResult = new ArrayList<String>();
 									listResult.addAll(checkResultOnManageInvestor(expectedResult, timeOut));
 									System.out.println("\n\n\nis list empty: " + listResult.isEmpty()
-											+ "\n\n\nList Size: " + listResult.size());
+									+ "\n\n\nList Size: " + listResult.size());
 									if (!listResult.isEmpty()) {
 										System.out.println("Inside the condition\n\n\n");
 										for (int j = 0; j < listResult.size(); j++) {
@@ -7331,7 +7334,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										"//tr/th//div//lightning-base-formatted-text[text()='" + val[i]
 												+ "']/ancestor::th/preceding-sibling::td/lightning-primitive-cell-checkbox",
 
-										"Radio Button of: " + val[i], action.BOOLEAN, timeOut),
+												"Radio Button of: " + val[i], action.BOOLEAN, timeOut),
 
 								"Radio Button of: " + val[i], action.SCROLLANDBOOLEAN)) {
 
@@ -7654,12 +7657,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 													+ " are not matced with Filter label name : " + field
 													+ ", filter Operator :" + Operator + ", Filter operand :"
 													+ filterValue[i] + "",
-											YesNo.No);
+													YesNo.No);
 									result.add("Either Filter label name : " + filterFieldLabel
 											+ " or filter Operator :" + filterOperator + " Or Filter operand :"
 											+ filterOperand + " are not matced with Filter label name : " + field
 											+ ", filter Operator :" + Operator + ", Filter operand :" + filterValue[i]
-											+ "");
+													+ "");
 								}
 							} else {
 
@@ -7694,12 +7697,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 												+ " or filter Operator :" + filterOperator + " Or Filter operand :"
 												+ filterOperand + " are not matced with Filter label name : "
 												+ filterFiled[j] + ", filter Operator :" + fOperator[j]
-												+ ", Filter operand :" + FOperand[j] + "", YesNo.Yes);
+														+ ", Filter operand :" + FOperand[j] + "", YesNo.Yes);
 										result.add("Either Filter label name : " + filterFieldLabel
 												+ " or filter Operator :" + filterOperator + " Or Filter operand :"
 												+ filterOperand + " are not matced with Filter label name : "
 												+ filterFiled[j] + ", filter Operator :" + fOperator[j]
-												+ ", Filter operand :" + FOperand[j] + "");
+														+ ", Filter operand :" + FOperand[j] + "");
 									}
 
 									if (filterLogic(50) != null) {
@@ -7814,14 +7817,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					for (int a = 0; a < expectedFieldValue.size(); a++) {
 						if (expectedFieldValue.get(a).equals(actualFieldValue.get(a))) {
 							log(LogStatus.INFO, "Expected field value : " + expectedFieldValue.get(a)
-									+ " has been matched with the Actual field value : " + actualFieldValue.get(a),
-									YesNo.No);
+							+ " has been matched with the Actual field value : " + actualFieldValue.get(a),
+							YesNo.No);
 						} else {
 							log(LogStatus.ERROR, "Expected field value : " + expectedFieldValue.get(a)
-									+ " is not matched with the Actual field value : " + actualFieldValue.get(a),
-									YesNo.No);
+							+ " is not matched with the Actual field value : " + actualFieldValue.get(a),
+							YesNo.No);
 							result.add("Expected field value : " + expectedFieldValue.get(a)
-									+ " is not matched with the Actual field value : " + actualFieldValue.get(a));
+							+ " is not matched with the Actual field value : " + actualFieldValue.get(a));
 						}
 
 					}
@@ -7892,7 +7895,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							"No. of Expected Highlighted Labels and Actual Highlighted Labels doesn't Match, So not able to Continue to verify Label and Values, No. of Expected Labels: "
 									+ ExpectedLabels.size() + " & No. of Actual Highlighted Labels: "
 									+ highlightedPanelLabels.size(),
-							YesNo.No);
+									YesNo.No);
 					negativeResult.add(
 							"No. of Expected Highlighted Labels and Actual Highlighted Labels doesn't Match, So not able to Continue to verify Label and Values, No. of Expected Labels: "
 									+ ExpectedLabels.size() + " & No. of Actual Highlighted Labels: "
@@ -7905,7 +7908,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				log(LogStatus.ERROR,
 						"No. of Expected Highlighted Labels and Values doesn't Match, So not able to Continue to verify Label and Values, No. of Expected Labels: "
 								+ ExpectedLabels.size() + " & No. of Expected Values: " + ExpectedLabelsValues.size(),
-						YesNo.No);
+								YesNo.No);
 				negativeResult.add(
 						"No. of Expected Highlighted Labels and Values doesn't Match, So not able to Continue to verify Label and Values, No. of Expected Labels: "
 								+ ExpectedLabels.size() + " & No. of Expected Values: " + ExpectedLabelsValues.size());
@@ -7918,7 +7921,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					"No. of Actual Highlighted Labels and Values doesn't Match, So not able to Continue to verify Label and Values, No. of Actual Labels: "
 							+ highlightedPanelLabels.size() + " & No. of Actual Values: "
 							+ highlightedPanelLabelsValues.size(),
-					YesNo.Yes);
+							YesNo.Yes);
 			negativeResult.add(
 					"No. of Actual Highlighted Labels and Values doesn't Match, So not able to Continue to verify Label and Values, No. of Actual Labels: "
 							+ highlightedPanelLabels.size() + " & No. of Actual Values: "
@@ -7956,13 +7959,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						for (String button : listOfButtons) {
 							if (button.equals(ExpectedButtonsOnPage.get(i))) {
 								log(LogStatus.INFO, "----Button Matched, Expected: " + ExpectedButtonsOnPage.get(i)
-										+ " & Actual: " + button + " on this Page----", YesNo.No);
+								+ " & Actual: " + button + " on this Page----", YesNo.No);
 							} else {
 
 								log(LogStatus.ERROR, "----Button Not Matched, Expected: " + ExpectedButtonsOnPage.get(i)
-										+ " but Actual: " + button + " on this Page----", YesNo.No);
+								+ " but Actual: " + button + " on this Page----", YesNo.No);
 								negativeResult.add("----Button Not Matched, Expected: " + ExpectedButtonsOnPage.get(i)
-										+ " but Actual: " + button + " on this Page----");
+								+ " but Actual: " + button + " on this Page----");
 
 							}
 
@@ -7972,7 +7975,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						log(LogStatus.ERROR,
 								"No. of Expected and Actual Buttons on Page not matched, So not able to continue, Expected: "
 										+ ExpectedButtonsOnPage + " & Actual: " + listOfButtons,
-								YesNo.Yes);
+										YesNo.Yes);
 						negativeResult.add(
 								"No. of Expected and Actual Buttons on Page not matched, So not able to continue, Expected: "
 										+ ExpectedButtonsOnPage + " & Actual: " + listOfButtons);
@@ -8025,14 +8028,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 												"----Button Matched, Expected: "
 														+ ExpectedButtonsInDownArrowButton.get(i) + " & Actual: "
 														+ button + " in DownArrow Button----",
-												YesNo.No);
+														YesNo.No);
 									} else {
 
 										log(LogStatus.ERROR,
 												"----Button Not Matched, Expected: "
 														+ ExpectedButtonsInDownArrowButton.get(i) + " but Actual: "
 														+ button + " in DownArrow Button----",
-												YesNo.No);
+														YesNo.No);
 										negativeResult.add("----Button Not Matched, Expected: "
 												+ ExpectedButtonsInDownArrowButton.get(i) + " but Actual: " + button
 												+ " in DownArrow Button----");
@@ -8046,7 +8049,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										"No. of Expected and Actual Buttons in DownArrow Button not matched, So not able to continue, Expected: "
 												+ ExpectedButtonsInDownArrowButton + " & Actual: "
 												+ dropDownButtonsList,
-										YesNo.Yes);
+												YesNo.Yes);
 								negativeResult.add(
 										"No. of Expected and Actual Buttons in DownArrow Button not matched, So not able to continue, Expected: "
 												+ ExpectedButtonsInDownArrowButton + " & Actual: "
@@ -8120,13 +8123,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						for (String tab : tabsInPage) {
 							if (tab.equals(expectedListOfTabs.get(i))) {
 								log(LogStatus.INFO, "----Tab Matched, Expected: " + expectedListOfTabs.get(i)
-										+ " & Actual: " + tab + " on this Page----", YesNo.No);
+								+ " & Actual: " + tab + " on this Page----", YesNo.No);
 							} else {
 
 								log(LogStatus.ERROR, "----Tab Not Matched, Expected: " + expectedListOfTabs.get(i)
-										+ " but Actual: " + tab + " on this Page----", YesNo.No);
+								+ " but Actual: " + tab + " on this Page----", YesNo.No);
 								negativeResult.add("----Tab Not Matched, Expected: " + expectedListOfTabs.get(i)
-										+ " but Actual: " + tab + " on this Page----");
+								+ " but Actual: " + tab + " on this Page----");
 
 							}
 
@@ -8136,7 +8139,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						log(LogStatus.ERROR,
 								"No. of Expected and Actual Tabs on Page not matched, So not able to continue, Expected: "
 										+ expectedListOfTabs + " & Actual: " + tabsInPage,
-								YesNo.Yes);
+										YesNo.Yes);
 						negativeResult.add(
 								"No. of Expected and Actual Tabs on Page not matched, So not able to continue, Expected: "
 										+ expectedListOfTabs + " & Actual: " + tabsInPage);
@@ -8225,17 +8228,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 										} else {
 											sa.assertTrue(false, "Value: " + values.get(i)
-													+ " has not been Chosen, So Not Able to Continue to Create Record in SDG: "
-													+ sdgName);
+											+ " has not been Chosen, So Not Able to Continue to Create Record in SDG: "
+											+ sdgName);
 											log(LogStatus.ERROR, "Value: " + values.get(i)
-													+ " has not been Chosen, So Not Able to Continue to Create Record in SDG: "
-													+ sdgName, YesNo.Yes);
+											+ " has not been Chosen, So Not Able to Continue to Create Record in SDG: "
+											+ sdgName, YesNo.Yes);
 										}
 									} else {
 										sa.assertTrue(false, "Not Able to Chose the " + label + " " + values.get(i)
-												+ " on SDG:  " + sdgName);
+										+ " on SDG:  " + sdgName);
 										log(LogStatus.ERROR, "Not Able to Chose the " + label + " " + values.get(i)
-												+ " on SDG:  " + sdgName, YesNo.Yes);
+										+ " on SDG:  " + sdgName, YesNo.Yes);
 									}
 
 								} else {
@@ -8245,17 +8248,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									log(LogStatus.ERROR,
 											"Not Able to Click on MultipickList Navigation Button of Label Role on SDG:  "
 													+ sdgName,
-											YesNo.Yes);
+													YesNo.Yes);
 								}
 
 							} else {
 								sa.assertTrue(false,
 										"Not Able to Click on Button Value so cannot move to Chosen of Label " + label
-												+ " on SDG:  " + sdgName);
+										+ " on SDG:  " + sdgName);
 								log(LogStatus.SKIP,
 										"Not Able to Click on " + values.get(i)
-												+ " Button Value so cannot move to Chosen of Label " + label
-												+ " on SDG:  " + sdgName,
+										+ " Button Value so cannot move to Chosen of Label " + label
+										+ " on SDG:  " + sdgName,
 										YesNo.Yes);
 							}
 
@@ -8378,7 +8381,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (recordName.size() == iconType.size()) {
 			for (int i = 0; i < recordName.size(); i++) {
 				xPath = "//a[text()='" + sdgName + "']/ancestor::article//td[contains(@data-label,'" + recordName.get(i)
-						+ "')]//span";
+				+ "')]//span";
 				ele = FindElement(driver, xPath, recordName.get(i) + " record", null, 50);
 				scrollDownThroughWebelementInCenter(driver, ele, recordName.get(i) + " record");
 				ThreadSleep(1500);
@@ -8794,7 +8797,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						else if (type.equalsIgnoreCase("SearchDropDownTextBox")) {
 
 							activityTimelineSearchDropDown(label, 30)
-									.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+							.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 							if (CommonLib.sendKeys(driver, activityTimelineSearchDropDown(label, 30), value,
 									label + " Input Box", action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, value + " value has been Entered in label: " + label, YesNo.No);
@@ -8871,7 +8874,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							log(LogStatus.SKIP,
 									"Either One of Them Data is Empty, So Not Able to Enter details for It, Label: "
 											+ label + " ,Value: " + value + " & Type: " + type,
-									YesNo.Yes);
+											YesNo.Yes);
 						}
 
 					}
@@ -8879,10 +8882,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					else {
 						sa.assertTrue(false,
 								"Either One of Them Data is Empty, So Not Able to Enter details for It, Label: " + label
-										+ " ,Value: " + value + " & Type: " + type);
+								+ " ,Value: " + value + " & Type: " + type);
 						log(LogStatus.SKIP,
 								"Either One of Them Data is Empty, So Not Able to Enter details for It, Label: " + label
-										+ " ,Value: " + value + " & Type: " + type,
+								+ " ,Value: " + value + " & Type: " + type,
 								YesNo.Yes);
 					}
 
@@ -8986,7 +8989,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		elements = CommonLib.FindElements(driver, xPath, "Upcoming and overdue record");
 		for (WebElement ele : elements) {
 			actualUpcomingAndOverdueRecord
-					.add(CommonLib.getText(driver, ele, "Upcoming and overdue record", action.SCROLLANDBOOLEAN));
+			.add(CommonLib.getText(driver, ele, "Upcoming and overdue record", action.SCROLLANDBOOLEAN));
 		}
 		// for This Month
 		xPath = "//span[text()='This Month']/ancestor::div[contains(@class,'past-activity-group')]//a[@rel='noreferrer']";
@@ -9000,13 +9003,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			log(LogStatus.INFO,
 					"Record on the Upcoming & Overdue and This month has been verified Upcoming & Overdue : "
 							+ actualUpcomingAndOverdueRecord + " This Month : " + actualThisMonthRecord,
-					YesNo.No);
+							YesNo.No);
 			flag = true;
 		} else {
 			log(LogStatus.ERROR,
 					"Record on the Upcoming & Overdue and This month are not verified Upcoming & Overdue : "
 							+ actualUpcomingAndOverdueRecord + " This Month : " + actualThisMonthRecord,
-					YesNo.No);
+							YesNo.No);
 
 		}
 		return flag;
@@ -9470,17 +9473,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										"----Header's Label Matched, Expected: " + expectedLabels.get(j) + " & Actual: "
 												+ recordLayoutSectionHeaderLabel + " for  section: " + expectedHeader
 												+ " on this Page----",
-										YesNo.No);
+												YesNo.No);
 							} else {
 
 								log(LogStatus.ERROR,
 										"----Header's Label Not Matched, Expected: " + expectedLabels.get(j)
-												+ " & Actual: " + recordLayoutSectionHeaderLabel + " for  section: "
-												+ expectedHeader + " on this Page----",
+										+ " & Actual: " + recordLayoutSectionHeaderLabel + " for  section: "
+										+ expectedHeader + " on this Page----",
 										YesNo.No);
 								negativeResult.add("----Header's Label Not Matched, Expected: " + expectedLabels.get(j)
-										+ " & Actual: " + recordLayoutSectionHeaderLabel + " for  section: "
-										+ expectedHeader + " on this Page----");
+								+ " & Actual: " + recordLayoutSectionHeaderLabel + " for  section: "
+								+ expectedHeader + " on this Page----");
 
 							}
 
@@ -9489,8 +9492,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					} else {
 						log(LogStatus.ERROR,
 								"No. of Expected and Actual Section Header Labels of Section " + expectedHeader
-										+ " on Page not matched, So not able to continue, Expected: " + expectedLabels
-										+ " & Actual: " + recordLayoutSectionHeaderLabels,
+								+ " on Page not matched, So not able to continue, Expected: " + expectedLabels
+								+ " & Actual: " + recordLayoutSectionHeaderLabels,
 								YesNo.Yes);
 						negativeResult.add("No. of Expected and Actual Section Header Labels of Section "
 								+ expectedHeader + " on Page not matched, So not able to continue, Expected: "
@@ -10032,7 +10035,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 													} else {
 														log(LogStatus.ERROR,
 																"Not able to select " + elements.get(k).getText()
-																		+ " value from dropdown list",
+																+ " value from dropdown list",
 																YesNo.No);
 														result.add("Not able to select " + elements.get(k).getText()
 																+ " value from dropdown list");
@@ -10431,7 +10434,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 													} else {
 														log(LogStatus.ERROR,
 																"Not able to select " + elements.get(k).getText()
-																		+ " value from dropdown list",
+																+ " value from dropdown list",
 																YesNo.No);
 														result.add("Not able to select " + elements.get(k).getText()
 																+ " value from dropdown list");
@@ -10542,19 +10545,19 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								&& actualUploadedFileType.equals(fileType)) {
 							log(LogStatus.INFO,
 									"Expected uploaded file date : " + currentDate + ", file size : " + fileSize
-											+ ", and file type : " + fileType
-											+ " have been matched with the Actual uploaded file date : "
-											+ actualUploadedFileDate + ", file size : " + actualUploadedFileSize
-											+ ", and file type : " + actualUploadedFileType,
+									+ ", and file type : " + fileType
+									+ " have been matched with the Actual uploaded file date : "
+									+ actualUploadedFileDate + ", file size : " + actualUploadedFileSize
+									+ ", and file type : " + actualUploadedFileType,
 									YesNo.No);
 							flag = true;
 						} else {
 							log(LogStatus.ERROR,
 									"Expected uploaded file date : " + currentDate + ", file size : " + fileSize
-											+ ", and file type : " + fileType
-											+ " are not  matched with the Actual uploaded file date : "
-											+ actualUploadedFileDate + ", file size : " + actualUploadedFileSize
-											+ ", and file type : " + actualUploadedFileType,
+									+ ", and file type : " + fileType
+									+ " are not  matched with the Actual uploaded file date : "
+									+ actualUploadedFileDate + ", file size : " + actualUploadedFileSize
+									+ ", and file type : " + actualUploadedFileType,
 									YesNo.No);
 
 						}
@@ -10637,7 +10640,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							if (recordLayoutSectionHeader.equals(expectedListOfSectionHeaders.get(i))) {
 								log(LogStatus.INFO,
 										"----Section Headers Matched, Expected: " + expectedListOfSectionHeaders.get(i)
-												+ " & Actual: " + recordLayoutSectionHeader + " on this Page----",
+										+ " & Actual: " + recordLayoutSectionHeader + " on this Page----",
 										YesNo.No);
 							} else {
 
@@ -10645,7 +10648,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										"----Section Headers Not Matched, Expected: "
 												+ expectedListOfSectionHeaders.get(i) + " but Actual: "
 												+ recordLayoutSectionHeader + " on this Page----",
-										YesNo.No);
+												YesNo.No);
 								negativeResult.add("----Section Headers Not Matched, Expected: "
 										+ expectedListOfSectionHeaders.get(i) + " but Actual: "
 										+ recordLayoutSectionHeader + " on this Page----");
@@ -10658,7 +10661,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						log(LogStatus.ERROR,
 								"No. of Expected and Actual Section Headers on Page not matched, So not able to continue, Expected: "
 										+ expectedListOfSectionHeaders + " & Actual: " + recordLayoutSectionHeaders,
-								YesNo.Yes);
+										YesNo.Yes);
 						negativeResult.add(
 								"No. of Expected and Actual Section Headers on Page not matched, So not able to continue, Expected: "
 										+ expectedListOfSectionHeaders + " & Actual: " + recordLayoutSectionHeaders);
@@ -10783,16 +10786,16 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							if (actualmeetingAndCalls.equalsIgnoreCase(meetingAndCalls)) {
 								log(LogStatus.INFO,
 										"Actual result " + actualmeetingAndCalls
-												+ " of meeting and call has been matched with Expected result : "
-												+ meetingAndCalls + " of Team Member: " + teamMember
-												+ " under Record page: " + contactName,
+										+ " of meeting and call has been matched with Expected result : "
+										+ meetingAndCalls + " of Team Member: " + teamMember
+										+ " under Record page: " + contactName,
 										YesNo.No);
 							} else {
 								log(LogStatus.ERROR,
 										"Actual result " + actualmeetingAndCalls
-												+ " of meeting and call are not matched with Expected resut : "
-												+ meetingAndCalls + " of Team Member: " + teamMember
-												+ " under Record page: " + contactName,
+										+ " of meeting and call are not matched with Expected resut : "
+										+ meetingAndCalls + " of Team Member: " + teamMember
+										+ " under Record page: " + contactName,
 										YesNo.No);
 								result.add("Actual result " + actualmeetingAndCalls
 										+ " of meeting and call are not matched with Expected resut : "
@@ -10879,12 +10882,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							"Actual result " + actualTitle + " of Title has been matched with Expected result : "
 									+ title + " of Team Member: " + teamMember + "under Record page of "
 									+ recordNameOfRecordPage,
-							YesNo.No);
+									YesNo.No);
 				} else {
 					log(LogStatus.ERROR,
 							"Actual result " + actualTitle + " of Title is not matched with Expected result : " + title
-									+ " of Team Member: " + teamMember + "under Record page of "
-									+ recordNameOfRecordPage,
+							+ " of Team Member: " + teamMember + "under Record page of "
+							+ recordNameOfRecordPage,
 							YesNo.No);
 					result.add("Actual result " + actualTitle + " of Title is not matched with Expected result : "
 							+ title + " of Team Member: " + teamMember + "under Record page of "
@@ -10899,14 +10902,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				if (actualDeal.equalsIgnoreCase(deals)) {
 					log(LogStatus.INFO,
 							"Actual result " + actualDeal + " of deal has been matched with Expected resut : " + deals
-									+ " of Team Member: " + teamMember + "under Record page of "
-									+ recordNameOfRecordPage,
+							+ " of Team Member: " + teamMember + "under Record page of "
+							+ recordNameOfRecordPage,
 							YesNo.No);
 				} else {
 					log(LogStatus.ERROR,
 							"Actual result " + actualDeal + " of deal are not matched with Expected resut : " + deals
-									+ " of Team Member: " + teamMember + "under Record page of "
-									+ recordNameOfRecordPage,
+							+ " of Team Member: " + teamMember + "under Record page of "
+							+ recordNameOfRecordPage,
 							YesNo.No);
 					result.add("Actual result " + actualDeal + " of deal are not matched with Expected resut : " + deals
 							+ " of Team Member: " + teamMember + "under Record page of " + recordNameOfRecordPage);
@@ -10942,12 +10945,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							"Actual result " + actualEmail + " of email has been matched with Expected result : "
 									+ email + " of Team Member: " + teamMember + "under Record page of "
 									+ recordNameOfRecordPage,
-							YesNo.No);
+									YesNo.No);
 				} else {
 					log(LogStatus.ERROR,
 							"Actual result " + actualEmail + " of email are not matched with Expected resut : " + email
-									+ " of Team Member: " + teamMember + "under Record page of "
-									+ recordNameOfRecordPage,
+							+ " of Team Member: " + teamMember + "under Record page of "
+							+ recordNameOfRecordPage,
 							YesNo.No);
 					result.add("Actual result " + actualEmail + " of email are not matched with Expected resut : "
 							+ email + " of Team Member: " + teamMember + "under Record page of "
@@ -10992,16 +10995,16 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				if (actualCompany.equalsIgnoreCase(highestStageReachedName)) {
 					log(LogStatus.INFO,
 							"Actual result " + actualCompany
-									+ " of highestStageReachedName has been matched with Expected result : "
-									+ highestStageReachedName + " of Deal Name: " + dealName + " under Record Page of "
-									+ recordNameOfRecordPage,
+							+ " of highestStageReachedName has been matched with Expected result : "
+							+ highestStageReachedName + " of Deal Name: " + dealName + " under Record Page of "
+							+ recordNameOfRecordPage,
 							YesNo.No);
 				} else {
 					log(LogStatus.ERROR,
 							"Actual result " + actualCompany
-									+ " of highestStageReachedName is not matched with Expected result : "
-									+ highestStageReachedName + " of Deal Name: " + dealName + " under Record Page of "
-									+ recordNameOfRecordPage,
+							+ " of highestStageReachedName is not matched with Expected result : "
+							+ highestStageReachedName + " of Deal Name: " + dealName + " under Record Page of "
+							+ recordNameOfRecordPage,
 							YesNo.No);
 					result.add("Actual result " + actualCompany + " of Company is not matched with Expected result : "
 							+ highestStageReachedName + " of Deal Name: " + dealName + " under Record Page of "
@@ -11016,12 +11019,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				if (actualStage.equalsIgnoreCase(stage)) {
 					log(LogStatus.INFO,
 							"Actual result " + actualStage + " of Stage has been matched with Expected resut : " + stage
-									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
 							YesNo.No);
 				} else {
 					log(LogStatus.ERROR,
 							"Actual result " + actualStage + " of Stage are not matched with Expected resut : " + stage
-									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
 							YesNo.No);
 					result.add("Actual result " + actualStage + " of Stage are not matched with Expected resut : "
 							+ stage + " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage);
@@ -11035,14 +11038,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				if (actualDateReceived.equalsIgnoreCase(dateReceived)) {
 					log(LogStatus.INFO,
 							"Actual result " + actualDateReceived
-									+ " of Date Received has been matched with Expected result : " + dateReceived
-									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							+ " of Date Received has been matched with Expected result : " + dateReceived
+							+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
 							YesNo.No);
 				} else {
 					log(LogStatus.ERROR,
 							"Actual result " + actualDateReceived
-									+ " of Date Received are not matched with Expected resut : " + dateReceived
-									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							+ " of Date Received are not matched with Expected resut : " + dateReceived
+							+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
 							YesNo.No);
 					result.add("Actual result " + actualDateReceived
 							+ " of Date Received are not matched with Expected resut : " + dateReceived
@@ -11076,16 +11079,16 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				if (actualCompany.equalsIgnoreCase(highestStageReachedName)) {
 					log(LogStatus.INFO,
 							"Actual result " + actualCompany
-									+ " of highestStageReachedName has been matched with Expected result : "
-									+ highestStageReachedName + " of Deal Name: " + dealName + " under Record Page of "
-									+ recordNameOfRecordPage,
+							+ " of highestStageReachedName has been matched with Expected result : "
+							+ highestStageReachedName + " of Deal Name: " + dealName + " under Record Page of "
+							+ recordNameOfRecordPage,
 							YesNo.No);
 				} else {
 					log(LogStatus.ERROR,
 							"Actual result " + actualCompany
-									+ " of highestStageReachedName is not matched with Expected result : "
-									+ highestStageReachedName + " of Deal Name: " + dealName + " under Record Page of "
-									+ recordNameOfRecordPage,
+							+ " of highestStageReachedName is not matched with Expected result : "
+							+ highestStageReachedName + " of Deal Name: " + dealName + " under Record Page of "
+							+ recordNameOfRecordPage,
 							YesNo.No);
 					result.add("Actual result " + actualCompany
 							+ " of highestStageReachedName is not matched with Expected result : "
@@ -11101,12 +11104,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				if (actualStage.equalsIgnoreCase(stage)) {
 					log(LogStatus.INFO,
 							"Actual result " + actualStage + " of Stage has been matched with Expected resut : " + stage
-									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
 							YesNo.No);
 				} else {
 					log(LogStatus.ERROR,
 							"Actual result " + actualStage + " of Stage are not matched with Expected resut : " + stage
-									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
 							YesNo.No);
 					result.add("Actual result " + actualStage + " of Stage are not matched with Expected resut : "
 							+ stage + " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage);
@@ -11120,14 +11123,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				if (actualDateReceived.equalsIgnoreCase(dateReceived)) {
 					log(LogStatus.INFO,
 							"Actual result " + actualDateReceived
-									+ " of Date Received has been matched with Expected result : " + dateReceived
-									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							+ " of Date Received has been matched with Expected result : " + dateReceived
+							+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
 							YesNo.No);
 				} else {
 					log(LogStatus.ERROR,
 							"Actual result " + actualDateReceived
-									+ " of Date Received are not matched with Expected resut : " + dateReceived
-									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							+ " of Date Received are not matched with Expected resut : " + dateReceived
+							+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
 							YesNo.No);
 					result.add("Actual result " + actualDateReceived
 							+ " of Date Received are not matched with Expected resut : " + dateReceived
@@ -11172,13 +11175,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							"Actual result " + actualCompany + " of Company has been matched with Expected result : "
 									+ company + " of Deal Name: " + dealName + " under Record Page of "
 									+ recordNameOfRecordPage,
-							YesNo.No);
+									YesNo.No);
 				} else {
 					log(LogStatus.ERROR,
 							"Actual result " + actualCompany + " of Company is not matched with Expected result : "
 									+ company + " of Deal Name: " + dealName + " under Record Page of "
 									+ recordNameOfRecordPage,
-							YesNo.No);
+									YesNo.No);
 					result.add("Actual result " + actualCompany + " of Company is not matched with Expected result : "
 							+ company + " of Deal Name: " + dealName + " under Record Page of "
 							+ recordNameOfRecordPage);
@@ -11192,12 +11195,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				if (actualStage.equalsIgnoreCase(stage)) {
 					log(LogStatus.INFO,
 							"Actual result " + actualStage + " of Stage has been matched with Expected resut : " + stage
-									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
 							YesNo.No);
 				} else {
 					log(LogStatus.ERROR,
 							"Actual result " + actualStage + " of Stage are not matched with Expected resut : " + stage
-									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
 							YesNo.No);
 					result.add("Actual result " + actualStage + " of Stage are not matched with Expected resut : "
 							+ stage + " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage);
@@ -11211,14 +11214,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				if (actualDateReceived.equalsIgnoreCase(dateReceived)) {
 					log(LogStatus.INFO,
 							"Actual result " + actualDateReceived
-									+ " of Date Received has been matched with Expected result : " + dateReceived
-									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							+ " of Date Received has been matched with Expected result : " + dateReceived
+							+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
 							YesNo.No);
 				} else {
 					log(LogStatus.ERROR,
 							"Actual result " + actualDateReceived
-									+ " of Date Received are not matched with Expected resut : " + dateReceived
-									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							+ " of Date Received are not matched with Expected resut : " + dateReceived
+							+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
 							YesNo.No);
 					result.add("Actual result " + actualDateReceived
 							+ " of Date Received are not matched with Expected resut : " + dateReceived
@@ -11269,12 +11272,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							"Actual result " + actualFund + " of Fund has been matched with Expected result : "
 									+ fundName + " of Fundraising Name: " + fundraisingName + " under Record Page of "
 									+ recordNameOfRecordPage,
-							YesNo.No);
+									YesNo.No);
 				} else {
 					log(LogStatus.ERROR,
 							"Actual result " + actualFund + " of Fund is not matched with Expected result : " + fundName
-									+ " of Fundraising Name: " + fundraisingName + " under Record Page of "
-									+ recordNameOfRecordPage,
+							+ " of Fundraising Name: " + fundraisingName + " under Record Page of "
+							+ recordNameOfRecordPage,
 							YesNo.No);
 					result.add("Actual result " + actualFund + " of Fund is not matched with Expected result : "
 							+ fundName + " of Fundraising Name: " + fundraisingName + " under Record Page of "
@@ -11289,14 +11292,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				if (actualStage.equalsIgnoreCase(stage)) {
 					log(LogStatus.INFO,
 							"Actual result " + actualStage + " of Stage has been matched with Expected resut : " + stage
-									+ " of Fundraising Name: " + fundraisingName + " under Record Page of "
-									+ recordNameOfRecordPage,
+							+ " of Fundraising Name: " + fundraisingName + " under Record Page of "
+							+ recordNameOfRecordPage,
 							YesNo.No);
 				} else {
 					log(LogStatus.ERROR,
 							"Actual result " + actualStage + " of Stage are not matched with Expected resut : " + stage
-									+ " of Fundraising Name: " + fundraisingName + " under Record Page of "
-									+ recordNameOfRecordPage,
+							+ " of Fundraising Name: " + fundraisingName + " under Record Page of "
+							+ recordNameOfRecordPage,
 							YesNo.No);
 					result.add("Actual result " + actualStage + " of Stage are not matched with Expected resut : "
 							+ stage + " of Fundraising Name: " + fundraisingName + " under Record Page of "
@@ -11312,16 +11315,16 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				if (actualTargetClosedDate.equalsIgnoreCase(targetClosedDate)) {
 					log(LogStatus.INFO,
 							"Actual result " + actualTargetClosedDate
-									+ " of targetClosedDate has been matched with Expected result : " + targetClosedDate
-									+ " of Fundraising Name: " + fundraisingName + " under Record Page of "
-									+ recordNameOfRecordPage,
+							+ " of targetClosedDate has been matched with Expected result : " + targetClosedDate
+							+ " of Fundraising Name: " + fundraisingName + " under Record Page of "
+							+ recordNameOfRecordPage,
 							YesNo.No);
 				} else {
 					log(LogStatus.ERROR,
 							"Actual result " + actualTargetClosedDate
-									+ " of targetClosedDate are not matched with Expected resut : " + targetClosedDate
-									+ " of Fundraising Name: " + fundraisingName + " under Record Page of "
-									+ recordNameOfRecordPage,
+							+ " of targetClosedDate are not matched with Expected resut : " + targetClosedDate
+							+ " of Fundraising Name: " + fundraisingName + " under Record Page of "
+							+ recordNameOfRecordPage,
 							YesNo.No);
 					result.add("Actual result " + actualTargetClosedDate
 							+ " of targetClosedDate are not matched with Expected resut : " + targetClosedDate
@@ -11382,9 +11385,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				}
 			} else {
 				log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Create.toString()
-						+ " so cannot click on : " + buttonName + " for creation ", YesNo.Yes);
+				+ " so cannot click on : " + buttonName + " for creation ", YesNo.Yes);
 				sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Create.toString()
-						+ " so cannot click on : " + buttonName + " for creation ");
+				+ " so cannot click on : " + buttonName + " for creation ");
 				return false;
 			}
 		} else {
@@ -12201,9 +12204,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		} else {
 			log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Research.toString()
-					+ " so cannot click on it for Research an Item", YesNo.Yes);
+			+ " so cannot click on it for Research an Item", YesNo.Yes);
 			sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Research.toString()
-					+ " so cannot click on it for Research an Item");
+			+ " so cannot click on it for Research an Item");
 
 		}
 		return flag;
@@ -12230,20 +12233,20 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			if (npbl.createNavPopUpMinimizeButton(5) != null) {
 				CommonLib.click(driver, npbl.createNavPopUpMinimizeButton(5), "Minimize", action.BOOLEAN);
 			}
-//			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName,
-//					NavigationMenuItems.Research.toString().replace("_", " "), action.BOOLEAN, 30)) {
-//				log(LogStatus.INFO, "Able to Click on Research Going to click on : "
-//						+ NavigationMenuItems.Research.toString() + " for Research an Item", YesNo.No);
+			//			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName,
+			//					NavigationMenuItems.Research.toString().replace("_", " "), action.BOOLEAN, 30)) {
+			//				log(LogStatus.INFO, "Able to Click on Research Going to click on : "
+			//						+ NavigationMenuItems.Research.toString() + " for Research an Item", YesNo.No);
 
-//				if (CommonLib.sendKeys(driver, npbl.researchSearchBox(20), searchString, "Research Search Box",
-//						action.BOOLEAN)) {
-//				if (CommonLib.sendKeys(driver, npbl.researchSearchBox(20), searchString, "Research Search Box",
-//						action.BOOLEAN)) {
+			//				if (CommonLib.sendKeys(driver, npbl.researchSearchBox(20), searchString, "Research Search Box",
+			//						action.BOOLEAN)) {
+			//				if (CommonLib.sendKeys(driver, npbl.researchSearchBox(20), searchString, "Research Search Box",
+			//						action.BOOLEAN)) {
 
-//					log(LogStatus.INFO, "Enter Value in Research Search Box: " + searchString, YesNo.No);
-//
-//					if (click(driver, npbl.researchButton(20), "Research Button", action.SCROLLANDBOOLEAN)) {
-//						log(LogStatus.INFO, "Clicked on Research Button", YesNo.No);
+			//					log(LogStatus.INFO, "Enter Value in Research Search Box: " + searchString, YesNo.No);
+			//
+			//					if (click(driver, npbl.researchButton(20), "Research Button", action.SCROLLANDBOOLEAN)) {
+			//						log(LogStatus.INFO, "Clicked on Research Button", YesNo.No);
 
 			if (noResultMsgInResearch(3) == null) {
 				CommonLib.refresh(driver);
@@ -12298,7 +12301,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						log(LogStatus.INFO,
 								"----Total Count of Grids and Side Nav and All Categories are Same and i.e. "
 										+ researchAllCategoriesCount + " for Record Search " + searchString + "----",
-								YesNo.No);
+										YesNo.No);
 						status++;
 
 						try {
@@ -12333,7 +12336,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 												"Counts for " + gridName + " doesn't matched, GridCount: "
 														+ gridNameAndCount.get(gridName) + " and SideNavCount: "
 														+ sideNavNameAndCount.get(gridName),
-												YesNo.Yes);
+														YesNo.Yes);
 										sa.assertTrue(false,
 												"Counts for " + gridName + " doesn't matched, GridCount: "
 														+ gridNameAndCount.get(gridName) + " and SideNavCount: "
@@ -12365,7 +12368,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										+ gridTotalCount + " and Total Nav Count: " + sideNavTotalCount
 										+ "and Total All Categories Count " + researchAllCategoriesCount
 										+ " for Record Search " + searchString + "----",
-								YesNo.Yes);
+										YesNo.Yes);
 						sa.assertTrue(false,
 								"----Total Count of Grids and Side Nav and All Categories are not Same, Total grid Count: "
 										+ gridTotalCount + " and Total Nav Count: " + sideNavTotalCount
@@ -12378,13 +12381,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					log(LogStatus.ERROR,
 							"----Total Count of Grids and Side Nav are not Same, Total grid Count: " + gridTotalCount
-									+ " and Total Nav Count: " + sideNavTotalCount + " for Record Search "
-									+ searchString + "----",
+							+ " and Total Nav Count: " + sideNavTotalCount + " for Record Search "
+							+ searchString + "----",
 							YesNo.Yes);
 					sa.assertTrue(false,
 							"----Total Count of Grids and Side Nav are not Same, Total grid Count: " + gridTotalCount
-									+ " and Total Nav Count: " + sideNavTotalCount + " for Record Search "
-									+ searchString + "----");
+							+ " and Total Nav Count: " + sideNavTotalCount + " for Record Search "
+							+ searchString + "----");
 
 				}
 
@@ -12393,26 +12396,26 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				sa.assertTrue(false, "No Result Found for the Text: " + searchString);
 			}
 
-//					}
-//
-//					else {
-//						log(LogStatus.ERROR, "Not Able to Click on Research Button", YesNo.Yes);
-//						sa.assertTrue(false, "Not Able to Click on Research Button");
-//					}
+			//					}
+			//
+			//					else {
+			//						log(LogStatus.ERROR, "Not Able to Click on Research Button", YesNo.Yes);
+			//						sa.assertTrue(false, "Not Able to Click on Research Button");
+			//					}
 
-//				} else {
-//
-//					log(LogStatus.ERROR, "Not Able to Enter Value in Research Search Box: " + searchString, YesNo.Yes);
-//					sa.assertTrue(false, "Not Able to Enter Value in Research Search Box: " + searchString);
-//
-//				}
-//			} else {
-//				log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Research.toString()
-//						+ " so cannot click on it for Research an Item", YesNo.Yes);
-//				sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Research.toString()
-//						+ " so cannot click on it for Research an Item");
-//
-//			}
+			//				} else {
+			//
+			//					log(LogStatus.ERROR, "Not Able to Enter Value in Research Search Box: " + searchString, YesNo.Yes);
+			//					sa.assertTrue(false, "Not Able to Enter Value in Research Search Box: " + searchString);
+			//
+			//				}
+			//			} else {
+			//				log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Research.toString()
+			//						+ " so cannot click on it for Research an Item", YesNo.Yes);
+			//				sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Research.toString()
+			//						+ " so cannot click on it for Research an Item");
+			//
+			//			}
 
 			if (status == loopCount + 1)
 				return true;
@@ -12500,7 +12503,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 															"Text Found: " + searchItemArray[i] + " in Record no. "
 																	+ recordNumber + " of NavLink: " + navText
 																	+ " of Record: " + searchString,
-															YesNo.No);
+																	YesNo.No);
 													status++;
 													loopReset++;
 													break;
@@ -12512,7 +12515,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 														"No Text Found: " + searchString + " in Record No. "
 																+ recordNumber + " of NavLink: " + navText
 																+ ", Actual Row: " + searchResultInTextForm,
-														YesNo.Yes);
+																YesNo.Yes);
 											}
 
 											loopCount++;
@@ -12532,8 +12535,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 											if (searchResultInTextForm.contains(searchItem.toLowerCase())) {
 												log(LogStatus.INFO,
 														"Text Found: " + searchItem + " in Record no. " + recordNumber
-																+ " of NavLink: " + navText + " of Record: "
-																+ searchItem,
+														+ " of NavLink: " + navText + " of Record: "
+														+ searchItem,
 														YesNo.No);
 												status++;
 											}
@@ -12543,7 +12546,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 														"No Text Found: " + searchItem + " in Record No. "
 																+ recordNumber + " of NavLink: " + navText
 																+ ", Actual Row: " + searchResultInTextForm,
-														YesNo.Yes);
+																YesNo.Yes);
 												sa.assertTrue(false,
 														"No Text Found: " + searchItem + " in Record No. "
 																+ recordNumber + " of NavLink: " + navText
@@ -12593,9 +12596,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		} else {
 			log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Research.toString()
-					+ " so cannot click on it for Research an Item", YesNo.Yes);
+			+ " so cannot click on it for Research an Item", YesNo.Yes);
 			sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Research.toString()
-					+ " so cannot click on it for Research an Item");
+			+ " so cannot click on it for Research an Item");
 
 		}
 
@@ -12650,8 +12653,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								if (gridCount <= 5 && gridCount >= 1) {
 									log(LogStatus.INFO,
 											"----Total Count of Grids are less than or equal to 5 and i.e. " + gridCount
-													+ " in section: " + gridNameAfterTrim + " for Record Search "
-													+ searchString + "----",
+											+ " in section: " + gridNameAfterTrim + " for Record Search "
+											+ searchString + "----",
 											YesNo.No);
 									status++;
 								} else {
@@ -12660,7 +12663,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 											"----Total Count of Grids are not less than or equal to 5 and i.e. "
 													+ gridCount + " in section: " + gridNameAfterTrim
 													+ " for Record Search " + searchString + "----",
-											YesNo.Yes);
+													YesNo.Yes);
 									sa.assertTrue(false,
 											"----Total Count of Grids are not less than or equal to 5 and i.e. "
 													+ gridCount + " in section: " + gridNameAfterTrim
@@ -12690,9 +12693,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				}
 			} else {
 				log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Research.toString()
-						+ " so cannot click on it for Research an Item", YesNo.Yes);
+				+ " so cannot click on it for Research an Item", YesNo.Yes);
 				sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Research.toString()
-						+ " so cannot click on it for Research an Item");
+				+ " so cannot click on it for Research an Item");
 
 			}
 
@@ -13403,8 +13406,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						if (actualSubjectName.get(i).equals(subjectName.get(j))) {
 							log(LogStatus.INFO,
 									"Actual result : " + actualSubjectName.get(i)
-											+ " has been matched with the expected result : " + subjectName.get(i)
-											+ " for subject in intraction view all",
+									+ " has been matched with the expected result : " + subjectName.get(i)
+									+ " for subject in intraction view all",
 									YesNo.No);
 							k++;
 							status++;
@@ -13871,7 +13874,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						elements = FindElements(driver, xPath, "Report Name");
 						for (int i = 0; i < elements.size(); i++) {
 							actualReportName
-									.add(getText(driver, elements.get(i), "Report Name", action.SCROLLANDBOOLEAN));
+							.add(getText(driver, elements.get(i), "Report Name", action.SCROLLANDBOOLEAN));
 						}
 						int status = 0;
 						for (int i = 0; i < reportName.size(); i++) {
@@ -13879,15 +13882,15 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							for (int j = 0; j < actualReportName.size(); j++) {
 								if (reportName.get(i).equals(actualReportName.get(j))) {
 									log(LogStatus.INFO, "Actual report name : " + actualReportName.get(j)
-											+ " has been matched with Expected report name : " + reportName.get(i),
-											YesNo.No);
+									+ " has been matched with Expected report name : " + reportName.get(i),
+									YesNo.No);
 									k++;
 									status++;
 								}
 							}
 							if (k == 0) {
 								log(LogStatus.ERROR, "Expected report name : " + reportName.get(i)
-										+ " is not available on export popup", YesNo.No);
+								+ " is not available on export popup", YesNo.No);
 							}
 
 						}
@@ -13895,7 +13898,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						if (reportName.size() == status) {
 							for (int i = 0; i < reportName.size(); i++) {
 								xPath = "//h2[text()='Export']/../..//a[text()='" + reportName.get(i)
-										+ "']/../../following-sibling::div//span";
+								+ "']/../../following-sibling::div//span";
 								ele = FindElement(driver, xPath, reportName.get(i) + " report description",
 										action.SCROLLANDBOOLEAN, 20);
 								if (ele != null) {
@@ -13903,7 +13906,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 											reportName.get(i) + " report description", action.SCROLLANDBOOLEAN));
 								} else {
 									log(LogStatus.ERROR, "Not able to get the element of " + reportName.get(i)
-											+ " report description", YesNo.No);
+									+ " report description", YesNo.No);
 								}
 							}
 							status = 0;
@@ -13912,15 +13915,15 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									if (reportDescription.get(i).equals(actualDescription.get(i))) {
 										log(LogStatus.INFO,
 												"Actual report description : " + actualDescription.get(i)
-														+ " has been matched with Expected report description : "
-														+ reportDescription.get(i),
+												+ " has been matched with Expected report description : "
+												+ reportDescription.get(i),
 												YesNo.No);
 										status++;
 									} else {
 										log(LogStatus.ERROR,
 												"Actual report description : " + actualDescription.get(i)
-														+ " is not matched with Expected report description : "
-														+ reportDescription.get(i),
+												+ " is not matched with Expected report description : "
+												+ reportDescription.get(i),
 												YesNo.No);
 									}
 								}
@@ -13984,7 +13987,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (reportName.get(i).equals(actualReportName.get(j))) {
 						log(LogStatus.INFO,
 								"Actual report name : " + actualReportName.get(j)
-										+ " has been matched with Expected report name :" + reportName.get(i),
+								+ " has been matched with Expected report name :" + reportName.get(i),
 								YesNo.No);
 						status++;
 						break;
@@ -14014,7 +14017,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (descripton.get(i).equals(actualDescriptionName.get(j))) {
 						log(LogStatus.INFO,
 								"Actual report description : " + actualDescriptionName.get(j)
-										+ " has been matched with Expected report description :" + descripton.get(i),
+								+ " has been matched with Expected report description :" + descripton.get(i),
 								YesNo.No);
 						status++;
 						break;
@@ -14092,7 +14095,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		else
 		{
 			log(LogStatus.ERROR, "The size of Header name list and tooltip list are now equal", YesNo.No);
-		    result.add("The size of Header name list and tooltip list are now equal");
+			result.add("The size of Header name list and tooltip list are now equal");
 		}
 		return result;
 	}
@@ -14133,7 +14136,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ele = FindElement(driver, xPath, "header of selected tag", action.SCROLLANDBOOLEAN, 15);
 		if (ele != null) {
 			log(LogStatus.INFO, defaultSelectedTab + " tab is default selected on Tagged section", YesNo.No);
-			
+
 		} else {
 			log(LogStatus.ERROR, defaultSelectedTab + " tab is not default selected on Tagged section", YesNo.No);
 			result.add(defaultSelectedTab + " tab is not default selected on Tagged section");
@@ -14235,7 +14238,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	public ArrayList<String> verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(
 			String InteractionSectionmessage, List<String> contactsSectionHeaderName,
 			String contactsSectionHeaderMessage, List<String> dealsSectionHeaderName, String dealsSectionHeaderMessage,
-			List<String> connectionsSectionHeaderName, String connectionsSectionHeaderMessage) {
+			List<String> connectionsSectionHeaderName, String connectionsSectionHeaderMessage,
+			List<String> externalConnectionsSectionHeaderName, String externalConnectionsSectionHeaderMessage) {
 		String xPath;
 		WebElement ele;
 		List<WebElement> elements;
@@ -14260,7 +14264,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			elements = FindElements(driver, xPath, "Contact section headers");
 			for (WebElement el : elements) {
 				actualContactsSectionHeaderName
-						.add(getText(driver, el, "Contact section headers", action.SCROLLANDBOOLEAN));
+				.add(getText(driver, el, "Contact section headers", action.SCROLLANDBOOLEAN));
 			}
 
 			xPath = "//span[@title='Contacts']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//lightning-icon";
@@ -14275,17 +14279,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (contactsSectionHeaderName.get(i).equalsIgnoreCase(actualContactsSectionHeaderName.get(j))) {
 						log(LogStatus.INFO,
 								"Expected header name: " + contactsSectionHeaderName.get(i)
-										+ " has been matched with Actual header name: "
-										+ actualContactsSectionHeaderName.get(j) + " on contact section",
+								+ " has been matched with Actual header name: "
+								+ actualContactsSectionHeaderName.get(j) + " on contact section",
 								YesNo.No);
 						k++;
 					}
 				}
 				if (k == 0) {
 					log(LogStatus.ERROR, "Expected header name: " + contactsSectionHeaderName.get(i)
-							+ " is not matched with Actual header name on contact section", YesNo.No);
+					+ " is not matched with Actual header name on contact section", YesNo.No);
 					result.add("Expected header name: " + contactsSectionHeaderName.get(i)
-							+ " is not matched with Actual header name on contact section");
+					+ " is not matched with Actual header name on contact section");
 				}
 
 			}
@@ -14310,7 +14314,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (!dealsSectionHeaderName.isEmpty()) {
 			ArrayList<String> actualDealsSectionHeaderName = new ArrayList<String>();
 			xPath = "//span[@title='Deals']/../../../..//span[text()=@title]";
-//					
+			//					
 			elements = FindElements(driver, xPath, "Deal section headers");
 			for (WebElement el : elements) {
 				actualDealsSectionHeaderName.add(getText(driver, el, "deal section headers", action.SCROLLANDBOOLEAN));
@@ -14322,17 +14326,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (dealsSectionHeaderName.get(i).equalsIgnoreCase(actualDealsSectionHeaderName.get(j))) {
 						log(LogStatus.INFO,
 								"Expected header name: " + dealsSectionHeaderName.get(i)
-										+ " has been matched with Actual header name: "
-										+ actualDealsSectionHeaderName.get(j) + " on deal section",
+								+ " has been matched with Actual header name: "
+								+ actualDealsSectionHeaderName.get(j) + " on deal section",
 								YesNo.No);
 						k++;
 					}
 				}
 				if (k == 0) {
 					log(LogStatus.ERROR, "Expected header name: " + dealsSectionHeaderName.get(i)
-							+ " is not matched with Actual header name on deal section", YesNo.No);
+					+ " is not matched with Actual header name on deal section", YesNo.No);
 					result.add("Expected header name: " + dealsSectionHeaderName.get(i)
-							+ " is not matched with Actual header name on deal section");
+					+ " is not matched with Actual header name on deal section");
 				}
 
 			}
@@ -14351,20 +14355,23 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				result.add("The meessage : " + dealsSectionHeaderMessage + " is not verified on deal secton");
 			}
 		}
-
 		if (!connectionsSectionHeaderName.isEmpty()) {
+			
+			if(click(driver, getInternalTabOnConnectionSection(20), "internal tab on connection section", action.SCROLLANDBOOLEAN))
+			{
+				log(LogStatus.INFO, "Clicked on internal button", YesNo.No);
 			ArrayList<String> actualConnectionsSectionHeaderName = new ArrayList<String>();
-			xPath = "//span[contains(@title,'Connection')]/ancestor::div//span[@class='slds-truncate' and @title!='']";
+			xPath = "(//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//tr)[1]//span[@class='slds-truncate' and @title!='']";
 			elements = FindElements(driver, xPath, "Connections section headers");
 			for (WebElement el : elements) {
 				actualConnectionsSectionHeaderName
-						.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
+				.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
 			}
-			xPath = "//span[contains(@title,'Connection')]/ancestor::div//div[@class='slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate']//lightning-icon";
+			xPath = "(//span[contains(@title,'Connection')]/ancestor::div[@class='slds-m-bottom_xx-small']//tr)[1]//lightning-icon";
 			elements = FindElements(driver, xPath, "Connections section headers");
 			for (WebElement el : elements) {
 				actualConnectionsSectionHeaderName
-						.add(getAttribute(driver, el, "Connections section headers", "title"));
+				.add(getAttribute(driver, el, "Connections section headers", "title"));
 			}
 
 			for (int i = 0; i < connectionsSectionHeaderName.size(); i++) {
@@ -14374,19 +14381,25 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							.equalsIgnoreCase(actualConnectionsSectionHeaderName.get(j))) {
 						log(LogStatus.INFO,
 								"Expected header name: " + connectionsSectionHeaderName.get(i)
-										+ " has been matched with Actual header name: "
-										+ actualConnectionsSectionHeaderName.get(j) + " on connection section",
+								+ " has been matched with Actual header name: "
+								+ actualConnectionsSectionHeaderName.get(j) + " on connection section",
 								YesNo.No);
 						k++;
 					}
 				}
 				if (k == 0) {
 					log(LogStatus.ERROR, "Expected header name: " + connectionsSectionHeaderName.get(i)
-							+ " is not matched with Actual header name on connection section", YesNo.No);
+					+ " is not matched with Actual header name on connection section", YesNo.No);
 					result.add("Expected header name: " + connectionsSectionHeaderName.get(i)
-							+ " is not matched with Actual header name on connection section");
+					+ " is not matched with Actual header name on connection section");
 				}
 
+			}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on internal tab", YesNo.No);
+				result.add("Not able to click on internal tab");
 			}
 		}
 
@@ -14405,6 +14418,74 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						"The meessage : " + connectionsSectionHeaderMessage + " is not verified on Connection section");
 			}
 		}
+
+		if (!externalConnectionsSectionHeaderName.isEmpty()) {
+
+			if(click(driver, getExternalTabOnConnectionSection(20), "external tab on connection section", action.SCROLLANDBOOLEAN))
+			{
+
+				log(LogStatus.INFO, "Clicked on external button", YesNo.No);
+
+
+				ArrayList<String> actualExternalConnectionsSectionHeaderName = new ArrayList<String>();
+				xPath = "(//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//tr)[1]//span[@class='slds-truncate' and @title!='']";
+				elements = FindElements(driver, xPath, "Connections section headers");
+				for (WebElement el : elements) {
+					actualExternalConnectionsSectionHeaderName
+					.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
+				}
+				xPath = "(//span[contains(@title,'Connection')]/ancestor::div[@class='slds-m-bottom_xx-small']//tr)[1]//lightning-icon";
+				elements = FindElements(driver, xPath, "Connections section headers");
+				for (WebElement el : elements) {
+					actualExternalConnectionsSectionHeaderName
+					.add(getAttribute(driver, el, "Connections section headers", "title"));
+				}
+
+				for (int i = 0; i < externalConnectionsSectionHeaderName.size(); i++) {
+					int k = 0;
+					for (int j = 0; j < actualExternalConnectionsSectionHeaderName.size(); j++) {
+						if (externalConnectionsSectionHeaderName.get(i)
+								.equalsIgnoreCase(actualExternalConnectionsSectionHeaderName.get(j))) {
+							log(LogStatus.INFO,
+									"Expected header name: " + externalConnectionsSectionHeaderName.get(i)
+									+ " has been matched with Actual header name: "
+									+ actualExternalConnectionsSectionHeaderName.get(j) + " on connection section",
+									YesNo.No);
+							k++;
+						}
+					}
+					if (k == 0) {
+						log(LogStatus.ERROR, "Expected header name: " + externalConnectionsSectionHeaderName.get(i)
+						+ " is not matched with Actual header name on connection section", YesNo.No);
+						result.add("Expected header name: " + externalConnectionsSectionHeaderName.get(i)
+						+ " is not matched with Actual header name on connection section");
+					}
+
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on external tab", YesNo.No);
+				result.add("Not able to click on external tab");
+			}
+		}
+
+		if (externalConnectionsSectionHeaderMessage != null && !"".equals(externalConnectionsSectionHeaderMessage)) {
+			xPath = "//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//p[text()='"
+					+ externalConnectionsSectionHeaderMessage + "']";
+			ele = FindElement(driver, xPath, "Message on Connections section", action.SCROLLANDBOOLEAN, 15);
+			if (ele != null) {
+				log(LogStatus.INFO, "The meessage : " + externalConnectionsSectionHeaderMessage
+						+ " has been verified on Connection section", YesNo.No);
+			} else {
+				log(LogStatus.ERROR,
+						"The meessage : " + externalConnectionsSectionHeaderMessage + " is not verified on Connection section",
+						YesNo.No);
+				result.add(
+						"The meessage : " + externalConnectionsSectionHeaderMessage + " is not verified on Connection section");
+			}
+		}
+
 		return result;
 	}
 
@@ -14421,7 +14502,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			elements = FindElements(driver, xPath, "Fundraising section headers");
 			for (WebElement el : elements) {
 				actualFundraisingSectionHeaderName
-						.add(getText(driver, el, "Fundraising section headers", action.SCROLLANDBOOLEAN));
+				.add(getText(driver, el, "Fundraising section headers", action.SCROLLANDBOOLEAN));
 			}
 			if (FundraisingSectionHeaderName.containsAll(FundraisingSectionHeaderName)) {
 				log(LogStatus.INFO, "The Headers name of Fundraising section have been verified "
@@ -14454,7 +14535,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	}
 
 	public ArrayList<String> verifyToolTipOnDealsConnctionsAndContactsHeader(List<String> dealSectionHeaderTooltip,
-			List<String> contactsSectionHeaderTooltip, List<String> connectionsSectionHeaderTooltip) {
+			List<String> contactsSectionHeaderTooltip, List<String> connectionsSectionHeaderTooltip,List<String> externalConnectionsSectionHeaderTooltip) {
 		String xPath;
 		List<WebElement> elements;
 		ArrayList<String> result = new ArrayList<String>();
@@ -14472,7 +14553,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				{
 					if (dealSectionHeaderTooltip.get(i).equals(actualDealsSectionHeaderTooltip.get(j))) {
 						log(LogStatus.INFO, "Expected tooltip "+dealSectionHeaderTooltip.get(i)+" have been matched with actual tooltip "+actualDealsSectionHeaderTooltip.get(j)+" on Headers name of deal section ", YesNo.No);
-					    k++;
+						k++;
 					}
 				}
 				if(k==0)
@@ -14498,7 +14579,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			for (WebElement el : elements) {
 				actualTooltip.add(getAttribute(driver, el, "Contact section headers Tooltip", "title"));
 			}
-			
+
 			for(int i=0; i<contactsSectionHeaderTooltip.size(); i++)
 			{
 				int k=0;
@@ -14518,47 +14599,86 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 		if (!connectionsSectionHeaderTooltip.isEmpty()) {
-			ArrayList<String> actualTooltip = new ArrayList<String>();
-
-			xPath = "//span[@title='Connections']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//span[@class='slds-truncate' and @title!='']";
-			elements = FindElements(driver, xPath, "Connections section headers");
-
-			for (WebElement el : elements) {
-				actualTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
-			}
-
-			xPath = "//span[@title='Connections']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//lightning-icon";
-			elements = FindElements(driver, xPath, "Connections section headers");
-			for (WebElement el : elements) {
-				actualTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
-			}
-			
-			for(int i=0; i<connectionsSectionHeaderTooltip.size(); i++)
+			if(click(driver, getInternalTabOnConnectionSection(20), "Internal tab on connection section", action.SCROLLANDBOOLEAN))
 			{
-				int k=0;
-				for(int j=0; j<actualTooltip.size(); j++)
+				log(LogStatus.INFO, "Clicked on external button", YesNo.No);
+				ArrayList<String> actualTooltip = new ArrayList<String>();
+
+				xPath = "(//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//tr)[1]//span[@class='slds-truncate' and @title!='']";
+				elements = FindElements(driver, xPath, "Connections section headers");
+
+				for (WebElement el : elements) {
+					actualTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
+				}
+
+				xPath = "(//span[contains(@title,'Connection')]/ancestor::div[@class='slds-m-bottom_xx-small']//tr)[1]//lightning-icon//lightning-primitive-icon";
+				elements = FindElements(driver, xPath, "Connections section headers");
+				for (WebElement el : elements) {
+					actualTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
+				}
+
+				for(int i=0; i<connectionsSectionHeaderTooltip.size(); i++)
 				{
-					if (connectionsSectionHeaderTooltip.get(i).equals(actualTooltip.get(j))) {
-						log(LogStatus.INFO, "Expected header tooltip "+connectionsSectionHeaderTooltip.get(i)+" have been verified with actual header tooltip "+actualTooltip.get(j), YesNo.No);
-					    k++;
+					int k=0;
+					for(int j=0; j<actualTooltip.size(); j++)
+					{
+						if (connectionsSectionHeaderTooltip.get(i).equals(actualTooltip.get(j))) {
+							log(LogStatus.INFO, "Expected header tooltip "+connectionsSectionHeaderTooltip.get(i)+" have been verified with actual header tooltip "+actualTooltip.get(j), YesNo.No);
+							k++;
+						}
+					}
+					if(k==0)
+					{
+						log(LogStatus.ERROR, "Expected header tooltip "+connectionsSectionHeaderTooltip.get(i)+" is not matched with the acutual tooltip", YesNo.No);
+						result.add("Expected header tooltip "+connectionsSectionHeaderTooltip.get(i)+" is not matched with the acutual tooltip");   
 					}
 				}
-				if(k==0)
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on external tab", YesNo.No);
+				result.add("Not able to click on external tab");
+			}
+		}
+		if (!externalConnectionsSectionHeaderTooltip.isEmpty()) {
+			ArrayList<String> actualexternalTooltip = new ArrayList<String>();
+			if(click(driver, getExternalTabOnConnectionSection(20), "Internal tab on connection section", action.SCROLLANDBOOLEAN))
+			{
+				log(LogStatus.INFO, "Clicked on external button", YesNo.No);
+				xPath = "(//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//tr)[1]//span[@class='slds-truncate' and @title!='']";
+				elements = FindElements(driver, xPath, "Connections section headers");
+
+				for (WebElement el : elements) {
+					actualexternalTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
+				}
+
+				xPath = "(//span[contains(@title,'Connection')]/ancestor::div[@class='slds-m-bottom_xx-small']//tr)[1]//lightning-icon";
+				elements = FindElements(driver, xPath, "Connections section headers");
+				for (WebElement el : elements) {
+					actualexternalTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
+				}
+
+				for(int i=0; i<externalConnectionsSectionHeaderTooltip.size(); i++)
 				{
-					log(LogStatus.ERROR, "Expected header tooltip "+connectionsSectionHeaderTooltip.get(i)+" is not matched with the acutual tooltip", YesNo.No);
-					result.add("Expected header tooltip "+connectionsSectionHeaderTooltip.get(i)+" is not matched with the acutual tooltip");   
+					int k=0;
+					for(int j=0; j<actualexternalTooltip.size(); j++)
+					{
+						if (externalConnectionsSectionHeaderTooltip.get(i).equals(actualexternalTooltip.get(j))) {
+							log(LogStatus.INFO, "Expected header tooltip "+externalConnectionsSectionHeaderTooltip.get(i)+" have been verified with actual header tooltip "+actualexternalTooltip.get(j), YesNo.No);
+							k++;
+						}
+					}
+					if(k==0)
+					{
+						log(LogStatus.ERROR, "Expected header tooltip "+externalConnectionsSectionHeaderTooltip.get(i)+" is not matched with the acutual tooltip", YesNo.No);
+						result.add("Expected header tooltip "+externalConnectionsSectionHeaderTooltip.get(i)+" is not matched with the acutual tooltip");   
+					}
 				}
 			}
-			
-
-			if (connectionsSectionHeaderTooltip.containsAll(actualTooltip)) {
-				log(LogStatus.INFO, "The Tooltip on Header of Connections section have been verified "
-						+ connectionsSectionHeaderTooltip, YesNo.No);
-			} else {
-				log(LogStatus.ERROR, "The Tooltip on Header of Connections section are not verified "
-						+ connectionsSectionHeaderTooltip, YesNo.No);
-				result.add("The Tooltip on Header of contact Connections are not verified "
-						+ connectionsSectionHeaderTooltip);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on external tab", YesNo.No);
+				result.add("Not able to click on external tab");
 			}
 		}
 		return result;
@@ -14587,7 +14707,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								log(LogStatus.ERROR,
 										"Time Reference : " + firmTimesReferenced[i] + " is not verified against "
 												+ firmsTagName[i] + " record on firm tab of Tagged",
-										YesNo.No);
+												YesNo.No);
 								result.add("Time Reference : " + firmTimesReferenced[i] + " is not verified against "
 										+ firmsTagName[i] + " record on firm tab of Tagged");
 							}
@@ -14624,12 +14744,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								log(LogStatus.INFO,
 										"Time Reference : " + peopleTimesReferenced[i] + " is verified against "
 												+ peopleTagName[i] + " record on people tab of Tagged",
-										YesNo.No);
+												YesNo.No);
 							} else {
 								log(LogStatus.ERROR,
 										"Time Reference : " + peopleTimesReferenced[i] + " is not verified against "
 												+ peopleTagName[i] + " record on people tab of Tagged",
-										YesNo.No);
+												YesNo.No);
 								result.add("Time Reference : " + peopleTimesReferenced[i] + " is not verified against "
 										+ peopleTagName[i] + " record on people tab of Tagged");
 							}
@@ -14668,12 +14788,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									log(LogStatus.INFO,
 											"Time Reference : " + dealTimesReferenced[i] + " is verified against "
 													+ dealTagName[i] + " record on deals tab of Tagged",
-											YesNo.No);
+													YesNo.No);
 								} else {
 									log(LogStatus.ERROR,
 											"Time Reference : " + dealTimesReferenced[i] + " is not verified against "
 													+ dealTagName[i] + " record on deals tab of Tagged",
-											YesNo.No);
+													YesNo.No);
 									result.add(
 											"Time Reference : " + dealTimesReferenced[i] + " is not verified against "
 													+ dealTagName[i] + " record on deals tab of Tagged");
@@ -14711,12 +14831,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									log(LogStatus.INFO,
 											"Time Reference : " + fundTimesReferenced[i] + " is verified against "
 													+ fundTagName[i] + " record on Funds tab of Tagged",
-											YesNo.No);
+													YesNo.No);
 								} else {
 									log(LogStatus.ERROR,
 											"Time Reference : " + fundTimesReferenced[i] + " is not verified against "
 													+ fundTagName[i] + " record on Funds tab of Tagged",
-											YesNo.No);
+													YesNo.No);
 									result.add(
 											"Time Reference : " + fundTimesReferenced[i] + " is not verified against "
 													+ fundTagName[i] + " record on Funds tab of Tagged");
@@ -15007,8 +15127,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						if (headingName.get(i).trim().equalsIgnoreCase(actualHeadingName.get(j).trim())) {
 							log(LogStatus.INFO,
 									"Expected heading name " + headingName.get(i)
-											+ " have been matched with the Actual heading name "
-											+ actualHeadingName.get(j) + " of Connection page",
+									+ " have been matched with the Actual heading name "
+									+ actualHeadingName.get(j) + " of Connection page",
 									YesNo.No);
 							k++;
 						}
@@ -15122,7 +15242,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ThreadSleep(5000);
 					ele = FindElement(driver,
 							"//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//td//span[text()='" + recordType
-									+ "']/ancestor::td/preceding-sibling::th//span//a[text()='" + alreadyCreated + "']",
+							+ "']/ancestor::td/preceding-sibling::th//span//a[text()='" + alreadyCreated + "']",
 							"Record: " + alreadyCreated + " of Record Type: " + recordType, action.BOOLEAN, 30);
 					ThreadSleep(2000);
 					if (click(driver, ele, "Record: " + alreadyCreated + " of Record Type: " + recordType,
@@ -15333,9 +15453,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				}
 			} else {
 				log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Create.toString()
-						+ " so cannot click on : " + buttonName + " for creation ", YesNo.Yes);
+				+ " so cannot click on : " + buttonName + " for creation ", YesNo.Yes);
 				sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Create.toString()
-						+ " so cannot click on : " + buttonName + " for creation ");
+				+ " so cannot click on : " + buttonName + " for creation ");
 				return false;
 			}
 		} else {
@@ -15824,7 +15944,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				} else {
 					log(LogStatus.ERROR,
 							subjectName
-									+ " links is not redirecting to Details Page, So Not able to Click on Edit Button",
+							+ " links is not redirecting to Details Page, So Not able to Click on Edit Button",
 							YesNo.No);
 					driver.close();
 					driver.switchTo().window(windowID);
@@ -15936,12 +16056,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									log(LogStatus.INFO,
 											relatedAssociation + " tag has been verified in Note PopUp with Icon: "
 													+ relatedAssociationIcon,
-											YesNo.No);
+													YesNo.No);
 								} else {
 									log(LogStatus.ERROR,
 											relatedAssociation + " tag has not verified in Note PopUp with Icon: "
 													+ relatedAssociationIcon,
-											YesNo.No);
+													YesNo.No);
 									result.add(relatedAssociation + " tag has not verified in Note PopUp with Icon: "
 											+ relatedAssociationIcon);
 								}
@@ -16202,7 +16322,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			result.add(" Popup is not open on the same page");
 		}
 
-//		click(driver, crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+		//		click(driver, crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
 
 		return result;
 	}
@@ -16600,7 +16720,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (headerName.get(i).equalsIgnoreCase(actualHeaderName.get(j))) {
 						log(LogStatus.INFO,
 								"Expected header name : " + headerName.get(i)
-										+ " has been matched with Actual header name : " + actualHeaderName.get(j),
+								+ " has been matched with Actual header name : " + actualHeaderName.get(j),
 								YesNo.No);
 						k++;
 					}
@@ -16739,9 +16859,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				}
 			} else {
 				log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Create.toString()
-						+ " so cannot click on : " + buttonName + " for creation ", YesNo.Yes);
+				+ " so cannot click on : " + buttonName + " for creation ", YesNo.Yes);
 				sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Create.toString()
-						+ " so cannot click on : " + buttonName + " for creation ");
+				+ " so cannot click on : " + buttonName + " for creation ");
 				return false;
 			}
 		} else {
@@ -17369,9 +17489,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				}
 			} else {
 				log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Create.toString()
-						+ " so cannot click on : " + buttonName + " for creation ", YesNo.Yes);
+				+ " so cannot click on : " + buttonName + " for creation ", YesNo.Yes);
 				sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Create.toString()
-						+ " so cannot click on : " + buttonName + " for creation ");
+				+ " so cannot click on : " + buttonName + " for creation ");
 				return false;
 			}
 		} else {
@@ -18418,7 +18538,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								"Related Association: " + tagList.get(i) + " should not be there in dropdown",
 								YesNo.No);
 						negativeResult
-								.add("Related Association: " + tagList.get(i) + " should not be there in dropdown");
+						.add("Related Association: " + tagList.get(i) + " should not be there in dropdown");
 					}
 
 				} else {
@@ -18903,12 +19023,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							if (actualTitle.toLowerCase().trim().equals(title[i].toLowerCase().trim())) {
 								log(LogStatus.INFO,
 										"Actual result " + actualTitle
-												+ " of Title has been matched with Expected result : " + title[i],
+										+ " of Title has been matched with Expected result : " + title[i],
 										YesNo.No);
 							} else {
 								log(LogStatus.ERROR,
 										"Actual result " + actualTitle
-												+ " of Title is not matched with Expected result : " + title[i],
+										+ " of Title is not matched with Expected result : " + title[i],
 										YesNo.No);
 								result.add("Actual result " + actualTitle
 										+ " of Title is not matched with Expected result : " + title[i]);
@@ -18923,12 +19043,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							if (actualDeal.toLowerCase().trim().equals(deals[i].toLowerCase().trim())) {
 								log(LogStatus.INFO,
 										"Actual result : " + actualDeal
-												+ " of deal has been matched with Expected resut : " + deals[i],
+										+ " of deal has been matched with Expected resut : " + deals[i],
 										YesNo.No);
 							} else {
 								log(LogStatus.ERROR,
 										"Actual result : " + actualDeal
-												+ " of deal are not matched with Expected result : " + deals[i],
+										+ " of deal are not matched with Expected result : " + deals[i],
 										YesNo.No);
 								result.add("Actual result : " + actualDeal
 										+ " of deal are not matched with Expected result : " + deals[i]);
@@ -18945,14 +19065,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									.equals(meetingAndCalls[i].toLowerCase().trim())) {
 								log(LogStatus.INFO,
 										"Actual result " + actualmeetingAndCalls
-												+ " of meeting and call has been matched with Expected result : "
-												+ meetingAndCalls[i],
+										+ " of meeting and call has been matched with Expected result : "
+										+ meetingAndCalls[i],
 										YesNo.No);
 							} else {
 								log(LogStatus.ERROR,
 										"Actual result " + actualmeetingAndCalls
-												+ " of meeting and call are not matched with Expected result : "
-												+ meetingAndCalls[i],
+										+ " of meeting and call are not matched with Expected result : "
+										+ meetingAndCalls[i],
 										YesNo.No);
 								result.add("Actual result " + actualmeetingAndCalls
 										+ " of meeting and call are not matched with Expected result : "
@@ -18968,12 +19088,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							if (actualEmail.toLowerCase().trim().equals(email[i].toLowerCase().trim())) {
 								log(LogStatus.INFO,
 										"Actual result " + actualEmail
-												+ " of email has been matched with Expected result : " + email[i],
+										+ " of email has been matched with Expected result : " + email[i],
 										YesNo.No);
 							} else {
 								log(LogStatus.ERROR,
 										"Actual result " + actualEmail
-												+ " of email are not matched with Expected result : " + email[i],
+										+ " of email are not matched with Expected result : " + email[i],
 										YesNo.No);
 								result.add("Actual result " + actualEmail
 										+ " of email are not matched with Expected result : " + email[i]);
@@ -19072,12 +19192,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							log(LogStatus.INFO,
 									"actual date : " + actualDate + " has been matched with the Expected date : "
 											+ expectedDate + " of subject : " + subject[i],
-									YesNo.No);
+											YesNo.No);
 						} else {
 							log(LogStatus.ERROR,
 									"actual date : " + actualDate + " is not matched with the Expected date : "
 											+ expectedDate + " of subject : " + subject[i],
-									YesNo.No);
+											YesNo.No);
 							result.add("actual date : " + actualDate + " is not matched with the Expected date : "
 									+ expectedDate + " of subject : " + subject[i]);
 						}
@@ -19105,13 +19225,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							log(LogStatus.INFO,
 									"actual details : " + actDetails + " has been matched with the Expected details : "
 											+ details[i] + " of subject : " + subject[i],
-									YesNo.No);
+											YesNo.No);
 
 						} else {
 							log(LogStatus.ERROR,
 									"actual details : " + actDetails + " is not matched with the Expected details : "
 											+ details[i] + " of subject : " + subject[i],
-									YesNo.No);
+											YesNo.No);
 							result.add("actual details : " + actDetails + " is not matched with the Expected details : "
 									+ details[i] + " of subject : " + subject[i]);
 						}
@@ -19217,19 +19337,19 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									if (actualTitle.equalsIgnoreCase(title[i])) {
 										log(LogStatus.INFO, "Actual result " + actualTitle
 												+ " of Title has been matched with Expected result : " + title[i]
-												+ " of Team Member: " + teamMember[i] + " under Record page: "
-												+ contactName + " for user " + teamMember[i], YesNo.No);
+														+ " of Team Member: " + teamMember[i] + " under Record page: "
+														+ contactName + " for user " + teamMember[i], YesNo.No);
 									} else {
 										log(LogStatus.ERROR,
 												"Actual result " + actualTitle
-														+ " of Title is not matched with Expected result : " + title[i]
+												+ " of Title is not matched with Expected result : " + title[i]
 														+ " of Team Member: " + teamMember[i] + " under Record page: "
 														+ contactName + " for user " + teamMember[i],
-												YesNo.No);
+														YesNo.No);
 										result.add("Actual result " + actualTitle
 												+ " of Title is not matched with Expected result : " + title[i]
-												+ " of Team Member: " + teamMember[i] + " under Record page: "
-												+ contactName + " for user " + teamMember[i]);
+														+ " of Team Member: " + teamMember[i] + " under Record page: "
+														+ contactName + " for user " + teamMember[i]);
 									}
 								}
 
@@ -19241,21 +19361,21 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									if (actualDeal.equalsIgnoreCase(deals[i])) {
 										log(LogStatus.INFO,
 												"Actual result " + actualDeal
-														+ " of deal has been matched with Expected resut : " + deals[i]
+												+ " of deal has been matched with Expected resut : " + deals[i]
 														+ " of Team Member: " + teamMember[i] + " under Record page: "
 														+ contactName + " for user " + teamMember[i],
-												YesNo.No);
+														YesNo.No);
 									} else {
 										log(LogStatus.ERROR,
 												"Actual result " + actualDeal
-														+ " of deal are not matched with Expected resut : " + deals[i]
+												+ " of deal are not matched with Expected resut : " + deals[i]
 														+ " of Team Member: " + teamMember[i] + " under Record page: "
 														+ contactName + " for user " + teamMember[i],
-												YesNo.No);
+														YesNo.No);
 										result.add("Actual result " + actualDeal
 												+ " of deal are not matched with Expected resut : " + deals[i]
-												+ " of Team Member: " + teamMember[i] + " under Record page: "
-												+ contactName + " for user " + teamMember[i]);
+														+ " of Team Member: " + teamMember[i] + " under Record page: "
+														+ contactName + " for user " + teamMember[i]);
 									}
 								}
 
@@ -19268,18 +19388,18 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										log(LogStatus.INFO, "Actual result " + actualmeetingAndCalls
 												+ " of meeting and call has been matched with Expected result : "
 												+ meetingAndCalls[i] + " of Team Member: " + teamMember[i]
-												+ " under Record page: " + contactName + " for user " + teamMember[i],
-												YesNo.No);
+														+ " under Record page: " + contactName + " for user " + teamMember[i],
+														YesNo.No);
 									} else {
 										log(LogStatus.ERROR, "Actual result " + actualmeetingAndCalls
 												+ " of meeting and call are not matched with Expected resut : "
 												+ meetingAndCalls[i] + " of Team Member: " + teamMember[i]
-												+ " under Record page: " + contactName + " for user " + teamMember[i],
-												YesNo.No);
+														+ " under Record page: " + contactName + " for user " + teamMember[i],
+														YesNo.No);
 										result.add("Actual result " + actualmeetingAndCalls
 												+ " of meeting and call are not matched with Expected resut : "
 												+ meetingAndCalls[i] + " of Team Member: " + teamMember[i]
-												+ " under Record page: " + contactName + " for user " + teamMember[i]);
+														+ " under Record page: " + contactName + " for user " + teamMember[i]);
 									}
 								}
 								if (email[i] != null && email[i] != "") {
@@ -19289,19 +19409,19 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									if (actualEmail.equalsIgnoreCase(email[i])) {
 										log(LogStatus.INFO, "Actual result " + actualEmail
 												+ " of email has been matched with Expected result : " + email[i]
-												+ " of Team Member: " + teamMember[i] + " under Record page: "
-												+ contactName + " for user " + teamMember[i], YesNo.No);
+														+ " of Team Member: " + teamMember[i] + " under Record page: "
+														+ contactName + " for user " + teamMember[i], YesNo.No);
 									} else {
 										log(LogStatus.ERROR,
 												"Actual result " + actualEmail
-														+ " of email are not matched with Expected resut : " + email[i]
+												+ " of email are not matched with Expected resut : " + email[i]
 														+ " of Team Member: " + teamMember[i] + " under Record page: "
 														+ contactName + " for user " + teamMember[i],
-												YesNo.No);
+														YesNo.No);
 										result.add("Actual result " + actualEmail
 												+ " of email are not matched with Expected resut : " + email[i]
-												+ " of Team Member: " + teamMember[i] + " under Record page: "
-												+ contactName + " for user " + teamMember[i]);
+														+ " of Team Member: " + teamMember[i] + " under Record page: "
+														+ contactName + " for user " + teamMember[i]);
 									}
 								}
 							} else {
@@ -19418,17 +19538,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								log(LogStatus.INFO,
 										"Expected date: " + date[i] + " has been matched with the actual date: "
 												+ actualDate + " for subject: " + subjectName[i]
-												+ " on meeting and call popup",
-										YesNo.No);
+														+ " on meeting and call popup",
+														YesNo.No);
 							} else {
 								log(LogStatus.INFO,
 										"Expected date: " + date[i] + " is not matched with the actual date: "
 												+ actualDate + " for subject: " + subjectName[i]
-												+ " on meeting and call popup",
-										YesNo.No);
+														+ " on meeting and call popup",
+														YesNo.No);
 								result.add("Expected date: " + date[i] + " is not matched with the actual date: "
 										+ actualDate + " for subject: " + subjectName[i]
-										+ " on meeting and call popup");
+												+ " on meeting and call popup");
 							}
 						}
 
@@ -19441,12 +19561,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								log(LogStatus.INFO,
 										"Expected subject: " + subjectName[i]
 												+ " has been matched with the actual subject: " + actualSubject,
-										YesNo.No);
+												YesNo.No);
 							} else {
 								log(LogStatus.ERROR,
 										"Expected subject: " + subjectName[i]
 												+ " is not matched with the actual subject: " + actualSubject,
-										YesNo.No);
+												YesNo.No);
 								result.add("Expected subject: " + subjectName[i]
 										+ " is not matched with the actual subject : " + actualSubject);
 							}
@@ -19465,14 +19585,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										"Expected details: " + details[i]
 												+ " has been matched with the actual details: " + actualDetails
 												+ " for subject: " + subjectName[i]
-												+ " on meeting and call popup. Subject: " + subjectName,
-										YesNo.No);
+														+ " on meeting and call popup. Subject: " + subjectName,
+														YesNo.No);
 							} else {
 								log(LogStatus.ERROR,
 										"Expected details: " + details[i] + " is not matched with the actual details: "
 												+ actualDetails + " for subject: " + subjectName[i]
-												+ " on meeting and call popup",
-										YesNo.No);
+														+ " on meeting and call popup",
+														YesNo.No);
 								result.add("Expected details: " + details[i]
 										+ " is not matched with the actual details: " + actualDetails + " for subject: "
 										+ subjectName[i] + " on meeting and call popup");
@@ -19722,7 +19842,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					} else {
 						log(LogStatus.ERROR,
 								"Subject: " + subjectName
-										+ " also not found in View All popup, So not able to perform click operation",
+								+ " also not found in View All popup, So not able to perform click operation",
 								YesNo.Yes);
 					}
 
@@ -19762,7 +19882,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 				if (!index.equals(-1)) {
 					log(LogStatus.INFO, "actual subject : " + actualSubjects.get(index)
-							+ " has been matched with the Expected subject : " + subject.get(i), YesNo.No);
+					+ " has been matched with the Expected subject : " + subject.get(i), YesNo.No);
 
 					if (icon != null && icon.size() != 0 && icon.get(i) != "") {
 
@@ -19773,7 +19893,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							log(LogStatus.ERROR, "The icon :" + icon.get(i) + " is not verified against "
 									+ subject.get(i) + " record", YesNo.No);
 							result.add("The icon :" + icon.get(i) + " is not verified against " + subject.get(i)
-									+ " record");
+							+ " record");
 						}
 					}
 
@@ -19782,18 +19902,18 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						if (actualDates.get(index).equalsIgnoreCase(date.get(i))) {
 							log(LogStatus.INFO,
 									"actual date : " + actualDates.get(index)
-											+ " has been matched with the Expected date : " + date.get(i)
-											+ " against Subject: " + subject.get(i),
+									+ " has been matched with the Expected date : " + date.get(i)
+									+ " against Subject: " + subject.get(i),
 									YesNo.No);
 						} else {
 							log(LogStatus.ERROR,
 									"actual date : " + actualDates.get(index)
-											+ " is not matched with the Expected date : " + date.get(i)
-											+ " against Subject: " + subject.get(i),
+									+ " is not matched with the Expected date : " + date.get(i)
+									+ " against Subject: " + subject.get(i),
 									YesNo.No);
 							result.add("actual date : " + actualDates.get(index)
-									+ " is not matched with the Expected date : " + date.get(i) + " against Subject: "
-									+ subject.get(i));
+							+ " is not matched with the Expected date : " + date.get(i) + " against Subject: "
+							+ subject.get(i));
 						}
 					}
 
@@ -19802,18 +19922,18 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						if (actualDetails.get(index).equalsIgnoreCase(details.get(i))) {
 							log(LogStatus.INFO,
 									"actual details : " + actualDetails.get(index)
-											+ " has been matched with the Expected details : " + details.get(i)
-											+ " against Subject: " + subject.get(i),
+									+ " has been matched with the Expected details : " + details.get(i)
+									+ " against Subject: " + subject.get(i),
 									YesNo.No);
 						} else {
 							log(LogStatus.ERROR,
 									"actual details : " + actualDetails.get(index)
-											+ " is not matched with the Expected details : " + details.get(i)
-											+ " against Subject: " + subject.get(i),
+									+ " is not matched with the Expected details : " + details.get(i)
+									+ " against Subject: " + subject.get(i),
 									YesNo.No);
 							result.add("actual details : " + actualDetails.get(index)
-									+ " is not matched with the Expected details : " + details.get(i)
-									+ " against Subject: " + subject.get(i));
+							+ " is not matched with the Expected details : " + details.get(i)
+							+ " against Subject: " + subject.get(i));
 						}
 					}
 					if (assignedTo != null && assignedTo.size() != 0 && assignedTo.get(i) != "") {
@@ -19821,25 +19941,25 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						if (actualAssignedTo.get(index).equalsIgnoreCase(assignedTo.get(i))) {
 							log(LogStatus.INFO,
 									"actual AssignedTo value : " + actualAssignedTo.get(index)
-											+ " has been matched with the Expected AssignedTo value : "
-											+ assignedTo.get(i) + " against Subject: " + subject.get(i),
+									+ " has been matched with the Expected AssignedTo value : "
+									+ assignedTo.get(i) + " against Subject: " + subject.get(i),
 									YesNo.No);
 						} else {
 							log(LogStatus.ERROR,
 									"actual AssignedTo value : " + actualAssignedTo.get(index)
-											+ " is not matched with the Expected AssignedTo value : "
-											+ assignedTo.get(i) + " against Subject: " + subject.get(i),
+									+ " is not matched with the Expected AssignedTo value : "
+									+ assignedTo.get(i) + " against Subject: " + subject.get(i),
 									YesNo.No);
 							result.add("actual AssignedTo value : " + actualAssignedTo.get(index)
-									+ " is not matched with the Expected AssignedTo value : " + assignedTo.get(i)
-									+ " against Subject: " + subject.get(i));
+							+ " is not matched with the Expected AssignedTo value : " + assignedTo.get(i)
+							+ " against Subject: " + subject.get(i));
 						}
 					}
 				} else {
 					log(LogStatus.ERROR, "actual subject : " + actualSubjects.get(index)
-							+ " is not matched with the Expected subject : " + subject.get(i), YesNo.No);
+					+ " is not matched with the Expected subject : " + subject.get(i), YesNo.No);
 					result.add("actual subject : " + actualSubjects.get(index)
-							+ " is not matched with the Expected subject : " + subject.get(i));
+					+ " is not matched with the Expected subject : " + subject.get(i));
 				}
 
 			}
@@ -19939,7 +20059,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							log(LogStatus.INFO,
 									"Expected filter type: " + filterValue[i]
 											+ " has been matched with the Actual filter type: " + actulaFilterType[j],
-									YesNo.No);
+											YesNo.No);
 							k++;
 						}
 					}
@@ -19981,7 +20101,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 												log(LogStatus.INFO,
 														filterValue[i]
 																+ " filter has been verfied on interaction popup",
-														YesNo.No);
+																YesNo.No);
 											} else {
 												log(LogStatus.ERROR,
 														filterValue[i] + " filter are not verfied on interaction popup",
@@ -20002,7 +20122,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 											log(LogStatus.ERROR,
 													"Not able to click on the checkbox of " + filterValue[i] + ". So "
 															+ filterValue[i] + " filter did not unselect",
-													YesNo.No);
+															YesNo.No);
 											result.add("Not able to click on the checkbox of " + filterValue[i]
 													+ ". So " + filterValue[i] + " filter did not unselect");
 										}
@@ -20021,7 +20141,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 											log(LogStatus.ERROR,
 													"Not able to click on the checkbox of " + filterValue[i] + ". So "
 															+ filterValue[i] + " filter did not unselect",
-													YesNo.No);
+															YesNo.No);
 											result.add("Not able to click on the checkbox of " + filterValue[i]
 													+ ". So " + filterValue[i] + " filter did not unselect");
 										}
@@ -20207,7 +20327,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							log(LogStatus.INFO,
 									"Expected filter type: " + filterValue[i]
 											+ " has been matched with the Actual filter type: " + actulaFilterType[j],
-									YesNo.No);
+											YesNo.No);
 							k++;
 						}
 					}
@@ -20254,7 +20374,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 												log(LogStatus.ERROR,
 														filterValue[i]
 																+ " filter are not verfied on Meetings and Calls popup",
-														YesNo.No);
+																YesNo.No);
 												result.add(filterValue[i]
 														+ " filter are not verfied on Meetings and Calls popup");
 											}
@@ -20271,7 +20391,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 											log(LogStatus.ERROR,
 													"Not able to click on the checkbox of " + filterValue[i] + ". So "
 															+ filterValue[i] + " filter did not unselect",
-													YesNo.No);
+															YesNo.No);
 											result.add("Not able to click on the checkbox of " + filterValue[i]
 													+ ". So " + filterValue[i] + " filter did not unselect");
 										}
@@ -20290,7 +20410,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 											log(LogStatus.ERROR,
 													"Not able to click on the checkbox of " + filterValue[i] + ". So "
 															+ filterValue[i] + " filter did not unselect",
-													YesNo.No);
+															YesNo.No);
 											result.add("Not able to click on the checkbox of " + filterValue[i]
 													+ ". So " + filterValue[i] + " filter did not unselect");
 										}
@@ -20443,7 +20563,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.FAIL, "Event: " + eventName[i] + " is present there in Notification Pane of HomePage",
 							YesNo.No);
 					negativeResults
-							.add("Event: " + eventName[i] + " is present there in Notification Pane of HomePage");
+					.add("Event: " + eventName[i] + " is present there in Notification Pane of HomePage");
 				}
 			}
 		} else {
@@ -20854,9 +20974,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.INFO, "Type has been verified and i.e.: " + type, YesNo.No);
 				} else {
 					log(LogStatus.ERROR, "Type has not been verified, Expected: " + IconType.Task.toString()
-							+ " but Actual: " + type, YesNo.No);
+					+ " but Actual: " + type, YesNo.No);
 					negativeResult.add("Type has not been verified, Expected: " + IconType.Task.toString()
-							+ " but Actual: " + type);
+					+ " but Actual: " + type);
 				}
 
 				WebElement iconLocator = iconOfSubjectLinkPopUpInInteractionSection(7);
@@ -20869,9 +20989,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					else {
 						log(LogStatus.ERROR, "Icon not verified for Subject link Popup Expected: " + icon.toString()
-								+ " but Actual: " + attribute, YesNo.No);
+						+ " but Actual: " + attribute, YesNo.No);
 						negativeResult.add("Icon not verified for Subject link Popup Expected: " + icon.toString()
-								+ " but Actual: " + attribute);
+						+ " but Actual: " + attribute);
 					}
 				}
 
@@ -20890,9 +21010,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.INFO, "Type has been verified and i.e.: " + type, YesNo.No);
 				} else {
 					log(LogStatus.ERROR, "Type has not been verified, Expected: " + IconType.Call.toString()
-							+ " but Actual: " + type, YesNo.No);
+					+ " but Actual: " + type, YesNo.No);
 					negativeResult.add("Type has not been verified, Expected: " + IconType.Call.toString()
-							+ " but Actual: " + type);
+					+ " but Actual: " + type);
 				}
 
 				WebElement iconLocator = iconOfSubjectLinkPopUpInInteractionSection(7);
@@ -20905,9 +21025,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					else {
 						log(LogStatus.ERROR, "Icon not verified for Subject link Popup Expected: " + icon.toString()
-								+ " but Actual: " + attribute, YesNo.No);
+						+ " but Actual: " + attribute, YesNo.No);
 						negativeResult.add("Icon not verified for Subject link Popup Expected: " + icon.toString()
-								+ " but Actual: " + attribute);
+						+ " but Actual: " + attribute);
 					}
 				}
 
@@ -20926,9 +21046,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.INFO, "Type has been verified and i.e.: " + type, YesNo.No);
 				} else {
 					log(LogStatus.ERROR, "Type has not been verified, Expected: " + IconType.Meeting.toString()
-							+ " but Actual: " + type, YesNo.No);
+					+ " but Actual: " + type, YesNo.No);
 					negativeResult.add("Type has not been verified, Expected: " + IconType.Meeting.toString()
-							+ " but Actual: " + type);
+					+ " but Actual: " + type);
 				}
 
 				WebElement iconLocator = iconOfSubjectLinkPopUpInInteractionSection(7);
@@ -20941,9 +21061,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					else {
 						log(LogStatus.ERROR, "Icon not verified for Subject link Popup Expected: " + icon.toString()
-								+ " but Actual: " + attribute, YesNo.No);
+						+ " but Actual: " + attribute, YesNo.No);
 						negativeResult.add("Icon not verified for Subject link Popup Expected: " + icon.toString()
-								+ " but Actual: " + attribute);
+						+ " but Actual: " + attribute);
 					}
 				}
 
@@ -20964,9 +21084,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.INFO, "Type has been verified and i.e.: " + type, YesNo.No);
 				} else {
 					log(LogStatus.ERROR, "Type has not been verified, Expected: " + IconType.Email.toString()
-							+ " but Actual: " + type, YesNo.No);
+					+ " but Actual: " + type, YesNo.No);
 					negativeResult.add("Type has not been verified, Expected: " + IconType.Email.toString()
-							+ " but Actual: " + type);
+					+ " but Actual: " + type);
 				}
 
 				WebElement iconLocator = iconOfSubjectLinkPopUpInInteractionSection(7);
@@ -20979,9 +21099,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					else {
 						log(LogStatus.ERROR, "Icon not verified for Subject link Popup Expected: " + icon.toString()
-								+ " but Actual: " + attribute, YesNo.No);
+						+ " but Actual: " + attribute, YesNo.No);
 						negativeResult.add("Icon not verified for Subject link Popup Expected: " + icon.toString()
-								+ " but Actual: " + attribute);
+						+ " but Actual: " + attribute);
 					}
 				}
 
@@ -21046,8 +21166,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										log(LogStatus.INFO,
 
 												relatedAssociation
-														+ " tag has been verified in Subject Link PopUp of Interaction with Icon: "
-														+ relatedAssociationIcon,
+												+ " tag has been verified in Subject Link PopUp of Interaction with Icon: "
+												+ relatedAssociationIcon,
 												YesNo.No);
 									} else {
 										log(LogStatus.ERROR, relatedAssociation
@@ -21148,15 +21268,15 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.INFO,
 							"Verified Subject Link Pop up has been closed after click on Cross button for Subject: "
 									+ subjectName,
-							YesNo.No);
+									YesNo.No);
 				} else {
 					log(LogStatus.ERROR,
 							"Subject Link Pop up has not been closed after click on Cross button for Subject: "
 									+ subjectName,
-							YesNo.No);
+									YesNo.No);
 					negativeResult
-							.add("Subject Link Pop up has not been closed after click on Cross button for Subject: "
-									+ subjectName);
+					.add("Subject Link Pop up has not been closed after click on Cross button for Subject: "
+							+ subjectName);
 				}
 
 			} else {
@@ -21164,7 +21284,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						"Not able to Click on Cross Button of Subject Link Pop up of Subject: " + subjectName,
 						YesNo.No);
 				negativeResult
-						.add("Not able to Click on Cross Button of Subject Link Pop up of Subject: " + subjectName);
+				.add("Not able to Click on Cross Button of Subject Link Pop up of Subject: " + subjectName);
 			}
 
 		} else {
@@ -21343,7 +21463,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			log(LogStatus.ERROR,
 					"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
 							+ NotesPopUpPrefilledNegativeResult,
-					YesNo.No);
+							YesNo.No);
 			sa.assertTrue(false,
 					"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
 							+ NotesPopUpPrefilledNegativeResult);
@@ -21367,8 +21487,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 	}
-	
-	public boolean verifyUIOfLogACallAndCreateTaskButtonOnAcuity(boolean logACallButton, boolean createTaskButton, boolean addContactIcon )
+
+	public boolean verifyUIOfLogACallAndCreateTaskButtonOnAcuity(boolean logACallButton, boolean createTaskButton, boolean addContactIcon,boolean notificationIcon, boolean internalBtn, boolean externalBtn )
 	{
 		int k=0;
 		boolean flag=false;
@@ -21411,7 +21531,48 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				k++;
 			}
 		}
+		if(notificationIcon)
+		{
+			if(getNotificationIcon()!=null)
+			{
+				log(LogStatus.INFO, "Notification icon is visible on acuity details page", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Notification icon is not visible on acuity details page", YesNo.No);
+				sa.assertTrue(false, "Notification icon is not visible on acuity details page");
+				k++;
+			}
+		}
 		
+		if(internalBtn)
+		{
+			if(getInternalTabOnConnectionSection(10)!=null)
+			{
+				log(LogStatus.INFO, "Internal Button is visible on Connection section", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Internal Button is not visible on Connection section", YesNo.No);
+				sa.assertTrue(false, "Internal Button is not visible on Connection section");
+				k++;
+			}
+		}
+		
+		if(externalBtn)
+		{
+			if(getExternalTabOnConnectionSection(10)!=null)
+			{
+				log(LogStatus.INFO, "External Button is visible on Connection section", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "External Button is not visible on Connection section", YesNo.No);
+				sa.assertTrue(false, "External Button is not visible on Connection section");
+				k++;
+			}
+		}
+
 		if(k==0)
 		{
 			flag=true;

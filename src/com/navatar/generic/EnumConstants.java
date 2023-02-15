@@ -150,7 +150,7 @@ public class EnumConstants {
 				return "Firms";
 		}
 		
-		}, FundraisingsTab, FundsTab,Navigation, NIMTab, CommitmentsTab, PartnershipsTab,QandA{
+		}, FundraisingsTab, Fundraising,Themes,FundsTab,Navigation, NIMTab, CommitmentsTab, PartnershipsTab,QandA{
 			
 			@Override
 			public String toString() {

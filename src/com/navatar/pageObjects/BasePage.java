@@ -9000,5 +9000,20 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, addContactIcon, "Visibility", timeOut, "Add contact icon");
 	}
 	
+	@FindBy(xpath = "//label[@class='slds-radio_button__label']//span[text()='External']")
+	private WebElement externalTabOnConnectionSection;
+
+	public WebElement getExternalTabOnConnectionSection(int timeOut) {
+		return isDisplayed(driver, externalTabOnConnectionSection, "Visibility", timeOut, "External tab on connection section");
+	}
+	
+	@FindBy(xpath = "//label[@class='slds-radio_button__label']//span[text()='Internal']")
+	private WebElement internalTabOnConnectionSection;
+
+	public WebElement getInternalTabOnConnectionSection(int timeOut) {
+		return isDisplayed(driver, internalTabOnConnectionSection, "Visibility", timeOut, "Internal tab on connection section");
+	}
+	
+	
 
 }

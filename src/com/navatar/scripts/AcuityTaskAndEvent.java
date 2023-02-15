@@ -241,7 +241,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
 					}
 
-					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, contactHeaders, message, blankList, null,connectionHeaders,null);
+					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, contactHeaders, message, blankList, null,connectionHeaders,null,blankList,null);
 
 					if(result1.isEmpty())
 					{
@@ -253,7 +253,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, "The header name and message are not verified on Interaction and Contacts "+result1);
 					}
 
-					ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, contactHeaders, connectionTooltips);
+					ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, contactHeaders, connectionTooltips,blankList);
 					if(result2.isEmpty())
 					{
 						log(LogStatus.INFO, "The Tooltip on Contact header have been verified", YesNo.No);
@@ -370,7 +370,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
 						}
 
-						ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, blankList, null, blankList, null,connnectionHeaders,message);
+						ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, blankList, null, blankList, null,connnectionHeaders,message,blankList,null);
 
 						if(result1.isEmpty())
 						{
@@ -382,7 +382,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							sa.assertTrue(false, "The header name and message are not verified on Interaction and Connection Section. "+result1);
 						}
 
-						ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, blankList, connnectionHeaders);
+						ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, blankList, connnectionHeaders,blankList);
 						if(result2.isEmpty())
 						{
 							log(LogStatus.INFO, "The Tooltip on connection header have been verified", YesNo.No);
@@ -691,7 +691,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);					
 
-					ArrayList<String> result=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null, emptyList, null, emptyList, null, connectionSectionHeadName, message);
+					ArrayList<String> result=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null, emptyList, null, emptyList, null, connectionSectionHeadName, message,emptyList,null);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The message and header names of connection popup have been verified", YesNo.No);
@@ -3951,7 +3951,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The record name and Time reference are not verifed "+result1);
 					}
 
-					ArrayList<String>result2=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null, contactsSectionHeaders , message, emptyList, null, emptyList, null);
+					ArrayList<String>result2=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null, contactsSectionHeaders , message, emptyList, null, emptyList, null,emptyList,null);
 
 					if(result2.isEmpty())
 					{
@@ -12263,7 +12263,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, "Not able to click on record of contact section");
 					}
 
-					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null, contactHeaders, null, blankList, null,blankList,null);
+					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null, contactHeaders, null, blankList, null,blankList,null,blankList,null);
 
 					if(result1.isEmpty())
 					{
