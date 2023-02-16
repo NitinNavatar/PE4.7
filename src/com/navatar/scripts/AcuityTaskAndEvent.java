@@ -206,71 +206,74 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if(bp.clicktabOnPage(TabName.Acuity.toString()))
 				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
+					ArrayList<String> result3=bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,sectionHeaderName);
 
-					if(bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,sectionHeaderName))
+					if(result3.isEmpty())
 					{
 						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
-
-						if(bp.verifyTabsOnTaggedSection(tabNameOnTagged,defaultTabOntagged))
-						{
-							log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section ", YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Default selected Tab and Tabs are not verified on Tagged section ", YesNo.No);
-							sa.assertTrue(false, "Default selected Tab and Tabs are not verified on Tagged section ");
-						}
-						refresh(driver);
-
-						ArrayList<String> result= bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
-						if(result.isEmpty())
-						{
-							log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ", YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. "+result, YesNo.No);
-							sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
-						}
-
-						ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, contactHeaders, message, blankList, null,connectionHeaders,null);
-
-						if(result1.isEmpty())
-						{
-							log(LogStatus.INFO, "The header name and message have been verified on Interaction and Contacts ", YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "The header name and message are not verified on Interaction and Contacts. "+result1, YesNo.No);
-							sa.assertTrue(false, "The header name and message are not verified on Interaction and Contacts "+result1);
-						}
-
-						ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, contactHeaders, connectionTooltips);
-						if(result2.isEmpty())
-						{
-							log(LogStatus.INFO, "The Tooltip on Contact header have been verified", YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "The Tooltip on Contact header are not verified. "+result2, YesNo.No);
-							sa.assertTrue(false, "The Tooltip on Contact header are not verified. "+result2);
-						}
-
-
-						if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
-							log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "view All Button is visible on Interaction section", YesNo.No);
-							sa.assertTrue(false, "view All Button is visible on Interaction section");
-						}
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab", YesNo.No);
-						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab");
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result3, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result3);
 					}
+
+					ArrayList<String> result4=bp.verifyTabsOnTaggedSection(tabNameOnTagged,defaultTabOntagged);
+					if(result4.isEmpty())
+					{
+						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Default selected Tab and Tabs are not verified on Tagged section. "+result4, YesNo.No);
+						sa.assertTrue(false, "Default selected Tab and Tabs are not verified on Tagged section. "+result4);
+					}
+					refresh(driver);
+
+					ArrayList<String> result= bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. "+result, YesNo.No);
+						sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
+					}
+
+					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, contactHeaders, message, blankList, null,connectionHeaders,null,blankList,null);
+
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The header name and message have been verified on Interaction and Contacts ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The header name and message are not verified on Interaction and Contacts. "+result1, YesNo.No);
+						sa.assertTrue(false, "The header name and message are not verified on Interaction and Contacts "+result1);
+					}
+
+					ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, contactHeaders, connectionTooltips,blankList);
+					if(result2.isEmpty())
+					{
+						log(LogStatus.INFO, "The Tooltip on Contact header have been verified", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Tooltip on Contact header are not verified. "+result2, YesNo.No);
+						sa.assertTrue(false, "The Tooltip on Contact header are not verified. "+result2);
+					}
+
+
+					if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
+						log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "view All Button is visible on Interaction section", YesNo.No);
+						sa.assertTrue(false, "view All Button is visible on Interaction section");
+					}
+
 				}
 				else
 				{
@@ -333,19 +336,27 @@ public class AcuityTaskAndEvent extends BaseLib {
 				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
 
-					if(bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,sectionHeaderName))
+					ArrayList<String> result3=bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,sectionHeaderName);
+					if(result3.isEmpty())
 					{
-						log(LogStatus.INFO, "Tagged Section Headers have been verified on acuity tab", YesNo.No);
+						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
 
-						if(bp.verifyTabsOnTaggedSection(tabNameOnTagged,defaultTabOntagged))
-						{
-							log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section ", YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Default selected Tab and Tabs are not verified on Tagged section ", YesNo.No);
-							sa.assertTrue(false, "Default selected Tab and Tabs are not verified on Tagged section ");
-						}
+					}					
+					else
+					{
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result3, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result3);
+					}
+					ArrayList<String> result4=bp.verifyTabsOnTaggedSection(tabNameOnTagged,defaultTabOntagged);
+					if(result4.isEmpty())
+					{
+						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Default selected Tab and Tabs are not verified on Tagged section. "+result4, YesNo.No);
+						sa.assertTrue(false, "Default selected Tab and Tabs are not verified on Tagged section. "+result4);
+					}
 						refresh(driver);
 
 						ArrayList<String> result= bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
@@ -359,7 +370,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
 						}
 
-						ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, blankList, null, blankList, null,connnectionHeaders,message);
+						ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, blankList, null, blankList, null,connnectionHeaders,message,blankList,null);
 
 						if(result1.isEmpty())
 						{
@@ -371,7 +382,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							sa.assertTrue(false, "The header name and message are not verified on Interaction and Connection Section. "+result1);
 						}
 
-						ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, blankList, connnectionHeaders);
+						ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, blankList, connnectionHeaders,blankList);
 						if(result2.isEmpty())
 						{
 							log(LogStatus.INFO, "The Tooltip on connection header have been verified", YesNo.No);
@@ -390,12 +401,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "view All Button is visible on Interaction section", YesNo.No);
 							sa.assertTrue(false, "view All Button is visible on Interaction section");
 						}
-					}
-					else
-					{
-						log(LogStatus.ERROR, "Tagged section headers and Tooltip are not verified on acuity tab", YesNo.No);
-						sa.assertTrue(false, "Tagged section headers and Tooltip are not verified on acuity tab");
-					}
+					
 				}
 				else
 				{
@@ -455,8 +461,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String[] dealTaggedName= {ATE_TaggedDealName1};
 		String[] dealTaggedTimeReference= {ATE_TaggedDealTimeReference1};
-
-
+		
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
 		String[][] advanceSection = { { "Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
@@ -686,7 +691,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);					
 
-					ArrayList<String> result=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null, emptyList, null, emptyList, null, connectionSectionHeadName, message);
+					ArrayList<String> result=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null, emptyList, null, emptyList, null, connectionSectionHeadName, message,emptyList,null);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The message and header names of connection popup have been verified", YesNo.No);
@@ -1830,7 +1835,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				"ATE_004", excelLabel.Advance_Due_Date);
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		String[][] advanceSection = { { "Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -1975,7 +1980,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				"ATE_005", excelLabel.Advance_Due_Date);
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		String[][] advanceSection = { { "Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -3946,7 +3951,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The record name and Time reference are not verifed "+result1);
 					}
 
-					ArrayList<String>result2=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null, contactsSectionHeaders , message, emptyList, null, emptyList, null);
+					ArrayList<String>result2=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null, contactsSectionHeaders , message, emptyList, null, emptyList, null,emptyList,null);
 
 					if(result2.isEmpty())
 					{
@@ -6234,7 +6239,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				"ATE_078", excelLabel.Advance_End_Date);
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		String[][] advanceSection = { { "Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
 		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
 		String[][] advanceSection1 = { { "Date", taskDueDate1 }/*, {"Status", taskStatus1}, {"Priority", taskPriority1} */};
@@ -7087,7 +7092,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				"ATE_081", excelLabel.Advance_End_Date);
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		String[][] advanceSection = { { "Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
 		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
 		String[][] advanceSection1 = { { "Date", taskDueDate1 }/*, {"Status", taskStatus1}, {"Priority", taskPriority1} */};
@@ -7786,7 +7791,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				"ATE_084", excelLabel.Advance_End_Date);
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		String[][] advanceSection = { { "Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
 		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
 		String[][] advanceSection1 = { { "Date", taskDueDate1 }/*, {"Status", taskStatus1}, {"Priority", taskPriority1}*/ };
@@ -8462,7 +8467,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String taskPriority=ATE_AdvancePriority11;
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		String[][] advanceSection = { { "Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword);
 
@@ -9884,7 +9889,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
 				"ATE_U002", excelLabel.Advance_Due_Date);
 		String[][] basicsection1 = { { "Subject", subject1 }, { "Related_To", relatedTo1 } };
-		String[][] advanceSection1 = { { "Due Date", taskDueDate1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 } };
 
 
 		String xPath;
@@ -12258,7 +12263,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, "Not able to click on record of contact section");
 					}
 
-					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null, contactHeaders, null, blankList, null,blankList,null);
+					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null, contactHeaders, null, blankList, null,blankList,null,blankList,null);
 
 					if(result1.isEmpty())
 					{
