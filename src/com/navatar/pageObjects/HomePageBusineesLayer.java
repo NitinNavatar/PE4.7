@@ -5580,7 +5580,7 @@ public class HomePageBusineesLayer extends HomePage {
 	 */
 	public void notificationPopUpClose() {
 
-		if (notificationPopUpCloseButton(10) != null) {
+		if (notificationPopUpCloseButton(2) != null) {
 			if (clickUsingJavaScript(driver, notificationPopUpCloseButton(10), "Notification PopUp Close Button",
 					action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.PASS, "Clicked on Notification Popup Close Button", YesNo.No);

@@ -6322,6 +6322,12 @@ public abstract class BasePage extends BaseLib {
 				action.SCROLLANDBOOLEAN, timeOut);
 
 	}
+	
+	public WebElement popupcalendarInputBox(String labelName, int timeOut) {
+		return FindElement(driver, "//span[text()='" + labelName + "']/../..//input[@type='text']", "calendarInputBox",
+				action.SCROLLANDBOOLEAN, timeOut);
+
+	}
 
 	public WebElement roleAvailableInNewAffiliationOfContact(String Section, int timeOut) {
 		return FindElement(driver, "//input[@placeholder='Search Firms...']", "firmInputBox", action.SCROLLANDBOOLEAN,
@@ -7133,6 +7139,18 @@ public abstract class BasePage extends BaseLib {
 			return FindElement(driver, xpath, "Header: " + stage, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
 			return FindElement(driver, xpath, "Header: " + stage, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+	
+	public WebElement dealAcuityHSRName(String dealName, String hsr, int timeOut) {
+
+		String xpath = "//a[text()='" + dealName
+				+ "']/ancestor::th[@data-label='Deal Name']/following-sibling::td[@data-label='Highest Stage Reached']//span";
+		try {
+			return FindElement(driver, xpath, "Header: " + hsr, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Header: " + hsr, action.SCROLLANDBOOLEAN, timeOut);
 		}
 
 	}
@@ -8435,6 +8453,27 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getContactpopupheader(int timeOut) {
 		return isDisplayed(driver, Contactpopupheader, "Visibility", timeOut, "Contactpopupheader");
 	}
+	
+	@FindBy(xpath = "//h2[text()='New Financing']")
+	private WebElement NewFinanacingpopupheader;
+
+	public WebElement getNewFinanacingpopupheader(int timeOut) {
+		return isDisplayed(driver, NewFinanacingpopupheader, "Visibility", timeOut, "NewFinanacingpopupheader");
+	}
+	
+	@FindBy(xpath = "//h2[text()='New Deal']")
+	private WebElement NewDealpopupheader;
+
+	public WebElement getNewDealpopupheader(int timeOut) {
+		return isDisplayed(driver, NewDealpopupheader, "Visibility", timeOut, "NewDealpopupheader");
+	}
+	
+	@FindBy(xpath = "//h2[text()='New Sourced Deal']")
+	private WebElement NewSourcedDealpopupheader;
+
+	public WebElement getNewSourcedDealpopupheader(int timeOut) {
+		return isDisplayed(driver, NewSourcedDealpopupheader, "Visibility", timeOut, "NewSourcedDealpopupheader");
+	}
 
 	@FindBy(xpath = "//div[@class='slds-page-header__name-title']//h1")
 	private WebElement Connectionpopupheader;
@@ -8481,6 +8520,37 @@ public abstract class BasePage extends BaseLib {
 		return ele = isDisplayed(driver,
 				FindElement(driver, xpath, "Download Icon Found: " + contactname, action.SCROLLANDBOOLEAN, timeOut),
 				"Visibility", 10, "Download Icon");
+	}
+	
+	public WebElement NewFinancingIcon(int timeOut) {
+		WebElement ele;
+		String xpath = "//*[@title='New Financing']";
+		return ele = isDisplayed(driver,
+				FindElement(driver, xpath, "New Financing Icon: " + "NewFinancingIcon", action.SCROLLANDBOOLEAN, timeOut),
+				"Visibility", 10, "New Financing Icon");
+	}
+	
+	public WebElement NewDealIcon(int timeOut) {
+		WebElement ele;
+		String xpath = "//*[@title='Add Deal']";
+		return ele = isDisplayed(driver,
+				FindElement(driver, xpath, "New Deal Icon: " + "NewDealIcon", action.SCROLLANDBOOLEAN, timeOut),
+				"Visibility", 10, "New Deal Icon");
+	}
+	public WebElement NewSourcedDealIcon(int timeOut) {
+		WebElement ele;
+		String xpath = "//*[@title='Add Sourced Deal']";
+		return ele = isDisplayed(driver,
+				FindElement(driver, xpath, "New Sourced Deal Icon: " + "NewSourcedDealIcon", action.SCROLLANDBOOLEAN, timeOut),
+				"Visibility", 10, "New Sourced Deal Icon");
+	}
+	
+	public WebElement SourcedTab(int timeOut,action action) {
+		WebElement ele;
+		String xpath = "//input[@name='radioGroups']/..//span[text()='Sourced']";
+		return ele = isDisplayed(driver,
+				FindElement(driver, xpath, "Sourced Tab: " + "SourcedTab", action.SCROLLANDBOOLEAN, timeOut),
+				"Visibility", 10, "Sourced Tab");
 	}
 
 	public WebElement contactEmailCount(String contactName, int timeOut) {
@@ -8978,6 +9048,10 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getSearchRelatedRecord(int timeOut) {
 		return isDisplayed(driver, searchRelatedRecord, "Visibility", timeOut, "search related record");
 	}
+
+	@FindBy(xpath = "//button[@title='Close this window']")
+	private WebElement NewFinancingPopupCrossIcon;
+
 	
 	@FindBy(xpath = "//ul[@class='slds-button-group-list']//button[text()='Create Task']")
 	private WebElement createTaskButton;
@@ -9049,4 +9123,45 @@ public abstract class BasePage extends BaseLib {
 	
 	
 
+	@FindBy(xpath = "//div[contains(@id,\"toastDescription\")]//span[contains(@class,\"toastMessage\")]")
+	private WebElement errorMsgInTopOfNotePopup;
+
+	public WebElement errorMsgInTopOfNotePopup(int timeOut) {
+		return isDisplayed(driver, errorMsgInTopOfNotePopup, "Visibility", timeOut, "errorMsgInTopOfNotePopup");
+	}
+
+	@FindBy(xpath = "//h2[text()=\"Review the errors on this page.\"]/ancestor::div/p")
+	private WebElement errorMsgInFieldLevelOfNotePopup;
+
+	public WebElement errorMsgInFieldLevelOfNotePopup(int timeOut) {
+		return isDisplayed(driver, errorMsgInFieldLevelOfNotePopup, "Visibility", timeOut,
+				"errorMsgInFieldLevelOfNotePopup");
+	}
+
+	@FindBy(xpath = "//span[text()=\"Log a Call\"]/ancestor::lightning-icon")
+	private WebElement logACallIconButtonInInteraction;
+
+	public WebElement logACallIconButtonInInteraction(int timeOut) {
+		return isDisplayed(driver, logACallIconButtonInInteraction, "Visibility", timeOut,
+				"logACallIconButtonInInteraction");
+	}
+
+
+	/**
+	 * @return the searchPopSearchTextBoxCrossIcon
+	 */
+	public WebElement getNewFinancingPopupCrossIcon(int timeOut) {
+		return isDisplayed(driver, NewFinancingPopupCrossIcon, "Visibility", timeOut,
+				"New Financing Popup Cross Icon");
+	}
+	@FindBy(xpath = "//footer//span[text()='Cancel']")
+	private WebElement NewFinancingPopupCancelIcon;
+
+	/**
+	 * @return the searchPopSearchTextBoxCrossIcon
+	 */
+	public WebElement getNewFinancingPopupCancelIcon(int timeOut) {
+		return isDisplayed(driver, NewFinancingPopupCancelIcon, "Visibility", timeOut,
+				"New Financing Popup Cancel Icon");
+	}
 }
