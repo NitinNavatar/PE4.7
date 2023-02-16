@@ -8614,7 +8614,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, ComponentErrorMsg, "Visibility", timeOut, "Component Error Msg");
 	}
 
-	@FindBy(xpath = "//span[text()='This site can’t be reached']")
+	@FindBy(xpath = "//span[text()='This site canï¿½t be reached']")
 	private WebElement pageloadErrorMsg;
 
 	public WebElement getpageloadErrorMsg(int timeOut) {
@@ -8707,6 +8707,15 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, timeReferenceIconOnTaggedSection, "Visibility", timeOut,
 				"time reference icon on tagged section");
 	}
+	
+	@FindBy(xpath = "//span[@class='slds-th__action']//span[@title='Summary']")
+	private WebElement summaryColumn;
+
+	public WebElement getSummaryColumn(int timeOut) {
+		return isDisplayed(driver, summaryColumn, "Visibility", timeOut,
+				"summary column");
+	}
+	
 
 	public WebElement getMessageOnTaggedSection(String tabName, String message, int timeOut) {
 
@@ -9039,8 +9048,104 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getSearchRelatedRecord(int timeOut) {
 		return isDisplayed(driver, searchRelatedRecord, "Visibility", timeOut, "search related record");
 	}
+
 	@FindBy(xpath = "//button[@title='Close this window']")
 	private WebElement NewFinancingPopupCrossIcon;
+
+	
+	@FindBy(xpath = "//ul[@class='slds-button-group-list']//button[text()='Create Task']")
+	private WebElement createTaskButton;
+
+	public WebElement getCreateTaskButton(int timeOut) {
+		return isDisplayed(driver, createTaskButton, "Visibility", timeOut, "create task button");
+	}
+	
+	@FindBy(xpath = "//lightning-icon[@title='Log a Call']//lightning-primitive-icon")
+	private WebElement createLogaCallButton;
+
+	public WebElement getCreateLogaCallButton(int timeOut) {
+		return isDisplayed(driver, createLogaCallButton, "Visibility", timeOut, "Log a Call button");
+	}
+	
+	@FindBy(xpath = "//lightning-icon[@title='Add Contact']")
+	private WebElement addContactIcon;
+
+	public WebElement getAddContactIcon(int timeOut) {
+		return isDisplayed(driver, addContactIcon, "Visibility", timeOut, "Add contact icon");
+	}
+	
+	@FindBy(xpath = "//label[@class='slds-radio_button__label']//span[text()='External']")
+	private WebElement externalTabOnConnectionSection;
+
+	public WebElement getExternalTabOnConnectionSection(int timeOut) {
+		return isDisplayed(driver, externalTabOnConnectionSection, "Visibility", timeOut, "External tab on connection section");
+	}
+	
+	@FindBy(xpath = "//label[@class='slds-radio_button__label']//span[text()='Internal']")
+	private WebElement internalTabOnConnectionSection;
+
+	public WebElement getInternalTabOnConnectionSection(int timeOut) {
+		return isDisplayed(driver, internalTabOnConnectionSection, "Visibility", timeOut, "Internal tab on connection section");
+	}
+	
+
+	@FindBy(xpath = "//input[@class='slds-input' and @type='search']")
+	private WebElement searchBoxOnTheme;
+
+	public WebElement getSearchBoxOnTheme(int timeOut) {
+		return isDisplayed(driver, searchBoxOnTheme, "Visibility", timeOut, "Search box on theme");
+	}
+	
+	
+	public WebElement getThemeName(String themeName, int timeOut) {
+
+		String xpath = "//th[@data-label='Theme Name']//a[text()='"+themeName+"']";
+		WebElement type = FindElement(driver, xpath, "Theme name", action.SCROLLANDBOOLEAN, timeOut);
+
+		return type;
+
+	}
+	
+	public WebElement getThemeNameOnDetailsPage(String themeName, int timeOut) {
+
+		String xpath = "//lightning-formatted-text[text()='PE Theme 1']";
+		WebElement type = FindElement(driver, xpath, "Theme name", action.SCROLLANDBOOLEAN, timeOut);
+
+		return type;
+
+	}
+		
+	
+	
+
+	
+	
+	
+	
+
+	@FindBy(xpath = "//div[contains(@id,\"toastDescription\")]//span[contains(@class,\"toastMessage\")]")
+	private WebElement errorMsgInTopOfNotePopup;
+
+	public WebElement errorMsgInTopOfNotePopup(int timeOut) {
+		return isDisplayed(driver, errorMsgInTopOfNotePopup, "Visibility", timeOut, "errorMsgInTopOfNotePopup");
+	}
+
+	@FindBy(xpath = "//h2[text()=\"Review the errors on this page.\"]/ancestor::div/p")
+	private WebElement errorMsgInFieldLevelOfNotePopup;
+
+	public WebElement errorMsgInFieldLevelOfNotePopup(int timeOut) {
+		return isDisplayed(driver, errorMsgInFieldLevelOfNotePopup, "Visibility", timeOut,
+				"errorMsgInFieldLevelOfNotePopup");
+	}
+
+	@FindBy(xpath = "//span[text()=\"Log a Call\"]/ancestor::lightning-icon")
+	private WebElement logACallIconButtonInInteraction;
+
+	public WebElement logACallIconButtonInInteraction(int timeOut) {
+		return isDisplayed(driver, logACallIconButtonInInteraction, "Visibility", timeOut,
+				"logACallIconButtonInInteraction");
+	}
+
 
 	/**
 	 * @return the searchPopSearchTextBoxCrossIcon

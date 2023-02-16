@@ -475,7 +475,7 @@ public class PECloudSmoke extends BaseLib{
 				
 				String [][] basicSection = {{PageLabel.Subject.toString(),task},{PageLabel.Related_To.toString(),SMOKTask1Name}};
 					
-				if (lp.createActivityTimeline("", true, "Task", basicSection, taskData, null, null)) {
+				if (lp.createActivityTimeline("", true, "Task", basicSection, taskData, null, null, false, null, null)) {
 					log(LogStatus.INFO,"Able to create task Value for : "+task,YesNo.No);
 						
 					ExcelUtils.writeData(phase1DataSheetFilePath,SMOKTask1DueDate, "Task1", excelLabel.Variable_Name, "SMOKTask1", excelLabel.Due_Date);
@@ -940,7 +940,7 @@ public class PECloudSmoke extends BaseLib{
 		
 		String [][] basicSection = {{PageLabel.Subject.toString(),task},{PageLabel.Related_To.toString(),SMOKTask2Name}};
 			
-		if (lp.createActivityTimeline("", true, "Task", basicSection, taskData, null, null)) {
+		if (lp.createActivityTimeline("", true, "Task", basicSection, taskData, null, null, false, null, null)) {
 			log(LogStatus.INFO,"Able to create task Value for : "+task,YesNo.No);
 							
 		} else {
@@ -2190,7 +2190,7 @@ public class PECloudSmoke extends BaseLib{
 						
 						ExcelUtils.writeData(phase1DataSheetFilePath,dueDate, "Task1", excelLabel.Variable_Name, "SMOKTask3", excelLabel.Due_Date);
 						
-						if(lp.createActivityTimeline("", true,NewInteractions_DefaultValues.Call.toString(), basicCall, advanceCall, null, null)) {
+						if(lp.createActivityTimeline("", true,NewInteractions_DefaultValues.Call.toString(), basicCall, advanceCall, null, null, false, null, null)) {
 							log(LogStatus.INFO,"successfully created : "+subject+" for "+newInteractionsNavigationLink,  YesNo.No);
 
 						}else {
@@ -2205,7 +2205,7 @@ public class PECloudSmoke extends BaseLib{
 						String[][] advanceTask= {{"Due Date Only",dueDate}};
 						
 
-						if(lp.createActivityTimeline("", true,NewInteractions_DefaultValues.Call.toString(), basicTask, advanceTask, null, null)) {
+						if(lp.createActivityTimeline("", true,NewInteractions_DefaultValues.Call.toString(), basicTask, advanceTask, null, null, false, null, null)) {
 							log(LogStatus.INFO,"successfully created : "+subject+" for "+newInteractionsNavigationLink,  YesNo.No);
 
 						}else {
@@ -2575,7 +2575,7 @@ public class PECloudSmoke extends BaseLib{
 		String[][] basictask = {{ActivityRelatedLabel.Subject.toString(),task},{excelLabel.Related_To.toString(),contactName},{excelLabel.Related_To.toString(),SmokeCTContactInst}};
 		String[][] advancetask ={{"Due Date Only",SmokeCTTask1dueDate},{PageLabel.Priority.toString(),SmokeCTTask1Priority}};
 
-		if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Task.toString(), basictask, advancetask, null, null)) {
+		if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Task.toString(), basictask, advancetask, null, null, false, null, null)) {
 			log(LogStatus.INFO,"Able to create task : "+task,YesNo.No);
 			ExcelUtils.writeData(phase1DataSheetFilePath,SmokeCTTask1dueDate, "Task1", excelLabel.Variable_Name, "SmokeCTTask1", excelLabel.Due_Date);
 
@@ -2591,7 +2591,7 @@ public class PECloudSmoke extends BaseLib{
 		String[][] basiccall = {{ActivityRelatedLabel.Subject.toString(),task},{excelLabel.Notes.toString(),SmokeCTLogACall1Comment},{excelLabel.Related_To.toString(),contactName},{excelLabel.Related_To.toString(),SmokeCTContactInst}};
 		String[][] advancecall ={{"Due Date Only",todaysDate},{PageLabel.Priority.toString(),SmokeCTTask1Priority}};
 
-		if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Call.toString(), basiccall, advancecall, null, null)) {
+		if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Call.toString(), basiccall, advancecall, null, null, false, null, null)) {
 			log(LogStatus.INFO,"Able to create task : "+task,YesNo.No);
 
 		} else {
@@ -2990,7 +2990,7 @@ public class PECloudSmoke extends BaseLib{
 		String[][] basictask = {{ActivityRelatedLabel.Subject.toString(),task},{excelLabel.Related_To.toString(),contactName},{excelLabel.Related_To.toString(),SmokeCTContactInst}};
 		String[][] advancetask ={{"Due Date Only",SmokeCTTask2dueDate},{PageLabel.Priority.toString(),SmokeCTTask2Priority}};
 
-		if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Task.toString(), basictask, advancetask, null, null)) {
+		if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Task.toString(), basictask, advancetask, null, null, false, null, null)) {
 			log(LogStatus.INFO,"Able to create task : "+task,YesNo.No);
 			ExcelUtils.writeData(phase1DataSheetFilePath,SmokeCTTask1dueDate, "Task1", excelLabel.Variable_Name, "SmokeCTTask1", excelLabel.Due_Date);
 
@@ -3005,7 +3005,7 @@ public class PECloudSmoke extends BaseLib{
 		String[][] basiccall = {{ActivityRelatedLabel.Subject.toString(),task},{excelLabel.Notes.toString(),SmokeCTLogACall2Comment},{excelLabel.Related_To.toString(),contactName},{excelLabel.Related_To.toString(),SmokeCTContact2Inst}};
 		String[][] advancecall ={{"Due Date Only",todaysDate}};
 
-		if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Call.toString(), basiccall, advancecall, null, null)) {
+		if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Call.toString(), basiccall, advancecall, null, null, false, null, null)) {
 			log(LogStatus.INFO,"Able to create task : "+task,YesNo.No);
 
 		} else {
@@ -4490,7 +4490,7 @@ public class PECloudSmoke extends BaseLib{
 		for(int i=0;i<2;i++){
 			
 			
-			if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Task.toString(), basicTask[i], advancetask[i], null, null)) {
+			if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Task.toString(), basicTask[i], advancetask[i], null, null, false, null, null)) {
 				log(LogStatus.INFO,"Able to create task : "+task,YesNo.No);
 
 			} else {
@@ -4556,7 +4556,7 @@ public class PECloudSmoke extends BaseLib{
 		for(int i=0;i<basicCall.length;i++){
 			
 
-			if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Call.toString(), basicCall[i], null, null, null)) {
+			if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Call.toString(), basicCall[i], null, null, null, false, null, null)) {
 				log(LogStatus.INFO,"Able to create task : "+task,YesNo.No);
 
 			} else {
@@ -4805,7 +4805,7 @@ public class PECloudSmoke extends BaseLib{
 		String[][] advanceCall={{PageLabel.Status.toString(),SmokeLTPLogACall1Status}};
 				
 
-		if (lp.createActivityTimeline("",true, "Call", logACall, advanceCall, null, null)) {
+		if (lp.createActivityTimeline("",true, "Call", logACall, advanceCall, null, null, false, null, null)) {
 			log(LogStatus.INFO,"Able to create task for : "+task,YesNo.No);
 			
 		} else {

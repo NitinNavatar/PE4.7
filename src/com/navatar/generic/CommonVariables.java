@@ -1424,9 +1424,38 @@ public class CommonVariables {
 			
 			
 		   /***************************** Acuity (Task Call & Event) ******************************/
-			public static String ATCERecord1,ATCERecord2,ATCERecord3,ATCERecord4,ATCERecord5,ATCERecord6,ATCERecord7,ATCERecord8,ATCERecord9;
-			
+		//firm 
+		public static String ATCERecord1,ATCERecord2,ATCERecord3,ATCERecord4,ATCERecord5,ATCERecord6,ATCERecord7,ATCERecord8,ATCERecord9,ATCERecord10,ATCERecord11,ATCERecord12,ATCERecord13,ATCERecord14;
+		
+		//contact 
+		public static String ATCE_Con1,ATCE_Con2,ATCE_Con3,ATCE_Con4,ATCE_Con5,ATCE_Con6,ATCE_Con7;
+		
+		//Deal
+		public static String ATCE_Deal1;
+		
+		// Fund
+		public static String ATCE_Fund1;
+		
+		// Fundraising
+		public static String ATCE_Fundraising1;
+		
+		// Theme
+		public static String ATCE_Theme1;
+		
+		
+		//Acuity sections
+	    public static String ATCE_Section1,ATCE_Section2,ATCE_Section3,ATCE_Section4,ATCE_Section5;
 	    
+	    //Acuity Tabs
+	    public static String ATCE_Tabs1,ATCE_Tabs2,ATCE_Tabs3;
+	    
+	  //Acuity Contact Header
+	    public static String ATCE_ContactHeader1;
+	    
+	  //Acuity Connection Header
+	    public static String ATCE_ConnectionHeader1,ATCE_ConnectionHeader2;
+	    
+	   //
 	    
 	    /***************************** Acuity (Task & Event) ******************************/
 	    
@@ -8391,9 +8420,63 @@ public class CommonVariables {
 						e.printStackTrace();
 					}	
 					
+					/********Firm********/
 					 ATCERecord1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ATCERecord001", excelLabel.Legal_Name);
+					 ATCERecord2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ATCERecord002", excelLabel.Legal_Name);
+					 ATCERecord3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ATCERecord003", excelLabel.Legal_Name);
+					 ATCERecord4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ATCERecord004", excelLabel.Legal_Name);
+					 ATCERecord5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ATCERecord005", excelLabel.Legal_Name);
+					 ATCERecord6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ATCERecord006", excelLabel.Legal_Name);
+					 ATCERecord7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ATCERecord007", excelLabel.Legal_Name);
+					 ATCERecord8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ATCERecord008", excelLabel.Legal_Name);
+					 ATCERecord9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ATCERecord009", excelLabel.Legal_Name);
+					 ATCERecord10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ATCERecord010", excelLabel.Legal_Name);
+					 ATCERecord11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ATCERecord011", excelLabel.Legal_Name);
+					 ATCERecord12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ATCERecord012", excelLabel.Legal_Name);
+					 ATCERecord13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ATCERecord013", excelLabel.Legal_Name);
+					 ATCERecord14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ATCERecord014", excelLabel.Legal_Name);
+					  
+					 /***** Contact******/
+					 ATCE_Con1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con1", excelLabel.ContactName);
+					 ATCE_Con2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con2", excelLabel.ContactName);
 					   
-				
+					 /************ Deal ***********/
+					 ATCE_Deal1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "ATCE_Deal1", excelLabel.Deal_Name);
+					
+					 /*************Fund **********/
+					 ATCE_Fund1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "ATCE_Fund01", excelLabel.Fund_Name);
+					
+					 /*************Fundraisng **********/
+					 ATCE_Fundraising1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ATCE_Fundraising01", excelLabel.FundRaising_Name);
+					
+					 /********* Theme ***********/
+					 ATCE_Theme1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Themes",excelLabel.Variable_Name, "ATCE_Theme01", excelLabel.Theme_Name);
+					 	
+					 
+					 
+					 /*******Section**********/
+					 ATCE_Section1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.Section);
+					 ATCE_Section2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.Section);
+					 ATCE_Section3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE003", excelLabel.Section);
+					 ATCE_Section4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE004", excelLabel.Section);
+					 ATCE_Section5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE005", excelLabel.Section);
+					 
+					 /*****Tag********/
+					 ATCE_Tabs1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.TabName);
+					 ATCE_Tabs2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.TabName);
+					 ATCE_Tabs3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE003", excelLabel.TabName);
+					 
+					 /*****Contact Header*****/
+					 
+					 ATCE_ContactHeader1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.ContactHeader);
+					  
+					 /****** Connection Header *********/
+					 ATCE_ConnectionHeader1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.ConnectionHeader);
+					 ATCE_ConnectionHeader2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.ConnectionHeader);
+					  
+					 
+					
+					 
 			 		try {
 						dataFile.close();
 					} catch (IOException e) {

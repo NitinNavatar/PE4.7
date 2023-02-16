@@ -1270,7 +1270,7 @@ lp.CRMlogout();
 			String[][] basicsection= {{"Subject",M3Call1Subject},{"Related_To",M3Contact1FName+" "+M3Contact1LName}};
 			String[][] advanceSection= {{"Priority","Normal"},{"Due Date Only",todaysDate}};
 	        String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
-			if(bl.createActivityTimeline(projectName, true, newInteractionsNavigationLink, basicsection, advanceSection, null,null))
+			if(bl.createActivityTimeline(projectName, true, newInteractionsNavigationLink, basicsection, advanceSection, null,null, false, null, null))
 //			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 //				log(LogStatus.INFO, "Able to Click on "+navigationMenuName+" Going to click on : "+newInteractionsNavigationLink+" for creation ", YesNo.No);
 

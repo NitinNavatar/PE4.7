@@ -481,7 +481,7 @@ public class AcuityDealsEmails extends BaseLib {
 				ArrayList<String> result1 = bp
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 								contactsSectionHeaderName, null, dealHeaders, message, connectionsSectionHeaderName,
-								null);
+								null,contactsSectionHeaderName, null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 				} else {
@@ -509,7 +509,7 @@ public class AcuityDealsEmails extends BaseLib {
 				ArrayList<String> result1 = bp
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 								contactsSectionHeaderName, null, dealHeaders, message, connectionsSectionHeaderName,
-								null);
+								null,contactsSectionHeaderName, null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 				} else {
@@ -1547,7 +1547,7 @@ public class AcuityDealsEmails extends BaseLib {
 
 				ArrayList<String> result1 = BP
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
-								contactsSectionHeaderName, null, dealHeaders, null, connectionsSectionHeaderName, null);
+								contactsSectionHeaderName, null, dealHeaders, null, connectionsSectionHeaderName, null,contactsSectionHeaderName, null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 				} else {
@@ -1606,7 +1606,7 @@ public class AcuityDealsEmails extends BaseLib {
 
 				ArrayList<String> result1 = BP
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
-								contactsSectionHeaderName, null, dealHeaders, null, connectionsSectionHeaderName, null);
+								contactsSectionHeaderName, null, dealHeaders, null, connectionsSectionHeaderName, null,contactsSectionHeaderName, null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 				} else {
@@ -2729,7 +2729,7 @@ public class AcuityDealsEmails extends BaseLib {
 				ThreadSleep(2000);
 				ArrayList<String> result1 = bp
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
-								contactsSectionHeaderName, null, dealHeaders, null, connectionsSectionHeaderName, null);
+								contactsSectionHeaderName, null, dealHeaders, null, connectionsSectionHeaderName, null,contactsSectionHeaderName, null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 				} else {
@@ -2755,7 +2755,7 @@ public class AcuityDealsEmails extends BaseLib {
 				ThreadSleep(2000);
 				ArrayList<String> result1 = bp
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
-								contactsSectionHeaderName, null, dealHeaders, null, connectionsSectionHeaderName, null);
+								contactsSectionHeaderName, null, dealHeaders, null, connectionsSectionHeaderName, null,contactsSectionHeaderName, null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 				} else {
@@ -3921,7 +3921,7 @@ public class AcuityDealsEmails extends BaseLib {
 				ThreadSleep(2000);
 				ArrayList<String> result1 = bp
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
-								contactsSectionHeader, null, DealHeaderName, null, connectionsSectionHeaderName, null);
+								contactsSectionHeader, null, DealHeaderName, null, connectionsSectionHeaderName, null,contactsSectionHeader, null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Contact Section ", YesNo.No);
 				} else {
@@ -3949,7 +3949,7 @@ public class AcuityDealsEmails extends BaseLib {
 				ArrayList<String> result1 = bp
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 								contactsSectionHeader, null, DealHeaderName, null, connectionsSectionHeaderName,
-								null);
+								null,contactsSectionHeader, null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Contact Section ", YesNo.No);
 
@@ -5734,7 +5734,7 @@ public void ADETc043_VerifyConnectionsCardSectionVisibilityAcuityTabforExistingC
 			ArrayList<String> result1 = bp
 					.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 							contactsSectionHeaderName, null, dealsSectionHeaderName,null, connectionsHeaders,
-							null);
+							null,contactsSectionHeaderName, null);
 			if (result1.isEmpty()) {
 				log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 			} else {
@@ -5809,7 +5809,7 @@ public void ADETc044_VerifyConnectionSectionWhencontactsConnectionCardPopupRespe
 				ArrayList<String> result1 = bp
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 								contactsSectionHeaderName, null, dealsSectionHeaderName,null, connectionsHeaders,
-								message);
+								message,contactsSectionHeaderName,null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Connection Section ", YesNo.No);
 				} else {
@@ -5884,7 +5884,7 @@ public void ADETc044_VerifyConnectionSectionWhencontactsConnectionCardPopupRespe
 						ArrayList<String> result1 = bp
 								.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 										contactsSectionHeaderName, null, dealsSectionHeaderName,null, connectionsHeaders,
-										message);
+										message,contactsSectionHeaderName, null);
 						if (result1.isEmpty()) {
 							log(LogStatus.INFO, "The header name and message have been verified  Connection Section ", YesNo.No);
 						} else {
@@ -8047,7 +8047,7 @@ public void ADETc065_VerifyContactCardsectionvisibilityinAcuitytabforexistingAcc
 			ThreadSleep(2000);
 			ArrayList<String> result1 = bp
 					.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
-							contactsSectionHeader, null, DealHeaderName, null, connectionsSectionHeaderName, null);
+							contactsSectionHeader, null, DealHeaderName, null, connectionsSectionHeaderName, null,contactsSectionHeader, null);
 			if (result1.isEmpty()) {
 				log(LogStatus.INFO, "The header name and message have been verified  Contact Section ", YesNo.No);
 			} else {
@@ -9965,6 +9965,7 @@ public void ADETc083_1_DeleteDealTeamVerifyImpactDealGridAdvisorFirm(String proj
 	String dealsSectionHeaderMessage = "No items to display.";
 
     ArrayList<String> dealsSectionHeaderName = new ArrayList<String>();
+    ArrayList<String> externalConnectionsSectionHeaderName = new ArrayList<String>();
 
 	ArrayList<String> contactsSectionHeaderName = new ArrayList<String>();
 	ArrayList<String> connectionsHeaders = new ArrayList<String>();
@@ -10039,7 +10040,7 @@ public void ADETc083_1_DeleteDealTeamVerifyImpactDealGridAdvisorFirm(String proj
 		ArrayList<String> result1 = BP
 				.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 						contactsSectionHeaderName, null, dealsSectionHeaderName,dealsSectionHeaderMessage, connectionsHeaders,
-						null);
+						null,externalConnectionsSectionHeaderName,null);
 		if (result1.isEmpty()) {
 			log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 		} else {
@@ -10173,7 +10174,7 @@ public void ADETc084_1_DeleteDealContactVerifyImpactDealGridAdvisorFirm(String p
 	String dealsSectionHeaderMessage = "No items to display.";
 
     ArrayList<String> dealsSectionHeaderName = new ArrayList<String>();
-
+    ArrayList<String> externalConnectionsSectionHeaderName = new ArrayList<String>();
 	ArrayList<String> contactsSectionHeaderName = new ArrayList<String>();
 	ArrayList<String> connectionsHeaders = new ArrayList<String>();
 
@@ -10247,7 +10248,7 @@ public void ADETc084_1_DeleteDealContactVerifyImpactDealGridAdvisorFirm(String p
 		ArrayList<String> result1 = BP
 				.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 						contactsSectionHeaderName, null, dealsSectionHeaderName,dealsSectionHeaderMessage, connectionsHeaders,
-						null);
+						null,externalConnectionsSectionHeaderName,null);
 		if (result1.isEmpty()) {
 			log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 		} else {
@@ -10381,7 +10382,7 @@ public void ADETc085_1_DeleteDealVerifyImpactDealGridAdvisorFirm(String projectN
 	
 
     ArrayList<String> dealsSectionHeaderName = new ArrayList<String>();
-
+    ArrayList<String> externalConnectionsSectionHeaderName = new ArrayList<String>();
 	ArrayList<String> contactsSectionHeaderName = new ArrayList<String>();
 	ArrayList<String> connectionsHeaders = new ArrayList<String>();
 
@@ -10455,7 +10456,7 @@ public void ADETc085_1_DeleteDealVerifyImpactDealGridAdvisorFirm(String projectN
 		ArrayList<String> result1 = BP
 				.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 						contactsSectionHeaderName, null, dealsSectionHeaderName,dealsSectionHeaderMessage, connectionsHeaders,
-						null);
+						null,externalConnectionsSectionHeaderName,null);
 		if (result1.isEmpty()) {
 			log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 		} else {
@@ -11428,7 +11429,7 @@ public void ADETc093_1_DeleteDealVerifyImpactDealGridLenderFirm(String projectNa
 	
 
     ArrayList<String> dealsSectionHeaderName = new ArrayList<String>();
-
+    ArrayList<String> externalConnectionsSectionHeaderName = new ArrayList<String>();
 	ArrayList<String> contactsSectionHeaderName = new ArrayList<String>();
 	ArrayList<String> connectionsHeaders = new ArrayList<String>();
 
@@ -11502,7 +11503,7 @@ public void ADETc093_1_DeleteDealVerifyImpactDealGridLenderFirm(String projectNa
 		ArrayList<String> result1 = BP
 				.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 						contactsSectionHeaderName, null, dealsSectionHeaderName,dealsSectionHeaderMessage, connectionsHeaders,
-						null);
+						null,externalConnectionsSectionHeaderName,null);
 		if (result1.isEmpty()) {
 			log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 		} else {
@@ -11636,7 +11637,7 @@ public void ADETc094_1_DeleteFinancingVerifyImpactDealGridLenderFirm(String proj
 	
 
     ArrayList<String> dealsSectionHeaderName = new ArrayList<String>();
-
+    ArrayList<String> externalConnectionsSectionHeaderName = new ArrayList<String>();
 	ArrayList<String> contactsSectionHeaderName = new ArrayList<String>();
 	ArrayList<String> connectionsHeaders = new ArrayList<String>();
 
@@ -11710,7 +11711,7 @@ public void ADETc094_1_DeleteFinancingVerifyImpactDealGridLenderFirm(String proj
 		ArrayList<String> result1 = BP
 				.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 						contactsSectionHeaderName, null, dealsSectionHeaderName,dealsSectionHeaderMessage, connectionsHeaders,
-						null);
+						null,externalConnectionsSectionHeaderName,null);
 		if (result1.isEmpty()) {
 			log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 		} else {
@@ -11846,7 +11847,7 @@ String dealsSectionHeaderMessage = "No items to display.";
 	
 
     ArrayList<String> dealsSectionHeaderName = new ArrayList<String>();
-
+    ArrayList<String> externalConnectionsSectionHeaderName = new ArrayList<String>();
 	ArrayList<String> contactsSectionHeaderName = new ArrayList<String>();
 	ArrayList<String> connectionsHeaders = new ArrayList<String>();
 	
@@ -11877,7 +11878,8 @@ String dealsSectionHeaderMessage = "No items to display.";
 				ArrayList<String> result1 = BP
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 								contactsSectionHeaderName, null, dealsSectionHeaderName,dealsSectionHeaderMessage, connectionsHeaders,
-								null);
+								null,externalConnectionsSectionHeaderName,null);
+
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 				} else {
@@ -12631,16 +12633,103 @@ public void ADETc101_VerifythatDealsWhereCurrentFirmISTaggedinCompanyareDisplayi
 			log(LogStatus.ERROR, "Not able to click on " + ADEIns5 + " tab", YesNo.Yes);
 			sa.assertTrue(false, "Not able to click on " + ADEIns5 + " tab");
 		}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+		}
+	
+
+	ThreadSleep(5000);
+	lp.CRMlogout();
+	sa.assertAll();
+		}
+	
+@Parameters({ "projectName"})
+@Test
+public void ADETc100_VerifythatEmailSubjectClickableRedirectionatEmailRecordsPopupforAccountContact(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
+	lp.CRMLogin(rgUser2, rgOrgPassword, appName);
+	String subject = "Testing indirect email6 for contact";
+	String contactName1=ADEUser01FName + " " + ADEUser01LName;
+	String contactName = ADEContact20LName;
+	if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
+		log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
+
+		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns15, 30)) {
+			if (CommonLib.click(driver, BP.connectionicon(contactName, 30), "Connection icon: " + "",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Connection icon: " + " " + " of Record: " + contactName, YesNo.No);
+				String parentWindowId = CommonLib.switchOnWindow(driver);
+				if (!parentWindowId.isEmpty()) {
+				if (CommonLib.click(driver, BP.contactEmailCountAcuity(contactName1, 30), "Email Count: " + "",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Email Count: " + " " + " of Record: " + contactName1, YesNo.No);
+				}
+				Set<String> childWindow = driver.getWindowHandles();
+				switchToDefaultContent(driver);
+				System.out.println(childWindow);
+				for(String child : childWindow) {
+				driver.switchTo().window(child);
+				}
+				if (clickUsingJavaScript(driver, BP.contactPopUpEmailsubject(subject, 10), "Email subject: " + subject,
+						action.BOOLEAN)) {
+					log(LogStatus.PASS, "Clicked on Email subject: " + subject, YesNo.No);
+				log(LogStatus.PASS, "New Window Open after click on Email subject Link: " + subject, YesNo.No);
+				Set<String> childWindow1 = driver.getWindowHandles();
+				switchToDefaultContent(driver);
+				System.out.println(childWindow1);
+				for(String child : childWindow1) {
+				driver.switchTo().window(child);
+				}
+				op.outLookLoginRevenueGrid(rgUser3,rgUserPassword);
+							if (BP.EmailRecordPage(subject, 20) != null) {
+								log(LogStatus.PASS,
+										"----Email Detail Page is redirecting for Email Record: " + subject + "-----",
+										YesNo.No);
+								driver.close();
+								driver.switchTo().window(parentWindowId);
+
+							} else {
+								log(LogStatus.FAIL, "----Email Detail Page is not redirecting for Email Record: "
+										+ subject + "-----", YesNo.Yes);
+								sa.assertTrue(false,
+										"----Email Detail Page is not redirecting for Email Record: " + subject + "-----");
+								driver.close();
+								driver.switchTo().window(parentWindowId);
+
+							}
+
+						} else {
+							log(LogStatus.FAIL, "No New Window Open after click on Deal Link: " + subject, YesNo.Yes);
+							sa.assertTrue(false, "No New Window Open after click on Deal Link: " + subject);
+						}
+//					} catch (Exception e) {
+//						log(LogStatus.FAIL,
+//								"Not able to switch to window after click on Deal Link, Msg showing: " + e.getMessage(),
+//								YesNo.Yes);
+//						sa.assertTrue(false, "Not able to switch to window after click on Deal Link, Msg showing: "
+//								+ e.getMessage());
+//					}
+				} else {
+					log(LogStatus.FAIL, "Not able to Click on Deal Name: " + subject, YesNo.Yes);
+					sa.assertTrue(false, "Not able to Click on Deal Name: " + subject);
+
+				}
 
 			} else {
 				log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
 				sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
 			}
-			
+		}
+	}
 	ThreadSleep(5000);
 	lp.CRMlogout();
 	sa.assertAll();
-}
+
+	}
 
 
 @Parameters({ "projectName" })
@@ -12824,7 +12913,7 @@ String dealsSectionHeaderMessage = "No items to display.";
 		ArrayList<String> result1 = BP
 				.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
 						contactsSectionHeaderName, null, dealsSectionHeaderName,dealsSectionHeaderMessage, connectionsHeaders,
-						null);
+						null,contactsSectionHeaderName, null);
 		if (result1.isEmpty()) {
 			log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
 		} else {
@@ -13104,6 +13193,7 @@ public void ADETc105_VerifythaNewDealpopupgetsClosewhenCancelCrossIcongetsClicke
 }
 
 
+
 @Parameters({ "projectName" })
 @Test
 public void ADETc106_VerfiytheFunctionalityofAddDealIconwhenFundsTabisSelectedatDealGridofPEFirm(String projectName) {
@@ -13170,7 +13260,6 @@ public void ADETc106_VerfiytheFunctionalityofAddDealIconwhenFundsTabisSelectedat
 					log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
 					sa.assertTrue(false, "HSR stage name not present: " + stage);
 					}
-			}
 		} else {
 			log(LogStatus.ERROR, "Not able to click on " + ADEIns2 + " tab", YesNo.Yes);
 			sa.assertTrue(false, "Not able to click on " + ADEIns2 + " tab");
@@ -13179,10 +13268,11 @@ public void ADETc106_VerfiytheFunctionalityofAddDealIconwhenFundsTabisSelectedat
 		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
 		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
 	}
+	}
 			ThreadSleep(5000);
 			lp.CRMlogout();
 			sa.assertAll();
-		}
+}
 
 
 @Parameters({ "projectName" })
