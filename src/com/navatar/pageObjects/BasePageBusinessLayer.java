@@ -1327,6 +1327,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case Deal_Team:
 			tabName = "Deal Team";
 			break;
+		case Financing:
+			tabName = "Financing";
+			break;
 		case RecycleBinTab:
 			tabName = "Recycle Bin";
 			break;
