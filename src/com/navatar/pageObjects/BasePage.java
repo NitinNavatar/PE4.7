@@ -8972,4 +8972,27 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, searchRelatedRecord, "Visibility", timeOut, "search related record");
 	}
 
+	@FindBy(xpath = "//div[contains(@id,\"toastDescription\")]//span[contains(@class,\"toastMessage\")]")
+	private WebElement errorMsgInTopOfNotePopup;
+
+	public WebElement errorMsgInTopOfNotePopup(int timeOut) {
+		return isDisplayed(driver, errorMsgInTopOfNotePopup, "Visibility", timeOut, "errorMsgInTopOfNotePopup");
+	}
+
+	@FindBy(xpath = "//h2[text()=\"Review the errors on this page.\"]/ancestor::div/p")
+	private WebElement errorMsgInFieldLevelOfNotePopup;
+
+	public WebElement errorMsgInFieldLevelOfNotePopup(int timeOut) {
+		return isDisplayed(driver, errorMsgInFieldLevelOfNotePopup, "Visibility", timeOut,
+				"errorMsgInFieldLevelOfNotePopup");
+	}
+
+	@FindBy(xpath = "//span[text()=\"Log a Call\"]/ancestor::lightning-icon")
+	private WebElement logACallIconButtonInInteraction;
+
+	public WebElement logACallIconButtonInInteraction(int timeOut) {
+		return isDisplayed(driver, logACallIconButtonInInteraction, "Visibility", timeOut,
+				"logACallIconButtonInInteraction");
+	}
+
 }

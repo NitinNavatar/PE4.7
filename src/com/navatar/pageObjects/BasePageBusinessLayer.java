@@ -11350,11 +11350,15 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @param advanceSection
 	 * @param taskSection
 	 * @param suggestedTags
+	 * @param errorMsg                       TODO
+	 * @param validationRuleMessage          TODO
+	 * @param validationRuleErrorMsgLocation TODO
 	 * @return return true if test case is passed
 	 */
 
 	public boolean createActivityTimeline(String projectName, boolean fromNavigation, String buttonName,
-			String[][] basicSection, String[][] advanceSection, String[][] taskSection, String[] suggestedTags) {
+			String[][] basicSection, String[][] advanceSection, String[][] taskSection, String[] suggestedTags,
+			boolean errorMsg, String validationRuleMessage, String validationRuleErrorMsgLocation) {
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		String xPath = "";
 		WebElement ele;
@@ -11388,14 +11392,35 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				return false;
 			}
 		} else {
-			if (CommonLib.clickUsingJavaScript(driver, activityTimelineButton(buttonName, 30), buttonName + " button",
-					action.BOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on " + buttonName + " button name", YesNo.No);
+
+			if (buttonName.equalsIgnoreCase("Task") || buttonName.equalsIgnoreCase("Create Task")) {
+
+				if (clickOnRecordPageButtonForNewRecordCreation(buttonName, 30)) {
+					log(LogStatus.INFO, "Clicked on Button: " + buttonName + " of Record Page", YesNo.No);
+
+				} else {
+					log(LogStatus.ERROR, "Not able to Click on Button: " + buttonName + " of Record Page: ", YesNo.No);
+					sa.assertTrue(false, "Not able to Click on Button: " + buttonName + " of Record Page: ");
+				}
+
+			}
+
+			else if (buttonName.equalsIgnoreCase("Call")) {
+				if (CommonLib.click(driver, logACallIconButtonInInteraction(20), "logACallIconButtonInInteraction",
+						action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Button: Log A Call Icon Button In Interaction", YesNo.No);
+
+				} else {
+					log(LogStatus.ERROR, "Clicked on Button: Log A Call Icon Button In Interaction", YesNo.No);
+					sa.assertTrue(false, "Clicked on Button: Log A Call Icon Button In Interaction");
+					return false;
+				}
 			} else {
-				log(LogStatus.ERROR, "Not able to click on " + buttonName, YesNo.No);
-				sa.assertTrue(false, "Not able to click on " + buttonName);
+				log(LogStatus.ERROR, "Please Provide Either Button Name: Task or Call", YesNo.No);
+				sa.assertTrue(false, "Please Provide Either Button Name: Task or Call");
 				return false;
 			}
+
 		}
 
 		String detail2 = CommonLib.getAttribute(driver, getNotePopUpSectionDetail("Advanced", 5), "Advanced Section",
@@ -11427,6 +11452,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				if (labelName.contains(excelLabel.Subject.toString())) {
 					xPath = "//label[text()='" + labelName + "']/..//input[contains(@data-id,'combobox')]";
 					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+
 					if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
 					} else {
@@ -11836,21 +11862,114 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				 * if (getSuccessMsg(30) != null) { log(LogStatus.INFO,
 				 * "Activity timeline record has been created", YesNo.No); ThreadSleep(1000);
 				 */
-				refresh(driver);
-				ThreadSleep(3000);
-				if (crossIconButtonInNotePopUp(8) != null) {
-					if (clickUsingJavaScript(driver, crossIconButtonInNotePopUp(8), "close button")) {
-						log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
-						log(LogStatus.INFO, "Activity timeline record has been created", YesNo.No);
-						flag = true;
+
+				if (errorMsg) {
+
+					if (validationRuleErrorMsgLocation.contains("Field<break>")) {
+
+						String[] labelAndvalue = validationRuleErrorMsgLocation.split("<break>", -1);
+
+						detail2 = CommonLib.getAttribute(driver, getNotePopUpSectionDetail("Advanced", 5),
+								"Advanced Section", "aria-hidden");
+
+						if ("true".equals(detail2) || detail2 == null) {
+							clickUsingJavaScript(driver, getSectionBtn("Advanced", 30), "Advanced section",
+									action.SCROLLANDBOOLEAN);
+							String detail = CommonLib.getAttribute(driver, getNotePopUpSectionDetail("Tasks", 5),
+									"Tasks Section", "aria-hidden");
+							if ("true".equals(detail) || detail == null) {
+								clickUsingJavaScript(driver, getSectionBtn("Tasks", 30), "Tasks section",
+										action.SCROLLANDBOOLEAN);
+							}
+
+						}
+
+						String actualErrorMsg = CommonLib.getText(driver, errorMsgInFieldLevelOfNotePopup(8),
+								"errorMsgInFieldLevelOfNotePopup: " + validationRuleMessage, action.SCROLLANDBOOLEAN);
+						if (validationRuleMessage.equals(actualErrorMsg)) {
+							log(LogStatus.INFO,
+									"Error Msg has been Match on field level of Note Popup: " + actualErrorMsg,
+									YesNo.No);
+							refresh(driver);
+							ThreadSleep(3000);
+							if (crossIconButtonInNotePopUp(8) != null) {
+								if (clickUsingJavaScript(driver, crossIconButtonInNotePopUp(8), "close button")) {
+									log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
+									log(LogStatus.INFO, "Activity timeline record has been created", YesNo.No);
+									flag = true;
+								} else {
+									log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
+									sa.assertTrue(false, "Not able to close the Note popup");
+									log(LogStatus.ERROR, "Activity timeline record is not created", YesNo.No);
+									return false;
+								}
+							} else {
+								return true;
+							}
+						}
+
+						else {
+							log(LogStatus.ERROR, "Error Msg has not been Match on field level of Note Popup, Actual: "
+									+ actualErrorMsg + " and Exepected: " + validationRuleMessage, YesNo.No);
+							sa.assertTrue(false, "Error Msg has not been Match on field level of Note Popup, Actual: "
+									+ actualErrorMsg + " and Exepected: " + validationRuleMessage);
+						}
+
 					} else {
-						log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
-						sa.assertTrue(false, "Not able to close the Note popup");
-						log(LogStatus.ERROR, "Activity timeline record is not created", YesNo.No);
-						return false;
+
+						String actualErrorMsg = CommonLib.getText(driver, errorMsgInTopOfNotePopup(8),
+								"errorMsgInTopOfNotePopup: " + validationRuleMessage, action.SCROLLANDBOOLEAN);
+						if (validationRuleMessage.equals(actualErrorMsg)) {
+							log(LogStatus.INFO, "Error Msg has been Match on top of Note Popup: " + actualErrorMsg,
+									YesNo.No);
+							refresh(driver);
+							ThreadSleep(3000);
+							if (crossIconButtonInNotePopUp(8) != null) {
+								if (clickUsingJavaScript(driver, crossIconButtonInNotePopUp(8), "close button")) {
+									log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
+									log(LogStatus.INFO, "Activity timeline record has been created", YesNo.No);
+									flag = true;
+								} else {
+									log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
+									sa.assertTrue(false, "Not able to close the Note popup");
+									log(LogStatus.ERROR, "Activity timeline record is not created", YesNo.No);
+									return false;
+								}
+							} else {
+								return true;
+							}
+						}
+
+						else {
+							log(LogStatus.ERROR, "Error Msg has not been Match on top of Note Popup, Actual: "
+									+ actualErrorMsg + " and Exepected: " + validationRuleMessage, YesNo.No);
+							sa.assertTrue(false, "Error Msg has not been Match on top of Note Popup, Actual: "
+									+ actualErrorMsg + " and Exepected: " + validationRuleMessage);
+						}
+
 					}
-				} else {
-					return true;
+
+				}
+
+				else {
+
+					refresh(driver);
+					ThreadSleep(3000);
+					if (crossIconButtonInNotePopUp(8) != null) {
+						if (clickUsingJavaScript(driver, crossIconButtonInNotePopUp(8), "close button")) {
+							log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
+							log(LogStatus.INFO, "Activity timeline record has been created", YesNo.No);
+							flag = true;
+						} else {
+							log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
+							sa.assertTrue(false, "Not able to close the Note popup");
+							log(LogStatus.ERROR, "Activity timeline record is not created", YesNo.No);
+							return false;
+						}
+					} else {
+						return true;
+					}
+
 				}
 
 				/*
@@ -12879,7 +12998,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String xPath = "";
 		WebElement ele;
 		boolean flag = false;
-		ThreadSleep(12000);
+		ThreadSleep(3000);
 
 		if (removeTagName != null && removeTagName.length != 0) {
 			for (int i = 0; i < removeTagName.length; i++) {
@@ -12976,44 +13095,62 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					for (int i = 0; i < tagList.size(); i++) {
 
-						ele = getSearchRelatedRecord(2);
-
-						if (ele == null) {
-							xPath = "//lightning-icon[@title=\"Tag\" and contains(@class,'mt15')]//lightning-primitive-icon";
+						if (tagList.get(i).contains("Prefilled")) {
+							String val1 = tagList.get(i);
+							String[] tgName = tagList.get(i).split("<Prefilled>");
+							xPath = "//lightning-pill[@data-id='" + tgName[0] + "']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									30);
-							if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
-								log(LogStatus.INFO, "Clicked on Tag button", YesNo.No);
+							if (ele != null) {
+								log(LogStatus.INFO, tgName[0] + " is prefilled", YesNo.No);
 							} else {
-								log(LogStatus.ERROR, "Not able to click on Tag button", YesNo.No);
-								sa.assertTrue(false, "Not able to click on Tag button");
-								return false;
-							}
-
-						}
-
-						ele = getSearchRelatedRecord(2);
-
-						if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, tagList.get(i) + " value has been passed in " + labelName + " field",
-									YesNo.No);
-							ThreadSleep(3000);
-							xPath = "//ul[@class='drop_ul']//li[text()='" + tagList.get(i) + "']";
-							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
-									30);
-							if (click(driver, ele, tagList + " dropdown", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO, "clicked on " + tagList.get(i) + " value", YesNo.No);
-							} else {
-								log(LogStatus.ERROR, "Not able to click on " + tagList.get(i) + " value", YesNo.No);
-								sa.assertTrue(false, "Not able to click on " + tagList.get(i) + " value");
+								log(LogStatus.ERROR, tgName[0] + " is not prefilled", YesNo.No);
+								sa.assertTrue(false, tgName[0] + " is not prefilled");
 								return false;
 							}
 
 						} else {
-							log(LogStatus.ERROR, tagList.get(i) + " value is not passed in " + labelName + " field",
-									YesNo.No);
-							sa.assertTrue(false, tagList.get(i) + " value is not passed in " + labelName + " field");
-							return false;
+
+							ele = getSearchRelatedRecord(2);
+
+							if (ele == null) {
+								xPath = "//h2[contains(@class,'header_text')]/../..//*[@title='Tag']";
+								ele = CommonLib.FindElement(driver, xPath, labelName + " label",
+										action.SCROLLANDBOOLEAN, 30);
+								if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
+									log(LogStatus.INFO, "Clicked on Tag button", YesNo.No);
+								} else {
+									log(LogStatus.ERROR, "Not able to click on Tag button", YesNo.No);
+									sa.assertTrue(false, "Not able to click on Tag button");
+									return false;
+								}
+
+							}
+
+							ele = getSearchRelatedRecord(2);
+
+							if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO,
+										tagList.get(i) + " value has been passed in " + labelName + " field", YesNo.No);
+								ThreadSleep(3000);
+								xPath = "//ul[@class='drop_ul']//li[text()='" + tagList.get(i) + "']";
+								ele = CommonLib.FindElement(driver, xPath, labelName + " label",
+										action.SCROLLANDBOOLEAN, 30);
+								if (click(driver, ele, tagList + " dropdown", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on " + tagList.get(i) + " value", YesNo.No);
+								} else {
+									log(LogStatus.ERROR, "Not able to click on " + tagList.get(i) + " value", YesNo.No);
+									sa.assertTrue(false, "Not able to click on " + tagList.get(i) + " value");
+									return false;
+								}
+
+							} else {
+								log(LogStatus.ERROR, tagList.get(i) + " value is not passed in " + labelName + " field",
+										YesNo.No);
+								sa.assertTrue(false,
+										tagList.get(i) + " value is not passed in " + labelName + " field");
+								return false;
+							}
 						}
 					}
 				} else {
@@ -13291,7 +13428,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 					}
 
-					if (suggestedTags[0].equalsIgnoreCase("All Records Select")) {
+					else if (suggestedTags[0].equalsIgnoreCase("All Records Select")) {
 						CommonLib.ThreadSleep(5000);
 						if (click(driver, suggestedTagsCheckBoxAllInput(), "suggestedTagsCheckBoxAllInput",
 								action.SCROLLANDBOOLEAN)) {
@@ -13304,7 +13441,66 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							return false;
 						}
 
-					} else {
+					} else if (suggestedTags[0].contains("=="))
+
+					{
+						boolean flagCancel = false;
+						for (int i = 0; i < suggestedTags.length; i++) {
+
+							String[] column = null;
+							if (i == 0) {
+								if (suggestedTags[i].contains("<Section>")) {
+									column = suggestedTags[i].split("<Section>", -1);
+									column = column[1].split("==", -1);
+									if (column[0].equalsIgnoreCase("Cancel")) {
+										flagCancel = true;
+									}
+
+								}
+
+							} else {
+								column = suggestedTags[i].split("==", -1);
+							}
+
+							xPath = "//lightning-base-formatted-text[text()='" + column[0]
+									+ "']/ancestor::th[@data-label='Name']/following-sibling::td//lightning-base-formatted-text[text()='"
+									+ column[1] + "']/ancestor::td/preceding-sibling::td//input";
+							ele = CommonLib.FindElement(driver, xPath,
+									column[0] + " sugested Tag of Type: " + column[1], action.SCROLLANDBOOLEAN, 30);
+							if (click(driver, ele, column[0] + " sugested Tag of Type: " + column[1],
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "clicked on " + column[0] + " sugested Tag of Type: " + column[1]
+										+ " checkbox button", YesNo.No);
+
+							} else {
+								log(LogStatus.ERROR, "Not able to click on " + column[0] + " sugested Tag of Type: "
+										+ column[1] + " checkbox button", YesNo.No);
+								sa.assertTrue(false, "Not able to click on " + column[0] + " sugested Tag of Type: "
+										+ column[1] + " checkbox button");
+								return false;
+
+							}
+
+						}
+
+						if (suggestedTags[0].contains("<Section>")) {
+
+						}
+
+						if (flagCancel) {
+							if (click(driver, getfooterTagButton(30), "Tag Button", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "clicked on footer tag button", YesNo.No);
+								return true;
+							} else {
+								log(LogStatus.ERROR, "Not able to click on footer tag button", YesNo.No);
+								sa.assertTrue(false, "Not able to click on footer tag button");
+								return false;
+							}
+						}
+
+					}
+
+					else {
 
 						for (int i = 0; i < suggestedTags.length; i++) {
 

@@ -474,6 +474,11 @@ Fundraising_ContactPage, Financing, Financial_Performance, Marketing_Initiative,
 	public String toString() {
 		return "Record Types";
 	}
+},validationRules{
+	@Override
+	public String toString() {
+		return "Validation Rules";
+	}
 }
 };
 

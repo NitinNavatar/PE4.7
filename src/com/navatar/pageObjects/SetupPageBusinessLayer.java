@@ -6849,4 +6849,256 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return flag;
 	}
 
+	/**
+	 * @author Ankur Huria
+	 * @param driver
+	 * @param userName
+	 * @param LabelswithCheck
+	 * @param timeOut
+	 * @return true if able to change permission for particular object for
+	 *         particular type for particular user
+	 */
+	public boolean createValidationRule(object objectName, String fieldName, String validationRuleName,
+			String validationRuleFormula, String validationRuleMessage, String validationRuleErrorMsgLocation) {
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		boolean flag = false;
+
+		if (home.clickOnSetUpLink()) {
+			String parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create Valiation Rules for field: "
+								+ fieldName + " of Object: " + objectName);
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create Valiation Rules for field: "
+								+ fieldName + " of Object: " + objectName,
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create Valiation Rules for field: "
+						+ fieldName + " of Object: " + objectName);
+				return false;
+			}
+
+			if (searchStandardOrCustomObject(environment, mode, objectName)) {
+				log(LogStatus.INFO, "click on Object : " + objectName, YesNo.No);
+				ThreadSleep(2000);
+				if (clickOnObjectFeature(environment, mode, objectName, ObjectFeatureName.validationRules)) {
+					log(LogStatus.INFO, "Clicked on feature : " + ObjectFeatureName.validationRules, YesNo.No);
+					ThreadSleep(2000);
+					if (validationRuleAlreadyExist(validationRuleName, 8) != null) {
+						log(LogStatus.INFO, "Validation Rule named: " + validationRuleName
+								+ " already exist, So not able to Create a New one", YesNo.No);
+						driver.close();
+						driver.switchTo().window(parentWindow);
+
+						return true;
+
+					} else {
+						log(LogStatus.INFO, "Validation Rule named: " + validationRuleName
+								+ " not already exist, So going to Create a New one", YesNo.No);
+
+						if (click(driver, vaidationRuleNewButton(10), "New Button", action.BOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on New button", YesNo.No);
+
+							if (validationRuleIframe(30) != null) {
+								log(LogStatus.INFO, "Validation Rule Iframe Found, So going to switch into it",
+										YesNo.No);
+								if (CommonLib.switchToFrame(driver, 15, validationRuleIframe(30))) {
+									log(LogStatus.INFO, "Switched into Validation Rule Iframe", YesNo.No);
+
+									if (sendKeys(driver, validationRuleName(30), validationRuleName,
+											"vaidationRuleName", action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.PASS,
+												"enter the value in Validation Rule Name : " + validationRuleName,
+												YesNo.No);
+										if (sendKeys(driver, validationRuleFormula(30), validationRuleFormula,
+												"validationRuleFormula", action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.PASS, "enter the value in Validation Rule Formula : "
+													+ validationRuleFormula, YesNo.No);
+
+											if (sendKeys(driver, validationRuleMessage(30), validationRuleMessage,
+													"validationRuleMessage", action.SCROLLANDBOOLEAN)) {
+												log(LogStatus.PASS, "enter the value in Validation Rule Error Msg : "
+														+ validationRuleMessage, YesNo.No);
+
+												if (validationRuleErrorMsgLocation.contains("Field<break>")) {
+
+													String[] labelAndvalue = validationRuleErrorMsgLocation
+															.split("<break>", -1);
+
+													if (click(driver,
+															validationRuleErrorMsgLocation(labelAndvalue[0], 10),
+															"New Button", action.BOOLEAN)) {
+														log(LogStatus.INFO, "Clicked on Error Msg Location: "
+																+ validationRuleErrorMsgLocation, YesNo.No);
+
+														if (CommonLib.selectVisibleTextFromDropDown(driver,
+																validationRuleFieldSelect(10), labelAndvalue[1],
+																labelAndvalue[1]))
+
+														{
+
+															if (click(driver, validationRuleSaveButton(10),
+																	"validationRuleSaveButton", action.BOOLEAN)) {
+																log(LogStatus.INFO, "Clicked on Save Button", YesNo.No);
+
+																CommonLib.switchToDefaultContent(driver);
+																CommonLib.refresh(driver);
+																CommonLib.switchToFrame(driver, 15,
+																		validationRuleIframe(30));
+																if (validationRuleCreatedDetailName(validationRuleName,
+																		10) != null) {
+																	log(LogStatus.INFO,
+																			"Validation rule has been Created",
+																			YesNo.No);
+																	CommonLib.switchToDefaultContent(driver);
+																	driver.close();
+																	driver.switchTo().window(parentWindow);
+																	flag = true;
+
+																} else {
+																	log(LogStatus.PASS,
+																			"Validation rule has not been Created",
+																			YesNo.No);
+																	sa.assertTrue(false,
+																			"Validation rule has not been Created");
+																}
+
+															} else {
+																log(LogStatus.PASS, "Not able to Click on Save Button",
+																		YesNo.No);
+																sa.assertTrue(false,
+																		"Not able to Click on Save Button");
+															}
+
+														} else {
+
+															log(LogStatus.PASS,
+																	"Not able to select the field: " + labelAndvalue[1]
+																			+ " in which we want the error Msg",
+																	YesNo.No);
+															sa.assertTrue(false,
+																	"Not able to select the field: " + labelAndvalue[1]
+																			+ " in which we want the error Msg");
+														}
+
+													} else {
+														log(LogStatus.PASS, "Not able to Click on Error Msg Location: "
+																+ validationRuleErrorMsgLocation, YesNo.No);
+														sa.assertTrue(false, "Not able to Click on Error Msg Location: "
+																+ validationRuleErrorMsgLocation);
+													}
+
+												} else {
+
+													if (click(driver,
+															validationRuleErrorMsgLocation(
+																	validationRuleErrorMsgLocation, 10),
+															"New Button", action.BOOLEAN)) {
+														log(LogStatus.INFO, "Clicked on Error Msg Location: "
+																+ validationRuleErrorMsgLocation, YesNo.No);
+
+														if (click(driver, validationRuleSaveButton(10), "New Button",
+																action.BOOLEAN)) {
+															log(LogStatus.INFO, "Clicked on Save Button", YesNo.No);
+															CommonLib.switchToDefaultContent(driver);
+															CommonLib.refresh(driver);
+															CommonLib.switchToFrame(driver, 15,
+																	validationRuleIframe(30));
+															if (validationRuleCreatedDetailName(validationRuleName,
+																	10) != null) {
+																log(LogStatus.INFO, "Validation rule has been Created",
+																		YesNo.No);
+																CommonLib.switchToDefaultContent(driver);
+																driver.close();
+																driver.switchTo().window(parentWindow);
+																flag = true;
+
+															} else {
+																log(LogStatus.PASS,
+																		"Validation rule has not been Created",
+																		YesNo.No);
+																sa.assertTrue(false,
+																		"Validation rule has not been Created");
+															}
+														} else {
+															log(LogStatus.PASS, "Not able to Click on Save Button",
+																	YesNo.No);
+															sa.assertTrue(false, "Not able to Click on Save Button");
+														}
+
+													} else {
+														log(LogStatus.PASS, "Not able to Click on Error Msg Location: "
+																+ validationRuleErrorMsgLocation, YesNo.No);
+														sa.assertTrue(false, "Not able to Click on Error Msg Location: "
+																+ validationRuleErrorMsgLocation);
+													}
+
+												}
+
+											} else {
+												log(LogStatus.PASS,
+														"not able to enter the value in Validation Rule Error Msg : "
+																+ validationRuleMessage,
+														YesNo.No);
+												sa.assertTrue(false,
+														"not able to enter the value in Validation Rule Error Msg : "
+																+ validationRuleMessage);
+											}
+
+										} else {
+											log(LogStatus.PASS,
+													"not able to enter the value in Validation Rule Formula : "
+															+ validationRuleFormula,
+													YesNo.No);
+											sa.assertTrue(false,
+													"not able to enter the value in Validation Rule Formula : "
+															+ validationRuleFormula);
+										}
+
+									} else {
+										log(LogStatus.PASS, "not able to enter the value in Validation Rule Name : "
+												+ validationRuleName, YesNo.No);
+										sa.assertTrue(false, "not able to enter the value in Validation Rule Name : "
+												+ validationRuleName);
+									}
+
+								} else {
+									log(LogStatus.PASS, "Not able to Switched into Validation Rule Iframe", YesNo.No);
+									sa.assertTrue(false, "Not able to Switched into Validation Rule Iframe");
+								}
+
+							} else {
+								log(LogStatus.PASS, "Validation Rule Iframe not Found, So not going to switch into it",
+										YesNo.No);
+								sa.assertTrue(false,
+										"Validation Rule Iframe not Found, So not going to switch into it");
+							}
+						} else {
+							log(LogStatus.PASS, "Not able to click on New button", YesNo.No);
+							sa.assertTrue(false, "Not able to click on New button");
+						}
+
+					}
+
+				} else
+
+				{
+					log(LogStatus.FAIL, "Not able to search object " + objectName.toString(), YesNo.Yes);
+					sa.assertTrue(false, "Not able to search object " + objectName.toString());
+
+				}
+
+			}
+
+		} else {
+			log(LogStatus.ERROR,
+					"Not able to click on setup link so cannot create Fields Objects for custom object Marketing Event",
+					YesNo.Yes);
+			sa.assertTrue(false,
+					"Not able to click on setup link so cannot create Fields Objects for custom object Marketing Event");
+		}
+
+		return flag;
+	}
+
 }

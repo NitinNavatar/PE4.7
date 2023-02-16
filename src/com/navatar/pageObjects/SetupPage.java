@@ -1233,12 +1233,95 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement viewUsers(int timeOut) {
 		return isDisplayed(driver, viewUsers, "Visibility", timeOut, "viewUsers");
 	}
-	
-	public WebElement LabelNameInCustomMetaData(String labelName, int timeOut) {
-		String xpath = "//a[text()='"+ labelName +"']";
 
-			return isDisplayed(driver, FindElement(driver, xpath, "Label Name In Custom Meta Data", action.SCROLLANDBOOLEAN, timeOut), "label Name", 10, "Label Name In Custom Meta Data");
+	public WebElement LabelNameInCustomMetaData(String labelName, int timeOut) {
+		String xpath = "//a[text()='" + labelName + "']";
+
+		return isDisplayed(driver,
+				FindElement(driver, xpath, "Label Name In Custom Meta Data", action.SCROLLANDBOOLEAN, timeOut),
+				"label Name", 10, "Label Name In Custom Meta Data");
 
 	}
+
+	@FindBy(xpath = "//button[@title=\"Validation Rule\"]")
+	private WebElement vaidationRuleNewButton;
+
+	public WebElement vaidationRuleNewButton(int timeOut) {
+		return isDisplayed(driver, vaidationRuleNewButton, "Visibility", timeOut, "vaidationRuleNewButton");
+	}
+
+	@FindBy(id = "ValidationName")
+	private WebElement validationRuleName;
+
+	public WebElement validationRuleName(int timeOut) {
+		return isDisplayed(driver, validationRuleName, "Visibility", timeOut, "vaidationRuleName");
+	}
+
+	@FindBy(id = "ValidationFormula")
+	private WebElement validationRuleFormula;
+
+	public WebElement validationRuleFormula(int timeOut) {
+		return isDisplayed(driver, validationRuleFormula, "Visibility", timeOut, "validationRuleFormula");
+	}
+
+	@FindBy(id = "ValidationMessage")
+	private WebElement validationRuleMessage;
+
+	public WebElement validationRuleMessage(int timeOut) {
+		return isDisplayed(driver, validationRuleMessage, "Visibility", timeOut, "validationRuleMessage");
+	}
+
+	public WebElement validationRuleErrorMsgLocation(String errorLocation, int timeOut) {
+		String xpath = "//td[text()=\"Error Location\"]/following-sibling::td//label[text()=\"" + errorLocation
+				+ "\"]/preceding-sibling::input";
+
+		return isDisplayed(driver,
+				FindElement(driver, xpath, "validationRuleErrorMsgLocation", action.SCROLLANDBOOLEAN, timeOut),
+				"label Name", 10, "validationRuleErrorMsgLocation");
+
+	}
+
+	public WebElement validationRuleAlreadyExist(String validationRuleName, int timeOut) {
+		String xpath = "//span[text()=\"" + validationRuleName + "\" and @class=\"uiOutputText\"]";
+
+		return isDisplayed(driver,
+				FindElement(driver, xpath, "validationRuleAlreadyExist", action.SCROLLANDBOOLEAN, timeOut),
+				"Validation Rule Name: " + validationRuleName, 10, "validationRuleAlreadyExist");
+
+	}
+
+	@FindBy(xpath = "//iframe[contains(@title,\"Validation Rule\")]")
+	private WebElement validationRuleIframe;
+
+	public WebElement validationRuleIframe(int timeOut) {
+		return isDisplayed(driver, validationRuleIframe, "Visibility", timeOut,
+				"vaidativalidationRuleIframeonRuleIframe");
+	}
+
+	@FindBy(name = "save")
+	private WebElement validationRuleSaveButton;
+
+	public WebElement validationRuleSaveButton(int timeOut) {
+		return isDisplayed(driver, validationRuleSaveButton, "Visibility", timeOut, "validationRuleSaveButton");
+	}
+
+	@FindBy(id = "FieldEnumOrId")
+	private WebElement validationRuleFieldSelect;
+
+	public WebElement validationRuleFieldSelect(int timeOut) {
+		return isDisplayed(driver, validationRuleFieldSelect, "Visibility", timeOut, "validationRuleFieldSelect");
+	}
+	
+	
+	public WebElement validationRuleCreatedDetailName(String validationRuleName, int timeOut) {
+		String xpath = "//table[@class=\"detailList\"]//td[text()=\""+validationRuleName+"\"]";
+
+		return isDisplayed(driver,
+				FindElement(driver, xpath, "validationRuleCreatedDetailName", action.SCROLLANDBOOLEAN, timeOut),
+				"Validation Rule Name: " + validationRuleName, 10, "validationRuleCreatedDetailName");
+
+	}
+	
+	
 
 }
