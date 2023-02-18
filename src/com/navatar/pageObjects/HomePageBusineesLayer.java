@@ -5785,9 +5785,7 @@ public class HomePageBusineesLayer extends HomePage {
 									}
 
 									else {
-										log(LogStatus.ERROR,
-												"No New Window Open after click on View All Button for Subject: "
-														+ recordName,
+										log(LogStatus.ERROR, "No New Window Open after click on Record: " + recordName,
 												YesNo.Yes);
 									}
 								} else {
@@ -5841,7 +5839,28 @@ public class HomePageBusineesLayer extends HomePage {
 										if (click(driver, globalSearchRecord(recordName, 7),
 												"globalSearchRecord: " + recordName, action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "Clicked on Record: " + recordName, YesNo.No);
-											flag = true;
+											if (sideNavOption.equalsIgnoreCase("Tasks")) {
+												CommonLib.ThreadSleep(4000);
+												String parentID = CommonLib.switchOnWindow(driver);
+												CommonLib.ThreadSleep(4000);
+												if (parentID != null) {
+
+													log(LogStatus.INFO,
+															"Subject: " + recordName + " found on All Interaction Page",
+															YesNo.No);
+
+													flag = true;
+
+												}
+
+												else {
+													log(LogStatus.ERROR,
+															"No New Window Open after click on Record: " + recordName,
+															YesNo.Yes);
+												}
+											} else {
+												flag = true;
+											}
 										} else {
 											log(LogStatus.ERROR, "Not able to Click on Record: " + recordName,
 													YesNo.Yes);
