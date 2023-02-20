@@ -14800,7 +14800,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (!connectionsSectionHeaderTooltip.isEmpty()) {
 			if(click(driver, getInternalTabOnConnectionSection(20), "Internal tab on connection section", action.SCROLLANDBOOLEAN))
 			{
-				log(LogStatus.INFO, "Clicked on external button", YesNo.No);
+				log(LogStatus.INFO, "Clicked on internal button", YesNo.No);
 				ArrayList<String> actualTooltip = new ArrayList<String>();
 
 				xPath = "(//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//tr)[1]//span[@class='slds-truncate' and @title!='']";
@@ -14810,7 +14810,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					actualTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
 				}
 
-				xPath = "(//span[contains(@title,'Connection')]/ancestor::div[@class='slds-m-bottom_xx-small']//tr)[1]//lightning-icon//lightning-primitive-icon";
+				xPath = "(//span[contains(@title,'Connection')]/ancestor::div[@class='slds-m-bottom_xx-small']//tr)[1]//lightning-icon";
 				elements = FindElements(driver, xPath, "Connections section headers");
 				for (WebElement el : elements) {
 					actualTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
@@ -14835,8 +14835,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 			else
 			{
-				log(LogStatus.ERROR, "Not able to click on external tab", YesNo.No);
-				result.add("Not able to click on external tab");
+				log(LogStatus.ERROR, "Not able to click on internal tab", YesNo.No);
+				result.add("Not able to click on internal tab");
 			}
 		}
 		if (!externalConnectionsSectionHeaderTooltip.isEmpty()) {
