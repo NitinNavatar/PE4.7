@@ -6322,7 +6322,7 @@ public abstract class BasePage extends BaseLib {
 				action.SCROLLANDBOOLEAN, timeOut);
 
 	}
-	
+
 	public WebElement popupcalendarInputBox(String labelName, int timeOut) {
 		return FindElement(driver, "//span[text()='" + labelName + "']/../..//input[@type='text']", "calendarInputBox",
 				action.SCROLLANDBOOLEAN, timeOut);
@@ -7142,7 +7142,7 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
-	
+
 	public WebElement dealAcuityHSRName(String dealName, String hsr, int timeOut) {
 
 		String xpath = "//a[text()='" + dealName
@@ -8453,21 +8453,21 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getContactpopupheader(int timeOut) {
 		return isDisplayed(driver, Contactpopupheader, "Visibility", timeOut, "Contactpopupheader");
 	}
-	
+
 	@FindBy(xpath = "//h2[text()='New Financing']")
 	private WebElement NewFinanacingpopupheader;
 
 	public WebElement getNewFinanacingpopupheader(int timeOut) {
 		return isDisplayed(driver, NewFinanacingpopupheader, "Visibility", timeOut, "NewFinanacingpopupheader");
 	}
-	
+
 	@FindBy(xpath = "//h2[text()='New Deal']")
 	private WebElement NewDealpopupheader;
 
 	public WebElement getNewDealpopupheader(int timeOut) {
 		return isDisplayed(driver, NewDealpopupheader, "Visibility", timeOut, "NewDealpopupheader");
 	}
-	
+
 	@FindBy(xpath = "//h2[text()='New Sourced Deal']")
 	private WebElement NewSourcedDealpopupheader;
 
@@ -8521,15 +8521,14 @@ public abstract class BasePage extends BaseLib {
 				FindElement(driver, xpath, "Download Icon Found: " + contactname, action.SCROLLANDBOOLEAN, timeOut),
 				"Visibility", 10, "Download Icon");
 	}
-	
+
 	public WebElement NewFinancingIcon(int timeOut) {
 		WebElement ele;
 		String xpath = "//*[@title='New Financing']";
-		return ele = isDisplayed(driver,
-				FindElement(driver, xpath, "New Financing Icon: " + "NewFinancingIcon", action.SCROLLANDBOOLEAN, timeOut),
-				"Visibility", 10, "New Financing Icon");
+		return ele = isDisplayed(driver, FindElement(driver, xpath, "New Financing Icon: " + "NewFinancingIcon",
+				action.SCROLLANDBOOLEAN, timeOut), "Visibility", 10, "New Financing Icon");
 	}
-	
+
 	public WebElement NewDealIcon(int timeOut) {
 		WebElement ele;
 		String xpath = "//*[@title='Add Deal']";
@@ -8537,15 +8536,15 @@ public abstract class BasePage extends BaseLib {
 				FindElement(driver, xpath, "New Deal Icon: " + "NewDealIcon", action.SCROLLANDBOOLEAN, timeOut),
 				"Visibility", 10, "New Deal Icon");
 	}
+
 	public WebElement NewSourcedDealIcon(int timeOut) {
 		WebElement ele;
 		String xpath = "//*[@title='Add Sourced Deal']";
-		return ele = isDisplayed(driver,
-				FindElement(driver, xpath, "New Sourced Deal Icon: " + "NewSourcedDealIcon", action.SCROLLANDBOOLEAN, timeOut),
-				"Visibility", 10, "New Sourced Deal Icon");
+		return ele = isDisplayed(driver, FindElement(driver, xpath, "New Sourced Deal Icon: " + "NewSourcedDealIcon",
+				action.SCROLLANDBOOLEAN, timeOut), "Visibility", 10, "New Sourced Deal Icon");
 	}
-	
-	public WebElement SourcedTab(int timeOut,action action) {
+
+	public WebElement SourcedTab(int timeOut, action action) {
 		WebElement ele;
 		String xpath = "//input[@name='radioGroups']/..//span[text()='Sourced']";
 		return ele = isDisplayed(driver,
@@ -8555,7 +8554,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement contactEmailCount(String contactName, int timeOut) {
 
-		String xpath = "//*[text()='"+ contactName + "']//ancestor::tr//button[@name='emailRef']";
+		String xpath = "//*[text()='" + contactName + "']//ancestor::tr//button[@name='emailRef']";
 		try {
 			return FindElement(driver, xpath, "Contact Header: " + contactName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -8565,7 +8564,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement contactEmailCountAcuity(String contactName, int timeOut) {
 
-		String xpath = "//*[text()='"+ contactName + "']//ancestor::tr//button[@name='emailRef']";
+		String xpath = "//*[text()='" + contactName + "']//ancestor::tr//button[@name='emailRef']";
 		try {
 			return FindElement(driver, xpath, "Contact Header: " + contactName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -8707,15 +8706,13 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, timeReferenceIconOnTaggedSection, "Visibility", timeOut,
 				"time reference icon on tagged section");
 	}
-	
+
 	@FindBy(xpath = "//span[@class='slds-th__action']//span[@title='Summary']")
 	private WebElement summaryColumn;
 
 	public WebElement getSummaryColumn(int timeOut) {
-		return isDisplayed(driver, summaryColumn, "Visibility", timeOut,
-				"summary column");
+		return isDisplayed(driver, summaryColumn, "Visibility", timeOut, "summary column");
 	}
-	
 
 	public WebElement getMessageOnTaggedSection(String tabName, String message, int timeOut) {
 
@@ -9052,42 +9049,42 @@ public abstract class BasePage extends BaseLib {
 	@FindBy(xpath = "//button[@title='Close this window']")
 	private WebElement NewFinancingPopupCrossIcon;
 
-	
 	@FindBy(xpath = "//ul[@class='slds-button-group-list']//button[text()='Create Task']")
 	private WebElement createTaskButton;
 
 	public WebElement getCreateTaskButton(int timeOut) {
 		return isDisplayed(driver, createTaskButton, "Visibility", timeOut, "create task button");
 	}
-	
+
 	@FindBy(xpath = "//lightning-icon[@title='Log a Call']//lightning-primitive-icon")
 	private WebElement createLogaCallButton;
 
 	public WebElement getCreateLogaCallButton(int timeOut) {
 		return isDisplayed(driver, createLogaCallButton, "Visibility", timeOut, "Log a Call button");
 	}
-	
+
 	@FindBy(xpath = "//lightning-icon[@title='Add Contact']")
 	private WebElement addContactIcon;
 
 	public WebElement getAddContactIcon(int timeOut) {
 		return isDisplayed(driver, addContactIcon, "Visibility", timeOut, "Add contact icon");
 	}
-	
+
 	@FindBy(xpath = "//label[@class='slds-radio_button__label']//span[text()='External']")
 	private WebElement externalTabOnConnectionSection;
 
 	public WebElement getExternalTabOnConnectionSection(int timeOut) {
-		return isDisplayed(driver, externalTabOnConnectionSection, "Visibility", timeOut, "External tab on connection section");
+		return isDisplayed(driver, externalTabOnConnectionSection, "Visibility", timeOut,
+				"External tab on connection section");
 	}
-	
+
 	@FindBy(xpath = "//label[@class='slds-radio_button__label']//span[text()='Internal']")
 	private WebElement internalTabOnConnectionSection;
 
 	public WebElement getInternalTabOnConnectionSection(int timeOut) {
-		return isDisplayed(driver, internalTabOnConnectionSection, "Visibility", timeOut, "Internal tab on connection section");
+		return isDisplayed(driver, internalTabOnConnectionSection, "Visibility", timeOut,
+				"Internal tab on connection section");
 	}
-	
 
 	@FindBy(xpath = "//input[@class='slds-input' and @type='search']")
 	private WebElement searchBoxOnTheme;
@@ -9095,17 +9092,16 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getSearchBoxOnTheme(int timeOut) {
 		return isDisplayed(driver, searchBoxOnTheme, "Visibility", timeOut, "Search box on theme");
 	}
-	
-	
+
 	public WebElement getThemeName(String themeName, int timeOut) {
 
-		String xpath = "//th[@data-label='Theme Name']//a[text()='"+themeName+"']";
+		String xpath = "//th[@data-label='Theme Name']//a[text()='" + themeName + "']";
 		WebElement type = FindElement(driver, xpath, "Theme name", action.SCROLLANDBOOLEAN, timeOut);
 
 		return type;
 
 	}
-	
+
 	public WebElement getThemeNameOnDetailsPage(String themeName, int timeOut) {
 
 		String xpath = "//lightning-formatted-text[text()='PE Theme 1']";
@@ -9114,14 +9110,6 @@ public abstract class BasePage extends BaseLib {
 		return type;
 
 	}
-		
-	
-	
-
-	
-	
-	
-	
 
 	@FindBy(xpath = "//div[contains(@id,\"toastDescription\")]//span[contains(@class,\"toastMessage\")]")
 	private WebElement errorMsgInTopOfNotePopup;
@@ -9146,14 +9134,13 @@ public abstract class BasePage extends BaseLib {
 				"logACallIconButtonInInteraction");
 	}
 
-
 	/**
 	 * @return the searchPopSearchTextBoxCrossIcon
 	 */
 	public WebElement getNewFinancingPopupCrossIcon(int timeOut) {
-		return isDisplayed(driver, NewFinancingPopupCrossIcon, "Visibility", timeOut,
-				"New Financing Popup Cross Icon");
+		return isDisplayed(driver, NewFinancingPopupCrossIcon, "Visibility", timeOut, "New Financing Popup Cross Icon");
 	}
+
 	@FindBy(xpath = "//footer//span[text()='Cancel']")
 	private WebElement NewFinancingPopupCancelIcon;
 
@@ -9164,4 +9151,5 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, NewFinancingPopupCancelIcon, "Visibility", timeOut,
 				"New Financing Popup Cancel Icon");
 	}
+
 }
