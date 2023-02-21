@@ -799,7 +799,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 
 					}
 
-					else if (labelNames[i].equalsIgnoreCase("Platform Company") || labelNames[i].equalsIgnoreCase("	")
+					else if (labelNames[i].equalsIgnoreCase("Platform Company") || labelNames[i].equalsIgnoreCase("Source Firm")
 							|| labelNames[i].equalsIgnoreCase("Source Contact")) {
 						if (click(driver, FindElement(driver, "//*[text()='" + labelNames[i]
 								+ "']/following-sibling::div[@class='slds-form-element__control']//input[@type='text']",
@@ -919,16 +919,16 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 
 				}
 
-			} else {
-				CommonLib.click(driver, getCancelButton(30), " Cancel button", action.SCROLLANDBOOLEAN);
-				log(LogStatus.ERROR, "Clicked on Cancel Button", YesNo.No);
-				return false;
-			}
+//			} else {
+//				CommonLib.click(driver, getCancelButton(30), " Cancel button", action.SCROLLANDBOOLEAN);
+//				log(LogStatus.ERROR, "Clicked on Cancel Button", YesNo.No);
+//				return false;
+//			}
 
 		} else {
 			log(LogStatus.ERROR, "Not able to click on the new button", YesNo.No);
 		}
-
+		}
 		return flag;
 
 	}
