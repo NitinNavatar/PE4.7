@@ -1248,7 +1248,6 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc010_VerifyUIOfAcuityTabOnDealRecord(String projectName) {
@@ -1706,6 +1705,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 	
+
+
 }
 
 
