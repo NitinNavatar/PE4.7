@@ -171,7 +171,7 @@ public void M7NTc003_CreateStandardTaskForTomLathamAndVerifyLastTouchpointOnCont
      String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
 
 
-     bp.createActivityTimeline(projectName,true,"Task", basicsection, advanceSection,null,null, false, null, null);
+     bp.createActivityTimeline(projectName,true,"Task", basicsection, advanceSection,null,null, false, null, null, null, null, null);
 	System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 	CommonLib.ThreadSleep(50000);
 
@@ -269,7 +269,7 @@ public void M7NTc004_CreateMultiTaggedTaskforContactJamesRoseAndVerifyLastTouchP
 				ExcelUtils.writeData(phase1DataSheetFilePath,M7NTask2dueDate, "Task1", excelLabel.Variable_Name, "M7NTask2", excelLabel.Due_Date);
 				///////////////////////
 				
-				bp.createActivityTimeline(projectName,false,"New Task", basicsection, advanceSection,null,null, false, null, null);
+				bp.createActivityTimeline(projectName,false,"New Task", basicsection, advanceSection,null,null, false, null, null, null, null, null);
 				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 				CommonLib.ThreadSleep(50000);
 					
@@ -491,7 +491,7 @@ public void M7NTc06_CreatLogACallForContactJhonAleaxVerifyLastTouchpointOnContac
 	String[][] advanceSection= {{"Due Date Only",M7NTask3dueDate}};
     String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
 
-    bp.createActivityTimeline(projectName,true,"Call", basicsection, advanceSection,null,null, false, null, null);
+    bp.createActivityTimeline(projectName,true,"Call", basicsection, advanceSection,null,null, false, null, null, null, null, null);
 	System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 	CommonLib.ThreadSleep(50000);
 	
@@ -589,7 +589,7 @@ public void M7NTc07_CreateMultiTaggedCallforContactSamanthaRaoAndVerifyLastTouch
 				ThreadSleep(3000);
 				ExcelUtils.writeData(phase1DataSheetFilePath,M7NTask4dueDate, "Task1", excelLabel.Variable_Name, "M7NTask4", excelLabel.Due_Date);
 				///////////////////////
-				bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null, false, null, null);
+				bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null, false, null, null, null, null, null);
 				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 				CommonLib.ThreadSleep(50000);
 				
@@ -752,7 +752,7 @@ public void M7NTc08_CreateMultiTaggedCallforContactJohnAlexaAndVerifyLastTouchPo
 				ThreadSleep(3000);
 				ExcelUtils.writeData(phase1DataSheetFilePath,M7NTask5dueDate, "Task1", excelLabel.Variable_Name, "M7NTask5", excelLabel.Due_Date);
 				///////////////////////
-				 bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null, false, null, null);
+				 bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null, false, null, null, null, null, null);
 					System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 					CommonLib.ThreadSleep(50000);
 				//out of scope 2
@@ -2432,7 +2432,7 @@ public void M7NTc026_1_VerifytheLasttouchpointOnContactWhenCallIsCreated(String 
 				click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
 				ThreadSleep(2000);
 				///////////////////////
-				 bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null, false, null, null);
+				 bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null, false, null, null, null, null, null);
 					System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 					CommonLib.ThreadSleep(50000);
 				
@@ -3021,7 +3021,7 @@ public void M7NTc032_CreateacontactCallandupdatetheNameafterupgrade(String proje
 	String[][] basicsection= {{"Subject",M7NTask8Subject},{"Related_To",M7NContact13FName+" "+M7NContact13LName}};
 	String[][] advanceSection= {{"Priority","Normal"},{"Due Date Only",M7NTask8dueDate}};
             String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
-            bp.createActivityTimeline(projectName,true,"Call", basicsection, advanceSection,null,null, false, null, null);
+            bp.createActivityTimeline(projectName,true,"Call", basicsection, advanceSection,null,null, false, null, null, null, null, null);
             ExcelUtils.writeData(phase1DataSheetFilePath,M7NTask8dueDate, "Task1", excelLabel.Variable_Name, "M7NTask8", excelLabel.Due_Date);
 			System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 			CommonLib.ThreadSleep(50000);
@@ -3374,7 +3374,7 @@ public void M7NTc034_CreateContactWithoutCallAndCreateTheTaskAfterUpgradeTier(St
 	String[][] advanceSection= {{"Priority","Normal"},{"Due Date Only",M7NTask9dueDate}};
             String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
 
-            bp.createActivityTimeline(projectName,true,"Call", basicsection, advanceSection,null,null, false, null, null);
+            bp.createActivityTimeline(projectName,true,"Call", basicsection, advanceSection,null,null, false, null, null, null, null, null);
             System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
             CommonLib.ThreadSleep(50000);
             
@@ -3988,7 +3988,7 @@ public void M7NTc039_WisselyStingContactWithCallandVerifyLastTouchPointandNextTo
 			WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
 			click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
 			ThreadSleep(2000);
-			 bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null, false, null, null);
+			 bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null, false, null, null, null, null, null);
 				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 				CommonLib.ThreadSleep(50000);
 			ExcelUtils.writeData(phase1DataSheetFilePath,M7NTask10dueDate, "Task1", excelLabel.Variable_Name, "M7NTask10", excelLabel.Due_Date);
@@ -4295,7 +4295,7 @@ public void M7NTc041_1_EllinaBingContactWithCallandVerifyLastTouchPointandNextTo
 			log(LogStatus.INFO,"Clicked on  : "+contactName+" For : "+tabObj2,YesNo.No);
 			ThreadSleep(2000);
 	
-			 bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null, false, null, null);
+			 bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null, false, null, null, null, null, null);
 				ExcelUtils.writeData(phase1DataSheetFilePath,M7NTask11dueDate, "Task1", excelLabel.Variable_Name, "M7NTask11", excelLabel.Due_Date);
 				ThreadSleep(1000);
 				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
