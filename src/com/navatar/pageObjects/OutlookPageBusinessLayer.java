@@ -62,8 +62,22 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 					if (sendKeys(driver, eventTitleInputBox(30), eventTitle, "Input Value : " + eventTitle,
 							action.BOOLEAN)) {
 						CommonLib.log(LogStatus.INFO, "Entered Value: " + eventTitle, YesNo.No);
-
-						if (sendKeysAndPressEnter(driver, inviteAttendeesInputBox(30), eventAttendees,
+						
+						String[] AttendeeNames=eventAttendees.split(",");
+						for(int i=0; i<AttendeeNames.length; i++)
+						{
+							if (sendKeysWithoutClearingTextBox(driver, inviteAttendeesInputBox(30), AttendeeNames[i] + ",", "to input box",
+									action.BOOLEAN)) {
+								log(LogStatus.INFO, "enter value in To box :" + AttendeeNames[i], YesNo.No);
+								ThreadSleep(2000);
+							} else {
+								log(LogStatus.ERROR, "Not able to enter value in To box :" + AttendeeNames[i], YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Not able to enter value in To box :" + AttendeeNames[i]);
+								return false;
+							}
+							
+						}
+					/*	if (sendKeysAndPressEnter(driver, inviteAttendeesInputBox(30), eventAttendees,
 								"Input Attendee Value : " + eventAttendees, action.BOOLEAN)) {
 							CommonLib.log(LogStatus.INFO, "Entered Value: " + eventAttendees, YesNo.No);
 
@@ -74,7 +88,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 							return false;
 						}
-
+*/
 						CommonLib.ThreadSleep(1000);
 
 						if (allDayToggle) {

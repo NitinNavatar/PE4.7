@@ -463,7 +463,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String[] dealTaggedTimeReference= {ATE_TaggedDealTimeReference1};
 		
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null)) {
@@ -1835,7 +1835,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				"ATE_004", excelLabel.Advance_Due_Date);
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -1980,7 +1980,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				"ATE_005", excelLabel.Advance_Due_Date);
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -6239,7 +6239,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				"ATE_078", excelLabel.Advance_End_Date);
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
 		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
 		String[][] advanceSection1 = { { "Date", taskDueDate1 }/*, {"Status", taskStatus1}, {"Priority", taskPriority1} */};
@@ -7092,7 +7092,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				"ATE_081", excelLabel.Advance_End_Date);
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
 		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
 		String[][] advanceSection1 = { { "Date", taskDueDate1 }/*, {"Status", taskStatus1}, {"Priority", taskPriority1} */};
@@ -7791,7 +7791,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				"ATE_084", excelLabel.Advance_End_Date);
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
 		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
 		String[][] advanceSection1 = { { "Date", taskDueDate1 }/*, {"Status", taskStatus1}, {"Priority", taskPriority1}*/ };
@@ -9889,7 +9889,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
 				"ATE_U002", excelLabel.Advance_Due_Date);
 		String[][] basicsection1 = { { "Subject", subject1 }, { "Related_To", relatedTo1 } };
-		String[][] advanceSection1 = { { "Date", taskDueDate1 } };
+		String[][] advanceSection1 = { { "Due Date", taskDueDate1 } };
 
 
 		String xPath;

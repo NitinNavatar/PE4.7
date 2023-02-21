@@ -3324,5 +3324,48 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 
 		return false;
 	}
+	
+	
+	public boolean createContactFromContactSectionOfAcuity(String salutation, String[][] labelAndValue)
+	{
+		if(salutation!=null && labelAndValue!=null)
+		{
+			if(click(driver, getAddContactIcon(30), "Add contact icon", action.SCROLLANDTHROWEXCEPTION))
+			{
+				log(LogStatus.INFO, "clicked on add contact button", YesNo.Yes);
+				if(salutation!=null)
+				{
+
+				}
+				if(labelAndValue!=null)
+				{
+					for(String[] val : labelAndValue)
+					{
+						String labelName=val[0];
+						String value=val[1];
+						if(sendKeys(driver, getTextboxWithLabelname(labelName,20), value, labelName+" textbox", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, value+" have been passed in field "+labelName, YesNo.Yes);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to pass the value "+value+" in field "+labelName, YesNo.Yes);
+							return false;
+						}
+					}
+
+				}
+				
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able clicked on add contact button", YesNo.Yes);
+			}
+		}
+		return false;
+
+	}
+
+	
 
 }

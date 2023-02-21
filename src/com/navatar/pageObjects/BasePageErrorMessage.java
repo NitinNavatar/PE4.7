@@ -156,5 +156,10 @@ public interface BasePageErrorMessage {
 	
 	public static String acuityDefaultMessage="No items to display.";
 	
+	public static String taggedInfoMessage="This section allows you to view all of the records that have been tagged in interactions with the referenced record. For example, you mentioned a specific deal on a call with the contact you are looking at. This deal will be shown here.";
+	public static String interactionsInfoMessage="These are the meetings, calls, and tasks that your organization has had with the entity you are viewing. If there is an applicable meeting note, it can be viewed here. If a meeting note needs to be created, they can be created here as well.";
+	public static String ContactInfoMessage="These are the people that are related to the entity you are viewing. You can view which ones have been added to Navatar and which ones have not. You can also view how many interactions you have had with the applicable contact.";
+	
+	
 	
 }
