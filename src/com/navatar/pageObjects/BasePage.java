@@ -9153,8 +9153,6 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, NewFinancingPopupCancelIcon, "Visibility", timeOut,
 				"New Financing Popup Cancel Icon");
 	}
-	
-	
 
 	public List<WebElement> createRecordPopUpNameInputBoxes() {
 
@@ -9196,14 +9194,12 @@ public abstract class BasePage extends BaseLib {
 			return listOfNameElements;
 	}
 
-	public List<WebElement> createRecordPopUpAccountComboBoxes() {
+	public WebElement createRecordPopUpAccountComboBoxes(Integer index, int timeOut) {
+		String xpath = "(//h1[text()=\"Create Records\"]/../following-sibling::div//lightning-layout-item//input[@type=\"text\"])["
+				+ index
+				+ "]/ancestor::lightning-layout-item/following-sibling::lightning-layout-item//button[contains(@class,\"slds-combobox__input\")]";
+		return FindElement(driver, xpath, "createRecordPopUpAccountComboBoxes", action.SCROLLANDBOOLEAN, timeOut);
 
-		String xpath = "//h1[text()=\"Create Records\"]/../following-sibling::div//lightning-layout-item//button[contains(@class,\"slds-combobox__input\")]";
-		List<WebElement> listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox");
-		if (listOfNameElements.size() == 0) {
-			return listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox");
-		} else
-			return listOfNameElements;
 	}
 
 	public WebElement createRecordPopUpAccountRecordType(String recordType, int timeOut) {
@@ -9222,7 +9218,7 @@ public abstract class BasePage extends BaseLib {
 
 	public List<WebElement> createRecordPopUpContactInputSuggestionBoxes() {
 
-		String xpath = "//h1[text()=\"Create Records\"]/../following-sibling::div//lightning-layout-item//*[@placeholder=\"Search Accounts\" or contains(@class,\"slds-combobox__input\")]";
+		String xpath = "//h1[text()=\"Create Records\"]/../following-sibling::div//lightning-layout-item[5 and contains(@class,\"lookup_css_h\")]";
 		List<WebElement> listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox");
 		if (listOfNameElements.size() == 0) {
 			return listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox");
@@ -9336,4 +9332,22 @@ public abstract class BasePage extends BaseLib {
 		return FindElement(driver, path, footerButtonName, action.SCROLLANDBOOLEAN, timeOut);
 
 	}
+
+	public WebElement createRecordPopUpContactInputSuggestionBoxes(Integer index, int timeOut) {
+		index = index + 1;
+		String path = "(//h1[text()=\"Create Records\"]/../following-sibling::div//lightning-layout-item//input[@type=\"text\"])["
+				+ index
+				+ "]/ancestor::lightning-layout-item/following-sibling::lightning-layout-item//*[@placeholder=\"Search Accounts\" or contains(@class,\"slds-combobox__input\")]";
+		return FindElement(driver, path, "createRecordPopUpContactInputSuggestionBoxes", action.SCROLLANDBOOLEAN,
+				timeOut);
+
+	}
+
+	public WebElement createRecordsPopupSuccessMsg(int timeOut) {
+		return isDisplayed(driver, createRecordsPopupSuccessMsg, "Visibility", timeOut, "createRecordsPopupSuccessMsg");
+	}
+
+	@FindBy(xpath = "//div[contains(@id,\"toast\")]/span[text()=\"Record was created.\"]")
+	private WebElement createRecordsPopupSuccessMsg;
+
 }
