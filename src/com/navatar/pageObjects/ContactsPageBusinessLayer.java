@@ -3328,8 +3328,8 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 	
 	public boolean createContactFromContactSectionOfAcuity(String salutation, String[][] labelAndValue)
 	{
-		if(salutation!=null && labelAndValue!=null)
-		{
+		boolean flag=false;
+		
 			if(click(driver, getAddContactIcon(30), "Add contact icon", action.SCROLLANDTHROWEXCEPTION))
 			{
 				log(LogStatus.INFO, "clicked on add contact button", YesNo.Yes);
@@ -3356,14 +3356,34 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 
 				}
 				
+				if(click(driver, getSaveButtonOnNewContactPopup(20), "save button", action.SCROLLANDBOOLEAN))
+				{
+					log(LogStatus.INFO, "Clicked on save button", YesNo.Yes);
+					if(ActivityTimeLineCreatedMsg(20)!=null)
+					{
+						log(LogStatus.INFO, "The Contact has been created", YesNo.Yes);
+						flag= true;
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Contact is not created", YesNo.Yes);
+						return false;
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on save button", YesNo.Yes);
+					return false;
+				}
+				
 			}
 			else
 			{
 				log(LogStatus.ERROR, "Not able clicked on add contact button", YesNo.Yes);
+				return false;
 			}
-		}
-		return false;
-
+	
+		return flag;
 	}
 
 	

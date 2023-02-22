@@ -1003,5 +1003,14 @@ public class ContactsPage extends BasePageBusinessLayer {
 		}
 	}
 	
+	
+	@FindBy(xpath = "//h2[text()='New Contact']/../..//footer//span[text()='Save']/..")
+	private WebElement saveButtonOnNewContactPopup;
+
+	public WebElement getSaveButtonOnNewContactPopup(int timeOut) {
+		return isDisplayed(driver, saveButtonOnNewContactPopup, "Visibility", timeOut, "save button");
+	}
+	
+	
 
 }
