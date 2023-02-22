@@ -198,7 +198,7 @@ public class EnumConstants {
 	CRMUserPage,   TaskPage, NewTaskPopUP,TestCustomObjectPage,ContactPage ,NewEventPopUp,ActivitiesOrMeetings,SearchActivitiesAttachment,EmailUploadPage,Object1Page,Object1PagePopup,Object2Page,Object3Page,Object4Page,Financing,ListEmail,
 CompactLayout, MeetingType, AddPickListMeetingType,ActivityLayoutPage, SDGPage,Object5Page,AccountCustomFieldStatusPage,MEPageFromCalender,SharingSettingsPage,DashboardDeadDeals,AccountReferral,VisualForcePage, WarningPopUp, RecordTypePortfolioCompany,CustomNavigationPage,NavigationPickListPage,CallPopUp,MeetingPopUp,ConvertToPortfolioFrame,TaskPopUp,GlobalActtion_TaskPOpUp, AffiliationPage, 
 Fundraising_ContactPage, Financial_Performance, Marketing_Initiative, FundDrawdown,Marketing_Prospect, Advisor, MarketingInitiatives, emailFundraisingContact, emailProspects, pastFundraisingAccountPopUp, EmailTargets, pastFundraisingContactPopUp, Send_Distribution_Notices, ManageTarget, ContactsPage, BulkEmail, emailCapitalCallNotice, BulkDownload, CapitalCall, FundDistribution, InvestorDistribution
-,AcuityDetails, Interaction, Deal_Team;
+,AcuityDetails, Interaction, Deal_Team, ThemesPage;
 
 
 
@@ -422,7 +422,7 @@ Fundraising_ContactPage, Financial_Performance, Marketing_Initiative, FundDrawdo
 		public String toString() {
 			return "Rename Tabs and Labels";
 		}
-	}, Event, Custom_Metadata_Types
+	}, Event, Custom_Metadata_Types, Theme, Clip
 	};
 
 	
@@ -1298,7 +1298,7 @@ public static enum PermissionType{
 				public String toString() {
 					return "Lender Status";
 				}
-			}, Deal_Contact, Stage_Upd, Pipeline_Comments, Pipeline_Comments_Upd, Legal_Name, Status_Notes, Legal_Name_Upd, Status_Notes_Upd
+			}, Deal_Contact, Stage_Upd, Pipeline_Comments, Pipeline_Comments_Upd, Legal_Name, Status_Notes, Legal_Name_Upd, Status_Notes_Upd, Vintage_Year_Upd, Description_Upd, Summary_Upd, Fund, Vintage_Year, Theme, Descrption, Clip, Summary, Theme_Name
 		};
 	
 	public static enum Links{

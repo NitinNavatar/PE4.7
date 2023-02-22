@@ -23,6 +23,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
+import com.navatar.generic.EnumConstants.PageLabel;
+import com.navatar.generic.EnumConstants.PageName;
+import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.relevantcodes.extentreports.LogStatus;
@@ -117,6 +120,33 @@ public class ThemePageBusinessLayer extends ThemePage {
 
 		return flag;
 
+	}
+
+	public boolean UpdateThemeName(String projectName, String themeName, int timeOut) {
+		boolean flag = true;
+		WebElement ele;
+		ThreadSleep(2000);
+		if (clickOnShowMoreActionDownArrow(projectName, PageName.ThemesPage, ShowMoreActionDropDownList.Edit, 10)) {
+			ThreadSleep(2000);
+			ele = getLabelTextBox(projectName, PageName.ThemesPage.toString(), PageLabel.Theme_Name.toString(), timeOut);
+			if (sendKeys(driver, ele, themeName, "Theme Name", action.BOOLEAN)) {
+				appLog.info("Successfully Entered value on Theme Name TextBox : " + themeName);
+			} else {
+				appLog.error("Not Able to Entered value on Theme Name TextBox : " + themeName);
+			}
+			ThreadSleep(1000);
+			ThreadSleep(2000);
+			if (click(driver, getCustomTabSaveBtn(projectName, 30), "Save Button", action.SCROLLANDBOOLEAN)) {
+				appLog.error("Click on save Button");
+				flag = true;
+				ThreadSleep(2000);
+			} else {
+				appLog.error("Not Able to Click on save Button");
+			}
+		} else {
+			appLog.error("Not Able to Click on edit Button");
+		}
+		return flag;
 	}
 
 }

@@ -1375,6 +1375,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			xpath = "//*[text()='" + labelTextBox + "']/..//input";
 		else if (pageName.equalsIgnoreCase(PageName.FundsPage.toString()))
 			xpath = "//*[text()='" + labelTextBox + "']/following-sibling::div//input";
+		else if (pageName.equalsIgnoreCase(PageName.ThemesPage.toString()))
+			xpath = "//*[text()='" + labelTextBox + "']/following-sibling::div//input";
 		else if (pageName.equalsIgnoreCase(PageName.FundraisingPage.toString()))
 			xpath = "//*[text()='" + labelTextBox + "']/following-sibling::div//input";
 		else if (pageName.equalsIgnoreCase(PageName.MEPageFromCalender.toString()))
@@ -4504,6 +4506,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			break;
 		case OfficeLocations:
 			tabName = "Office Locations";
+			break;
+		case ThemesTab:
+			tabName = "Themes";
+			break;
+		case ClipsTab:
+			tabName = "Clips";
 			break;
 		default:
 			return flag;
