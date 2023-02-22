@@ -13780,16 +13780,19 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
+		String task1ButtonName = "Create Task";
+		String recordName = "Maxjonic";
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("-1"));
 
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = "IntroductionNewRecordPopup";
-		String task1Notes = "This is to check @Alaksa ahemd and @Bruno ecostic , quest should be part of the deal";
+		String task1Notes = "This is to check @Alaksa ahemd and @Bruno ecostic , quest should be part of the deal, @ahemd and @ecostic";
 		String relatedTo = "Houlihan Lokey<break>Glomez";
 		String priority = "Normal";
 		String status = "Completed";
-		String updatedRelatedToVerify = relatedTo + "<break>Alaska<break>Bruno";
+		String updatedRelatedToVerify = relatedTo + "<break>Alaska<break>Bruno<break>" + recordName;
+		String task1NotesVerify = task1Notes.replace("@", "");
 
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
 				{ AMNNR_TaskLabel3, relatedTo } };
@@ -13797,24 +13800,220 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
 				{ AMNNR_TaskLabel6, priority } };
 
-		String task1ButtonName = "Create Task";
-		String recordName = "Maxjonic";
-
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-				{ AMNNR_TaskLabel2, task1Notes }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
+				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
 		String[][] createNewRecordPopUp = {
 				"checked<break>Alaksa<break><AsItIs><break>Firm<break><break>Create".split("<break>", -1),
-				"checked<break>Bruno<break><AsItIs><break>Contact<break>Alaksa<break>Create".split("<break>", -1) };
+				"checked<break>Bruno<break><AsItIs><break>Contact<break>Alaksa<break>Create".split("<break>", -1),
+				"checked<break>ecostic<break><AsItIs><break>Firm<break>Private Equity<break>Create".split("<break>",
+						-1) };
+		String firmRecord1 = "Alaksa";
+		String firmRecord2 = "ecostic";
+		String firmRecord3ShouldNotThere = "ahemd";
+		String contactRecord = "Bruno";
+		String subTabName = "Details";
+
+		String[] labelAndValueSeprateByBreak1 = { "Record Type" + "<break>" + "Company" };
+		String[] labelAndValueSeprateByBreak2 = { "Record Type" + "<break>" + "Private Equity" };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
 			log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
+
 			if (BP.createActivityTimeline(projectName, false, task1ButtonName, task1BasicSection, task1AdvancedSection,
 					null, null, false, null, null, createNewRecordPopUp, null, null)) {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 
 				CommonLib.refresh(driver);
+				CommonLib.ThreadSleep(10000);
+				lp.clickOnTab(projectName, TabName.HomeTab);
+				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false)) {
+
+					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord1 + " found in Firm Object-----",
+							YesNo.No);
+					CommonLib.refresh(driver);
+					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							PageName.AcuityDetails);
+
+					if (subjectLinkPopUpNegativeResult.isEmpty()) {
+						log(LogStatus.PASS,
+								"------" + task1SubjectName
+										+ " record is able to open popup after click on it and verify its data on "
+										+ firmRecord1 + "------",
+								YesNo.No);
+
+					} else {
+						log(LogStatus.ERROR,
+								"------" + task1SubjectName + " record link popup is not verified on Record: "
+										+ firmRecord1 + ", Reason: " + subjectLinkPopUpNegativeResult + "------",
+								YesNo.Yes);
+						sa.assertTrue(false,
+								"------" + task1SubjectName + " record link popup is not verified on Record: "
+										+ firmRecord1 + ", Reason: " + subjectLinkPopUpNegativeResult + "------");
+
+					}
+
+					if (BP.clicktabOnPage(subTabName)) {
+						log(LogStatus.PASS, "Clicked on SubTab: " + subTabName, YesNo.No);
+
+						CommonLib.ThreadSleep(8000);
+						List<String> firmDetailPageNegativeResult = BP
+								.fieldValueVerification(labelAndValueSeprateByBreak1);
+
+						if (firmDetailPageNegativeResult.isEmpty()) {
+							log(LogStatus.PASS,
+									"------" + firmRecord1
+											+ " labels and their values in Detail page has been verified------",
+									YesNo.No);
+
+						} else {
+							log(LogStatus.ERROR,
+									"------" + firmRecord1
+											+ " labels and their values in Detail page has not been verified, Reason: "
+											+ firmDetailPageNegativeResult + "------",
+									YesNo.No);
+							sa.assertTrue(false,
+									"------" + firmRecord1
+											+ " labels and their values in Detail page has not been verified, Reason: "
+											+ firmDetailPageNegativeResult + "------");
+
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not able to click on SubTab: " + subTabName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on SubTab: " + subTabName);
+
+					}
+
+				} else {
+
+					log(LogStatus.ERROR, "-----Firm named: " + firmRecord1 + " not found in Firm Object-----",
+							YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "-----Firm named: " + firmRecord1 + " not found in Firm Object-----");
+
+				}
+				lp.clickOnTab(projectName, TabName.HomeTab);
+				if (home.globalSearchAndNavigate(firmRecord2, "Firms", false)) {
+					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord2 + " found in Firm Object-----",
+							YesNo.No);
+					CommonLib.refresh(driver);
+					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							PageName.AcuityDetails);
+					if (subjectLinkPopUpNegativeResult.isEmpty()) {
+						log(LogStatus.PASS,
+								"------" + task1SubjectName
+										+ " record is able to open popup after click on it and verify its data on "
+										+ firmRecord2 + "------",
+								YesNo.No);
+
+					} else {
+						log(LogStatus.ERROR,
+								"------" + task1SubjectName + " record link popup is not verified on Record: "
+										+ firmRecord2 + ", Reason: " + subjectLinkPopUpNegativeResult + "------",
+								YesNo.Yes);
+						sa.assertTrue(false,
+								"------" + task1SubjectName + " record link popup is not verified on Record: "
+										+ firmRecord2 + ", Reason: " + subjectLinkPopUpNegativeResult + "------");
+
+					}
+
+					if (BP.clicktabOnPage(subTabName)) {
+						log(LogStatus.PASS, "Clicked on SubTab: " + subTabName, YesNo.No);
+
+						CommonLib.ThreadSleep(8000);
+						List<String> firmDetailPageNegativeResult = BP
+								.fieldValueVerification(labelAndValueSeprateByBreak2);
+
+						if (firmDetailPageNegativeResult.isEmpty()) {
+							log(LogStatus.PASS,
+									"------" + firmRecord2
+											+ " labels and their values in Detail page has been verified------",
+									YesNo.No);
+
+						} else {
+							log(LogStatus.ERROR,
+									"------" + firmRecord2
+											+ " labels and their values in Detail page has not been verified, Reason: "
+											+ firmDetailPageNegativeResult + "------",
+									YesNo.No);
+							sa.assertTrue(false,
+									"------" + firmRecord2
+											+ " labels and their values in Detail page has not been verified, Reason: "
+											+ firmDetailPageNegativeResult + "------");
+
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not able to click on SubTab: " + subTabName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on SubTab: " + subTabName);
+
+					}
+
+				} else {
+
+					log(LogStatus.ERROR, "-----Firm named: " + firmRecord2 + " not found in Firm Object-----",
+							YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "-----Firm named: " + firmRecord2 + " not found in Firm Object-----");
+
+				}
+
+				lp.clickOnTab(projectName, TabName.HomeTab);
+				if (home.globalSearchAndNavigate(firmRecord3ShouldNotThere, "Firms", true)) {
+
+					log(LogStatus.INFO,
+							"-----Verified Firm named: " + firmRecord3ShouldNotThere + " not found in Firm Object-----",
+							YesNo.No);
+
+				} else {
+
+					log(LogStatus.ERROR, "-----Firm named: " + firmRecord3ShouldNotThere + " found in Firm Object-----",
+							YesNo.Yes);
+					BaseLib.sa.assertTrue(false,
+							"-----Firm named: " + firmRecord3ShouldNotThere + " found in Firm Object-----");
+
+				}
+
+				lp.clickOnTab(projectName, TabName.HomeTab);
+				if (home.globalSearchAndNavigate(contactRecord, "Contacts", false)) {
+
+					log(LogStatus.INFO,
+							"-----Verified Contact named: " + contactRecord + " found in Contact Object-----",
+							YesNo.No);
+					CommonLib.refresh(driver);
+					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							PageName.AcuityDetails);
+
+					if (subjectLinkPopUpNegativeResult.isEmpty()) {
+						log(LogStatus.PASS,
+								"------" + task1SubjectName
+										+ " record is able to open popup after click on it and verify its data on "
+										+ contactRecord + "------",
+								YesNo.No);
+
+					} else {
+						log(LogStatus.ERROR,
+								"------" + task1SubjectName + " record link popup is not verified on Record: "
+										+ contactRecord + ", Reason: " + subjectLinkPopUpNegativeResult + "------",
+								YesNo.Yes);
+						sa.assertTrue(false,
+								"------" + task1SubjectName + " record link popup is not verified on Record: "
+										+ contactRecord + ", Reason: " + subjectLinkPopUpNegativeResult + "------");
+
+					}
+
+				} else {
+
+					log(LogStatus.ERROR, "-----Contact named: " + contactRecord + " not found in Contact Object-----",
+							YesNo.Yes);
+					BaseLib.sa.assertTrue(false,
+							"-----Contact named: " + contactRecord + " not found in Contact Object-----");
+
+				}
 				lp.clickOnTab(projectName, TabName.HomeTab);
 				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
 
@@ -13856,6 +14055,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.FAIL, "-----Activity timeline record is not created-----", YesNo.No);
 				sa.assertTrue(false, "-----Activity timeline record is not created-----");
 			}
+
 		} else
 
 		{
