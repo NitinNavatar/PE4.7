@@ -9156,4 +9156,184 @@ public abstract class BasePage extends BaseLib {
 	
 	
 
+	public List<WebElement> createRecordPopUpNameInputBoxes() {
+
+		String xpath = "//h1[text()=\"Create Records\"]/../following-sibling::div//lightning-layout-item//input[@type=\"text\"]";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox");
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox");
+		} else
+			return listOfNameElements;
+	}
+
+	public List<WebElement> createRecordPopUpCheckBoxes() {
+
+		String xpath = "//h1[text()=\"Create Records\"]/../following-sibling::div//lightning-layout-item//input[@name=\"input1\"]";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox");
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox");
+		} else
+			return listOfNameElements;
+	}
+
+	public List<WebElement> createRecordPopUpAccountRadioButtons() {
+
+		String xpath = "//h1[text()=\"Create Records\"]/../following-sibling::div//lightning-layout-item//input[@value=\"Account\"]";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox");
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox");
+		} else
+			return listOfNameElements;
+	}
+
+	public List<WebElement> createRecordPopUpContactRadioButtons() {
+
+		String xpath = "//h1[text()=\"Create Records\"]/../following-sibling::div//lightning-layout-item//input[@value=\"Contact\"]";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox");
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox");
+		} else
+			return listOfNameElements;
+	}
+
+	public List<WebElement> createRecordPopUpAccountComboBoxes() {
+
+		String xpath = "//h1[text()=\"Create Records\"]/../following-sibling::div//lightning-layout-item//button[contains(@class,\"slds-combobox__input\")]";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox");
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox");
+		} else
+			return listOfNameElements;
+	}
+
+	public WebElement createRecordPopUpAccountRecordType(String recordType, int timeOut) {
+		String path = "//h1[text()=\"Create Records\"]/../following-sibling::div//lightning-layout-item//span[text()=\""
+				+ recordType + "\"]/ancestor::lightning-base-combobox-item";
+		return FindElement(driver, path, recordType, action.SCROLLANDBOOLEAN, timeOut);
+
+	}
+
+	public WebElement createRecordPopUpContactAccountDropDownValue(String accountName, int timeOut) {
+		String path = "//h1[text()=\"Create Records\"]/../following-sibling::div//lightning-layout-item//li[@role=\"listitem\" and text()=\""
+				+ accountName + "\"]";
+		return FindElement(driver, path, accountName, action.SCROLLANDBOOLEAN, timeOut);
+
+	}
+
+	public List<WebElement> createRecordPopUpContactInputSuggestionBoxes() {
+
+		String xpath = "//h1[text()=\"Create Records\"]/../following-sibling::div//lightning-layout-item//*[@placeholder=\"Search Accounts\" or contains(@class,\"slds-combobox__input\")]";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox");
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox");
+		} else
+			return listOfNameElements;
+	}
+
+	public WebElement createRecordPopUpFooterButtonName(String footerButtonName, int timeOut) {
+		String path = "//h1[text()=\"Create Records\"]/../following-sibling::div/button[text()=\"" + footerButtonName
+				+ "\"]";
+		return FindElement(driver, path, footerButtonName, action.SCROLLANDBOOLEAN, timeOut);
+
+	}
+
+	public List<String> addContactsToDealTeamPopUpContactNames() {
+
+		String xpath = "//h1[text()=\"Add Contacts to Deal Team\"]/../following-sibling::div//lightning-layout[contains(@class,\"slds-p-around_x-small\")]//lightning-layout-item[2]";
+		List<String> listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox").stream()
+				.map(x -> x.getText()).collect(Collectors.toList());
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "addContactsToDealTeamPopUpContactNames").stream()
+					.map(x -> x.getText()).collect(Collectors.toList());
+		} else
+			return listOfNameElements;
+	}
+
+	public List<WebElement> addContactsToDealTeamPopUpCheckBoxes() {
+
+		String xpath = "//h1[text()=\"Add Contacts to Deal Team\"]/../following-sibling::div//lightning-layout[contains(@class,\"slds-p-around_x-small\")]//lightning-layout-item[1]";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox");
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "addContactsToDealTeamPopUpCheckBoxes");
+		} else
+			return listOfNameElements;
+	}
+
+	public List<WebElement> addContactsToDealTeamPopUpRoleDropDown() {
+
+		String xpath = "//h1[text()=\"Add Contacts to Deal Team\"]/../following-sibling::div//lightning-layout[contains(@class,\"slds-p-around_x-small\")]//lightning-layout-item[4]";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath, "addContactsToDealTeamPopUpRoleDropDown");
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "addContactsToDealTeamPopUpRoleDropDown");
+		} else
+			return listOfNameElements;
+	}
+
+	public List<WebElement> addContactsToDealTeamPopUpRoleDropDownValues() {
+
+		String xpath = "//h1[text()=\"Add Contacts to Deal Team\"]/../following-sibling::div//lightning-layout[contains(@class,\"slds-p-around_x-small\")]//lightning-base-combobox-item";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath,
+				"addContactsToDealTeamPopUpRoleDropDownValues");
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "addContactsToDealTeamPopUpRoleDropDownValues");
+		} else
+			return listOfNameElements;
+	}
+
+	public WebElement addContactsToDealTeamPopUpFooterButtonName(String footerButtonName, int timeOut) {
+		String path = "//h1[text()=\"Add Contacts to Deal Team\"]/../following-sibling::div/button[text()=\""
+				+ footerButtonName + "\"]";
+		return FindElement(driver, path, footerButtonName, action.SCROLLANDBOOLEAN, timeOut);
+
+	}
+
+	public List<String> addToFundraisingContactsTeamPopUpContactNames() {
+
+		String xpath = "//h1[text()=\"Add to Fundraising Contacts\"]/../following-sibling::div//lightning-layout[contains(@class,\"slds-p-around_x-small\")]//lightning-layout-item[2]";
+		List<String> listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox").stream()
+				.map(x -> x.getText()).collect(Collectors.toList());
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "addContactsToDealTeamPopUpContactNames").stream()
+					.map(x -> x.getText()).collect(Collectors.toList());
+		} else
+			return listOfNameElements;
+	}
+
+	public List<WebElement> addToFundraisingContactsPopUpCheckBoxes() {
+
+		String xpath = "//h1[text()=\"Add to Fundraising Contacts\"]/../following-sibling::div//lightning-layout[contains(@class,\"slds-p-around_x-small\")]//lightning-layout-item[1]";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox");
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "addContactsToDealTeamPopUpCheckBoxes");
+		} else
+			return listOfNameElements;
+	}
+
+	public List<WebElement> addToFundraisingContactsPopUpRoleDropDown() {
+
+		String xpath = "//h1[text()=\"Add to Fundraising Contacts\"]/../following-sibling::div//lightning-layout[contains(@class,\"slds-p-around_x-small\")]//lightning-layout-item[4]";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath, "addContactsToDealTeamPopUpRoleDropDown");
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "addContactsToDealTeamPopUpRoleDropDown");
+		} else
+			return listOfNameElements;
+	}
+
+	public List<WebElement> addToFundraisingContactsPopUpRoleDropDownValues() {
+
+		String xpath = "//h1[text()=\"Add to Fundraising Contacts\"]/../following-sibling::div//lightning-layout[contains(@class,\"slds-p-around_x-small\")]//lightning-base-combobox-item";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath,
+				"addContactsToDealTeamPopUpRoleDropDownValues");
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "addContactsToDealTeamPopUpRoleDropDownValues");
+		} else
+			return listOfNameElements;
+	}
+
+	public WebElement addToFundraisingContactsPopUpFooterButtonName(String footerButtonName, int timeOut) {
+		String path = "//h1[text()=\"Add to Fundraising Contacts\"]/../following-sibling::div/button[text()=\""
+				+ footerButtonName + "\"]";
+		return FindElement(driver, path, footerButtonName, action.SCROLLANDBOOLEAN, timeOut);
+
+	}
 }
