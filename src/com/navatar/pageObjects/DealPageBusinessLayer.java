@@ -1201,8 +1201,8 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 			labelValue = otherLabelValues.split("<Break>", -1);
 		}
 
-		if (CommonLib.click(driver, NewDealIcon(30), tabObj4 + "New Deal Icon", action.SCROLLANDBOOLEAN)) {
-			log(LogStatus.INFO, "Clicked on the new Deal Icon", YesNo.No);
+//		if (CommonLib.click(driver, NewDealIcon(30), tabObj4 + "New Deal Icon", action.SCROLLANDBOOLEAN)) {
+//			log(LogStatus.INFO, "Clicked on the new Deal Icon", YesNo.No);
 
 //			if (recordType != null && !"".equals(recordType)) {
 //				if (CommonLib.click(driver, dealRecordTypeRadioButton(recordType, 20), "Radio button: " + recordType,
@@ -1420,9 +1420,9 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 				return false;
 			}
 
-		} else {
-			log(LogStatus.ERROR, "Not able to click on the new button", YesNo.No);
-		}
+//		} else {
+//			log(LogStatus.ERROR, "Not able to click on the new button", YesNo.No);
+//		}
 
 		return flag;
 
