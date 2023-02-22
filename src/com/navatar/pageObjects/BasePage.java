@@ -7134,7 +7134,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement dealAcuityStageName(String dealName, String stage, int timeOut) {
 
 		String xpath = "//a[text()='" + dealName
-				+ "']/ancestor::th[@data-label='Deal Name']/following-sibling::td[@data-label='Stage']//span";
+				+ "']/ancestor::th[@data-label='Deal Name']/following-sibling::td[@data-label='Stage']//span//*[text()='"+ stage + "']";
 		try {
 			return FindElement(driver, xpath, "Header: " + stage, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7146,7 +7146,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement dealAcuityHSRName(String dealName, String hsr, int timeOut) {
 
 		String xpath = "//a[text()='" + dealName
-				+ "']/ancestor::th[@data-label='Deal Name']/following-sibling::td[@data-label='Highest Stage Reached']//span";
+				+ "']/ancestor::th[@data-label='Deal Name']/following-sibling::td[@data-label='Highest Stage Reached']//span//*[text()='"+ hsr + "']";
 		try {
 			return FindElement(driver, xpath, "Header: " + hsr, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7158,7 +7158,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement dealAcuity2StageName(String dealName, String stage, int timeOut) {
 
 		String xpath = "//a[text()='" + dealName
-				+ "']/ancestor::th[@data-label='Deal']/following-sibling::td[@data-label='Stage']//span";
+				+ "']/ancestor::th[@data-label='Deal']/following-sibling::td[@data-label='Stage']//span//*[text()='"+ stage + "']";
 		try {
 			return FindElement(driver, xpath, "Header: " + stage, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7170,7 +7170,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement dealAcuityDateReceived(String dealName, String dateReceived, int timeOut) {
 
 		String xpath = "//a[text()='" + dealName
-				+ "']/ancestor::th[@data-label='Deal Name']/following-sibling::td[@data-label='Date Received']//span";
+				+ "']/ancestor::th[@data-label='Deal Name']/following-sibling::td[@data-label='Date Received']//span//*[text()='"+ dateReceived + "']";
 		try {
 			return FindElement(driver, xpath, "Header: " + dateReceived, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7182,7 +7182,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement dealAcuity2DateReceived(String dealName, String dateReceived, int timeOut) {
 
 		String xpath = "//a[text()='" + dealName
-				+ "']/ancestor::th[@data-label='Deal']/following-sibling::td[@data-label='Date Received']//span";
+				+ "']/ancestor::th[@data-label='Deal']/following-sibling::td[@data-label='Date Received']//span//*[text()='"+ dateReceived + "']";
 		try {
 			return FindElement(driver, xpath, "Header: " + dateReceived, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7218,7 +7218,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement dealAcuityPopUpCompanyName(String dealName, String company, int timeOut) {
 
 		String xpath = "//a[text()='" + dealName
-				+ "']/ancestor::th[@data-label='Deal']/following-sibling::td[@data-label='Company']//span";
+				+ "']/ancestor::th[@data-label='Deal']/following-sibling::td[@data-label='Company']//span//*[text()='"+ company + "']";
 		try {
 			return FindElement(driver, xpath, "Header: " + company, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7230,7 +7230,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement dealAcuityPopUpStageName(String dealName, String stage, int timeOut) {
 
 		String xpath = "//div[@class='slds-modal__container']//a[text()='" + dealName
-				+ "']/ancestor::th[@data-label='Deal Name']/following-sibling::td[@data-label='Stage']//span";
+				+ "']/ancestor::th[@data-label='Deal Name']/following-sibling::td[@data-label='Stage']//span//*[text()='"+ stage + "']";
 		try {
 			return FindElement(driver, xpath, "Header: " + stage, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7242,7 +7242,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement dealAcuityPopUpDateReceived(String dealName, String dateReceived, int timeOut) {
 
 		String xpath = "//div[@class='slds-modal__container']//a[text()='" + dealName
-				+ "']/ancestor::th[@data-label='Deal Name']/following-sibling::td[@data-label='Date Received']//span";
+				+ "']/ancestor::th[@data-label='Deal Name']/following-sibling::td[@data-label='Date Received']//span//*[text()='"+ dateReceived + "']";
 		try {
 			return FindElement(driver, xpath, "Header: " + dateReceived, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7301,7 +7301,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement fundraisingsAcuityStageName(String fundraisingsName, String stage, int timeOut) {
 
 		String xpath = "//a[text()='" + fundraisingsName
-				+ "']/ancestor::th[@data-label='Fundraising Name']/following-sibling::td[@data-label='Stage']//span";
+				+ "']/ancestor::th[@data-label='Fundraising Name']/following-sibling::td[@data-label='Stage']//span//*[text()='"+ stage + "']";
 		try {
 			return FindElement(driver, xpath, "Header: " + stage, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7313,7 +7313,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement fundrasingsAcuityTargetClosedDate(String fundraisingsName, String targetClosedDate, int timeOut) {
 
 		String xpath = "//a[text()='" + fundraisingsName
-				+ "']/ancestor::th[@data-label='Fundraising Name']/following-sibling::td[@data-label='Target Close Date']//span";
+				+ "']/ancestor::th[@data-label='Fundraising Name']/following-sibling::td[@data-label='Target Close Date']//span//*[text()='"+ targetClosedDate + "']";
 		try {
 			return FindElement(driver, xpath, "Header: " + targetClosedDate, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -9046,8 +9046,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, searchRelatedRecord, "Visibility", timeOut, "search related record");
 	}
 
-	@FindBy(xpath = "//button[@title='Close this window']")
-	private WebElement NewFinancingPopupCrossIcon;
+	
 
 	@FindBy(xpath = "//ul[@class='slds-button-group-list']//button[text()='Create Task']")
 	private WebElement createTaskButton;
@@ -9137,6 +9136,9 @@ public abstract class BasePage extends BaseLib {
 	/**
 	 * @return the searchPopSearchTextBoxCrossIcon
 	 */
+	@FindBy(xpath = "//button[@title='Close this window']")
+	private WebElement NewFinancingPopupCrossIcon;
+	
 	public WebElement getNewFinancingPopupCrossIcon(int timeOut) {
 		return isDisplayed(driver, NewFinancingPopupCrossIcon, "Visibility", timeOut, "New Financing Popup Cross Icon");
 	}
