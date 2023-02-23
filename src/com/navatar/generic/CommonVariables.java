@@ -1454,13 +1454,17 @@ public class CommonVariables {
 	    //Acuity Connection Header
 	    public static String ATCE_ConnectionHeader1,ATCE_ConnectionHeader2;
 	    
+	    // Acuity Connection Header
+	    public static String ATCE_MeetingAndCallHeader;
+	    
 	    //Contact
 	    public static String ATCE_ContactFirstName1,ATCE_ContactFirstName2,ATCE_ContactFirstName3,ATCE_ContactFirstName4,ATCE_ContactFirstName5,ATCE_ContactFirstName6,ATCE_ContactFirstName7;
 	    public static String ATCE_ContactLastName1,ATCE_ContactLastName2,ATCE_ContactLastName3,ATCE_ContactLastName4,ATCE_ContactLastName5,ATCE_ContactLastName6,ATCE_ContactLastName7;
+	    public static String ATCE_ContactFullName1,ATCE_ContactFullName2,ATCE_ContactFullName3,ATCE_ContactFullName4,ATCE_ContactFullName5,ATCE_ContactFullName6,ATCE_ContactFullName7,ATCE_ContactFullName8,ATCE_ContactFullName9,ATCE_ContactFullName10,ATCE_ContactFullName11,ATCE_ContactFullName12,ATCE_ContactFullName13,ATCE_ContactFullName14;
 	    public static String ATCE_ContactLegalName1,ATCE_ContactLegalName2,ATCE_ContactLegalName3,ATCE_ContactLegalName4,ATCE_ContactLegalName5,ATCE_ContactLegalName6,ATCE_ContactLegalName7;
 	    public static String ATCE_ContactEmail1,ATCE_ContactEmail2,ATCE_ContactEmail3,ATCE_ContactEmail4,ATCE_ContactEmail5,ATCE_ContactEmail6,ATCE_ContactEmail7;
 	    public static String ATCE_ContactTitle1,ATCE_ContactTitle2,ATCE_ContactTitle3,ATCE_ContactTitle4,ATCE_ContactTitle5,ATCE_ContactTitle6,ATCE_ContactTitle7;
-	   
+	    
 	    //Activity type
 	    public static String ATCE_ATActivityType1,ATCE_ATActivityType2;
 	    public static String ATCE_ATSubject1,ATCE_ATSubject2;
@@ -1470,6 +1474,8 @@ public class CommonVariables {
 	    public static String ATCE_AdvanceStatus1,ATCE_AdvanceStatus2;
 	    public static String ATCE_AdvancePriority1,ATCE_AdvancePriority2;	    
 	    public static String ATCE_ATDay1,ATCE_ATDay2;
+	    public static String ATCE_ATParticipants1;
+	    public static String ATCE_ATTags1;
 	    
 	    
 	    //Tagged Section
@@ -8522,7 +8528,10 @@ public class CommonVariables {
 					 /****** Connection Header *********/
 					 ATCE_ConnectionHeader1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.ConnectionHeader);
 					 ATCE_ConnectionHeader2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.ConnectionHeader);
-					  
+					 
+					 /*******Meeting and call header ******/
+					 ATCE_MeetingAndCallHeader=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.MeetingAndCallsHeader);
+						
 					 
 					 ATCE_ContactFirstName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con1", excelLabel.Contact_FirstName);
 					 ATCE_ContactFirstName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con3", excelLabel.Contact_FirstName);
@@ -8540,6 +8549,21 @@ public class CommonVariables {
 					 ATCE_ContactLastName6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con11", excelLabel.Contact_LastName);
 					 ATCE_ContactLastName7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con13", excelLabel.Contact_LastName);
 					 
+					 ATCE_ContactFullName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con1", excelLabel.ContactName);
+					 ATCE_ContactFullName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con2", excelLabel.ContactName);
+					 ATCE_ContactFullName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con3", excelLabel.ContactName);
+					 ATCE_ContactFullName4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con4", excelLabel.ContactName);
+					 ATCE_ContactFullName5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con5", excelLabel.ContactName);
+					 ATCE_ContactFullName6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con6", excelLabel.ContactName);
+					 ATCE_ContactFullName7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con7", excelLabel.ContactName);
+					 ATCE_ContactFullName8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con8", excelLabel.ContactName);
+					 ATCE_ContactFullName9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con9", excelLabel.ContactName);
+					 ATCE_ContactFullName10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con10", excelLabel.ContactName);
+					 ATCE_ContactFullName11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con11", excelLabel.ContactName);
+					 ATCE_ContactFullName12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con12", excelLabel.ContactName);
+					 ATCE_ContactFullName13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con13", excelLabel.ContactName);
+					 ATCE_ContactFullName14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con14", excelLabel.ContactName);
+					 		
 					 
 					 ATCE_ContactLegalName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con1", excelLabel.Legal_Name);
 					 ATCE_ContactLegalName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATCE_Con3", excelLabel.Legal_Name);
@@ -8588,11 +8612,13 @@ public class CommonVariables {
 					 ATCE_AdvanceStatus1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_001", excelLabel.Advance_Status);		
 					
 					 ATCE_AdvancePriority1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_001", excelLabel.Advance_Priority);		
-					
-					 
+										 
 					 ATCE_ATDay1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_001", excelLabel.Day);		
 					 ATCE_ATDay2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_002", excelLabel.Day);
 		 			
+					 ATCE_ATParticipants1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_002", excelLabel.Participants);
+					 ATCE_ATTags1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_002", excelLabel.Tags);
+				 			
 			
 					 /****************Tagged Section********************/
 					 //firms

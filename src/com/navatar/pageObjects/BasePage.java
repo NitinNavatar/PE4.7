@@ -9334,4 +9334,89 @@ public abstract class BasePage extends BaseLib {
 		return FindElement(driver, path, footerButtonName, action.SCROLLANDBOOLEAN, timeOut);
 
 	}
+	
+	public WebElement getParticipantOnMeetingAndCallPopup(String subjectName, int timeOut) {
+		String xPath = "//button[text()='"+subjectName+"']/ancestor::td[@data-label='Subject']/../td[@data-label='Participants']//button";
+		return FindElement(driver, xPath, subjectName, action.SCROLLANDBOOLEAN, timeOut);
+
+	}
+	
+	
+	public WebElement getTagOnMeetingAndCallPopup(String subjectName, int timeOut) {
+		String xPath = "//button[text()='"+subjectName+"']/ancestor::td[@data-label='Subject']/../td[@data-label='Tags']//button";
+		return FindElement(driver, xPath, subjectName, action.SCROLLANDBOOLEAN, timeOut);
+
+	}
+	
+	@FindBy(xpath = "//header//h2[text()='Participants ']")
+	private WebElement headingOfParticipantsPopup;
+
+	public WebElement getHeadingOfParticipantsPopup(int timeOut) {
+		return isDisplayed(driver, headingOfParticipantsPopup, "Visibility", timeOut,
+				"heading of participant popup");
+	}
+	
+	@FindBy(xpath = "//header//h2[text()='Tags ']")
+	private WebElement headingOfTagPopup;
+
+	public WebElement getHeadingOfTagPopup(int timeOut) {
+		return isDisplayed(driver, headingOfTagPopup, "Visibility", timeOut,
+				"heading of tag popup");
+	}
+	
+	@FindBy(xpath = "//header//h2[text()='Participants ']/..//lightning-icon[@title='Close']")
+	private WebElement closeIconOfParticipantPopup;
+
+	public WebElement getCloseIconOfParticipantPopup(int timeOut) {
+		return isDisplayed(driver, closeIconOfParticipantPopup, "Visibility", timeOut,
+				"close icon of participant popup");
+	}
+	
+	@FindBy(xpath = "//header//h2[text()='Tags ']/..//lightning-icon[@title='Close']")
+	private WebElement closeIconOfTagPopup;
+
+	public WebElement getCloseIconOfTagPopup(int timeOut) {
+		return isDisplayed(driver, closeIconOfTagPopup, "Visibility", timeOut,
+				"close icon of tag popup");
+	}
+	
+	@FindBy(xpath = "//header//h2[text()='Participants ']/../..//button[@title='OK']")
+	private WebElement okButtonOnParticipantPopup;
+
+	public WebElement getOkButtonOnParticipantPopup(int timeOut) {
+		return isDisplayed(driver, okButtonOnParticipantPopup, "Visibility", timeOut,
+				"Ok button of participant popup");
+	}
+	
+	@FindBy(xpath = "//header//h2[text()='Tags ']/../..//button[@title='OK']")
+	private WebElement tagButtonOnParticipantPopup;
+
+	public WebElement getOkButtonOnTagsPopup(int timeOut) {
+		return isDisplayed(driver, tagButtonOnParticipantPopup, "Visibility", timeOut,
+				"Tag button of participant popup");
+	}
+
+	
+	public List<WebElement> getRecordsOfParticipantTagPopup() {
+
+		String xpath = "//header//h2[text()='Participants ']/../following-sibling::div//a";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath,
+				"Records on participant tag");
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "Records on participant tag");
+		} else
+			return listOfNameElements;
+	}
+	
+	public List<WebElement> getRecordsOfTagPopup() {
+
+		String xpath = "//header//h2[text()='Tags ']/../following-sibling::div//a";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath,
+				"Records on Tag");
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "Records on tag");
+		} else
+			return listOfNameElements;
+	}
+	
 }

@@ -1784,6 +1784,120 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
+	public void ATCETc015_VerifyUIOfConnectionPageAndMeetingAndCallPageOnCompanyRecord(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord1;		
+		
+		String contactName=ATCE_ContactFullName1;
+		String message=bp.acuityDefaultMessage;
+		
+		String[] meetingAndCall=ATCE_MeetingAndCallHeader.split("<break>");
+		ArrayList<String> headerNameMeetingAndCall=new ArrayList<String>();
+		for(String txt:meetingAndCall)
+		{
+			headerNameMeetingAndCall.add(txt);
+		}
+
+		
+		String[] val=ATCE_ConnectionHeader1.split("<break>");
+		ArrayList<String> headerName=new ArrayList<String>();
+		for(String txt:val)
+		{
+			headerName.add(txt);
+		}
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+				if(bp.clicktabOnPage(TabName.Acuity.toString()))
+				{
+					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
+					if(click(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName, action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on Connection icon of "+contactName, YesNo.No);
+
+						ArrayList<String> result=bp.verifyUIOfConnectionPopup(contactName, headerName, message);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The UI of Connections popup have been verified", YesNo.No);
+							sa.assertTrue(true,  "The UI of Connections popup have been verified");
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The UI of Connections popup are not verified. "+result, YesNo.No);
+							sa.assertTrue(false,  "The UI of Connections popup are not verified. "+result);
+
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to Connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false,  "Not able to Connection icon of "+contactName);
+					}
+					
+					
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactName+" record on contact section",YesNo.No);
+						
+						ArrayList<String> result1=bp.verifyUIOfMeetingAndCallsPopup( headerNameMeetingAndCall, message);
+						if(result1.isEmpty())
+						{
+							log(LogStatus.INFO, "The UI of Meeting and call page have been verified", YesNo.No);
+							sa.assertTrue(true,  "The UI of Meeting and call page have been verified");
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The UI of Meeting and call page are not verified. "+result1, YesNo.No);
+							sa.assertTrue(false,  "The UI of Meeting and call page are not verified. "+result1);
+
+						}					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName+" record on contact section",	YesNo.No);		
+						sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactName+" record on contact section");
+					}
+					
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Acuity Tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	@Parameters({ "projectName" })
+	@Test
 	public void ATETc015_CreateATaskAndLogACall(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -1817,7 +1931,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 
@@ -1828,7 +1942,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
 		}	 
 		
-		if (bp.createActivityTimeline(projectName, true, activityType1, basicsection1, advanceSection1, null, null, false, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
 
@@ -1890,6 +2004,37 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		String connectionDeal=ATCE_ConnectionDeal1;
 		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall1;
 		String connectionEmail=ATCE_ConnectionEmail1;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		String userName3=crmUser8FirstName+" "+crmUser8LastName;
+		
+		String[] participantArr=ATCE_ATParticipants1.split("<break>");
+		String[] participants=new String[participantArr.length];
+		
+		for(int i=0; i<participantArr.length; i++)
+		{
+			if(participantArr[i].trim().equalsIgnoreCase("PE User 1"))
+			{
+				participants[i]=userName1;
+			}
+			if(participantArr[i].trim().equalsIgnoreCase("PE User 2"))
+			{
+				participants[i]=userName2;
+			}
+			if(participantArr[i].trim().equalsIgnoreCase("PE User 3"))
+			{
+				participants[i]=userName3;
+			}
+			else
+			{
+				participants[i]=participantArr[i];
+			}
+		}
+		
+		
+		String[] tagsArr=ATCE_ATTags1.split("<break>");
+		
 		
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -1976,20 +2121,18 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
 						{
 							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
-							String parentID=switchOnWindow(driver);
 							
-							ArrayList<String> result8=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate, taskSubject, null, null);
-							if(result2.isEmpty())
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
+							if(result6.isEmpty())
 							{
 								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
 							}
 							else
 							{
-								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result2, YesNo.No);
-								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result2);
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
 							}
-							driver.close();
-							driver.switchTo().window(parentID);
+						
 						}
 						else
 						{
@@ -1998,18 +2141,48 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 						
-						ArrayList<String> result6=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
-						if(result6.isEmpty())
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
 						{
 							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
 						}
 						else
 						{
-							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result6 , YesNo.No);
-							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result6);
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
 						}
 						
-						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
 						
 					}
 					else

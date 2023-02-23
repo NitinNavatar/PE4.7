@@ -1041,7 +1041,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								 {
 									 log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName, YesNo.No);
 
-									 ArrayList<String> result1=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call",taskDueDate, taskSubject, taskDetails, userName);
+									 ArrayList<String> result1=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call",taskDueDate, taskSubject, taskDetails, null, null);
 									 if(result1.isEmpty())
 									 {
 										 log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+contactSectionName, YesNo.No);
@@ -1246,7 +1246,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName, YesNo.No);
 
-						ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate, taskSubject, taskDetails, userName);
+						ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate, taskSubject, taskDetails, null, null);
 						if(result4.isEmpty())
 						{
 							log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
@@ -1561,7 +1561,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
 
-						ArrayList<String> result2=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate, taskSubject, taskDetails, userName);
+						ArrayList<String> result2=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate, taskSubject, taskDetails, null, null);
 						if(result2.isEmpty())
 						{
 							log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
@@ -1583,7 +1583,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
 
-						ArrayList<String> result3=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("event", taskDueDate1, taskSubject1, taskDetails1, userName1);
+						ArrayList<String> result3=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("event", taskDueDate1, taskSubject1, taskDetails1, null, null);
 						if(result3.isEmpty())
 						{
 							log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
@@ -1744,7 +1744,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
 
-						ArrayList<String> result5=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate, taskSubject, taskDetails, userName);
+						ArrayList<String> result5=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate, taskSubject, taskDetails, null, null);
 						if(result5.isEmpty())
 						{
 							log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
@@ -1766,7 +1766,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
 
-						ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("event", taskDueDate1, taskSubject1, taskDetails1, userName1);
+						ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("event", taskDueDate1, taskSubject1, taskDetails1, null, null);
 						if(result6.isEmpty())
 						{
 							log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
@@ -2781,7 +2781,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(contactRecord, 20),"Count of "+contactRecord+" on contact section" , action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on count of "+contactRecord,YesNo.No);
-						ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(meetingAndCallIcon, meetingAndCallDate, meetingAndCallSubject, meetingAndCallDetails, meetingAndCallAssignedTo);
+						ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(meetingAndCallIcon, meetingAndCallDate, meetingAndCallSubject, meetingAndCallDetails, null, null);
 						if(result4.isEmpty())
 						{
 							log(LogStatus.INFO, meetingAndCallSubject+" record has been verified on meeting and call popup",YesNo.No);
@@ -2802,7 +2802,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(contactRecord, 20),"Count of "+contactRecord+" on contact section" , action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on count of "+contactRecord,YesNo.No);
-						ArrayList<String> result5=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(meetingAndCallIcon1, meetingAndCallDate1, meetingAndCallSubject1, meetingAndCallDetails1, meetingAndCallAssignedTo1);
+						ArrayList<String> result5=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(meetingAndCallIcon1, meetingAndCallDate1, meetingAndCallSubject1, meetingAndCallDetails1, null, null);
 						if(result5.isEmpty())
 						{
 							log(LogStatus.INFO, meetingAndCallSubject+" record has been verifid on meeting and call popup",YesNo.No);
@@ -3053,7 +3053,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(user1, 20),"Count of "+contactRecord+" on contact section" , action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on count of "+contactRecord,YesNo.No);
-						ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(meetingAndCallIcon, meetingAndCallDate, meetingAndCallSubject, meetingAndCallDetails, meetingAndCallAssignedTo);
+						ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(meetingAndCallIcon, meetingAndCallDate, meetingAndCallSubject, meetingAndCallDetails, null, null);
 						if(result4.isEmpty())
 						{
 							log(LogStatus.INFO, meetingAndCallSubject+" record has been verifid on meeting and call popup",YesNo.No);
@@ -3352,7 +3352,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
 
-						ArrayList<String> result7=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(activityType, taskDueDate, taskSubject, taskDetails, userName1);
+						ArrayList<String> result7=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(activityType, taskDueDate, taskSubject, taskDetails, null, null);
 						if(result7.isEmpty())
 						{
 							log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
@@ -3374,7 +3374,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
 
-						ArrayList<String> result8=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(activityType1, taskDueDate1, taskSubject1, taskDetails1, userName);
+						ArrayList<String> result8=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(activityType1, taskDueDate1, taskSubject1, taskDetails1, null, null);
 						if(result8.isEmpty())
 						{
 							log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
@@ -3577,7 +3577,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
 
-						ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(activityType, taskDueDate, taskSubject, taskDetails, userName1);
+						ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(activityType, taskDueDate, taskSubject, taskDetails, null, null);
 						if(result4.isEmpty())
 						{
 							log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+userName1, YesNo.No);
@@ -3599,7 +3599,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
 
-						ArrayList<String> result5=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(activityType1, taskDueDate1, taskSubject1, taskDetails1, userName);
+						ArrayList<String> result5=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(activityType1, taskDueDate1, taskSubject1, taskDetails1, null, null);
 						if(result5.isEmpty())
 						{
 							log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+userName, YesNo.No);
