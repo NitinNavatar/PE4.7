@@ -1375,6 +1375,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			xpath = "//*[text()='" + labelTextBox + "']/..//input";
 		else if (pageName.equalsIgnoreCase(PageName.FundsPage.toString()))
 			xpath = "//*[text()='" + labelTextBox + "']/following-sibling::div//input";
+		else if (pageName.equalsIgnoreCase(PageName.ThemesPage.toString()))
+			xpath = "//*[text()='" + labelTextBox + "']/following-sibling::div//input";
 		else if (pageName.equalsIgnoreCase(PageName.FundraisingPage.toString()))
 			xpath = "//*[text()='" + labelTextBox + "']/following-sibling::div//input";
 		else if (pageName.equalsIgnoreCase(PageName.MEPageFromCalender.toString()))
@@ -4504,6 +4506,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			break;
 		case OfficeLocations:
 			tabName = "Office Locations";
+			break;
+		case ThemesTab:
+			tabName = "Themes";
+			break;
+		case ClipsTab:
+			tabName = "Clips";
 			break;
 		default:
 			return flag;
@@ -20343,7 +20351,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String label = "";
 		String value = "";
 
-		CommonLib.ThreadSleep(14000);
+		CommonLib.ThreadSleep(5000);
 		try {
 			for (String labelValue : labelAndValueSeprateByBreak) {
 
@@ -21300,8 +21308,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ArrayList<String> negativeResult = new ArrayList<String>();
 
 		if (pageName.toString().equals("AcuityDetails")) {
-			if (CommonLib.click(driver, subjectOfInteractionCard(subjectName, 15), "Subject Name on Intraction",
-					action.BOOLEAN)) {
+			if (CommonLib.clickUsingJavaScript(driver, subjectOfInteractionCard(subjectName, 15),
+					"Subject Name on Intraction", action.BOOLEAN)) {
 				log(LogStatus.INFO, "clicked on " + subjectName, YesNo.No);
 
 			} else {
@@ -21317,10 +21325,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				log(LogStatus.ERROR, "not able to click on " + subjectName, YesNo.No);
 				negativeResult.add("not able to click on " + subjectName);
 			}
-		}
-		else
-		{
-			
+		} else {
+
 		}
 
 		if (activitySubjetLinkPopupHeaderOnInteraction(5) != null) {
@@ -22042,8 +22048,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 				if (firmOrContactRadio.equalsIgnoreCase("Firm")) {
 
-					if (clickUsingJavaScript(driver, createRecordPopUpAccountRadioButtons().get(index), firmOrContactRadio,
-							action.SCROLLANDBOOLEAN)) {
+					if (clickUsingJavaScript(driver, createRecordPopUpAccountRadioButtons().get(index),
+							firmOrContactRadio, action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO,
 								"Clicked on Radio Button: " + firmOrContactRadio + " of Record: " + oldRecordName,
 								YesNo.No);
@@ -22054,7 +22060,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									YesNo.No);
 
 							if (!recordTypeOrAccount.equalsIgnoreCase("")) {
-								if (clickUsingJavaScript(driver, createRecordPopUpContactInputSuggestionBoxes().get(index),
+								if (clickUsingJavaScript(driver, createRecordPopUpContactInputSuggestionBoxes(index, 7),
 										recordTypeOrAccount)) {
 									log(LogStatus.INFO, "Clicked on ComboBox of Record: " + oldRecordName, YesNo.No);
 
@@ -22104,8 +22110,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 				else if (firmOrContactRadio.equalsIgnoreCase("Contact")) {
 
-					if (clickUsingJavaScript(driver, createRecordPopUpContactRadioButtons().get(index), firmOrContactRadio,
-							action.SCROLLANDBOOLEAN)) {
+					if (clickUsingJavaScript(driver, createRecordPopUpContactRadioButtons().get(index),
+							firmOrContactRadio, action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO,
 								"Clicked on Radio Button: " + firmOrContactRadio + " of Record: " + oldRecordName,
 								YesNo.No);
@@ -22117,9 +22123,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 							if (recordTypeOrAccount.contains("<existing>")) {
 								recordTypeOrAccount = recordTypeOrAccount.replace("<existing>", "");
-								if (CommonLib.sendKeys(driver,
-										createRecordPopUpContactInputSuggestionBoxes().get(index), recordTypeOrAccount,
-										"Research Search Box", action.BOOLEAN)) {
+								if (CommonLib.sendKeys(driver, createRecordPopUpContactInputSuggestionBoxes(index, 7),
+										recordTypeOrAccount, "Research Search Box", action.BOOLEAN)) {
 									log(LogStatus.INFO, "Enter Value in Accounts Input Box of Record: " + oldRecordName
 											+ " is " + recordTypeOrAccount, YesNo.No);
 
@@ -22150,9 +22155,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 
 							else {
-								if (CommonLib.sendKeys(driver,
-										createRecordPopUpContactInputSuggestionBoxes().get(index), recordTypeOrAccount,
-										"Research Search Box", action.BOOLEAN)) {
+								if (CommonLib.sendKeys(driver, createRecordPopUpContactInputSuggestionBoxes(index, 7),
+										recordTypeOrAccount, "Research Search Box", action.BOOLEAN)) {
 									log(LogStatus.INFO, "Enter Value in Accounts Input Box of Record: " + oldRecordName
 											+ " is " + recordTypeOrAccount, YesNo.No);
 
@@ -22319,7 +22323,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					buttonNameOfAddContactsToDealTeamPopUp)) {
 				log(LogStatus.INFO, "Clicked on Footer Button: " + buttonNameOfAddContactsToDealTeamPopUp
 						+ " of Add Contacts To Deal Team Popup", YesNo.No);
-				flag = true;
+
+				if (createRecordsPopupSuccessMsg(20) != null) {
+
+					log(LogStatus.INFO, "Success Msg is Showing for Create Record Popup", YesNo.No);
+					flag = true;
+				} else {
+					log(LogStatus.ERROR, "Success Msg is not Showing for Create Record Popup", YesNo.No);
+					sa.assertTrue(false, "Success Msg is not Showing for Create Record Popup");
+
+					return false;
+				}
 
 			} else {
 				log(LogStatus.ERROR, "Not Able to Click on Footer Button: " + buttonNameOfAddContactsToDealTeamPopUp

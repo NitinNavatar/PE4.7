@@ -1101,7 +1101,7 @@ public class CommonVariables {
 		public static String AS_ContactOtherLabelNames8,AS_ContactOtherLabelNames11;
 		public static String AS_ContactOtherLabelValues8,AS_ContactOtherLabelValues11;
 		
-		public static String AR_ContactRecordType1;
+		public static String AR_FirmOther_LabelNames1,AR_ContactRecordType1;
 		
 		//Deal
 		public static String AS_DealName,AS_DealName2,AS_DealName3,AS_DealName5;
@@ -1177,8 +1177,8 @@ public class CommonVariables {
 	    public static String AR_Firm1Name,AR_Contact1FirstName,AR_Contact1LastName;
 	    public static String AR_Firm1,AR_Firm2,AR_Firm3,AR_Firm4,AR_Firm5,AR_Firm6,AR_Firm7,AR_Firm8,AR_Firm9,AR_Firm10,AR_Firm11,AR_Firm12,AR_Firm13,AR_Firm14,AR_Firm15,AR_Firm16,AR_Firm17,AR_Firm18,AR_Firm19,AR_Firm20,AR_Firm21,AR_Firm22,
 	    AR_Firm23,AR_Firm24,AR_Firm25,AR_Firm26,AR_Firm27,AR_Firm28,AR_Firm29,AR_Firm30,AR_Firm31,AR_Firm32,AR_Firm33,AR_Firm34,AR_Firm35,AR_Firm36,AR_Firm37,AR_Firm38,AR_Firm39,AR_Firm40,AR_Firm41,AR_Firm42,AR_Firm43,AR_Firm44,AR_Firm45,AR_Firm46,
-	    AR_Firm47,AR_Firm48,AR_Firm49,AR_Firm50,AR_Firm51,AR_Firm52,AR_Data1,AR_Data2,AR_Data3,
-	    AR_Research1,AR_Research2,AR_Research3,AR_Research4,AR_Research5,AR_Research6,AR_Research7,
+	    AR_Firm47,AR_Firm48,AR_Firm49,AR_Firm50,AR_Firm51,AR_Firm52,AR_Firm53,AR_Firm54,AR_Firm55,AR_Firm56,AR_Firm57,AR_Data1,AR_Data2,AR_Data3,
+	    AR_Research1,AR_Research2,AR_Research3,AR_Research4,AR_Research5,AR_Research6,AR_Research7,AR_Research54,AR_Research55,
 	    ARNewFirm1Name,ARNewFirm2Name,ARNewFirm1RecordType,ARNewFirm2RecordType;
 	    public static String ARUpdated1Name,ARUpdated2Name,ARUpdated3Name,ARUpdated4Name;
 	   
@@ -1199,8 +1199,10 @@ public class CommonVariables {
 	    public static String ADEIns12,ADEIns12RecordType;
 	    public static String ADEIns13,ADEIns13RecordType;
 	    public static String ADEIns14,ADEIns14RecordType;
-	    public static String ADEIns15,ADEIns15RecordType;
 	    public static String ADEIns16,ADEIns16RecordType;
+	    
+	    //RG FIRM
+	    public static String RGEIns1,RGEIns1RecordType;
 	    
 	    //contact
 	    public static String ADEContact1FName,ADEContact1LName,ADEContact1EmailID,ADEContact1RecordType;
@@ -1222,11 +1224,14 @@ public class CommonVariables {
 	    public static String ADEContact17FName,ADEContact17LName,ADEContact17EmailID,ADEContact17RecordType;
 	    public static String ADEContact18FName,ADEContact18LName,ADEContact18EmailID,ADEContact18RecordType;
 	    public static String ADEContact19FName,ADEContact19LName,ADEContact19EmailID,ADEContact19RecordType;
-	    public static String ADEContact20FName,ADEContact20LName,ADEContact20EmailID,ADEContact20RecordType;
-	    public static String ADEContact21FName,ADEContact21LName,ADEContact21EmailID,ADEContact21RecordType;
-	    public static String ADEContact22FName,ADEContact22LName,ADEContact22EmailID,ADEContact22RecordType;
-	    public static String ADEUser01FName,ADEUser01LName;
 	    public static String ADEContact23FName,ADEContact23LName,ADEContact23EmailID,ADEContact23RecordType;
+	    public static String ADEContact24FName,ADEContact24LName,ADEContact24EmailID,ADEContact24RecordType;
+	    
+	    //RG Contact
+	    public static String RGEContact1FName,RGEContact1LName,RGEContact1EmailID,RGEContact1RecordType;
+	    public static String RGEContact2FName,RGEContact2LName,RGEContact2EmailID,RGEContact2RecordType;
+	    public static String RGEContact3FName,RGEContact3LName,RGEContact3EmailID,RGEContact3RecordType;
+	    public static String RGEUser01FName,RGEUser01LName;
 	    
 	    //deal
 	    
@@ -1275,6 +1280,7 @@ public class CommonVariables {
 		public static String ADEDeal28,ADEDeal28CompanyName,ADEDeal28RecordType,ADEDeal28Stage,ADEDeal28SourceContact,ADEDeal28SourceFirm,ADEDeal28HighestStageReached;
 		public static String ADEDeal29,ADEDeal29CompanyName,ADEDeal29RecordType,ADEDeal29Stage,ADEDeal29SourceContact,ADEDeal29SourceFirm,ADEDeal29HighestStageReached;
 		public static String ADEDeal30,ADEDeal30CompanyName,ADEDeal30RecordType,ADEDeal30Stage,ADEDeal30SourceContact,ADEDeal30SourceFirm,ADEDeal30HighestStageReached;
+		public static String ADEDeal31,ADEDeal31CompanyName,ADEDeal31RecordType,ADEDeal31Stage,ADEDeal31SourceContact,ADEDeal31SourceFirm,ADEDeal31HighestStageReached;
 
 
 		
@@ -1399,6 +1405,12 @@ public class CommonVariables {
 	  		public static String ADEDealTeamMember20;
 	  		public static String ADEDealTeamRole20;
 	  		public static String ADEDealTeamID20;
+	  		
+	  		public static String ADEDealTeamName21;
+	  		public static String ADEDealContact21;
+	  		public static String ADEDealTeamMember21;
+	  		public static String ADEDealTeamRole21;
+	  		public static String ADEDealTeamID21;
 	  		//financing
 	  		public static String ADEFinancingDealName1;
 	  		public static String ADEFinancingCompany1;
@@ -7048,9 +7060,6 @@ public class CommonVariables {
 					
 					ADEIns14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ADEIns14", excelLabel.Legal_Name);
 					ADEIns14RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ADEIns14", excelLabel.Record_Type);
-					
-					ADEIns15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ADEIns15", excelLabel.Legal_Name);
-					ADEIns15RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ADEIns15", excelLabel.Record_Type);
 				
 					ADEIns16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ADEIns16", excelLabel.Legal_Name);
 					ADEIns16RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ADEIns16", excelLabel.Record_Type);
@@ -7298,6 +7307,8 @@ public class CommonVariables {
 					ADERFundName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR2", excelLabel.Fund_Name);
 					ADEStage1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR2", excelLabel.Stage);
 					
+								
+						
 					try {
 						dataFile.close();
 					} catch (IOException e) {
@@ -9002,28 +9013,16 @@ public class CommonVariables {
 				ADEContact19EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact19", excelLabel.Contact_EmailId);
 				ADEContact19RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact19", excelLabel.Record_Type);
 				
-				ADEContact20FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact20", excelLabel.Contact_FirstName);
-				ADEContact20LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact20", excelLabel.Contact_LastName);
-				ADEContact20EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact20", excelLabel.Contact_EmailId);
-				ADEContact20RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact20", excelLabel.Record_Type);
-				
-				ADEContact21FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact21", excelLabel.Contact_FirstName);
-				ADEContact21LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact21", excelLabel.Contact_LastName);
-				ADEContact21EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact21", excelLabel.Contact_EmailId);
-				ADEContact21RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact21", excelLabel.Record_Type);
-				
-				ADEContact22FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact22", excelLabel.Contact_FirstName);
-				ADEContact22LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact22", excelLabel.Contact_LastName);
-				ADEContact22EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact22", excelLabel.Contact_EmailId);
-				ADEContact22RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact22", excelLabel.Record_Type);
-				
-				ADEUser01FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEUser01", excelLabel.Contact_FirstName);
-				ADEUser01LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEUser01", excelLabel.Contact_LastName);
-				
+			
 				ADEContact23FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact23", excelLabel.Contact_FirstName);
 				ADEContact23LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact23", excelLabel.Contact_LastName);
 				ADEContact23EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact23", excelLabel.Contact_EmailId);
 				ADEContact23RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact23", excelLabel.Record_Type);
+				
+				ADEContact24FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact24", excelLabel.Contact_FirstName);
+				ADEContact24LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact24", excelLabel.Contact_LastName);
+				ADEContact24EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact24", excelLabel.Contact_EmailId);
+				ADEContact24RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact24", excelLabel.Record_Type);
 				
 				ADEFieldname1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_1", excelLabel.FieldName);
 				ADEvalue1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_1", excelLabel.Value);
@@ -9241,12 +9240,26 @@ public class CommonVariables {
 				ADEDeal30SourceFirm=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal30", excelLabel.Source_Firm);
 				ADEDeal30HighestStageReached=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal30", excelLabel.Highest_Stage_Reached);
 				
+				ADEDeal31=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal31", excelLabel.Deal_Name);
+				ADEDeal31CompanyName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal31", excelLabel.Company_Name);
+				ADEDeal31Stage=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal31", excelLabel.Stage);
+				ADEDeal31SourceContact=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal31", excelLabel.Source_Contact);
+				ADEDeal31SourceFirm=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal31", excelLabel.Source_Firm);
+				ADEDeal31HighestStageReached=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal31", excelLabel.Highest_Stage_Reached);
+				
+				
 				//Deal Team
 				ADEDealTeamName20=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_20", excelLabel.Deal_Name);
 				ADEDealContact20=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_20", excelLabel.Contact);
 				ADEDealTeamMember20=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_20", excelLabel.Member);
 				ADEDealTeamRole20=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_20", excelLabel.Role);
 				ADEDealTeamID20=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_20", excelLabel.DealTeamID);
+
+				ADEDealTeamName21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_21", excelLabel.Deal_Name);
+				ADEDealContact21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_21", excelLabel.Contact);
+				ADEDealTeamMember21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_21", excelLabel.Member);
+				ADEDealTeamRole21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_21", excelLabel.Role);
+				ADEDealTeamID21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_21", excelLabel.DealTeamID);
 
 				//financing
 				ADEFinancingDealName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Financing",excelLabel.Variable_Name, "F_01", excelLabel.Deal_Name);
@@ -9400,6 +9413,12 @@ public class CommonVariables {
 					AR_Firm49=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up49", excelLabel.Name);
 					AR_Firm50=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up50", excelLabel.Name);
 					AR_Firm51=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up51", excelLabel.Name);
+					AR_Firm52=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up52", excelLabel.Name);
+					AR_Firm53=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up53", excelLabel.Name);
+					AR_Firm54=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up54", excelLabel.Name);
+					AR_Firm55=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up55", excelLabel.Name);
+					AR_Firm56=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up56", excelLabel.Name);
+					AR_Firm57=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up57", excelLabel.Name);
 					
 					AR_Research1=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up1", excelLabel.ResearchFindings);
 					AR_Research2=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up2", excelLabel.ResearchFindings);
@@ -9408,6 +9427,8 @@ public class CommonVariables {
 					AR_Research5=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up5", excelLabel.ResearchFindings);
 					AR_Research6=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up6", excelLabel.ResearchFindings);
 					AR_Research7=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up7", excelLabel.ResearchFindings);
+					AR_Research54=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up54", excelLabel.ResearchFindings);
+					AR_Research55=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up55", excelLabel.ResearchFindings);
 					
 					AR_Data1=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_1", excelLabel.ResearchFindings);
 					AR_Data2=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_37", excelLabel.ResearchFindings);
@@ -9420,6 +9441,8 @@ public class CommonVariables {
 					
 					AR_RecordType1=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"Others",excelLabel.Variable_Name, "AR_Firm1", excelLabel.Record_Type);
 					AR_OtherLabels1=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"Others",excelLabel.Variable_Name, "AR_Firm1", excelLabel.Other_LabelValues);
+					
+					AR_FirmOther_LabelNames1=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"Others",excelLabel.Variable_Name, "AR_Firm1", excelLabel.Other_LabelNames);
 					
 					AR_ContactRecordType1=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"Others",excelLabel.Variable_Name, "AR_Contact1", excelLabel.Record_Type);
 					
@@ -10172,6 +10195,67 @@ public class CommonVariables {
     			 	RGAMNNR_FirmLegalName11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGAMNNR_Record011", excelLabel.Legal_Name);
     			 	RGAMNNR_FirmLegalName12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGAMNNR_Record012", excelLabel.Legal_Name);
     			 	
+    				try {
+						dataFile.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+						dataWb.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					
+					break;
+					
+					case "RGAcuityEmailCount" :
+						
+						try {
+							dataFile=new FileInputStream(new File(AcuityDataSheetFilePath));
+						} catch (FileNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						try {
+							dataWb=WorkbookFactory.create(dataFile);
+						} catch (EncryptedDocumentException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (InvalidFormatException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						//Firm
+						
+						RGEIns1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGEIns1", excelLabel.Legal_Name);
+						RGEIns1RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGEIns1", excelLabel.Record_Type);
+						
+						//Contact
+						RGEContact1FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact1", excelLabel.Contact_FirstName);
+						RGEContact1LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact1", excelLabel.Contact_LastName);
+						RGEContact1EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact1", excelLabel.Contact_EmailId);
+						RGEContact1RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact1", excelLabel.Record_Type);
+						
+						RGEContact2FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact2", excelLabel.Contact_FirstName);
+						RGEContact2LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact2", excelLabel.Contact_LastName);
+						RGEContact2EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact2", excelLabel.Contact_EmailId);
+						RGEContact2RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact2", excelLabel.Record_Type);
+						
+						RGEContact3FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact3", excelLabel.Contact_FirstName);
+						RGEContact3LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact3", excelLabel.Contact_LastName);
+						RGEContact3EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact3", excelLabel.Contact_EmailId);
+						RGEContact3RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact3", excelLabel.Record_Type);
+						
+						RGEUser01FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEUser01", excelLabel.Contact_FirstName);
+						RGEUser01LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEUser01", excelLabel.Contact_LastName);
+						
+						
 				try {
 					dataFile.close();
 				} catch (IOException e) {

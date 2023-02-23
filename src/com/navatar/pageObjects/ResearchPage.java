@@ -172,7 +172,7 @@ public class ResearchPage extends BasePageBusinessLayer {
 			
 		}
 		
-		@FindBy(xpath = "//button[@title='Research']")
+		@FindBy(xpath = "//div[@class='slds-m-around_medium main-Container']//button[@title='Research']")
 		private WebElement researchButton;
 
 		public WebElement getResearchButton(int timeOut) {
