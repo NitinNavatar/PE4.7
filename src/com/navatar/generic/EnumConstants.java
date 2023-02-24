@@ -828,7 +828,7 @@ public static enum PermissionType{
 	}
 
 	public static enum RecordType{
-		Company,Institution,IndividualInvestor,Contact, PipeLine, Fund, Fundraising,Partnerships,Master,Advisor,Fund_Manager,Fund_Manager_Fund,Indivisual_investor,Intermediary,Lender,Limited_Partner,Portfolio_Company,Deal;
+		Company,Institution,IndividualInvestor,Contact, PipeLine, Fund, Fundraising,Partnerships,Master,Advisor,Fund_Manager,Fund_Manager_Fund,Indivisual_investor,Intermediary,Lender,Limited_Partner,Portfolio_Company,Deal, Banker;
 	}
 	
 	public static enum searchContactInEmailProspectGrid{
