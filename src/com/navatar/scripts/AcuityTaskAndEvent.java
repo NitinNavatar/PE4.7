@@ -594,7 +594,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					{
 						log(LogStatus.INFO, "clicked on Connection icon of "+contactName, YesNo.No);
 
-						ArrayList<String> result=bp.verifyUIOfConnectionPopup(contactName, headerName, message);
+						ArrayList<String> result=bp.verifyUIOfConnectionPopup(contactName, headerName, message,null,null);
 						if(result.isEmpty())
 						{
 							log(LogStatus.INFO, "The UI of Connections popup have been verified", YesNo.No);

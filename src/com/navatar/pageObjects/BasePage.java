@@ -9396,7 +9396,7 @@ public abstract class BasePage extends BaseLib {
 	
 	public List<WebElement> getRecordsOfParticipantTagPopup() {
 
-		String xpath = "//header//h2[text()='Participants ']/../following-sibling::div//a";
+		String xpath = "//header//h2[text()='Participants ']/../following-sibling::div//*[@class='no_underline tagsScreen']";
 		List<WebElement> listOfNameElements = FindElements(driver, xpath,
 				"Records on participant tag");
 		if (listOfNameElements.size() == 0) {

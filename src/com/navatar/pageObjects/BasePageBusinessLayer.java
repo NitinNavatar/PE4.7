@@ -3392,7 +3392,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			ele = isDisplayed(driver, ele, "visibility", 30, tabName);
 			if (ele != null) {
 				appLog.info("Tab Found");
-				ThreadSleep(5000);
+				ThreadSleep(3000);
 				if (clickUsingJavaScript(driver, ele, tabName + " :Tab")) {
 					CommonLib.log(LogStatus.INFO, "Tab found", YesNo.No);
 					appLog.info("Clicked on Tab : " + tabName);
@@ -15187,7 +15187,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (isInstitutionRecordType == true) {
 			if (fundTagName != null && fundTimesReferenced != null) {
 				if (fundTagName.length == fundTimesReferenced.length) {
-					if (click(driver, getTaggedRecordName("F", 30), "Funds tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, getTaggedRecordName("Funds", 30), "Funds tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Funds tab name", YesNo.No);
 
 						for (int i = 0; i < fundTagName.length; i++) {
@@ -15466,70 +15466,196 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	}
 
 	public ArrayList<String> verifyUIOfConnectionPopup(String recordName, ArrayList<String> headingName,
-			String message) {
+			String message, ArrayList<String> externalTabHeadingName,String externalMessage) {
 		String xPath;
 		WebElement ele;
 		List<WebElement> elements;
 		ArrayList<String> result = new ArrayList<String>();
 		ArrayList<String> actualHeadingName = new ArrayList<String>();
 		ArrayList<String> actualToolTipOfHeaderName = new ArrayList<String>();
+		ArrayList<String> actualExternalHeadingName = new ArrayList<String>();
+		ArrayList<String> actualExternalToolTipOfHeaderName = new ArrayList<String>();
 		
 		String parentID = CommonLib.switchOnWindow(driver);
 		if (getHeadingOfConnectionPage(recordName, 20) != null) {
-			log(LogStatus.INFO, "Connection popup has been open and heading of connection popup has been verified",
+			log(LogStatus.INFO, "Connection page has been open and heading of connection page has been verified",
 					YesNo.No);
 
 			if (!headingName.isEmpty()) {
-				
-				xPath = "//span[contains(text(),'Connections')]/ancestor::div//span[@class='slds-th__action']/span[@class='slds-truncate' and @title!='']";
-				elements = FindElements(driver, xPath, "Connections section headers");
-				for (WebElement el : elements) {
-					actualHeadingName.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
-				}
+				if (click(driver, getInternalTabOnConnectionSection(20), "internal tab on connection section",
+						action.SCROLLANDBOOLEAN)) {
 
-				xPath = "//span[@class='slds-th__action']//lightning-icon[@title!='Close']";
-				elements = FindElements(driver, xPath, "Connections section headers");
-				for (WebElement el : elements) {
-					actualHeadingName.add(getAttribute(driver, el, "Connections section headers", "title"));
-				}
+					log(LogStatus.INFO, "Clicked on internal button", YesNo.No);
+					xPath = "//span[contains(text(),'Connections')]/ancestor::div//span[@class='slds-th__action']/span[@class='slds-truncate' and @title!='']";
+					elements = FindElements(driver, xPath, "Connections section headers");
+					for (WebElement el : elements) {
+						actualHeadingName.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
+						actualToolTipOfHeaderName.add(getAttribute(driver, el, "Tooltip", "title"));
+					}
 
-				for (int i = 0; i < headingName.size(); i++) {
-					int k = 0;
-					for (int j = 0; j < actualHeadingName.size(); j++) {
-						if (headingName.get(i).trim().equalsIgnoreCase(actualHeadingName.get(j).trim())) {
-							log(LogStatus.INFO,
-									"Expected heading name " + headingName.get(i)
-											+ " have been matched with the Actual heading name "
-											+ actualHeadingName.get(j) + " of Connection page",
+					xPath = "//span[@class='slds-th__action']//lightning-icon[@title!='Close']";
+					elements = FindElements(driver, xPath, "Connections section headers");
+					for (WebElement el : elements) {
+						actualHeadingName.add(getAttribute(driver, el, "Connections section headers", "title"));
+						actualToolTipOfHeaderName.add(getAttribute(driver, el, "Tooltip", "title"));
+					}
+
+					for (int i = 0; i < headingName.size(); i++) {
+						int k = 0;
+						for (int j = 0; j < actualHeadingName.size(); j++) {
+							if (headingName.get(i).trim().equalsIgnoreCase(actualHeadingName.get(j).trim())) {
+								log(LogStatus.INFO,
+										"Expected heading name " + headingName.get(i)
+										+ " have been matched with the Actual heading name "
+										+ actualHeadingName.get(j) + " of Connection page",
+										YesNo.No);
+								k++;
+							}
+						}
+						if (k == 0) {
+							log(LogStatus.ERROR,
+									"Expected heading name " + headingName.get(i) + " is not matched on Connection page",
 									YesNo.No);
-							k++;
+							result.add(
+									"Expected heading name " + headingName.get(i) + " is not matched on Connection page");
+						}
+
+
+						for (int j = 0; j < actualHeadingName.size(); j++) {
+							if (headingName.get(i).trim().equalsIgnoreCase(actualToolTipOfHeaderName.get(j).trim())) {
+								log(LogStatus.INFO,
+										"Expected tooltip of header " + headingName.get(i)
+										+ " have been matched with the Actual tooltip header "
+										+ actualToolTipOfHeaderName.get(j) + " of Connection page",
+										YesNo.No);
+								k++;
+							}
+						}
+						if (k == 0) {
+							log(LogStatus.ERROR,
+									"Expected tooltip of header " + headingName.get(i) + " is not matched on Connection page",
+									YesNo.No);
+							result.add(
+									"Expected tooltip of header " + headingName.get(i) + " is not matched on Connection page");
 						}
 					}
-					if (k == 0) {
-						log(LogStatus.ERROR,
-								"Expected heading name " + headingName.get(i) + " is not matched on Connection page",
-								YesNo.No);
-						result.add(
-								"Expected heading name " + headingName.get(i) + " is not matched on Connection page");
-					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on internal button", YesNo.No);
+					result.add("Not able to click on internal button");
+
 				}
 			}
 
 			if (message != null && message != "") {
 				xPath = "//span[contains(text(),'Connections of')]/ancestor::div//p[text()='" + message + "']";
-				ele = FindElement(driver, xPath, "message on popup", action.SCROLLANDBOOLEAN, 20);
+				ele = FindElement(driver, xPath, "message on page", action.SCROLLANDBOOLEAN, 20);
 				if (ele != null) {
-					log(LogStatus.INFO, message + ": Message is visible on Connection popup", YesNo.No);
+					log(LogStatus.INFO, message + ": Message is visible on Connection page", YesNo.No);
 				} else {
-					log(LogStatus.ERROR, message + ": Message is not visible on Connection popup", YesNo.No);
-					result.add(message + ": Message is not visible on Connection popup");
+					log(LogStatus.ERROR, message + ": Message is not visible on Connection page", YesNo.No);
+					result.add(message + ": Message is not visible on Connection page");
+				}
+			}
+		
+		
+		
+		
+		
+		
+
+			if (!externalTabHeadingName.isEmpty()) {
+				if (click(driver, getExternalTabOnConnectionSection(20), "external tab on connection section",
+						action.SCROLLANDBOOLEAN)) {
+
+					log(LogStatus.INFO, "Clicked on external button", YesNo.No);
+					xPath = "//span[contains(text(),'Connections')]/ancestor::div//span[@class='slds-th__action']/span[@class='slds-truncate' and @title!='']";
+					elements = FindElements(driver, xPath, "Connections section headers");
+					for (WebElement el : elements) {
+						actualExternalHeadingName.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
+						actualExternalToolTipOfHeaderName.add(getAttribute(driver, el, "Tooltip", "title"));
+					}
+
+					xPath = "//span[@class='slds-th__action']//lightning-icon[@title!='Close']";
+					elements = FindElements(driver, xPath, "Connections section headers");
+					for (WebElement el : elements) {
+						actualExternalHeadingName.add(getAttribute(driver, el, "Connections section headers", "title"));
+						actualExternalToolTipOfHeaderName.add(getAttribute(driver, el, "Tooltip", "title"));
+					}
+
+					for (int i = 0; i < externalTabHeadingName.size(); i++) {
+						int k = 0;
+						for (int j = 0; j < actualExternalHeadingName.size(); j++) {
+							if (externalTabHeadingName.get(i).trim().equalsIgnoreCase(actualExternalHeadingName.get(j).trim())) {
+								log(LogStatus.INFO,
+										"Expected heading name " + externalTabHeadingName.get(i)
+										+ " have been matched with the Actual heading name "
+										+ actualExternalHeadingName.get(j) + " of Connection page",
+										YesNo.No);
+								k++;
+							}
+						}
+						if (k == 0) {
+							log(LogStatus.ERROR,
+									"Expected heading name " + externalTabHeadingName.get(i) + " is not matched on Connection page",
+									YesNo.No);
+							result.add(
+									"Expected heading name " + externalTabHeadingName.get(i) + " is not matched on Connection page");
+						}
+
+
+						for (int j = 0; j < actualExternalHeadingName.size(); j++) {
+							if (externalTabHeadingName.get(i).trim().equalsIgnoreCase(actualExternalHeadingName.get(j).trim())) {
+								log(LogStatus.INFO,
+										"Expected tooltip of header " + externalTabHeadingName.get(i)
+										+ " have been matched with the Actual tooltip header "
+										+ actualExternalHeadingName.get(j) + " of Connection page",
+										YesNo.No);
+								k++;
+							}
+						}
+						if (k == 0) {
+							log(LogStatus.ERROR,
+									"Expected tooltip of header " + externalTabHeadingName.get(i) + " is not matched on Connection page",
+									YesNo.No);
+							result.add(
+									"Expected tooltip of header " + externalTabHeadingName.get(i) + " is not matched on Connection page");
+						}
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on external button", YesNo.No);
+					result.add("Not able to click on external button");
+
+				}
+			}
+
+			if (externalMessage != null && externalMessage != "") {
+				xPath = "//span[contains(text(),'Connections of')]/ancestor::div//p[text()='" + externalMessage + "']";
+				ele = FindElement(driver, xPath, "externalMessage on page", action.SCROLLANDBOOLEAN, 20);
+				if (ele != null) {
+					log(LogStatus.INFO, externalMessage + ": externalMessage is visible on Connection page", YesNo.No);
+				} else {
+					log(LogStatus.ERROR, externalMessage + ": externalMessage is not visible on Connection page", YesNo.No);
+					result.add(externalMessage + ": externalMessage is not visible on Connection page");
 				}
 			}
 		} else {
-			log(LogStatus.ERROR, "Either Connection popup did not open or Connection popup heading is not verified",
+			log(LogStatus.ERROR, "Either Connection page did not open or Connection page heading is not verified",
 					YesNo.No);
-			result.add("Either Connection popup did not open or Connection popup heading is not verified");
+			result.add("Either Connection page did not open or Connection page heading is not verified");
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		driver.close();
 		driver.switchTo().window(parentID);
 
@@ -17079,12 +17205,15 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		List<WebElement> elements;
 		String parentID = switchOnWindow(driver);
 		ArrayList<String> result = new ArrayList<String>();
+		ArrayList<String> actualHeaderName = new ArrayList<String>();
+		ArrayList<String> actualHeaderTooltip = new ArrayList<String>();
 		if (!headerName.isEmpty()) {
-			ArrayList<String> actualHeaderName = new ArrayList<String>();
+			
 			xPath = "//table[contains(@class,'slds-table_header-fixed')]//span[@class='slds-truncate' and @title!='']";
 			elements = FindElements(driver, xPath, "Meetings and Calls popup");
 			for (WebElement el : elements) {
 				actualHeaderName.add(getText(driver, el, "Meetings and Calls popup headers", action.SCROLLANDBOOLEAN));
+				actualHeaderTooltip.add(getAttribute(driver, el, "Title", "title"));
 			}
 
 			for (int i = 0; i < headerName.size(); i++) {
@@ -17108,6 +17237,37 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 				}
 			}
+			
+			
+			
+			
+			for (int i = 0; i < headerName.size(); i++) {
+				int k = 0;
+				for (int j = 0; j < actualHeaderTooltip.size(); j++) {
+					if (headerName.get(i).equalsIgnoreCase(actualHeaderTooltip.get(j))) {
+						log(LogStatus.INFO,
+								"Expected tootlip of header : " + headerName.get(i)
+										+ " has been matched with Actual tooltip header : " + actualHeaderTooltip.get(j),
+								YesNo.No);
+						k++;
+					}
+
+				}
+				if (k == 0) {
+					log(LogStatus.ERROR,
+							"Expected tooltip of header name : " + headerName.get(i) + " is not matched with Actual tooltip",
+							YesNo.No);
+					result.add(
+							"Expected tooltip of header name : " + headerName.get(i) + " is not matched with Actual tooltip");
+
+				}
+			}
+			
+			
+			
+			
+			
+			
 		}
 		if (message != null && !"".equals(message)) {
 			xPath = "//p[contains(@class,'nodata-popup') and text()='" + message + "']";
