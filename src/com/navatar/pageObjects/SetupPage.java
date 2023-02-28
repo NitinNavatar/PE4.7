@@ -690,7 +690,7 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, addUtilityItem, "Visibility", timeOut, "Add Utility Item");
 	}
 
-	@FindBy(xpath = "//*[@Title='Navatar Research']")
+	@FindBy(xpath = "//*[@Title='Research']")
 	private WebElement researchItem;
 
 	public WebElement getResearchItem(int timeOut) {
