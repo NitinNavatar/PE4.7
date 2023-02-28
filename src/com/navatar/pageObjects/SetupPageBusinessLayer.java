@@ -2471,7 +2471,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 			// "']/..//following-sibling::td[text()='" + labelValue[1] + "']";
 			// xpath = "//*[text()='" + labelValue[0] +
 			// "']/..//following-sibling::td/img[@title='" + labelValue[1] + "']";
-			xpath = "//*[text()='" + labelValue[0] + "']/..//td[@title='" + labelValue[1] + "']";
+			xpath = "//*[text()='" + labelValue[0] + "']/..//*[@title='" + labelValue[1] + "' or text()='" + labelValue[1] + "']";
 			ele = FindElement(driver, xpath, labelValue[0] + " with Value " + labelValue[1], action.BOOLEAN, 10);
 			if (ele != null) {
 				log(LogStatus.PASS, labelValue[0] + " with Value " + labelValue[1] + " verified", YesNo.No);
@@ -6461,9 +6461,10 @@ public class SetupPageBusinessLayer extends SetupPage {
 				switchToDefaultContent(driver);
 				ThreadSleep(5000);
 				switchToFrame(driver, 60, getSetUpPageIframe(60));
+				ThreadSleep(5000);
 				xpath = "//td[@id='topButtonRow']//input[@title='Edit']";
 				ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, 10);
-				ele = isDisplayed(driver, ele, "visibility", 10, "Edit Button");
+				//ele = isDisplayed(driver, ele, "visibility", 10, "Edit Button");
 				if (click(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO,
 							"able to click on edit button for " + profileForSelection + " Profiles settiing", YesNo.No);

@@ -578,7 +578,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement getCustomTabSaveBtn(String projectName, int timeOut) {
 
-		List<WebElement> eleList = FindElements(driver, "//button[text()='Save' and @name='SaveEdit']", "Save Button");
+		List<WebElement> eleList = FindElements(driver, "//button[text()='Save' or @name='SaveEdit']", "Save Button");
 
 		for (WebElement webElement : eleList) {
 			webElement = isDisplayed(driver, webElement, "Visibility", 2, "Custom Tab Save Button lightning");
@@ -7460,7 +7460,7 @@ public abstract class BasePage extends BaseLib {
 
 	public List<WebElement> researchResultsGridCounts() {
 		return FindElements(driver,
-				"//div[contains(@class,'slds-table_header-fixed_container')]//table//tbody//tr/ancestor::div[contains(@class,'slds-size_1-of-1')]//ul/li[2]",
+				"//div[contains(@class,'windowViewMode-normal')]//div[contains(@class,'slds-col slds-size_1-of-1')]//span[contains(@class,'slds-page-header__title')]",
 				"researchResultsGridCounts");
 	}
 
