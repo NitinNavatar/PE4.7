@@ -2294,6 +2294,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 					}
 				}
 			} else if (!isMakeAvailable && profileForSelection != null) {
+
 				ele = getMakeAvailableCheckBox(10);
 				if (isSelected(driver, ele, "make available")) {
 					if (click(driver, ele, "make Available CheckBox", action.BOOLEAN)) {
