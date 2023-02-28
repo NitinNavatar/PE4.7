@@ -8983,9 +8983,10 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement editButtonOfSubjectLinkPopUpInInteractionSection(int timeOut) {
 
-		String xpath = "//section//lightning-layout-item[contains(@class,\"slds-carousel__panel\")]//lightning-button/button[text()=\"Edit\"]";
-		WebElement editButton = FindElement(driver, xpath, "editButton", action.SCROLLANDBOOLEAN, timeOut);
-
+		String xpath = "//section//lightning-layout-item[contains(@class,'slds-carousel__panel')]//lightning-button";
+		String xpath2 = "//button[text()='Edjidst']";
+		WebElement editButton = isDisplayed(driver, FindElement(driver, xpath, "editButton", action.BOOLEAN, timeOut), "visibility", timeOut, "editButton", action.BOOLEAN) ;
+		//section//lightning-layout-item[contains(@class,'slds-carousel__panel')]//lightning-button
 		return editButton;
 
 	}

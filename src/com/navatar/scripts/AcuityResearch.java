@@ -2297,22 +2297,24 @@ public class AcuityResearch extends BaseLib{
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 	
-	 String[][] task1BasicSection = { { excelLabel.Subject.toString(), AR_Research6} };
+	 String[][] task1BasicSection = { { excelLabel.Subject.toString(), AR_Research6.replace("\"", "")} };
 		 lp.CRMLogin(superAdminUserName, adminPassword, appName);
    
-		 if (home.globalSearchAndNavigate(AR_Firm6.replace("  ", "").replace("\"", ""), RelatedTab.Tasks.toString(), false)) {
+		 if (home.globalSearchAndNavigate(AR_Firm6.replace("   ", "").replace("\"", ""), RelatedTab.Tasks.toString(), false)) {
 
 				log(LogStatus.INFO,
 						"-----Verified Task named: " + AR_Firm6 + " found in Tasks Object-----",
 						YesNo.No);
-				if (click(driver, taskBP.downArrowButton(20), "downArrowButton", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
+//				if (click(driver, taskBP.downArrowButton(20), "downArrowButton", action.SCROLLANDBOOLEAN)) {
+//					log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
 
-					if (click(driver, taskBP.buttonInTheDownArrowList(ShowMoreAction.Edit.toString(), 20),
-							"Edit Button in downArrowButton", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Edit Button in  Down Arrow Button", YesNo.No);
-
-						ThreadSleep(10000);
+//					if (click(driver, taskBP.buttonInTheDownArrowList(ShowMoreAction.Edit.toString(), 20),
+//							"Edit Button in downArrowButton", action.SCROLLANDBOOLEAN)) {
+//						log(LogStatus.INFO, "Clicked on Edit Button in  Down Arrow Button", YesNo.No);
+				if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+							"Edit Note Button of: " + task1BasicSection, action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
+						ThreadSleep(5000);
 
 							if (BP.updateActivityTimelineRecord(projectName, task1BasicSection, null,
 									null, null, null)) {
@@ -2325,12 +2327,12 @@ public class AcuityResearch extends BaseLib{
 								sa.assertTrue(false, "Activity timeline record has not Updated");
 							}
 
-					} else {
-						log(LogStatus.ERROR, "Not Able Click on Edit button in Down Arrow Button",
-								YesNo.Yes);
-						BaseLib.sa.assertTrue(false, "Not Able Click on Edit button in Down Arrow Button");
-
-					}
+//					} else {
+//						log(LogStatus.ERROR, "Not Able Click on Edit button in Down Arrow Button",
+//								YesNo.Yes);
+//						BaseLib.sa.assertTrue(false, "Not Able Click on Edit button in Down Arrow Button");
+//
+//					}
 
 				} else {
 					log(LogStatus.ERROR, "Not Able Click on Down Arrow Button", YesNo.Yes);
@@ -2504,20 +2506,24 @@ public class AcuityResearch extends BaseLib{
 		ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		
-		 String[][] task1BasicSection = { { excelLabel.Subject.toString(), AR_Research7} };
+		 String[][] task1BasicSection = { { excelLabel.Subject.toString(), AR_Research7.replace("\"", "")} };
 			 lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	   
-			 if (home.globalSearchAndNavigate(AR_Firm7.replace("  ", "").replace("\"", ""), RelatedTab.Events.toString(), false)) {
+			 if (home.globalSearchAndNavigate(AR_Firm7.replace("   ", "").replace("\"", ""), RelatedTab.Events.toString(), false)) {
 
 					log(LogStatus.INFO,
-							"-----Verified Task named: " + AR_Firm7 + " found in Events Object-----",
+							"-----Verified Task named: " + AR_Firm7 + " found in Tasks Object-----",
 							YesNo.No);
+//					if (click(driver, taskBP.downArrowButton(20), "downArrowButton", action.SCROLLANDBOOLEAN)) {
+//						log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
 
-						if (click(driver, taskBP.getEditButtonOnEvent(20),
-								"Edit Button in downArrowButton", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on Edit Button in  Down Arrow Button", YesNo.No);
-
-							ThreadSleep(10000);
+//						if (click(driver, taskBP.buttonInTheDownArrowList(ShowMoreAction.Edit.toString(), 20),
+//								"Edit Button in downArrowButton", action.SCROLLANDBOOLEAN)) {
+//							log(LogStatus.INFO, "Clicked on Edit Button in  Down Arrow Button", YesNo.No);
+					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+								"Edit Note Button of: " + task1BasicSection, action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
+							ThreadSleep(5000);
 
 								if (BP.updateActivityTimelineRecord(projectName, task1BasicSection, null,
 										null, null, null)) {
@@ -2530,20 +2536,26 @@ public class AcuityResearch extends BaseLib{
 									sa.assertTrue(false, "Activity timeline record has not Updated");
 								}
 
-						} else {
-							log(LogStatus.ERROR, "Not Able Click on Edit button in Down Arrow Button",
-									YesNo.Yes);
-							BaseLib.sa.assertTrue(false, "Not Able Click on Edit button in Down Arrow Button");
+//						} else {
+//							log(LogStatus.ERROR, "Not Able Click on Edit button in Down Arrow Button",
+//									YesNo.Yes);
+//							BaseLib.sa.assertTrue(false, "Not Able Click on Edit button in Down Arrow Button");
+	//
+//						}
 
-						}
+					} else {
+						log(LogStatus.ERROR, "Not Able Click on Down Arrow Button", YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not Able Click on Down Arrow Button");
+
+					}
 
 				} else {
 
 					log(LogStatus.ERROR,
-							"-----Task named: " + AR_Firm7 + " not found in Events Object-----",
+							"-----Task named: " + AR_Firm7 + " not found in Tasks Object-----",
 							YesNo.Yes);
 					BaseLib.sa.assertTrue(false,
-							"-----Task named: " + AR_Firm7 + " not found in Events Object-----");
+							"-----Task named: " + AR_Firm7 + " not found in Tasks Object-----");
 
 				}
 		switchToDefaultContent(driver);
