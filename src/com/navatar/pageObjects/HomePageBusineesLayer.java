@@ -5742,8 +5742,9 @@ public class HomePageBusineesLayer extends HomePage {
 
 	public boolean globalSearchAndNavigate(String recordName, String sideNavOption, boolean noResultMsg) {
 		boolean flag = false;
-		if (clickUsingJavaScript(driver, globalSearchButton(20), "globalSearchButton", action.SCROLLANDBOOLEAN)) {
+		if (click(driver, globalSearchButton(20), "globalSearchButton", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on globalSearchButton", YesNo.No);
+			CommonLib.ThreadSleep(1000);
 			if (sendKeysAndPressEnter(driver, globalSearchInput(20), recordName, "globalSearchInput",
 					action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Pass the Value to Input Box: " + recordName, YesNo.No);

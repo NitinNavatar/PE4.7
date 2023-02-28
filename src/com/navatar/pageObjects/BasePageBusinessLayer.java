@@ -11655,7 +11655,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 
 					else if (labelName.contains(excelLabel.Status.toString())
-							|| labelName.contains(excelLabel.Priority.toString())) {
+							|| labelName.contains(excelLabel.Priority.toString())
+							|| labelName.contains("Classification")) {
 						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
 								+ labelName + "']/..//button";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
@@ -11976,31 +11977,38 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				 */
 			} else {
 
-				if (getSuccessMsg(30) != null) {
-					log(LogStatus.INFO, "Activity timeline record has been created", YesNo.No);
-					ThreadSleep(1000);
+				if (suggestedTags == null && createNewRecordPopUp == null && addContactsToDealTeamPopUp == null
+						&& addContactsToFundraisingPopUp == null) {
+					if (getSuccessMsg(30) != null) {
+						log(LogStatus.INFO, "Activity timeline record has been created", YesNo.No);
+						ThreadSleep(1000);
 
-					refresh(driver);
-					ThreadSleep(3000);
-					if (crossIconButtonInNotePopUp(8) != null) {
-						if (clickUsingJavaScript(driver, crossIconButtonInNotePopUp(8), "close button")) {
-							log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
-							log(LogStatus.INFO, "Activity timeline record has been created", YesNo.No);
-							flag = true;
+						refresh(driver);
+						ThreadSleep(3000);
+						if (crossIconButtonInNotePopUp(8) != null) {
+							if (clickUsingJavaScript(driver, crossIconButtonInNotePopUp(8), "close button")) {
+								log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
+								log(LogStatus.INFO, "Activity timeline record has been created", YesNo.No);
+								flag = true;
+							} else {
+								log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
+								sa.assertTrue(false, "Not able to close the Note popup");
+								log(LogStatus.ERROR, "Activity timeline record is not created", YesNo.No);
+								return false;
+							}
 						} else {
-							log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
-							sa.assertTrue(false, "Not able to close the Note popup");
-							log(LogStatus.ERROR, "Activity timeline record is not created", YesNo.No);
-							return false;
+							return true;
 						}
+
 					} else {
-						return true;
+						log(LogStatus.ERROR, "Activity timeline record is not created", YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created");
+						return false;
 					}
 
 				} else {
-					log(LogStatus.ERROR, "Activity timeline record is not created", YesNo.No);
-					sa.assertTrue(false, "Activity timeline record is not created");
-					return false;
+					log(LogStatus.INFO, "Activity timeline record has been created", YesNo.No);
+					flag = true;
 				}
 
 			}
@@ -21727,6 +21735,26 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					}
 
+					else if (labelName.contains("Classification")) {
+
+						String actualValue = getText(driver,
+								valueOfClassificationInSubjectLinkPopUpInInteractionSection(2), labelName,
+								action.SCROLLANDBOOLEAN);
+
+						log(LogStatus.INFO, "Successfully get the value from " + labelName + " field", YesNo.No);
+						if (value.equals(actualValue)) {
+							log(LogStatus.INFO, labelName
+									+ " label's value has been verify in Subject link Popup and i.e. :" + value,
+									YesNo.No);
+						} else {
+							log(LogStatus.ERROR, labelName + " label's value is not verify, Expected: " + value
+									+ " but Actual: " + actualValue, YesNo.No);
+							negativeResult.add(labelName + " label's value is not verify, Expected: " + value
+									+ " but Actual: " + actualValue);
+						}
+
+					}
+
 					else {
 						log(LogStatus.ERROR, "Please Provide the Correct Label Name: " + labelName, YesNo.No);
 						negativeResult.add("Please Provide the Correct Label Name: " + labelName);
@@ -22129,7 +22157,53 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 				if (newRecordName.equalsIgnoreCase("<AsItIs>")) {
 
-				} else {
+				} else if (newRecordName.contains("<Error>")) {
+
+					if (CommonLib.sendKeys(driver, createRecordPopUpNameInputBoxes().get(index), "",
+							"Research Search Box", action.BOOLEAN)) {
+						log(LogStatus.INFO, "Enter Value in Input Box of Record: " + oldRecordName + " is " + "",
+								YesNo.No);
+
+						String errorMsg = newRecordName.replace("<Error>", "");
+						String actualErrorMsg = CommonLib.getText(driver, errorMsgInCreateRecordPopUp(3),
+								buttonNameOfCreateRecordPopup, action.BOOLEAN);
+						if (errorMsg.equals(actualErrorMsg)) {
+							log(LogStatus.INFO, "Error Msg has Been verified: " + errorMsg, YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "Error Msg has not been verified, Expected " + errorMsg
+									+ " but Actual: " + actualErrorMsg, YesNo.No);
+							sa.assertTrue(false, "Error Msg has not been verified, Expected " + errorMsg
+									+ " but Actual: " + actualErrorMsg);
+							return false;
+						}
+
+						if (clickUsingJavaScript(driver, createRecordPopUpFooterButtonName("Create", 7), "Create")) {
+							log(LogStatus.INFO, "Clicked on Footer Button: " + "Create" + " of Create New Record Popup",
+									YesNo.No);
+
+						} else {
+							log(LogStatus.ERROR,
+									"Not Able to Click on Footer Button: " + "Create" + " of Create New Record Popup",
+									YesNo.No);
+							sa.assertTrue(false,
+									"Not Able to Click on Footer Button: " + "Create" + " of Create New Record Popup");
+
+							return false;
+						}
+
+					} else {
+						log(LogStatus.ERROR,
+								"Not Able to Enter Value in Input Box of Record: " + oldRecordName + " is " + "",
+								YesNo.No);
+						sa.assertTrue(false,
+								"Not Able to Enter Value in Input Box of Record: " + oldRecordName + " is " + "");
+
+						return false;
+					}
+
+				}
+
+				else {
 					if (CommonLib.sendKeys(driver, createRecordPopUpNameInputBoxes().get(index), newRecordName,
 							"Research Search Box", action.BOOLEAN)) {
 						log(LogStatus.INFO,
@@ -22160,32 +22234,63 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									YesNo.No);
 
 							if (!recordTypeOrAccount.equalsIgnoreCase("")) {
-								if (clickUsingJavaScript(driver, createRecordPopUpContactInputSuggestionBoxes(index, 7),
-										recordTypeOrAccount)) {
-									log(LogStatus.INFO, "Clicked on ComboBox of Record: " + oldRecordName, YesNo.No);
 
-									CommonLib.ThreadSleep(1000);
-									if (clickUsingJavaScript(driver,
-											createRecordPopUpAccountRecordType(recordTypeOrAccount, 7),
-											recordTypeOrAccount)) {
-										log(LogStatus.INFO, "Clicked on RecordType: " + recordTypeOrAccount
-												+ " of Record: " + oldRecordName, YesNo.No);
+								if (recordTypeOrAccount.contains("<Default>")) {
 
+									String expectedDefaultRecortType = newRecordName.replace("<Default>", "");
+									String actualDefaultRecortType = CommonLib.getText(driver,
+											createRecordPopUpContactInputSuggestionBoxes(index, 3),
+											expectedDefaultRecortType, action.BOOLEAN);
+									if (expectedDefaultRecortType.equals(actualDefaultRecortType)) {
+										log(LogStatus.INFO,
+												"Default Record Type has Been verified: " + expectedDefaultRecortType,
+												YesNo.No);
 									} else {
-										log(LogStatus.ERROR, "Not able to Click on RecordType: " + recordTypeOrAccount
-												+ " of Record: " + oldRecordName, YesNo.No);
-										sa.assertTrue(false, "Not able to Click on RecordType: " + recordTypeOrAccount
-												+ " of Record: " + oldRecordName);
-
+										log(LogStatus.ERROR,
+												"Default Record Type has not been verified, Expected "
+														+ expectedDefaultRecortType + " but Actual: "
+														+ actualDefaultRecortType + " for Record: " + oldRecordName,
+												YesNo.No);
+										sa.assertTrue(false,
+												"Default Record Type has not been verified, Expected "
+														+ expectedDefaultRecortType + " but Actual: "
+														+ actualDefaultRecortType + " for Record: " + oldRecordName);
 										return false;
 									}
 
-								} else {
-									log(LogStatus.ERROR, "Not able to Click on ComboBox of Record: " + oldRecordName,
-											YesNo.No);
-									sa.assertTrue(false, "Not able to Click on ComboBox of Record: " + oldRecordName);
+								}
 
-									return false;
+								else {
+									if (clickUsingJavaScript(driver,
+											createRecordPopUpContactInputSuggestionBoxes(index, 7),
+											recordTypeOrAccount)) {
+										log(LogStatus.INFO, "Clicked on ComboBox of Record: " + oldRecordName,
+												YesNo.No);
+
+										CommonLib.ThreadSleep(1000);
+										if (clickUsingJavaScript(driver,
+												createRecordPopUpAccountRecordType(recordTypeOrAccount, 7),
+												recordTypeOrAccount)) {
+											log(LogStatus.INFO, "Clicked on RecordType: " + recordTypeOrAccount
+													+ " of Record: " + oldRecordName, YesNo.No);
+
+										} else {
+											log(LogStatus.ERROR, "Not able to Click on RecordType: "
+													+ recordTypeOrAccount + " of Record: " + oldRecordName, YesNo.No);
+											sa.assertTrue(false, "Not able to Click on RecordType: "
+													+ recordTypeOrAccount + " of Record: " + oldRecordName);
+
+											return false;
+										}
+
+									} else {
+										log(LogStatus.ERROR,
+												"Not able to Click on ComboBox of Record: " + oldRecordName, YesNo.No);
+										sa.assertTrue(false,
+												"Not able to Click on ComboBox of Record: " + oldRecordName);
+
+										return false;
+									}
 								}
 							}
 

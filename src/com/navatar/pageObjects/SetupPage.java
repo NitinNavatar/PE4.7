@@ -1311,17 +1311,23 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement validationRuleFieldSelect(int timeOut) {
 		return isDisplayed(driver, validationRuleFieldSelect, "Visibility", timeOut, "validationRuleFieldSelect");
 	}
-	
-	
+
 	public WebElement validationRuleCreatedDetailName(String validationRuleName, int timeOut) {
-		String xpath = "//table[@class=\"detailList\"]//td[text()=\""+validationRuleName+"\"]";
+		String xpath = "//table[@class=\"detailList\"]//td[text()=\"" + validationRuleName + "\"]";
 
 		return isDisplayed(driver,
 				FindElement(driver, xpath, "validationRuleCreatedDetailName", action.SCROLLANDBOOLEAN, timeOut),
 				"Validation Rule Name: " + validationRuleName, 10, "validationRuleCreatedDetailName");
 
 	}
-	
-	
+
+	public WebElement recordTypeMakeAvailableGlobal(int timeOut) {
+		String xpath = "//tr[@class=\"headerRow\"]/th/following::label[text()=\"Make Available\"]/preceding-sibling::input";
+
+		return isDisplayed(driver,
+				FindElement(driver, xpath, "recordTypeMakeAvailableGlobal", action.SCROLLANDBOOLEAN, timeOut),
+				"recordTypeMakeAvailableGlobal", 10, "recordTypeMakeAvailableGlobal");
+
+	}
 
 }
