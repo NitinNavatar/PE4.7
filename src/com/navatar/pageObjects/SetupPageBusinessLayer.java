@@ -2472,6 +2472,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 			// xpath = "//*[text()='" + labelValue[0] +
 			// "']/..//following-sibling::td/img[@title='" + labelValue[1] + "']";
 			xpath = "//*[text()='" + labelValue[0] + "']/..//*[@title='" + labelValue[1] + "' or text()='" + labelValue[1] + "']";
+			
 			ele = FindElement(driver, xpath, labelValue[0] + " with Value " + labelValue[1], action.BOOLEAN, 10);
 			if (ele != null) {
 				log(LogStatus.PASS, labelValue[0] + " with Value " + labelValue[1] + " verified", YesNo.No);
