@@ -1,0 +1,12 @@
+#################
+#Dataloader Files of Acuity Meeting Notes Notification Reminder and RG Acuity Meeting Notes Notification are same but need to upload and execute on different orgs
+
+
+###AcuityMeetingNotesNotificationReminder###
+1)Please Confirm with User1 "Task Custom Object" (Created at the time of Speed up) tab should be shown
+2)Create List View named: "All" in Task Object with all the tasks should be shown
+
+###RGAcuityMeetingNotesNotificationReminder###
+
+1) PLease Note the Firm named domain provided for eg. cypressgroup-ng.com should be created in org
+
