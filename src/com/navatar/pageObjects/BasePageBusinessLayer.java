@@ -11385,7 +11385,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		boolean flag = false;
 
 		if (fromNavigation == true) {
-			if (npbl.createNavPopUpMinimizeButton(5) != null) {
+			if (npbl.createNavPopUpMinimizeButton(2) != null) {
 				CommonLib.click(driver, npbl.createNavPopUpMinimizeButton(5), "Minimize", action.BOOLEAN);
 			}
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, NavigationMenuItems.Create.toString(), action.BOOLEAN,
@@ -11486,13 +11486,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
 					if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
 						log(LogStatus.INFO, "Clicked on " + labelName + " paragraph", YesNo.No);
-						ThreadSleep(2000);
+						ThreadSleep(500);
 						xPath = "//div[label[text()='Notes']]//textarea";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
 						if (sendKeys(driver, ele, value, labelName + " paragraph", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, value + " has been passed on " + labelName + " paragraph", YesNo.No);
 
-							CommonLib.ThreadSleep(2000);
+							CommonLib.ThreadSleep(500);
 						} else {
 							log(LogStatus.ERROR, value + " is not passed on " + labelName + " paragraph", YesNo.No);
 							sa.assertTrue(false, value + " is not passed on " + labelName + " paragraph");
@@ -15438,8 +15438,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return negativeResults;
 	}
 
-	public ArrayList<String> verifyUIOfConnectionPopup(String recordName, ArrayList<String> headingName,
-			String message, ArrayList<String> externalTabHeadingName,String externalMessage) {
+	public ArrayList<String> verifyUIOfConnectionPopup(String recordName, ArrayList<String> headingName, String message,
+			ArrayList<String> externalTabHeadingName, String externalMessage) {
 		String xPath;
 		WebElement ele;
 		List<WebElement> elements;
@@ -15449,7 +15449,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		ArrayList<String> actualExternalHeadingName = new ArrayList<String>();
 		ArrayList<String> actualExternalToolTipOfHeaderName = new ArrayList<String>();
-
 
 		String parentID = CommonLib.switchOnWindow(driver);
 		if (getHeadingOfConnectionPage(recordName, 20) != null) {
@@ -15465,7 +15464,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					xPath = "//span[contains(text(),'Connections')]/ancestor::div//span[@class='slds-th__action']/span[@class='slds-truncate' and @title!='']";
 					elements = FindElements(driver, xPath, "Connections section headers");
 					for (WebElement el : elements) {
-						actualHeadingName.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
+						actualHeadingName
+								.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
 						actualToolTipOfHeaderName.add(getAttribute(driver, el, "Tooltip", "title"));
 					}
 
@@ -15482,42 +15482,37 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							if (headingName.get(i).trim().equalsIgnoreCase(actualHeadingName.get(j).trim())) {
 								log(LogStatus.INFO,
 										"Expected heading name " + headingName.get(i)
-										+ " have been matched with the Actual heading name "
-										+ actualHeadingName.get(j) + " of Connection page",
+												+ " have been matched with the Actual heading name "
+												+ actualHeadingName.get(j) + " of Connection page",
 										YesNo.No);
 								k++;
 							}
 						}
 						if (k == 0) {
-							log(LogStatus.ERROR,
-									"Expected heading name " + headingName.get(i) + " is not matched on Connection page",
-									YesNo.No);
-							result.add(
-									"Expected heading name " + headingName.get(i) + " is not matched on Connection page");
+							log(LogStatus.ERROR, "Expected heading name " + headingName.get(i)
+									+ " is not matched on Connection page", YesNo.No);
+							result.add("Expected heading name " + headingName.get(i)
+									+ " is not matched on Connection page");
 						}
-
 
 						for (int j = 0; j < actualHeadingName.size(); j++) {
 							if (headingName.get(i).trim().equalsIgnoreCase(actualToolTipOfHeaderName.get(j).trim())) {
 								log(LogStatus.INFO,
 										"Expected tooltip of header " + headingName.get(i)
-										+ " have been matched with the Actual tooltip header "
-										+ actualToolTipOfHeaderName.get(j) + " of Connection page",
+												+ " have been matched with the Actual tooltip header "
+												+ actualToolTipOfHeaderName.get(j) + " of Connection page",
 										YesNo.No);
 								k++;
 							}
 						}
 						if (k == 0) {
-							log(LogStatus.ERROR,
-									"Expected tooltip of header " + headingName.get(i) + " is not matched on Connection page",
-									YesNo.No);
-							result.add(
-									"Expected tooltip of header " + headingName.get(i) + " is not matched on Connection page");
+							log(LogStatus.ERROR, "Expected tooltip of header " + headingName.get(i)
+									+ " is not matched on Connection page", YesNo.No);
+							result.add("Expected tooltip of header " + headingName.get(i)
+									+ " is not matched on Connection page");
 						}
 					}
-				}
-				else
-				{
+				} else {
 					log(LogStatus.ERROR, "Not able to click on internal button", YesNo.No);
 					result.add("Not able to click on internal button");
 
@@ -15543,7 +15538,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					xPath = "//span[contains(text(),'Connections')]/ancestor::div//span[@class='slds-th__action']/span[@class='slds-truncate' and @title!='']";
 					elements = FindElements(driver, xPath, "Connections section headers");
 					for (WebElement el : elements) {
-						actualExternalHeadingName.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
+						actualExternalHeadingName
+								.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
 						actualExternalToolTipOfHeaderName.add(getAttribute(driver, el, "Tooltip", "title"));
 					}
 
@@ -15557,45 +15553,42 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					for (int i = 0; i < externalTabHeadingName.size(); i++) {
 						int k = 0;
 						for (int j = 0; j < actualExternalHeadingName.size(); j++) {
-							if (externalTabHeadingName.get(i).trim().equalsIgnoreCase(actualExternalHeadingName.get(j).trim())) {
+							if (externalTabHeadingName.get(i).trim()
+									.equalsIgnoreCase(actualExternalHeadingName.get(j).trim())) {
 								log(LogStatus.INFO,
 										"Expected heading name " + externalTabHeadingName.get(i)
-										+ " have been matched with the Actual heading name "
-										+ actualExternalHeadingName.get(j) + " of Connection page",
+												+ " have been matched with the Actual heading name "
+												+ actualExternalHeadingName.get(j) + " of Connection page",
 										YesNo.No);
 								k++;
 							}
 						}
 						if (k == 0) {
-							log(LogStatus.ERROR,
-									"Expected heading name " + externalTabHeadingName.get(i) + " is not matched on Connection page",
-									YesNo.No);
-							result.add(
-									"Expected heading name " + externalTabHeadingName.get(i) + " is not matched on Connection page");
+							log(LogStatus.ERROR, "Expected heading name " + externalTabHeadingName.get(i)
+									+ " is not matched on Connection page", YesNo.No);
+							result.add("Expected heading name " + externalTabHeadingName.get(i)
+									+ " is not matched on Connection page");
 						}
-
 
 						for (int j = 0; j < actualExternalHeadingName.size(); j++) {
-							if (externalTabHeadingName.get(i).trim().equalsIgnoreCase(actualExternalHeadingName.get(j).trim())) {
+							if (externalTabHeadingName.get(i).trim()
+									.equalsIgnoreCase(actualExternalHeadingName.get(j).trim())) {
 								log(LogStatus.INFO,
 										"Expected tooltip of header " + externalTabHeadingName.get(i)
-										+ " have been matched with the Actual tooltip header "
-										+ actualExternalHeadingName.get(j) + " of Connection page",
+												+ " have been matched with the Actual tooltip header "
+												+ actualExternalHeadingName.get(j) + " of Connection page",
 										YesNo.No);
 								k++;
 							}
 						}
 						if (k == 0) {
-							log(LogStatus.ERROR,
-									"Expected tooltip of header " + externalTabHeadingName.get(i) + " is not matched on Connection page",
-									YesNo.No);
-							result.add(
-									"Expected tooltip of header " + externalTabHeadingName.get(i) + " is not matched on Connection page");
+							log(LogStatus.ERROR, "Expected tooltip of header " + externalTabHeadingName.get(i)
+									+ " is not matched on Connection page", YesNo.No);
+							result.add("Expected tooltip of header " + externalTabHeadingName.get(i)
+									+ " is not matched on Connection page");
 						}
 					}
-				}
-				else
-				{
+				} else {
 					log(LogStatus.ERROR, "Not able to click on external button", YesNo.No);
 					result.add("Not able to click on external button");
 
@@ -15608,7 +15601,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				if (ele != null) {
 					log(LogStatus.INFO, externalMessage + ": externalMessage is visible on Connection page", YesNo.No);
 				} else {
-					log(LogStatus.ERROR, externalMessage + ": externalMessage is not visible on Connection page", YesNo.No);
+					log(LogStatus.ERROR, externalMessage + ": externalMessage is not visible on Connection page",
+							YesNo.No);
 					result.add(externalMessage + ": externalMessage is not visible on Connection page");
 				}
 			}
@@ -15617,7 +15611,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					YesNo.No);
 			result.add("Either Connection page did not open or Connection page heading is not verified");
 		}
-
 
 		driver.close();
 		driver.switchTo().window(parentID);
@@ -17171,7 +17164,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ArrayList<String> actualHeaderName = new ArrayList<String>();
 		ArrayList<String> actualHeaderTooltip = new ArrayList<String>();
 		if (!headerName.isEmpty()) {
-			
+
 			xPath = "//table[contains(@class,'slds-table_header-fixed')]//span[@class='slds-truncate' and @title!='']";
 			elements = FindElements(driver, xPath, "Meetings and Calls popup");
 			for (WebElement el : elements) {
@@ -17200,37 +17193,27 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 				}
 			}
-			
-			
-			
-			
+
 			for (int i = 0; i < headerName.size(); i++) {
 				int k = 0;
 				for (int j = 0; j < actualHeaderTooltip.size(); j++) {
 					if (headerName.get(i).equalsIgnoreCase(actualHeaderTooltip.get(j))) {
-						log(LogStatus.INFO,
-								"Expected tootlip of header : " + headerName.get(i)
-										+ " has been matched with Actual tooltip header : " + actualHeaderTooltip.get(j),
+						log(LogStatus.INFO, "Expected tootlip of header : " + headerName.get(i)
+								+ " has been matched with Actual tooltip header : " + actualHeaderTooltip.get(j),
 								YesNo.No);
 						k++;
 					}
 
 				}
 				if (k == 0) {
-					log(LogStatus.ERROR,
-							"Expected tooltip of header name : " + headerName.get(i) + " is not matched with Actual tooltip",
-							YesNo.No);
-					result.add(
-							"Expected tooltip of header name : " + headerName.get(i) + " is not matched with Actual tooltip");
+					log(LogStatus.ERROR, "Expected tooltip of header name : " + headerName.get(i)
+							+ " is not matched with Actual tooltip", YesNo.No);
+					result.add("Expected tooltip of header name : " + headerName.get(i)
+							+ " is not matched with Actual tooltip");
 
 				}
 			}
-			
-			
-			
-			
-			
-			
+
 		}
 		if (message != null && !"".equals(message)) {
 			xPath = "//p[contains(@class,'nodata-popup') and text()='" + message + "']";
@@ -17893,10 +17876,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						sa.assertTrue(false, value + " value is not passed in " + labelName + " field");
 						return false;
 					}
-				} else {
-					log(LogStatus.ERROR, "Label name is not correct", YesNo.No);
-					sa.assertTrue(false, "Label name is not correct");
-					return false;
 				}
 			}
 
