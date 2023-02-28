@@ -158,7 +158,6 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		sa.assertAll();
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc002_VerifyUIOfAcuityTabOnCompanyRecord(String projectName) {
@@ -177,6 +176,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
 
+		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage,bp.contactInfoMessage,bp.dealInfoMessage};		
+		
 		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
 
@@ -263,6 +264,16 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
 					}
 
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
+						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
+					}
 
 					if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
 						log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
@@ -312,6 +323,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+		
+		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage,bp.contactInfoMessage};		
+		
 
 		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
@@ -400,6 +414,16 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
 					}
 
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
+						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
+					}
 
 					if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
 						log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
@@ -449,6 +473,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+		
+		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage,bp.contactInfoMessage,bp.dealInfoMessage};		
+		
 
 		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
@@ -536,6 +563,16 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
 					}
 
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
+						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
+					}
 
 					if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
 						log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
@@ -585,6 +622,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+		
+		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage,bp.contactInfoMessage,bp.dealInfoMessage};				
 
 		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
@@ -670,6 +709,17 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					{
 						log(LogStatus.ERROR, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified", YesNo.No);
 						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
+					}
+					
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
+						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
 					}
 
 
@@ -721,6 +771,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+		
+		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage,bp.contactInfoMessage,bp.dealInfoMessage};		
 
 		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
@@ -808,6 +860,16 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
 					}
 
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
+						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
+					}
 
 					if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
 						log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
@@ -857,6 +919,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+		
+		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage,bp.contactInfoMessage,bp.dealInfoMessage};		
+
 
 		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
@@ -942,6 +1007,17 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					{
 						log(LogStatus.ERROR, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified", YesNo.No);
 						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
+					}
+					
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
+						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
 					}
 
 
@@ -993,6 +1069,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+		
+		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage,bp.contactInfoMessage,bp.dealInfoMessage};		
 
 		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
@@ -1078,6 +1156,17 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					{
 						log(LogStatus.ERROR, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified", YesNo.No);
 						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
+					}
+					
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
+						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
 					}
 
 
@@ -1131,7 +1220,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
 
-
+		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage,bp.connectionInfoMessage,bp.dealInfoMessage};		
+		
 		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
 
@@ -1223,6 +1313,17 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The UI of Log a Call, Create Task Notification icon, Internal button and External button are not verified", YesNo.No);
 							sa.assertTrue(false, "The UI of Log a Call, Create Task Notification icon, Internal button and External button are not verified");
 						}
+						
+						ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+						if(result9.isEmpty())
+						{
+							log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+							sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
+						}
 
 						if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
 							log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
@@ -1271,6 +1372,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+		
+		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage};		
+		
 
 		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
@@ -1333,6 +1437,17 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
 					}
 					
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
+						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
+					}
+					
 					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, blankList, null, blankList, null,blankList,null,blankList,null);
 
 					if(result1.isEmpty())
@@ -1391,6 +1506,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+		
+		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage};	
 
 		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
@@ -1453,6 +1570,17 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
 					}
 					
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
+						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
+					}
+					
 					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, blankList, null, blankList, null,blankList,null,blankList,null);
 
 					if(result1.isEmpty())
@@ -1511,6 +1639,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+		
+		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage};	
 
 		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
@@ -1573,6 +1703,17 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
 					}
 					
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
+						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
+					}
+					
 					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, blankList, null, blankList, null,blankList,null,blankList,null);
 
 					if(result1.isEmpty())
@@ -1631,6 +1772,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
 
+		String[] infoMessage=  {bp.interactionsInfoMessage};	
+
 		
 		List<String> blankList=new ArrayList<String>();
 
@@ -1666,6 +1809,17 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					{
 						log(LogStatus.ERROR, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified", YesNo.No);
 						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
+					}
+					
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
+						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
 					}
 					
 					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, blankList, null, blankList, null,blankList,null,blankList,null);
@@ -2590,7 +2744,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc022_CreateATaskAndLogACall(String projectName) {
+	public void ATCETc022_CreateATaskAndLogACall(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2652,7 +2806,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc023_VerifyTaskCallFunctionalityOnCompanyRecordType(String projectName) {
+	public void ATCETc023_VerifyTaskCallFunctionalityOnCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2899,10 +3053,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc024_VerifyTaskCallFunctionalityOnAdvisorRecordType(String projectName) {
+	public void ATCETc024_VerifyTaskCallFunctionalityOnAdvisorRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3151,7 +3304,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc025_VerifyTaskCallFunctionalityOnLendorRecordType(String projectName) {
+	public void ATCETc025_VerifyTaskCallFunctionalityOnLendorRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3368,7 +3521,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc026_VerifyTaskCallFunctionalityOnIntermediaryRecordType(String projectName) {
+	public void ATCETc026_VerifyTaskCallFunctionalityOnIntermediaryRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3585,7 +3738,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc027_VerifyTaskCallFunctionalityOnInstitutionRecordType(String projectName) {
+	public void ATCETc027_VerifyTaskCallFunctionalityOnInstitutionRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3802,7 +3955,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc028_VerifyTaskCallFunctionalityOnPortfolioCompanyRecordType(String projectName) {
+	public void ATCETc028_VerifyTaskCallFunctionalityOnPortfolioCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4051,7 +4204,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc029_VerifyTaskCallFunctionalityOnPrivateEquityRecordType(String projectName) {
+	public void ATCETc029_VerifyTaskCallFunctionalityOnPrivateEquityRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4298,11 +4451,13 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	public void ATETc030_VerifyTaskCallFunctionalityOnContactRecordType(String projectName) {
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc030_VerifyTaskCallFunctionalityOnContactRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName=ATCERecord13;
+		String recordName=ATCE_Con1;
 		String taskSubject=ATCE_ATSubject1;
 		String taskRelatedTo=ATCE_ATRelatedTo1;
 		String taskNotes=ATCE_ATNote1;
@@ -4317,16 +4472,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		String taskDueDate1 =ATCE_ATDueDate2;
 		
 		String contactSectionName=ATCE_ConName7;
-		String contactSectionTitle=ATCE_ConTitle7;
-		String contactSectionDeal=ATCE_ConDeal7;
-		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall7;
-		String contactSectionEmail=ATCE_ConEmail7;
 
-		String[] firmsTaggedName= {ATCE_TaggedFirmsName1,ATCE_TaggedFirmsName2,ATCE_TaggedFirmsName3,ATCE_TaggedFirmsName4,ATCE_TaggedFirmsName5,ATCE_TaggedFirmsName6,ATCE_TaggedFirmsName7,ATCE_TaggedFirmsName8,ATCE_TaggedFirmsName10};
-		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount1,ATCE_TaggedFirmsCount2,ATCE_TaggedFirmsCount3,ATCE_TaggedFirmsCount4,ATCE_TaggedFirmsCount5,ATCE_TaggedFirmsCount6,ATCE_TaggedFirmsCount7,ATCE_TaggedFirmsCount8,ATCE_TaggedFirmsCount10};
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName1,ATCE_TaggedFirmsName2,ATCE_TaggedFirmsName3,ATCE_TaggedFirmsName4,ATCE_TaggedFirmsName5,ATCE_TaggedFirmsName6,ATCE_TaggedFirmsName7,ATCE_TaggedFirmsName8,ATCE_TaggedFirmsName9};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount1,ATCE_TaggedFirmsCount2,ATCE_TaggedFirmsCount3,ATCE_TaggedFirmsCount4,ATCE_TaggedFirmsCount5,ATCE_TaggedFirmsCount6,ATCE_TaggedFirmsCount7,ATCE_TaggedFirmsCount8,ATCE_TaggedFirmsCount9};
 
-		String[] peopleTaggedName= {ATCE_TaggedPeopleName1,ATCE_TaggedPeopleName2,ATCE_TaggedPeopleName3,ATCE_TaggedPeopleName4,ATCE_TaggedPeopleName5,ATCE_TaggedPeopleName7};
-		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount1,ATCE_TaggedPeopleCount2,ATCE_TaggedPeopleCount3,ATCE_TaggedPeopleCount4,ATCE_TaggedPeopleCount5,ATCE_TaggedPeopleCount7};
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName1,ATCE_TaggedPeopleName2,ATCE_TaggedPeopleName3,ATCE_TaggedPeopleName4,ATCE_TaggedPeopleName5,ATCE_TaggedPeopleName6};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount1,ATCE_TaggedPeopleCount2,ATCE_TaggedPeopleCount3,ATCE_TaggedPeopleCount4,ATCE_TaggedPeopleCount5,ATCE_TaggedPeopleCount6};
 				
 		String[] dealTaggedName= {ATCE_TaggedDealName1};
 		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount1};
@@ -4376,11 +4527,11 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-			if (lp.clickOnTab(projectName, tabObj1)) {
+			if (lp.clickOnTab(projectName, tabObj2)) {
 
-				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
 
-				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
 						recordName, 30)) {
 					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
@@ -4433,17 +4584,6 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							
 						}
 						
-
-						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
-						if(result4.isEmpty())
-						{
-							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
-							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
-						}
 						
 						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
 						if(result5.isEmpty())
@@ -4455,20 +4595,34 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 						}
+					
+						ArrayList<String> result6=bp.verifyRecordOnConnectionsSectionInAcuity(recordName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+
+						if(result6.isEmpty())
+						{
+							log(LogStatus.INFO, "The records have been verified on Connection section in Acuity user : "+connectionUserName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records are not verified on Connection section in Acuity. user : "+connectionUserName+" "+result6, YesNo.No);
+							sa.assertTrue(false,  "The records are not verified on Connection section in Acuity.  user : "+connectionUserName+" "+result6);
+						}
 						
-						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(connectionUserName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
 						{
 							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
 							
-							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
-							if(result6.isEmpty())
+							ArrayList<String> result7=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
+							if(result7.isEmpty())
 							{
 								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
 							}
 							else
 							{
-								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
-								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result7, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result7);
 							}
 						
 						}
@@ -4478,48 +4632,565 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
 						}
 						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj2, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc031_VerifyTaskCallFunctionalityOnDealRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Deal1;
+	
+		String taskSubject=ATCE_ATSubject1;
+		String taskRelatedTo=ATCE_ATRelatedTo1;
+		String taskNotes=ATCE_ATNote1;
+		String taskStatus=ATCE_AdvanceStatus1;
+		String taskPriority=ATCE_AdvancePriority1;	
+		String taskDueDate =ATCE_ATDueDate1;
+		
+		String taskSubject1=ATCE_ATSubject2;
+		String taskRelatedTo1=ATCE_ATRelatedTo2;
+		String taskNotes1=ATCE_ATNote2;
+		
+		String taskDueDate1 =ATCE_ATDueDate2;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName1,ATCE_TaggedFirmsName2,ATCE_TaggedFirmsName3,ATCE_TaggedFirmsName4,ATCE_TaggedFirmsName5,ATCE_TaggedFirmsName6,ATCE_TaggedFirmsName7,ATCE_TaggedFirmsName8,ATCE_TaggedFirmsName9};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount1,ATCE_TaggedFirmsCount2,ATCE_TaggedFirmsCount3,ATCE_TaggedFirmsCount4,ATCE_TaggedFirmsCount5,ATCE_TaggedFirmsCount6,ATCE_TaggedFirmsCount7,ATCE_TaggedFirmsCount8,ATCE_TaggedFirmsCount9};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName1,ATCE_TaggedPeopleName2,ATCE_TaggedPeopleName3,ATCE_TaggedPeopleName4,ATCE_TaggedPeopleName5,ATCE_TaggedPeopleName6,ATCE_TaggedPeopleName7};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount1,ATCE_TaggedPeopleCount2,ATCE_TaggedPeopleCount3,ATCE_TaggedPeopleCount4,ATCE_TaggedPeopleCount5,ATCE_TaggedPeopleCount6,ATCE_TaggedPeopleCount7};
+	
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj4)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+						ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Task,taskSubject, taskNotes, true, false,null,null);
+						if (result.isEmpty()) {
+							log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject + " record is not verified on intraction. "+result,YesNo.No);
+							sa.assertTrue(false,taskSubject + " record is not verified on intraction. "+result);
+						}
 						
-						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
-						if(result7.isEmpty())
+						ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1,IconType.Call,taskSubject1, taskNotes1, true, false,null,null);
+						if (result1.isEmpty()) {
+							log(LogStatus.PASS,taskSubject1 + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject1 + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject1 + " record is not verified on intraction. "+result1,YesNo.No);
+							sa.assertTrue(false,taskSubject1 + " record is not verified on intraction. "+result1);
+						}
+						
+						ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.AcuityDetails);
+						
+						if(result2.isEmpty())
 						{
-							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
 						}
 						else
 						{
-							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
-							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+							
 						}
 						
-						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
-								action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
-							String parentID=switchOnWindow(driver);
-							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
-							{
-								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
-								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
-								if(result6.isEmpty())
-								{
-									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
-								}
-								else
-								{
-									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
-									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
-								}
-							}
-							else
-							{
-								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
-								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
-							}		
-							driver.close();
-							driver.switchTo().window(parentID);
+                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
+						
+						if(result3.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
 						}
 						else
 						{
-							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
-							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+							
+						}
+												
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null, null,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc032_VerifyTaskCallFunctionalityOnFundraisingRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fundraising1;
+	
+		String taskSubject=ATCE_ATSubject1;
+		String taskRelatedTo=ATCE_ATRelatedTo1;
+		String taskNotes=ATCE_ATNote1;
+		String taskStatus=ATCE_AdvanceStatus1;
+		String taskPriority=ATCE_AdvancePriority1;	
+		String taskDueDate =ATCE_ATDueDate1;
+		
+		String taskSubject1=ATCE_ATSubject2;
+		String taskRelatedTo1=ATCE_ATRelatedTo2;
+		String taskNotes1=ATCE_ATNote2;
+		
+		String taskDueDate1 =ATCE_ATDueDate2;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName1,ATCE_TaggedFirmsName2,ATCE_TaggedFirmsName3,ATCE_TaggedFirmsName4,ATCE_TaggedFirmsName5,ATCE_TaggedFirmsName6,ATCE_TaggedFirmsName7,ATCE_TaggedFirmsName8,ATCE_TaggedFirmsName9,ATCE_TaggedFirmsName10};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount1,ATCE_TaggedFirmsCount2,ATCE_TaggedFirmsCount3,ATCE_TaggedFirmsCount4,ATCE_TaggedFirmsCount5,ATCE_TaggedFirmsCount6,ATCE_TaggedFirmsCount7,ATCE_TaggedFirmsCount8,ATCE_TaggedFirmsCount9,ATCE_TaggedFirmsCount10};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName1,ATCE_TaggedPeopleName2,ATCE_TaggedPeopleName3,ATCE_TaggedPeopleName4,ATCE_TaggedPeopleName5,ATCE_TaggedPeopleName6,ATCE_TaggedPeopleName7};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount1,ATCE_TaggedPeopleCount2,ATCE_TaggedPeopleCount3,ATCE_TaggedPeopleCount4,ATCE_TaggedPeopleCount5,ATCE_TaggedPeopleCount6,ATCE_TaggedPeopleCount7};
+	
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+						ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Task,taskSubject, taskNotes, true, false,null,null);
+						if (result.isEmpty()) {
+							log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject + " record is not verified on intraction. "+result,YesNo.No);
+							sa.assertTrue(false,taskSubject + " record is not verified on intraction. "+result);
+						}
+						
+						ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1,IconType.Call,taskSubject1, taskNotes1, true, false,null,null);
+						if (result1.isEmpty()) {
+							log(LogStatus.PASS,taskSubject1 + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject1 + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject1 + " record is not verified on intraction. "+result1,YesNo.No);
+							sa.assertTrue(false,taskSubject1 + " record is not verified on intraction. "+result1);
+						}
+						
+						ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.AcuityDetails);
+						
+						if(result2.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+							
+						}
+						
+                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
+						
+						if(result3.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+							
+						}
+												
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null, null,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc033_VerifyTaskCallFunctionalityOnFundRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fund1;
+	
+		String taskSubject=ATCE_ATSubject1;
+		String taskRelatedTo=ATCE_ATRelatedTo1;
+		String taskNotes=ATCE_ATNote1;
+		String taskStatus=ATCE_AdvanceStatus1;
+		String taskPriority=ATCE_AdvancePriority1;	
+		String taskDueDate =ATCE_ATDueDate1;
+		
+		String taskSubject1=ATCE_ATSubject2;
+		String taskRelatedTo1=ATCE_ATRelatedTo2;
+		String taskNotes1=ATCE_ATNote2;
+		
+		String taskDueDate1 =ATCE_ATDueDate2;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName1,ATCE_TaggedFirmsName2,ATCE_TaggedFirmsName3,ATCE_TaggedFirmsName4,ATCE_TaggedFirmsName5,ATCE_TaggedFirmsName6,ATCE_TaggedFirmsName7,ATCE_TaggedFirmsName8,ATCE_TaggedFirmsName9,ATCE_TaggedFirmsName10};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount1,ATCE_TaggedFirmsCount2,ATCE_TaggedFirmsCount3,ATCE_TaggedFirmsCount4,ATCE_TaggedFirmsCount5,ATCE_TaggedFirmsCount6,ATCE_TaggedFirmsCount7,ATCE_TaggedFirmsCount8,ATCE_TaggedFirmsCount9,ATCE_TaggedFirmsCount10};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName1,ATCE_TaggedPeopleName2,ATCE_TaggedPeopleName3,ATCE_TaggedPeopleName4,ATCE_TaggedPeopleName5,ATCE_TaggedPeopleName6,ATCE_TaggedPeopleName7};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount1,ATCE_TaggedPeopleCount2,ATCE_TaggedPeopleCount3,ATCE_TaggedPeopleCount4,ATCE_TaggedPeopleCount5,ATCE_TaggedPeopleCount6,ATCE_TaggedPeopleCount7};
+	
+		String[] dealTaggedName= {ATCE_TaggedDealName1};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount1};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj3)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj3, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+						ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Task,taskSubject, taskNotes, true, false,null,null);
+						if (result.isEmpty()) {
+							log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject + " record is not verified on intraction. "+result,YesNo.No);
+							sa.assertTrue(false,taskSubject + " record is not verified on intraction. "+result);
+						}
+						
+						ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1,IconType.Call,taskSubject1, taskNotes1, true, false,null,null);
+						if (result1.isEmpty()) {
+							log(LogStatus.PASS,taskSubject1 + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject1 + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject1 + " record is not verified on intraction. "+result1,YesNo.No);
+							sa.assertTrue(false,taskSubject1 + " record is not verified on intraction. "+result1);
+						}
+						
+						ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.AcuityDetails);
+						
+						if(result2.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+							
+						}
+						
+                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
+						
+						if(result3.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+							
+						}
+												
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj3, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj3);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc034_VerifyTaskCallFunctionalityOnThemeRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Theme1;	
+
+		String taskSubject=ATCE_ATSubject1;
+		String taskRelatedTo=ATCE_ATRelatedTo1;
+		String taskNotes=ATCE_ATNote1;
+		String taskStatus=ATCE_AdvanceStatus1;
+		String taskPriority=ATCE_AdvancePriority1;	
+		String taskDueDate =ATCE_ATDueDate1;
+
+		String taskSubject1=ATCE_ATSubject2;
+		String taskRelatedTo1=ATCE_ATRelatedTo2;
+		String taskNotes1=ATCE_ATNote2;
+
+		String taskDueDate1 =ATCE_ATDueDate2;
+
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, TabName.Themes.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : "+TabName.Themes.toString(), YesNo.No);
+
+			String parentWindowID=bp.clickOnThemeRecord(recordName);
+
+			if (parentWindowID!=null) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Task,taskSubject, taskNotes, true, false,null,null);
+					if (result.isEmpty()) {
+						log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
+						sa.assertTrue(true,taskSubject + " record has been verified on intraction");
+					} else {
+						log(LogStatus.ERROR,taskSubject + " record is not verified on intraction. "+result,YesNo.No);
+						sa.assertTrue(false,taskSubject + " record is not verified on intraction. "+result);
+					}
+
+					ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1,IconType.Call,taskSubject1, taskNotes1, true, false,null,null);
+					if (result1.isEmpty()) {
+						log(LogStatus.PASS,taskSubject1 + " record has been verified on intraction",YesNo.No);
+						sa.assertTrue(true,taskSubject1 + " record has been verified on intraction");
+					} else {
+						log(LogStatus.ERROR,taskSubject1 + " record is not verified on intraction. "+result1,YesNo.No);
+						sa.assertTrue(false,taskSubject1 + " record is not verified on intraction. "+result1);
+					}
+
+					ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.AcuityDetails);
+
+					if(result2.isEmpty())
+					{
+						log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+						sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+					}
+					else
+					{
+						log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+						sa.assertTrue(true,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+
+					}
+
+					ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
+
+					if(result3.isEmpty())
+					{
+						log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+						sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+					}
+					else
+					{
+						log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+						sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+			}
+			driver.close();
+			driver.switchTo().window(parentWindowID);
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+TabName.Themes.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+TabName.Themes.toString());
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc035_verifyingPopup(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName="Test Account 2_COMPANY";
+		
+			
+		String[] section= {"Tagged","Interactions","Contacts","Deals"};
+		String[] message= {bp.taggedInfoMessage,bp.interactionsInfoMessage,bp.contactInfoMessage,bp.dealInfoMessage};
+
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+						ArrayList<String> result=bp.infoMessageOfAcuitySection(section, message);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result, YesNo.No);
+							sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result);
 						}
 						
 					}
@@ -4544,6 +5215,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
+	
+	
 	
 }
 

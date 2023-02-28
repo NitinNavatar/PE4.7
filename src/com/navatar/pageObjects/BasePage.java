@@ -9435,4 +9435,20 @@ public abstract class BasePage extends BaseLib {
 	@FindBy(xpath = "//div[contains(@id,\"toast\")]/span[text()=\"Record was created.\"]")
 	private WebElement createRecordsPopupSuccessMsg;
 
+	public WebElement infoIconOfSectionName(String sectionName, int timeOut) {
+		
+		String path = "//span[text()='"+sectionName+"']/../..//lightning-helptext//button/lightning-primitive-icon";
+		return FindElement(driver, path, "info icon of section", action.BOOLEAN,
+				timeOut);
+	}
+	
+   public WebElement infoPopupMessageOfSection(int timeOut) {
+		
+		String path = "//lightning-primitive-bubble[@role='tooltip']//div[@class='slds-popover__body']";
+		return FindElement(driver, path, "info popup message", action.BOOLEAN,
+				timeOut);
+	}
+	
+	//lightning-primitive-bubble[@role='tooltip']//div[@class='slds-popover__body']
+	
 }
