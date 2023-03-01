@@ -72,5 +72,15 @@ public class ThemePage extends BasePageBusinessLayer {
 		return isDisplayed(driver, type, "Visibility", timeOut, recordName);
 
 	}
+	
+	@FindBy(xpath = "//input[contains(@name,'Search')]")
+	private WebElement searchIcon;
+
+	/**
+	 * @return the searchIcon
+	 */
+	public WebElement getSearchIcon(int timeOut) {
+		return isDisplayed(driver, searchIcon, "Visibility", timeOut, "Search Icon");
+	}
 
 }
