@@ -946,7 +946,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		String[] labelNames = null;
 		String[] labelValue = null;
 		if (otherLabels != null && !"".equalsIgnoreCase(otherLabels)) {
-			labelNames = otherLabels.split("<Break>", -1);
+			labelNames = otherLabels.replaceAll("_", " ").split("<Break>", -1);
 			labelValue = otherLabelValues.split("<Break>", -1);
 		}
 		ThreadSleep(2000);

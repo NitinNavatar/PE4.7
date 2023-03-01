@@ -2523,6 +2523,12 @@ public class HomePage extends BasePageBusinessLayer {
 					FindElement(driver, xpath, "Text Found: " + recordName, action.SCROLLANDBOOLEAN, timeOut),
 					"Visibility", timeOut, "textToSearch");
 		}
+		
+//		if (recordName.contains("Event")) {
+//			xpath = "//*/span/a[text()=\"" + recordName + "\"][not(contains(@data-aura-class,\"uiOutputURL\"))]";
+//		} else
+//			xpath = "//*/span/a[text()=\"" + recordName + "\"][not(contains(@data-aura-class,\"uiOutputURL\"))]";
+//	}
 	}
 
 	public WebElement globalSearchSideNavOptionLink(String globalSearchSideNavOptionName, int timeOut) {
