@@ -551,6 +551,16 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getAddBtn(int timeOut) {
 		return isDisplayed(driver, AddBtn, "Visibility", timeOut, "Custom Tab Add Button");
 	}
+	
+	@FindBy(xpath = "//a//img[@title='Remove']")
+	private WebElement RemoveBtn;
+
+	/**
+	 * @return the customTabRemoveBtn
+	 */
+	public WebElement getRemoveBtn(int timeOut) {
+		return isDisplayed(driver, RemoveBtn, "Visibility", timeOut, "Custom Tab Remove Button");
+	}
 
 	@FindBy(xpath = "//label[text()='Available Fields']/../following-sibling::select")
 	private WebElement availableFieldsLayout;
