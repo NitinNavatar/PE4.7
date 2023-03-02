@@ -324,7 +324,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
 		
-		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage,bp.contactInfoMessage};		
+		String[] infoMessage=  {bp.taggedInfoMessageInstitution,bp.interactionsInfoMessage,bp.contactInfoMessage};		
 		
 
 		String[] arrTabName= tabsOnTagged.split("<break>");		
@@ -474,7 +474,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
 		
-		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage,bp.contactInfoMessage,bp.dealInfoMessage};		
+		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage,bp.contactInfoMessage,bp.dealInfoMessageAdvisor};		
 		
 
 		String[] arrTabName= tabsOnTagged.split("<break>");		
@@ -1203,7 +1203,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc009_VerifyUIOfAcuityTabOnContact(String projectName) {
+	public void ATCETc009_VerifyUIOfAcuityTabOnContact(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1640,7 +1640,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
 		
-		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage};	
+		String[] infoMessage=  {bp.taggedInfoMessageFundarsing,bp.interactionsInfoMessage};	
 
 		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
