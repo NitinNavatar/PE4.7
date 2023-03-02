@@ -2472,8 +2472,9 @@ public class SetupPageBusinessLayer extends SetupPage {
 			// "']/..//following-sibling::td[text()='" + labelValue[1] + "']";
 			// xpath = "//*[text()='" + labelValue[0] +
 			// "']/..//following-sibling::td/img[@title='" + labelValue[1] + "']";
-			xpath = "//*[text()='" + labelValue[0] + "']/..//*[@title='" + labelValue[1] + "' or text()='" + labelValue[1] + "']";
-			
+			xpath = "//*[text()='" + labelValue[0] + "']/..//*[@title='" + labelValue[1] + "' or text()='"
+					+ labelValue[1] + "']";
+
 			ele = FindElement(driver, xpath, labelValue[0] + " with Value " + labelValue[1], action.BOOLEAN, 10);
 			if (ele != null) {
 				log(LogStatus.PASS, labelValue[0] + " with Value " + labelValue[1] + " verified", YesNo.No);
@@ -6466,7 +6467,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 				ThreadSleep(5000);
 				xpath = "//td[@id='topButtonRow']//input[@title='Edit']";
 				ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, 10);
-				//ele = isDisplayed(driver, ele, "visibility", 10, "Edit Button");
+				// ele = isDisplayed(driver, ele, "visibility", 10, "Edit Button");
 				if (click(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO,
 							"able to click on edit button for " + profileForSelection + " Profiles settiing", YesNo.No);
@@ -7099,6 +7100,107 @@ public class SetupPageBusinessLayer extends SetupPage {
 					YesNo.Yes);
 			sa.assertTrue(false,
 					"Not able to click on setup link so cannot create Fields Objects for custom object Marketing Event");
+		}
+
+		return flag;
+	}
+
+	public boolean defaultRecordTypeSelect(String profileName, String objectName, String defaultRecordType) {
+		boolean flag = false;
+		String xPath = "";
+		WebElement ele = null;
+
+		ThreadSleep(5000);
+		if (CommonLib.switchToFrame(driver, 50, getuserProfileIframe(50))) {
+			ThreadSleep(5000);
+			log(LogStatus.INFO, "Successfully switched to User Profile Iframe", YesNo.No);
+			xPath = "//div[@class='bRelatedList']//a[text()='" + profileName + "']";
+			ele = CommonLib.FindElement(driver, xPath, profileName + " profile name", action.SCROLLANDBOOLEAN, 50);
+			if (CommonLib.clickUsingJavaScript(driver, ele, profileName + " profile name", action.BOOLEAN)) {
+				log(LogStatus.INFO, "Successfully clicked on the " + profileName + " profile name", YesNo.No);
+				ThreadSleep(12000);
+				CommonLib.switchToDefaultContent(driver);
+				ThreadSleep(2000);
+				if (CommonLib.switchToFrame(driver, 50, getProfileIframe(50))) {
+					ThreadSleep(5000);
+					log(LogStatus.INFO, "Successfully switched to Profile Iframe", YesNo.No);
+					xPath = "//h4[contains(text(),'Record Type Settings')]/ancestor::tbody//td[text()='" + objectName
+							+ "s']/following-sibling::td/a";
+					ele = FindElement(driver, xPath, objectName.toString() + " edit button", action.SCROLLANDBOOLEAN,
+							20);
+					if (click(driver, ele, objectName.toString() + " edit button", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on edit button of " + objectName.toString(), YesNo.Yes);
+						ThreadSleep(9000);
+						CommonLib.switchToDefaultContent(driver);
+						if (CommonLib.switchToFrame(driver, 50, geteditRecordTypeIframe(50))) {
+
+							log(LogStatus.INFO, "Successfully switched to edit record Iframe", YesNo.No);
+							ThreadSleep(5000);
+
+							if (CommonLib.selectVisibleTextFromDropDown(driver, defaultRecordTypeOption(15),
+									"Default Record Type", defaultRecordType)) {
+
+								log(LogStatus.INFO, "Successfully Select the Dafault Record Type: " + defaultRecordType
+										+ " for Object: " + objectName, YesNo.No);
+
+								if (click(driver, getSaveButton(30), "Save button", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on the save button", YesNo.No);
+
+									ThreadSleep(5000);
+									CommonLib.switchToDefaultContent(driver);
+									CommonLib.switchToDefaultContent(driver);
+									CommonLib.refresh(driver);
+
+									if (CommonLib.switchToFrame(driver, 50, getProfileIframe(50))) {
+
+										log(LogStatus.INFO, "Successfully switched to Profile Iframe", YesNo.No);
+										ThreadSleep(5000);
+
+										xPath = "//h4[contains(text(),'Record Type Settings')]/ancestor::tbody//td[text()='"
+												+ objectName + "s']/following-sibling::td/a";
+										ele = FindElement(driver, xPath, objectName.toString() + " edit button",
+												action.SCROLLANDBOOLEAN, 20);
+										if (ele != null) {
+											log(LogStatus.INFO, "Successfully select the Default Record Type: "
+													+ defaultRecordType + " for Object: " + objectName, YesNo.No);
+											flag = true;
+										} else {
+											log(LogStatus.ERROR,
+													"Not Successfully select the Default Record Type: "
+															+ defaultRecordType + " for Object: " + objectName,
+													YesNo.Yes);
+										}
+
+									} else {
+										log(LogStatus.ERROR, "Not able to switched to Profile Iframe", YesNo.Yes);
+									}
+
+								} else {
+									log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
+								}
+
+							} else {
+								log(LogStatus.ERROR, "Not able to Select default RecordType: " + defaultRecordType
+										+ " as it is not available", YesNo.No);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to switch to edit record Iframe", YesNo.No);
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not able to click on edit button of " + objectName.toString(), YesNo.Yes);
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not able to switched to Profile Iframe", YesNo.Yes);
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to click on the " + profileName + " profile name", YesNo.Yes);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to switched to User profile Iframe", YesNo.Yes);
 		}
 
 		return flag;

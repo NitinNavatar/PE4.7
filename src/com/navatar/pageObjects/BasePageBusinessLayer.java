@@ -22237,7 +22237,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 								if (recordTypeOrAccount.contains("<Default>")) {
 
-									String expectedDefaultRecortType = newRecordName.replace("<Default>", "");
+									String expectedDefaultRecortType = recordTypeOrAccount.replace("<Default>", "");
 									String actualDefaultRecortType = CommonLib.getText(driver,
 											createRecordPopUpContactInputSuggestionBoxes(index, 3),
 											expectedDefaultRecortType, action.BOOLEAN);
@@ -22707,48 +22707,50 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return negativeResult;
 	}
-	
-	public ArrayList<String> infoMessageOfAcuitySection(String[] sectionName, String[] infoMessage)
-	{
-		ArrayList<String> result=new ArrayList<String>();
-		if(sectionName.length==infoMessage.length)
-		{
-			for(int i=0; i<sectionName.length; i++)
-			{
+
+	public ArrayList<String> infoMessageOfAcuitySection(String[] sectionName, String[] infoMessage) {
+		ArrayList<String> result = new ArrayList<String>();
+		if (sectionName.length == infoMessage.length) {
+			for (int i = 0; i < sectionName.length; i++) {
 				ThreadSleep(2000);
-				scrollDownThroughWebelementInCenter(driver, infoIconOfSectionName(sectionName[i],20), "info");
+				scrollDownThroughWebelementInCenter(driver, infoIconOfSectionName(sectionName[i], 20), "info");
 				ThreadSleep(3000);
-				mouseOverOperation(driver, infoIconOfSectionName(sectionName[i],20));
+				mouseOverOperation(driver, infoIconOfSectionName(sectionName[i], 20));
 				ThreadSleep(2000);
-				/*if(clickUsingJavaScript(driver, infoIconOfSectionName(sectionName[i],20), "info icon of "+sectionName[i], null))
-				{
-					log(LogStatus.INFO, "Clicked on info icon of "+sectionName[i], YesNo.No);*/
-					ThreadSleep(1000);
-					String message=getText(driver, infoPopupMessageOfSection(20), "info message of "+sectionName[i]+" poup", action.BOOLEAN);
-					if(infoMessage[i].equals(message))
-					{
-						log(LogStatus.INFO, "Expected message : "+infoMessage[i]+" has been matched with Actual message : "+message+" on popup of Section : "+sectionName[i], YesNo.No);
-					}
-					else
-					{
-						log(LogStatus.ERROR, "Expected message : "+infoMessage[i]+" is not matched with Actual message : "+message+" on popup of Section : "+sectionName[i], YesNo.No);
-						result.add("Expected message : "+infoMessage[i]+" is not matched with Actual message : "+message+" on popup of Section : "+sectionName[i]);		
-					}
-					/*
-					 * } else { log(LogStatus.ERROR,
-					 * "Not able to click on info icon of "+sectionName[i], YesNo.No);
-					 * result.add("Not able to click on info icon of "+sectionName[i]); }
-					 */
+				/*
+				 * if(clickUsingJavaScript(driver, infoIconOfSectionName(sectionName[i],20),
+				 * "info icon of "+sectionName[i], null)) { log(LogStatus.INFO,
+				 * "Clicked on info icon of "+sectionName[i], YesNo.No);
+				 */
+				ThreadSleep(1000);
+				String message = getText(driver, infoPopupMessageOfSection(20),
+						"info message of " + sectionName[i] + " poup", action.BOOLEAN);
+				if (infoMessage[i].equals(message)) {
+					log(LogStatus.INFO,
+							"Expected message : " + infoMessage[i] + " has been matched with Actual message : "
+									+ message + " on popup of Section : " + sectionName[i],
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Expected message : " + infoMessage[i] + " is not matched with Actual message : " + message
+									+ " on popup of Section : " + sectionName[i],
+							YesNo.No);
+					result.add("Expected message : " + infoMessage[i] + " is not matched with Actual message : "
+							+ message + " on popup of Section : " + sectionName[i]);
+				}
+				/*
+				 * } else { log(LogStatus.ERROR,
+				 * "Not able to click on info icon of "+sectionName[i], YesNo.No);
+				 * result.add("Not able to click on info icon of "+sectionName[i]); }
+				 */
 			}
-		}
-		else
-		{
+		} else {
 			log(LogStatus.ERROR, "The length of section name and info message are not equal", YesNo.No);
 			result.add("The length of section name and info message are not equal");
-			
+
 		}
 		return result;
-		
+
 	}
 
 }
