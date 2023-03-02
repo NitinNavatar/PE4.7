@@ -7182,6 +7182,17 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
+	public WebElement dealAcuityDateReceived2(String dealName, int timeOut) {
+
+		String xpath = "//a[text()='" + dealName
+				+ "']/ancestor::tr//td[@data-label='Date Received']//div/*";
+		try {
+			return FindElement(driver, xpath, "Header: " + "dateReceived", action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Header: " + "dateReceived", action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
 
 	public WebElement dealAcuity2DateReceived(String dealName, String dateReceived, int timeOut) {
 

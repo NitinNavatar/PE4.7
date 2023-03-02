@@ -1377,6 +1377,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			xpath = "//*[text()='" + labelTextBox + "']/following-sibling::div//input";
 		else if (pageName.equalsIgnoreCase(PageName.ThemesPage.toString()))
 			xpath = "//*[text()='" + labelTextBox + "']/following-sibling::div//input";
+		else if (pageName.equalsIgnoreCase(PageName.ClipsPage.toString()))
+			xpath = "//*[text()='" + labelTextBox + "']/following-sibling::div//input";
 		else if (pageName.equalsIgnoreCase(PageName.FundraisingPage.toString()))
 			xpath = "//*[text()='" + labelTextBox + "']/following-sibling::div//input";
 		else if (pageName.equalsIgnoreCase(PageName.MEPageFromCalender.toString()))

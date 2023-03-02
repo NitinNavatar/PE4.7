@@ -40,6 +40,7 @@ import com.navatar.generic.EnumConstants.object;
 import com.navatar.generic.EnumConstants.recordTypeLabel;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.pageObjects.BasePageBusinessLayer;
+import com.navatar.pageObjects.ClipPageBusinessLayer;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
 import com.navatar.pageObjects.DealPageBusinessLayer;
 import com.navatar.pageObjects.FundRaisingPageBusinessLayer;
@@ -51,6 +52,7 @@ import com.navatar.pageObjects.NavigationPageBusineesLayer;
 import com.navatar.pageObjects.ResearchPageBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.navatar.pageObjects.TaskPageBusinessLayer;
+import com.navatar.pageObjects.ThemePageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class AcuityResearch extends BaseLib{
@@ -1008,7 +1010,7 @@ public class AcuityResearch extends BaseLib{
 	String ele;
 	String headerName;
 	
-	String[] searchValues = {AR_Firm1};
+	String[] searchValues = {AR_Data1};
 	
 	for(String searchValue : searchValues) {
 		
@@ -2711,6 +2713,7 @@ public class AcuityResearch extends BaseLib{
 	public void ARTc019_3_RenameThemeNameAndVerifyResearchData(String projectName) {
     LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
     FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+    ThemePageBusinessLayer tp = new ThemePageBusinessLayer(driver);
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
 	 
@@ -2718,24 +2721,31 @@ public class AcuityResearch extends BaseLib{
    
 	   if (fp.clickOnTab(environment, mode, TabName.ThemesTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.ThemesTab, YesNo.No);
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm54.replace("  ", "").replace("\"", ""), 10)) {
-	           if (fp.UpdateFundName(projectName, AR_Research54, 10)) {
-	               log(LogStatus.INFO, "successfully update contact name " + AR_Research54, YesNo.Yes);
+	      if (tp.clickOnAlreadyCreatedItem(projectName, AR_Firm54.replace("  ", "").replace("\"", ""), 10)) {
+	    	  switchOnWindow(driver);
+	    	  ThreadSleep(3000);
+	           if (tp.UpdateThemeName(projectName, AR_Research54.replace("\"", ""), 10)) {
+	               log(LogStatus.INFO, "successfully update Theme name " + AR_Research54, YesNo.Yes);
 	           } else {
-	               sa.assertTrue(false, "not able to update deal name " + AR_Research54);
-	               log(LogStatus.SKIP, "not able to update deal name " + AR_Research54, YesNo.Yes);
+	               sa.assertTrue(false, "not able to update Theme name " + AR_Research54);
+	               log(LogStatus.SKIP, "not able to update Theme name " + AR_Research54, YesNo.Yes);
 	           }
 	       } else {
-	          sa.assertTrue(false, "Not Able to open created Deal : " + AR_Firm54);
-	           log(LogStatus.SKIP, "Not Able to open created Deal: " + AR_Firm54, YesNo.Yes);
+	          sa.assertTrue(false, "Not Able to open created Theme : " + AR_Firm54);
+	           log(LogStatus.SKIP, "Not Able to open created Theme: " + AR_Firm54, YesNo.Yes);
 	      }
 	   } else {
 	       log(LogStatus.ERROR, "Not able to click on " + TabName.ThemesTab + " tab", YesNo.Yes);
 	       sa.assertTrue(false, "Not able to click on " + TabName.ThemesTab + " tab");
 	   }
-	   
+//	 driver.close();
+	ThreadSleep(3000);
 	switchToDefaultContent(driver);
-	ThreadSleep(5000);
+	refresh(driver);
+	lp.CRMlogout();
+	ThreadSleep(2000);
+	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+	ThreadSleep(2000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 			if(sendKeys(driver, rp.getTextAreaResearch(10),AR_Research54, "Research Input Field", action.BOOLEAN)){
@@ -2884,13 +2894,17 @@ public class AcuityResearch extends BaseLib{
     FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
-	 
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	ThemePageBusinessLayer tp = new ThemePageBusinessLayer(driver);
+	ClipPageBusinessLayer cp = new ClipPageBusinessLayer(driver);
 		 lp.CRMLogin(superAdminUserName, adminPassword, appName);
    
 	   if (fp.clickOnTab(environment, mode, TabName.ClipsTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.ClipsTab, YesNo.No);
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm55.replace("  ", "").replace("\"", ""), 10)) {
-	           if (fp.UpdateFundName(projectName, AR_Research55, 10)) {
+	      if (tp.clickOnAlreadyCreatedItem(projectName, AR_Firm55.replace("  ", "").replace("\"", ""), 10)) {
+//	    	  ThreadSleep(3000);
+//				click(driver, bp.getPagePopUp(projectName, 5), "Page PopUp", action.BOOLEAN);
+	           if (cp.UpdateClipName(projectName,AR_Firm55.replace("  ", "").replace("\"", ""), AR_Research55.replace("\"", ""), 10)) {
 	               log(LogStatus.INFO, "successfully update contact name " + AR_Research55, YesNo.Yes);
 	           } else {
 	               sa.assertTrue(false, "not able to update deal name " + AR_Research55);
@@ -2906,7 +2920,12 @@ public class AcuityResearch extends BaseLib{
 	   }
 	   
 	switchToDefaultContent(driver);
-	ThreadSleep(5000);
+	ThreadSleep(3000);
+//	refresh(driver);
+	lp.CRMlogout();
+	ThreadSleep(2000);
+	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+	ThreadSleep(2000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 			if(sendKeys(driver, rp.getTextAreaResearch(10),AR_Research55, "Research Input Field", action.BOOLEAN)){
