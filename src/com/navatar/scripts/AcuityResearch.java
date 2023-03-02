@@ -40,6 +40,7 @@ import com.navatar.generic.EnumConstants.object;
 import com.navatar.generic.EnumConstants.recordTypeLabel;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.pageObjects.BasePageBusinessLayer;
+import com.navatar.pageObjects.ClipPageBusinessLayer;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
 import com.navatar.pageObjects.DealPageBusinessLayer;
 import com.navatar.pageObjects.FundRaisingPageBusinessLayer;
@@ -51,6 +52,7 @@ import com.navatar.pageObjects.NavigationPageBusineesLayer;
 import com.navatar.pageObjects.ResearchPageBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.navatar.pageObjects.TaskPageBusinessLayer;
+import com.navatar.pageObjects.ThemePageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class AcuityResearch extends BaseLib{
@@ -156,9 +158,82 @@ public class AcuityResearch extends BaseLib{
 		sa.assertAll();
 	}
 	
+@Parameters({ "projectName"})
+@Test
+	public void ARTc002_1_UpdateFirmRecordTypesAsActive(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	SetupPageBusinessLayer sp = new SetupPageBusinessLayer(driver);
+	
+	lp.CRMLogin(superAdminUserName, adminPassword,appName);
+	
+	String RecordTypeList = AR_OtherLabelName1;
+	String RecordTypeArray[] = RecordTypeList.split(breakSP, -1);
+	
+	String[][] RecordType = { { recordTypeLabel.Active.toString(), "Checked" }};
+	String parentID=null;
+	String value = "Not Checked";
+	
+	
+	for (int i = 0; i < RecordTypeArray.length; i++) {
+		home.notificationPopUpClose();
+		if (home.clickOnSetUpLink()) {
+			parentID = switchOnWindow(driver);
+			if (parentID != null) {
+				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Firm)) {
+					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Firm,
+							ObjectFeatureName.recordTypes)) {
+						if (sp.clickOnAlreadyCreatedLayout(RecordTypeArray[i])) {
+							switchToFrame(driver, 60, sp.getSetUpPageIframe(20));
+							if(sp.getRecordTypeLabelWithoutEditMode(projectName, recordTypeLabel.Active.toString(),value, 10) != null) {
+								log(LogStatus.ERROR,"Active field is not checked",YesNo.Yes);
+							if (sp.editRecordTypeForObject(projectName, RecordType, 10)) {
+								log(LogStatus.ERROR,RecordTypeArray[i]+" has been updated ",YesNo.Yes);	
+							}else {
+								log(LogStatus.ERROR,RecordTypeArray[i]+" not updated ",YesNo.Yes);
+								sa.assertTrue(false, RecordTypeArray[i]+" not updated ");
+							}
+							}
+							else
+							{
+								log(LogStatus.ERROR,RecordTypeArray[i]+" is already updated ",YesNo.Yes);
+							}
+						
+						}else {
+							log(LogStatus.ERROR, RecordTypeArray[i]+" is not clickable", YesNo.Yes);
+							sa.assertTrue(false, RecordTypeArray[i]+" is not clickable");
+						}
+				
+					}else {
+						log(LogStatus.ERROR, "object feature "+ObjectFeatureName.recordTypes+" is not clickable", YesNo.Yes);
+						sa.assertTrue(false, "object feature "+ObjectFeatureName.recordTypes+" is not clickable");
+					}
+				}else {
+					log(LogStatus.ERROR, "Firm object could not be found in object manager", YesNo.Yes);
+					sa.assertTrue(false, "Firm object could not be found in object manager");
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+				switchToDefaultContent(driver);
+			}else {
+				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch");
+			}
+		}else {
+			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "could not click on setup link");
+		}
+
+	}
+	lp.switchToLighting();
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();
+}
+
 	@Parameters({ "projectName"})
 	@Test
-	public void ARTc002_VerifyTheNavigationMenuItems(String projectName) {
+	public void ARTc002_2_VerifyTheNavigationMenuItems(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -453,7 +528,7 @@ public class AcuityResearch extends BaseLib{
 
 	
 	String[] profileForSelection = { "PE Standard User", "System Administrator" };
-	boolean isMakeAvailable = false;
+	boolean isMakeAvailable = true;
 	boolean isMakeDefault = false;
 	boolean flag = false;
 	String parentID=null;
@@ -558,7 +633,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, contactrecordType[i], isMakeAvailable,
-										null, isMakeDefault, null, 10);
+										profileForSelection, isMakeDefault, null, 10);
 							}
 						}
 						if (flag) {
@@ -610,7 +685,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, dealRecordType[i], isMakeAvailable,
-										null, isMakeDefault, null, 10);
+										profileForSelection, isMakeDefault, null, 10);
 							}
 						} else {
 							isMakeDefault = false;
@@ -674,7 +749,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, fundrecordType[i], isMakeAvailable,
-										null, isMakeDefault, null, 10);
+										profileForSelection, isMakeDefault, null, 10);
 							}
 						} else {
 							isMakeDefault = false;
@@ -739,7 +814,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, fundraisingrecordType[i],
-										isMakeAvailable, null, isMakeDefault, null, 10);
+										isMakeAvailable, profileForSelection, isMakeDefault, null, 10);
 							}
 						} else {
 							isMakeDefault = false;
@@ -998,7 +1073,7 @@ public class AcuityResearch extends BaseLib{
 
 @Parameters({ "projectName"})
 @Test
-	public void ARTc006_VerifyResearchFunctionalityForNSADMIN(String projectName) {
+	public void ARTc006_1_VerifyResearchFunctionalityForNSADMIN(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
@@ -1008,7 +1083,7 @@ public class AcuityResearch extends BaseLib{
 	String ele;
 	String headerName;
 	
-	String[] searchValues = {AR_Firm1};
+	String[] searchValues = {AR_Data1};
 	
 	for(String searchValue : searchValues) {
 		
@@ -1101,7 +1176,7 @@ public class AcuityResearch extends BaseLib{
 
 @Parameters({ "projectName"})
 @Test
-	public void ARTc006_VerifyResearchFunctionalityForValidData1(String projectName) {
+	public void ARTc006_2_VerifyResearchFunctionalityForValidData(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
@@ -1181,7 +1256,7 @@ public class AcuityResearch extends BaseLib{
 
 @Parameters({ "projectName"})
 @Test
-	public void ARTc006_VerifyResearchFunctionalityForValidData2(String projectName) {
+	public void ARTc006_3_VerifyResearchFunctionalityForValidData(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
@@ -1261,7 +1336,7 @@ public class AcuityResearch extends BaseLib{
 
 @Parameters({ "projectName"})
 @Test
-	public void ARTc006_VerifyResearchFunctionalityForValidData3(String projectName) {
+	public void ARTc006_4_VerifyResearchFunctionalityForValidData(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
@@ -1341,7 +1416,7 @@ public class AcuityResearch extends BaseLib{
 
 @Parameters({ "projectName"})
 @Test
-	public void ARTc006_VerifyResearchFunctionalityForValidData4(String projectName) {
+	public void ARTc006_5_VerifyResearchFunctionalityForValidData(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
@@ -2711,6 +2786,7 @@ public class AcuityResearch extends BaseLib{
 	public void ARTc019_3_RenameThemeNameAndVerifyResearchData(String projectName) {
     LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
     FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+    ThemePageBusinessLayer tp = new ThemePageBusinessLayer(driver);
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
 	 
@@ -2718,24 +2794,31 @@ public class AcuityResearch extends BaseLib{
    
 	   if (fp.clickOnTab(environment, mode, TabName.ThemesTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.ThemesTab, YesNo.No);
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm54.replace("  ", "").replace("\"", ""), 10)) {
-	           if (fp.UpdateFundName(projectName, AR_Research54, 10)) {
-	               log(LogStatus.INFO, "successfully update contact name " + AR_Research54, YesNo.Yes);
+	      if (tp.clickOnAlreadyCreatedItem(projectName, AR_Firm54.replace("  ", "").replace("\"", ""), 10)) {
+	    	  switchOnWindow(driver);
+	    	  ThreadSleep(3000);
+	           if (tp.UpdateThemeName(projectName, AR_Research54.replace("\"", ""), 10)) {
+	               log(LogStatus.INFO, "successfully update Theme name " + AR_Research54, YesNo.Yes);
 	           } else {
-	               sa.assertTrue(false, "not able to update deal name " + AR_Research54);
-	               log(LogStatus.SKIP, "not able to update deal name " + AR_Research54, YesNo.Yes);
+	               sa.assertTrue(false, "not able to update Theme name " + AR_Research54);
+	               log(LogStatus.SKIP, "not able to update Theme name " + AR_Research54, YesNo.Yes);
 	           }
 	       } else {
-	          sa.assertTrue(false, "Not Able to open created Deal : " + AR_Firm54);
-	           log(LogStatus.SKIP, "Not Able to open created Deal: " + AR_Firm54, YesNo.Yes);
+	          sa.assertTrue(false, "Not Able to open created Theme : " + AR_Firm54);
+	           log(LogStatus.SKIP, "Not Able to open created Theme: " + AR_Firm54, YesNo.Yes);
 	      }
 	   } else {
 	       log(LogStatus.ERROR, "Not able to click on " + TabName.ThemesTab + " tab", YesNo.Yes);
 	       sa.assertTrue(false, "Not able to click on " + TabName.ThemesTab + " tab");
 	   }
-	   
+//	 driver.close();
+	ThreadSleep(3000);
 	switchToDefaultContent(driver);
-	ThreadSleep(5000);
+	refresh(driver);
+	lp.CRMlogout();
+	ThreadSleep(2000);
+	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+	ThreadSleep(2000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 			if(sendKeys(driver, rp.getTextAreaResearch(10),AR_Research54, "Research Input Field", action.BOOLEAN)){
@@ -2884,13 +2967,17 @@ public class AcuityResearch extends BaseLib{
     FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
-	 
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	ThemePageBusinessLayer tp = new ThemePageBusinessLayer(driver);
+	ClipPageBusinessLayer cp = new ClipPageBusinessLayer(driver);
 		 lp.CRMLogin(superAdminUserName, adminPassword, appName);
    
 	   if (fp.clickOnTab(environment, mode, TabName.ClipsTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.ClipsTab, YesNo.No);
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm55.replace("  ", "").replace("\"", ""), 10)) {
-	           if (fp.UpdateFundName(projectName, AR_Research55, 10)) {
+	      if (tp.clickOnAlreadyCreatedItem(projectName, AR_Firm55.replace("  ", "").replace("\"", ""), 10)) {
+//	    	  ThreadSleep(3000);
+//				click(driver, bp.getPagePopUp(projectName, 5), "Page PopUp", action.BOOLEAN);
+	           if (cp.UpdateClipName(projectName,AR_Firm55.replace("  ", "").replace("\"", ""), AR_Research55.replace("\"", ""), 10)) {
 	               log(LogStatus.INFO, "successfully update contact name " + AR_Research55, YesNo.Yes);
 	           } else {
 	               sa.assertTrue(false, "not able to update deal name " + AR_Research55);
@@ -2906,7 +2993,12 @@ public class AcuityResearch extends BaseLib{
 	   }
 	   
 	switchToDefaultContent(driver);
-	ThreadSleep(5000);
+	ThreadSleep(3000);
+//	refresh(driver);
+	lp.CRMlogout();
+	ThreadSleep(2000);
+	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+	ThreadSleep(2000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 			if(sendKeys(driver, rp.getTextAreaResearch(10),AR_Research55, "Research Input Field", action.BOOLEAN)){

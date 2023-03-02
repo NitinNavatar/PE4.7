@@ -2235,6 +2235,12 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return ele;
 	}
 
+	public WebElement getRecordTypeLabelWithoutEditMode(String projectName, String recordTypeLabel, String checkedValue, int timeOut) {
+		String xpath = "//*[text()='" + recordTypeLabel + "']/..//following-sibling::td//img[@title='"+ checkedValue +"']";
+		WebElement ele = isDisplayed(driver, FindElement(driver, xpath, recordTypeLabel, action.BOOLEAN, 10),
+				"visibility", 10, recordTypeLabel);
+		return ele;
+	}
 	/**
 	 * @author Azhar Alam
 	 * @param projectName

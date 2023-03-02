@@ -1377,6 +1377,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			xpath = "//*[text()='" + labelTextBox + "']/following-sibling::div//input";
 		else if (pageName.equalsIgnoreCase(PageName.ThemesPage.toString()))
 			xpath = "//*[text()='" + labelTextBox + "']/following-sibling::div//input";
+		else if (pageName.equalsIgnoreCase(PageName.ClipsPage.toString()))
+			xpath = "//*[text()='" + labelTextBox + "']/following-sibling::div//input";
 		else if (pageName.equalsIgnoreCase(PageName.FundraisingPage.toString()))
 			xpath = "//*[text()='" + labelTextBox + "']/following-sibling::div//input";
 		else if (pageName.equalsIgnoreCase(PageName.MEPageFromCalender.toString()))
@@ -14412,8 +14414,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 			for (int i = 0; i < sectionHeaderName.size(); i++) {
 				int k = 0;
-				for (int j = 0; j < sectionHeaderName.size(); j++) {
-					if (sectionHeaderName.get(i).equals(actualSectionHeaderName.get(j))) {
+				for (int j = 0; j < actualTooltipName.size(); j++) {
+					if (sectionHeaderName.get(i).trim().equals(actualSectionHeaderName.get(j).trim())) {
 						log(LogStatus.INFO, "Actual Section header name : " + actualSectionHeaderName.get(j)
 								+ " have been matched with the Expected Header Name : " + sectionHeaderName.get(i),
 								YesNo.No);
@@ -14429,7 +14431,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 			for (int i = 0; i < toolTipMessage.size(); i++) {
 				int k = 0;
-				for (int j = 0; j < toolTipMessage.size(); j++) {
+				for (int j = 0; j < actualTooltipName.size(); j++) {
 					if (toolTipMessage.get(i).equals(actualTooltipName.get(j))) {
 						log(LogStatus.INFO,
 								"Actual Tooltip of section : " + actualTooltipName.get(j)

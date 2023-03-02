@@ -134,10 +134,9 @@ public class ThemePageBusinessLayer extends ThemePage {
 			} else {
 				appLog.error("Not Able to Entered value on Theme Name TextBox : " + themeName);
 			}
-			ThreadSleep(1000);
 			ThreadSleep(2000);
 			if (click(driver, getCustomTabSaveBtn(projectName, 30), "Save Button", action.SCROLLANDBOOLEAN)) {
-				appLog.error("Click on save Button");
+				appLog.info("Click on save Button");
 				flag = true;
 				ThreadSleep(2000);
 			} else {
@@ -149,4 +148,33 @@ public class ThemePageBusinessLayer extends ThemePage {
 		return flag;
 	}
 
+	public boolean clickOnAlreadyCreatedItem(String projectName, String alreadyCreated, int timeout) {
+		boolean flag = false;
+		String xpath = "";
+		WebElement ele;
+		ele = null;
+
+		refresh(driver);
+		ThreadSleep(5000);
+
+				if (sendKeys(driver, getSearchIcon(10), alreadyCreated + "\n", "Search Icon Text",
+						action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(5000);
+
+					xpath = "//table[contains(@class,'slds-table')]//tbody//tr//span//*[text()='"
+							+ alreadyCreated + "']";
+					ele = FindElement(driver, xpath, alreadyCreated, action.BOOLEAN, 10);
+					ThreadSleep(2000);
+
+					if (clickUsingJavaScript(driver, ele, alreadyCreated, action.BOOLEAN)) {
+						flag = true;
+					} else {
+						appLog.error("Not able to Click on Already Created : " + alreadyCreated);
+					}
+				} else {
+					appLog.error("Not able to enter value on Search Box");
+				}
+		return flag;
+	}
+	
 }
