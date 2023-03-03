@@ -1089,7 +1089,7 @@ public class CommonVariables {
 		public static String AS_FirmLabelValues17;;
 		public static String AS_FirmRecordType1,AS_FirmRecordType2, AS_FirmRecordType13,AS_FirmRecordType16,AS_FirmRecordType17;
 		
-		public static String AR_RecordType1,AR_OtherLabels1;
+		public static String AR_RecordType1,AR_OtherLabels1,AR_OtherLabelName1;
 		
 		//Contact
 		public static String AS_ContactFirstName,AS_ContactFirstName2, AS_ContactFirstName8,AS_ContactFirstName11,AS_ContactFirstName12;
@@ -9651,6 +9651,7 @@ public class CommonVariables {
 					
 					AR_RecordType1=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"Others",excelLabel.Variable_Name, "AR_Firm1", excelLabel.Record_Type);
 					AR_OtherLabels1=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"Others",excelLabel.Variable_Name, "AR_Firm1", excelLabel.Other_LabelValues);
+					AR_OtherLabelName1=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"Others",excelLabel.Variable_Name, "AR_Firm1", excelLabel.Other_LabelNames);
 					
 					AR_FirmOther_LabelNames1=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"Others",excelLabel.Variable_Name, "AR_Firm1", excelLabel.Other_LabelNames);
 					

@@ -1330,4 +1330,13 @@ public class SetupPage extends BasePageBusinessLayer {
 
 	}
 
+	
+	@FindBy(id = "p5")
+	private WebElement defaultRecordTypeOption;
+
+	public WebElement defaultRecordTypeOption(int timeOut) {
+		return isDisplayed(driver, defaultRecordTypeOption, "Visibility", timeOut, "defaultRecordTypeOption");
+	}
+	
+	
 }
