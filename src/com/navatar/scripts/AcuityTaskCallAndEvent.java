@@ -5154,69 +5154,768 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc035_verifyingPopup(String projectName) {
+	public void ATCETc035_CreateATaskAndLogACallFromCompanyRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName="Test Account 2_COMPANY";
-		
-			
-		String[] section= {"Tagged","Interactions","Contacts","Deals"};
-		String[] message= {bp.taggedInfoMessage,bp.interactionsInfoMessage,bp.contactInfoMessage,bp.dealInfoMessage};
+		String recordName=ATCERecord1;
+		String activityType=null;
+		if(ATCE_ATActivityType3.trim().equals("Task"))
+		{
+			activityType="Create Task";
+		}
+		else if(ATCE_ATActivityType3.trim().equals("Call"))
+		{
+			activityType="Log a Call";
+		}
 
-		
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo=ATCE_ATRelatedTo3;
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus2;
+		String taskPriority=ATCE_AdvancePriority2;	
+		String dueDateDay=ATCE_ATDay3;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_003", excelLabel.Advance_Due_Date);
+
+		String activityType1=ATCE_ATActivityType4;
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1=ATCE_ATRelatedTo4;
+		String taskNotes1=ATCE_ATNote4;	
+		String dueDateDay1=ATCE_ATDay4;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_004", excelLabel.Advance_Due_Date);
+
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-			if (lp.clickOnTab(projectName, tabObj1)) {
+		if (lp.clickOnTab(projectName, tabObj1)) {
 
-				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
-						recordName, 30)) {
-					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
-						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-						ArrayList<String> result=bp.infoMessageOfAcuitySection(section, message);
-						if(result.isEmpty())
-						{
-							log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result, YesNo.No);
-							sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result);
-						}
-						
+					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Acuity tab");
-					}
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+					}	 
+
 				}
 				else
 				{
-					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
-					sa.assertTrue(false,  "Not able to open record "+recordName);
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
 				}
 			}
 			else
 			{
-				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
-				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
 			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
 
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+					}	 
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
 	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc036_CreateATaskAndLogACallFromAdvisorRecord(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord5;
+		String activityType=null;
+		if(ATCE_ATActivityType5.trim().equals("Task"))
+		{
+			activityType="Create Task";
+		}
+		else if(ATCE_ATActivityType5.trim().equals("Call"))
+		{
+			activityType="Log a Call";
+		}
+
+		String taskSubject=ATCE_ATSubject5;
+		String taskRelatedTo=ATCE_ATRelatedTo5;
+		String taskNotes=ATCE_ATNote5;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String dueDateDay=ATCE_ATDay5;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_005", excelLabel.Advance_Due_Date);
+
+		String activityType1=ATCE_ATActivityType6;
+		String taskSubject1=ATCE_ATSubject6;
+		String taskRelatedTo1=ATCE_ATRelatedTo6;
+		String taskNotes1=ATCE_ATNote6;	
+		String dueDateDay1=ATCE_ATDay6;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_006", excelLabel.Advance_Due_Date);
+
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+					}	 
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+					}	 
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
 	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc037_CreateATaskAndLogACallFromLendorRecord(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord7;
+		String activityType=null;
+		if(ATCE_ATActivityType7.trim().equals("Task"))
+		{
+			activityType="Create Task";
+		}
+		else if(ATCE_ATActivityType7.trim().equals("Call"))
+		{
+			activityType="Log a Call";
+		}
+
+		String taskSubject=ATCE_ATSubject7;
+		String taskRelatedTo=ATCE_ATRelatedTo7;
+		String taskNotes=ATCE_ATNote7;
+		String taskStatus=ATCE_AdvanceStatus4;
+		String taskPriority=ATCE_AdvancePriority4;	
+		String dueDateDay=ATCE_ATDay7;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_007", excelLabel.Advance_Due_Date);
+
+		String activityType1=ATCE_ATActivityType8;
+		String taskSubject1=ATCE_ATSubject8;
+		String taskRelatedTo1=ATCE_ATRelatedTo8;
+		String taskNotes1=ATCE_ATNote8;	
+		String dueDateDay1=ATCE_ATDay8;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_008", excelLabel.Advance_Due_Date);
+
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+					}	 
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+					}	 
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc038_CreateATaskAndLogACallFromIntermediaryRecord(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord9;
+		String activityType=null;
+		if(ATCE_ATActivityType9.trim().equals("Task"))
+		{
+			activityType="Create Task";
+		}
+		else if(ATCE_ATActivityType9.trim().equals("Call"))
+		{
+			activityType="Log a Call";
+		}
+
+		String taskSubject=ATCE_ATSubject9;
+		String taskRelatedTo=ATCE_ATRelatedTo9;
+		String taskNotes=ATCE_ATNote9;
+		String taskStatus=ATCE_AdvanceStatus5;
+		String taskPriority=ATCE_AdvancePriority5;	
+		String dueDateDay=ATCE_ATDay9;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_009", excelLabel.Advance_Due_Date);
+
+		String activityType1=ATCE_ATActivityType10;
+		String taskSubject1=ATCE_ATSubject10;
+		String taskRelatedTo1=ATCE_ATRelatedTo10;
+		String taskNotes1=ATCE_ATNote10;	
+		String dueDateDay1=ATCE_ATDay10;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_010", excelLabel.Advance_Due_Date);
+
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+					}	 
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+					}	 
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc039_CreateATaskAndLogACallFromInstitutionRecord(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord3;
+		String activityType=null;
+		if(ATCE_ATActivityType11.trim().equals("Task"))
+		{
+			activityType="Create Task";
+		}
+		else if(ATCE_ATActivityType11.trim().equals("Call"))
+		{
+			activityType="Log a Call";
+		}
+
+		String taskSubject=ATCE_ATSubject11;
+		String taskRelatedTo=ATCE_ATRelatedTo11;
+		String taskNotes=ATCE_ATNote11;
+		String taskStatus=ATCE_AdvanceStatus5;
+		String taskPriority=ATCE_AdvancePriority5;	
+		String dueDateDay=ATCE_ATDay11;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_011", excelLabel.Advance_Due_Date);
+
+		String activityType1=ATCE_ATActivityType12;
+		String taskSubject1=ATCE_ATSubject12;
+		String taskRelatedTo1=ATCE_ATRelatedTo12;
+		String taskNotes1=ATCE_ATNote12;	
+		String dueDateDay1=ATCE_ATDay12;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_012", excelLabel.Advance_Due_Date);
+
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+					}	 
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+					}	 
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc040_CreateATaskAndLogACallFromPortfolioCompanyRecord(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord11;
+		String activityType=null;
+		if(ATCE_ATActivityType13.trim().equals("Task"))
+		{
+			activityType="Create Task";
+		}
+		else if(ATCE_ATActivityType13.trim().equals("Call"))
+		{
+			activityType="Log a Call";
+		}
+
+		String taskSubject=ATCE_ATSubject13;
+		String taskRelatedTo=ATCE_ATRelatedTo13;
+		String taskNotes=ATCE_ATNote13;
+		String taskStatus=ATCE_AdvanceStatus6;
+		String taskPriority=ATCE_AdvancePriority6;	
+		String dueDateDay=ATCE_ATDay13;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_013", excelLabel.Advance_Due_Date);
+
+		String activityType1=ATCE_ATActivityType14;
+		String taskSubject1=ATCE_ATSubject14;
+		String taskRelatedTo1=ATCE_ATRelatedTo14;
+		String taskNotes1=ATCE_ATNote14;	
+		String dueDateDay1=ATCE_ATDay14;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_014", excelLabel.Advance_Due_Date);
+
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+					}	 
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+					}	 
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
 	
 }
 

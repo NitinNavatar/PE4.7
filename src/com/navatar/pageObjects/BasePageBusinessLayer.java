@@ -11427,7 +11427,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 			}
 
-			else if (buttonName.equalsIgnoreCase("Call")) {
+			else if (buttonName.equalsIgnoreCase("Call")|| buttonName.equalsIgnoreCase("Log a Call")) {
 				if (CommonLib.click(driver, logACallIconButtonInInteraction(20), "logACallIconButtonInInteraction",
 						action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on Button: Log A Call Icon Button In Interaction", YesNo.No);
