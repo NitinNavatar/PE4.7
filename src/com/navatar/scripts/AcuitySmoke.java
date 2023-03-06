@@ -295,7 +295,7 @@ public class AcuitySmoke extends BaseLib {
 										log(LogStatus.INFO, "clicked on Communications tab", YesNo.No);
 
 										if (bp.createActivityTimeline(projectName, false, AS_ATActivityType1,
-												basicsection, advanceSection, null, suggestedTag)) {
+												basicsection, advanceSection, null, suggestedTag, false, null, null, null, null, null)) {
 											log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
 											sa.assertTrue(true, "Activity timeline record has been created");
 											ThreadSleep(4000);
@@ -480,7 +480,7 @@ public class AcuitySmoke extends BaseLib {
 					log(LogStatus.INFO, "clicked on Communications tab", YesNo.No);
 
 					if (bp.createActivityTimeline(projectName, false, AS_ATActivityType3, basicsection, advanceSection,
-							null, null)) {
+							null, null, false, null, null, null, null, null)) {
 						log(LogStatus.PASS, subjectName + " Activity timeline record has been created", YesNo.No);
 						sa.assertTrue(true, subjectName + " Activity timeline record has been created");
 						ThreadSleep(4000);
@@ -757,7 +757,7 @@ public class AcuitySmoke extends BaseLib {
 						log(LogStatus.INFO, "clicked on Communications tab", YesNo.No);
 
 						if (bp.createActivityTimeline(projectName, false, buttonName, basicsection, advanceSection,
-								null, null)) {
+								null, null, false, null, null, null, null, null)) {
 							log(LogStatus.INFO, "Activity timeline has been created", YesNo.No);
 							sa.assertTrue(true, "Activity timeline has been created");
 
@@ -775,7 +775,7 @@ public class AcuitySmoke extends BaseLib {
 										if (bp.clicktabOnPage("Communications")) {
 											log(LogStatus.INFO, "clicked on Communications tab", YesNo.No);
 											if (bp.createActivityTimeline(projectName, false, buttonName1,
-													basicsection1, advanceSection1, null, null)) {
+													basicsection1, advanceSection1, null, null, false, null, null, null, null, null)) {
 												log(LogStatus.INFO, "Activity timeline has been created", YesNo.No);
 												sa.assertTrue(true, "Activity timeline has been created");
 												if (bp.clicktabOnPage("Acuity")) {
@@ -799,7 +799,7 @@ public class AcuitySmoke extends BaseLib {
 																		YesNo.No);
 
 																if (bp.createActivityTimeline(projectName, false,
-																		buttonName2, basicsection2, null, null, null)) {
+																		buttonName2, basicsection2, null, null, null, false, null, null, null, null, null)) {
 																	log(LogStatus.INFO,
 																			"Activity timeline has been created",
 																			YesNo.No);
@@ -1552,7 +1552,7 @@ public class AcuitySmoke extends BaseLib {
 										log(LogStatus.INFO, "clicked on Communications tab", YesNo.No);
 
 										if (bp.createActivityTimeline(projectName, false, activityType, basicsection,
-												null, null, null)) {
+												null, null, null, false, null, null, null, null, null)) {
 											log(LogStatus.PASS,
 													"Activity timeline record has been created. SubjectName : "
 															+ subjectName,
@@ -1587,7 +1587,7 @@ public class AcuitySmoke extends BaseLib {
 
 																if (bp.createActivityTimeline(projectName, false,
 																		activityType1, basicsection1, advanceSection1,
-																		null, null)) {
+																		null, null, false, null, null, null, null, null)) {
 																	log(LogStatus.PASS,
 																			"Activity timeline record has been created. SubjectName : "
 																					+ subjectName1,
@@ -1819,7 +1819,7 @@ public class AcuitySmoke extends BaseLib {
 						log(LogStatus.INFO, "Clicked on Meeting and call Count of Record: " + contactName, YesNo.No);
 
 						ArrayList<String> result2 = bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(null, null,
-								call1, null, null);
+								call1, null, null, null);
 						if (result2.isEmpty()) {
 							log(LogStatus.INFO, "Records on Meetings and call slot have been matched for :" + call1,
 									YesNo.No);
@@ -1840,7 +1840,7 @@ public class AcuitySmoke extends BaseLib {
 						log(LogStatus.INFO, "Clicked on Meeting and call Count of Record: " + contactName, YesNo.No);
 
 						ArrayList<String> result3 = bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(null, null,
-								call2, null, null);
+								call2, null, null, null);
 						if (result3.isEmpty()) {
 							log(LogStatus.INFO, "Records on Meetings and call slot have been matched for :" + call2,
 									YesNo.No);
@@ -3826,7 +3826,7 @@ public class AcuitySmoke extends BaseLib {
 				"---------Now Going to Create Call: " + AS_ATSubject13 + " in Activity Timeline Section---------",
 				YesNo.No);
 		CommonLib.refresh(driver);
-		if (BP.createActivityTimeline(projectName, true, AS_ATActivityType13, callBasicSection, null, null, null)) {
+		if (BP.createActivityTimeline(projectName, true, AS_ATActivityType13, callBasicSection, null, null, null, false, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
 
 			ThreadSleep(4000);
@@ -3876,7 +3876,7 @@ public class AcuitySmoke extends BaseLib {
 				"---------Now Going to Create Task: " + AS_ATSubject14 + " in Activity Timeline Section---------",
 				YesNo.No);
 		CommonLib.refresh(driver);
-		if (BP.createActivityTimeline(projectName, true, AS_ATActivityType14, taskBasicSection, null, null, null)) {
+		if (BP.createActivityTimeline(projectName, true, AS_ATActivityType14, taskBasicSection, null, null, null, false, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
 
 			ThreadSleep(4000);
@@ -4446,7 +4446,7 @@ public class AcuitySmoke extends BaseLib {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
 			home.notificationPopUpClose();
 			if (BP.createActivityTimeline(projectName, true, AS_ATActivityType15, task1BasicSection,
-					task1AdvancedSection, null, null)) {
+					task1AdvancedSection, null, null, false, null, null, null, null, null)) {
 				log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
 
 				ThreadSleep(4000);
@@ -4488,7 +4488,7 @@ public class AcuitySmoke extends BaseLib {
 
 		home.notificationPopUpClose();
 		if (BP.createActivityTimeline(projectName, true, AS_ATActivityType16, task2BasicSection, task2AdvancedSection,
-				null, null)) {
+				null, null, false, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
 
 			ThreadSleep(4000);

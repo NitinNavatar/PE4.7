@@ -984,5 +984,33 @@ public class ContactsPage extends BasePageBusinessLayer {
 	public WebElement getPhoneFieldOnContactPage(int timeOut) {
 		return isDisplayed(driver, phoneFieldOnContactPage, "Visibility", timeOut, "Phone Field On Contact Page");
 	}
+	
+	@FindBy(xpath = "//span[text()='Contacts']/ancestor::div//lightning-icon[@title='Add Contact']")
+	private WebElement addContactIcon;
+
+	public WebElement getAddContactIcon(int timeOut) {
+		return isDisplayed(driver, addContactIcon, "Visibility", timeOut, "add contact icon");
+	}
+	
+	public WebElement getTextboxWithLabelname(String labelName, int timeOut) {
+		String xpath = "//span[text()='"+labelName+"']/../..//input";
+
+		try {
+			return FindElement(driver, xpath, "textbox : " + labelName, action.SCROLLANDBOOLEAN, timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "textbox : " + labelName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+	
+	
+	@FindBy(xpath = "//h2[text()='New Contact']/../..//footer//span[text()='Save']/..")
+	private WebElement saveButtonOnNewContactPopup;
+
+	public WebElement getSaveButtonOnNewContactPopup(int timeOut) {
+		return isDisplayed(driver, saveButtonOnNewContactPopup, "Visibility", timeOut, "save button");
+	}
+	
+	
 
 }

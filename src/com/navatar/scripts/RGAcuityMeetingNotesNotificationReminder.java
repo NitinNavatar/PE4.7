@@ -4609,7 +4609,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
 			home.notificationPopUpClose();
 			if (BP.createActivityTimeline(projectName, true, task1ButtonName, task1BasicSection, task1AdvancedSection,
-					null, null)) {
+					null, null, false, null, null, null, null, null)) {
 				log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
 
 			} else {
@@ -4781,7 +4781,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
 			home.notificationPopUpClose();
 			if (BP.createActivityTimeline(projectName, true, task1ButtonName, task1BasicSection, task1AdvancedSection,
-					null, null)) {
+					null, null, false, null, null, null, null, null)) {
 				log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
 
 			} else {

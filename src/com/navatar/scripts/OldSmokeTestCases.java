@@ -6217,7 +6217,7 @@ public class OldSmokeTestCases extends BaseLib {
 						ThreadSleep(2000);
 
 						// Deal Information 2nd
-						String expectedResult = "Company" + "," + "Fund Manager" + "," + "Fund Manager’s Fund" + ","
+						String expectedResult = "Company" + "," + "Fund Manager" + "," + "Fund Managerï¿½s Fund" + ","
 								+ "Individual Investor" + "," + "Institution" + "," + "Limited Partner";
 						checkBox = nspbl.getEnableCheckBoxforNavatarSetUpSideMenuTab(environment, mode,
 								NavatarSetupSideMenuTab.CommitmentCreation, EditViewMode.Edit, ClickOrCheckEnableDisableCheckBox.EnableOrDisable, 10);
@@ -6320,7 +6320,7 @@ public class OldSmokeTestCases extends BaseLib {
 									log(LogStatus.INFO, "click on Limited Partner required field link", YesNo.No);
 									ThreadSleep(5000);
 									List<WebElement> options = allOptionsInDropDrop(driver, nspbl.getNewLP_CommitmentTab_DropDownList(environment, mode, 10), "limited partner drop down list");
-									if(compareMultipleList(driver, "Company,Fund Manager,Fund Manager’s Fund,Individual Investor,Institution,Limited Partner", options).isEmpty()) {
+									if(compareMultipleList(driver, "Company,Fund Manager,Fund Managerï¿½s Fund,Individual Investor,Institution,Limited Partner", options).isEmpty()) {
 										log(LogStatus.INFO, "Limited partner drop down list is verified ", YesNo.No);
 									}else {
 										log(LogStatus.FAIL, "Limited partner drop down list is not verified ", YesNo.No);
@@ -14233,7 +14233,7 @@ public class OldSmokeTestCases extends BaseLib {
 		String[][] basic = {{ActivityRelatedLabel.Subject.toString(),Smoke_NewTask1Subject},{excelLabel.Related_To.toString(),contactName}};
 		String task = Smoke_NewTask1Subject;
 
-		if (home.createActivityTimeline("", true, NewInteractions_DefaultValues.Task.toString(), basic, new String[][] {{"Due Date Only",todaysDate}}, null, null)) {
+		if (home.createActivityTimeline("", true, NewInteractions_DefaultValues.Task.toString(), basic, new String[][] {{"Due Date Only",todaysDate}}, null, null, false, null, null, null, null, null)) {
 			log(LogStatus.INFO,"Able to create task : "+task,YesNo.No);
 			
 		} else {
@@ -14248,7 +14248,7 @@ public class OldSmokeTestCases extends BaseLib {
 		String[][] basicCall= {{excelLabel.Subject.toString(),task},{excelLabel.Related_To.toString(),contactName},{excelLabel.Related_To.toString(),Smoke_Fund1}};
 		String[][] advanceCall= {{"Due Date Only",startDate}};
 		
-		if (home.createActivityTimeline("", true, NewInteractions_DefaultValues.Call.toString(), basicCall,advanceCall , null, null)) {
+		if (home.createActivityTimeline("", true, NewInteractions_DefaultValues.Call.toString(), basicCall,advanceCall , null, null, false, null, null, null, null, null)) {
 			log(LogStatus.INFO,"Able to create call : "+task,YesNo.No);
 			
 		} else {
@@ -14926,7 +14926,7 @@ public class OldSmokeTestCases extends BaseLib {
 			
 			String[][] basic = {{ActivityRelatedLabel.Subject.toString(),Smoke_NewTask2Subject},{excelLabel.Related_To.toString(),contactName}};
 
-			if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Task.toString(), basic, new String[][] {{"Due Date Only",todaysDate}}, null, null)) {
+			if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Task.toString(), basic, new String[][] {{"Due Date Only",todaysDate}}, null, null, false, null, null, null, null, null)) {
 				log(LogStatus.INFO,"Able to create task : "+task,YesNo.No);
 				
 			} else {
@@ -14941,7 +14941,7 @@ public class OldSmokeTestCases extends BaseLib {
 			String[][] basicCall= {{excelLabel.Subject.toString(),task},{excelLabel.Related_To.toString(),contactName},{excelLabel.Related_To.toString(),Smoke_Fund2}};
 			String[][] advanceCall= {{"Due Date Only",startDate}};
 			
-			if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Call.toString(), basicCall,advanceCall , null, null)) {
+			if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Call.toString(), basicCall,advanceCall , null, null, false, null, null, null, null, null)) {
 				log(LogStatus.INFO,"Able to create call : "+task,YesNo.No);
 				
 			} else {

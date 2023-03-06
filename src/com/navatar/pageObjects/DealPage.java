@@ -164,6 +164,13 @@ public class DealPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, dealNameInput, "Visibility", timeOut, " deal name input");
 
 	}
+	@FindBy(xpath = "//span[text()='Deal Name']/../..//input[@type='text']")
+	private WebElement PopupdealNameInput;
+
+	public WebElement getPopupdealNameInput(int timeOut) {
+		return isDisplayed(driver, PopupdealNameInput, "Visibility", timeOut, "Popup deal Name Input");
+
+	}
 
 	@FindBy(xpath = "(//div[@class='requiredInput']//span[@class='lookupInput']//input)[2]")
 	private WebElement company_Classic;
@@ -214,6 +221,14 @@ public class DealPage extends BasePageBusinessLayer {
 
 		return isDisplayed(driver, saveButton, "Visibility", timeOut, "save button ");
 	}
+	
+	@FindBy(xpath = "//footer//span[text()='Save']")
+	private WebElement popupsaveButton;
+
+	public WebElement getpopupsaveButton(int timeOut) {
+
+		return isDisplayed(driver, popupsaveButton, "Visibility", timeOut, "popup save Button ");
+	}
 
 	@FindBy(xpath = "//span[text()='Mark Stage as Complete']")
 	private WebElement markStageCompleteButton;
@@ -237,6 +252,14 @@ public class DealPage extends BasePageBusinessLayer {
 	public WebElement getStageField(int timeOut) {
 
 		return isDisplayed(driver, stageField, "Visibility", timeOut, "Stage field");
+	}
+	
+	@FindBy(xpath = "//a[@class='select']")
+	private WebElement popupstageField;
+
+	public WebElement getpopupstageField(int timeOut) {
+
+		return isDisplayed(driver, popupstageField, "Visibility", timeOut, "popup stage Field");
 	}
 
 	public WebElement dealRecordTypeRadioButton(String dealRecordType, int timeOut) {
@@ -325,4 +348,5 @@ public class DealPage extends BasePageBusinessLayer {
 	public WebElement getreplacevaluewithNullforstage(String projectName, int timeOut) {
 		return isDisplayed(driver, replacevaluewithNullforstage, "Visibility", timeOut, "replacevaluewithNullforstage");
 	}
+	
 }

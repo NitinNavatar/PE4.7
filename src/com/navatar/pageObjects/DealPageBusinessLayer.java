@@ -799,8 +799,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 
 					}
 
-					else if (labelNames[i].equalsIgnoreCase("Platform Company")
-							|| labelNames[i].equalsIgnoreCase("Source Firm")
+					else if (labelNames[i].equalsIgnoreCase("Platform Company") || labelNames[i].equalsIgnoreCase("Source Firm")
 							|| labelNames[i].equalsIgnoreCase("Source Contact")) {
 						if (click(driver, FindElement(driver, "//*[text()='" + labelNames[i]
 								+ "']/following-sibling::div[@class='slds-form-element__control']//input[@type='text']",
@@ -920,16 +919,16 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 
 				}
 
-			} else {
-				CommonLib.click(driver, getCancelButton(30), " Cancel button", action.SCROLLANDBOOLEAN);
-				log(LogStatus.ERROR, "Clicked on Cancel Button", YesNo.No);
-				return false;
-			}
+//			} else {
+//				CommonLib.click(driver, getCancelButton(30), " Cancel button", action.SCROLLANDBOOLEAN);
+//				log(LogStatus.ERROR, "Clicked on Cancel Button", YesNo.No);
+//				return false;
+//			}
 
 		} else {
 			log(LogStatus.ERROR, "Not able to click on the new button", YesNo.No);
 		}
-
+		}
 		return flag;
 
 	}
@@ -947,7 +946,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		String[] labelNames = null;
 		String[] labelValue = null;
 		if (otherLabels != null && !"".equalsIgnoreCase(otherLabels)) {
-			labelNames = otherLabels.split("<Break>", -1);
+			labelNames = otherLabels.replaceAll("_", " ").split("<Break>", -1);
 			labelValue = otherLabelValues.split("<Break>", -1);
 		}
 		ThreadSleep(2000);
@@ -1189,4 +1188,244 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		WebElement emailElement = FindElement(driver, xpath, "EmailcountonPopup", action.BOOLEAN, 10);
 		return isDisplayed(driver, emailElement, xpath, 10, "").getAttribute("data-last-rendered-row");
 	}
+
+	public boolean createDealfromIcon(String recordType, String dealName, String stage, String otherLabels,
+			String otherLabelValues) {
+		// TODO Auto-generated method stub
+		WebElement ele;
+		boolean flag = false;
+		String[] labelNames = null;
+		String[] labelValue = null;
+		if (otherLabels != null && !"".equalsIgnoreCase(otherLabels)) {
+			labelNames = otherLabels.split("<Break>", -1);
+			labelValue = otherLabelValues.split("<Break>", -1);
+		}
+
+//		if (CommonLib.click(driver, NewDealIcon(30), tabObj4 + "New Deal Icon", action.SCROLLANDBOOLEAN)) {
+//			log(LogStatus.INFO, "Clicked on the new Deal Icon", YesNo.No);
+
+//			if (recordType != null && !"".equals(recordType)) {
+//				if (CommonLib.click(driver, dealRecordTypeRadioButton(recordType, 20), "Radio button: " + recordType,
+//						action.SCROLLANDBOOLEAN)) {
+//					log(LogStatus.INFO, "Clicked on the radio button: " + recordType, YesNo.No);
+//
+//					if (CommonLib.click(driver, nextButtonOnForm(20), "Next button", action.SCROLLANDBOOLEAN)) {
+//						log(LogStatus.INFO, "Clicked on the Next button", YesNo.No);
+//
+//					} else {
+//						log(LogStatus.ERROR, "Not able to click on the Next button", YesNo.No);
+//					}
+//
+//				} else {
+//					log(LogStatus.ERROR, "Not able to click on the Radio button: " + recordType, YesNo.No);
+//				}
+//			}
+
+			if (!dealName.isEmpty() && dealName != null) {
+
+				if (CommonLib.sendKeys(driver, getPopupdealNameInput(30), dealName, "Deal name",
+						action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, dealName + " value has been passed in Deal Name", YesNo.No);
+				} else {
+					log(LogStatus.ERROR, dealName + " value is not passed in Deal Name", YesNo.No);
+					return false;
+				}
+			} else {
+				log(LogStatus.ERROR, "Deal Name not Provided", YesNo.No);
+				return false;
+			}
+
+//			if (!companyName.isEmpty() && companyName != null) {
+//
+//				if (sendKeys(driver, getCompanyName(60), companyName, "Company Name", action.SCROLLANDBOOLEAN)) {
+//					ThreadSleep(3000);
+//					if (click(driver,
+//							FindElement(driver, "//*[text()='Company']/..//*[@title='" + companyName + "']",
+//									"Legal Name List", action.THROWEXCEPTION, 30),
+//							companyName + "   :   Company Name", action.BOOLEAN)) {
+//						appLog.info(companyName + "  is present in list.");
+//					} else {
+//						appLog.error(companyName + "  is not present in the list.");
+//						return false;
+//					}
+//
+//				} else {
+//					appLog.error("Not able to enter legal name");
+//					return false;
+//				}
+//
+//			}
+//
+//			else {
+//				log(LogStatus.ERROR, "Company Name not Provided", YesNo.No);
+//				return false;
+//			}
+			if (!stage.isEmpty() && stage != null) {
+
+				if (CommonLib.dropDownHandle(driver, getpopupstageField(40), "//div[@class=\"select-options\"]//li/a",
+						"Stage field", stage)) {
+					log(LogStatus.INFO, stage + " value has been selected from stage field", YesNo.No);
+
+				} else {
+					log(LogStatus.ERROR, stage + " value is not selected from stage field", YesNo.No);
+					return false;
+				}
+			}
+
+			else {
+				log(LogStatus.ERROR, "Stage not Provided", YesNo.No);
+				return false;
+			}
+
+			int loopCount = 0;
+			int status = 0;
+			if (labelNames != null && labelValue != null) {
+				for (int i = 0; i < labelNames.length; i++) {
+
+					if (labelNames[i].equalsIgnoreCase("Our Role")
+							|| labelNames[i].equalsIgnoreCase("Reason for Decline")
+							|| labelNames[i].equalsIgnoreCase("Reason to Park")
+							|| labelNames[i].equalsIgnoreCase("Deal Type")
+							|| labelNames[i].equalsIgnoreCase("Management Meeting")) {
+
+						String firmDropDownElements = "//*[text()='" + labelNames[i]
+								+ "']/..//button/../following-sibling::div//lightning-base-combobox-item";
+						if (CommonLib.dropDownHandle(driver, dropDownWithLabelName(labelNames[i], 20),
+								firmDropDownElements, labelNames[i] + "DropDown", labelValue[i])) {
+							log(LogStatus.INFO, labelNames[i] + " has been Selected to:  " + labelValue[i], YesNo.No);
+							status++;
+
+						} else {
+							sa.assertTrue(false, labelNames[i] + " has not been Selected to:  " + labelValue[i]);
+							log(LogStatus.ERROR, labelNames[i] + " has not been Selected to:  " + labelValue[i],
+									YesNo.Yes);
+
+						}
+
+					}
+
+					else if (labelNames[i].equalsIgnoreCase("Platform Company") || labelNames[i].equalsIgnoreCase("	")
+							|| labelNames[i].equalsIgnoreCase("Source Contact")) {
+						if (click(driver,
+								FindElement(driver, "//span[text()='" + labelNames[i] + "']/../..//input[@type='text']",
+										"picklist " + labelNames[i], action.SCROLLANDBOOLEAN, 10),
+								"picklist " + labelNames[i], action.SCROLLANDBOOLEAN)) {
+							if (sendKeys(driver,
+									FindElement(driver,
+											"//span[text()='" + labelNames[i] + "']/../..//input[@type='text']",
+											"picklist " + labelNames[i], action.SCROLLANDBOOLEAN, 10),
+									labelValue[i], "Label Names", action.SCROLLANDBOOLEAN)) {
+								appLog.info(labelNames[i] + "  is present in list.");
+							}
+							ThreadSleep(3000);
+
+							if (click(driver, FindElement(driver,
+//											"//span[text()='" + labelValue[i]
+//													+ "']/ancestor::lightning-base-combobox-item",
+									"//*[text()='" + labelNames[i] + "']/..//*[@title='" + labelValue[i] + "']",
+									"Legal Name List", action.THROWEXCEPTION, 30),
+									labelNames[i] + "   :   Account Name", action.BOOLEAN)) {
+								appLog.info(labelNames[i] + "  is present in list.");
+								status++;
+
+							} else {
+								appLog.error("Not able to select " + labelValue[i] + " in " + labelNames[i] + " field");
+								BaseLib.sa.assertTrue(false,
+										"Not able to select " + labelValue[i] + " in " + labelNames[i] + " field");
+
+							}
+						} else {
+							appLog.error("Not able to select " + labelValue[i] + " in " + labelNames[i] + " field");
+							BaseLib.sa.assertTrue(false,
+									"Not able to select " + labelValue[i] + " in " + labelNames[i] + " field");
+
+						}
+					}
+
+					else if (labelNames[i].equalsIgnoreCase("Date Received")
+							|| labelNames[i].equalsIgnoreCase("LOI Due Date")
+							|| labelNames[i].equalsIgnoreCase("NDA Signed Date")
+							|| labelNames[i].equalsIgnoreCase("Management Meeting Date")
+							|| labelNames[i].equalsIgnoreCase("Pipeline Data Date")
+							|| labelNames[i].equalsIgnoreCase("Last Stage Change Date")) {
+
+						if (CommonLib.sendKeys(driver, popupcalendarInputBox(labelNames[i], 30), labelValue[i],
+								labelValue[i] + " Input Box", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Date has been Selected  " + labelValue[i], YesNo.No);
+							status++;
+						} else {
+							sa.assertTrue(false, "Date has not been Selected  " + labelValue[i]);
+							log(LogStatus.ERROR, "Date has not been Selected  " + labelValue[i], YesNo.Yes);
+							return false;
+						}
+
+					}
+
+					else if (labelNames[i].equalsIgnoreCase("Deal Description")
+							|| labelNames[i].equalsIgnoreCase("Pipeline Comments")) {
+
+						if (CommonLib.sendKeys(driver, textAreaBoxBasedOnLabelName(labelNames[i], 10), labelValue[i],
+								"textBoxBasedOnLabelName: " + labelNames[i], action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, labelValue[i] + " value has been passed in " + labelNames[i], YesNo.No);
+							status++;
+						} else {
+							log(LogStatus.ERROR, labelValue[i] + " value is not passed in " + labelNames[i], YesNo.No);
+							sa.assertTrue(false, labelValue[i] + " value is not passed in " + labelNames[i]);
+
+						}
+					}
+
+					else {
+
+						if (CommonLib.sendKeys(driver, textBoxBasedOnLabelName(labelNames[i], 10), labelValue[i],
+								"textBoxBasedOnLabelName: " + labelNames[i], action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, labelValue[i] + " value has been passed in " + labelNames[i], YesNo.No);
+							status++;
+						} else {
+							log(LogStatus.ERROR, labelValue[i] + " value is not passed in " + labelNames[i], YesNo.No);
+							sa.assertTrue(false, labelValue[i] + " value is not passed in " + labelNames[i]);
+
+						}
+					}
+
+					loopCount++;
+				}
+
+			}
+
+			if (status == loopCount) {
+				if (CommonLib.click(driver, getpopupsaveButton(30), tabObj4 + " save button",
+						action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on save button", YesNo.No);
+
+					String xPath = "//lightning-formatted-text[contains(text(),'" + dealName + "')]";
+					ele = CommonLib.FindElement(driver, xPath, dealName, action.SCROLLANDBOOLEAN, 40);
+					if (ele != null) {
+						log(LogStatus.INFO, dealName + " deal has been created", YesNo.No);
+
+						flag = true;
+
+					} else {
+						log(LogStatus.ERROR, dealName + " deal is not created", YesNo.No);
+
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
+
+				}
+
+			} else {
+				CommonLib.click(driver, getNewFinancingPopupCancelIcon(30), " Cancel button", action.SCROLLANDBOOLEAN);
+				log(LogStatus.ERROR, "Clicked on Cancel Button", YesNo.No);
+				return false;
+			}
+
+//		} else {
+//			log(LogStatus.ERROR, "Not able to click on the new button", YesNo.No);
+//		}
+
+		return flag;
+
+	}
+
 }
