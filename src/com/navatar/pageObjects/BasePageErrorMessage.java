@@ -156,9 +156,18 @@ public interface BasePageErrorMessage {
 	
 	public static String acuityDefaultMessage="No items to display.";
 	
-	public static String taggedInfoMessage="This section allows you to view all of the records that have been tagged in interactions with the referenced record. For example, you mentioned a specific deal on a call with the contact you are looking at. This deal will be shown here.";
-	public static String interactionsInfoMessage="These are the meetings, calls, and tasks that your organization has had with the entity you are viewing. If there is an applicable meeting note, it can be viewed here. If a meeting note needs to be created, they can be created here as well.";
-	public static String ContactInfoMessage="These are the people that are related to the entity you are viewing. You can view which ones have been added to Navatar and which ones have not. You can also view how many interactions you have had with the applicable contact.";
+	public static String taggedInfoMessage="The firms, contacts, deals, themes or clips (click on the relevant tab) are listed here since they have been tagged within interactions with this firm. They may also be listed because this firm was tagged in another interaction, deal, theme or clip. Click on the number next to each to view the interactions.";
+	public static String taggedInfoMessageInstitution="The firms, contacts, funds, themes or clips (click on the relevant tab) are listed here since they have been tagged within interactions with this firm. They may also be listed because this firm was tagged in another interaction, fund, theme or clip. Click on the number next to each to view the interactions.";
+	public static String taggedInfoMessageFundarsing="The firms, contacts, themes or clips (click on the relevant tab) are listed here since they have been tagged within interactions with this firm. They may also be listed because this firm was tagged in another interaction, theme or clip. Click on the number next to each to view the interactions.";
+	public static String interactionsInfoMessage="Each interaction represents notes from a meeting with this company or with another company where this company was discussed and tagged to the note. An interaction may also represent an email exchange that was tagged by a user. Click on an interaction to view details. Click View All to see additional interactions.";
+	public static String contactInfoMessage="View details of people at this firm, who at our firm they have interacted with, all interactions (emails or meetings) as well as deals they have been associated with. View contacts at this firm discovered in Outlook by Navatar who your users may have emailed but not added to Navatar, with the option of downloading them into Navatar. Click on a contact to view or edit details.";
+	public static String dealInfoMessage="View deals associated with this firm. Click on a deal to view or edit details. Click the plus icon to create new deals.";
+	public static String dealInfoMessageAdvisor="View deals associated with this firm. Click on a deal to view or edit details.";
+	
+	public static String connectionInfoMessage="View the strength of this contact's connection to your team as well as other contacts based on the number of emails, meetings, and deals they have been a part of together. Click on a contact to view or edit details.";
+	
+	
+	
 	
 	
 	

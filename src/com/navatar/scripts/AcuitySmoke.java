@@ -1819,7 +1819,7 @@ public class AcuitySmoke extends BaseLib {
 						log(LogStatus.INFO, "Clicked on Meeting and call Count of Record: " + contactName, YesNo.No);
 
 						ArrayList<String> result2 = bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(null, null,
-								call1, null, null);
+								call1, null, null, null);
 						if (result2.isEmpty()) {
 							log(LogStatus.INFO, "Records on Meetings and call slot have been matched for :" + call1,
 									YesNo.No);
@@ -1840,7 +1840,7 @@ public class AcuitySmoke extends BaseLib {
 						log(LogStatus.INFO, "Clicked on Meeting and call Count of Record: " + contactName, YesNo.No);
 
 						ArrayList<String> result3 = bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(null, null,
-								call2, null, null);
+								call2, null, null, null);
 						if (result3.isEmpty()) {
 							log(LogStatus.INFO, "Records on Meetings and call slot have been matched for :" + call2,
 									YesNo.No);
