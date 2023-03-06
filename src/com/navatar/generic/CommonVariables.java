@@ -1428,11 +1428,17 @@ public class CommonVariables {
 			public static String ADEFundraisingName1,ADEInstitutionName1,ADERFundName1,ADEStage1,ADEClosing1,ADEInvestmentLikelyAmountMN1,ADENote1,ADETargetClosingDate1;
 	    
 			//meta data
+			public static String RGFieldname1,RGvalue1,RGNewValue1;
+			public static String RGFieldname2,RGvalue2,RGNewValue2;
+			public static String RGFieldname3,RGvalue3,RGNewValue3;
+			public static String RGFieldname4,RGvalue4,RGNewValue4;
+			public static String RGFieldname5,RGvalue5,RGNewValue5;
 			public static String ADEFieldname1,ADEvalue1,ADENewValue1;
 			public static String ADEFieldname2,ADEvalue2,ADENewValue2;
 			public static String ADEFieldname3,ADEvalue3,ADENewValue3;
 			public static String ADEFieldname4,ADEvalue4,ADENewValue4;
 			public static String ADEFieldname5,ADEvalue5,ADENewValue5;
+			public static String ADEFieldname6,ADEvalue6,ADENewValue6;
 			
 			
 		   /***************************** Acuity (Task Call & Event) ******************************/
@@ -8998,26 +9004,7 @@ public class CommonVariables {
 				ADEContact24EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact24", excelLabel.Contact_EmailId);
 				ADEContact24RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact24", excelLabel.Record_Type);
 				
-				ADEFieldname1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_1", excelLabel.FieldName);
-				ADEvalue1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_1", excelLabel.Value);
-				ADENewValue1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_1", excelLabel.New_Value);
-				
-				ADEFieldname2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_2", excelLabel.FieldName);
-				ADEvalue2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_2", excelLabel.Value);
-				ADENewValue2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_2", excelLabel.New_Value);
-				
-				ADEFieldname3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_3", excelLabel.FieldName);
-				ADEvalue3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_3", excelLabel.Value);
-				ADENewValue3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_3", excelLabel.New_Value);
-				
-				ADEFieldname4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_4", excelLabel.FieldName);
-				ADEvalue4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_4", excelLabel.Value);
-				ADENewValue4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_4", excelLabel.New_Value);
-				
-				ADEFieldname5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_5", excelLabel.FieldName);
-				ADEvalue5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_5", excelLabel.Value);
-				ADENewValue5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_5", excelLabel.New_Value);
-				
+			
 				ADEDeal3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal3", excelLabel.Deal_Name);
 				ADEDeal3CompanyName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal3", excelLabel.Company_Name);
 				ADEDeal3Stage=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal3", excelLabel.Stage);
@@ -9242,6 +9229,30 @@ public class CommonVariables {
 				ADEFinancingStatus1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Financing",excelLabel.Variable_Name, "F_01", excelLabel.Status);
 				ADEFinancingId1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Financing",excelLabel.Variable_Name, "F_01", excelLabel.FinancingId);
 				
+				//META DATA
+				ADEFieldname1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_1", excelLabel.FieldName);
+				ADEvalue1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_1", excelLabel.Value);
+				ADENewValue1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_1", excelLabel.New_Value);
+				
+				ADEFieldname2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_2", excelLabel.FieldName);
+				ADEvalue2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_2", excelLabel.Value);
+				ADENewValue2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_2", excelLabel.New_Value);
+				
+				ADEFieldname3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_3", excelLabel.FieldName);
+				ADEvalue3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_3", excelLabel.Value);
+				ADENewValue3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_3", excelLabel.New_Value);
+				
+				ADEFieldname4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_4", excelLabel.FieldName);
+				ADEvalue4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_1", excelLabel.Value);
+				ADENewValue4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_1", excelLabel.New_Value);
+				
+				ADEFieldname5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_5", excelLabel.FieldName);
+				ADEvalue5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_2", excelLabel.Value);
+				ADENewValue5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_2", excelLabel.New_Value);
+				
+				ADEFieldname6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_6", excelLabel.FieldName);
+				ADEvalue6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_3", excelLabel.Value);
+				ADENewValue6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_3", excelLabel.New_Value);
 				
 				break;
 				
@@ -10218,6 +10229,28 @@ public class CommonVariables {
 						
 						RGEUser01FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEUser01", excelLabel.Contact_FirstName);
 						RGEUser01LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEUser01", excelLabel.Contact_LastName);
+						
+						//METADATA
+						
+						RGFieldname1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "RG_1", excelLabel.FieldName);
+						RGvalue1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "RG_1", excelLabel.Value);
+						RGNewValue1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "RG_1", excelLabel.New_Value);
+						
+						RGFieldname2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "RG_2", excelLabel.FieldName);
+						RGvalue2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "RG_2", excelLabel.Value);
+						RGNewValue2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "RG_2", excelLabel.New_Value);
+						
+						RGFieldname3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "RG_3", excelLabel.FieldName);
+						RGvalue3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "RG_3", excelLabel.Value);
+						RGNewValue3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "RG_3", excelLabel.New_Value);
+						
+						RGFieldname4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "RG_4", excelLabel.FieldName);
+						RGvalue4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "RG_4", excelLabel.Value);
+						RGNewValue4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "RG_4", excelLabel.New_Value);
+						
+						RGFieldname5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "RG_5", excelLabel.FieldName);
+						RGvalue5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "RG_5", excelLabel.Value);
+						RGNewValue5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "RG_5", excelLabel.New_Value);
 						
 						
 				try {

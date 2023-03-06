@@ -8531,7 +8531,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement NewDealIcon(int timeOut) {
 		WebElement ele;
-		String xpath = "//*[@title='Add Deal']";
+		String xpath = "//*[@title='New Deal']";
 		return ele = isDisplayed(driver,
 				FindElement(driver, xpath, "New Deal Icon: " + "NewDealIcon", action.SCROLLANDBOOLEAN, timeOut),
 				"Visibility", 10, "New Deal Icon");
@@ -8539,11 +8539,36 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement NewSourcedDealIcon(int timeOut) {
 		WebElement ele;
-		String xpath = "//*[@title='Add Sourced Deal']";
+		String xpath = "//*[@title='New Sourced Deal']";
 		return ele = isDisplayed(driver, FindElement(driver, xpath, "New Sourced Deal Icon: " + "NewSourcedDealIcon",
 				action.SCROLLANDBOOLEAN, timeOut), "Visibility", 10, "New Sourced Deal Icon");
 	}
+	
+	public WebElement DateReciviedSortingIcon(int timeOut) {
+		WebElement ele;
+		String xpath = "//li[@class='sortby_css']//button[@name='progress']";
+		return ele = isDisplayed(driver, FindElement(driver, xpath, "Date Recivied Sorting Icon: " + "DateReciviedSortingIcon",
+				action.SCROLLANDBOOLEAN, timeOut), "Visibility", 10, "Date Recivied Sorting Icon");
+	}
+	public WebElement sortingorder(String order, int timeOut) {
+		WebElement ele;
+		String xpath = "//li[@class='sortby_css']//*[@data-value='" +order+ "']";
+		return ele = isDisplayed(driver, FindElement(driver, xpath, "Date Recivied Sorting Icon: " + "DateReciviedSortingIcon",
+				action.SCROLLANDBOOLEAN, timeOut), "Visibility", 10, "Date Recivied Sorting Icon");
+	}
 
+	public WebElement dealAcuityDateReceived2(String dealName, int timeOut) {
+
+		String xpath = "//a[text()='" + dealName
+				+ "']/ancestor::tr//td[@data-label='Date Received']//div/*";
+		try {
+			return FindElement(driver, xpath, "Header: " + "dateReceived", action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Header: " + "dateReceived", action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+	
 	public WebElement SourcedTab(int timeOut, action action) {
 		WebElement ele;
 		String xpath = "//input[@name='radioGroups']/..//span[text()='Sourced']";

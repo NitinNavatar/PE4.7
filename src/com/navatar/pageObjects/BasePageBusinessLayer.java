@@ -14634,8 +14634,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 		if (connectionsSectionHeaderMessage != null && !"".equals(connectionsSectionHeaderMessage)) {
-			xPath = "//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//p[text()='"
-					+ connectionsSectionHeaderMessage + "']";
+//			xPat = "//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//p[text()='"
+//					+ connectionsSectionHeaderMessage + "']";
+			xPath = "//*[contains(@title,'Connections')]/ancestor::div/following-sibling::div//span[@class='slds-th__action']//*[@title !='']";
 			ele = FindElement(driver, xPath, "Message on Connections section", action.SCROLLANDBOOLEAN, 15);
 			if (ele != null) {
 				log(LogStatus.INFO, "The meessage : " + connectionsSectionHeaderMessage
@@ -14697,8 +14698,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 		if (externalConnectionsSectionHeaderMessage != null && !"".equals(externalConnectionsSectionHeaderMessage)) {
-			xPath = "//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//p[text()='"
-					+ externalConnectionsSectionHeaderMessage + "']";
+//			xPath = "//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//p[text()='"
+//					+ externalConnectionsSectionHeaderMessage + "']";
+			xPath = "//*[contains(@title,'Connections')]/ancestor::div/following-sibling::div//span[@class='slds-th__action']//*[@title !='']";
 			ele = FindElement(driver, xPath, "Message on Connections section", action.SCROLLANDBOOLEAN, 15);
 			if (ele != null) {
 				log(LogStatus.INFO, "The meessage : " + externalConnectionsSectionHeaderMessage
