@@ -3595,4 +3595,16 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 		return parentWindowId;
 	}
 
+	/**
+	 * @author Ankur Huria
+	 * @param list1
+	 * @param list2
+	 * @description Will Return the Difference of ArrayList
+	 */
+	public static List<String> getDifference(List<String> list1, List<String> list2) {
+		List<String> diff = new ArrayList<String>(list1);
+		diff.removeAll(list2);
+		return diff;
+	}
+
 }
