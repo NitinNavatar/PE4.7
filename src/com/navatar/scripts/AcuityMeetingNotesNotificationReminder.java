@@ -18511,4 +18511,175 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+
+	@Parameters({ "projectName" })
+
+	@Test
+	public void AcuityMNNRTc085_VerifyWhenMaxCharLengthTaskIsCreatedWithMaxCharLengthRecordsEnteredUnderNotesSectionUsingAtTheRateWhenRecordDoesNotExistInTheOrg(
+			String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+
+		String task1ButtonName = "Create Task";
+		String recordName = "WARBUG";
+		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("2"));
+		String getAdvanceDueDate = AdvanceDueDate;
+
+		String task1SubjectName = "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated  nsuser firm record 1608 updated";
+		String task1Notes = "Jasbinder singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdgg"
+				+ "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated"
+				+ "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated "
+				+ "nsuser firm record 1608 updated" + "@Jasbinder";
+		String relatedTo = "Vitara Deal<break>FCR 1";
+		String priority = "High";
+		String status = "Not Started";
+		String task1NotesVerify = task1Notes.replace("@", "");
+		String updatedRelatedToVerifyForDetails = relatedTo + "<break>" + recordName + "<break>"
+				+ (crmUser1FirstName + " " + crmUser1LastName);
+		String updatedRelatedToVerify = updatedRelatedToVerifyForDetails + "<break>"
+				+ "jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdgg" + "break"
+				+ "<break>"
+				+ "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated"
+				+ "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated "
+				+ "nsuser firm record 1608 updated";
+
+		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
+				{ AMNNR_TaskLabel3, relatedTo } };
+
+		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_TaskLabel1, task1SubjectName },
+				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyForDetails } };
+		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
+				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
+
+		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
+				{ AMNNR_TaskLabel6, priority }, { "Classification", "C" } };
+
+		String[][] followUptask1 = null;
+
+		String[] SuggestedTags = "All Records Select".split("<break>", -1);
+		String[][] createNewRecordPopUp = {
+				("checked<break>Jasbinder<break>jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdgg<break>Contact<break>nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated"
+						+ "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated "
+						+ "nsuser firm record 1608 updated<existing><break>Create").split("<break>") };
+		String[][] addContactsToDealTeamPopUp = {
+				"allRecords<break>Jasbinder singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdg<break><break>Add"
+						.split("<break>") };
+		String[][] addContactsToFundraisingObjectPopup = {
+				"allRecords<break>Jasbinder singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdg<break><break>Add"
+						.split("<break>") };
+
+		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
+				task1BasicSectionVerificationForDetailsSection, task1AdvancedSection };
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		if (BP.navigateToRecordAndClickOnSubTab(projectName, "Firms", recordName, null)) {
+			log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
+
+			if (BP.createActivityTimeline(projectName, false, task1ButtonName, task1BasicSection, task1AdvancedSection,
+					followUptask1, SuggestedTags, false, null, null, createNewRecordPopUp, addContactsToDealTeamPopUp,
+					addContactsToFundraisingObjectPopup, detailSectionVerifcation)) {
+				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
+
+				CommonLib.refresh(driver);
+				lp.clickOnTab(projectName, TabName.HomeTab);
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+
+					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
+							YesNo.No);
+
+					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							PageName.TaskPage);
+
+					if (subjectLinkPopUpNegativeResult.isEmpty()) {
+						log(LogStatus.PASS, "------" + task1SubjectName
+								+ " record is able to open popup after click on it and verify its data" + "------",
+								YesNo.No);
+
+					} else {
+						log(LogStatus.ERROR,
+								"------" + task1SubjectName + " record link popup is not verified, Reason: "
+										+ subjectLinkPopUpNegativeResult + "------",
+								YesNo.Yes);
+						sa.assertTrue(false,
+								"------" + task1SubjectName + " record link popup is not verified, Reason: "
+										+ subjectLinkPopUpNegativeResult + "------");
+
+					}
+
+					CommonLib.refresh(driver);
+
+					if (CommonLib.click(driver, BP.subjectOfInteractionPage(task1SubjectName, 15),
+							"Subject Name on Intraction", action.BOOLEAN)) {
+						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
+
+						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
+
+							String url = getURL(driver, 10);
+
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
+									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
+											task1AdvancedSection, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,
+										"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+										YesNo.No);
+
+							} else {
+								log(LogStatus.ERROR,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult,
+										YesNo.No);
+								sa.assertTrue(false,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult);
+							}
+						} else {
+							log(LogStatus.ERROR, "Not able to click on Edit button on Subject Link Popup of Task: "
+									+ task1SubjectName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit button on Subject Link Popup of Task: "
+									+ task1SubjectName);
+						}
+
+					} else {
+						log(LogStatus.ERROR, "not able to click on " + task1SubjectName, YesNo.No);
+						sa.assertTrue(false, "not able to click on " + task1SubjectName);
+					}
+
+					driver.close();
+					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+					CommonLib.ThreadSleep(4000);
+				} else {
+
+					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
+							YesNo.Yes);
+					BaseLib.sa.assertTrue(false,
+							"-----Task named: " + task1SubjectName + " not found in Tasks Object-----");
+
+				}
+
+			} else {
+				log(LogStatus.FAIL,
+						"-----Activity timeline record is not created for Task: " + task1SubjectName + "-----",
+						YesNo.No);
+				sa.assertTrue(false,
+						"-----Activity timeline record is not created for Task: " + task1SubjectName + "-----");
+			}
+
+		} else
+
+		{
+			log(LogStatus.ERROR, "Not able to Open the Record: " + recordName, YesNo.No);
+			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
+		}
+
+		ThreadSleep(5000);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 }
