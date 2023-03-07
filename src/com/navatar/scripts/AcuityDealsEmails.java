@@ -27,6 +27,7 @@ import com.navatar.generic.EnumConstants.Environment;
 import com.navatar.generic.EnumConstants.Header;
 import com.navatar.generic.EnumConstants.InstRecordType;
 import com.navatar.generic.EnumConstants.InstitutionPageFieldLabelText;
+import com.navatar.generic.EnumConstants.MetaDataSetting;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.PageLabel;
@@ -1257,22 +1258,23 @@ public class AcuityDealsEmails extends BaseLib {
 //	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 //	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 //	
-//	List<WebElement> ele = null;
+//	String xpath="//*[@class='for_desk dealDataTable tabcont shadowremovedatatable']//td[@data-label='Date Received']//lightning-formatted-date-time";
+//	List<WebElement> ele =FindElements(driver, xpath, "");
 //	if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
 //		log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
 //		
-//		if(fp.clickOnAlreadyCreatedItem(projectName, ADEIns1, 30)){
+//		if(fp.clickOnAlreadyCreatedItem(projectName, ADEIns16, 30)){
 //			
-//			log(LogStatus.INFO,"open created item"+ADEIns1,YesNo.No);
+//			log(LogStatus.INFO,"open created item"+ADEIns16,YesNo.No);
 //			
 //			if (CommonLib.checkSorting(driver, SortOrder.Decending, ele)) {
 //				log(LogStatus.PASS,
-//						"-----------Fund Name Column is in Descending Order By Default --------------",
+//						"-----------Fund Name Column is in Descending Order By Default  --------------",
 //						YesNo.No);
 //				sa.assertTrue(true,
 //						"-----------Fund Name Column is in Descending Order By Default --------------");
 //
-//			}}}}}
+//			}}}}
 
 	@Parameters({ "projectName" })
 	@Test
@@ -1786,7 +1788,11 @@ public class AcuityDealsEmails extends BaseLib {
 //							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 							if (BP.dealAcuityHSRName(dealName, hsr, 30) != null) {
 								log(LogStatus.PASS, "HSR: " + hsr + " is present", YesNo.No);
-                                  String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
+
+								String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
+
+         
+
 								
 								if (cp.verifyDate(todaysDate,null, actualDate)) {
 									log(LogStatus.INFO,todaysDate+"Date Received: " + dateReceived + " is present", YesNo.No);
@@ -1800,21 +1806,21 @@ public class AcuityDealsEmails extends BaseLib {
 								sa.assertTrue(false, "HSR stage name not present: " + hsr);
 
 							}
+					} else {
+						log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
+						sa.assertTrue(false, "stage name not present: " + stage);
+					}
 						} else {
 							log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
 							sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
 						}
-//					} else {
-//						log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
-//						sa.assertTrue(false, "stage name not present: " + stage);
-//
-//					}
+//					
 
-				} else {
-					log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
-					sa.assertTrue(false, "date receivednot present: " + dateReceived);
-				}
+//				} else {
+//					log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
+//					sa.assertTrue(false, "date receivednot present: " + dateReceived);
+//				}
 			} else {
 
 				sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns1);
@@ -1889,6 +1895,7 @@ public class AcuityDealsEmails extends BaseLib {
 			}
 
 		}
+		
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
 		sa.assertAll();
@@ -2460,6 +2467,7 @@ public class AcuityDealsEmails extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
 		String dealName = ADEDeal11;
@@ -2479,26 +2487,29 @@ public class AcuityDealsEmails extends BaseLib {
 					log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
 					if (BP.dealAcuityStageName(dealName, stage, 30) != null) {
 						log(LogStatus.PASS, "Stage Name: " + stage + " is present", YesNo.No);
-						if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
-							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
+//						if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
+//							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 							if (BP.dealAcuityHSRName(dealName, hsr, 30) != null) {
 								log(LogStatus.PASS, "HSR: " + hsr + " is present", YesNo.No);
-
+								String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
+								
+								if (cp.verifyDate(todaysDate,null, actualDate)) {
+									log(LogStatus.INFO,todaysDate+"Date Received: " + dateReceived + " is present", YesNo.No);
+								}
+								else {
+								log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
+									sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
+								}
 							} else {
 								log(LogStatus.FAIL, "HSR stage name not present: " + hsr, YesNo.Yes);
 								sa.assertTrue(false, "HSR stage name not present: " + hsr);
 
 							}
-						} else {
-							log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
-							sa.assertTrue(false, "date receivednot present: " + dateReceived);
-						}
 					} else {
 						log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
 						sa.assertTrue(false, "stage name not present: " + stage);
 
 					}
-
 				
 			} else {
 				log(LogStatus.FAIL, "Not able to Click on Deal Name not present: " + dealName, YesNo.Yes);
@@ -2631,24 +2642,24 @@ public class AcuityDealsEmails extends BaseLib {
 		String labelName1[] = { excelLabel.Record_Type.toString() };
 		String labelValues1[] = { InstRecordType.Portfolio_Company.toString() };
 
-//		for (String[] accounts : EntityOrAccounts) {
-//			if (lp.clickOnTab(projectName, tabObj1)) {
-//				log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
-//				value = accounts[0];
-//				type = accounts[1];
-//				if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
-//					log(LogStatus.INFO, "successfully Created Account/Entity : " + value + " of record type : " + type,
-//							YesNo.No);
-//				} else {
-//					sa.assertTrue(false, "Not Able to Create Account/Entity : " + value + " of record type : " + type);
-//					log(LogStatus.SKIP, "Not Able to Create Account/Entity : " + value + " of record type : " + type,
-//							YesNo.Yes);
-//				}
-//			} else {
-//				sa.assertTrue(false, "Not Able to Click on Tab : " + tabObj1);
-//				log(LogStatus.SKIP, "Not Able to Click on Tab : " + tabObj1, YesNo.Yes);
-//			}
-//		}
+		for (String[] accounts : EntityOrAccounts) {
+			if (lp.clickOnTab(projectName, tabObj1)) {
+				log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
+				value = accounts[0];
+				type = accounts[1];
+				if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
+					log(LogStatus.INFO, "successfully Created Account/Entity : " + value + " of record type : " + type,
+							YesNo.No);
+				} else {
+					sa.assertTrue(false, "Not Able to Create Account/Entity : " + value + " of record type : " + type);
+					log(LogStatus.SKIP, "Not Able to Create Account/Entity : " + value + " of record type : " + type,
+							YesNo.Yes);
+				}
+			} else {
+				sa.assertTrue(false, "Not Able to Click on Tab : " + tabObj1);
+				log(LogStatus.SKIP, "Not Able to Click on Tab : " + tabObj1, YesNo.Yes);
+			}
+		}
 		String recordType = "";
 		String dealName = ADEDeal12;
 		String companyName = ADEDeal12CompanyName;
@@ -2689,7 +2700,10 @@ public class AcuityDealsEmails extends BaseLib {
 //							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 							if (BP.dealAcuityHSRName(dealName, hsr, 30) != null) {
 								log(LogStatus.PASS, "HSR: " + hsr + " is present", YesNo.No);
-                                String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
+
+								String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
+
+
 								
 								if (cp.verifyDate(todaysDate,null, actualDate)) {
 									log(LogStatus.INFO,todaysDate+"Date Received: " + dateReceived + " is present", YesNo.No);
@@ -2713,12 +2727,19 @@ public class AcuityDealsEmails extends BaseLib {
 
 					}
 
+
+//				} else {
+//					log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
+//					sa.assertTrue(false, "date receivednot present: " + dateReceived);
+//				}
+
 				
 			} else {
 				log(LogStatus.FAIL, "Not able to Click on Deal Name not present: " + dealName, YesNo.Yes);
 				sa.assertTrue(false, "Not able to Click on Deal Name not present: " + dealName);
 
 			}
+
 			} else {
 
 				sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns10);
@@ -3383,12 +3404,16 @@ public class AcuityDealsEmails extends BaseLib {
 
 					}
 
+
+		
+
 				
 			} else {
 				log(LogStatus.FAIL, "Not able to Click on Deal Name not present: " + dealName, YesNo.Yes);
 				sa.assertTrue(false, "Not able to Click on Deal Name not present: " + dealName);
 
 			}
+
 			} else {
 
 				sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns1);
@@ -3410,11 +3435,19 @@ public class AcuityDealsEmails extends BaseLib {
 					log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
 					if (BP.dealAcuityStageName(dealName, stage, 30) != null) {
 						log(LogStatus.PASS, "Stage Name: " + stage + " is present", YesNo.No);
-						if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
-							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
+//						if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
+//							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 							if (BP.dealAcuityHSRName(dealName, hsr, 30) != null) {
 								log(LogStatus.PASS, "HSR: " + hsr + " is present", YesNo.No);
-
+								String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
+								
+								if (cp.verifyDate(todaysDate,null, actualDate)) {
+									log(LogStatus.INFO,todaysDate+"Date Received: " + dateReceived + " is present", YesNo.No);
+								}
+								else {
+								log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
+									sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
+								}
 							} else {
 								log(LogStatus.FAIL, "HSR stage name not present: " + hsr, YesNo.Yes);
 								sa.assertTrue(false, "HSR stage name not present: " + hsr);
@@ -3431,10 +3464,10 @@ public class AcuityDealsEmails extends BaseLib {
 
 					}
 
-				} else {
-					log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
-					sa.assertTrue(false, "date receivednot present: " + dateReceived);
-				}
+//				} else {
+//					log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
+//					sa.assertTrue(false, "date receivednot present: " + dateReceived);
+//				}
 			} else {
 
 				sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns1);
@@ -3456,11 +3489,19 @@ public class AcuityDealsEmails extends BaseLib {
 					log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
 					if (BP.dealAcuityStageName(dealName, stage, 30) != null) {
 						log(LogStatus.PASS, "Stage Name: " + stage + " is present", YesNo.No);
-						if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
-							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
+//						if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
+//							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 							if (BP.dealAcuityHSRName(dealName, hsr, 30) != null) {
 								log(LogStatus.PASS, "HSR: " + hsr + " is present", YesNo.No);
-
+								String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
+								
+								if (cp.verifyDate(todaysDate,null, actualDate)) {
+									log(LogStatus.INFO,todaysDate+"Date Received: " + dateReceived + " is present", YesNo.No);
+								}
+								else {
+								log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
+									sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
+								}
 							} else {
 								log(LogStatus.FAIL, "HSR stage name not present: " + hsr, YesNo.Yes);
 								sa.assertTrue(false, "HSR stage name not present: " + hsr);
@@ -3477,10 +3518,10 @@ public class AcuityDealsEmails extends BaseLib {
 
 					}
 
-				} else {
-					log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
-					sa.assertTrue(false, "date receivednot present: " + dateReceived);
-				}
+//				} else {
+//					log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
+//					sa.assertTrue(false, "date receivednot present: " + dateReceived);
+//				}
 			} else {
 
 				sa.assertTrue(false,
@@ -3507,6 +3548,7 @@ public class AcuityDealsEmails extends BaseLib {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
 		String recordType = "";
@@ -3544,11 +3586,19 @@ public class AcuityDealsEmails extends BaseLib {
 					log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
 					if (BP.dealAcuityStageName(dealName, stage, 30) != null) {
 						log(LogStatus.PASS, "Stage Name: " + stage + " is present", YesNo.No);
-						if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
-							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
+//						if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
+//							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 							if (BP.dealAcuityHSRName(dealName, hsr, 30) != null) {
 								log(LogStatus.PASS, "HSR: " + hsr + " is present", YesNo.No);
-
+								String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
+								
+								if (cp.verifyDate(todaysDate,null, actualDate)) {
+									log(LogStatus.INFO,todaysDate+"Date Received: " + dateReceived + " is present", YesNo.No);
+								}
+								else {
+								log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
+									sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
+								}
 							} else {
 								log(LogStatus.FAIL, "HSR stage name not present: " + hsr, YesNo.Yes);
 								sa.assertTrue(false, "HSR stage name not present: " + hsr);
@@ -3565,10 +3615,10 @@ public class AcuityDealsEmails extends BaseLib {
 
 					}
 
-				} else {
-					log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
-					sa.assertTrue(false, "date receivednot present: " + dateReceived);
-				}
+//				} else {
+//					log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
+//					sa.assertTrue(false, "date receivednot present: " + dateReceived);
+//				}
 			} else {
 
 				sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns1);
@@ -3615,11 +3665,19 @@ public class AcuityDealsEmails extends BaseLib {
 					log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
 					if (BP.dealAcuityStageName(dealName, stage, 30) != null) {
 						log(LogStatus.PASS, "Stage Name: " + stage + " is present", YesNo.No);
-						if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
-							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
+//						if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
+//							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 							if (BP.dealAcuityHSRName(dealName, hsr, 30) != null) {
 								log(LogStatus.PASS, "HSR: " + hsr + " is present", YesNo.No);
-
+								String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
+								
+								if (cp.verifyDate(todaysDate,null, actualDate)) {
+									log(LogStatus.INFO,todaysDate+"Date Received: " + dateReceived + " is present", YesNo.No);
+								}
+								else {
+								log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
+									sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
+								}
 							} else {
 								log(LogStatus.FAIL, "HSR stage name not present: " + hsr, YesNo.Yes);
 								sa.assertTrue(false, "HSR stage name not present: " + hsr);
@@ -3636,10 +3694,10 @@ public class AcuityDealsEmails extends BaseLib {
 
 					}
 
-				} else {
-					log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
-					sa.assertTrue(false, "date receivednot present: " + dateReceived);
-				}
+//				} else {
+//					log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
+//					sa.assertTrue(false, "date receivednot present: " + dateReceived);
+//				}
 			} else {
 
 				sa.assertTrue(false,
@@ -6933,24 +6991,24 @@ public void ADETc052_VerifyDealCountUnderDealColumnClickableTab(String projectNa
 							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 
 						} else {
-							log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-							sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
+							log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
+							sa.assertTrue(false, "date receivednot present: " + dateReceived);
 
 						}
-					} else {
-						log(LogStatus.FAIL, "Not able to Click on Company Name: " + companyName, YesNo.Yes);
-						sa.assertTrue(false, "Not able to Click on Company Name: " + companyName);
-
-					}
 					} else {
 						log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
 						sa.assertTrue(false, "stage name not present: " + stage);
 
 					}
+					} else {
+						log(LogStatus.FAIL, "Not able to Click on Company Name: " + companyName, YesNo.Yes);
+						sa.assertTrue(false, "Not able to Click on Company Name: " + companyName);
+
+					}
 
 				} else {
-					log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
-					sa.assertTrue(false, "date receivednot present: " + dateReceived);
+					log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+					sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 				}
 				driver.close();
 				driver.switchTo().window(parentWindowId);
@@ -7482,7 +7540,7 @@ public void ADETc059_DeleteExistingFundraisingandVerifyImpactFundraisingsonInsti
 
 					} else {
 						sa.assertTrue(false, "Not Able to Click on Tab after delete : " + TabName.FundraisingsTab
-								+ " For : " + "Test D");
+								+ " For : " + "ADEFundraisingName");
 						log(LogStatus.SKIP, "Not Able to Click on Tab after delete : " + TabName.FundraisingsTab
 								+ " For : " +ADEFundraisingName, YesNo.Yes);
 					}
@@ -9992,7 +10050,9 @@ public void ADETc080_VerifyDealGridWhenAdvisorFirmContactGetsAddedIntoaDealTeama
 //							if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
 //								log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 								if (BP.dealAcuityHSRName(dealName, stage, 30) != null) {
-									log(LogStatus.PASS, " HSR Stage: " + stage + " is present", YesNo.No);
+
+									log(LogStatus.PASS, "HSR: " + stage + " is present", YesNo.No);
+
 									String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
 									
 									if (cp.verifyDate(todaysDate,null, actualDate)) {
@@ -10002,11 +10062,12 @@ public void ADETc080_VerifyDealGridWhenAdvisorFirmContactGetsAddedIntoaDealTeama
 									log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
 										sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
 									}
-							} else {
-								log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-								sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
-							}
+								} else {
+									log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
+									sa.assertTrue(false, "HSR stage name not present: " + stage);
+
+								}
 						} else {
 							log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
 							sa.assertTrue(false, "stage name not present: " + stage);
@@ -10017,11 +10078,13 @@ public void ADETc080_VerifyDealGridWhenAdvisorFirmContactGetsAddedIntoaDealTeama
 //						log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
 //						sa.assertTrue(false, "date receivednot present: " + dateReceived);
 //					}
+
 					} else {
 						log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
 						sa.assertTrue(false, "HSR stage name not present: " + stage);
 
 					}
+
 				} else {
 
 					sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns2);
@@ -10118,36 +10181,41 @@ public void ADETc081_VerifyDealGridWhenAdvisorFirmContactGetsAddedIntoaDealTeama
 //							if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
 //								log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 								if (BP.dealAcuityHSRName(dealName, stage, 30) != null) {
-									log(LogStatus.PASS, " HSR Stage: " + stage + " is present", YesNo.No);
+
+									log(LogStatus.PASS, "HSR: " + stage + " is present", YesNo.No);
 									String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
 									
-																if (cp.verifyDate(todaysDate,null, actualDate)) {
-																	log(LogStatus.INFO,todaysDate+"Date Received: " + dateReceived + " is present", YesNo.No);
-																}
-																else {
-																log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
-																	sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
-																}
-							} else {
-								log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-								sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
+									if (cp.verifyDate(todaysDate,null, actualDate)) {
+										log(LogStatus.INFO,todaysDate+"Date Received: " + dateReceived + " is present", YesNo.No);
+									}
+									else {
+									log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
+										sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
+									}
+								} else {
+									log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
+									sa.assertTrue(false, "HSR stage name not present: " + stage);
 
-							}
+								}
 						} else {
 							log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
 							sa.assertTrue(false, "stage name not present: " + stage);
 
 						}
+							} else {
+								log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+								sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
+
+							}
+						
 
 //					} else {
 //						log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
 //						sa.assertTrue(false, "date receivednot present: " + dateReceived);
 //					}
-					} else {
-						log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
-						sa.assertTrue(false, "HSR stage name not present: " + stage);
 
-					}
+					
+
 				} else {
 
 					sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns2);
@@ -10341,6 +10409,7 @@ public void ADETc083_2_RestoreDealTeamVerifyImpactDealGridAdvisorFirm(String pro
 	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	
 	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 	WebElement ele = null;
 
@@ -10394,7 +10463,8 @@ public void ADETc083_2_RestoreDealTeamVerifyImpactDealGridAdvisorFirm(String pro
 //					if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
 //						log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 						if (BP.dealAcuityHSRName(dealName, stage, 30) != null) {
-							log(LogStatus.PASS, " HSR Stage: " + stage + " is present", YesNo.No);
+
+							log(LogStatus.PASS, "HSR: " + stage + " is present", YesNo.No);
 							String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
 							
 							if (cp.verifyDate(todaysDate,null, actualDate)) {
@@ -10404,26 +10474,22 @@ public void ADETc083_2_RestoreDealTeamVerifyImpactDealGridAdvisorFirm(String pro
 							log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
 								sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
 							}
-					} else {
-						log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-						sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
-					}
+						} else {
+							log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
+							sa.assertTrue(false, "HSR stage name not present: " + stage);
+
+						}
 				} else {
 					log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
 					sa.assertTrue(false, "stage name not present: " + stage);
 
 				}
+					} else {
+						log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+						sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
-//			} else {
-//				log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
-//				sa.assertTrue(false, "date receivednot present: " + dateReceived);
-//			}
-			} else {
-				log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
-				sa.assertTrue(false, "HSR stage name not present: " + stage);
-
-			}
+					}
 		} else {
 
 			sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns1);
@@ -10557,6 +10623,7 @@ public void ADETc084_2_RestoreDealContactVerifyImpactDealGridAdvisorFirm(String 
 	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	
 	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 	WebElement ele = null;
 
@@ -10610,7 +10677,8 @@ public void ADETc084_2_RestoreDealContactVerifyImpactDealGridAdvisorFirm(String 
 //					if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
 //						log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 						if (BP.dealAcuityHSRName(dealName, stage, 30) != null) {
-							log(LogStatus.PASS, " HSR Stage: " + stage + " is present", YesNo.No);
+
+							log(LogStatus.PASS, "HSR: " + stage + " is present", YesNo.No);
 							String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
 							
 							if (cp.verifyDate(todaysDate,null, actualDate)) {
@@ -10620,11 +10688,13 @@ public void ADETc084_2_RestoreDealContactVerifyImpactDealGridAdvisorFirm(String 
 							log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
 								sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
 							}
-					} else {
-						log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-						sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
-					}
+						} else {
+							log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
+							sa.assertTrue(false, "HSR stage name not present: " + stage);
+
+						}
+					
 				} else {
 					log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
 					sa.assertTrue(false, "stage name not present: " + stage);
@@ -10635,11 +10705,14 @@ public void ADETc084_2_RestoreDealContactVerifyImpactDealGridAdvisorFirm(String 
 //				log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
 //				sa.assertTrue(false, "date receivednot present: " + dateReceived);
 //			}
+
+
 			} else {
-				log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
-				sa.assertTrue(false, "HSR stage name not present: " + stage);
+				log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
 			}
+
 		} else {
 
 			sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns2);
@@ -10826,7 +10899,8 @@ public void ADETc085_2_RestoreDealTeamVerifyImpactDealGridAdvisorFirm(String pro
 //					if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
 //						log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 						if (BP.dealAcuityHSRName(dealName, stage, 30) != null) {
-							log(LogStatus.PASS, " HSR Stage: " + stage + " is present", YesNo.No);
+
+							log(LogStatus.PASS, "HSR: " + stage + " is present", YesNo.No);
 							String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
 							
 							if (cp.verifyDate(todaysDate,null, actualDate)) {
@@ -10836,11 +10910,13 @@ public void ADETc085_2_RestoreDealTeamVerifyImpactDealGridAdvisorFirm(String pro
 							log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
 								sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
 							}
-					} else {
-						log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-						sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
-					}
+						} else {
+							log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
+							sa.assertTrue(false, "HSR stage name not present: " + stage);
+
+						}
+					
 				} else {
 					log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
 					sa.assertTrue(false, "stage name not present: " + stage);
@@ -10852,10 +10928,11 @@ public void ADETc085_2_RestoreDealTeamVerifyImpactDealGridAdvisorFirm(String pro
 //				sa.assertTrue(false, "date receivednot present: " + dateReceived);
 //			}
 			} else {
-				log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
-				sa.assertTrue(false, "HSR stage name not present: " + stage);
+				log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
 			}
+
 		} else {
 
 			sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns1);
@@ -10914,23 +10991,43 @@ if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 			log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
 			if (BP.dealAcuityStageName(dealName, stage, 30) != null) {
 				log(LogStatus.PASS, "Stage Name: " + stage + " is present", YesNo.No);
+//				if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
+//					log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 					if (BP.dealAcuityHSRName(dealName, stage, 30) != null) {
-						log(LogStatus.PASS, " HSR Stage: " + stage + " is present", YesNo.No);
-				} else {
-					log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-					sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
+						log(LogStatus.PASS, "HSR: " + stage + " is present", YesNo.No);
+						String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
+						
+						if (cp.verifyDate(todaysDate,null, actualDate)) {
+							log(LogStatus.INFO,todaysDate+"Date Received: " + dateReceived + " is present", YesNo.No);
+						}
+						else {
+						log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
+							sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
+						}
+					} else {
+						log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
+						sa.assertTrue(false, "HSR stage name not present: " + stage);
 
-				}
+					}
+				
 			} else {
 				log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
 				sa.assertTrue(false, "stage name not present: " + stage);
 
 			}
+
+
+//		} else {
+//			log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
+//			sa.assertTrue(false, "date receivednot present: " + dateReceived);
+//		}
+
 		} else {
-			log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
-			sa.assertTrue(false, "HSR stage name not present: " + stage);
+			log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+			sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
 		}
+
 	} else {
 
 		sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns1);
@@ -10971,21 +11068,39 @@ if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns2, 30)) {
 		log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
 		if (BP.dealAcuityStageName(dealName, stage1, 30) != null) {
 			log(LogStatus.PASS, "Stage Name: " + stage1 + " is present", YesNo.No);
-			if (BP.dealAcuityHSRName(dealName, stage1, 30) != null) {
-				log(LogStatus.PASS, " HSR Stage: " + stage1 + " is present", YesNo.No);
-			} else {
-				log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-				sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
+//			if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
+//				log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
+				if (BP.dealAcuityHSRName(dealName, stage1, 30) != null) {
+					log(LogStatus.PASS, "HSR: " + stage1 + " is present", YesNo.No);
+					String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
+					
+					if (cp.verifyDate(todaysDate,null, actualDate)) {
+						log(LogStatus.INFO,todaysDate+"Date Received: " + dateReceived + " is present", YesNo.No);
+					}
+					else {
+					log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
+						sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
+					}
+				} else {
+					log(LogStatus.FAIL, "HSR stage name not present: " + stage1, YesNo.Yes);
+					sa.assertTrue(false, "HSR stage name not present: " + stage1);
 
-			}
+				}
+			
 		} else {
 			log(LogStatus.FAIL, "stage name not present: " + stage1, YesNo.Yes);
 			sa.assertTrue(false, "stage name not present: " + stage1);
 
 		}
+
+//	} else {
+//		log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
+//		sa.assertTrue(false, "date receivednot present: " + dateReceived);
+//	}
+
 	} else {
-		log(LogStatus.FAIL, "HSR stage name not present: " + stage1, YesNo.Yes);
-		sa.assertTrue(false, "HSR stage name not present: " + stage1);
+		log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+		sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
 	}
 } else {
@@ -11028,23 +11143,40 @@ if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns2, 30)) {
 		log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
 		if (BP.dealAcuityStageName(dealName, stage2, 30) != null) {
 			log(LogStatus.PASS, "Stage Name: " + stage2 + " is present", YesNo.No);
+//			if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
+//				log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 				if (BP.dealAcuityHSRName(dealName, stage1, 30) != null) {
-					log(LogStatus.PASS, " HSR Stage: " + stage1 + " is present", YesNo.No);
-			} else {
-				log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-				sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
+					log(LogStatus.PASS, "HSR: " + stage1 + " is present", YesNo.No);
+					String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
+					
+					if (cp.verifyDate(todaysDate,null, actualDate)) {
+						log(LogStatus.INFO,todaysDate+"Date Received: " + dateReceived + " is present", YesNo.No);
+					}
+					else {
+					log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
+						sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
+					}
+				} else {
+					log(LogStatus.FAIL, "HSR stage name not present: " + stage1, YesNo.Yes);
+					sa.assertTrue(false, "HSR stage name not present: " + stage1);
 
-			}
+				}
+			
 		} else {
 			log(LogStatus.FAIL, "stage name not present: " + stage2, YesNo.Yes);
 			sa.assertTrue(false, "stage name not present: " + stage2);
 
 		}
-	} else {
-		log(LogStatus.FAIL, "HSR stage name not present: " + stage1, YesNo.Yes);
-		sa.assertTrue(false, "HSR stage name not present: " + stage1);
 
-	}
+//	} else {
+//		log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
+//		sa.assertTrue(false, "date receivednot present: " + dateReceived);
+//	}
+} else {
+	log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+	sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
+
+}
 } else {
 
 	sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns2);
@@ -11432,24 +11564,26 @@ public void ADETc090_VerifyDealCountRedirectionForContactatContactGridofAdvisorF
 												log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
 													sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
 												}
-										} else {
-											log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-											sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
+											} else {
+												log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
+												sa.assertTrue(false, "HSR stage name not present: " + stage);
 
-										}
+											}
+										
 									} else {
 										log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
 										sa.assertTrue(false, "stage name not present: " + stage);
 
 									}
 
+
 //								} else {
 //									log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
 //									sa.assertTrue(false, "date receivednot present: " + dateReceived);
 //								}
 								} else {
-									log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
-									sa.assertTrue(false, "HSR stage name not present: " + stage);
+									log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+									sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
 								}
 							}
@@ -11590,10 +11724,10 @@ public void ADETc092_VerifyDealGridWhenLenderFirmContactGetsAddedIntoaDealTeamas
 	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 	String dealName = ADEDeal25;
-	String companyName = ADEDeal22CompanyName;
-	String stage = ADEDeal22Stage;
+	String companyName = ADEDeal25CompanyName;
+	String stage = ADEDeal25Stage;
 	String dateReceived = todaysDate;
-	String contactName = ADEContact2FName + " " + ADEContact2LName;
+	String contactName = ADEContact5FName + " " + ADEContact5LName;
 
 	
 	String[][] data = { { PageLabel.Deal.toString(), dealName }, { PageLabel.Firm.toString(), ADEIns5 }, { PageLabel.Company.toString(), ADEIns1 } };
@@ -11658,7 +11792,8 @@ public void ADETc092_VerifyDealGridWhenLenderFirmContactGetsAddedIntoaDealTeamas
 //					if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
 //						log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 						if (BP.dealAcuityHSRName(dealName, stage, 30) != null) {
-							log(LogStatus.PASS, " HSR Stage: " + stage + " is present", YesNo.No);
+
+							log(LogStatus.PASS, "HSR: " + stage + " is present", YesNo.No);
                            String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
 							
 							if (cp.verifyDate(todaysDate,null, actualDate)) {
@@ -11668,11 +11803,13 @@ public void ADETc092_VerifyDealGridWhenLenderFirmContactGetsAddedIntoaDealTeamas
 							log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
 								sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
 							}
-					} else {
-						log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-						sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
-					}
+						} else {
+							log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
+							sa.assertTrue(false, "HSR stage name not present: " + stage);
+
+						}
+					
 				} else {
 					log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
 					sa.assertTrue(false, "stage name not present: " + stage);
@@ -11684,8 +11821,8 @@ public void ADETc092_VerifyDealGridWhenLenderFirmContactGetsAddedIntoaDealTeamas
 //				sa.assertTrue(false, "date receivednot present: " + dateReceived);
 //			}
 			} else {
-				log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
-				sa.assertTrue(false, "HSR stage name not present: " + stage);
+				log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
 			}
 		} else {
@@ -11874,8 +12011,9 @@ public void ADETc093_2_RestoreDealVerifyImpactDealGridLenderFirm(String projectN
 //					if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
 //						log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 						if (BP.dealAcuityHSRName(dealName, stage, 30) != null) {
-							log(LogStatus.PASS, " HSR Stage: " + stage + " is present", YesNo.No);
-                           String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
+							log(LogStatus.PASS, "HSR: " + stage + " is present", YesNo.No);
+	                           String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
+
 							
 							if (cp.verifyDate(todaysDate,null, actualDate)) {
 								log(LogStatus.INFO,todaysDate+"Date Received: " + dateReceived + " is present", YesNo.No);
@@ -11884,11 +12022,14 @@ public void ADETc093_2_RestoreDealVerifyImpactDealGridLenderFirm(String projectN
 							log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
 								sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
 							}
-					} else {
-						log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-						sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
-					}
+						} else {
+							log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
+							sa.assertTrue(false, "HSR stage name not present: " + stage);
+
+						}
+
+					
 				} else {
 					log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
 					sa.assertTrue(false, "stage name not present: " + stage);
@@ -11899,9 +12040,10 @@ public void ADETc093_2_RestoreDealVerifyImpactDealGridLenderFirm(String projectN
 //				log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
 //				sa.assertTrue(false, "date receivednot present: " + dateReceived);
 //			}
+
 			} else {
-				log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
-				sa.assertTrue(false, "HSR stage name not present: " + stage);
+				log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
 			}
 		} else {
@@ -12090,7 +12232,8 @@ public void ADETc094_2_RestoreFinancingVerifyImpactDealGridLenderFirm(String pro
 //					if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
 //						log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 						if (BP.dealAcuityHSRName(dealName, stage, 30) != null) {
-							log(LogStatus.PASS, " HSR Stage: " + stage + " is present", YesNo.No);
+
+							log(LogStatus.PASS, "HSR: " + stage + " is present", YesNo.No);
                              String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
 							
 							if (cp.verifyDate(todaysDate,null, actualDate)) {
@@ -12100,11 +12243,14 @@ public void ADETc094_2_RestoreFinancingVerifyImpactDealGridLenderFirm(String pro
 							log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
 								sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
 							}
-					} else {
-						log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-						sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
-					}
+						} else {
+							log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
+							sa.assertTrue(false, "HSR stage name not present: " + stage);
+
+						}
+
+					
 				} else {
 					log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
 					sa.assertTrue(false, "stage name not present: " + stage);
@@ -12115,9 +12261,10 @@ public void ADETc094_2_RestoreFinancingVerifyImpactDealGridLenderFirm(String pro
 //				log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
 //				sa.assertTrue(false, "date receivednot present: " + dateReceived);
 //			}
+
 			} else {
-				log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
-				sa.assertTrue(false, "HSR stage name not present: " + stage);
+				log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
 			}
 		} else {
@@ -12273,7 +12420,8 @@ if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 //				if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
 //					log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 					if (BP.dealAcuityHSRName(dealName, stage, 30) != null) {
-						log(LogStatus.PASS, " HSR Stage: " + stage + " is present", YesNo.No);
+
+						log(LogStatus.PASS, "HSR: " + stage + " is present", YesNo.No);
 						String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
 						
 						if (cp.verifyDate(todaysDate,null, actualDate)) {
@@ -12283,11 +12431,13 @@ if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 						log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
 							sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
 						}
-				} else {
-					log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-					sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
-				}
+					} else {
+						log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
+						sa.assertTrue(false, "HSR stage name not present: " + stage);
+
+					}
+				
 			} else {
 				log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
 				sa.assertTrue(false, "stage name not present: " + stage);
@@ -12299,10 +12449,11 @@ if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 //			sa.assertTrue(false, "date receivednot present: " + dateReceived);
 //		}
 		} else {
-			log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
-			sa.assertTrue(false, "HSR stage name not present: " + stage);
+			log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+			sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
 		}
+
 	} else {
 
 		sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns1);
@@ -12346,7 +12497,8 @@ if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns5, 30)) {
 //			if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
 //				log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 				if (BP.dealAcuityHSRName(dealName, stage1, 30) != null) {
-					log(LogStatus.PASS, " HSR Stage: " + stage1 + " is present", YesNo.No);
+
+					log(LogStatus.PASS, "HSR: " + stage1 + " is present", YesNo.No);
 					String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
 					
 					if (cp.verifyDate(todaysDate,null, actualDate)) {
@@ -12356,11 +12508,12 @@ if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns5, 30)) {
 					log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
 						sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
 					}
-			} else {
-				log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-				sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
+				} else {
+					log(LogStatus.FAIL, "HSR stage name not present: " + stage1, YesNo.Yes);
+					sa.assertTrue(false, "HSR stage name not present: " + stage1);
 
-			}
+				}
+			
 		} else {
 			log(LogStatus.FAIL, "stage name not present: " + stage1, YesNo.Yes);
 			sa.assertTrue(false, "stage name not present: " + stage1);
@@ -12372,10 +12525,11 @@ if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns5, 30)) {
 //		sa.assertTrue(false, "date receivednot present: " + dateReceived);
 //	}
 	} else {
-		log(LogStatus.FAIL, "HSR stage name not present: " + stage1, YesNo.Yes);
-		sa.assertTrue(false, "HSR stage name not present: " + stage1);
+		log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+		sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
 	}
+
 } else {
 
 	sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns1);
@@ -12419,7 +12573,11 @@ if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns5, 30)) {
 //			if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
 //				log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 				if (BP.dealAcuityHSRName(dealName, stage1, 30) != null) {
-					log(LogStatus.PASS, " HSR Stage: " + stage1 + " is present", YesNo.No);
+
+					log(LogStatus.PASS, "HSR: " + stage1 + " is present", YesNo.No);
+
+
+
 					String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
 					
 					if (cp.verifyDate(todaysDate,null, actualDate)) {
@@ -12429,11 +12587,14 @@ if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns5, 30)) {
 					log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
 						sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
 					}
-			} else {
-				log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-				sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
-			}
+				} else {
+					log(LogStatus.FAIL, "HSR stage name not present: " + stage1, YesNo.Yes);
+					sa.assertTrue(false, "HSR stage name not present: " + stage1);
+
+				}
+
+			
 		} else {
 			log(LogStatus.FAIL, "stage name not present: " + stage2, YesNo.Yes);
 			sa.assertTrue(false, "stage name not present: " + stage2);
@@ -12445,8 +12606,8 @@ if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns5, 30)) {
 //		sa.assertTrue(false, "date receivednot present: " + dateReceived);
 //	}
 	} else {
-		log(LogStatus.FAIL, "HSR stage name not present: " + stage1, YesNo.Yes);
-		sa.assertTrue(false, "HSR stage name not present: " + stage1);
+		log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+		sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
 	}
 } else {
@@ -12831,14 +12992,21 @@ public void ADETc100_VerifyDealCountRedirectionForContactatContactGridofLenderFi
 												log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
 													sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
 												}
+											} else {
+												log(LogStatus.FAIL, "Not able to Click on Company Name: " + companyName, YesNo.Yes);
+												sa.assertTrue(false, "Not able to Click on Company Name: " + companyName);
+
+											}
 										} else {
-											log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-											sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
+											log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
+											sa.assertTrue(false, "stage name not present: " + stage);
+
 
 										}
 									} else {
-										log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
-										sa.assertTrue(false, "stage name not present: " + stage);
+										log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+										sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
+
 
 									}
 
@@ -12846,11 +13014,6 @@ public void ADETc100_VerifyDealCountRedirectionForContactatContactGridofLenderFi
 //									log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
 //									sa.assertTrue(false, "date receivednot present: " + dateReceived);
 //								}
-								} else {
-									log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
-									sa.assertTrue(false, "HSR stage name not present: " + stage);
-
-								}
 							}
 							driver.close();
 							driver.switchTo().window(parentWindowId);
@@ -12923,7 +13086,8 @@ public void ADETc101_VerifythatDealsWhereCurrentFirmISTaggedinCompanyareDisplayi
 //					if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
 //						log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 						if (BP.dealAcuityHSRName(dealName, stage, 30) != null) {
-							log(LogStatus.PASS, " HSR Stage: " + stage + " is present", YesNo.No);
+
+							log(LogStatus.PASS, "HSR: " + stage + " is present", YesNo.No);
 							String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
 							
 							if (cp.verifyDate(todaysDate,null, actualDate)) {
@@ -12933,11 +13097,13 @@ public void ADETc101_VerifythatDealsWhereCurrentFirmISTaggedinCompanyareDisplayi
 							log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
 								sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
 							}
-					} else {
-						log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-						sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
-					}
+						} else {
+							log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
+							sa.assertTrue(false, "HSR stage name not present: " + stage);
+
+						}
+					
 				} else {
 					log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
 					sa.assertTrue(false, "stage name not present: " + stage);
@@ -12948,10 +13114,13 @@ public void ADETc101_VerifythatDealsWhereCurrentFirmISTaggedinCompanyareDisplayi
 //				log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
 //				sa.assertTrue(false, "date receivednot present: " + dateReceived);
 //			}
+
 			} else {
-				log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
-				sa.assertTrue(false, "HSR stage name not present: " + stage);
-				}
+				log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
+
+			}
+
 			if (CommonLib.click(driver, BP.SourcedTab(30,action.SCROLLANDBOOLEAN), "Source tab: " + "",
 					action.BOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on Source tab", YesNo.No);
@@ -13030,7 +13199,7 @@ public void ADETc102_VerifythatDealswhereCurrentFirmistaggedinSourceFirmareDispl
 			log(LogStatus.INFO, "open created item" + ADEIns16, YesNo.No);
 
 			if (BP.dealAcuityDealName(dealName1, 30) != null) {
-				log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
+				log(LogStatus.PASS, "Deal Name: " + dealName1 + " is hyperlink and is present", YesNo.No);
 				if (BP.dealAcuityStageName(dealName1, stage, 30) != null) {
 					log(LogStatus.PASS, "Stage Name: " + stage + " is present", YesNo.No);
 //					if (BP.dealAcuityDateReceived(dealName1, dateReceived, 30) != null) {
@@ -13043,14 +13212,15 @@ public void ADETc102_VerifythatDealswhereCurrentFirmistaggedinSourceFirmareDispl
 								log(LogStatus.INFO,todaysDate+"Date Received: " + dateReceived + " is present", YesNo.No);
 							}
 							else {
-							log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
-								sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
+							log(LogStatus.ERROR, "Date Received is not matched For : "+dealName1+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
+								sa.assertTrue(false,"Date Received is not matched For : "+dealName1+" Actual : "+actualDate+" /t Expected : "+todaysDate );
 							}
-					} else {
-						log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName1, YesNo.Yes);
-						sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName1);
+						} else {
+							log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
+							sa.assertTrue(false, "HSR stage name not present: " + stage);
+						}
 
-					}
+					
 				} else {
 					log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
 					sa.assertTrue(false, "stage name not present: " + stage);
@@ -13061,10 +13231,13 @@ public void ADETc102_VerifythatDealswhereCurrentFirmistaggedinSourceFirmareDispl
 //				log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
 //				sa.assertTrue(false, "date receivednot present: " + dateReceived);
 //			}
+
 			} else {
-				log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
-				sa.assertTrue(false, "HSR stage name not present: " + stage);
-				}
+				log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName1, YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName1);
+
+			}
+
 			if (CommonLib.click(driver, BP.SourcedTab( 30,action.SCROLLANDBOOLEAN), "Source tab: " + "",
 					action.BOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on Source tab", YesNo.No);
@@ -13075,7 +13248,8 @@ public void ADETc102_VerifythatDealswhereCurrentFirmistaggedinSourceFirmareDispl
 //						if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
 //							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 							if (BP.dealAcuityHSRName(dealName, stage, 30) != null) {
-								log(LogStatus.PASS, " HSR Stage: " + stage + " is present", YesNo.No);
+
+								log(LogStatus.PASS, "HSR: " + stage + " is present", YesNo.No);
 								String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
 								
 								if (cp.verifyDate(todaysDate,null, actualDate)) {
@@ -13085,11 +13259,13 @@ public void ADETc102_VerifythatDealswhereCurrentFirmistaggedinSourceFirmareDispl
 								log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
 									sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
 								}
-						} else {
-							log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-							sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
-						}
+							} else {
+								log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
+								sa.assertTrue(false, "HSR stage name not present: " + stage);
+
+							}
+						
 					} else {
 						log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
 						sa.assertTrue(false, "stage name not present: " + stage);
@@ -13101,9 +13277,10 @@ public void ADETc102_VerifythatDealswhereCurrentFirmistaggedinSourceFirmareDispl
 //					sa.assertTrue(false, "date receivednot present: " + dateReceived);
 //				}
 				} else {
-					log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
-					sa.assertTrue(false, "HSR stage name not present: " + stage);
-					}
+					log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+					sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
+
+				}
 			} else {
 				log(LogStatus.FAIL, "Not able to Click on Source tab: " , YesNo.Yes);
 				sa.assertTrue(false, "Not able to Click on Source tab: " );
@@ -13149,8 +13326,8 @@ String dealsSectionHeaderMessage = "No items to display.";
 		if (fp.clickOnAlreadyCreatedItem(projectName, dealName, 10)) {
 			if (BP.clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Edit, 10)) {
 				ThreadSleep(2000);
-				if (click(driver, fp.getCompanyCrossIcon(projectName, 60), "Company Cross Icon", action.SCROLLANDBOOLEAN)) {
-					appLog.info("Clicked on Legal Cross icon");
+				if (click(driver, fp.getPlatformCompanyCrossIcon(projectName, 60), "Platform Company Cross Icon", action.SCROLLANDBOOLEAN)) {
+					appLog.info("Clicked on Platform Company Cross Icon");
 					ThreadSleep(3000);
 				} else {
 					appLog.info("Not able to click on Cross Icon button");
@@ -13239,6 +13416,7 @@ public void ADETc104_ChangeCurrentFirmfromSourcetoCompanyandVerifyImpactonFundsS
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 	String dealName = ADEDeal28;
 	String dealName1 = ADEDeal29;
@@ -13288,16 +13466,28 @@ public void ADETc104_ChangeCurrentFirmfromSourcetoCompanyandVerifyImpactonFundsS
 		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns16, 30)) {
 
 			log(LogStatus.INFO, "open created item" + ADEIns16, YesNo.No);
-
 			if (BP.dealAcuityDealName(dealName1, 30) != null) {
 				log(LogStatus.PASS, "Deal Name: " + dealName1 + " is hyperlink and is present", YesNo.No);
 				if (BP.dealAcuityStageName(dealName1, stage, 30) != null) {
 					log(LogStatus.PASS, "Stage Name: " + stage + " is present", YesNo.No);
-					if (BP.dealAcuityDateReceived(dealName1, dateReceived, 30) != null) {
-						log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
+//					if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
+//						log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 						if (BP.dealAcuityHSRName(dealName1, stage, 30) != null) {
-							log(LogStatus.PASS, " HSR Stage: " + stage + " is present", YesNo.No);
+							log(LogStatus.PASS, "HSR: " + stage + " is present", YesNo.No);
+							String actualDate= BP.dealAcuityDateReceived2(dealName1, 30).getText();
+							
+							if (cp.verifyDate(todaysDate,null, actualDate)) {
+								log(LogStatus.INFO,todaysDate+"Date Received: " + dateReceived + " is present", YesNo.No);
+							}
+							else {
+							log(LogStatus.ERROR, "Date Received is not matched For : "+dealName1+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
+								sa.assertTrue(false,"Date Received is not matched For : "+dealName1+" Actual : "+actualDate+" /t Expected : "+todaysDate );
+							}
+						} else {
+							log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
+							sa.assertTrue(false, "HSR stage name not present: " + stage);
 
+						}
 					} else {
 						log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName1, YesNo.Yes);
 						sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName1);
@@ -13309,14 +13499,10 @@ public void ADETc104_ChangeCurrentFirmfromSourcetoCompanyandVerifyImpactonFundsS
 
 				}
 
-			} else {
-				log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
-				sa.assertTrue(false, "date receivednot present: " + dateReceived);
-			}
-			} else {
-				log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
-				sa.assertTrue(false, "HSR stage name not present: " + stage);
-				}
+//			} else {
+//				log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
+//				sa.assertTrue(false, "date receivednot present: " + dateReceived);
+//			}
 			if (CommonLib.click(driver, BP.SourcedTab( 30,action.SCROLLANDBOOLEAN), "Source tab: " + "",
 					action.BOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on Source tab", YesNo.No);
@@ -13324,11 +13510,24 @@ public void ADETc104_ChangeCurrentFirmfromSourcetoCompanyandVerifyImpactonFundsS
 					log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
 					if (BP.dealAcuityStageName(dealName, stage, 30) != null) {
 						log(LogStatus.PASS, "Stage Name: " + stage + " is present", YesNo.No);
-						if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
-							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
+//						if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
+//							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 							if (BP.dealAcuityHSRName(dealName, stage, 30) != null) {
-								log(LogStatus.PASS, " HSR Stage: " + stage + " is present", YesNo.No);
+								log(LogStatus.PASS, "HSR: " + stage + " is present", YesNo.No);
+								String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
+								
+								if (cp.verifyDate(todaysDate,null, actualDate)) {
+									log(LogStatus.INFO,todaysDate+"Date Received: " + dateReceived + " is present", YesNo.No);
+								}
+								else {
+								log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
+									sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
+								}
+							} else {
+								log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
+								sa.assertTrue(false, "HSR stage name not present: " + stage);
 
+							}
 						} else {
 							log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
 							sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
@@ -13340,14 +13539,10 @@ public void ADETc104_ChangeCurrentFirmfromSourcetoCompanyandVerifyImpactonFundsS
 
 					}
 
-				} else {
-					log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
-					sa.assertTrue(false, "date receivednot present: " + dateReceived);
-				}
-				} else {
-					log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
-					sa.assertTrue(false, "HSR stage name not present: " + stage);
-					}
+//				} else {
+//					log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
+//					sa.assertTrue(false, "date receivednot present: " + dateReceived);
+//				}
 			} else {
 				log(LogStatus.FAIL, "Not able to Click on Source tab: " , YesNo.Yes);
 				sa.assertTrue(false, "Not able to Click on Source tab: " );
@@ -13425,7 +13620,7 @@ public void ADETc105_VerifythaNewDealpopupgetsClosewhenCancelCrossIcongetsClicke
 					log(LogStatus.INFO, "Clicked on New Deal Icon", YesNo.No);
 					String actualHeader = getText(driver, BP.getNewDealpopupheader(20), "NewDealpopupheader",
 							action.SCROLLANDBOOLEAN);
-					if (ExpectedHeader.equals(actualHeader)) {
+					if (actualHeader.equals(ExpectedHeader)) {
 						log(LogStatus.INFO,
 								"Actual result " + actualHeader + " of pop up has been matched with Expected result : "
 										+ ExpectedHeader + " for New Finanacing popup",
@@ -13475,6 +13670,7 @@ public void ADETc106_VerfiytheFunctionalityofAddDealIconwhenFundsTabisSelectedat
 	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 	
 	String recordType = "";
@@ -13510,11 +13706,24 @@ public void ADETc106_VerfiytheFunctionalityofAddDealIconwhenFundsTabisSelectedat
 					log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
 					if (BP.dealAcuityStageName(dealName, stage, 30) != null) {
 						log(LogStatus.PASS, "Stage Name: " + stage + " is present", YesNo.No);
-						if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
-							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
+//						if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
+//							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 							if (BP.dealAcuityHSRName(dealName, stage, 30) != null) {
-								log(LogStatus.PASS, " HSR Stage: " + stage + " is present", YesNo.No);
+								log(LogStatus.PASS, "HSR: " + stage + " is present", YesNo.No);
+								String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
+								
+								if (cp.verifyDate(todaysDate,null, actualDate)) {
+									log(LogStatus.INFO,todaysDate+"Date Received: " + dateReceived + " is present", YesNo.No);
+								}
+								else {
+								log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
+									sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
+								}
+							} else {
+								log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
+								sa.assertTrue(false, "HSR stage name not present: " + stage);
 
+							}
 						} else {
 							log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
 							sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
@@ -13526,14 +13735,10 @@ public void ADETc106_VerfiytheFunctionalityofAddDealIconwhenFundsTabisSelectedat
 
 					}
 
-				} else {
-					log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
-					sa.assertTrue(false, "date receivednot present: " + dateReceived);
-				}
-				} else {
-					log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
-					sa.assertTrue(false, "HSR stage name not present: " + stage);
-					}
+//				} else {
+//					log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
+//					sa.assertTrue(false, "date receivednot present: " + dateReceived);
+//				}
 		} else {
 			log(LogStatus.ERROR, "Not able to click on " + ADEIns2 + " tab", YesNo.Yes);
 			sa.assertTrue(false, "Not able to click on " + ADEIns2 + " tab");
@@ -13605,6 +13810,9 @@ public void ADETc107_VerifythatNewDealpopupgetsClosewhenCancelCrossIcongetsClick
 				sa.assertTrue(false, "New Fianacing Icon not present");
 			}
 			refresh(driver);
+			if (CommonLib.click(driver, BP.SourcedTab( 30,action.SCROLLANDBOOLEAN), "Source tab: " + "",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Source tab", YesNo.No);
 			if(BP.NewSourcedDealIcon( 10) != null) {
 				log(LogStatus.PASS, "New Deal Icon is present", YesNo.No);
 				if (CommonLib.click(driver, BP.NewSourcedDealIcon( 30), "New Deal Icon: " + "",
@@ -13612,7 +13820,7 @@ public void ADETc107_VerifythatNewDealpopupgetsClosewhenCancelCrossIcongetsClick
 					log(LogStatus.INFO, "Clicked on New Deal Icon", YesNo.No);
 					String actualHeader = getText(driver, BP.getNewSourcedDealpopupheader(20), "NewSourcedDealpopupheader",
 							action.SCROLLANDBOOLEAN);
-					if (ExpectedHeader.equals(actualHeader)) {
+					if (actualHeader.equals(ExpectedHeader)) {
 						log(LogStatus.INFO,
 								"Actual result " + actualHeader + " of pop up has been matched with Expected result : "
 										+ ExpectedHeader + " for New Finanacing popup",
@@ -13644,6 +13852,10 @@ public void ADETc107_VerifythatNewDealpopupgetsClosewhenCancelCrossIcongetsClick
 				log(LogStatus.FAIL, "Not able to Click on Source tab: " , YesNo.Yes);
 				sa.assertTrue(false, "Not able to Click on Source tab: " );
 				}
+			} else {
+				log(LogStatus.FAIL, "Not able to Click on Source tab: " , YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on Source tab: " );
+				}
 		} else {
 			log(LogStatus.ERROR, "Not able to click on " + ADEIns2 + " tab", YesNo.Yes);
 			sa.assertTrue(false, "Not able to click on " + ADEIns2 + " tab");
@@ -13665,6 +13877,7 @@ public void ADETc108_VerfiytheFunctionalityofAddDealIconwhenFundsTabisSelectedat
 	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 	
 	String recordType = "";
@@ -13697,18 +13910,31 @@ public void ADETc108_VerfiytheFunctionalityofAddDealIconwhenFundsTabisSelectedat
 			log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 
 			if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns16, 30)) {
-
-				log(LogStatus.INFO, "open created item" + ADEIns16, YesNo.No);
-
+                 log(LogStatus.INFO, "open created item" + ADEIns16, YesNo.No);
+                 if (CommonLib.click(driver, BP.SourcedTab( 30,action.SCROLLANDBOOLEAN), "Source tab: " + "",
+     					action.BOOLEAN)) {
 				if (BP.dealAcuityDealName(dealName, 30) != null) {
 					log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
 					if (BP.dealAcuityStageName(dealName, stage, 30) != null) {
 						log(LogStatus.PASS, "Stage Name: " + stage + " is present", YesNo.No);
-						if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
-							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
+//						if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
+//							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 							if (BP.dealAcuityHSRName(dealName, stage, 30) != null) {
-								log(LogStatus.PASS, " HSR Stage: " + stage + " is present", YesNo.No);
+								log(LogStatus.PASS, "HSR: " + stage + " is present", YesNo.No);
+								String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
+								
+								if (cp.verifyDate(todaysDate,null, actualDate)) {
+									log(LogStatus.INFO,todaysDate+"Date Received: " + dateReceived + " is present", YesNo.No);
+								}
+								else {
+								log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
+									sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
+								}
+							} else {
+								log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
+								sa.assertTrue(false, "HSR stage name not present: " + stage);
 
+							}
 						} else {
 							log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
 							sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
@@ -13720,20 +13946,21 @@ public void ADETc108_VerfiytheFunctionalityofAddDealIconwhenFundsTabisSelectedat
 
 					}
 
-				} else {
-					log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
-					sa.assertTrue(false, "date receivednot present: " + dateReceived);
-				}
-				} else {
-					log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
-					sa.assertTrue(false, "HSR stage name not present: " + stage);
-					}
+//				} else {
+//					log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
+//					sa.assertTrue(false, "date receivednot present: " + dateReceived);
+//				}
+                 } else {
+     				log(LogStatus.FAIL, "Not able to Click on Source tab: " , YesNo.Yes);
+     				sa.assertTrue(false, "Not able to Click on Source tab: " );
+     				}
 		} else {
 			log(LogStatus.ERROR, "Not able to click on " + ADEIns2 + " tab", YesNo.Yes);
 			sa.assertTrue(false, "Not able to click on " + ADEIns2 + " tab");
 		}
 		} else {
 			log(LogStatus.ERROR, "Not able to click on the New Sourced Deal Icon", YesNo.No);
+			sa.assertTrue(false, "Not able to Click on New Sourced Deal Icon: " );
 		}
 			} else {
 				log(LogStatus.FAIL, "Not able to Click on Source tab: " , YesNo.Yes);
@@ -13756,6 +13983,7 @@ public void ADETc109_ChangeStageofDealandVerifytheImpactonHighestStageColumnatDe
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 	String dealName = ADEDeal31;
 	String stage = "Due Diligence";
@@ -13788,35 +14016,43 @@ if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 				action.BOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Source tab", YesNo.No);
 			ThreadSleep(1000);
-		if (BP.dealAcuityDealName(dealName, 30) != null) {
-			log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
-			if (BP.dealAcuityStageName(dealName, stage, 30) != null) {
-				log(LogStatus.PASS, "Stage Name: " + stage + " is present", YesNo.No);
-				if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
-					log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
-				if (BP.dealAcuityHSRName(dealName, stage, 30) != null) {
-						log(LogStatus.PASS, " HSR Stage: " + stage + " is present", YesNo.No);
+			if (BP.dealAcuityDealName(dealName, 30) != null) {
+				log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
+				if (BP.dealAcuityStageName(dealName, stage, 30) != null) {
+					log(LogStatus.PASS, "Stage Name: " + stage + " is present", YesNo.No);
+//					if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
+//						log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
+						if (BP.dealAcuityHSRName(dealName, stage, 30) != null) {
+							log(LogStatus.PASS, "HSR: " + stage + " is present", YesNo.No);
+							String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
+							
+							if (cp.verifyDate(todaysDate,null, actualDate)) {
+								log(LogStatus.INFO,todaysDate+"Date Received: " + dateReceived + " is present", YesNo.No);
+							}
+							else {
+							log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
+								sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
+							}
+						} else {
+							log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
+							sa.assertTrue(false, "HSR stage name not present: " + stage);
 
+						}
+					} else {
+						log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+						sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
+
+					}
 				} else {
-					log(LogStatus.FAIL, "HSR stage name not present: " + stage, YesNo.Yes);
-					sa.assertTrue(false, "HSR stage name not present: " + stage);
+					log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
+					sa.assertTrue(false, "stage name not present: " + stage);
 
 				}
-			} else {
-				log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
-				sa.assertTrue(false, "date received not present: " + dateReceived);
 
-			}
-
-		} else {
-			log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
-			sa.assertTrue(false, "stage name not present:" + stage);
-		}
-		} else {
-			log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-			sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
-
-		}
+//			} else {
+//				log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
+//				sa.assertTrue(false, "date receivednot present: " + dateReceived);
+//			}
 	} else {
 
 		sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns16);
@@ -13863,31 +14099,39 @@ if (CommonLib.click(driver, BP.SourcedTab( 30,action.SCROLLANDBOOLEAN), "Source 
 		log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
 		if (BP.dealAcuityStageName(dealName, stage1, 30) != null) {
 			log(LogStatus.PASS, "Stage Name: " + stage1 + " is present", YesNo.No);
-			if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
-				log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
+//			if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
+//				log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 				if (BP.dealAcuityHSRName(dealName, stage1, 30) != null) {
-					log(LogStatus.PASS, " HSR Stage: " + stage1 + " is present", YesNo.No);
-
+					log(LogStatus.PASS, "HSR: " + stage1 + " is present", YesNo.No);
+					String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
+					
+					if (cp.verifyDate(todaysDate,null, actualDate)) {
+						log(LogStatus.INFO,todaysDate+"Date Received: " + dateReceived + " is present", YesNo.No);
+					}
+					else {
+					log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
+						sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
+					}
 				} else {
 					log(LogStatus.FAIL, "HSR stage name not present: " + stage1, YesNo.Yes);
 					sa.assertTrue(false, "HSR stage name not present: " + stage1);
 
 				}
 			} else {
-				log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
-				sa.assertTrue(false, "date received not present: " + dateReceived);
+				log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
 			}
-
 		} else {
 			log(LogStatus.FAIL, "stage name not present: " + stage1, YesNo.Yes);
-			sa.assertTrue(false, "stage name not present:" + stage1);
-		}
-		} else {
-			log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-			sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
+			sa.assertTrue(false, "stage name not present: " + stage1);
 
 		}
+
+//	} else {
+//		log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
+//		sa.assertTrue(false, "date receivednot present: " + dateReceived);
+//	}
 } else {
 	log(LogStatus.FAIL, "Not able to Click on Source tab: " , YesNo.Yes);
 	sa.assertTrue(false, "Not able to Click on Source tab: " );
@@ -13930,35 +14174,43 @@ log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 			action.BOOLEAN)) {
 		log(LogStatus.INFO, "Clicked on Source tab", YesNo.No);
 		ThreadSleep(1000);
-	if (BP.dealAcuityDealName(dealName, 30) != null) {
-		log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
-		if (BP.dealAcuityStageName(dealName, stage2, 30) != null) {
-			log(LogStatus.PASS, "Stage Name: " + stage2 + " is present", YesNo.No);
-			if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
-				log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
-				if (BP.dealAcuityHSRName(dealName, stage1, 30) != null) {
-					log(LogStatus.PASS, " HSR Stage: " + stage1 + " is present", YesNo.No);
+		if (BP.dealAcuityDealName(dealName, 30) != null) {
+			log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
+			if (BP.dealAcuityStageName(dealName, stage2, 30) != null) {
+				log(LogStatus.PASS, "Stage Name: " + stage2 + " is present", YesNo.No);
+//				if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
+//					log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
+					if (BP.dealAcuityHSRName(dealName, stage1, 30) != null) {
+						log(LogStatus.PASS, "HSR: " + stage1 + " is present", YesNo.No);
+						String actualDate= BP.dealAcuityDateReceived2(dealName, 30).getText();
+						
+						if (cp.verifyDate(todaysDate,null, actualDate)) {
+							log(LogStatus.INFO,todaysDate+"Date Received: " + dateReceived + " is present", YesNo.No);
+						}
+						else {
+						log(LogStatus.ERROR, "Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate, YesNo.Yes);
+							sa.assertTrue(false,"Date Received is not matched For : "+dealName+" Actual : "+actualDate+" /t Expected : "+todaysDate );
+						}
+					} else {
+						log(LogStatus.FAIL, "HSR stage name not present: " + stage1, YesNo.Yes);
+						sa.assertTrue(false, "HSR stage name not present: " + stage1);
 
+					}
 				} else {
-					log(LogStatus.FAIL, "HSR stage name not present: " + stage1, YesNo.Yes);
-					sa.assertTrue(false, "HSR stage name not present: " + stage1);
+					log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+					sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
 				}
 			} else {
-				log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
-				sa.assertTrue(false, "date received not present: " + dateReceived);
+				log(LogStatus.FAIL, "stage name not present: " + stage2, YesNo.Yes);
+				sa.assertTrue(false, "stage name not present: " + stage2);
 
 			}
 
-		} else {
-			log(LogStatus.FAIL, "stage name not present: " + stage2, YesNo.Yes);
-			sa.assertTrue(false, "stage name not present:" + stage2);
-		}
-		} else {
-			log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
-			sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
-
-		}
+//		} else {
+//			log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
+//			sa.assertTrue(false, "date receivednot present: " + dateReceived);
+//		}
     } else {
 		log(LogStatus.FAIL, "Not able to Click on Source tab: " , YesNo.Yes);
 		sa.assertTrue(false, "Not able to Click on Source tab: " );
@@ -13986,7 +14238,7 @@ public void ADETc110_VerifyThatDealNamesClickableandDealRedirectionforAccounts(S
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-	String dealName = ADEDeal31;
+	String dealName = ADEDeal30;
 
 	if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 		log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
@@ -14287,4 +14539,2060 @@ public void ADETc112_VerifyDealCountRedirectionForContactatContactGridofLenderFi
 			lp.CRMlogout();
 			sa.assertAll();
 		}
+
+
+@Parameters({ "projectName"})
+@Test
+public void ADETc113_VerifyDefaultSortingatDealSectionAICIAccountsisDecending(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	
+	String xpath="//*[@class='for_desk dealDataTable tabcont shadowremovedatatable']//td[@data-label='Date Received']//lightning-formatted-date-time";
+	
+	if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
+		log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
+		
+		if(fp.clickOnAlreadyCreatedItem(projectName, ADEIns16, 30)){
+			
+			log(LogStatus.INFO,"open created item"+ADEIns16,YesNo.No);
+			List<WebElement> ele =FindElements(driver, xpath, "");	
+			if (CommonLib.checkSorting(driver, SortOrder.Decending, ele)) {
+				log(LogStatus.PASS,
+						"-----------Deal Column is in Descending Order By Default  --------------",
+						YesNo.No);
+				sa.assertTrue(true,
+						"-----------Deal Column is in Descending Order By Default --------------");
+                   }
+		else {
+				log(LogStatus.ERROR, "-----------Deal Column is not in Descending Order By Default  --------------", YesNo.Yes);
+				sa.assertTrue(false, "-----------Deal Column is not in Descending Order By Default  --------------");
+				}
+			if (CommonLib.click(driver, BP.SourcedTab( 30,action.SCROLLANDBOOLEAN), "Source tab: " + "",
+					action.BOOLEAN)) {
+				List<WebElement> ele1 =FindElements(driver, xpath, "");
+				if (CommonLib.checkSorting(driver, SortOrder.Decending, ele1)) {
+					log(LogStatus.PASS,
+							"-----------Deal Column is in Descending Order By Default  --------------",
+							YesNo.No);
+					sa.assertTrue(true,
+							"-----------Deal Column is in Descending Order By Default --------------");
+	                   }
+			else {
+					log(LogStatus.ERROR, "-----------Deal Column is not in Descending Order By Default  --------------", YesNo.Yes);
+					sa.assertTrue(false, "-----------Deal Column is not in Descending Order By Default  --------------");
+					}
+			} else {
+				log(LogStatus.FAIL, "Not able to Click on Source tab: " , YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on Source tab: " );
+				}
+			} else {
+			log(LogStatus.ERROR, "Not able to click on " + ADEIns16 + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + ADEIns16 + " tab");
+		}
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	ThreadSleep(5000);
+	lp.CRMlogout();
+	sa.assertAll();
+}
+
+
+@Parameters({ "projectName"})
+@Test
+public void ADETc114_VerifySortingatDealSectionDateReceivedAICIPEAccountsisAecending(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	String order = "date";
+	String xpath="//*[@class='for_desk dealDataTable tabcont shadowremovedatatable']//td[@data-label='Date Received']//lightning-formatted-date-time";
+	
+	if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
+		log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
+		
+		if(fp.clickOnAlreadyCreatedItem(projectName, ADEIns16, 30)){
+			
+			log(LogStatus.INFO,"open created item"+ADEIns16,YesNo.No);
+			if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "CDate Recivied Sorting Icon", YesNo.No);
+				if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
+					List<WebElement> ele =FindElements(driver, xpath, "");
+			if (CommonLib.checkSorting(driver, SortOrder.Assecending, ele)) {
+				log(LogStatus.PASS,
+						"-----------deal Column is in Assecending Order By clicking on deal reacieved  --------------",
+						YesNo.No);
+				sa.assertTrue(true,
+						"-----------deal Name Column is in Assecending Order By clicking on deal reacieved --------------");
+
+			}
+			else {
+				log(LogStatus.ERROR, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------", YesNo.Yes);
+				sa.assertTrue(false, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------");
+				}
+			
+				} else {
+					log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting order", YesNo.No);
+					sa.assertTrue(false, "Not able to Click on Date Recivied Sorting order: " );
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting Icon", YesNo.No);
+				sa.assertTrue(false, "Not able to Click on Date Recivied Sorting Icon: " );
+			}
+			if (CommonLib.click(driver, BP.SourcedTab( 30,action.SCROLLANDBOOLEAN), "Source tab: " + "",
+					action.BOOLEAN)) {
+				if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "CDate Recivied Sorting Icon", YesNo.No);
+					if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+							action.BOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
+						List<WebElement> ele =FindElements(driver, xpath, "");
+				if (CommonLib.checkSorting(driver, SortOrder.Assecending, ele)) {
+					log(LogStatus.PASS,
+							"-----------deal Column is in Assecending Order By clicking on deal reacieved  --------------",
+							YesNo.No);
+					sa.assertTrue(true,
+							"-----------deal Name Column is in Assecending Order By clicking on deal reacieved --------------");
+
+				}
+				else {
+					log(LogStatus.ERROR, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------", YesNo.Yes);
+					sa.assertTrue(false, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------");
+					}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting order", YesNo.No);
+						sa.assertTrue(false, "Not able to Click on Date Recivied Sorting order: " );
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting Icon", YesNo.No);
+					sa.assertTrue(false, "Not able to Click on Date Recivied Sorting Icon: " );
+				}
+				} else {
+					log(LogStatus.FAIL, "Not able to Click on Source tab: " , YesNo.Yes);
+					sa.assertTrue(false, "Not able to Click on Source tab: " );
+					}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + ADEIns16 + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + ADEIns16 + " tab");
+		}
+			
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	ThreadSleep(5000);
+	lp.CRMlogout();
+	sa.assertAll();
+}
+
+
+@Parameters({ "projectName"})
+@Test
+public void ADETc115_VerifySortingatDealSectionStageColumeAICIPEAccountsisDecending(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	String order = "Stage";
+//	String xpath="//*[@class='for_desk dealDataTable tabcont shadowremovedatatable']//td[@data-label='Stage']//lightning-primitive-cell-button";
+	String xpath="//*[@class='for_desk dealDataTable tabcont shadowremovedatatable']//td[@data-label='Stage']";
+	
+	if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
+		log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
+		
+		if(fp.clickOnAlreadyCreatedItem(projectName, ADEIns1, 30)){
+			
+			log(LogStatus.INFO,"open created item"+ADEIns1,YesNo.No);
+			if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+				if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
+//			 		if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+//							action.BOOLEAN)) {
+//						log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+//						if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+//								action.BOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
+					List<WebElement> ele =FindElements(driver, xpath, "");
+			if (CommonLib.checkStageSorting(driver, true, ele)) {
+				log(LogStatus.PASS,
+						"-----------deal Column is in Decending Order By clicking on stage  --------------",
+						YesNo.No);
+				sa.assertTrue(true,
+						"-----------deal Name Column is in Decending Order By clicking on stage --------------");
+
+			}
+			else {
+				log(LogStatus.ERROR, "-----------deal Name Column is not Decending Order By clicking on stage  --------------", YesNo.Yes);
+				sa.assertTrue(false, "-----------deal Name Column is not Decending Order By clicking on stage  --------------");
+				}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting order", YesNo.No);
+					sa.assertTrue(false, "Not able to Click on Date Recivied Sorting order: " );
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting Icon", YesNo.No);
+				sa.assertTrue(false, "Not able to Click on Date Recivied Sorting Icon: " );
+			}
+			if (CommonLib.click(driver, BP.SourcedTab( 30,action.SCROLLANDBOOLEAN), "Source tab: " + "",
+					action.BOOLEAN)) {
+			if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+				if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
+					List<WebElement> ele1 =FindElements(driver, xpath, "");
+					if (CommonLib.checkStageSorting(driver, true, ele1)) {
+				log(LogStatus.PASS,
+						"-----------deal Column is in Decending Order By clicking on stage  --------------",
+						YesNo.No);
+				sa.assertTrue(true,
+						"-----------deal Name Column is in Decending Order By clicking on stage --------------");
+
+			}
+			else {
+				log(LogStatus.ERROR, "-----------deal Name Column is not Decending Order By clicking on stage  --------------", YesNo.Yes);
+				sa.assertTrue(false, "-----------deal Name Column is not Decending Order By clicking on stage  --------------");
+				}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting order", YesNo.No);
+					sa.assertTrue(false, "Not able to Click on Date Recivied Sorting order: " );
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting Icon", YesNo.No);
+				sa.assertTrue(false, "Not able to Click on Date Recivied Sorting Icon: " );
+			}
+			} else {
+				log(LogStatus.FAIL, "Not able to Click on Source tab: " , YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on Source tab: " );
+				}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + ADEIns16 + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + ADEIns16 + " tab");
+		}
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	ThreadSleep(5000);
+	lp.CRMlogout();
+	sa.assertAll();
+
+}
+
+
+@Parameters({ "projectName"})
+@Test
+public void ADETc116_VerifySortingatDealSectionStageAICIPEAccountsisAecending(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	String order = "Stage";
+	String xpath="//*[@class='for_desk dealDataTable tabcont shadowremovedatatable']//td[@data-label='Stage']";
+	if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
+		log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
+		
+		if(fp.clickOnAlreadyCreatedItem(projectName, ADEIns16, 30)){
+			
+			log(LogStatus.INFO,"open created item"+ADEIns16,YesNo.No);
+			if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+				if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
+					if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+							action.BOOLEAN)) {
+				log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+						if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+								action.BOOLEAN)) {
+							List<WebElement> ele =FindElements(driver, xpath, "");
+							if (CommonLib.checkStageSorting(driver, false, ele)) {
+				log(LogStatus.PASS,
+						"-----------deal Column is in Assecending Order By clicking on stage  --------------",
+						YesNo.No);
+				sa.assertTrue(true,
+						"-----------deal Name Column is in Assecending Order By clicking on stage --------------");
+
+			}
+			else {
+				log(LogStatus.ERROR, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------", YesNo.Yes);
+				sa.assertTrue(false, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------");
+				}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting order", YesNo.No);
+					sa.assertTrue(false, "Not able to Click on Date Recivied Sorting order: " );
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting Icon", YesNo.No);
+				sa.assertTrue(false, "Not able to Click on Date Recivied Sorting Icon: " );
+			}
+				}
+			}
+			if (CommonLib.click(driver, BP.SourcedTab( 30,action.SCROLLANDBOOLEAN), "Source tab: " + "",
+					action.BOOLEAN)) {
+			if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+				if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
+					if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+							action.BOOLEAN)) {
+				log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+						if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+								action.BOOLEAN)) {
+							List<WebElement> ele =FindElements(driver, xpath, "");
+							if (CommonLib.checkStageSorting(driver, false, ele)) {
+				log(LogStatus.PASS,
+						"-----------deal Column is in Assecending Order By clicking on stage  --------------",
+						YesNo.No);
+				sa.assertTrue(true,
+						"-----------deal Name Column is in Assecending Order By clicking on stage --------------");
+
+			}
+			else {
+				log(LogStatus.ERROR, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------", YesNo.Yes);
+				sa.assertTrue(false, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------");
+				}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting order", YesNo.No);
+					sa.assertTrue(false, "Not able to Click on Date Recivied Sorting order: " );
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting Icon", YesNo.No);
+				sa.assertTrue(false, "Not able to Click on Date Recivied Sorting Icon: " );
+			}
+			} else {
+				log(LogStatus.FAIL, "Not able to Click on Source tab: " , YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on Source tab: " );
+				}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + ADEIns16 + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + ADEIns16 + " tab");
+		}
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+		}
+	}
+	ThreadSleep(5000);
+	lp.CRMlogout();
+	sa.assertAll();
+}
+
+@Parameters({ "projectName"})
+@Test
+public void ADETc117_1_VerifySortingatDealSectionDateReceivedForCompanyRecord(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	String order = "Date Received";
+	String xpath="//*[@class='for_desk dealDataTable tabcont shadowremovedatatable']//td[@data-label='Date Received']//lightning-formatted-date-time";
+	
+	if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
+		log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
+		
+		if(fp.clickOnAlreadyCreatedItem(projectName, ADEIns1, 30)){
+			
+			log(LogStatus.INFO,"open created item"+ADEIns1,YesNo.No);
+					List<WebElement> ele =FindElements(driver, xpath, "");
+			if (CommonLib.checkSorting(driver, SortOrder.Decending, ele)) {
+				log(LogStatus.PASS,
+						"-----------deal Column is in Decending Order By clicking on deal reacieved  --------------",
+						YesNo.No);
+				sa.assertTrue(true,
+						"-----------deal Name Column is in Decending Order By clicking on deal reacieved --------------");
+
+			}
+			else {
+				log(LogStatus.ERROR, "-----------deal Name Column is not Decending Order By clicking on deal reacieved  --------------", YesNo.Yes);
+				sa.assertTrue(false, "-----------deal Name Column is not Decending Order By clicking on deal reacieved  --------------");
+			}
+				if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+					if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+							action.BOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
+						List<WebElement> ele1 =FindElements(driver, xpath, "");
+				if (CommonLib.checkSorting(driver, SortOrder.Assecending, ele1)) {
+					log(LogStatus.PASS,
+							"-----------deal Column is in Assecending Order By clicking on deal reacieved  --------------",
+							YesNo.No);
+					sa.assertTrue(true,
+							"-----------deal Name Column is in Assecending Order By clicking on deal reacieved --------------");
+
+				}
+				else {
+					log(LogStatus.ERROR, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------", YesNo.Yes);
+					sa.assertTrue(false, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------");
+					}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting order", YesNo.No);
+						sa.assertTrue(false, "Not able to Click on Date Recivied Sorting order: " );
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting Icon", YesNo.No);
+					sa.assertTrue(false, "Not able to Click on Date Recivied Sorting Icon: " );
+				}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + ADEIns16 + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + ADEIns16 + " tab");
+		}
+			
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	ThreadSleep(5000);
+	lp.CRMlogout();
+	sa.assertAll();
+}
+
+@Parameters({ "projectName"})
+@Test
+public void ADETc117_2_VerifySortingatDealSectionStageForCompanyRecord(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	String order = "Stage";
+	String xpath="//*[@class='for_desk dealDataTable tabcont shadowremovedatatable']//td[@data-label='Stage']";
+	if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
+		log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
+		
+		if(fp.clickOnAlreadyCreatedItem(projectName, ADEIns1, 30)){
+			
+			log(LogStatus.INFO,"open created item"+ADEIns1,YesNo.No);
+			if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+				if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
+//					if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+//							action.BOOLEAN)) {
+//				log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+//						if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+//								action.BOOLEAN)) {
+							List<WebElement> ele =FindElements(driver, xpath, "");
+							if (CommonLib.checkStageSorting(driver, true, ele)) {
+				log(LogStatus.PASS,
+						"-----------deal Column is in Decending Order By clicking on stage  --------------",
+						YesNo.No);
+				sa.assertTrue(true,
+						"-----------deal Name Column is in Decending Order By clicking on stage --------------");
+
+			}
+			else {
+				log(LogStatus.ERROR, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------", YesNo.Yes);
+				sa.assertTrue(false, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------");
+				}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting order", YesNo.No);
+					sa.assertTrue(false, "Not able to Click on Date Recivied Sorting order: " );
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting Icon", YesNo.No);
+				sa.assertTrue(false, "Not able to Click on Date Recivied Sorting Icon: " );
+			}
+				
+			
+			if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+				if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
+							List<WebElement> ele =FindElements(driver, xpath, "");
+							if (CommonLib.checkStageSorting(driver, false, ele)) {
+				log(LogStatus.PASS,
+						"-----------deal Column is in Assecending Order By clicking on stage  --------------",
+						YesNo.No);
+				sa.assertTrue(true,
+						"-----------deal Name Column is in Assecending Order By clicking on stage --------------");
+
+			}
+			else {
+				log(LogStatus.ERROR, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------", YesNo.Yes);
+				sa.assertTrue(false, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------");
+				}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting order", YesNo.No);
+					sa.assertTrue(false, "Not able to Click on Date Recivied Sorting order: " );
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting Icon", YesNo.No);
+				sa.assertTrue(false, "Not able to Click on Date Recivied Sorting Icon: " );
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + ADEIns16 + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + ADEIns16 + " tab");
+		}
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	ThreadSleep(5000);
+	lp.CRMlogout();
+	sa.assertAll();
+}
+
+@Parameters({ "projectName"})
+@Test
+public void ADETc118_1_VerifySortingatDealSectionDateReceivedForIntermediaryRecord(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	String order = "Date Received";
+	String xpath="//*[@class='for_desk dealDataTable tabcont shadowremovedatatable']//td[@data-label='Date Received']//lightning-formatted-date-time";
+	
+	if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
+		log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
+		
+		if(fp.clickOnAlreadyCreatedItem(projectName, ADEIns4, 30)){
+			
+			log(LogStatus.INFO,"open created item"+ADEIns4,YesNo.No);
+					List<WebElement> ele =FindElements(driver, xpath, "");
+			if (CommonLib.checkSorting(driver, SortOrder.Decending, ele)) {
+				log(LogStatus.PASS,
+						"-----------deal Column is in Decending Order By clicking on deal reacieved  --------------",
+						YesNo.No);
+				sa.assertTrue(true,
+						"-----------deal Name Column is in Decending Order By clicking on deal reacieved --------------");
+
+			}
+			else {
+				log(LogStatus.ERROR, "-----------deal Name Column is not Decending Order By clicking on deal reacieved  --------------", YesNo.Yes);
+				sa.assertTrue(false, "-----------deal Name Column is not Decending Order By clicking on deal reacieved  --------------");
+			}
+				if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+					if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+							action.BOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
+						List<WebElement> ele1 =FindElements(driver, xpath, "");
+				if (CommonLib.checkSorting(driver, SortOrder.Assecending, ele1)) {
+					log(LogStatus.PASS,
+							"-----------deal Column is in Assecending Order By clicking on deal reacieved  --------------",
+							YesNo.No);
+					sa.assertTrue(true,
+							"-----------deal Name Column is in Assecending Order By clicking on deal reacieved --------------");
+
+				}
+				else {
+					log(LogStatus.ERROR, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------", YesNo.Yes);
+					sa.assertTrue(false, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------");
+					}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting order", YesNo.No);
+						sa.assertTrue(false, "Not able to Click on Date Recivied Sorting order: " );
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting Icon", YesNo.No);
+					sa.assertTrue(false, "Not able to Click on Date Recivied Sorting Icon: " );
+				}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + ADEIns16 + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + ADEIns16 + " tab");
+		}
+			
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	ThreadSleep(5000);
+	lp.CRMlogout();
+	sa.assertAll();
+}
+
+@Parameters({ "projectName"})
+@Test
+public void ADETc118_2_VerifySortingatDealSectionStageForIntermediateryRecord(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	String order = "Stage";
+	String xpath="//*[@class='for_desk dealDataTable tabcont shadowremovedatatable']//td[@data-label='Stage']";
+	if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
+		log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
+		
+		if(fp.clickOnAlreadyCreatedItem(projectName, ADEIns4, 30)){
+			
+			log(LogStatus.INFO,"open created item"+ADEIns4,YesNo.No);
+			if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+				if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
+//					if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+//							action.BOOLEAN)) {
+//				log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+//						if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+//								action.BOOLEAN)) {
+							List<WebElement> ele =FindElements(driver, xpath, "");
+							if (CommonLib.checkStageSorting(driver, true, ele)) {
+				log(LogStatus.PASS,
+						"-----------deal Column is in Decending Order By clicking on stage  --------------",
+						YesNo.No);
+				sa.assertTrue(true,
+						"-----------deal Name Column is in Decending Order By clicking on stage --------------");
+
+			}
+			else {
+				log(LogStatus.ERROR, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------", YesNo.Yes);
+				sa.assertTrue(false, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------");
+				}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting order", YesNo.No);
+					sa.assertTrue(false, "Not able to Click on Date Recivied Sorting order: " );
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting Icon", YesNo.No);
+				sa.assertTrue(false, "Not able to Click on Date Recivied Sorting Icon: " );
+			}
+				
+			
+			if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+				if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
+							List<WebElement> ele =FindElements(driver, xpath, "");
+							if (CommonLib.checkStageSorting(driver, false, ele)) {
+				log(LogStatus.PASS,
+						"-----------deal Column is in Assecending Order By clicking on stage  --------------",
+						YesNo.No);
+				sa.assertTrue(true,
+						"-----------deal Name Column is in Assecending Order By clicking on stage --------------");
+
+			}
+			else {
+				log(LogStatus.ERROR, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------", YesNo.Yes);
+				sa.assertTrue(false, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------");
+				}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting order", YesNo.No);
+					sa.assertTrue(false, "Not able to Click on Date Recivied Sorting order: " );
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting Icon", YesNo.No);
+				sa.assertTrue(false, "Not able to Click on Date Recivied Sorting Icon: " );
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + ADEIns16 + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + ADEIns16 + " tab");
+		}
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	ThreadSleep(5000);
+	lp.CRMlogout();
+	sa.assertAll();
+}
+
+@Parameters({ "projectName"})
+@Test
+public void ADETc119_1_VerifySortingatDealSectionDateReceivedForPCRecord(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	String order = "Date Received";
+	String xpath="//*[@class='for_desk dealDataTable tabcont shadowremovedatatable']//td[@data-label='Date Received']//lightning-formatted-date-time";
+	
+	if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
+		log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
+		
+		if(fp.clickOnAlreadyCreatedItem(projectName, ADEIns7, 30)){
+			
+			log(LogStatus.INFO,"open created item"+ADEIns7,YesNo.No);
+					List<WebElement> ele =FindElements(driver, xpath, "");
+			if (CommonLib.checkSorting(driver, SortOrder.Decending, ele)) {
+				log(LogStatus.PASS,
+						"-----------deal Column is in Decending Order By clicking on deal reacieved  --------------",
+						YesNo.No);
+				sa.assertTrue(true,
+						"-----------deal Name Column is in Decending Order By clicking on deal reacieved --------------");
+
+			}
+			else {
+				log(LogStatus.ERROR, "-----------deal Name Column is not Decending Order By clicking on deal reacieved  --------------", YesNo.Yes);
+				sa.assertTrue(false, "-----------deal Name Column is not Decending Order By clicking on deal reacieved  --------------");
+			}
+				if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+					if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+							action.BOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
+						List<WebElement> ele1 =FindElements(driver, xpath, "");
+				if (CommonLib.checkSorting(driver, SortOrder.Assecending, ele1)) {
+					log(LogStatus.PASS,
+							"-----------deal Column is in Assecending Order By clicking on deal reacieved  --------------",
+							YesNo.No);
+					sa.assertTrue(true,
+							"-----------deal Name Column is in Assecending Order By clicking on deal reacieved --------------");
+
+				}
+				else {
+					log(LogStatus.ERROR, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------", YesNo.Yes);
+					sa.assertTrue(false, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------");
+					}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting order", YesNo.No);
+						sa.assertTrue(false, "Not able to Click on Date Recivied Sorting order: " );
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting Icon", YesNo.No);
+					sa.assertTrue(false, "Not able to Click on Date Recivied Sorting Icon: " );
+				}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + ADEIns16 + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + ADEIns16 + " tab");
+		}
+			
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	ThreadSleep(5000);
+	lp.CRMlogout();
+	sa.assertAll();
+}
+
+@Parameters({ "projectName"})
+@Test
+public void ADETc119_2_VerifySortingatDealSectionStageForPCRecord(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	String order = "Stage";
+	String xpath="//*[@class='for_desk dealDataTable tabcont shadowremovedatatable']//td[@data-label='Stage']";
+	if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
+		log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
+		
+		if(fp.clickOnAlreadyCreatedItem(projectName, ADEIns4, 30)){
+			
+			log(LogStatus.INFO,"open created item"+ADEIns4,YesNo.No);
+			if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+				if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
+//					if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+//							action.BOOLEAN)) {
+//				log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+//						if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+//								action.BOOLEAN)) {
+							List<WebElement> ele =FindElements(driver, xpath, "");
+							if (CommonLib.checkStageSorting(driver, true, ele)) {
+				log(LogStatus.PASS,
+						"-----------deal Column is in Decending Order By clicking on stage  --------------",
+						YesNo.No);
+				sa.assertTrue(true,
+						"-----------deal Name Column is in Decending Order By clicking on stage --------------");
+
+			}
+			else {
+				log(LogStatus.ERROR, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------", YesNo.Yes);
+				sa.assertTrue(false, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------");
+				}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting order", YesNo.No);
+					sa.assertTrue(false, "Not able to Click on Date Recivied Sorting order: " );
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting Icon", YesNo.No);
+				sa.assertTrue(false, "Not able to Click on Date Recivied Sorting Icon: " );
+			}
+				
+			
+			if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+				if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
+							List<WebElement> ele =FindElements(driver, xpath, "");
+							if (CommonLib.checkStageSorting(driver, false, ele)) {
+				log(LogStatus.PASS,
+						"-----------deal Column is in Assecending Order By clicking on stage  --------------",
+						YesNo.No);
+				sa.assertTrue(true,
+						"-----------deal Name Column is in Assecending Order By clicking on stage --------------");
+
+			}
+			else {
+				log(LogStatus.ERROR, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------", YesNo.Yes);
+				sa.assertTrue(false, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------");
+				}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting order", YesNo.No);
+					sa.assertTrue(false, "Not able to Click on Date Recivied Sorting order: " );
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting Icon", YesNo.No);
+				sa.assertTrue(false, "Not able to Click on Date Recivied Sorting Icon: " );
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + ADEIns16 + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + ADEIns16 + " tab");
+		}
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	ThreadSleep(5000);
+	lp.CRMlogout();
+	sa.assertAll();
+}
+
+@Parameters({ "projectName"})
+@Test
+public void ADETc120_1_VerifySortingatDealSectionDateReceivedForInstitutionRecord(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	String order = "Stage";
+	String xpath="//*[@class='for_desk dealDataTable tabcont shadowremovedatatable']//lightning-primitive-cell-factory[@data-label='Stage']//lightning-base-formatted-text";
+	
+	if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
+		log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
+		
+		if(fp.clickOnAlreadyCreatedItem(projectName, ADEIns3, 30)){
+			
+			log(LogStatus.INFO,"open created item"+ADEIns3,YesNo.No);
+					List<WebElement> ele =FindElements(driver, xpath, "");
+					if (CommonLib.checkFundraisingStageSorting(driver, true, ele)) {
+				log(LogStatus.PASS,
+						"-----------deal Column is in Decending Order By clicking on deal reacieved  --------------",
+						YesNo.No);
+				sa.assertTrue(true,
+						"-----------deal Name Column is in Decending Order By clicking on deal reacieved --------------");
+
+			}
+			else {
+				log(LogStatus.ERROR, "-----------deal Name Column is not Decending Order By clicking on deal reacieved  --------------", YesNo.Yes);
+				sa.assertTrue(false, "-----------deal Name Column is not Decending Order By clicking on deal reacieved  --------------");
+			}
+				if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+					if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+							action.BOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
+						List<WebElement> ele1 =FindElements(driver, xpath, "");
+						if (CommonLib.checkFundraisingStageSorting(driver, false, ele1)) {
+					log(LogStatus.PASS,
+							"-----------deal Column is in Assecending Order By clicking on deal reacieved  --------------",
+							YesNo.No);
+					sa.assertTrue(false,
+							"-----------deal Name Column is in Assecending Order By clicking on deal reacieved --------------");
+
+				}
+				else {
+					log(LogStatus.ERROR, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------", YesNo.Yes);
+					sa.assertTrue(false, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------");
+					}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting order", YesNo.No);
+						sa.assertTrue(false, "Not able to Click on Date Recivied Sorting order: " );
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting Icon", YesNo.No);
+					sa.assertTrue(false, "Not able to Click on Date Recivied Sorting Icon: " );
+				}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + ADEIns16 + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + ADEIns16 + " tab");
+		}
+			
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	ThreadSleep(5000);
+	lp.CRMlogout();
+	sa.assertAll();
+}
+@Parameters({ "projectName"})
+@Test
+public void ADETc120_2_VerifySortingatDealSectionStageForInstitutionRecord(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	String order = "Target Close Date";
+	String xpath="//*[@class='for_desk dealDataTable tabcont shadowremovedatatable']//lightning-primitive-cell-factory[@data-label='Target Close Date']//lightning-base-formatted-text";
+	if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
+		log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
+		
+		if(fp.clickOnAlreadyCreatedItem(projectName, ADEIns3, 30)){
+			
+			log(LogStatus.INFO,"open created item"+ADEIns3,YesNo.No);
+			if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+				if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
+//					if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+//							action.BOOLEAN)) {
+//				log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+//						if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+//								action.BOOLEAN)) {
+							List<WebElement> ele =FindElements(driver, xpath, "");
+							
+								if (CommonLib.checkSorting(driver, SortOrder.Decending, ele)) {
+				log(LogStatus.PASS,
+						"-----------deal Column is in Decending Order By clicking on stage  --------------",
+						YesNo.No);
+				sa.assertTrue(true,
+						"-----------deal Name Column is in Decending Order By clicking on stage --------------");
+
+			}
+			else {
+				log(LogStatus.ERROR, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------", YesNo.Yes);
+				sa.assertTrue(false, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------");
+				}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting order", YesNo.No);
+					sa.assertTrue(false, "Not able to Click on Date Recivied Sorting order: " );
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting Icon", YesNo.No);
+				sa.assertTrue(false, "Not able to Click on Date Recivied Sorting Icon: " );
+			}
+				
+			
+			if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
+				if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
+							List<WebElement> ele =FindElements(driver, xpath, "");
+						
+								if (CommonLib.checkSorting(driver, SortOrder.Assecending, ele))
+							
+				log(LogStatus.PASS,
+						"-----------deal Column is in Assecending Order By clicking on stage  --------------",
+						YesNo.No);
+				sa.assertTrue(true,
+						"-----------deal Name Column is in Assecending Order By clicking on stage --------------");
+
+			}
+			else {
+				log(LogStatus.ERROR, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------", YesNo.Yes);
+				sa.assertTrue(false, "-----------deal Name Column is not Assecending Order By clicking on deal reacieved  --------------");
+				}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting order", YesNo.No);
+					sa.assertTrue(false, "Not able to Click on Date Recivied Sorting order: " );
+				}
+//			} else {
+//				log(LogStatus.ERROR, "Not able to click on the Date Recivied Sorting Icon", YesNo.No);
+//				sa.assertTrue(false, "Not able to Click on Date Recivied Sorting Icon: " );
+//			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + ADEIns16 + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + ADEIns16 + " tab");
+		}
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	ThreadSleep(5000);
+	lp.CRMlogout();
+	sa.assertAll();
+}
+@Parameters({ "projectName" })
+@Test
+public void ADETc121_1_RenameStageNamesCheckImpactDealSectionAccountContact(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	SetupPageBusinessLayer sp = new SetupPageBusinessLayer(driver);
+	String parentID = null;
+	lp.CRMLogin(superAdminUserName, adminPassword, appName);
+	String[][] newAndOldStage = {
+			{ Stage.IOI.toString(), Stage.IOL.toString() } };
+	if (home.clickOnSetUpLink()) {
+		parentID = switchOnWindow(driver);
+		if (parentID != null) {
+			if (sp.searchStandardOrCustomObject(environment, mode, object.Deal)) {
+				if (sp.clickOnObjectFeature(environment, mode, object.Deal,
+						ObjectFeatureName.FieldAndRelationShip)) {
+					if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10),
+							excelLabel.Stage.toString() + Keys.ENTER, "status", action.BOOLEAN)) {
+
+						if (sp.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
+							for (int i = 0; i < newAndOldStage.length; i++) {
+								switchToDefaultContent(driver);
+								switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
+								WebElement ele = sp.clickOnEditInFrontOfFieldValues(projectName,
+										newAndOldStage[i][0]);
+								if (click(driver, ele, "watchlist", action.BOOLEAN)) {
+									switchToDefaultContent(driver);
+									ThreadSleep(3000);
+									switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
+									sendKeys(driver, sp.getFieldLabelTextBox1(10), newAndOldStage[i][1], "label",
+											action.BOOLEAN);
+
+									if (clickUsingJavaScript(driver, fp.getCustomTabSaveBtn(10), "save",
+											action.BOOLEAN)) {
+
+										log(LogStatus.INFO, "successfully changed stage label", YesNo.No);
+									} else {
+										sa.assertTrue(false, "not able to click on save button");
+										log(LogStatus.SKIP, "not able to click on save button", YesNo.Yes);
+									}
+
+								} else {
+									sa.assertTrue(false, "edit button is not clickable");
+									log(LogStatus.SKIP, "edit button is not clickable", YesNo.Yes);
+								}
+							}
+							ThreadSleep(3000);
+							switchToDefaultContent(driver);
+							switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
+							WebElement ele = sp.clickOnEditInFrontOfFieldValues(projectName, newAndOldStage[0][1]);
+							WebElement ele1 = null;
+							ele1 = sp.clickOnEditInFrontOfFieldValues(projectName, newAndOldStage[1][1]);
+							if ((ele != null) && (ele1 != null)) {
+								log(LogStatus.INFO, "successfully verified rename of stage values", YesNo.No);
+
+							} else {
+								log(LogStatus.ERROR, "stage field is not renamed", YesNo.No);
+								sa.assertTrue(false, "stage field is not renamed");
+							}
+						} else {
+							sa.assertTrue(false, "stage field is not clickable");
+							log(LogStatus.SKIP, "stage field is not clickable", YesNo.Yes);
+						}
+					} else {
+						sa.assertTrue(false, "field textbox is not visible");
+						log(LogStatus.SKIP, "field textbox is not visible", YesNo.Yes);
+					}
+				} else {
+					sa.assertTrue(false, "field and relationships is not clickable");
+					log(LogStatus.SKIP, "field and relationships is not clickable", YesNo.Yes);
+				}
+			} else {
+				sa.assertTrue(false, "activity object is not clickable");
+				log(LogStatus.SKIP, "activity object is not clickable", YesNo.Yes);
+			}
+			ThreadSleep(3000);
+			driver.close();
+			driver.switchTo().window(parentID);
+		} else {
+			sa.assertTrue(false, "new window is not found, so cannot change watchlist label");
+			log(LogStatus.SKIP, "new window is not found, so cannot change watchlist label", YesNo.Yes);
+		}
+	} else {
+		sa.assertTrue(false, "setup link is not clickable");
+		log(LogStatus.SKIP, "setup link is not clickable", YesNo.Yes);
+	}
+	lp.CRMlogout();
+	sa.assertAll();
+}
+
+@Parameters({ "projectName" })
+@Test
+public void ADETc121_2_RenameStageNamesCheckImpactDealSectionAccountContact(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
+		log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
+
+		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns2, 30)) {
+			log(LogStatus.INFO, "open created item" + ADEIns2, YesNo.No);
+
+			String dealname = ADEDeal21;
+			String stage = "IOL";
+
+			if (BP.dealAcuityStageName(dealname, stage, 30) != null) {
+				log(LogStatus.PASS, "Stage Name: " + stage + " is present", YesNo.No);
+
+			} else {
+				log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
+				sa.assertTrue(false, "stage name not present: " + stage);
+
+			}
+
+		} else {
+
+			sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns1);
+			log(LogStatus.SKIP, "Not Able to open created source firm : " + ADEIns1, YesNo.Yes);
+
+		}
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+
+	refresh(driver);
+
+	if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
+		log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
+
+		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns5, 30)) {
+			log(LogStatus.INFO, "open created item" + ADEIns5, YesNo.No);
+			String dealname1 = ADEDeal25;
+			String stage1 = "IOL";
+
+			if (BP.dealAcuityStageName(dealname1, stage1, 30) != null) {
+				log(LogStatus.PASS, "Stage Name: " + stage1 + " is present", YesNo.No);
+
+			} else {
+				log(LogStatus.FAIL, "stage name not present: " + stage1, YesNo.Yes);
+				sa.assertTrue(false, "stage name not present: " + stage1);
+
+			}
+		} else {
+
+			sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns5);
+			log(LogStatus.SKIP, "Not Able to open created source firm : " + ADEIns5, YesNo.Yes);
+		}
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
+		log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
+
+		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns16, 30)) {
+			log(LogStatus.INFO, "open created item" + ADEIns16, YesNo.No);
+			String dealname1 = ADEDeal30;
+			String stage1 = "IOL";
+
+			if (BP.dealAcuityStageName(dealname1, stage1, 30) != null) {
+				log(LogStatus.PASS, "Stage Name: " + stage1 + " is present", YesNo.No);
+
+			} else {
+				log(LogStatus.FAIL, "stage name not present: " + stage1, YesNo.Yes);
+				sa.assertTrue(false, "stage name not present: " + stage1);
+
+			}
+		} else {
+
+			sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns16);
+			log(LogStatus.SKIP, "Not Able to open created source firm : " + ADEIns16, YesNo.Yes);
+		}
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();
+}
+
+
+@Parameters({ "projectName" })
+@Test
+public void ADETc122_1_CreateNewLabelOfStagesAndDeleteExistingStage(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	SetupPageBusinessLayer sp = new SetupPageBusinessLayer(driver);
+	lp.CRMLogin(superAdminUserName, adminPassword, appName);
+	WebElement ele = null;
+	String parentID = null;
+	String stage = "DS";
+	if (home.clickOnSetUpLink()) {
+		parentID = switchOnWindow(driver);
+		if (parentID != null) {
+			if (sp.searchStandardOrCustomObject(environment, mode, object.Deal)) {
+				if (sp.clickOnObjectFeature(environment, mode, object.Deal,
+						ObjectFeatureName.FieldAndRelationShip)) {
+					if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10),
+							excelLabel.Stage.toString() + Keys.ENTER, "status", action.BOOLEAN)) {
+						if (sp.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
+							switchToDefaultContent(driver);
+							ThreadSleep(10000);
+							switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
+							stage = stage.replace("_", " ");
+							ThreadSleep(3000);
+							ele = sp.getValuesNewButton(10);
+							if (click(driver, ele, "new button", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "click on Values New Button", YesNo.No);
+								switchToDefaultContent(driver);
+								ThreadSleep(20000);
+								switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
+								ThreadSleep(5000);
+								if (sendKeys(driver, dp.getTextArea(20), stage, stage, action.BOOLEAN)) {
+									log(LogStatus.INFO, "enter value on textarea " + stage, YesNo.No);
+									ThreadSleep(2000);
+									if (click(driver, sp.getCustomTabSaveBtn(10), "save button",
+											action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.ERROR, "Click on save Button : ", YesNo.No);
+										ThreadSleep(2000);
+									} else {
+										log(LogStatus.ERROR, "Not Able to Click on save Button : ", YesNo.Yes);
+										sa.assertTrue(false, "Not Able to Click on save Button : ");
+									}
+								} else {
+									sa.assertTrue(false, "Not Able to enter value to textarea ");
+									log(LogStatus.SKIP, "Not Able to enter value to textarea ", YesNo.Yes);
+								}
+							} else {
+								log(LogStatus.ERROR, "new button is not clickable", YesNo.Yes);
+								sa.assertTrue(false, "new button is not clickable");
+							}
+						} else {
+							log(LogStatus.ERROR, "stage field is not clickable", YesNo.Yes);
+							sa.assertTrue(false, "stage field is not clickable");
+						}
+					} else {
+						log(LogStatus.ERROR, "field search textbox is not visible", YesNo.Yes);
+						sa.assertTrue(false, "field search textbox is not visible");
+					}
+				} else {
+					log(LogStatus.ERROR, "fundraising object is not clickable", YesNo.Yes);
+					sa.assertTrue(false, "fundraising object is not clickable");
+				}
+			} else {
+				log(LogStatus.ERROR, "fundraising object is not clickable", YesNo.Yes);
+				sa.assertTrue(false, "fundraising object is not clickable");
+			}
+			ThreadSleep(5000);
+			driver.close();
+			driver.switchTo().window(parentID);
+		} else {
+			log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+			sa.assertTrue(false, "could not find new window to switch");
+		}
+	} else {
+		log(LogStatus.ERROR, "setup link is not clickable", YesNo.Yes);
+		sa.assertTrue(false, "setup link is not clickable");
+	}
+	if (home.clickOnSetUpLink()) {
+		parentID = switchOnWindow(driver);
+		if (parentID != null) {
+			if (sp.searchStandardOrCustomObject(environment, mode, object.Deal)) {
+				if (sp.clickOnObjectFeature(environment, mode, object.Deal,
+						ObjectFeatureName.FieldAndRelationShip)) {
+					if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), excelLabel.Stage.toString(),
+							"stage", action.BOOLEAN)) {
+						if (sp.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
+							switchToDefaultContent(driver);
+							switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
+							ThreadSleep(5000);
+							WebElement ele1 = dp.findDeleteLink(projectName, Stage.LOI.toString());
+							if (click(driver, ele1, "delete LOI", action.SCROLLANDBOOLEAN)) {
+								ThreadSleep(5000);
+								if (!isAlertPresent(driver)) {
+									clickUsingJavaScript(driver, ele1, "delete LOI", action.SCROLLANDBOOLEAN);
+								}
+								ThreadSleep(2000);
+								// driver.switchTo().alert().accept();
+								switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+								switchToDefaultContent(driver);
+								switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
+								ThreadSleep(2000);
+								if (selectVisibleTextFromDropDown(driver,
+										dp.getreplacevalueforstage(projectName, 10), "replacevalueforstage",
+										"DS")) {
+									log(LogStatus.INFO,
+											"Select custom field text in setup component dropdown in PipelineCustomPage setup page",
+											YesNo.No);
+									ThreadSleep(5000);
+									if (click(driver, sp.getCustomTabSaveBtn(10), "save button",
+											action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.ERROR, "Click on save Button : ", YesNo.No);
+										ThreadSleep(2000);
+									} else {
+										log(LogStatus.ERROR, "Not Able to Click on save Button : ", YesNo.Yes);
+										sa.assertTrue(false, "Not Able to Click on save Button : ");
+									}
+								} else {
+									sa.assertTrue(false, "deactivate link is not clickable");
+									log(LogStatus.SKIP, "deactivate link is not clickable", YesNo.Yes);
+								}
+							} else {
+								sa.assertTrue(false, "stage field link is not clickable");
+								log(LogStatus.SKIP, "stage field link is not clickable", YesNo.Yes);
+							}
+						} else {
+							sa.assertTrue(false, "search textbox is not visible");
+							log(LogStatus.SKIP, "search textbox is not visible", YesNo.Yes);
+						}
+					} else {
+						log(LogStatus.FAIL, "field n relationships feature not clickable", YesNo.Yes);
+						sa.assertTrue(false, "field n relationships feature not clickable");
+					}
+				} else {
+					log(LogStatus.FAIL, "deal object is not clickable", YesNo.Yes);
+					sa.assertTrue(false, "deal object is not clickable");
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+			} else {
+				log(LogStatus.FAIL, "could not find new window to switch", YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch");
+			}
+		} else {
+			log(LogStatus.FAIL, "setup link is not clickable", YesNo.Yes);
+			sa.assertTrue(false, "setup link is not clickable");
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+}
+
+@Parameters({ "projectName" })
+@Test
+public void ADETc122_2_EditExistingCompanyDealVerifyimpactDealCompanyAccount(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+
+	if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
+		log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
+
+		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns2, 30)) {
+			log(LogStatus.INFO, "open created item" + ADEIns2, YesNo.No);
+
+			String dealname = ADEDeal21;
+			String stage = "DS";
+
+			if (BP.dealAcuityStageName(dealname, stage, 30) != null) {
+				log(LogStatus.PASS, "Stage Name: " + stage + " is present", YesNo.No);
+
+			} else {
+				log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
+				sa.assertTrue(false, "stage name not present: " + stage);
+
+			}
+
+		} else {
+
+			sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns1);
+			log(LogStatus.SKIP, "Not Able to open created source firm : " + ADEIns1, YesNo.Yes);
+
+		}
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+
+	refresh(driver);
+
+	if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
+		log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
+
+		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns5, 30)) {
+			log(LogStatus.INFO, "open created item" + ADEIns5, YesNo.No);
+			String dealname1 = ADEDeal25;
+			String stage1 = "DS";
+
+			if (BP.dealAcuityStageName(dealname1, stage1, 30) != null) {
+				log(LogStatus.PASS, "Stage Name: " + stage1 + " is present", YesNo.No);
+
+			} else {
+				log(LogStatus.FAIL, "stage name not present: " + stage1, YesNo.Yes);
+				sa.assertTrue(false, "stage name not present: " + stage1);
+
+			}
+		} else {
+
+			sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns5);
+			log(LogStatus.SKIP, "Not Able to open created source firm : " + ADEIns5, YesNo.Yes);
+		}
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
+		log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
+
+		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns16, 30)) {
+			log(LogStatus.INFO, "open created item" + ADEIns16, YesNo.No);
+			String dealname1 = ADEDeal30;
+			String stage1 = "DS";
+
+			if (BP.dealAcuityStageName(dealname1, stage1, 30) != null) {
+				log(LogStatus.PASS, "Stage Name: " + stage1 + " is present", YesNo.No);
+
+			} else {
+				log(LogStatus.FAIL, "stage name not present: " + stage1, YesNo.Yes);
+				sa.assertTrue(false, "stage name not present: " + stage1);
+
+			}
+		} else {
+
+			sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns16);
+			log(LogStatus.SKIP, "Not Able to open created source firm : " + ADEIns16, YesNo.Yes);
+		}
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();
+
+}
+
+@Parameters({ "projectName" })
+@Test
+public void ADETc123_1_VerifytheImpactonSubjectLinewhenBaseUrlgetsChangedforDealGridAPIForAccounts(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	lp.CRMLogin(superAdminUserName, adminPassword, appName);
+	String fieldName = ADEFieldname1;
+	String valueField =ADENewValue1;
+	String fieldName1 = ADEFieldname2;
+	String valueField1 =ADENewValue2;
+	String fieldName2 = ADEFieldname3;
+	String valueField2 =ADENewValue3;
+	String parentWindow = null;
+	
+	if (home.clickOnSetUpLink()) {
+        parentWindow = switchOnWindow(driver);
+        if (parentWindow == null) {
+            sa.assertTrue(false,
+                    "No new window is open after click on setup link in lighting mode so cannot create clone user");
+            log(LogStatus.SKIP,
+                    "No new window is open after click on setup link in lighting mode so cannot create clone user",
+                    YesNo.Yes);
+            exit("No new window is open after click on setup link in lighting mode so cannot create clone user");
+        }
+        ThreadSleep(3000);
+	if(setup.UpdateValueInCustomMetaData(MetaDataSetting.Acuity_Setting.toString(), fieldName, valueField, 10)) {
+		 
+             log(LogStatus.INFO, "Changed the value of " + fieldName + " for Acuity Setting", YesNo.No);
+         }
+         else
+         {
+             log(LogStatus.ERROR, "Not able to change the value of " + fieldName + " for Acuity Setting", YesNo.No);
+             sa.assertTrue(false, "Not able to changed the value of " + fieldName + " for Acuity Setting");    
+         }
+         ThreadSleep(5000);
+     }    
+     ThreadSleep(5000);
+     switchToDefaultContent(driver);
+     driver.close();
+     driver.switchTo().window(parentWindow);
+     
+     if (home.clickOnSetUpLink()) {
+         parentWindow = switchOnWindow(driver);
+         if (parentWindow == null) {
+             sa.assertTrue(false,
+                     "No new window is open after click on setup link in lighting mode so cannot create clone user");
+             log(LogStatus.SKIP,
+                     "No new window is open after click on setup link in lighting mode so cannot create clone user",
+                     YesNo.Yes);
+             exit("No new window is open after click on setup link in lighting mode so cannot create clone user");
+         }
+         ThreadSleep(3000);
+ 	if(setup.UpdateValueInCustomMetaData(MetaDataSetting.Acuity_Setting.toString(), fieldName1, valueField1, 10)) {
+ 		 
+              log(LogStatus.INFO, "Changed the value of " + fieldName + " for Acuity Setting", YesNo.No);
+          }
+          else
+          {
+              log(LogStatus.ERROR, "Not able to change the value of " + fieldName + " for Acuity Setting", YesNo.No);
+              sa.assertTrue(false, "Not able to changed the value of " + fieldName + " for Acuity Setting");    
+          }
+          ThreadSleep(5000);
+          switchToDefaultContent(driver);
+          driver.close();
+          driver.switchTo().window(parentWindow);
+          }
+     if (home.clickOnSetUpLink()) {
+         parentWindow = switchOnWindow(driver);
+         if (parentWindow == null) {
+             sa.assertTrue(false,
+                     "No new window is open after click on setup link in lighting mode so cannot create clone user");
+             log(LogStatus.SKIP,
+                     "No new window is open after click on setup link in lighting mode so cannot create clone user",
+                     YesNo.Yes);
+             exit("No new window is open after click on setup link in lighting mode so cannot create clone user");
+         }
+         ThreadSleep(3000);
+ 	if(setup.UpdateValueInCustomMetaData(MetaDataSetting.Acuity_Setting.toString(), fieldName2, valueField2, 10)) {
+ 		 
+              log(LogStatus.INFO, "Changed the value of " + fieldName + " for Acuity Setting", YesNo.No);
+          }
+          else
+          {
+              log(LogStatus.ERROR, "Not able to change the value of " + fieldName + " for Acuity Setting", YesNo.No);
+              sa.assertTrue(false, "Not able to changed the value of " + fieldName + " for Acuity Setting");    
+          }
+          ThreadSleep(5000);
+          switchToDefaultContent(driver);
+          driver.close();
+          driver.switchTo().window(parentWindow);
+     }
+     lp.CRMlogout();
+  	sa.assertAll();
+}
+
+
+@Parameters({ "projectName" })
+@Test
+public void ADETc123_2_VerifyUpdatefieldcolumnNamesCheckDealsectionAccountsTab(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	String [] account = {ADEIns1,ADEIns2,ADEIns4,ADEIns7,ADEIns5};
+	String dealHeader = "Deal Name<break>Import Status<break>Deal Description<break>Stage";
+
+
+	ArrayList<String> connectionsSectionHeaderName = new ArrayList<String>();
+
+	ArrayList<String> contactsSectionHeaderName = new ArrayList<String>();
+
+	String[] arrDealHeader = dealHeader.split("<break>");
+	List<String> dealHeaders = new ArrayList<String>(Arrays.asList(arrDealHeader));
+	for (int i = 0; i < account.length; i++) {
+	if (cp.clickOnTab(projectName, tabObj1)) {
+		log(LogStatus.INFO, "Clicked on Tab : " + tabObj1 + " For : " + account[i], YesNo.No);
+		ThreadSleep(1000);
+		if (cp.clickOnAlreadyCreatedItem(projectName, account[i], 30)) {
+			log(LogStatus.INFO, "Clicked on  : " + ADEIns1 + " For : " + tabObj1, YesNo.No);
+			ThreadSleep(2000);
+			ArrayList<String> result1 = bp
+					.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
+							contactsSectionHeaderName, null, dealHeaders, null, connectionsSectionHeaderName, null,contactsSectionHeaderName, null);
+			if (result1.isEmpty()) {
+				log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "The header name and message are not verified on Deals Section ", YesNo.No);
+				sa.assertTrue(false, "The header name and message are not verified on  Deals Section ");
+			}
+		} else {
+
+			sa.assertTrue(false, "Not Able to open created source firm : " + account[i]);
+			log(LogStatus.SKIP, "Not Able to open created source firm : " + account[i], YesNo.Yes);
+
+		}
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	}
+	   lp.CRMlogout();
+	  	sa.assertAll();
+	}
+
+
+@Parameters({ "projectName" })
+@Test
+public void ADETc124_1_VerifytheImpactonSubjectLinewhenBaseUrlgetsChangedforDealGridAPIForAccounts(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	lp.CRMLogin(superAdminUserName, adminPassword, appName);
+	String fieldName = ADEFieldname1;
+	String valueField =ADENewValue2;
+	String fieldName1 = ADEFieldname2;
+	String valueField1 =ADENewValue3;
+	String fieldName2 = ADEFieldname3;
+	String valueField2 =ADENewValue1;
+	String parentWindow = null;
+	
+	if (home.clickOnSetUpLink()) {
+        parentWindow = switchOnWindow(driver);
+        if (parentWindow == null) {
+            sa.assertTrue(false,
+                    "No new window is open after click on setup link in lighting mode so cannot create clone user");
+            log(LogStatus.SKIP,
+                    "No new window is open after click on setup link in lighting mode so cannot create clone user",
+                    YesNo.Yes);
+            exit("No new window is open after click on setup link in lighting mode so cannot create clone user");
+        }
+        ThreadSleep(3000);
+	if(setup.UpdateValueInCustomMetaData(MetaDataSetting.Acuity_Setting.toString(), fieldName, valueField, 10)) {
+		 
+             log(LogStatus.INFO, "Changed the value of " + fieldName + " for Acuity Setting", YesNo.No);
+         }
+         else
+         {
+             log(LogStatus.ERROR, "Not able to change the value of " + fieldName + " for Acuity Setting", YesNo.No);
+             sa.assertTrue(false, "Not able to changed the value of " + fieldName + " for Acuity Setting");    
+         }
+         ThreadSleep(5000);
+     }    
+     ThreadSleep(5000);
+     switchToDefaultContent(driver);
+     driver.close();
+     driver.switchTo().window(parentWindow);
+     
+     if (home.clickOnSetUpLink()) {
+         parentWindow = switchOnWindow(driver);
+         if (parentWindow == null) {
+             sa.assertTrue(false,
+                     "No new window is open after click on setup link in lighting mode so cannot create clone user");
+             log(LogStatus.SKIP,
+                     "No new window is open after click on setup link in lighting mode so cannot create clone user",
+                     YesNo.Yes);
+             exit("No new window is open after click on setup link in lighting mode so cannot create clone user");
+         }
+         ThreadSleep(3000);
+ 	if(setup.UpdateValueInCustomMetaData(MetaDataSetting.Acuity_Setting.toString(), fieldName1, valueField1, 10)) {
+ 		 
+              log(LogStatus.INFO, "Changed the value of " + fieldName + " for Acuity Setting", YesNo.No);
+          }
+          else
+          {
+              log(LogStatus.ERROR, "Not able to change the value of " + fieldName + " for Acuity Setting", YesNo.No);
+              sa.assertTrue(false, "Not able to changed the value of " + fieldName + " for Acuity Setting");    
+          }
+          ThreadSleep(5000);
+          switchToDefaultContent(driver);
+          driver.close();
+          driver.switchTo().window(parentWindow);
+          }
+     if (home.clickOnSetUpLink()) {
+         parentWindow = switchOnWindow(driver);
+         if (parentWindow == null) {
+             sa.assertTrue(false,
+                     "No new window is open after click on setup link in lighting mode so cannot create clone user");
+             log(LogStatus.SKIP,
+                     "No new window is open after click on setup link in lighting mode so cannot create clone user",
+                     YesNo.Yes);
+             exit("No new window is open after click on setup link in lighting mode so cannot create clone user");
+         }
+         ThreadSleep(3000);
+ 	if(setup.UpdateValueInCustomMetaData(MetaDataSetting.Acuity_Setting.toString(), fieldName2, valueField2, 10)) {
+ 		 
+              log(LogStatus.INFO, "Changed the value of " + fieldName + " for Acuity Setting", YesNo.No);
+          }
+          else
+          {
+              log(LogStatus.ERROR, "Not able to change the value of " + fieldName + " for Acuity Setting", YesNo.No);
+              sa.assertTrue(false, "Not able to changed the value of " + fieldName + " for Acuity Setting");    
+          }
+          ThreadSleep(5000);
+          switchToDefaultContent(driver);
+          driver.close();
+          driver.switchTo().window(parentWindow);
+     }
+     lp.CRMlogout();
+  	sa.assertAll();
+}
+
+
+@Parameters({ "projectName" })
+@Test
+public void ADETc124_2_VerifyUpdatefieldcolumnNamesCheckDealsectionAccountsTab(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	String [] account = {ADEIns1,ADEIns2,ADEIns4,ADEIns7,ADEIns5};
+	String dealHeader = "Deal Name<break>Deal Description<break>Stage<break>Import Status";
+
+
+	ArrayList<String> connectionsSectionHeaderName = new ArrayList<String>();
+
+	ArrayList<String> contactsSectionHeaderName = new ArrayList<String>();
+
+	String[] arrDealHeader = dealHeader.split("<break>");
+	List<String> dealHeaders = new ArrayList<String>(Arrays.asList(arrDealHeader));
+	for (int i = 0; i < account.length; i++) {
+	if (cp.clickOnTab(projectName, tabObj1)) {
+		log(LogStatus.INFO, "Clicked on Tab : " + tabObj1 + " For : " + account[i], YesNo.No);
+		ThreadSleep(1000);
+		if (cp.clickOnAlreadyCreatedItem(projectName, account[i], 30)) {
+			log(LogStatus.INFO, "Clicked on  : " + ADEIns1 + " For : " + tabObj1, YesNo.No);
+			ThreadSleep(2000);
+			ArrayList<String> result1 = bp
+					.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
+							contactsSectionHeaderName, null, dealHeaders, null, connectionsSectionHeaderName, null,contactsSectionHeaderName, null);
+			if (result1.isEmpty()) {
+				log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "The header name and message are not verified on Deals Section ", YesNo.No);
+				sa.assertTrue(false, "The header name and message are not verified on  Deals Section ");
+			}
+		} else {
+
+			sa.assertTrue(false, "Not Able to open created source firm : " + account[i]);
+			log(LogStatus.SKIP, "Not Able to open created source firm : " + account[i], YesNo.Yes);
+
+		}
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	}
+	   lp.CRMlogout();
+	  	sa.assertAll();
+	}
+
+
+@Parameters({ "projectName" })
+@Test
+public void ADETc125_1_VerifytheImpactonSubjectLinewhenBaseUrlgetsChangedforDealGridAPIForContact(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	lp.CRMLogin(superAdminUserName, adminPassword, appName);
+	String fieldName = ADEFieldname4;
+	String valueField =ADENewValue1;
+	String fieldName1 = ADEFieldname5;
+	String valueField1 =ADENewValue2;
+	String fieldName2 = ADEFieldname6;
+	String valueField2 =ADENewValue3;
+	String parentWindow = null;
+	
+	if (home.clickOnSetUpLink()) {
+        parentWindow = switchOnWindow(driver);
+        if (parentWindow == null) {
+            sa.assertTrue(false,
+                    "No new window is open after click on setup link in lighting mode so cannot create clone user");
+            log(LogStatus.SKIP,
+                    "No new window is open after click on setup link in lighting mode so cannot create clone user",
+                    YesNo.Yes);
+            exit("No new window is open after click on setup link in lighting mode so cannot create clone user");
+        }
+        ThreadSleep(3000);
+	if(setup.UpdateValueInCustomMetaData(MetaDataSetting.Acuity_Setting.toString(), fieldName, valueField, 10)) {
+		 
+             log(LogStatus.INFO, "Changed the value of " + fieldName + " for Acuity Setting", YesNo.No);
+         }
+         else
+         {
+             log(LogStatus.ERROR, "Not able to change the value of " + fieldName + " for Acuity Setting", YesNo.No);
+             sa.assertTrue(false, "Not able to changed the value of " + fieldName + " for Acuity Setting");    
+         }
+         ThreadSleep(5000);
+     }    
+     ThreadSleep(5000);
+     switchToDefaultContent(driver);
+     driver.close();
+     driver.switchTo().window(parentWindow);
+     
+     if (home.clickOnSetUpLink()) {
+         parentWindow = switchOnWindow(driver);
+         if (parentWindow == null) {
+             sa.assertTrue(false,
+                     "No new window is open after click on setup link in lighting mode so cannot create clone user");
+             log(LogStatus.SKIP,
+                     "No new window is open after click on setup link in lighting mode so cannot create clone user",
+                     YesNo.Yes);
+             exit("No new window is open after click on setup link in lighting mode so cannot create clone user");
+         }
+         ThreadSleep(3000);
+ 	if(setup.UpdateValueInCustomMetaData(MetaDataSetting.Acuity_Setting.toString(), fieldName1, valueField1, 10)) {
+ 		 
+              log(LogStatus.INFO, "Changed the value of " + fieldName + " for Acuity Setting", YesNo.No);
+          }
+          else
+          {
+              log(LogStatus.ERROR, "Not able to change the value of " + fieldName + " for Acuity Setting", YesNo.No);
+              sa.assertTrue(false, "Not able to changed the value of " + fieldName + " for Acuity Setting");    
+          }
+          ThreadSleep(5000);
+          switchToDefaultContent(driver);
+          driver.close();
+          driver.switchTo().window(parentWindow);
+          }
+     if (home.clickOnSetUpLink()) {
+         parentWindow = switchOnWindow(driver);
+         if (parentWindow == null) {
+             sa.assertTrue(false,
+                     "No new window is open after click on setup link in lighting mode so cannot create clone user");
+             log(LogStatus.SKIP,
+                     "No new window is open after click on setup link in lighting mode so cannot create clone user",
+                     YesNo.Yes);
+             exit("No new window is open after click on setup link in lighting mode so cannot create clone user");
+         }
+         ThreadSleep(3000);
+ 	if(setup.UpdateValueInCustomMetaData(MetaDataSetting.Acuity_Setting.toString(), fieldName2, valueField2, 10)) {
+ 		 
+              log(LogStatus.INFO, "Changed the value of " + fieldName + " for Acuity Setting", YesNo.No);
+          }
+          else
+          {
+              log(LogStatus.ERROR, "Not able to change the value of " + fieldName + " for Acuity Setting", YesNo.No);
+              sa.assertTrue(false, "Not able to changed the value of " + fieldName + " for Acuity Setting");    
+          }
+          ThreadSleep(5000);
+          switchToDefaultContent(driver);
+          driver.close();
+          driver.switchTo().window(parentWindow);
+     }
+     lp.CRMlogout();
+  	sa.assertAll();
+}
+
+
+@Parameters({ "projectName" })
+@Test
+public void ADETc125_2_VerifyUpdatefieldcolumnNamesCheckDealsectionContactTab(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	String ContactName = ADEContact1FName + " " + ADEContact1LName;
+	String dealHeader = "Deal Name<break>Import Status<break>Deal Description<break>Stage";
+
+
+	ArrayList<String> connectionsSectionHeaderName = new ArrayList<String>();
+
+	ArrayList<String> contactsSectionHeaderName = new ArrayList<String>();
+
+	String[] arrDealHeader = dealHeader.split("<break>");
+	List<String> dealHeaders = new ArrayList<String>(Arrays.asList(arrDealHeader));
+	if (cp.clickOnTab(projectName, tabObj2)) {
+		log(LogStatus.INFO, "Clicked on Tab : " + tabObj2 + " For : " + ContactName, YesNo.No);
+		ThreadSleep(1000);
+		if (cp.clickOnAlreadyCreatedItem(projectName, ContactName, 30)) {
+			log(LogStatus.INFO, "Clicked on  : " + ContactName + " For : " + tabObj2, YesNo.No);
+			ThreadSleep(2000);
+			ArrayList<String> result1 = bp
+					.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
+							contactsSectionHeaderName, null, dealHeaders, null, connectionsSectionHeaderName, null,contactsSectionHeaderName, null);
+			if (result1.isEmpty()) {
+				log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "The header name and message are not verified on Deals Section ", YesNo.No);
+				sa.assertTrue(false, "The header name and message are not verified on  Deals Section ");
+			}
+		} else {
+
+			sa.assertTrue(false, "Not Able to open created source firm : " + ContactName);
+			log(LogStatus.SKIP, "Not Able to open created source firm : " + ContactName, YesNo.Yes);
+
+		}
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj2 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj2 + " tab");
+	}
+	
+	   lp.CRMlogout();
+	  	sa.assertAll();
+	}
+
+
+@Parameters({ "projectName" })
+@Test
+public void ADETc126_1_VerifytheImpactonSubjectLinewhenBaseUrlgetsChangedforDealGridAPIForContact(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	lp.CRMLogin(superAdminUserName, adminPassword, appName);
+	String fieldName = ADEFieldname4;
+	String valueField =ADENewValue2;
+	String fieldName1 = ADEFieldname5;
+	String valueField1 =ADENewValue3;
+	String fieldName2 = ADEFieldname6;
+	String valueField2 =ADENewValue1;
+	String parentWindow = null;
+	
+	if (home.clickOnSetUpLink()) {
+        parentWindow = switchOnWindow(driver);
+        if (parentWindow == null) {
+            sa.assertTrue(false,
+                    "No new window is open after click on setup link in lighting mode so cannot create clone user");
+            log(LogStatus.SKIP,
+                    "No new window is open after click on setup link in lighting mode so cannot create clone user",
+                    YesNo.Yes);
+            exit("No new window is open after click on setup link in lighting mode so cannot create clone user");
+        }
+        ThreadSleep(3000);
+	if(setup.UpdateValueInCustomMetaData(MetaDataSetting.Acuity_Setting.toString(), fieldName, valueField, 10)) {
+		 
+             log(LogStatus.INFO, "Changed the value of " + fieldName + " for Acuity Setting", YesNo.No);
+         }
+         else
+         {
+             log(LogStatus.ERROR, "Not able to change the value of " + fieldName + " for Acuity Setting", YesNo.No);
+             sa.assertTrue(false, "Not able to changed the value of " + fieldName + " for Acuity Setting");    
+         }
+         ThreadSleep(5000);
+     }    
+     ThreadSleep(5000);
+     switchToDefaultContent(driver);
+     driver.close();
+     driver.switchTo().window(parentWindow);
+     
+     if (home.clickOnSetUpLink()) {
+         parentWindow = switchOnWindow(driver);
+         if (parentWindow == null) {
+             sa.assertTrue(false,
+                     "No new window is open after click on setup link in lighting mode so cannot create clone user");
+             log(LogStatus.SKIP,
+                     "No new window is open after click on setup link in lighting mode so cannot create clone user",
+                     YesNo.Yes);
+             exit("No new window is open after click on setup link in lighting mode so cannot create clone user");
+         }
+         ThreadSleep(3000);
+ 	if(setup.UpdateValueInCustomMetaData(MetaDataSetting.Acuity_Setting.toString(), fieldName1, valueField1, 10)) {
+ 		 
+              log(LogStatus.INFO, "Changed the value of " + fieldName + " for Acuity Setting", YesNo.No);
+          }
+          else
+          {
+              log(LogStatus.ERROR, "Not able to change the value of " + fieldName + " for Acuity Setting", YesNo.No);
+              sa.assertTrue(false, "Not able to changed the value of " + fieldName + " for Acuity Setting");    
+          }
+          ThreadSleep(5000);
+          switchToDefaultContent(driver);
+          driver.close();
+          driver.switchTo().window(parentWindow);
+          }
+     if (home.clickOnSetUpLink()) {
+         parentWindow = switchOnWindow(driver);
+         if (parentWindow == null) {
+             sa.assertTrue(false,
+                     "No new window is open after click on setup link in lighting mode so cannot create clone user");
+             log(LogStatus.SKIP,
+                     "No new window is open after click on setup link in lighting mode so cannot create clone user",
+                     YesNo.Yes);
+             exit("No new window is open after click on setup link in lighting mode so cannot create clone user");
+         }
+         ThreadSleep(3000);
+ 	if(setup.UpdateValueInCustomMetaData(MetaDataSetting.Acuity_Setting.toString(), fieldName2, valueField2, 10)) {
+ 		 
+              log(LogStatus.INFO, "Changed the value of " + fieldName + " for Acuity Setting", YesNo.No);
+          }
+          else
+          {
+              log(LogStatus.ERROR, "Not able to change the value of " + fieldName + " for Acuity Setting", YesNo.No);
+              sa.assertTrue(false, "Not able to changed the value of " + fieldName + " for Acuity Setting");    
+          }
+          ThreadSleep(5000);
+          switchToDefaultContent(driver);
+          driver.close();
+          driver.switchTo().window(parentWindow);
+     }
+     lp.CRMlogout();
+  	sa.assertAll();
+}
+
+
+@Parameters({ "projectName" })
+@Test
+public void ADETc126_2_VerifyUpdatefieldcolumnNamesCheckDealsectionContactTab(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	String ContactName = ADEContact1FName + " " + ADEContact1LName;
+	String dealHeader = "Deal Name<break>Deal Description<break>Stage<break>Import Status";
+
+
+	ArrayList<String> connectionsSectionHeaderName = new ArrayList<String>();
+
+	ArrayList<String> contactsSectionHeaderName = new ArrayList<String>();
+
+	String[] arrDealHeader = dealHeader.split("<break>");
+	List<String> dealHeaders = new ArrayList<String>(Arrays.asList(arrDealHeader));
+
+	if (cp.clickOnTab(projectName, tabObj2)) {
+		log(LogStatus.INFO, "Clicked on Tab : " + tabObj2 + " For : " + ContactName, YesNo.No);
+		ThreadSleep(1000);
+		if (cp.clickOnAlreadyCreatedItem(projectName, ContactName, 30)) {
+			log(LogStatus.INFO, "Clicked on  : " + ContactName + " For : " + tabObj2, YesNo.No);
+			ThreadSleep(2000);
+			ArrayList<String> result1 = bp
+					.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
+							contactsSectionHeaderName, null, dealHeaders, null, connectionsSectionHeaderName, null,contactsSectionHeaderName, null);
+			if (result1.isEmpty()) {
+				log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "The header name and message are not verified on Deals Section ", YesNo.No);
+				sa.assertTrue(false, "The header name and message are not verified on  Deals Section ");
+			}
+		} else {
+
+			sa.assertTrue(false, "Not Able to open created source firm : " + ContactName);
+			log(LogStatus.SKIP, "Not Able to open created source firm : " + ContactName, YesNo.Yes);
+
+		}
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj2 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj2 + " tab");
+	}
+	
+	   lp.CRMlogout();
+	  	sa.assertAll();
+	}
 }

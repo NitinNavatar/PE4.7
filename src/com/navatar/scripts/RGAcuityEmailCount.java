@@ -376,7 +376,7 @@ public class RGAcuityEmailCount extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(rgUser2, rgOrgPassword, appName);
 		String actualemailCount = null;
-		String expected[] = {"Outbound Email","2/16/2023","Alexandar","Henry CRM2,Liam CRM1","Testing indirect email8 for contact"};
+		String expected[] = {"Outbound Email","2/24/2023",RGEContact1LName,"Henry CRM2,Liam CRM1","Testing indirect email8 for contact"};
 
 		String contactName =RGEContact1LName;
 
@@ -427,8 +427,8 @@ public class RGAcuityEmailCount extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(rgUser2, rgOrgPassword, appName);
 
-		String subject = "Testing indirect email6 for contact";
-		String Toname = RGEContact2LName;
+		String subject = "Testing indirect email5 for contact";
+		String Toname = RGEContact1LName;
 		String CCname = RGEContact1LName;
 
 		String contactName = RGEContact1LName;
@@ -1402,7 +1402,7 @@ public class RGAcuityEmailCount extends BaseLib {
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		lp.CRMLogin(rgUser2, rgOrgPassword, appName);
 		String actualDetail = null;
-		String expected[] = {"Indirect Email","2/16/2023","Alexandar","Henry CRM2,Liam CRM1","Testing indirect email8 for contact"};
+		String expected[] = {"Indirect Email","2/24/2023",RGEContact1LName,"Henry CRM2,Liam CRM1","Testing indirect email8 for contact"};
 		String contactName1=RGEUser01FName + " " + RGEUser01LName;
 		String contactName =RGEContact1LName;
 
@@ -1656,8 +1656,8 @@ public class RGAcuityEmailCount extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String contactname = RGEContact1LName;
-		String subject = "Testing indirect email8 for contact";
-		String Toname = RGEContact2LName;
+		String subject = "Testing indirect email5 for contact";
+		String Toname = RGEContact1LName;
 		String CCname = RGEContact1LName;
 		String contactname1 = RGEUser01FName + " " + RGEUser01LName;
 
@@ -1976,8 +1976,8 @@ public class RGAcuityEmailCount extends BaseLib {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		String fieldName = ADEFieldname1;
-		String valueField =ADENewValue1;
+		String fieldName = RGFieldname1;
+		String valueField =RGNewValue1;
 		String parentWindow = null;
 		
 		if (home.clickOnSetUpLink()) {
@@ -2074,8 +2074,8 @@ public class RGAcuityEmailCount extends BaseLib {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		String fieldName = ADEFieldname2;
-		String valueField =ADENewValue2;
+		String fieldName = RGFieldname2;
+		String valueField =RGNewValue2;
 		String parentWindow = null;
 		
 		if (home.clickOnSetUpLink()) {
@@ -2252,8 +2252,8 @@ public class RGAcuityEmailCount extends BaseLib {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		String fieldName = ADEFieldname3;
-		String valueField =ADENewValue3;
+		String fieldName = RGFieldname3;
+		String valueField =RGNewValue3;
 		String parentWindow = null;
 		
 		if (home.clickOnSetUpLink()) {
@@ -2348,8 +2348,8 @@ public class RGAcuityEmailCount extends BaseLib {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		String fieldName = ADEFieldname4;
-		String valueField =ADENewValue4;
+		String fieldName = RGFieldname4;
+		String valueField =RGNewValue4;
 		String parentWindow = null;
 		
 		if (home.clickOnSetUpLink()) {
@@ -2423,8 +2423,8 @@ public class RGAcuityEmailCount extends BaseLib {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		String fieldName = ADEFieldname5;
-		String valueField =ADENewValue5;
+		String fieldName = RGFieldname5;
+		String valueField =RGNewValue5;
 		String parentWindow = null;
 		
 		if (home.clickOnSetUpLink()) {
