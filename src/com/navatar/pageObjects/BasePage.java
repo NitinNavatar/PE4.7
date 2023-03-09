@@ -8076,7 +8076,7 @@ public abstract class BasePage extends BaseLib {
 	}
 
 	public WebElement subjectOfInteractionPage(String subjectName, int timeOut) {
-		String xpath = "//td[@data-label='Subject']//button[@name='subject' and text()='" + subjectName + "']";
+		String xpath = "//td[@data-label=\"Subject\"]//button[@name=\"subject\" and text()='" + subjectName + "']";
 		WebElement ele = FindElement(driver, xpath, "subject of Interaction page: " + subjectName,
 				action.SCROLLANDBOOLEAN, timeOut);
 		try {
@@ -9166,7 +9166,7 @@ public abstract class BasePage extends BaseLib {
 				"errorMsgInFieldLevelOfNotePopup");
 	}
 
-	@FindBy(xpath = "//span[text()=\"Log a Call\"]/ancestor::lightning-icon")
+	@FindBy(xpath = "//span[text()='Log a Call' or text()='new_direct_message']/ancestor::lightning-icon")
 	private WebElement logACallIconButtonInInteraction;
 
 	public WebElement logACallIconButtonInInteraction(int timeOut) {
