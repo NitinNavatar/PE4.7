@@ -71,10 +71,12 @@ import java.util.Comparator;
 import java.util.Currency;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
@@ -2239,6 +2241,375 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 		return flag;
 	}
 
+	public static boolean checkStageSorting(WebDriver driver, boolean isAscending, List<WebElement> elements) {
+
+//		if date comparator if either of a or b is date
+
+		List<String> ts = new ArrayList<String>();
+		List<String> newList = new ArrayList<String>();
+		List<String> actual = new ArrayList<String>();
+		List<String> sorted = new ArrayList<>();
+		List<String> checked = new ArrayList<>();
+		List<WebElement> ele = elements;
+		boolean flag = true;
+		for (int i = 0; i < ele.size(); i++) {
+			scrollDownThroughWebelement(driver, ele.get(i), "");
+			ts.add(ele.get(i).getText());
+		}
+		
+		for (String element : ts) {
+			  
+            // If this element is not present in newList
+            // then add it
+            if (!newList.contains(element)) {
+  
+            	newList.add(element);
+            }
+        }
+		actual.addAll(newList);
+		
+		
+		Map<Integer, String> map =new HashMap<>();  
+		map.put(1, "Deal Received");
+		map.put(2, "NDA Signed");
+		map.put(3, "Management Meeting");
+		map.put(4, "IOI");
+		map.put(5, "Due Diligence");
+		map.put(6, "Closed");
+		map.put(7, "Parked");
+		map.put(8, "Declined/Dead");
+		map.put(9, "DS");
+//		map.put(10, "IOL");
+
+		
+		for(String st:actual) {
+			switch (st) {
+		 	case "Deal Received": {
+		 		checked.add("Deal Received");
+			break;		
+			}case "NDA Signed":{
+		 		checked.add("NDA Signed");
+		 		break;	
+			}case "Management Meeting":{
+		 		checked.add("Management Meeting");
+		 		break;	
+				
+			}case "IOI":{
+		 		checked.add("IOI");
+		 		break;
+//			}case "IOL":{
+//		 		checked.add("IOL");
+//		 		break;	
+			}case "Due Diligence":{
+		 		checked.add("Due Diligence");
+		 		break;	
+			}case "Closed":{
+		 		checked.add("Closed");
+		 		break;	
+			}case "Parked":{
+		 		checked.add("Parked");
+		 		break;	
+			}case "Declined/Dead":{
+		 		checked.add("Declined/Dead");
+		 		break;	
+			}case "DS":{
+		 		checked.add("DS");
+		 		break;	
+			}
+		 	default:
+		 		checked.add("");
+		 		System.err.println(st+":Stage not present/matched");
+		 }
+		}
+		int size=checked.size();
+		if(isAscending) {
+			for(int i=0;i<size;i++) {
+				
+				int sortedNo=0;
+				switch (checked.get(i)) {
+			 	case "Deal Received": {
+			 		sortedNo=1;
+			 		
+				break;		
+				}case "NDA Signed":{
+					sortedNo=2;		
+					break;	
+				}case "Management Meeting":{
+					sortedNo=3;		
+					break;	
+//				}case "IOL":{
+//					sortedNo=10;		
+//					break;
+				}case "IOI":{
+					sortedNo=4;		
+					break;
+				}case "Due Diligence":{
+					sortedNo=5;
+					break;	
+				}case "Closed":{
+					sortedNo=6;
+					break;	
+				}case "Parked":{
+					sortedNo=7;
+					break;	
+				}case "Declined/Dead":{
+					sortedNo=8;
+					break;	
+				}case "DS":{
+					sortedNo=9;
+					break;	
+				}
+			 	default:
+			 		System.err.println(checked.get(i)+":Stage order present/matched ");
+			 }
+				
+			sorted.add( map.get(sortedNo));
+			}
+			}else  {
+				for(int i=size-1;i>=0;i--) {
+				
+				int sortedNo=0;
+				switch (checked.get(i)) {
+			 	case "Deal Received": {
+			 		sortedNo=9;
+			 		
+				break;		
+				}case "NDA Signed":{
+					sortedNo=8;		
+					break;	
+				}case "Management Meeting":{
+					sortedNo=7;		
+					break;	
+//				}case "IOL":{
+//					sortedNo=10;		
+//					break;
+				}case "IOI":{
+					sortedNo=6;		
+					break;
+				}case "Due Diligence":{
+					sortedNo=5;
+					break;	
+				}case "Closed":{
+					sortedNo=4;
+					break;	
+				}case "Parked":{
+					sortedNo=3;
+					break;	
+				}case "Declined/Dead":{
+					sortedNo=2;
+					break;	
+				}case "DS":{
+					sortedNo=1;
+					break;	
+				}
+			 	default:
+			 		System.err.println(checked.get(i)+":Stage order  present/matched");
+			 }
+				
+			sorted.add( map.get(sortedNo));
+		}
+	
+		}
+		
+		for(int i=0;i<sorted.size();i++) {
+			String a = actual.get(i);
+			System.out.println("Comparing:>>" + actual.get(i).trim() + ">>With:>>"+ sorted.get(i).trim());
+			if (a.equalsIgnoreCase(sorted.get(i))) {
+				appLog.info("Order of column is  matched " + "Actual: " + a + "\tExpected: " + sorted.get(i));
+			} else {
+				appLog.info("Order of column din't match. " + "Actual: " + a + "\tExpected: " + sorted.get(i));
+				BaseLib.sa.assertTrue(false, "Contact name coloumn is not sorted in  order"
+						+ "Actual: " + a + "\tExpected: " + sorted.get(i));
+				flag = false;
+			}
+		}
+		return flag;
+	}
+	
+	public static boolean checkFundraisingStageSorting(WebDriver driver, boolean isAscending, List<WebElement> elements) {
+
+//		if date comparator if either of a or b is date
+
+		List<String> ts = new ArrayList<String>();
+		List<String> newList = new ArrayList<String>();
+		List<String> actual = new ArrayList<String>();
+		List<String> sorted = new ArrayList<>();
+		List<String> checked = new ArrayList<>();
+		List<WebElement> ele = elements;
+		boolean flag = true;
+		for (int i = 0; i < ele.size(); i++) {
+			scrollDownThroughWebelement(driver, ele.get(i), "");
+			ts.add(ele.get(i).getText());
+		}
+		
+		for (String element : ts) {
+			  
+            // If this element is not present in newList
+            // then add it
+            if (!newList.contains(element)) {
+  
+            	newList.add(element);
+            }
+        }
+		actual.addAll(newList);
+		
+		
+		Map<Integer, String> map =new HashMap<>();  
+		map.put(1, "Prospect");
+		map.put(2, "Sent PPM");
+		map.put(3, "Interested");
+		map.put(4, "Initial Meeting");
+		map.put(5, "Second Meeting");
+		map.put(6, "Follow up Diligence");
+		map.put(7, "Soft Circle");
+		map.put(8, "Verbal Commitment");
+		map.put(9, "Legal Closed");
+		map.put(10, "Decline");
+
+		
+		for(String st:actual) {
+			switch (st) {
+		 	case "Prospect": {
+		 		checked.add("Prospect");
+			break;		
+			}case "Sent PPM":{
+		 		checked.add("Sent PPM");
+		 		break;	
+			}case "Interested":{
+		 		checked.add("Interested");
+		 		break;	
+				
+			}case "Initial Meeting":{
+		 		checked.add("Initial Meeting");
+		 		break;
+			}case "Second Meeting":{
+		 		checked.add("Second Meeting");
+	 		break;	
+			}case "Follow up Diligence":{
+		 		checked.add("Follow up Diligence");
+		 		break;	
+			}case "Soft Circle":{
+		 		checked.add("Soft Circle");
+		 		break;	
+			}case "Verbal Commitment":{
+		 		checked.add("Verbal Commitment");
+		 		break;	
+			}case "Legal Closed":{
+		 		checked.add("Legal Closed");
+		 		break;	
+			}case "Decline":{
+		 		checked.add("Decline");
+		 		break;	
+			}
+		 	default:
+		 		checked.add("");
+		 		System.err.println(st+":Stage not present/matched");
+		 }
+		}
+		int size=checked.size();
+		if(isAscending) {
+			for(int i=0;i<size;i++) {
+				
+				int sortedNo=0;
+				switch (checked.get(i)) {
+			 	case "Prospect": {
+			 		sortedNo=1;
+			 		
+				break;		
+				}case "Sent PPM":{
+					sortedNo=2;		
+					break;	
+				}case "Interested":{
+					sortedNo=3;		
+					break;	
+				}case "Decline":{
+					sortedNo=10;		
+					break;
+				}case "Initial Meeting":{
+					sortedNo=4;		
+					break;
+				}case "Second Meeting":{
+					sortedNo=5;
+					break;	
+				}case "Follow up Diligence":{
+					sortedNo=6;
+					break;	
+				}case "Soft Circle":{
+					sortedNo=7;
+					break;	
+				}case "Verbal Commitment":{
+					sortedNo=8;
+					break;	
+				}case "Legal Closed":{
+					sortedNo=9;
+					break;	
+				}
+			 	default:
+			 		System.err.println(checked.get(i)+":Stage order present/matched ");
+			 }
+				
+			sorted.add( map.get(sortedNo));
+			}
+			}else  {
+				for(int i=size-1;i>=0;i--) {
+				
+				int sortedNo=0;
+				switch (checked.get(i)) {
+			 	case "Prospect": {
+			 		sortedNo=9;
+			 		
+				break;		
+				}case "Sent PPM":{
+					sortedNo=8;		
+					break;	
+				}case "Interested":{
+					sortedNo=7;		
+					break;	
+				}case "Decline":{
+					sortedNo=10;		
+					break;
+				}case "Initial Meeting":{
+					sortedNo=6;		
+					break;
+				}case "Second Meeting":{
+					sortedNo=5;
+					break;	
+				}case "Follow up Diligence":{
+					sortedNo=4;
+					break;	
+				}case "Soft Circle":{
+					sortedNo=3;
+					break;	
+				}case "Verbal Commitment":{
+					sortedNo=2;
+					break;	
+				}case "Legal Closed":{
+					sortedNo=1;
+					break;	
+				}
+			 	default:
+			 		System.err.println(checked.get(i)+":Stage order  present/matched");
+			 }
+				
+			sorted.add( map.get(sortedNo));
+		}
+	
+		}
+		
+		for(int i=0;i<sorted.size();i++) {
+			String a = actual.get(i);
+			System.out.println("Comparing:>>" + actual.get(i).trim() + ">>With:>>"+ sorted.get(i).trim());
+			if (a.equalsIgnoreCase(sorted.get(i))) {
+				appLog.info("Order of column is  matched " + "Actual: " + a + "\tExpected: " + sorted.get(i));
+			} else {
+				appLog.info("Order of column din't match. " + "Actual: " + a + "\tExpected: " + sorted.get(i));
+				BaseLib.sa.assertTrue(false, "Contact name coloumn is not sorted in  order"
+						+ "Actual: " + a + "\tExpected: " + sorted.get(i));
+				flag = false;
+			}
+		}
+		return flag;
+	}
 	public static boolean clearTextBox(WebElement element) {
 		try {
 			element.clear();
@@ -3593,6 +3964,18 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 
 		}
 		return parentWindowId;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param list1
+	 * @param list2
+	 * @description Will Return the Difference of ArrayList
+	 */
+	public static List<String> getDifference(List<String> list1, List<String> list2) {
+		List<String> diff = new ArrayList<String>(list1);
+		diff.removeAll(list2);
+		return diff;
 	}
 
 }

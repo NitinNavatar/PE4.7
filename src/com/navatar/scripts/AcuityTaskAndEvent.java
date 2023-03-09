@@ -466,7 +466,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 
@@ -828,7 +828,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 		
-		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 		 
@@ -1839,7 +1839,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 		}
@@ -1984,7 +1984,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 
@@ -6249,7 +6249,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 */
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 
@@ -6260,7 +6260,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
 		}	
 
-		if (bp.createActivityTimeline(projectName, true, activityType1, basicsection1, advanceSection1, null, null, false, null, null, null, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType1, basicsection1, advanceSection1, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
 
@@ -7102,7 +7102,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 */
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 		
-		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 
@@ -7113,7 +7113,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
 		}	
 
-		if (bp.createActivityTimeline(projectName, true, activityType1, basicsection1, advanceSection1, null, null, false, null, null, null, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType1, basicsection1, advanceSection1, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
 
@@ -7801,7 +7801,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 */
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 
@@ -7812,7 +7812,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
 		}	
 
-		if (bp.createActivityTimeline(projectName, true, activityType1, basicsection1, advanceSection1, null, null, false, null, null, null, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType1, basicsection1, advanceSection1, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
 
@@ -8507,7 +8507,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 										log(LogStatus.INFO, "clicked on followup button" , YesNo.No);
 										CommonLib.ThreadSleep(7000);
 										if (BP.updateActivityTimelineRecord(projectName, basicsection, advanceSection, null, null,
-												null)) {
+												null, false, null, null, null, null, null, null)) {
 											log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
 										
 										} else {
@@ -10073,7 +10073,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.INFO, "clicked on edit button of "+task1SubjectNameNavigation , YesNo.No);
 								CommonLib.ThreadSleep(10000);
 								if (BP.updateActivityTimelineRecord(projectName, basicsection, advanceSection, null, null,
-										null)) {
+										null, false, null, null, null, null, null, null)) {
 									log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
 									driver.close();
 									driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
@@ -10149,7 +10149,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								CommonLib.ThreadSleep(10000);
 
 								if (BP.updateActivityTimelineRecord(projectName, basicsection1, advanceSection1, null, null,
-										null)) {
+										null, false, null, null, null, null, null, null)) {
 									log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
 									driver.close();
 									driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
@@ -11973,7 +11973,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			log(LogStatus.INFO,"Able to click on Calendar/Event Link",YesNo.No);
 
 			refresh(driver);
-			if (bp.updateActivityTimelineRecord(projectName, basicsection, advanceSection, null, null,null)) {
+			if (bp.updateActivityTimelineRecord(projectName, basicsection, advanceSection, null, null,null, false, null, null, null, null, null, null)) {
 				log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 				sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 
