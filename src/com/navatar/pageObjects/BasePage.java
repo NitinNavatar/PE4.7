@@ -617,6 +617,14 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, fundRaisingSaveButton, "Visibility", timeOut, "fundRaisingSaveButton");
 
 	}
+	
+	@FindBy(xpath = "//div[@class='slds-modal__footer']//button[@title='Save' or @type='submit']")
+	private WebElement fundRaisingpupupSaveButton;
+
+	public WebElement fundRaisingpupupSaveButton(String projectName, int timeOut) {
+		return isDisplayed(driver, fundRaisingpupupSaveButton, "Visibility", timeOut, "fund Raising pup up Save Button");
+
+	}
 
 	@FindBy(xpath = "//button[text()='Compact Layout Assignment']")
 	private WebElement compactLayoutAssignmentLight;
@@ -7203,6 +7211,28 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
+	
+	public WebElement FundraisingAcuityTargetCloseDate2(String fundraisingsName, int timeOut) {
+
+		String xpath = "//a[text()='" + fundraisingsName +"']/ancestor::th[@data-label='Fundraising Name']/following-sibling::td[@data-label='Target Close Date']//div/*";
+		try {
+			return FindElement(driver, xpath, "Header: " + "dateReceived", action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Header: " + "dateReceived", action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+	
+	public WebElement FundraisingAcuityTargetCloseDateCoinvestement2(String CompanyName, int timeOut) {
+
+		String xpath = "//a[text()='" + CompanyName +"']/ancestor::th[@data-label='Company']/following-sibling::td[@data-label='Target Close Date']//div/*";
+		try {
+			return FindElement(driver, xpath, "Header: " + "dateReceived", action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Header: " + "dateReceived", action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
 
 	public WebElement dealAcuity2DateReceived(String dealName, String dateReceived, int timeOut) {
 
@@ -7352,7 +7382,44 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
+	
+	public WebElement fundraisingsAcuityFundraisingsCompany(String CompanyName, int timeOut) {
 
+		String xpath = "//a[text()='" + CompanyName + "']/ancestor::th[@data-label='Company']//a";
+		try {
+			return FindElement(driver, xpath, "Header: " + CompanyName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Header: " + CompanyName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+
+	public WebElement fundraisingsAcuityFundNameCoinvestment(String CompanyName, String fund, int timeOut) {
+
+		String xpath = "//a[text()='" + CompanyName
+				+ "']/ancestor::th[@data-label='Fundraising Name']/following-sibling::td[@data-label='Fund Name']//span//a";
+		try {
+			return FindElement(driver, xpath, "Header: " + fund, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Header: " + fund, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+
+	public WebElement fundraisingsAcuityStageNameCoinvestment(String CompanyName, String stage, int timeOut) {
+
+		String xpath = "//a[text()='" + CompanyName
+				+ "']/ancestor::th[@data-label='Company']/following-sibling::td[@data-label='Stage']//span//*[text()='"
+				+ stage + "']";
+		try {
+			return FindElement(driver, xpath, "Header: " + stage, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Header: " + stage, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+
+	
 	public WebElement activityTimelineButton(String btnName, int timeOut) {
 
 		String xPath = "//div[@class=\"menuList\" and text()='" + btnName + "']";
@@ -8575,6 +8642,13 @@ public abstract class BasePage extends BaseLib {
 				action.SCROLLANDBOOLEAN, timeOut), "Visibility", 10, "New Sourced Deal Icon");
 	}
 	
+	public WebElement NewCoinvestmentFundraisingIcon(int timeOut) {
+		WebElement ele;
+		String xpath = "//*[@title='New Fundraising']";
+		return ele = isDisplayed(driver, FindElement(driver, xpath, "New Coinvestment Fundraising Icon: " + "NewCoinvestmentFundraisingIcon",
+				action.SCROLLANDBOOLEAN, timeOut), "Visibility", 10, "New Coinvestment Fundraising Icon");
+	}
+	
 	public WebElement DateReciviedSortingIcon(int timeOut) {
 		WebElement ele;
 		String xpath = "//li[@class='sortby_css']//button[@name='progress']";
@@ -8599,6 +8673,14 @@ public abstract class BasePage extends BaseLib {
 //		}
 //
 //	}
+	
+	public WebElement CoinvestmentTab(int timeOut, action action) {
+		WebElement ele;
+		String xpath = "//input[@name='radioGroupss']/..//span[text()='Co-Investments']";
+		return ele = isDisplayed(driver,
+				FindElement(driver, xpath, "Coinvestment Tab: " + "CoinvestmentTab", action.SCROLLANDBOOLEAN, timeOut),
+				"Visibility", 10, "Coinvestmen tTab");
+	}
 	
 	public WebElement SourcedTab(int timeOut, action action) {
 		WebElement ele;

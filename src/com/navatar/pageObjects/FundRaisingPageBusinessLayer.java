@@ -460,6 +460,223 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage {
 	}
 
 	/**
+	 * @author Sourabh Kumar
+	 * @param environment
+	 * @param mode
+	 * @param fundraisingName
+	 * @param fundName
+	 * @param legalName
+	 * @param closing                TODO
+	 * @param stage                  TODO
+	 * @param investmentLikelyAmount TODO
+	 * @param statusNote             TODO
+	 * @param Year                   TODO
+	 * @param Month                  TODO
+	 * @param Date                   TODO
+	 * 
+	 * @return true if able to create FundRaising
+	 */
+	public boolean createFundRaisingFromIcon(String environment, String mode, String fundraisingName, String fundName,
+			String CompanyName, String closing, String stage, String investmentLikelyAmount, String statusNote,
+			String targetClosingYear, String targetClosingMonth, String targetClosingDate) {
+		Boolean flag = false;
+//		refresh(driver);
+//		ThreadSleep(5000);
+//		if (click(driver, getNewButton(environment, mode, 60), "New Button", action.SCROLLANDBOOLEAN)) {
+//			ThreadSleep(500);
+//			if (sendKeys(driver, getFundraisingName(environment, mode, 60), fundraisingName, "FundRaising Name",
+//					action.BOOLEAN)) {
+//				ThreadSleep(500);
+				if (sendKeys(driver, getPopUpfundraisingFundName(60), fundName, "Fund Name", action.BOOLEAN)) {
+					ThreadSleep(500);
+					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						ThreadSleep(2000);
+						if (click(driver,
+								FindElement(driver,
+										"//*[contains(@class,'slds-p-around')]/*[text()='" + fundName
+												+ "']",
+										"Fund Name List", action.THROWEXCEPTION, 30),
+								fundName + "   :   Fund Name", action.BOOLEAN)) {
+							appLog.info(fundName + "  is present in list.");
+						} else {
+							appLog.info(fundName + "  is not present in the list.");
+						}
+					}
+					try {
+						if (CompanyName != null) {
+					if (sendKeys(driver, getfundraisingCompanyName( 60), CompanyName, "Legal Name",
+							action.BOOLEAN)) {
+						ThreadSleep(500);
+						if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+							ThreadSleep(1000);
+							if (click(driver,
+									FindElement(driver,
+											"//*[contains(@class,'slds-p-around')]/*[text()='" + CompanyName
+													+ "']",
+											"Legal Name List", action.THROWEXCEPTION, 30),
+									CompanyName + "   :   Legal Name", action.SCROLLANDBOOLEAN)) {
+								appLog.info(CompanyName + "  is present in list.");
+							} else {
+								appLog.info(CompanyName + "  is not present in the list.");
+							}
+						}
+					}
+
+						}else {
+						log(LogStatus.ERROR, "Company Name not Provided", YesNo.No);
+						
+					}
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					
+						try {
+							if (!"".equals(closing) && closing != null) {
+								if (click(
+										driver, FindElement(driver, "//*[text()='Closing']/..//button/..",
+												"Clsoing input", action.THROWEXCEPTION, 30),
+										"Clsoing input", action.BOOLEAN)) {
+									appLog.info("Click on closing input");
+									ThreadSleep(2000);
+									click(driver, FindElement(driver,
+											"//*[text()='Closing']/..//following-sibling::div//span[text()='" + closing
+													+ "']/../..",
+											"Clsoing list", action.THROWEXCEPTION, 30), "Clsoing list", action.BOOLEAN);
+									appLog.info("Click on closing list item:" + closing);
+
+								} else {
+									appLog.info("Not able to Click on closing input");
+								}
+
+							}
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						try {
+							if (!"".equals(stage) && stage != null) {
+								if (click(driver, FindElement(driver, "//*[text()='Stage']/..//button", "Stage input",
+										action.THROWEXCEPTION, 30), "Stage input", action.BOOLEAN)) {
+									appLog.info("Click on stage input");
+									ThreadSleep(2000);
+									click(driver, FindElement(driver,
+											"//*[text()='" + stage + "']/../ancestor::lightning-base-combobox-item",
+											"stage list", action.THROWEXCEPTION, 30), "stage list", action.BOOLEAN);
+									appLog.info("Click on stage list item:" + stage);
+
+								} else {
+									appLog.info("Not able to Click on stage input");
+								}
+
+							}
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						try {
+							if (!"".equals(investmentLikelyAmount) && investmentLikelyAmount != null) {
+								WebElement ele = FindElement(driver,
+										"//input[@name='navpeII__Investment_Likely_Amount_USD_mn__c']",
+										"investment likely amount input box", action.BOOLEAN, 20);
+								if (sendKeys(driver, ele, investmentLikelyAmount, "investment likely amount input box",
+										action.BOOLEAN)) {
+									appLog.info("Enter investment likley amount:" + investmentLikelyAmount);
+
+								} else {
+									appLog.info("Not able to Enter investment likley amount:" + investmentLikelyAmount);
+								}
+
+							}
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						try {
+							if (!"".equals(statusNote) && statusNote != null) {
+								WebElement ele = FindElement(driver, "//*[text()='Status Notes']/..//textarea",
+										"status note", action.BOOLEAN, 20);
+								if (sendKeys(driver, ele, statusNote, "status note", action.BOOLEAN)) {
+									appLog.info("Enter status note:" + statusNote);
+
+								} else {
+									appLog.info("not able to Enter status note:" + statusNote);
+								}
+
+							}
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						try {
+							if ((!"".equals(targetClosingYear) && targetClosingYear != null)
+									&& (!"".equals(targetClosingMonth) && targetClosingMonth != null
+											&& (!"".equals(targetClosingDate) && targetClosingDate != null))) {
+								WebElement ele = FindElement(driver, "//label[text()='Target Close Date']/..//input",
+										"Closing Date", action.BOOLEAN, 20);
+								CommonLib.scrollDownThroughWebelementInCenter(driver, ele, "Calender");
+								CommonLib.click(driver, ele, "Calender", action.BOOLEAN);
+
+								if (CommonLib.datePickerHandle(driver, "Calender", targetClosingYear,
+										targetClosingMonth, targetClosingDate)) {
+									appLog.info("Date has been selected from Calender");
+									CommonLib.ThreadSleep(3000);
+								} else {
+									appLog.info("Date has been selected from Calender");
+								}
+
+							}
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						if (click(driver, fundRaisingpupupSaveButton("", 60), "Save Button", action.SCROLLANDBOOLEAN)) {
+							ThreadSleep(500);
+
+							ThreadSleep(2000);
+//							String fundraising = null;
+//							WebElement ele;
+//							if (Mode.Lightning.toString().equalsIgnoreCase(mode)) {
+//								String xpath = "//*[contains(text(),'Fundraising')]/..//*[text()='" + fundraisingName
+//										+ "']";
+//								ele = FindElement(driver, xpath, "Header : " + fundraisingName, action.BOOLEAN, 30);
+//
+//							} else {
+//								ele = getFundraisingNameInViewMode(environment, mode, 60);
+//							}
+//
+//							if (ele != null) {
+//								appLog.info("Fundraising is created successfully.:" + fundraisingName);
+//								return true;
+//							} else {
+//								appLog.info("FundRaising is not created successfully.:" + fundraisingName);
+//							}
+							
+						} else {
+							appLog.error("Not able to click on save button");
+						}
+					} else {
+						appLog.error("Not able to enter legal Name");
+					}
+//				} else {
+//					appLog.error("Not able to enter fund name");
+//				}
+//			} else {
+//				appLog.error("Not able to enter value in fundraiisng text box");
+//			}
+//		} else {
+//			appLog.error("Not able to click on new button so we cannot create fundraising");
+//		}
+		return flag;
+	}
+
+	
+	/**
 	 * @author Ankur Alam
 	 * @param environment
 	 * @param mode
@@ -933,6 +1150,79 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage {
 			return flag;
 }
 
+	/**
+	 * @author sahil bansal
+	 * @param projectName
+	 * @param companyname
+	 * @param timeOut
+	 * @return true if successfully change stage
+	 */
+	public boolean UpdateFundraisingDetail(String environment, String mode, String fundName,
+			String CompanyName, int timeOut) {
+		boolean flag = true;
+		
+		ThreadSleep(2000);
+		
+		if (sendKeys(driver, getFundName(environment, mode, 60), fundName, "Fund Name", action.BOOLEAN)) {
+			ThreadSleep(500);
+			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				ThreadSleep(2000);
+				if (click(driver,
+						FindElement(driver,
+								"//*[contains(@class,'slds-listbox__option-text')]/*[@title='" + fundName
+										+ "']",
+								"Fund Name List", action.THROWEXCEPTION, 30),
+						fundName + "   :   Fund Name", action.BOOLEAN)) {
+					appLog.info(fundName + "  is present in list.");
+				} else {
+					appLog.info(fundName + "  is not present in the list.");
+				}
+			}
+		
+				try {
+					if (CompanyName != null) {
+				if (sendKeys(driver, getfundraisingCompanyName( 60), CompanyName, "Legal Name",
+						action.BOOLEAN)) {
+					ThreadSleep(500);
+					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						ThreadSleep(1000);
+						if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+							ThreadSleep(1000);
+							if (click(driver,
+									FindElement(driver,
+											"//*[contains(@class,'slds-listbox__option-text')]/*[@title='" + CompanyName
+													+ "']",
+											"Legal Name List", action.THROWEXCEPTION, 30),
+									CompanyName + "   :   Legal Name", action.SCROLLANDBOOLEAN)) {
+								appLog.info(CompanyName + "  is present in list.");
+							} else {
+								appLog.info(CompanyName + "  is not present in the list.");
+							}
+						}
+					
+				
+					} 
+				}
+					}
+				}catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				if (click(driver, getCustomTabSaveBtn("", 60), "Save Button", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(500);
+				} else {
+					appLog.error("Not able to click on save button");
+				}
+			} else {
+				appLog.error("Not able to enter legal Name");
+			}
+				
+		
+			return flag;
+				
+		}
+	
+		
 	public boolean UpdateFundRaisingName(String projectName, String fundraisingName, int timeOut) {
 		boolean flag = true;
 		WebElement ele;
