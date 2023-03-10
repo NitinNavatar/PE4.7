@@ -19933,7 +19933,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		WebElement ele;
 
 		ArrayList<String> result = new ArrayList<String>();
-		String parentId = switchOnWindow(driver);
+		String parentId = switchToWindowOpenNextToParentWindow(driver);
 		if (parentId != null) {
 			if (correspondenceHeader != null && correspondenceHeader.length != 0) {
 				for (int i = 0; i < correspondenceHeader.length; i++) {
