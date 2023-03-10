@@ -8682,6 +8682,14 @@ public abstract class BasePage extends BaseLib {
 				"Visibility", 10, "Coinvestmen tTab");
 	}
 	
+	public WebElement ExternalTab(int timeOut, action action) {
+		WebElement ele;
+		String xpath = "//input[@name='radioGroupss']/..//span[text()='External']";
+		return ele = isDisplayed(driver,
+				FindElement(driver, xpath, "External Tab: " + "ExternalTab", action.SCROLLANDBOOLEAN, timeOut),
+				"Visibility", 10, "External Tab");
+	}
+	
 	public WebElement SourcedTab(int timeOut, action action) {
 		WebElement ele;
 		String xpath = "//input[@name='radioGroups']/..//span[text()='Sourced']";

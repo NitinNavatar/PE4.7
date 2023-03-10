@@ -476,6 +476,57 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage {
 	 * 
 	 * @return true if able to create FundRaising
 	 */
+	public boolean createFundRaisingContactFromIcon(String environment, String mode, String ContactName, String Role) {
+		Boolean flag = false;
+		if (click(driver, getFundraisingContactIcon( 60), "Fundraising Contact Icon", action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(500);
+			if (sendKeys(driver, getPopUpfundraisingContact(60), ContactName, "Contact Name", action.BOOLEAN)) {
+				ThreadSleep(500);
+				if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+					ThreadSleep(2000);
+					if (click(driver,
+							FindElement(driver,
+									"//*[contains(@class,'slds-p-around')]/*[text()='" + ContactName
+											+ "']",
+									"Fund Name List", action.THROWEXCEPTION, 30),
+							ContactName + "   :   Fund Name", action.BOOLEAN)) {
+						appLog.info(ContactName + "  is present in list.");
+					} else {
+						appLog.info(ContactName + "  is not present in the list.");
+					}
+				}
+	}
+			try {
+				if (!"".equals(Role) && Role != null) {
+					if (click(driver, FindElement(driver, "//*[text()='Role']/..//button", "Role input",
+							action.THROWEXCEPTION, 30), "Role input", action.BOOLEAN)) {
+						appLog.info("Click on stage input");
+						ThreadSleep(2000);
+						click(driver, FindElement(driver,
+								"//*[text()='" + Role + "']/../ancestor::lightning-base-combobox-item",
+								"Role list", action.THROWEXCEPTION, 30), "Role list", action.BOOLEAN);
+						appLog.info("Click on stage list item:" + Role);
+
+					} else {
+						appLog.info("Not able to Click on Role input");
+					}
+
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (click(driver, getNewFinancingPopupSaveIcon(60), "Save Button", action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(500);
+			} else {
+				appLog.error("Not able to click on save button");
+			}
+		} else {
+			appLog.error("Not able to Click on fundraising contact icon");
+		}
+		return flag;
+	}		
+				
 	public boolean createFundRaisingFromIcon(String environment, String mode, String fundraisingName, String fundName,
 			String CompanyName, String closing, String stage, String investmentLikelyAmount, String statusNote,
 			String targetClosingYear, String targetClosingMonth, String targetClosingDate) {

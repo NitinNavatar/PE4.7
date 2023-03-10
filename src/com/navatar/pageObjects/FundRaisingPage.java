@@ -395,6 +395,28 @@ public class FundRaisingPage extends BasePage {
 		return isDisplayed(driver, PopUpfundraisingFundName, "Visibility", timeOut, "fundraising Company Name");
 	}
 	
+	@FindBy(xpath = "//*[text()='Contact']/..//..//..//..//input[@type='Search' or contains(@placeholder,'Search')]")
+	private WebElement PopUpfundraisingContact;
+
+	public WebElement getPopUpfundraisingContact(int timeOut) {
+		return isDisplayed(driver, PopUpfundraisingContact, "Visibility", timeOut, "PopUp fundraising Contact");
+	}
+	
+	@FindBy(xpath = "//*[@data-key='new']")
+	private WebElement FundraisingContactIcon;
+
+	public WebElement getFundraisingContactIcon(int timeOut) {
+		return isDisplayed(driver, FundraisingContactIcon, "Visibility", timeOut, "Fundraising Contact Icon");
+	}
+	
+	@FindBy(xpath = "//footer//span[text()='Save']")
+	private WebElement NewFinancingPopupSaveIcon;
+	
+	public WebElement getNewFinancingPopupSaveIcon(int timeOut) {
+		return isDisplayed(driver, NewFinancingPopupSaveIcon, "Visibility", timeOut,
+				"New Financing Popup Save Icon");
+	}
+	
 	@FindBy(xpath = "//*[text()='Company']/..//..//..//..//input[@type='Search' or contains(@placeholder,'Search')]")
 	private WebElement fundraisingCompanyName;
 
@@ -428,7 +450,7 @@ public class FundRaisingPage extends BasePage {
 	public WebElement getFundNameCrossIcon(String projectName, int timeOut) {
 		return isDisplayed(driver, FundNameCrossIcon, "Visibility", timeOut, "Fund Name Cross Icon");
 	}
-	@FindBy(xpath = "//label[text()='Company']/following-sibling::div//button")
+	@FindBy(xpath = "//label[text()='Fund Name']/following-sibling::div//button")
 	private WebElement CompanyNameCrossIcon;
 
 	public WebElement getCompanyNameCrossIcon(String projectName, int timeOut) {

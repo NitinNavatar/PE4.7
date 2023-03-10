@@ -18390,8 +18390,8 @@ public void ADETc142_VerifyDealCountRedirectionForContactatContactGridofPEFirm(S
 				log(LogStatus.SKIP, "could not create DT" + dealName, YesNo.Yes);
 			}
 		} else {
-			log(LogStatus.ERROR, "Not able to click on " + ADEIns2 + " tab", YesNo.Yes);
-			sa.assertTrue(false, "Not able to click on " + ADEIns2 + " tab");
+			log(LogStatus.ERROR, "Not able to click on " + ADEIns7 + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + ADEIns7 + " tab");
 		}
 
 	} else {
@@ -18402,7 +18402,7 @@ public void ADETc142_VerifyDealCountRedirectionForContactatContactGridofPEFirm(S
 			if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 				log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 
-				if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns2, 30)) {
+				if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns7, 30)) {
 
 					actualDealCount = getText(driver, BP.contactDealCount(contactName, 30), "deal",
 							action.SCROLLANDBOOLEAN);
