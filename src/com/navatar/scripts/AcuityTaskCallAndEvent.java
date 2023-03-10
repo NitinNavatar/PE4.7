@@ -4,11 +4,13 @@ import static com.navatar.generic.CommonLib.FindElement;
 import static com.navatar.generic.CommonLib.ThreadSleep;
 import static com.navatar.generic.CommonLib.click;
 import static com.navatar.generic.CommonLib.exit;
+import static com.navatar.generic.CommonLib.getURL;
 import static com.navatar.generic.CommonLib.log;
 import static com.navatar.generic.CommonLib.refresh;
 import static com.navatar.generic.CommonLib.removeNumbersFromString;
 import static com.navatar.generic.CommonLib.switchOnWindow;
 import static com.navatar.generic.CommonLib.switchToDefaultContent;
+import static com.navatar.generic.CommonLib.switchToWindowOpenNextToParentWindow;
 import static com.navatar.generic.CommonVariables.*;
 import static com.navatar.generic.SmokeCommonVariables.adminPassword;
 import static com.navatar.generic.SmokeCommonVariables.superAdminUserName;
@@ -41,7 +43,8 @@ import com.relevantcodes.extentreports.LogStatus;
 
 public class AcuityTaskCallAndEvent extends BaseLib {
 
-	public boolean isInstitutionRecord = false;
+	public boolean isInstitutionRecord=false;
+	
 
 	@Parameters({ "projectName" })
 	@Test
@@ -50,24 +53,16 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
-		for (int k = 0; k < 11; k++) {
+		for(int k=0; k<11; k++)
+		{
 			lp = new LoginPageBusinessLayer(driver);
 			home = new HomePageBusineesLayer(driver);
 			setup = new SetupPageBusinessLayer(driver);
-			String[] firstName = { crmUser6FirstName, crmUser7FirstName, crmUser8FirstName, crmUser9FirstName,
-					crmUser10FirstName, crmUser11FirstName, crmUser12FirstName, crmUser13FirstName, crmUser14FirstName,
-					crmUser15FirstName, crmUser16FirstName };
-			String[] lastName = { crmUser6LastName, crmUser7LastName, crmUser8LastName, crmUser9LastName,
-					crmUser10LastName, crmUser11LastName, crmUser12LastName, crmUser13LastName, crmUser14LastName,
-					crmUser15LastName, crmUser16LastName };
-			String[] userLicence = { crmUser6Lience, crmUser7Lience, crmUser8Lience, crmUser9Lience, crmUser10Lience,
-					crmUser11Lience, crmUser12Lience, crmUser13Lience, crmUser14Lience, crmUser15Lience,
-					crmUser16Lience };
-			String[] userProfile = { crmUser6Profile, crmUser7Profile, crmUser8Profile, crmUser9Profile,
-					crmUser10Profile, crmUser11Profile, crmUser12Profile, crmUser13Profile, crmUser14Profile,
-					crmUser15Profile, crmUser16Profile };
-			String[] userTitle = { crmUser6Title, crmUser7Title, crmUser8Title, crmUser9Title, crmUser10Title,
-					crmUser11Title, crmUser12Title, crmUser13Title, crmUser14Title, crmUser15Title, crmUser16Title };
+			String[] firstName= {crmUser6FirstName,crmUser7FirstName,crmUser8FirstName,crmUser9FirstName,crmUser10FirstName,crmUser11FirstName,crmUser12FirstName,crmUser13FirstName,crmUser14FirstName,crmUser15FirstName,crmUser16FirstName};
+			String[] lastName= {crmUser6LastName,crmUser7LastName,crmUser8LastName,crmUser9LastName,crmUser10LastName,crmUser11LastName,crmUser12LastName,crmUser13LastName,crmUser14LastName,crmUser15LastName,crmUser16LastName};
+			String[] userLicence= {crmUser6Lience,crmUser7Lience,crmUser8Lience,crmUser9Lience,crmUser10Lience,crmUser11Lience,crmUser12Lience,crmUser13Lience,crmUser14Lience,crmUser15Lience,crmUser16Lience};
+			String[] userProfile= {crmUser6Profile,crmUser7Profile,crmUser8Profile,crmUser9Profile,crmUser10Profile,crmUser11Profile,crmUser12Profile,crmUser13Profile,crmUser14Profile,crmUser15Profile,crmUser16Profile};
+			String[] userTitle= {crmUser6Title,crmUser7Title,crmUser8Title,crmUser9Title,crmUser10Title,crmUser11Title,crmUser12Title,crmUser13Title,crmUser14Title,crmUser15Title,crmUser16Title};
 			String parentWindow = null;
 			String[] splitedUserLastName = removeNumbersFromString(lastName[k]);
 			String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
@@ -89,14 +84,14 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									YesNo.Yes);
 							exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
 						}
-						if (setup.createPEUser(firstName[k], UserLastName, emailId, userLicence[k], userProfile[k],
-								userTitle[k])) {
+						if (setup.createPEUser(firstName[k], UserLastName, emailId, userLicence[k], userProfile[k], userTitle[k])) {
 							log(LogStatus.INFO,
-									"CRM User is created Successfully: " + firstName[k] + " " + UserLastName, YesNo.No);
-							ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name,
-									"User" + (k + 6), excelLabel.User_Email);
+									"CRM User is created Successfully: " + firstName[k] + " " + UserLastName,
+									YesNo.No);
+							ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User"+(k+6),
+									excelLabel.User_Email);
 							ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name,
-									"User" + (k + 6), excelLabel.User_Last_Name);
+									"User"+(k+6), excelLabel.User_Last_Name);
 							flag = true;
 							break;
 
@@ -171,28 +166,27 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord1;
+		String recordName=ATCERecord1;		
+			
+		String sectionHeader=ATCE_Section1;
+		String tabsOnTagged=ATCE_Tabs1;
+		String defaultTabOntagged="Firms";
+		String message=bp.acuityDefaultMessage;
 
-		String sectionHeader = ATCE_Section1;
-		String tabsOnTagged = ATCE_Tabs1;
-		String defaultTabOntagged = "Firms";
-		String message = bp.acuityDefaultMessage;
+		String contactHeader=ATCE_ContactHeader1;
 
-		String contactHeader = ATCE_ContactHeader1;
-
-		String[] arrSectionHeader = sectionHeader.split("<break>");
+		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
 
-		String[] infoMessage = { bp.taggedInfoMessage, bp.interactionsInfoMessage, bp.contactInfoMessage,
-				bp.dealInfoMessage };
-
-		String[] arrTabName = tabsOnTagged.split("<break>");
+		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage,bp.contactInfoMessage,bp.dealInfoMessage};		
+		
+		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
 
-		String[] arrContactHeader = contactHeader.split("<break>");
+		String[] arrContactHeader=contactHeader.split("<break>");
 		List<String> contactHeaders = new ArrayList<String>(Arrays.asList(arrContactHeader));
-
-		List<String> blankList = new ArrayList<String>();
+		
+		List<String> blankList=new ArrayList<String>();
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -200,139 +194,149 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+				if(bp.clicktabOnPage(TabName.Acuity.toString()))
+				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
-					ArrayList<String> result3 = bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,
-							sectionHeaderName);
-					if (result3.isEmpty()) {
+					ArrayList<String> result3=bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,sectionHeaderName);
+					if(result3.isEmpty())
+					{
 						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. " + result3,
-								YesNo.No);
-						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. " + result3);
+					}					
+					else
+					{
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result3, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result3);
 					}
-					ArrayList<String> result4 = bp.verifyTabsOnTaggedSection(tabNameOnTagged, defaultTabOntagged);
-					if (result4.isEmpty()) {
-						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4,
-								YesNo.No);
-						sa.assertTrue(false,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4);
+					ArrayList<String> result4=bp.verifyTabsOnTaggedSection(tabNameOnTagged,defaultTabOntagged);
+					if(result4.isEmpty())
+					{
+						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Default selected Tab and Tabs are not verified on Tagged section. "+result4, YesNo.No);
+						sa.assertTrue(false, "Default selected Tab and Tabs are not verified on Tagged section. "+result4);
 					}
 					refresh(driver);
 
-					ArrayList<String> result = bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
-					if (result.isEmpty()) {
-						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. " + result,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The Column name, Time referenced and message are not verified. " + result);
+					ArrayList<String> result= bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. "+result, YesNo.No);
+						sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
 					}
 
-					ArrayList<String> result1 = bp
-							.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message,
-									contactHeaders, message, blankList, null, blankList, null, blankList, null);
+					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, contactHeaders, message, blankList, null,blankList,null,blankList,null);
 
-					if (result1.isEmpty()) {
-						log(LogStatus.INFO,
-								"The header name and message have been verified on Interaction and Contacts ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The header name and message are not verified on Interaction and Contacts. " + result1,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The header name and message are not verified on Interaction and Contacts " + result1);
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The header name and message have been verified on Interaction and Contacts ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The header name and message are not verified on Interaction and Contacts. "+result1, YesNo.No);
+						sa.assertTrue(false, "The header name and message are not verified on Interaction and Contacts "+result1);
 					}
 
-					ArrayList<String> result2 = bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList,
-							contactHeaders, blankList, blankList);
-					if (result2.isEmpty()) {
+					ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, contactHeaders, blankList,blankList);
+					if(result2.isEmpty())
+					{
 						log(LogStatus.INFO, "The Tooltip on Contact header have been verified", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The Tooltip on Contact header are not verified. " + result2, YesNo.No);
-						sa.assertTrue(false, "The Tooltip on Contact header are not verified. " + result2);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Tooltip on Contact header are not verified. "+result2, YesNo.No);
+						sa.assertTrue(false, "The Tooltip on Contact header are not verified. "+result2);
+					}
+					
+					if(bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, true, true, false, false))
+					{
+						log(LogStatus.INFO, "The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified", YesNo.No);
+						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
 					}
 
-					if (bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, true, true, false, false)) {
-						log(LogStatus.INFO,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified",
-								YesNo.No);
-						sa.assertTrue(false,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
-					}
-
-					ArrayList<String> result9 = bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
-					if (result9.isEmpty()) {
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
 						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. " + result9,
-								YesNo.No);
-						sa.assertTrue(false, "The info message are not verified of section on Acuity. " + result9);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
 					}
 
 					if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
 						log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
-					} else {
+					}
+					else
+					{
 						log(LogStatus.ERROR, "view All Button is visible on Interaction section", YesNo.No);
 						sa.assertTrue(false, "view All Button is visible on Interaction section");
 					}
 
-				} else {
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Acuity Tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open " + recordName + " reocrd", YesNo.No);
-				sa.assertTrue(false, "Not able to open " + recordName + " reocrd");
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab : " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab : " + tabObj1);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+			}
 		}
-		lp.CRMlogout();
-		sa.assertAll();
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
-
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc003_VerifyUIOfAcuityTabOnInstitutionRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord3;
+		String recordName=ATCERecord3;		
+			
+		String sectionHeader=ATCE_Section2;
+		String tabsOnTagged=ATCE_Tabs2;
+		String defaultTabOntagged="Firms";
+		String message=bp.acuityDefaultMessage;
 
-		String sectionHeader = ATCE_Section2;
-		String tabsOnTagged = ATCE_Tabs2;
-		String defaultTabOntagged = "Firms";
-		String message = bp.acuityDefaultMessage;
+		String contactHeader=ATCE_ContactHeader1;
 
-		String contactHeader = ATCE_ContactHeader1;
-
-		String[] arrSectionHeader = sectionHeader.split("<break>");
+		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+		
+		String[] infoMessage=  {bp.taggedInfoMessageInstitution,bp.interactionsInfoMessage,bp.contactInfoMessage};		
+		
 
-		String[] infoMessage = { bp.taggedInfoMessageInstitution, bp.interactionsInfoMessage, bp.contactInfoMessage };
-
-		String[] arrTabName = tabsOnTagged.split("<break>");
+		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
 
-		String[] arrContactHeader = contactHeader.split("<break>");
+		String[] arrContactHeader=contactHeader.split("<break>");
 		List<String> contactHeaders = new ArrayList<String>(Arrays.asList(arrContactHeader));
 
-		List<String> blankList = new ArrayList<String>();
+		
+		List<String> blankList=new ArrayList<String>();
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -340,140 +344,148 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+				if(bp.clicktabOnPage(TabName.Acuity.toString()))
+				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
-					ArrayList<String> result3 = bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,
-							sectionHeaderName);
-					if (result3.isEmpty()) {
+					ArrayList<String> result3=bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,sectionHeaderName);
+					if(result3.isEmpty())
+					{
 						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. " + result3,
-								YesNo.No);
-						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. " + result3);
+					}					
+					else
+					{
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result3, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result3);
 					}
-					ArrayList<String> result4 = bp.verifyTabsOnTaggedSection(tabNameOnTagged, defaultTabOntagged);
-					if (result4.isEmpty()) {
-						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4,
-								YesNo.No);
-						sa.assertTrue(false,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4);
+					ArrayList<String> result4=bp.verifyTabsOnTaggedSection(tabNameOnTagged,defaultTabOntagged);
+					if(result4.isEmpty())
+					{
+						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Default selected Tab and Tabs are not verified on Tagged section. "+result4, YesNo.No);
+						sa.assertTrue(false, "Default selected Tab and Tabs are not verified on Tagged section. "+result4);
 					}
 					refresh(driver);
 
-					ArrayList<String> result = bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
-					if (result.isEmpty()) {
-						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. " + result,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The Column name, Time referenced and message are not verified. " + result);
+					ArrayList<String> result= bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. "+result, YesNo.No);
+						sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
 					}
 
-					ArrayList<String> result1 = bp
-							.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message,
-									contactHeaders, message, blankList, null, blankList, null, blankList, null);
+					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, contactHeaders, message, blankList, null,blankList,null,blankList,null);
 
-					if (result1.isEmpty()) {
-						log(LogStatus.INFO,
-								"The header name and message have been verified on Interaction and Contacts ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The header name and message are not verified on Interaction and Contacts. " + result1,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The header name and message are not verified on Interaction and Contacts " + result1);
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The header name and message have been verified on Interaction and Contacts ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The header name and message are not verified on Interaction and Contacts. "+result1, YesNo.No);
+						sa.assertTrue(false, "The header name and message are not verified on Interaction and Contacts "+result1);
 					}
 
-					ArrayList<String> result2 = bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList,
-							contactHeaders, blankList, blankList);
-					if (result2.isEmpty()) {
+					ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, contactHeaders, blankList,blankList);
+					if(result2.isEmpty())
+					{
 						log(LogStatus.INFO, "The Tooltip on Contact header have been verified", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The Tooltip on Contact header are not verified. " + result2, YesNo.No);
-						sa.assertTrue(false, "The Tooltip on Contact header are not verified. " + result2);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Tooltip on Contact header are not verified. "+result2, YesNo.No);
+						sa.assertTrue(false, "The Tooltip on Contact header are not verified. "+result2);
+					}
+					
+					if(bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, true, true, false, false))
+					{
+						log(LogStatus.INFO, "The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified", YesNo.No);
+						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
 					}
 
-					if (bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, true, true, false, false)) {
-						log(LogStatus.INFO,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified",
-								YesNo.No);
-						sa.assertTrue(false,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
-					}
-
-					ArrayList<String> result9 = bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
-					if (result9.isEmpty()) {
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
 						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. " + result9,
-								YesNo.No);
-						sa.assertTrue(false, "The info message are not verified of section on Acuity. " + result9);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
 					}
 
 					if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
 						log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
-					} else {
+					}
+					else
+					{
 						log(LogStatus.ERROR, "view All Button is visible on Interaction section", YesNo.No);
 						sa.assertTrue(false, "view All Button is visible on Interaction section");
 					}
 
-				} else {
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Acuity Tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open " + recordName + " reocrd", YesNo.No);
-				sa.assertTrue(false, "Not able to open " + recordName + " reocrd");
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab : " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab : " + tabObj1);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+			}
 		}
-		lp.CRMlogout();
-		sa.assertAll();
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
-
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc004_VerifyUIOfAcuityTabOnAdvisorRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord5;
+		String recordName=ATCERecord5;		
+			
+		String sectionHeader=ATCE_Section1;
+		String tabsOnTagged=ATCE_Tabs1;
+		String defaultTabOntagged="Firms";
+		String message=bp.acuityDefaultMessage;
 
-		String sectionHeader = ATCE_Section1;
-		String tabsOnTagged = ATCE_Tabs1;
-		String defaultTabOntagged = "Firms";
-		String message = bp.acuityDefaultMessage;
+		String contactHeader=ATCE_ContactHeader1;
 
-		String contactHeader = ATCE_ContactHeader1;
-
-		String[] arrSectionHeader = sectionHeader.split("<break>");
+		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+		
+		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage,bp.contactInfoMessage,bp.dealInfoMessageAdvisor};		
+		
 
-		String[] infoMessage = { bp.taggedInfoMessage, bp.interactionsInfoMessage, bp.contactInfoMessage,
-				bp.dealInfoMessageAdvisor };
-
-		String[] arrTabName = tabsOnTagged.split("<break>");
+		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
 
-		String[] arrContactHeader = contactHeader.split("<break>");
+		String[] arrContactHeader=contactHeader.split("<break>");
 		List<String> contactHeaders = new ArrayList<String>(Arrays.asList(arrContactHeader));
 
-		List<String> blankList = new ArrayList<String>();
+		List<String> blankList=new ArrayList<String>();
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -481,110 +493,118 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+				if(bp.clicktabOnPage(TabName.Acuity.toString()))
+				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
-					ArrayList<String> result3 = bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,
-							sectionHeaderName);
-					if (result3.isEmpty()) {
+					ArrayList<String> result3=bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,sectionHeaderName);
+					if(result3.isEmpty())
+					{
 						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. " + result3,
-								YesNo.No);
-						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. " + result3);
+					}					
+					else
+					{
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result3, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result3);
 					}
-					ArrayList<String> result4 = bp.verifyTabsOnTaggedSection(tabNameOnTagged, defaultTabOntagged);
-					if (result4.isEmpty()) {
-						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4,
-								YesNo.No);
-						sa.assertTrue(false,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4);
+					ArrayList<String> result4=bp.verifyTabsOnTaggedSection(tabNameOnTagged,defaultTabOntagged);
+					if(result4.isEmpty())
+					{
+						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Default selected Tab and Tabs are not verified on Tagged section. "+result4, YesNo.No);
+						sa.assertTrue(false, "Default selected Tab and Tabs are not verified on Tagged section. "+result4);
 					}
 					refresh(driver);
 
-					ArrayList<String> result = bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
-					if (result.isEmpty()) {
-						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. " + result,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The Column name, Time referenced and message are not verified. " + result);
+					ArrayList<String> result= bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. "+result, YesNo.No);
+						sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
 					}
 
-					ArrayList<String> result1 = bp
-							.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message,
-									contactHeaders, message, blankList, null, blankList, null, blankList, null);
+					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, contactHeaders, message, blankList, null,blankList,null,blankList,null);
 
-					if (result1.isEmpty()) {
-						log(LogStatus.INFO,
-								"The header name and message have been verified on Interaction and Contacts ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The header name and message are not verified on Interaction and Contacts. " + result1,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The header name and message are not verified on Interaction and Contacts " + result1);
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The header name and message have been verified on Interaction and Contacts ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The header name and message are not verified on Interaction and Contacts. "+result1, YesNo.No);
+						sa.assertTrue(false, "The header name and message are not verified on Interaction and Contacts "+result1);
 					}
 
-					ArrayList<String> result2 = bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList,
-							contactHeaders, blankList, blankList);
-					if (result2.isEmpty()) {
+					ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, contactHeaders, blankList,blankList);
+					if(result2.isEmpty())
+					{
 						log(LogStatus.INFO, "The Tooltip on Contact header have been verified", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The Tooltip on Contact header are not verified. " + result2, YesNo.No);
-						sa.assertTrue(false, "The Tooltip on Contact header are not verified. " + result2);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Tooltip on Contact header are not verified. "+result2, YesNo.No);
+						sa.assertTrue(false, "The Tooltip on Contact header are not verified. "+result2);
+					}
+					
+					if(bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, true, true, false, false))
+					{
+						log(LogStatus.INFO, "The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified", YesNo.No);
+						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
 					}
 
-					if (bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, true, true, false, false)) {
-						log(LogStatus.INFO,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified",
-								YesNo.No);
-						sa.assertTrue(false,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
-					}
-
-					ArrayList<String> result9 = bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
-					if (result9.isEmpty()) {
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
 						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. " + result9,
-								YesNo.No);
-						sa.assertTrue(false, "The info message are not verified of section on Acuity. " + result9);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
 					}
 
 					if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
 						log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
-					} else {
+					}
+					else
+					{
 						log(LogStatus.ERROR, "view All Button is visible on Interaction section", YesNo.No);
 						sa.assertTrue(false, "view All Button is visible on Interaction section");
 					}
 
-				} else {
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Acuity Tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open " + recordName + " reocrd", YesNo.No);
-				sa.assertTrue(false, "Not able to open " + recordName + " reocrd");
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab : " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab : " + tabObj1);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+			}
 		}
-		lp.CRMlogout();
-		sa.assertAll();
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
 
 	@Parameters({ "projectName" })
@@ -593,28 +613,27 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord7;
+		String recordName=ATCERecord7;		
+			
+		String sectionHeader=ATCE_Section1;
+		String tabsOnTagged=ATCE_Tabs1;
+		String defaultTabOntagged="Firms";
+		String message=bp.acuityDefaultMessage;
 
-		String sectionHeader = ATCE_Section1;
-		String tabsOnTagged = ATCE_Tabs1;
-		String defaultTabOntagged = "Firms";
-		String message = bp.acuityDefaultMessage;
+		String contactHeader=ATCE_ContactHeader1;
 
-		String contactHeader = ATCE_ContactHeader1;
-
-		String[] arrSectionHeader = sectionHeader.split("<break>");
+		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+		
+		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage,bp.contactInfoMessage,bp.dealInfoMessage};				
 
-		String[] infoMessage = { bp.taggedInfoMessage, bp.interactionsInfoMessage, bp.contactInfoMessage,
-				bp.dealInfoMessage };
-
-		String[] arrTabName = tabsOnTagged.split("<break>");
+		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
 
-		String[] arrContactHeader = contactHeader.split("<break>");
+		String[] arrContactHeader=contactHeader.split("<break>");
 		List<String> contactHeaders = new ArrayList<String>(Arrays.asList(arrContactHeader));
 
-		List<String> blankList = new ArrayList<String>();
+		List<String> blankList=new ArrayList<String>();
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -622,110 +641,119 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+				if(bp.clicktabOnPage(TabName.Acuity.toString()))
+				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
-					ArrayList<String> result3 = bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,
-							sectionHeaderName);
-					if (result3.isEmpty()) {
+					ArrayList<String> result3=bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,sectionHeaderName);
+					if(result3.isEmpty())
+					{
 						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. " + result3,
-								YesNo.No);
-						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. " + result3);
+					}					
+					else
+					{
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result3, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result3);
 					}
-					ArrayList<String> result4 = bp.verifyTabsOnTaggedSection(tabNameOnTagged, defaultTabOntagged);
-					if (result4.isEmpty()) {
-						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4,
-								YesNo.No);
-						sa.assertTrue(false,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4);
+					ArrayList<String> result4=bp.verifyTabsOnTaggedSection(tabNameOnTagged,defaultTabOntagged);
+					if(result4.isEmpty())
+					{
+						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Default selected Tab and Tabs are not verified on Tagged section. "+result4, YesNo.No);
+						sa.assertTrue(false, "Default selected Tab and Tabs are not verified on Tagged section. "+result4);
 					}
 					refresh(driver);
 
-					ArrayList<String> result = bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
-					if (result.isEmpty()) {
-						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. " + result,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The Column name, Time referenced and message are not verified. " + result);
+					ArrayList<String> result= bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. "+result, YesNo.No);
+						sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
 					}
 
-					ArrayList<String> result1 = bp
-							.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message,
-									contactHeaders, message, blankList, null, blankList, null, blankList, null);
+					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, contactHeaders, message, blankList, null,blankList,null,blankList,null);
 
-					if (result1.isEmpty()) {
-						log(LogStatus.INFO,
-								"The header name and message have been verified on Interaction and Contacts ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The header name and message are not verified on Interaction and Contacts. " + result1,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The header name and message are not verified on Interaction and Contacts " + result1);
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The header name and message have been verified on Interaction and Contacts ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The header name and message are not verified on Interaction and Contacts. "+result1, YesNo.No);
+						sa.assertTrue(false, "The header name and message are not verified on Interaction and Contacts "+result1);
 					}
 
-					ArrayList<String> result2 = bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList,
-							contactHeaders, blankList, blankList);
-					if (result2.isEmpty()) {
+					ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, contactHeaders, blankList,blankList);
+					if(result2.isEmpty())
+					{
 						log(LogStatus.INFO, "The Tooltip on Contact header have been verified", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The Tooltip on Contact header are not verified. " + result2, YesNo.No);
-						sa.assertTrue(false, "The Tooltip on Contact header are not verified. " + result2);
 					}
-
-					if (bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, true, true, false, false)) {
-						log(LogStatus.INFO,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified",
-								YesNo.No);
-						sa.assertTrue(false,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
+					else
+					{
+						log(LogStatus.ERROR, "The Tooltip on Contact header are not verified. "+result2, YesNo.No);
+						sa.assertTrue(false, "The Tooltip on Contact header are not verified. "+result2);
 					}
-
-					ArrayList<String> result9 = bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
-					if (result9.isEmpty()) {
+					
+					if(bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, true, true, false, false))
+					{
+						log(LogStatus.INFO, "The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified", YesNo.No);
+						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
+					}
+					
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
 						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. " + result9,
-								YesNo.No);
-						sa.assertTrue(false, "The info message are not verified of section on Acuity. " + result9);
 					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
+					}
+
 
 					if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
 						log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
-					} else {
+					}
+					else
+					{
 						log(LogStatus.ERROR, "view All Button is visible on Interaction section", YesNo.No);
 						sa.assertTrue(false, "view All Button is visible on Interaction section");
 					}
 
-				} else {
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Acuity Tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open " + recordName + " reocrd", YesNo.No);
-				sa.assertTrue(false, "Not able to open " + recordName + " reocrd");
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab : " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab : " + tabObj1);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+			}
 		}
-		lp.CRMlogout();
-		sa.assertAll();
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
 
 	@Parameters({ "projectName" })
@@ -734,28 +762,27 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord9;
+		String recordName=ATCERecord9;		
+			
+		String sectionHeader=ATCE_Section1;
+		String tabsOnTagged=ATCE_Tabs1;
+		String defaultTabOntagged="Firms";
+		String message=bp.acuityDefaultMessage;
 
-		String sectionHeader = ATCE_Section1;
-		String tabsOnTagged = ATCE_Tabs1;
-		String defaultTabOntagged = "Firms";
-		String message = bp.acuityDefaultMessage;
+		String contactHeader=ATCE_ContactHeader1;
 
-		String contactHeader = ATCE_ContactHeader1;
-
-		String[] arrSectionHeader = sectionHeader.split("<break>");
+		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+		
+		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage,bp.contactInfoMessage,bp.dealInfoMessage};		
 
-		String[] infoMessage = { bp.taggedInfoMessage, bp.interactionsInfoMessage, bp.contactInfoMessage,
-				bp.dealInfoMessage };
-
-		String[] arrTabName = tabsOnTagged.split("<break>");
+		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
 
-		String[] arrContactHeader = contactHeader.split("<break>");
+		String[] arrContactHeader=contactHeader.split("<break>");
 		List<String> contactHeaders = new ArrayList<String>(Arrays.asList(arrContactHeader));
 
-		List<String> blankList = new ArrayList<String>();
+		List<String> blankList=new ArrayList<String>();
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -763,110 +790,118 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+				if(bp.clicktabOnPage(TabName.Acuity.toString()))
+				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
-					ArrayList<String> result3 = bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,
-							sectionHeaderName);
-					if (result3.isEmpty()) {
+					ArrayList<String> result3=bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,sectionHeaderName);
+					if(result3.isEmpty())
+					{
 						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. " + result3,
-								YesNo.No);
-						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. " + result3);
+					}					
+					else
+					{
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result3, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result3);
 					}
-					ArrayList<String> result4 = bp.verifyTabsOnTaggedSection(tabNameOnTagged, defaultTabOntagged);
-					if (result4.isEmpty()) {
-						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4,
-								YesNo.No);
-						sa.assertTrue(false,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4);
+					ArrayList<String> result4=bp.verifyTabsOnTaggedSection(tabNameOnTagged,defaultTabOntagged);
+					if(result4.isEmpty())
+					{
+						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Default selected Tab and Tabs are not verified on Tagged section. "+result4, YesNo.No);
+						sa.assertTrue(false, "Default selected Tab and Tabs are not verified on Tagged section. "+result4);
 					}
 					refresh(driver);
 
-					ArrayList<String> result = bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
-					if (result.isEmpty()) {
-						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. " + result,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The Column name, Time referenced and message are not verified. " + result);
+					ArrayList<String> result= bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. "+result, YesNo.No);
+						sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
 					}
 
-					ArrayList<String> result1 = bp
-							.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message,
-									contactHeaders, message, blankList, null, blankList, null, blankList, null);
+					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, contactHeaders, message, blankList, null,blankList,null,blankList,null);
 
-					if (result1.isEmpty()) {
-						log(LogStatus.INFO,
-								"The header name and message have been verified on Interaction and Contacts ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The header name and message are not verified on Interaction and Contacts. " + result1,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The header name and message are not verified on Interaction and Contacts " + result1);
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The header name and message have been verified on Interaction and Contacts ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The header name and message are not verified on Interaction and Contacts. "+result1, YesNo.No);
+						sa.assertTrue(false, "The header name and message are not verified on Interaction and Contacts "+result1);
 					}
 
-					ArrayList<String> result2 = bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList,
-							contactHeaders, blankList, blankList);
-					if (result2.isEmpty()) {
+					ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, contactHeaders, blankList,blankList);
+					if(result2.isEmpty())
+					{
 						log(LogStatus.INFO, "The Tooltip on Contact header have been verified", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The Tooltip on Contact header are not verified. " + result2, YesNo.No);
-						sa.assertTrue(false, "The Tooltip on Contact header are not verified. " + result2);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Tooltip on Contact header are not verified. "+result2, YesNo.No);
+						sa.assertTrue(false, "The Tooltip on Contact header are not verified. "+result2);
+					}
+					
+					if(bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, true, true, false, false))
+					{
+						log(LogStatus.INFO, "The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified", YesNo.No);
+						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
 					}
 
-					if (bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, true, true, false, false)) {
-						log(LogStatus.INFO,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified",
-								YesNo.No);
-						sa.assertTrue(false,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
-					}
-
-					ArrayList<String> result9 = bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
-					if (result9.isEmpty()) {
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
 						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. " + result9,
-								YesNo.No);
-						sa.assertTrue(false, "The info message are not verified of section on Acuity. " + result9);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
 					}
 
 					if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
 						log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
-					} else {
+					}
+					else
+					{
 						log(LogStatus.ERROR, "view All Button is visible on Interaction section", YesNo.No);
 						sa.assertTrue(false, "view All Button is visible on Interaction section");
 					}
 
-				} else {
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Acuity Tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open " + recordName + " reocrd", YesNo.No);
-				sa.assertTrue(false, "Not able to open " + recordName + " reocrd");
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab : " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab : " + tabObj1);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+			}
 		}
-		lp.CRMlogout();
-		sa.assertAll();
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
 
 	@Parameters({ "projectName" })
@@ -875,28 +910,28 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord11;
+		String recordName=ATCERecord11;		
+			
+		String sectionHeader=ATCE_Section1;
+		String tabsOnTagged=ATCE_Tabs1;
+		String defaultTabOntagged="Firms";
+		String message=bp.acuityDefaultMessage;
 
-		String sectionHeader = ATCE_Section1;
-		String tabsOnTagged = ATCE_Tabs1;
-		String defaultTabOntagged = "Firms";
-		String message = bp.acuityDefaultMessage;
+		String contactHeader=ATCE_ContactHeader1;
 
-		String contactHeader = ATCE_ContactHeader1;
-
-		String[] arrSectionHeader = sectionHeader.split("<break>");
+		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+		
+		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage,bp.contactInfoMessage,bp.dealInfoMessage};		
 
-		String[] infoMessage = { bp.taggedInfoMessage, bp.interactionsInfoMessage, bp.contactInfoMessage,
-				bp.dealInfoMessage };
 
-		String[] arrTabName = tabsOnTagged.split("<break>");
+		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
 
-		String[] arrContactHeader = contactHeader.split("<break>");
+		String[] arrContactHeader=contactHeader.split("<break>");
 		List<String> contactHeaders = new ArrayList<String>(Arrays.asList(arrContactHeader));
 
-		List<String> blankList = new ArrayList<String>();
+		List<String> blankList=new ArrayList<String>();
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -904,140 +939,148 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+				if(bp.clicktabOnPage(TabName.Acuity.toString()))
+				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
-					ArrayList<String> result3 = bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,
-							sectionHeaderName);
-					if (result3.isEmpty()) {
+					ArrayList<String> result3=bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,sectionHeaderName);
+					if(result3.isEmpty())
+					{
 						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. " + result3,
-								YesNo.No);
-						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. " + result3);
+					}					
+					else
+					{
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result3, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result3);
 					}
-					ArrayList<String> result4 = bp.verifyTabsOnTaggedSection(tabNameOnTagged, defaultTabOntagged);
-					if (result4.isEmpty()) {
-						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4,
-								YesNo.No);
-						sa.assertTrue(false,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4);
+					ArrayList<String> result4=bp.verifyTabsOnTaggedSection(tabNameOnTagged,defaultTabOntagged);
+					if(result4.isEmpty())
+					{
+						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Default selected Tab and Tabs are not verified on Tagged section. "+result4, YesNo.No);
+						sa.assertTrue(false, "Default selected Tab and Tabs are not verified on Tagged section. "+result4);
 					}
 					refresh(driver);
 
-					ArrayList<String> result = bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
-					if (result.isEmpty()) {
-						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. " + result,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The Column name, Time referenced and message are not verified. " + result);
+					ArrayList<String> result= bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. "+result, YesNo.No);
+						sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
 					}
 
-					ArrayList<String> result1 = bp
-							.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message,
-									contactHeaders, message, blankList, null, blankList, null, blankList, null);
+					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, contactHeaders, message, blankList, null,blankList,null,blankList,null);
 
-					if (result1.isEmpty()) {
-						log(LogStatus.INFO,
-								"The header name and message have been verified on Interaction and Contacts ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The header name and message are not verified on Interaction and Contacts. " + result1,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The header name and message are not verified on Interaction and Contacts " + result1);
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The header name and message have been verified on Interaction and Contacts ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The header name and message are not verified on Interaction and Contacts. "+result1, YesNo.No);
+						sa.assertTrue(false, "The header name and message are not verified on Interaction and Contacts "+result1);
 					}
 
-					ArrayList<String> result2 = bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList,
-							contactHeaders, blankList, blankList);
-					if (result2.isEmpty()) {
+					ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, contactHeaders, blankList,blankList);
+					if(result2.isEmpty())
+					{
 						log(LogStatus.INFO, "The Tooltip on Contact header have been verified", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The Tooltip on Contact header are not verified. " + result2, YesNo.No);
-						sa.assertTrue(false, "The Tooltip on Contact header are not verified. " + result2);
 					}
-
-					if (bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, true, true, false, false)) {
-						log(LogStatus.INFO,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified",
-								YesNo.No);
-						sa.assertTrue(false,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
+					else
+					{
+						log(LogStatus.ERROR, "The Tooltip on Contact header are not verified. "+result2, YesNo.No);
+						sa.assertTrue(false, "The Tooltip on Contact header are not verified. "+result2);
 					}
-
-					ArrayList<String> result9 = bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
-					if (result9.isEmpty()) {
+					
+					if(bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, true, true, false, false))
+					{
+						log(LogStatus.INFO, "The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified", YesNo.No);
+						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
+					}
+					
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
 						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. " + result9,
-								YesNo.No);
-						sa.assertTrue(false, "The info message are not verified of section on Acuity. " + result9);
 					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
+					}
+
 
 					if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
 						log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
-					} else {
+					}
+					else
+					{
 						log(LogStatus.ERROR, "view All Button is visible on Interaction section", YesNo.No);
 						sa.assertTrue(false, "view All Button is visible on Interaction section");
 					}
 
-				} else {
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Acuity Tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open " + recordName + " reocrd", YesNo.No);
-				sa.assertTrue(false, "Not able to open " + recordName + " reocrd");
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab : " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab : " + tabObj1);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+			}
 		}
-		lp.CRMlogout();
-		sa.assertAll();
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
-
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc008_VerifyUIOfAcuityTabOnPrivateEquityRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord13;
+		String recordName=ATCERecord13;		
+			
+		String sectionHeader=ATCE_Section1;
+		String tabsOnTagged=ATCE_Tabs1;
+		String defaultTabOntagged="Firms";
+		String message=bp.acuityDefaultMessage;
 
-		String sectionHeader = ATCE_Section1;
-		String tabsOnTagged = ATCE_Tabs1;
-		String defaultTabOntagged = "Firms";
-		String message = bp.acuityDefaultMessage;
+		String contactHeader=ATCE_ContactHeader1;
 
-		String contactHeader = ATCE_ContactHeader1;
-
-		String[] arrSectionHeader = sectionHeader.split("<break>");
+		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+		
+		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage,bp.contactInfoMessage,bp.dealInfoMessage};		
 
-		String[] infoMessage = { bp.taggedInfoMessage, bp.interactionsInfoMessage, bp.contactInfoMessage,
-				bp.dealInfoMessage };
-
-		String[] arrTabName = tabsOnTagged.split("<break>");
+		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
 
-		String[] arrContactHeader = contactHeader.split("<break>");
+		String[] arrContactHeader=contactHeader.split("<break>");
 		List<String> contactHeaders = new ArrayList<String>(Arrays.asList(arrContactHeader));
 
-		List<String> blankList = new ArrayList<String>();
+		List<String> blankList=new ArrayList<String>();
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -1045,110 +1088,119 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+				if(bp.clicktabOnPage(TabName.Acuity.toString()))
+				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
-					ArrayList<String> result3 = bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,
-							sectionHeaderName);
-					if (result3.isEmpty()) {
+					ArrayList<String> result3=bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,sectionHeaderName);
+					if(result3.isEmpty())
+					{
 						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. " + result3,
-								YesNo.No);
-						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. " + result3);
+					}					
+					else
+					{
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result3, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result3);
 					}
-					ArrayList<String> result4 = bp.verifyTabsOnTaggedSection(tabNameOnTagged, defaultTabOntagged);
-					if (result4.isEmpty()) {
-						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4,
-								YesNo.No);
-						sa.assertTrue(false,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4);
+					ArrayList<String> result4=bp.verifyTabsOnTaggedSection(tabNameOnTagged,defaultTabOntagged);
+					if(result4.isEmpty())
+					{
+						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Default selected Tab and Tabs are not verified on Tagged section. "+result4, YesNo.No);
+						sa.assertTrue(false, "Default selected Tab and Tabs are not verified on Tagged section. "+result4);
 					}
 					refresh(driver);
 
-					ArrayList<String> result = bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
-					if (result.isEmpty()) {
-						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. " + result,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The Column name, Time referenced and message are not verified. " + result);
+					ArrayList<String> result= bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. "+result, YesNo.No);
+						sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
 					}
 
-					ArrayList<String> result1 = bp
-							.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message,
-									contactHeaders, message, blankList, null, blankList, null, blankList, null);
+					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, contactHeaders, message, blankList, null,blankList,null,blankList,null);
 
-					if (result1.isEmpty()) {
-						log(LogStatus.INFO,
-								"The header name and message have been verified on Interaction and Contacts ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The header name and message are not verified on Interaction and Contacts. " + result1,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The header name and message are not verified on Interaction and Contacts " + result1);
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The header name and message have been verified on Interaction and Contacts ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The header name and message are not verified on Interaction and Contacts. "+result1, YesNo.No);
+						sa.assertTrue(false, "The header name and message are not verified on Interaction and Contacts "+result1);
 					}
 
-					ArrayList<String> result2 = bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList,
-							contactHeaders, blankList, blankList);
-					if (result2.isEmpty()) {
+					ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, contactHeaders, blankList,blankList);
+					if(result2.isEmpty())
+					{
 						log(LogStatus.INFO, "The Tooltip on Contact header have been verified", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The Tooltip on Contact header are not verified. " + result2, YesNo.No);
-						sa.assertTrue(false, "The Tooltip on Contact header are not verified. " + result2);
 					}
-
-					if (bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, true, true, false, false)) {
-						log(LogStatus.INFO,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified",
-								YesNo.No);
-						sa.assertTrue(false,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
+					else
+					{
+						log(LogStatus.ERROR, "The Tooltip on Contact header are not verified. "+result2, YesNo.No);
+						sa.assertTrue(false, "The Tooltip on Contact header are not verified. "+result2);
 					}
-
-					ArrayList<String> result9 = bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
-					if (result9.isEmpty()) {
+					
+					if(bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, true, true, false, false))
+					{
+						log(LogStatus.INFO, "The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified", YesNo.No);
+						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
+					}
+					
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
 						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. " + result9,
-								YesNo.No);
-						sa.assertTrue(false, "The info message are not verified of section on Acuity. " + result9);
 					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
+					}
+
 
 					if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
 						log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
-					} else {
+					}
+					else
+					{
 						log(LogStatus.ERROR, "view All Button is visible on Interaction section", YesNo.No);
 						sa.assertTrue(false, "view All Button is visible on Interaction section");
 					}
 
-				} else {
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Acuity Tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open " + recordName + " reocrd", YesNo.No);
-				sa.assertTrue(false, "Not able to open " + recordName + " reocrd");
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab : " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab : " + tabObj1);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+			}
 		}
-		lp.CRMlogout();
-		sa.assertAll();
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
 
 	@Parameters({ "projectName" })
@@ -1158,31 +1210,31 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 
-		String recordName = ATCE_Con2;
-		String sectionHeader = ATCE_Section3;
-		String tabsOnTagged = ATCE_Tabs1;
-		String defaultTabOntagged = "Firms";
-		String message = bp.acuityDefaultMessage;
+		String recordName=ATCE_Con2;
+		String sectionHeader=ATCE_Section3;
+		String tabsOnTagged=ATCE_Tabs1;
+		String defaultTabOntagged="Firms";
+		String message=bp.acuityDefaultMessage;
 
-		String internalconnectionHeader = ATCE_ConnectionHeader1;
-		String externalconnectionHeader = ATCE_ConnectionHeader2;
+		String internalconnectionHeader=ATCE_ConnectionHeader1;
+		String externalconnectionHeader=ATCE_ConnectionHeader2;
 
-		String[] arrSectionHeader = sectionHeader.split("<break>");
+		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
 
-		String[] infoMessage = { bp.taggedInfoMessage, bp.interactionsInfoMessage, bp.connectionInfoMessage,
-				bp.dealInfoMessage };
-
-		String[] arrTabName = tabsOnTagged.split("<break>");
+		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage,bp.connectionInfoMessage,bp.dealInfoMessage};		
+		
+		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
 
-		String[] arrinternalConnnectionHeader = internalconnectionHeader.split("<break>");
+		String[] arrinternalConnnectionHeader=internalconnectionHeader.split("<break>");
 		List<String> internalConnnectionHeaders = new ArrayList<String>(Arrays.asList(arrinternalConnnectionHeader));
 
-		String[] arrExternalConnnectionHeader = externalconnectionHeader.split("<break>");
+		String[] arrExternalConnnectionHeader=externalconnectionHeader.split("<break>");
 		List<String> externalConnnectionHeaders = new ArrayList<String>(Arrays.asList(arrExternalConnnectionHeader));
 
-		List<String> blankList = new ArrayList<String>();
+		
+		List<String> blankList=new ArrayList<String>();
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -1190,117 +1242,121 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+				if(bp.clicktabOnPage(TabName.Acuity.toString()))
+				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
 
-					ArrayList<String> result3 = bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,
-							sectionHeaderName);
-					if (result3.isEmpty()) {
+					ArrayList<String> result3=bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,sectionHeaderName);
+					if(result3.isEmpty())
+					{
 						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
 
-					} else {
-						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. " + result3,
-								YesNo.No);
-						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. " + result3);
+					}					
+					else
+					{
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result3, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result3);
 					}
-					ArrayList<String> result4 = bp.verifyTabsOnTaggedSection(tabNameOnTagged, defaultTabOntagged);
-					if (result4.isEmpty()) {
-						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4,
-								YesNo.No);
-						sa.assertTrue(false,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4);
+					ArrayList<String> result4=bp.verifyTabsOnTaggedSection(tabNameOnTagged,defaultTabOntagged);
+					if(result4.isEmpty())
+					{
+						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ", YesNo.No);
 					}
-					refresh(driver);
-
-					ArrayList<String> result = bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
-					if (result.isEmpty()) {
-						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. " + result,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The Column name, Time referenced and message are not verified. " + result);
+					else
+					{
+						log(LogStatus.ERROR, "Default selected Tab and Tabs are not verified on Tagged section. "+result4, YesNo.No);
+						sa.assertTrue(false, "Default selected Tab and Tabs are not verified on Tagged section. "+result4);
 					}
+						refresh(driver);
 
-					ArrayList<String> result1 = bp
-							.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message,
-									blankList, null, blankList, null, internalConnnectionHeaders, message,
-									externalConnnectionHeaders, message);
+						ArrayList<String> result= bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. "+result, YesNo.No);
+							sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
+						}
 
-					if (result1.isEmpty()) {
-						log(LogStatus.INFO,
-								"The header name and message have been verified on Interaction and Connection Section. "
-										+ result1,
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The header name and message are not verified on Interaction and Connection Section. "
-										+ result1,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The header name and message are not verified on Interaction and Connection Section. "
-										+ result1);
-					}
+						ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, blankList, null, blankList, null,internalConnnectionHeaders,message,externalConnnectionHeaders,message);
 
-					ArrayList<String> result2 = bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, blankList,
-							internalConnnectionHeaders, externalConnnectionHeaders);
-					if (result2.isEmpty()) {
-						log(LogStatus.INFO, "The Tooltip on connection header have been verified", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The Tooltip on connection header are not verified. " + result2, YesNo.No);
-						sa.assertTrue(false, "The Tooltip on connnection header are not verified. " + result2);
-					}
+						if(result1.isEmpty())
+						{
+							log(LogStatus.INFO, "The header name and message have been verified on Interaction and Connection Section. "+result1, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The header name and message are not verified on Interaction and Connection Section. "+result1, YesNo.No);
+							sa.assertTrue(false, "The header name and message are not verified on Interaction and Connection Section. "+result1);
+						}
 
-					if (bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, false, true, false, false)) {
-						log(LogStatus.INFO,
-								"The UI of Log a Call, Create Task Notification icon, Internal button and External button have been verified",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The UI of Log a Call, Create Task Notification icon, Internal button and External button are not verified",
-								YesNo.No);
-						sa.assertTrue(false,
-								"The UI of Log a Call, Create Task Notification icon, Internal button and External button are not verified");
-					}
+						ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, blankList, internalConnnectionHeaders, externalConnnectionHeaders);
+						if(result2.isEmpty())
+						{
+							log(LogStatus.INFO, "The Tooltip on connection header have been verified", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Tooltip on connection header are not verified. "+result2, YesNo.No);
+							sa.assertTrue(false, "The Tooltip on connnection header are not verified. "+result2);
+						}
+						
+						if(bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, false, true, false, false))
+						{
+							log(LogStatus.INFO, "The UI of Log a Call, Create Task Notification icon, Internal button and External button have been verified", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The UI of Log a Call, Create Task Notification icon, Internal button and External button are not verified", YesNo.No);
+							sa.assertTrue(false, "The UI of Log a Call, Create Task Notification icon, Internal button and External button are not verified");
+						}
+						
+						ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+						if(result9.isEmpty())
+						{
+							log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+							sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
+						}
 
-					ArrayList<String> result9 = bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
-					if (result9.isEmpty()) {
-						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. " + result9,
-								YesNo.No);
-						sa.assertTrue(false, "The info message are not verified of section on Acuity. " + result9);
-					}
-
-					if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
-						log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "view All Button is visible on Interaction section", YesNo.No);
-						sa.assertTrue(false, "view All Button is visible on Interaction section");
-					}
-
-				} else {
+						if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
+							log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "view All Button is visible on Interaction section", YesNo.No);
+							sa.assertTrue(false, "view All Button is visible on Interaction section");
+						}
+					
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Acuity Tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open " + recordName + " reocrd", YesNo.No);
-				sa.assertTrue(false, "Not able to open " + recordName + " reocrd");
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab : " + tabObj2, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab : " + tabObj2);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+tabObj2, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+tabObj2);
 		}
 
-		lp.CRMlogout();
-		sa.assertAll();
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
 
 	@Parameters({ "projectName" })
@@ -1309,22 +1365,23 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCE_Deal1;
+		String recordName=ATCE_Deal1;		
+			
+		String sectionHeader=ATCE_Section4;
+		String tabsOnTagged=ATCE_Tabs1;
+		String defaultTabOntagged="Firms";
+		String message=bp.acuityDefaultMessage;
 
-		String sectionHeader = ATCE_Section4;
-		String tabsOnTagged = ATCE_Tabs1;
-		String defaultTabOntagged = "Firms";
-		String message = bp.acuityDefaultMessage;
-
-		String[] arrSectionHeader = sectionHeader.split("<break>");
+		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+		
+		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage};		
+		
 
-		String[] infoMessage = { bp.taggedInfoMessage, bp.interactionsInfoMessage };
-
-		String[] arrTabName = tabsOnTagged.split("<break>");
+		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
 
-		List<String> blankList = new ArrayList<String>();
+		List<String> blankList=new ArrayList<String>();
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -1332,127 +1389,132 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+				if(bp.clicktabOnPage(TabName.Acuity.toString()))
+				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
-					ArrayList<String> result3 = bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,
-							sectionHeaderName);
-					if (result3.isEmpty()) {
+					ArrayList<String> result3=bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,sectionHeaderName);
+					if(result3.isEmpty())
+					{
 						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. " + result3,
-								YesNo.No);
-						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. " + result3);
+					}					
+					else
+					{
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result3, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result3);
 					}
-					ArrayList<String> result4 = bp.verifyTabsOnTaggedSection(tabNameOnTagged, defaultTabOntagged);
-					if (result4.isEmpty()) {
-						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4,
-								YesNo.No);
-						sa.assertTrue(false,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4);
+					ArrayList<String> result4=bp.verifyTabsOnTaggedSection(tabNameOnTagged,defaultTabOntagged);
+					if(result4.isEmpty())
+					{
+						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Default selected Tab and Tabs are not verified on Tagged section. "+result4, YesNo.No);
+						sa.assertTrue(false, "Default selected Tab and Tabs are not verified on Tagged section. "+result4);
 					}
 					refresh(driver);
 
-					ArrayList<String> result = bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
-					if (result.isEmpty()) {
-						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. " + result,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The Column name, Time referenced and message are not verified. " + result);
+					ArrayList<String> result= bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. "+result, YesNo.No);
+						sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
 					}
 
-					if (bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, false, true, false, false)) {
-						log(LogStatus.INFO,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified",
-								YesNo.No);
-						sa.assertTrue(false,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
+					
+					if(bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, false, true, false, false))
+					{
+						log(LogStatus.INFO, "The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified", YesNo.No);
 					}
-
-					ArrayList<String> result9 = bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
-					if (result9.isEmpty()) {
+					else
+					{
+						log(LogStatus.ERROR, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified", YesNo.No);
+						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
+					}
+					
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
 						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. " + result9,
-								YesNo.No);
-						sa.assertTrue(false, "The info message are not verified of section on Acuity. " + result9);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
+					}
+					
+					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, blankList, null, blankList, null,blankList,null,blankList,null);
+
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The header name and message have been verified on Interaction and Connection Section. "+result1, YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The header name and message are not verified on Interaction and Connection Section. "+result1, YesNo.No);
+						sa.assertTrue(false, "The header name and message are not verified on Interaction and Connection Section. "+result1);
 					}
 
-					ArrayList<String> result1 = bp
-							.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message,
-									blankList, null, blankList, null, blankList, null, blankList, null);
-
-					if (result1.isEmpty()) {
-						log(LogStatus.INFO,
-								"The header name and message have been verified on Interaction and Connection Section. "
-										+ result1,
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The header name and message are not verified on Interaction and Connection Section. "
-										+ result1,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The header name and message are not verified on Interaction and Connection Section. "
-										+ result1);
-					}
 
 					if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
 						log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
-					} else {
+					}
+					else
+					{
 						log(LogStatus.ERROR, "view All Button is visible on Interaction section", YesNo.No);
 						sa.assertTrue(false, "view All Button is visible on Interaction section");
 					}
-				} else {
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Acuity Tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open " + recordName + " reocrd", YesNo.No);
-				sa.assertTrue(false, "Not able to open " + recordName + " reocrd");
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab : " + tabObj4, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab : " + tabObj4);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+			}
 		}
-		lp.CRMlogout();
-		sa.assertAll();
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+tabObj4, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+tabObj4);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
-
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc011_VerifyUIOfAcuityTabOnFundRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCE_Fund1;
+		String recordName=ATCE_Fund1;		
+			
+		String sectionHeader=ATCE_Section4;
+		String tabsOnTagged=ATCE_Tabs1;
+		String defaultTabOntagged="Firms";
+		String message=bp.acuityDefaultMessage;
 
-		String sectionHeader = ATCE_Section4;
-		String tabsOnTagged = ATCE_Tabs1;
-		String defaultTabOntagged = "Firms";
-		String message = bp.acuityDefaultMessage;
-
-		String[] arrSectionHeader = sectionHeader.split("<break>");
+		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+		
+		String[] infoMessage=  {bp.taggedInfoMessage,bp.interactionsInfoMessage};	
 
-		String[] infoMessage = { bp.taggedInfoMessage, bp.interactionsInfoMessage };
-
-		String[] arrTabName = tabsOnTagged.split("<break>");
+		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
 
-		List<String> blankList = new ArrayList<String>();
+		List<String> blankList=new ArrayList<String>();
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -1460,337 +1522,353 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj3, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+				if(bp.clicktabOnPage(TabName.Acuity.toString()))
+				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
-					ArrayList<String> result3 = bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,
-							sectionHeaderName);
-					if (result3.isEmpty()) {
+					ArrayList<String> result3=bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,sectionHeaderName);
+					if(result3.isEmpty())
+					{
 						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. " + result3,
-								YesNo.No);
-						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. " + result3);
+					}					
+					else
+					{
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result3, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result3);
 					}
-					ArrayList<String> result4 = bp.verifyTabsOnTaggedSection(tabNameOnTagged, defaultTabOntagged);
-					if (result4.isEmpty()) {
-						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4,
-								YesNo.No);
-						sa.assertTrue(false,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4);
+					ArrayList<String> result4=bp.verifyTabsOnTaggedSection(tabNameOnTagged,defaultTabOntagged);
+					if(result4.isEmpty())
+					{
+						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Default selected Tab and Tabs are not verified on Tagged section. "+result4, YesNo.No);
+						sa.assertTrue(false, "Default selected Tab and Tabs are not verified on Tagged section. "+result4);
 					}
 					refresh(driver);
 
-					ArrayList<String> result = bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
-					if (result.isEmpty()) {
-						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. " + result,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The Column name, Time referenced and message are not verified. " + result);
+					ArrayList<String> result= bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. "+result, YesNo.No);
+						sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
 					}
 
-					if (bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, false, true, false, false)) {
-						log(LogStatus.INFO,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified",
-								YesNo.No);
-						sa.assertTrue(false,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
+					
+					if(bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, false, true, false, false))
+					{
+						log(LogStatus.INFO, "The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified", YesNo.No);
 					}
-
-					ArrayList<String> result9 = bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
-					if (result9.isEmpty()) {
+					else
+					{
+						log(LogStatus.ERROR, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified", YesNo.No);
+						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
+					}
+					
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
 						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. " + result9,
-								YesNo.No);
-						sa.assertTrue(false, "The info message are not verified of section on Acuity. " + result9);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
+					}
+					
+					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, blankList, null, blankList, null,blankList,null,blankList,null);
+
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The header name and message have been verified on Interaction and Connection Section. "+result1, YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The header name and message are not verified on Interaction and Connection Section. "+result1, YesNo.No);
+						sa.assertTrue(false, "The header name and message are not verified on Interaction and Connection Section. "+result1);
 					}
 
-					ArrayList<String> result1 = bp
-							.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message,
-									blankList, null, blankList, null, blankList, null, blankList, null);
-
-					if (result1.isEmpty()) {
-						log(LogStatus.INFO,
-								"The header name and message have been verified on Interaction and Connection Section. "
-										+ result1,
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The header name and message are not verified on Interaction and Connection Section. "
-										+ result1,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The header name and message are not verified on Interaction and Connection Section. "
-										+ result1);
-					}
 
 					if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
 						log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
-					} else {
+					}
+					else
+					{
 						log(LogStatus.ERROR, "view All Button is visible on Interaction section", YesNo.No);
 						sa.assertTrue(false, "view All Button is visible on Interaction section");
 					}
-				} else {
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Acuity Tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open " + recordName + " reocrd", YesNo.No);
-				sa.assertTrue(false, "Not able to open " + recordName + " reocrd");
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab : " + tabObj3, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab : " + tabObj3);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+			}
 		}
-		lp.CRMlogout();
-		sa.assertAll();
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+tabObj3, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+tabObj3);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
-
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc012_VerifyUIOfAcuityTabOnFundraisingRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCE_Fundraising1;
+		String recordName=ATCE_Fundraising1;		
+			
+		String sectionHeader=ATCE_Section4;
+		String tabsOnTagged=ATCE_Tabs3;
+		String defaultTabOntagged="Firms";
+		String message=bp.acuityDefaultMessage;
 
-		String sectionHeader = ATCE_Section4;
-		String tabsOnTagged = ATCE_Tabs3;
-		String defaultTabOntagged = "Firms";
-		String message = bp.acuityDefaultMessage;
-
-		String[] arrSectionHeader = sectionHeader.split("<break>");
+		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+		
+		String[] infoMessage=  {bp.taggedInfoMessageFundarsing,bp.interactionsInfoMessage};	
 
-		String[] infoMessage = { bp.taggedInfoMessageFundarsing, bp.interactionsInfoMessage };
-
-		String[] arrTabName = tabsOnTagged.split("<break>");
+		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
 
-		List<String> blankList = new ArrayList<String>();
+		List<String> blankList=new ArrayList<String>();
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 		if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
 
-			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+			log(LogStatus.INFO, "Clicked on Tab : "+TabName.Fundraising.toString(), YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+				if(bp.clicktabOnPage(TabName.Acuity.toString()))
+				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
-					ArrayList<String> result3 = bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,
-							sectionHeaderName);
-					if (result3.isEmpty()) {
+					ArrayList<String> result3=bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,sectionHeaderName);
+					if(result3.isEmpty())
+					{
 						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. " + result3,
-								YesNo.No);
-						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. " + result3);
+					}					
+					else
+					{
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result3, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result3);
 					}
-					ArrayList<String> result4 = bp.verifyTabsOnTaggedSection(tabNameOnTagged, defaultTabOntagged);
-					if (result4.isEmpty()) {
-						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4,
-								YesNo.No);
-						sa.assertTrue(false,
-								"Default selected Tab and Tabs are not verified on Tagged section. " + result4);
+					ArrayList<String> result4=bp.verifyTabsOnTaggedSection(tabNameOnTagged,defaultTabOntagged);
+					if(result4.isEmpty())
+					{
+						log(LogStatus.INFO, "Default selected Tab and Tabs have been verified on Tagged section. ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Default selected Tab and Tabs are not verified on Tagged section. "+result4, YesNo.No);
+						sa.assertTrue(false, "Default selected Tab and Tabs are not verified on Tagged section. "+result4);
 					}
 					refresh(driver);
 
-					ArrayList<String> result = bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
-					if (result.isEmpty()) {
-						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. " + result,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The Column name, Time referenced and message are not verified. " + result);
+					ArrayList<String> result= bp.verifyColumnsAndMessageOnTabsOfTagged(tabNameOnTagged, message);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Column name, Time referenced and message has been verified ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. "+result, YesNo.No);
+						sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
 					}
 
-					if (bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, false, true, false, false)) {
-						log(LogStatus.INFO,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified",
-								YesNo.No);
-						sa.assertTrue(false,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
+					
+					if(bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, false, true, false, false))
+					{
+						log(LogStatus.INFO, "The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified", YesNo.No);
 					}
-
-					ArrayList<String> result9 = bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
-					if (result9.isEmpty()) {
+					else
+					{
+						log(LogStatus.ERROR, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified", YesNo.No);
+						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
+					}
+					
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
 						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. " + result9,
-								YesNo.No);
-						sa.assertTrue(false, "The info message are not verified of section on Acuity. " + result9);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
+					}
+					
+					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, blankList, null, blankList, null,blankList,null,blankList,null);
+
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The header name and message have been verified on Interaction and Connection Section. "+result1, YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The header name and message are not verified on Interaction and Connection Section. "+result1, YesNo.No);
+						sa.assertTrue(false, "The header name and message are not verified on Interaction and Connection Section. "+result1);
 					}
 
-					ArrayList<String> result1 = bp
-							.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message,
-									blankList, null, blankList, null, blankList, null, blankList, null);
-
-					if (result1.isEmpty()) {
-						log(LogStatus.INFO,
-								"The header name and message have been verified on Interaction and Connection Section. "
-										+ result1,
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The header name and message are not verified on Interaction and Connection Section. "
-										+ result1,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The header name and message are not verified on Interaction and Connection Section. "
-										+ result1);
-					}
 
 					if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
 						log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
-					} else {
+					}
+					else
+					{
 						log(LogStatus.ERROR, "view All Button is visible on Interaction section", YesNo.No);
 						sa.assertTrue(false, "view All Button is visible on Interaction section");
 					}
-				} else {
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Acuity Tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open " + recordName + " reocrd", YesNo.No);
-				sa.assertTrue(false, "Not able to open " + recordName + " reocrd");
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab : " + TabName.Fundraising.toString(), YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab : " + TabName.Fundraising.toString());
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+			}
 		}
-		lp.CRMlogout();
-		sa.assertAll();
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+TabName.Fundraising.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+TabName.Fundraising.toString());
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
-
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc013_VerifyUIOfAcuityTabOnThemeRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCE_Theme1;
+		String recordName=ATCE_Theme1;		
+			
+		String sectionHeader=ATCE_Section5;
+		
+		String message=bp.acuityDefaultMessage;
 
-		String sectionHeader = ATCE_Section5;
-
-		String message = bp.acuityDefaultMessage;
-
-		String[] arrSectionHeader = sectionHeader.split("<break>");
+		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
 
-		String[] infoMessage = { bp.interactionsInfoMessage };
+		String[] infoMessage=  {bp.interactionsInfoMessage};	
 
-		List<String> blankList = new ArrayList<String>();
+		
+		List<String> blankList=new ArrayList<String>();
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 		if (lp.clickOnTab(projectName, TabName.Themes.toString())) {
 
-			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Themes.toString(), YesNo.No);
+			log(LogStatus.INFO, "Clicked on Tab : "+TabName.Themes.toString(), YesNo.No);
+			
+			String parentWindowID=bp.clickOnThemeRecord(recordName);
 
-			String parentWindowID = bp.clickOnThemeRecord(recordName);
-
-			if (parentWindowID != null) {
+			if (parentWindowID!=null) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+				if(bp.clicktabOnPage(TabName.Acuity.toString()))
+				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
-					ArrayList<String> result3 = bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,
-							sectionHeaderName);
-					if (result3.isEmpty()) {
+					ArrayList<String> result3=bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,sectionHeaderName);
+					if(result3.isEmpty())
+					{
 						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. " + result3,
-								YesNo.No);
-						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. " + result3);
+					}					
+					else
+					{
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result3, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result3);
 					}
-
-					if (bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, false, true, false, false)) {
-						log(LogStatus.INFO,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified",
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified",
-								YesNo.No);
-						sa.assertTrue(false,
-								"The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
+					
+					if(bp.verifyUIOfLogACallAndCreateTaskButtonOnAcuity(true, true, false, true, false, false))
+					{
+						log(LogStatus.INFO, "The UI of Log a Call, Create Task and Add Contact icon on contact section have been verified", YesNo.No);
 					}
-
-					ArrayList<String> result9 = bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
-					if (result9.isEmpty()) {
+					else
+					{
+						log(LogStatus.ERROR, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified", YesNo.No);
+						sa.assertTrue(false, "The UI of Log a Call, Create Task and Add Contact icon on contact section are not verified");
+					}
+					
+					ArrayList<String> result9=bp.infoMessageOfAcuitySection(arrSectionHeader, infoMessage);
+					if(result9.isEmpty())
+					{
 						log(LogStatus.INFO, "The info message have been verified of section on Acuity", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. " + result9,
-								YesNo.No);
-						sa.assertTrue(false, "The info message are not verified of section on Acuity. " + result9);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The info message are not verified of section on Acuity. "+result9, YesNo.No);
+						sa.assertTrue(false,  "The info message are not verified of section on Acuity. "+result9);
+					}
+					
+					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, blankList, null, blankList, null,blankList,null,blankList,null);
+
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The header name and message have been verified on Interaction and Connection Section. "+result1, YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The header name and message are not verified on Interaction and Connection Section. "+result1, YesNo.No);
+						sa.assertTrue(false, "The header name and message are not verified on Interaction and Connection Section. "+result1);
 					}
 
-					ArrayList<String> result1 = bp
-							.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message,
-									blankList, null, blankList, null, blankList, null, blankList, null);
-
-					if (result1.isEmpty()) {
-						log(LogStatus.INFO,
-								"The header name and message have been verified on Interaction and Connection Section. "
-										+ result1,
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"The header name and message are not verified on Interaction and Connection Section. "
-										+ result1,
-								YesNo.No);
-						sa.assertTrue(false,
-								"The header name and message are not verified on Interaction and Connection Section. "
-										+ result1);
-					}
 
 					if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
 						log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
-					} else {
+					}
+					else
+					{
 						log(LogStatus.ERROR, "view All Button is visible on Interaction section", YesNo.No);
 						sa.assertTrue(false, "view All Button is visible on Interaction section");
 					}
-				} else {
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Acuity Tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open " + recordName + " reocrd", YesNo.No);
-				sa.assertTrue(false, "Not able to open " + recordName + " reocrd");
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
 			}
 			driver.close();
 			driver.switchTo().window(parentWindowID);
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab : " + TabName.Themes.toString(), YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab : " + TabName.Themes.toString());
 		}
-		lp.CRMlogout();
-		sa.assertAll();
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+TabName.Themes.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+TabName.Themes.toString());
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
+	
 
 	@Parameters({ "projectName" })
 	@Test
@@ -1798,94 +1876,99 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
-
-		String[] legalName = { ATCE_ContactLegalName1, ATCE_ContactLegalName2, ATCE_ContactLegalName3,
-				ATCE_ContactLegalName4, ATCE_ContactLegalName5, ATCE_ContactLegalName6, ATCE_ContactLegalName7 };
-
-		String[][][] contactDetails = {
-				{ { "First Name", ATCE_ContactFirstName1 }, { "Last Name", ATCE_ContactLastName1 },
-						{ "Email", ATCE_ContactEmail1 }, { "Title", ATCE_ContactTitle1 } },
-				{ { "First Name", ATCE_ContactFirstName2 }, { "Last Name", ATCE_ContactLastName2 },
-						{ "Email", ATCE_ContactEmail2 }, { "Title", ATCE_ContactTitle2 } },
-				{ { "First Name", ATCE_ContactFirstName3 }, { "Last Name", ATCE_ContactLastName3 },
-						{ "Email", ATCE_ContactEmail3 }, { "Title", ATCE_ContactTitle3 } },
-				{ { "First Name", ATCE_ContactFirstName4 }, { "Last Name", ATCE_ContactLastName4 },
-						{ "Email", ATCE_ContactEmail4 }, { "Title", ATCE_ContactTitle4 } },
-				{ { "First Name", ATCE_ContactFirstName5 }, { "Last Name", ATCE_ContactLastName5 },
-						{ "Email", ATCE_ContactEmail5 }, { "Title", ATCE_ContactTitle5 } },
-				{ { "First Name", ATCE_ContactFirstName6 }, { "Last Name", ATCE_ContactLastName6 },
-						{ "Email", ATCE_ContactEmail6 }, { "Title", ATCE_ContactTitle6 } },
-				{ { "First Name", ATCE_ContactFirstName7 }, { "Last Name", ATCE_ContactLastName7 },
-						{ "Email", ATCE_ContactEmail7 }, { "Title", ATCE_ContactTitle7 } } };
-
+		ContactsPageBusinessLayer cp=new ContactsPageBusinessLayer(driver);
+		
+		String[] legalName= {ATCE_ContactLegalName1,ATCE_ContactLegalName2,ATCE_ContactLegalName3,ATCE_ContactLegalName4,ATCE_ContactLegalName5,ATCE_ContactLegalName6,ATCE_ContactLegalName7};
+		
+		String[][][] contactDetails= {{{"First Name",ATCE_ContactFirstName1},{"Last Name",ATCE_ContactLastName1},{"Email",ATCE_ContactEmail1},{"Title",ATCE_ContactTitle1}},
+			{{"First Name",ATCE_ContactFirstName2},{"Last Name",ATCE_ContactLastName2},{"Email",ATCE_ContactEmail2},{"Title",ATCE_ContactTitle2}},
+			{{"First Name",ATCE_ContactFirstName3},{"Last Name",ATCE_ContactLastName3},{"Email",ATCE_ContactEmail3},{"Title",ATCE_ContactTitle3}},
+			{{"First Name",ATCE_ContactFirstName4},{"Last Name",ATCE_ContactLastName4},{"Email",ATCE_ContactEmail4},{"Title",ATCE_ContactTitle4}},
+			{{"First Name",ATCE_ContactFirstName5},{"Last Name",ATCE_ContactLastName5},{"Email",ATCE_ContactEmail5},{"Title",ATCE_ContactTitle5}},
+			{{"First Name",ATCE_ContactFirstName6},{"Last Name",ATCE_ContactLastName6},{"Email",ATCE_ContactEmail6},{"Title",ATCE_ContactTitle6}},
+			{{"First Name",ATCE_ContactFirstName7},{"Last Name",ATCE_ContactLastName7},{"Email",ATCE_ContactEmail7},{"Title",ATCE_ContactTitle7}}};
+		
+		
+		
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
-		for (int i = 0; i < legalName.length; i++) {
-			System.err.println("Sou " + contactDetails[i]);
-			if (lp.clickOnTab(projectName, tabObj1)) {
+		for(int i=0; i<legalName.length; i++)
+		{
+			System.err.println("Sou "+contactDetails[i]);
+		if (lp.clickOnTab(projectName, tabObj1)) {
 
-				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			log(LogStatus.INFO, "Clicked on Tab : "+tabObj1, YesNo.No);
 
-				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, legalName[i], 30)) {
-					log(LogStatus.INFO, legalName[i] + " reocrd has been open", YesNo.No);
-					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
-						log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
-
-						if (cp.createContactFromContactSectionOfAcuity(null, contactDetails[i])) {
-							log(LogStatus.INFO, "The Contact have been created contact Name: " + contactDetails[i][0][0]
-									+ " " + contactDetails[i][1][1], YesNo.No);
-						} else {
-							log(LogStatus.ERROR, "The Contact is not created contact Name: " + contactDetails[i][0][0]
-									+ " " + contactDetails[i][1][1], YesNo.No);
-							sa.assertTrue(false, "The Contact is not created contact Name: " + contactDetails[i][0][0]
-									+ " " + contactDetails[i][1][1]);
-						}
-					} else {
-						log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
-						sa.assertTrue(false, "Not able to click on Acuity Tab");
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					legalName[i], 30)) {
+				log(LogStatus.INFO, legalName[i] + " reocrd has been open", YesNo.No);
+				if(bp.clicktabOnPage(TabName.Acuity.toString()))
+				{
+					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
+					
+					if(cp.createContactFromContactSectionOfAcuity(null,contactDetails[i]))
+					{
+						log(LogStatus.INFO, "The Contact have been created contact Name: "+contactDetails[i][0][0]+" "+contactDetails[i][1][1], YesNo.No);
 					}
-				} else {
-					log(LogStatus.ERROR, "Not able to open " + legalName[i] + " reocrd", YesNo.No);
-					sa.assertTrue(false, "Not able to open " + legalName[i] + " reocrd");
+					else
+					{
+						log(LogStatus.ERROR, "The Contact is not created contact Name: "+contactDetails[i][0][0]+" "+contactDetails[i][1][1], YesNo.No);
+						sa.assertTrue(false, "The Contact is not created contact Name: "+contactDetails[i][0][0]+" "+contactDetails[i][1][1]);
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Acuity Tab");
 				}
 			}
-
-			else {
-				log(LogStatus.ERROR, "Not able to click on tab : " + tabObj1, YesNo.No);
-				sa.assertTrue(false, "Not able to click on tab : " + tabObj1);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+legalName[i] +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+legalName[i] +" reocrd");
 			}
 		}
-		lp.CRMlogout();
-		sa.assertAll();
-	}
 
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+tabObj1);
+		}
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc015_VerifyUIOfConnectionPageAndMeetingAndCallPageOnCompanyRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord1;
-
-		String contactName = ATCE_ContactFullName1;
-		String message = bp.acuityDefaultMessage;
-
-		String[] meetingAndCall = ATCE_MeetingAndCallHeader.split("<break>");
-
-		ArrayList<String> headerNameMeetingAndCall = new ArrayList<String>();
-		for (String txt : meetingAndCall) {
+		String recordName=ATCERecord1;		
+		
+		String contactName=ATCE_ContactFullName1;
+		String message=bp.acuityDefaultMessage;
+		
+		String[] meetingAndCall=ATCE_MeetingAndCallHeader.split("<break>");
+		
+		ArrayList<String> headerNameMeetingAndCall=new ArrayList<String>();
+		for(String txt:meetingAndCall)
+		{
 			headerNameMeetingAndCall.add(txt);
 		}
 
-		String[] externalConnectionHeaderArr = ATCE_ConnectionHeader2.split("<break>");
-		ArrayList<String> exteralHeaderName = new ArrayList<String>();
-		for (String txt : externalConnectionHeaderArr) {
+		String[] externalConnectionHeaderArr=ATCE_ConnectionHeader2.split("<break>");
+		ArrayList<String> exteralHeaderName=new ArrayList<String>();
+		for(String txt:externalConnectionHeaderArr)
+		{
 			exteralHeaderName.add(txt);
 		}
-
-		String[] val = ATCE_ConnectionHeader1.split("<break>");
-		ArrayList<String> headerName = new ArrayList<String>();
-		for (String txt : val) {
+		
+		
+		String[] val=ATCE_ConnectionHeader1.split("<break>");
+		ArrayList<String> headerName=new ArrayList<String>();
+		for(String txt:val)
+		{
 			headerName.add(txt);
 		}
 
@@ -1895,95 +1978,112 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+				if(bp.clicktabOnPage(TabName.Acuity.toString()))
+				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
-					if (click(driver, bp.getConnectionIconOfContact(contactName, 20),
-							"Connection icon of " + contactName, action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "clicked on Connection icon of " + contactName, YesNo.No);
+					if(click(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName, action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on Connection icon of "+contactName, YesNo.No);
 
-						ArrayList<String> result = bp.verifyUIOfConnectionPopup(contactName, headerName, message,
-								exteralHeaderName, message);
-						if (result.isEmpty()) {
+						ArrayList<String> result=bp.verifyUIOfConnectionPopup(contactName, headerName, message,exteralHeaderName,message);
+						if(result.isEmpty())
+						{
 							log(LogStatus.INFO, "The UI of Connections popup have been verified", YesNo.No);
-							sa.assertTrue(true, "The UI of Connections popup have been verified");
-						} else {
-							log(LogStatus.ERROR, "The UI of Connections popup are not verified. " + result, YesNo.No);
-							sa.assertTrue(false, "The UI of Connections popup are not verified. " + result);
+							sa.assertTrue(true,  "The UI of Connections popup have been verified");
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The UI of Connections popup are not verified. "+result, YesNo.No);
+							sa.assertTrue(false,  "The UI of Connections popup are not verified. "+result);
 
 						}
-					} else {
-						log(LogStatus.ERROR, "Not able to Connection icon of " + contactName, YesNo.No);
-						sa.assertTrue(false, "Not able to Connection icon of " + contactName);
 					}
-
-					if (click(driver, bp.getMeetingAndCallCount(contactName, 20), "Meeting and call count",
-							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on the count of meeting and call of " + contactName
-								+ " record on contact section", YesNo.No);
-
-						ArrayList<String> result1 = bp.verifyUIOfMeetingAndCallsPopup(headerNameMeetingAndCall,
-								message);
-						if (result1.isEmpty()) {
+					else
+					{
+						log(LogStatus.ERROR, "Not able to Connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false,  "Not able to Connection icon of "+contactName);
+					}
+					
+					
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactName+" record on contact section",YesNo.No);
+						
+						ArrayList<String> result1=bp.verifyUIOfMeetingAndCallsPopup( headerNameMeetingAndCall, message);
+						if(result1.isEmpty())
+						{
 							log(LogStatus.INFO, "The UI of Meeting and call page have been verified", YesNo.No);
-							sa.assertTrue(true, "The UI of Meeting and call page have been verified");
-						} else {
-							log(LogStatus.ERROR, "The UI of Meeting and call page are not verified. " + result1,
-									YesNo.No);
-							sa.assertTrue(false, "The UI of Meeting and call page are not verified. " + result1);
-
+							sa.assertTrue(true,  "The UI of Meeting and call page have been verified");
 						}
-					} else {
-						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of " + contactName
-								+ " record on contact section", YesNo.No);
-						sa.assertTrue(false, "Not able to click on the count of meeting and call of " + contactName
-								+ " record on contact section");
-					}
+						else
+						{
+							log(LogStatus.ERROR, "The UI of Meeting and call page are not verified. "+result1, YesNo.No);
+							sa.assertTrue(false,  "The UI of Meeting and call page are not verified. "+result1);
 
-				} else {
+						}					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName+" record on contact section",	YesNo.No);		
+						sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactName+" record on contact section");
+					}
+					
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Acuity Tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open " + recordName + " reocrd", YesNo.No);
-				sa.assertTrue(false, "Not able to open " + recordName + " reocrd");
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab : " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab : " + tabObj1);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+			}
 		}
-		lp.CRMlogout();
-		sa.assertAll();
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
-
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc016_VerifyUIOfConnectionPageAndMeetingAndCallPageOnInstitutionRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord3;
-
-		String contactName = ATCE_ContactFullName3;
-		String message = bp.acuityDefaultMessage;
-
-		String[] meetingAndCall = ATCE_MeetingAndCallHeader.split("<break>");
-
-		ArrayList<String> headerNameMeetingAndCall = new ArrayList<String>();
-		for (String txt : meetingAndCall) {
+		String recordName=ATCERecord3;		
+		
+		String contactName=ATCE_ContactFullName3;
+		String message=bp.acuityDefaultMessage;
+		
+		String[] meetingAndCall=ATCE_MeetingAndCallHeader.split("<break>");
+		
+		ArrayList<String> headerNameMeetingAndCall=new ArrayList<String>();
+		for(String txt:meetingAndCall)
+		{
 			headerNameMeetingAndCall.add(txt);
 		}
 
-		String[] externalConnectionHeaderArr = ATCE_ConnectionHeader2.split("<break>");
-		ArrayList<String> exteralHeaderName = new ArrayList<String>();
-		for (String txt : externalConnectionHeaderArr) {
+		String[] externalConnectionHeaderArr=ATCE_ConnectionHeader2.split("<break>");
+		ArrayList<String> exteralHeaderName=new ArrayList<String>();
+		for(String txt:externalConnectionHeaderArr)
+		{
 			exteralHeaderName.add(txt);
 		}
-
-		String[] val = ATCE_ConnectionHeader1.split("<break>");
-		ArrayList<String> headerName = new ArrayList<String>();
-		for (String txt : val) {
+		
+		
+		String[] val=ATCE_ConnectionHeader1.split("<break>");
+		ArrayList<String> headerName=new ArrayList<String>();
+		for(String txt:val)
+		{
 			headerName.add(txt);
 		}
 
@@ -1993,95 +2093,112 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+				if(bp.clicktabOnPage(TabName.Acuity.toString()))
+				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
-					if (click(driver, bp.getConnectionIconOfContact(contactName, 20),
-							"Connection icon of " + contactName, action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "clicked on Connection icon of " + contactName, YesNo.No);
+					if(click(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName, action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on Connection icon of "+contactName, YesNo.No);
 
-						ArrayList<String> result = bp.verifyUIOfConnectionPopup(contactName, headerName, message,
-								exteralHeaderName, message);
-						if (result.isEmpty()) {
+						ArrayList<String> result=bp.verifyUIOfConnectionPopup(contactName, headerName, message,exteralHeaderName,message);
+						if(result.isEmpty())
+						{
 							log(LogStatus.INFO, "The UI of Connections popup have been verified", YesNo.No);
-							sa.assertTrue(true, "The UI of Connections popup have been verified");
-						} else {
-							log(LogStatus.ERROR, "The UI of Connections popup are not verified. " + result, YesNo.No);
-							sa.assertTrue(false, "The UI of Connections popup are not verified. " + result);
+							sa.assertTrue(true,  "The UI of Connections popup have been verified");
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The UI of Connections popup are not verified. "+result, YesNo.No);
+							sa.assertTrue(false,  "The UI of Connections popup are not verified. "+result);
 
 						}
-					} else {
-						log(LogStatus.ERROR, "Not able to Connection icon of " + contactName, YesNo.No);
-						sa.assertTrue(false, "Not able to Connection icon of " + contactName);
 					}
-
-					if (click(driver, bp.getMeetingAndCallCount(contactName, 20), "Meeting and call count",
-							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on the count of meeting and call of " + contactName
-								+ " record on contact section", YesNo.No);
-
-						ArrayList<String> result1 = bp.verifyUIOfMeetingAndCallsPopup(headerNameMeetingAndCall,
-								message);
-						if (result1.isEmpty()) {
+					else
+					{
+						log(LogStatus.ERROR, "Not able to Connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false,  "Not able to Connection icon of "+contactName);
+					}
+					
+					
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactName+" record on contact section",YesNo.No);
+						
+						ArrayList<String> result1=bp.verifyUIOfMeetingAndCallsPopup( headerNameMeetingAndCall, message);
+						if(result1.isEmpty())
+						{
 							log(LogStatus.INFO, "The UI of Meeting and call page have been verified", YesNo.No);
-							sa.assertTrue(true, "The UI of Meeting and call page have been verified");
-						} else {
-							log(LogStatus.ERROR, "The UI of Meeting and call page are not verified. " + result1,
-									YesNo.No);
-							sa.assertTrue(false, "The UI of Meeting and call page are not verified. " + result1);
-
+							sa.assertTrue(true,  "The UI of Meeting and call page have been verified");
 						}
-					} else {
-						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of " + contactName
-								+ " record on contact section", YesNo.No);
-						sa.assertTrue(false, "Not able to click on the count of meeting and call of " + contactName
-								+ " record on contact section");
-					}
+						else
+						{
+							log(LogStatus.ERROR, "The UI of Meeting and call page are not verified. "+result1, YesNo.No);
+							sa.assertTrue(false,  "The UI of Meeting and call page are not verified. "+result1);
 
-				} else {
+						}					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName+" record on contact section",	YesNo.No);		
+						sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactName+" record on contact section");
+					}
+					
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Acuity Tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open " + recordName + " reocrd", YesNo.No);
-				sa.assertTrue(false, "Not able to open " + recordName + " reocrd");
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab : " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab : " + tabObj1);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+			}
 		}
-		lp.CRMlogout();
-		sa.assertAll();
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
-
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc017_VerifyUIOfConnectionPageAndMeetingAndCallPageOnAdvisorRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord5;
-
-		String contactName = ATCE_ContactFullName9;
-		String message = bp.acuityDefaultMessage;
-
-		String[] meetingAndCall = ATCE_MeetingAndCallHeader.split("<break>");
-
-		ArrayList<String> headerNameMeetingAndCall = new ArrayList<String>();
-		for (String txt : meetingAndCall) {
+		String recordName=ATCERecord5;		
+		
+		String contactName=ATCE_ContactFullName9;
+		String message=bp.acuityDefaultMessage;
+		
+		String[] meetingAndCall=ATCE_MeetingAndCallHeader.split("<break>");
+		
+		ArrayList<String> headerNameMeetingAndCall=new ArrayList<String>();
+		for(String txt:meetingAndCall)
+		{
 			headerNameMeetingAndCall.add(txt);
 		}
 
-		String[] externalConnectionHeaderArr = ATCE_ConnectionHeader2.split("<break>");
-		ArrayList<String> exteralHeaderName = new ArrayList<String>();
-		for (String txt : externalConnectionHeaderArr) {
+		String[] externalConnectionHeaderArr=ATCE_ConnectionHeader2.split("<break>");
+		ArrayList<String> exteralHeaderName=new ArrayList<String>();
+		for(String txt:externalConnectionHeaderArr)
+		{
 			exteralHeaderName.add(txt);
 		}
-
-		String[] val = ATCE_ConnectionHeader1.split("<break>");
-		ArrayList<String> headerName = new ArrayList<String>();
-		for (String txt : val) {
+		
+		
+		String[] val=ATCE_ConnectionHeader1.split("<break>");
+		ArrayList<String> headerName=new ArrayList<String>();
+		for(String txt:val)
+		{
 			headerName.add(txt);
 		}
 
@@ -2091,95 +2208,112 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+				if(bp.clicktabOnPage(TabName.Acuity.toString()))
+				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
-					if (click(driver, bp.getConnectionIconOfContact(contactName, 20),
-							"Connection icon of " + contactName, action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "clicked on Connection icon of " + contactName, YesNo.No);
+					if(click(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName, action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on Connection icon of "+contactName, YesNo.No);
 
-						ArrayList<String> result = bp.verifyUIOfConnectionPopup(contactName, headerName, message,
-								exteralHeaderName, message);
-						if (result.isEmpty()) {
+						ArrayList<String> result=bp.verifyUIOfConnectionPopup(contactName, headerName, message,exteralHeaderName,message);
+						if(result.isEmpty())
+						{
 							log(LogStatus.INFO, "The UI of Connections popup have been verified", YesNo.No);
-							sa.assertTrue(true, "The UI of Connections popup have been verified");
-						} else {
-							log(LogStatus.ERROR, "The UI of Connections popup are not verified. " + result, YesNo.No);
-							sa.assertTrue(false, "The UI of Connections popup are not verified. " + result);
+							sa.assertTrue(true,  "The UI of Connections popup have been verified");
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The UI of Connections popup are not verified. "+result, YesNo.No);
+							sa.assertTrue(false,  "The UI of Connections popup are not verified. "+result);
 
 						}
-					} else {
-						log(LogStatus.ERROR, "Not able to Connection icon of " + contactName, YesNo.No);
-						sa.assertTrue(false, "Not able to Connection icon of " + contactName);
 					}
-
-					if (click(driver, bp.getMeetingAndCallCount(contactName, 20), "Meeting and call count",
-							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on the count of meeting and call of " + contactName
-								+ " record on contact section", YesNo.No);
-
-						ArrayList<String> result1 = bp.verifyUIOfMeetingAndCallsPopup(headerNameMeetingAndCall,
-								message);
-						if (result1.isEmpty()) {
+					else
+					{
+						log(LogStatus.ERROR, "Not able to Connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false,  "Not able to Connection icon of "+contactName);
+					}
+					
+					
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactName+" record on contact section",YesNo.No);
+						
+						ArrayList<String> result1=bp.verifyUIOfMeetingAndCallsPopup( headerNameMeetingAndCall, message);
+						if(result1.isEmpty())
+						{
 							log(LogStatus.INFO, "The UI of Meeting and call page have been verified", YesNo.No);
-							sa.assertTrue(true, "The UI of Meeting and call page have been verified");
-						} else {
-							log(LogStatus.ERROR, "The UI of Meeting and call page are not verified. " + result1,
-									YesNo.No);
-							sa.assertTrue(false, "The UI of Meeting and call page are not verified. " + result1);
-
+							sa.assertTrue(true,  "The UI of Meeting and call page have been verified");
 						}
-					} else {
-						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of " + contactName
-								+ " record on contact section", YesNo.No);
-						sa.assertTrue(false, "Not able to click on the count of meeting and call of " + contactName
-								+ " record on contact section");
-					}
+						else
+						{
+							log(LogStatus.ERROR, "The UI of Meeting and call page are not verified. "+result1, YesNo.No);
+							sa.assertTrue(false,  "The UI of Meeting and call page are not verified. "+result1);
 
-				} else {
+						}					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName+" record on contact section",	YesNo.No);		
+						sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactName+" record on contact section");
+					}
+					
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Acuity Tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open " + recordName + " reocrd", YesNo.No);
-				sa.assertTrue(false, "Not able to open " + recordName + " reocrd");
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab : " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab : " + tabObj1);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+			}
 		}
-		lp.CRMlogout();
-		sa.assertAll();
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
-
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc018_VerifyUIOfConnectionPageAndMeetingAndCallPageOnLenderRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord7;
-
-		String contactName = ATCE_ContactFullName7;
-		String message = bp.acuityDefaultMessage;
-
-		String[] meetingAndCall = ATCE_MeetingAndCallHeader.split("<break>");
-
-		ArrayList<String> headerNameMeetingAndCall = new ArrayList<String>();
-		for (String txt : meetingAndCall) {
+		String recordName=ATCERecord7;		
+		
+		String contactName=ATCE_ContactFullName7;
+		String message=bp.acuityDefaultMessage;
+		
+		String[] meetingAndCall=ATCE_MeetingAndCallHeader.split("<break>");
+		
+		ArrayList<String> headerNameMeetingAndCall=new ArrayList<String>();
+		for(String txt:meetingAndCall)
+		{
 			headerNameMeetingAndCall.add(txt);
 		}
 
-		String[] externalConnectionHeaderArr = ATCE_ConnectionHeader2.split("<break>");
-		ArrayList<String> exteralHeaderName = new ArrayList<String>();
-		for (String txt : externalConnectionHeaderArr) {
+		String[] externalConnectionHeaderArr=ATCE_ConnectionHeader2.split("<break>");
+		ArrayList<String> exteralHeaderName=new ArrayList<String>();
+		for(String txt:externalConnectionHeaderArr)
+		{
 			exteralHeaderName.add(txt);
 		}
-
-		String[] val = ATCE_ConnectionHeader1.split("<break>");
-		ArrayList<String> headerName = new ArrayList<String>();
-		for (String txt : val) {
+		
+		
+		String[] val=ATCE_ConnectionHeader1.split("<break>");
+		ArrayList<String> headerName=new ArrayList<String>();
+		for(String txt:val)
+		{
 			headerName.add(txt);
 		}
 
@@ -2189,95 +2323,112 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+				if(bp.clicktabOnPage(TabName.Acuity.toString()))
+				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
-					if (click(driver, bp.getConnectionIconOfContact(contactName, 20),
-							"Connection icon of " + contactName, action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "clicked on Connection icon of " + contactName, YesNo.No);
+					if(click(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName, action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on Connection icon of "+contactName, YesNo.No);
 
-						ArrayList<String> result = bp.verifyUIOfConnectionPopup(contactName, headerName, message,
-								exteralHeaderName, message);
-						if (result.isEmpty()) {
+						ArrayList<String> result=bp.verifyUIOfConnectionPopup(contactName, headerName, message,exteralHeaderName,message);
+						if(result.isEmpty())
+						{
 							log(LogStatus.INFO, "The UI of Connections popup have been verified", YesNo.No);
-							sa.assertTrue(true, "The UI of Connections popup have been verified");
-						} else {
-							log(LogStatus.ERROR, "The UI of Connections popup are not verified. " + result, YesNo.No);
-							sa.assertTrue(false, "The UI of Connections popup are not verified. " + result);
+							sa.assertTrue(true,  "The UI of Connections popup have been verified");
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The UI of Connections popup are not verified. "+result, YesNo.No);
+							sa.assertTrue(false,  "The UI of Connections popup are not verified. "+result);
 
 						}
-					} else {
-						log(LogStatus.ERROR, "Not able to Connection icon of " + contactName, YesNo.No);
-						sa.assertTrue(false, "Not able to Connection icon of " + contactName);
 					}
-
-					if (click(driver, bp.getMeetingAndCallCount(contactName, 20), "Meeting and call count",
-							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on the count of meeting and call of " + contactName
-								+ " record on contact section", YesNo.No);
-
-						ArrayList<String> result1 = bp.verifyUIOfMeetingAndCallsPopup(headerNameMeetingAndCall,
-								message);
-						if (result1.isEmpty()) {
+					else
+					{
+						log(LogStatus.ERROR, "Not able to Connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false,  "Not able to Connection icon of "+contactName);
+					}
+					
+					
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactName+" record on contact section",YesNo.No);
+						
+						ArrayList<String> result1=bp.verifyUIOfMeetingAndCallsPopup( headerNameMeetingAndCall, message);
+						if(result1.isEmpty())
+						{
 							log(LogStatus.INFO, "The UI of Meeting and call page have been verified", YesNo.No);
-							sa.assertTrue(true, "The UI of Meeting and call page have been verified");
-						} else {
-							log(LogStatus.ERROR, "The UI of Meeting and call page are not verified. " + result1,
-									YesNo.No);
-							sa.assertTrue(false, "The UI of Meeting and call page are not verified. " + result1);
-
+							sa.assertTrue(true,  "The UI of Meeting and call page have been verified");
 						}
-					} else {
-						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of " + contactName
-								+ " record on contact section", YesNo.No);
-						sa.assertTrue(false, "Not able to click on the count of meeting and call of " + contactName
-								+ " record on contact section");
-					}
+						else
+						{
+							log(LogStatus.ERROR, "The UI of Meeting and call page are not verified. "+result1, YesNo.No);
+							sa.assertTrue(false,  "The UI of Meeting and call page are not verified. "+result1);
 
-				} else {
+						}					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName+" record on contact section",	YesNo.No);		
+						sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactName+" record on contact section");
+					}
+					
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Acuity Tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open " + recordName + " reocrd", YesNo.No);
-				sa.assertTrue(false, "Not able to open " + recordName + " reocrd");
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab : " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab : " + tabObj1);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+			}
 		}
-		lp.CRMlogout();
-		sa.assertAll();
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
-
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc019_VerifyUIOfConnectionPageAndMeetingAndCallPageOnIntermediaryRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord9;
-
-		String contactName = ATCE_ContactFullName5;
-		String message = bp.acuityDefaultMessage;
-
-		String[] meetingAndCall = ATCE_MeetingAndCallHeader.split("<break>");
-
-		ArrayList<String> headerNameMeetingAndCall = new ArrayList<String>();
-		for (String txt : meetingAndCall) {
+		String recordName=ATCERecord9;		
+		
+		String contactName=ATCE_ContactFullName5;
+		String message=bp.acuityDefaultMessage;
+		
+		String[] meetingAndCall=ATCE_MeetingAndCallHeader.split("<break>");
+		
+		ArrayList<String> headerNameMeetingAndCall=new ArrayList<String>();
+		for(String txt:meetingAndCall)
+		{
 			headerNameMeetingAndCall.add(txt);
 		}
 
-		String[] externalConnectionHeaderArr = ATCE_ConnectionHeader2.split("<break>");
-		ArrayList<String> exteralHeaderName = new ArrayList<String>();
-		for (String txt : externalConnectionHeaderArr) {
+		String[] externalConnectionHeaderArr=ATCE_ConnectionHeader2.split("<break>");
+		ArrayList<String> exteralHeaderName=new ArrayList<String>();
+		for(String txt:externalConnectionHeaderArr)
+		{
 			exteralHeaderName.add(txt);
 		}
-
-		String[] val = ATCE_ConnectionHeader1.split("<break>");
-		ArrayList<String> headerName = new ArrayList<String>();
-		for (String txt : val) {
+		
+		
+		String[] val=ATCE_ConnectionHeader1.split("<break>");
+		ArrayList<String> headerName=new ArrayList<String>();
+		for(String txt:val)
+		{
 			headerName.add(txt);
 		}
 
@@ -2287,95 +2438,112 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+				if(bp.clicktabOnPage(TabName.Acuity.toString()))
+				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
-					if (click(driver, bp.getConnectionIconOfContact(contactName, 20),
-							"Connection icon of " + contactName, action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "clicked on Connection icon of " + contactName, YesNo.No);
+					if(click(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName, action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on Connection icon of "+contactName, YesNo.No);
 
-						ArrayList<String> result = bp.verifyUIOfConnectionPopup(contactName, headerName, message,
-								exteralHeaderName, message);
-						if (result.isEmpty()) {
+						ArrayList<String> result=bp.verifyUIOfConnectionPopup(contactName, headerName, message,exteralHeaderName,message);
+						if(result.isEmpty())
+						{
 							log(LogStatus.INFO, "The UI of Connections popup have been verified", YesNo.No);
-							sa.assertTrue(true, "The UI of Connections popup have been verified");
-						} else {
-							log(LogStatus.ERROR, "The UI of Connections popup are not verified. " + result, YesNo.No);
-							sa.assertTrue(false, "The UI of Connections popup are not verified. " + result);
+							sa.assertTrue(true,  "The UI of Connections popup have been verified");
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The UI of Connections popup are not verified. "+result, YesNo.No);
+							sa.assertTrue(false,  "The UI of Connections popup are not verified. "+result);
 
 						}
-					} else {
-						log(LogStatus.ERROR, "Not able to Connection icon of " + contactName, YesNo.No);
-						sa.assertTrue(false, "Not able to Connection icon of " + contactName);
 					}
-
-					if (click(driver, bp.getMeetingAndCallCount(contactName, 20), "Meeting and call count",
-							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on the count of meeting and call of " + contactName
-								+ " record on contact section", YesNo.No);
-
-						ArrayList<String> result1 = bp.verifyUIOfMeetingAndCallsPopup(headerNameMeetingAndCall,
-								message);
-						if (result1.isEmpty()) {
+					else
+					{
+						log(LogStatus.ERROR, "Not able to Connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false,  "Not able to Connection icon of "+contactName);
+					}
+					
+					
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactName+" record on contact section",YesNo.No);
+						
+						ArrayList<String> result1=bp.verifyUIOfMeetingAndCallsPopup( headerNameMeetingAndCall, message);
+						if(result1.isEmpty())
+						{
 							log(LogStatus.INFO, "The UI of Meeting and call page have been verified", YesNo.No);
-							sa.assertTrue(true, "The UI of Meeting and call page have been verified");
-						} else {
-							log(LogStatus.ERROR, "The UI of Meeting and call page are not verified. " + result1,
-									YesNo.No);
-							sa.assertTrue(false, "The UI of Meeting and call page are not verified. " + result1);
-
+							sa.assertTrue(true,  "The UI of Meeting and call page have been verified");
 						}
-					} else {
-						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of " + contactName
-								+ " record on contact section", YesNo.No);
-						sa.assertTrue(false, "Not able to click on the count of meeting and call of " + contactName
-								+ " record on contact section");
-					}
+						else
+						{
+							log(LogStatus.ERROR, "The UI of Meeting and call page are not verified. "+result1, YesNo.No);
+							sa.assertTrue(false,  "The UI of Meeting and call page are not verified. "+result1);
 
-				} else {
+						}					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName+" record on contact section",	YesNo.No);		
+						sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactName+" record on contact section");
+					}
+					
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Acuity Tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open " + recordName + " reocrd", YesNo.No);
-				sa.assertTrue(false, "Not able to open " + recordName + " reocrd");
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab : " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab : " + tabObj1);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+			}
 		}
-		lp.CRMlogout();
-		sa.assertAll();
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
-
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc020_VerifyUIOfConnectionPageAndMeetingAndCallPageOnPortfolioCompanyRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord11;
-
-		String contactName = ATCE_ContactFullName11;
-		String message = bp.acuityDefaultMessage;
-
-		String[] meetingAndCall = ATCE_MeetingAndCallHeader.split("<break>");
-
-		ArrayList<String> headerNameMeetingAndCall = new ArrayList<String>();
-		for (String txt : meetingAndCall) {
+		String recordName=ATCERecord11;		
+		
+		String contactName=ATCE_ContactFullName11;
+		String message=bp.acuityDefaultMessage;
+		
+		String[] meetingAndCall=ATCE_MeetingAndCallHeader.split("<break>");
+		
+		ArrayList<String> headerNameMeetingAndCall=new ArrayList<String>();
+		for(String txt:meetingAndCall)
+		{
 			headerNameMeetingAndCall.add(txt);
 		}
 
-		String[] externalConnectionHeaderArr = ATCE_ConnectionHeader2.split("<break>");
-		ArrayList<String> exteralHeaderName = new ArrayList<String>();
-		for (String txt : externalConnectionHeaderArr) {
+		String[] externalConnectionHeaderArr=ATCE_ConnectionHeader2.split("<break>");
+		ArrayList<String> exteralHeaderName=new ArrayList<String>();
+		for(String txt:externalConnectionHeaderArr)
+		{
 			exteralHeaderName.add(txt);
 		}
-
-		String[] val = ATCE_ConnectionHeader1.split("<break>");
-		ArrayList<String> headerName = new ArrayList<String>();
-		for (String txt : val) {
+		
+		
+		String[] val=ATCE_ConnectionHeader1.split("<break>");
+		ArrayList<String> headerName=new ArrayList<String>();
+		for(String txt:val)
+		{
 			headerName.add(txt);
 		}
 
@@ -2385,95 +2553,112 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+				if(bp.clicktabOnPage(TabName.Acuity.toString()))
+				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
-					if (click(driver, bp.getConnectionIconOfContact(contactName, 20),
-							"Connection icon of " + contactName, action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "clicked on Connection icon of " + contactName, YesNo.No);
+					if(click(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName, action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on Connection icon of "+contactName, YesNo.No);
 
-						ArrayList<String> result = bp.verifyUIOfConnectionPopup(contactName, headerName, message,
-								exteralHeaderName, message);
-						if (result.isEmpty()) {
+						ArrayList<String> result=bp.verifyUIOfConnectionPopup(contactName, headerName, message,exteralHeaderName,message);
+						if(result.isEmpty())
+						{
 							log(LogStatus.INFO, "The UI of Connections popup have been verified", YesNo.No);
-							sa.assertTrue(true, "The UI of Connections popup have been verified");
-						} else {
-							log(LogStatus.ERROR, "The UI of Connections popup are not verified. " + result, YesNo.No);
-							sa.assertTrue(false, "The UI of Connections popup are not verified. " + result);
+							sa.assertTrue(true,  "The UI of Connections popup have been verified");
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The UI of Connections popup are not verified. "+result, YesNo.No);
+							sa.assertTrue(false,  "The UI of Connections popup are not verified. "+result);
 
 						}
-					} else {
-						log(LogStatus.ERROR, "Not able to Connection icon of " + contactName, YesNo.No);
-						sa.assertTrue(false, "Not able to Connection icon of " + contactName);
 					}
-
-					if (click(driver, bp.getMeetingAndCallCount(contactName, 20), "Meeting and call count",
-							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on the count of meeting and call of " + contactName
-								+ " record on contact section", YesNo.No);
-
-						ArrayList<String> result1 = bp.verifyUIOfMeetingAndCallsPopup(headerNameMeetingAndCall,
-								message);
-						if (result1.isEmpty()) {
+					else
+					{
+						log(LogStatus.ERROR, "Not able to Connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false,  "Not able to Connection icon of "+contactName);
+					}
+					
+					
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactName+" record on contact section",YesNo.No);
+						
+						ArrayList<String> result1=bp.verifyUIOfMeetingAndCallsPopup( headerNameMeetingAndCall, message);
+						if(result1.isEmpty())
+						{
 							log(LogStatus.INFO, "The UI of Meeting and call page have been verified", YesNo.No);
-							sa.assertTrue(true, "The UI of Meeting and call page have been verified");
-						} else {
-							log(LogStatus.ERROR, "The UI of Meeting and call page are not verified. " + result1,
-									YesNo.No);
-							sa.assertTrue(false, "The UI of Meeting and call page are not verified. " + result1);
-
+							sa.assertTrue(true,  "The UI of Meeting and call page have been verified");
 						}
-					} else {
-						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of " + contactName
-								+ " record on contact section", YesNo.No);
-						sa.assertTrue(false, "Not able to click on the count of meeting and call of " + contactName
-								+ " record on contact section");
-					}
+						else
+						{
+							log(LogStatus.ERROR, "The UI of Meeting and call page are not verified. "+result1, YesNo.No);
+							sa.assertTrue(false,  "The UI of Meeting and call page are not verified. "+result1);
 
-				} else {
+						}					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName+" record on contact section",	YesNo.No);		
+						sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactName+" record on contact section");
+					}
+					
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Acuity Tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open " + recordName + " reocrd", YesNo.No);
-				sa.assertTrue(false, "Not able to open " + recordName + " reocrd");
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab : " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab : " + tabObj1);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+			}
 		}
-		lp.CRMlogout();
-		sa.assertAll();
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
-
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc021_VerifyUIOfConnectionPageAndMeetingAndCallPageOnPrivateEquityRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord13;
-
-		String contactName = ATCE_ContactFullName13;
-		String message = bp.acuityDefaultMessage;
-
-		String[] meetingAndCall = ATCE_MeetingAndCallHeader.split("<break>");
-
-		ArrayList<String> headerNameMeetingAndCall = new ArrayList<String>();
-		for (String txt : meetingAndCall) {
+		String recordName=ATCERecord13;		
+		
+		String contactName=ATCE_ContactFullName13;
+		String message=bp.acuityDefaultMessage;
+		
+		String[] meetingAndCall=ATCE_MeetingAndCallHeader.split("<break>");
+		
+		ArrayList<String> headerNameMeetingAndCall=new ArrayList<String>();
+		for(String txt:meetingAndCall)
+		{
 			headerNameMeetingAndCall.add(txt);
 		}
 
-		String[] externalConnectionHeaderArr = ATCE_ConnectionHeader2.split("<break>");
-		ArrayList<String> exteralHeaderName = new ArrayList<String>();
-		for (String txt : externalConnectionHeaderArr) {
+		String[] externalConnectionHeaderArr=ATCE_ConnectionHeader2.split("<break>");
+		ArrayList<String> exteralHeaderName=new ArrayList<String>();
+		for(String txt:externalConnectionHeaderArr)
+		{
 			exteralHeaderName.add(txt);
 		}
-
-		String[] val = ATCE_ConnectionHeader1.split("<break>");
-		ArrayList<String> headerName = new ArrayList<String>();
-		for (String txt : val) {
+		
+		
+		String[] val=ATCE_ConnectionHeader1.split("<break>");
+		ArrayList<String> headerName=new ArrayList<String>();
+		for(String txt:val)
+		{
 			headerName.add(txt);
 		}
 
@@ -2483,861 +2668,1155 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+				if(bp.clicktabOnPage(TabName.Acuity.toString()))
+				{
 					log(LogStatus.INFO, "Clicked on Acuity Tab", YesNo.No);
-					if (click(driver, bp.getConnectionIconOfContact(contactName, 20),
-							"Connection icon of " + contactName, action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "clicked on Connection icon of " + contactName, YesNo.No);
+					if(click(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName, action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on Connection icon of "+contactName, YesNo.No);
 
-						ArrayList<String> result = bp.verifyUIOfConnectionPopup(contactName, headerName, message,
-								exteralHeaderName, message);
-						if (result.isEmpty()) {
+						ArrayList<String> result=bp.verifyUIOfConnectionPopup(contactName, headerName, message,exteralHeaderName,message);
+						if(result.isEmpty())
+						{
 							log(LogStatus.INFO, "The UI of Connections popup have been verified", YesNo.No);
-							sa.assertTrue(true, "The UI of Connections popup have been verified");
-						} else {
-							log(LogStatus.ERROR, "The UI of Connections popup are not verified. " + result, YesNo.No);
-							sa.assertTrue(false, "The UI of Connections popup are not verified. " + result);
+							sa.assertTrue(true,  "The UI of Connections popup have been verified");
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The UI of Connections popup are not verified. "+result, YesNo.No);
+							sa.assertTrue(false,  "The UI of Connections popup are not verified. "+result);
 
 						}
-					} else {
-						log(LogStatus.ERROR, "Not able to Connection icon of " + contactName, YesNo.No);
-						sa.assertTrue(false, "Not able to Connection icon of " + contactName);
 					}
-
-					if (click(driver, bp.getMeetingAndCallCount(contactName, 20), "Meeting and call count",
-							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on the count of meeting and call of " + contactName
-								+ " record on contact section", YesNo.No);
-
-						ArrayList<String> result1 = bp.verifyUIOfMeetingAndCallsPopup(headerNameMeetingAndCall,
-								message);
-						if (result1.isEmpty()) {
+					else
+					{
+						log(LogStatus.ERROR, "Not able to Connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false,  "Not able to Connection icon of "+contactName);
+					}
+					
+					
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactName+" record on contact section",YesNo.No);
+						
+						ArrayList<String> result1=bp.verifyUIOfMeetingAndCallsPopup( headerNameMeetingAndCall, message);
+						if(result1.isEmpty())
+						{
 							log(LogStatus.INFO, "The UI of Meeting and call page have been verified", YesNo.No);
-							sa.assertTrue(true, "The UI of Meeting and call page have been verified");
-						} else {
-							log(LogStatus.ERROR, "The UI of Meeting and call page are not verified. " + result1,
-									YesNo.No);
-							sa.assertTrue(false, "The UI of Meeting and call page are not verified. " + result1);
-
+							sa.assertTrue(true,  "The UI of Meeting and call page have been verified");
 						}
-					} else {
-						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of " + contactName
-								+ " record on contact section", YesNo.No);
-						sa.assertTrue(false, "Not able to click on the count of meeting and call of " + contactName
-								+ " record on contact section");
-					}
+						else
+						{
+							log(LogStatus.ERROR, "The UI of Meeting and call page are not verified. "+result1, YesNo.No);
+							sa.assertTrue(false,  "The UI of Meeting and call page are not verified. "+result1);
 
-				} else {
+						}					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName+" record on contact section",	YesNo.No);		
+						sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactName+" record on contact section");
+					}
+					
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Acuity Tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open " + recordName + " reocrd", YesNo.No);
-				sa.assertTrue(false, "Not able to open " + recordName + " reocrd");
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab : " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab : " + tabObj1);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+			}
 		}
-		lp.CRMlogout();
-		sa.assertAll();
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
-
+	
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc022_CreateATaskAndLogACall(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-
-		String activityType = ATCE_ATActivityType1;
-		String taskSubject = ATCE_ATSubject1;
-		String taskRelatedTo = ATCE_ATRelatedTo1;
-		String taskNotes = ATCE_ATNote1;
-		String taskStatus = ATCE_AdvanceStatus1;
-		String taskPriority = ATCE_AdvancePriority1;
-		String dueDateDay = ATCE_ATDay1;
-		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy",
-				Integer.parseInt(dueDateDay));
+		
+		String activityType=ATCE_ATActivityType1;
+		String taskSubject=ATCE_ATSubject1;
+		String taskRelatedTo=ATCE_ATRelatedTo1;
+		String taskNotes=ATCE_ATNote1;
+		String taskStatus=ATCE_AdvanceStatus1;
+		String taskPriority=ATCE_AdvancePriority1;	
+		String dueDateDay=ATCE_ATDay1;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
 		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
 				"ATCE_001", excelLabel.Advance_Due_Date);
-
-		String activityType1 = ATCE_ATActivityType2;
-		String taskSubject1 = ATCE_ATSubject2;
-		String taskRelatedTo1 = ATCE_ATRelatedTo2;
-		String taskNotes1 = ATCE_ATNote2;
-		String dueDateDay1 = ATCE_ATDay2;
-		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy",
-				Integer.parseInt(dueDateDay1));
+		
+		String activityType1=ATCE_ATActivityType2;
+		String taskSubject1=ATCE_ATSubject2;
+		String taskRelatedTo1=ATCE_ATRelatedTo2;
+		String taskNotes1=ATCE_ATNote2;	
+		String dueDateDay1=ATCE_ATDay2;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
 		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
 				"ATCE_002", excelLabel.Advance_Due_Date);
-
-		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes },
-				{ "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, { "Status", taskStatus },
-				{ "Priority", taskPriority } };
-
-		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 },
-				{ "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Date", taskDueDate1 } };
-
+	
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false,
-				null, null, null, null, null, null)) {
-			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : " + taskSubject, YesNo.No);
-			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : " + taskSubject);
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 
-		} else {
-			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : " + taskSubject, YesNo.No);
-			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : " + taskSubject);
 		}
+		else
+		{
+			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+		}	 
+		
+		if (bp.createActivityTimeline(projectName, true, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null,null)) {
+			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
 
-		if (bp.createActivityTimeline(projectName, true, activityType1, basicsection1, advanceSection1, null, null,
-				false, null, null, null, null, null, null)) {
-			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : " + taskSubject1, YesNo.No);
-			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : " + taskSubject1);
-
-		} else {
-			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : " + taskSubject1, YesNo.No);
-			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : " + taskSubject1);
 		}
+		else
+		{
+			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+		}	 
 
-		lp.CRMlogout();
-		sa.assertAll();
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
-
+	
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc023_VerifyTaskCallFunctionalityOnCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord1;
-		String taskSubject = ATCE_ATSubject1;
-		String taskRelatedTo = ATCE_ATRelatedTo1;
-		String taskNotes = ATCE_ATNote1;
-		String taskStatus = ATCE_AdvanceStatus1;
-		String taskPriority = ATCE_AdvancePriority1;
-		String taskDueDate = ATCE_ATDueDate1;
+		String recordName=ATCERecord1;
+		String taskSubject=ATCE_ATSubject1;
+		String taskRelatedTo=ATCE_ATRelatedTo1;
+		String taskNotes=ATCE_ATNote1;
+		String taskStatus=ATCE_AdvanceStatus1;
+		String taskPriority=ATCE_AdvancePriority1;	
+		String taskDueDate =ATCE_ATDueDate1;
 
-		String taskSubject1 = ATCE_ATSubject2;
-		String taskRelatedTo1 = ATCE_ATRelatedTo2;
-		String taskNotes1 = ATCE_ATNote2;
+		String taskSubject1=ATCE_ATSubject2;
+		String taskRelatedTo1=ATCE_ATRelatedTo2;
+		String taskNotes1=ATCE_ATNote2;
 
-		String taskDueDate1 = ATCE_ATDueDate2;
+		String taskDueDate1 =ATCE_ATDueDate2;
 
-		String contactSectionName = ATCE_ConName1;
-		String contactSectionTitle = ATCE_ConTitle1;
-		String contactSectionDeal = ATCE_ConDeal1;
-		String contactSectionMeetingAndCalls = ATCE_ConMeetingAndCall1;
-		String contactSectionEmail = ATCE_ConEmail1;
+		String contactSectionName=ATCE_ConName1;
+		String contactSectionTitle=ATCE_ConTitle1;
+		String contactSectionDeal=ATCE_ConDeal1;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall1;
+		String contactSectionEmail=ATCE_ConEmail1;
 
-		String[] firmsTaggedName = { ATCE_TaggedFirmsName1, ATCE_TaggedFirmsName2, ATCE_TaggedFirmsName3,
-				ATCE_TaggedFirmsName4, ATCE_TaggedFirmsName5, ATCE_TaggedFirmsName6, ATCE_TaggedFirmsName7,
-				ATCE_TaggedFirmsName8, ATCE_TaggedFirmsName9 };
-		String[] firmsTaggedTimeReference = { ATCE_TaggedFirmsCount1, ATCE_TaggedFirmsCount2, ATCE_TaggedFirmsCount3,
-				ATCE_TaggedFirmsCount4, ATCE_TaggedFirmsCount5, ATCE_TaggedFirmsCount6, ATCE_TaggedFirmsCount7,
-				ATCE_TaggedFirmsCount8, ATCE_TaggedFirmsCount9 };
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName1,ATCE_TaggedFirmsName2,ATCE_TaggedFirmsName3,ATCE_TaggedFirmsName4,ATCE_TaggedFirmsName5,ATCE_TaggedFirmsName6,ATCE_TaggedFirmsName7,ATCE_TaggedFirmsName8,ATCE_TaggedFirmsName9};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount1,ATCE_TaggedFirmsCount2,ATCE_TaggedFirmsCount3,ATCE_TaggedFirmsCount4,ATCE_TaggedFirmsCount5,ATCE_TaggedFirmsCount6,ATCE_TaggedFirmsCount7,ATCE_TaggedFirmsCount8,ATCE_TaggedFirmsCount9};
 
-		String[] peopleTaggedName = { ATCE_TaggedPeopleName1, ATCE_TaggedPeopleName2, ATCE_TaggedPeopleName3,
-				ATCE_TaggedPeopleName4, ATCE_TaggedPeopleName5, ATCE_TaggedPeopleName6 };
-		String[] peopleTaggedTimeReference = { ATCE_TaggedPeopleCount1, ATCE_TaggedPeopleCount2,
-				ATCE_TaggedPeopleCount3, ATCE_TaggedPeopleCount4, ATCE_TaggedPeopleCount5, ATCE_TaggedPeopleCount6 };
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName1,ATCE_TaggedPeopleName2,ATCE_TaggedPeopleName3,ATCE_TaggedPeopleName4,ATCE_TaggedPeopleName5,ATCE_TaggedPeopleName6};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount1,ATCE_TaggedPeopleCount2,ATCE_TaggedPeopleCount3,ATCE_TaggedPeopleCount4,ATCE_TaggedPeopleCount5,ATCE_TaggedPeopleCount6};
 
-		String[] dealTaggedName = { ATCE_TaggedDealName1 };
-		String[] dealTaggedTimeReference = { ATCE_TaggedDealCount1 };
+		String[] dealTaggedName= {ATCE_TaggedDealName1};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount1};
 
-		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes },
-				{ "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, { "Status", taskStatus },
-				{ "Priority", taskPriority } };
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
-		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 },
-				{ "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Date", taskDueDate1 } };
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
 
-		String connectionUserName = crmUser6FirstName + " " + crmUser6LastName;
-		String connectionTitle = ATCE_ConnectionTitle1;
-		String connectionDeal = ATCE_ConnectionDeal1;
-		String connectionMeetingaAndCall = ATCE_ConnectionMeetingAndCall1;
-		String connectionEmail = ATCE_ConnectionEmail1;
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle1;
+		String connectionDeal=ATCE_ConnectionDeal1;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall1;
+		String connectionEmail=ATCE_ConnectionEmail1;
 
-		String userName1 = crmUser6FirstName + " " + crmUser6LastName;
-		String userName2 = crmUser7FirstName + " " + crmUser7LastName;
-		String userName3 = crmUser8FirstName + " " + crmUser8LastName;
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		String userName3=crmUser8FirstName+" "+crmUser8LastName;
 
-		String[] participantArr = ATCE_ATParticipants1.split("<break>");
-		String[] participants = new String[participantArr.length];
+		String[] participantArr=ATCE_ATParticipants2.split("<break>");
+		String[] participants=new String[participantArr.length];
 
-		for (int i = 0; i < participantArr.length; i++) {
-			if (participantArr[i].trim().equalsIgnoreCase("PE User 1")) {
-				participants[i] = userName1;
-			} else if (participantArr[i].trim().equalsIgnoreCase("PE User 2")) {
-				participants[i] = userName2;
-			} else if (participantArr[i].trim().equalsIgnoreCase("PE User 3")) {
-				participants[i] = userName3;
-			} else {
-				participants[i] = participantArr[i];
+		for(int i=0; i<participantArr.length; i++)
+		{
+			if(participantArr[i].trim().equalsIgnoreCase("PE User 1"))
+			{
+				participants[i]=userName1;
+			}
+			else if(participantArr[i].trim().equalsIgnoreCase("PE User 2"))
+			{
+				participants[i]=userName2;
+			}
+			else if(participantArr[i].trim().equalsIgnoreCase("PE User 3"))
+			{
+				participants[i]=userName3;
+			}
+			else
+			{
+				participants[i]=participantArr[i];
 			}
 		}
 
-		String[] tagsArr = ATCE_ATTags1.split("<break>");
 
-		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+		String[] tagsArr=ATCE_ATTags1.split("<break>");
+		
+		
+		//lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+		lp.CRMLogin("navatariptesting+96281@gmail.com", adminPassword, appName);
 
 		if (lp.clickOnTab(projectName, tabObj1)) {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-					ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate, IconType.Task, taskSubject,
-							taskNotes, true, false, null, null);
+					ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Task,taskSubject, taskNotes, true, false,null,null);
 					if (result.isEmpty()) {
-						log(LogStatus.PASS, taskSubject + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject + " record has been verified on intraction");
+						log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
+						sa.assertTrue(true,taskSubject + " record has been verified on intraction");
 					} else {
-						log(LogStatus.ERROR, taskSubject + " record is not verified on intraction. " + result,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject + " record is not verified on intraction. " + result);
+						log(LogStatus.ERROR,taskSubject + " record is not verified on intraction. "+result,YesNo.No);
+						sa.assertTrue(false,taskSubject + " record is not verified on intraction. "+result);
 					}
 
-					ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1, IconType.Call,
-							taskSubject1, taskNotes1, true, false, null, null);
+					ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1,IconType.Call,taskSubject1, taskNotes1, true, false,null,null);
 					if (result1.isEmpty()) {
-						log(LogStatus.PASS, taskSubject1 + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject1 + " record has been verified on intraction");
+						log(LogStatus.PASS,taskSubject1 + " record has been verified on intraction",YesNo.No);
+						sa.assertTrue(true,taskSubject1 + " record has been verified on intraction");
 					} else {
-						log(LogStatus.ERROR, taskSubject1 + " record is not verified on intraction. " + result1,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject1 + " record is not verified on intraction. " + result1);
+						log(LogStatus.ERROR,taskSubject1 + " record is not verified on intraction. "+result1,YesNo.No);
+						sa.assertTrue(false,taskSubject1 + " record is not verified on intraction. "+result1);
 					}
 
-					ArrayList<String> result2 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection,
-							advanceSection, IconType.Task, PageName.AcuityDetails);
+					ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.AcuityDetails);
 
-					if (result2.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2);
+					if(result2.isEmpty())
+					{
+						log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+						sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+					}
+					else
+					{
+						log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+						sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
 
 					}
 
-					ArrayList<String> result3 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1,
-							basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
+					ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
 
-					if (result3.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject1 + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject1 + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3);
+					if(result3.isEmpty())
+					{
+						log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+						sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+					}
+					else
+					{
+						log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+						sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 
 					}
 
-					ArrayList<String> result4 = bp.verifyRecordOnContactSectionAcuity(contactSectionName,
-							contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls,
-							contactSectionEmail);
-					if (result4.isEmpty()) {
-						log(LogStatus.INFO,
-								contactSectionName + " record on Contact section has been verified for " + recordName,
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, contactSectionName + " record on Contact section is not verified for "
-								+ recordName + ". " + result4, YesNo.No);
-						sa.assertTrue(false, contactSectionName + " record on Contact section is not verified for "
-								+ recordName + ". " + result4);
-					}
+					String currentUrl = getURL(driver, 10);
+					refresh(driver);
 
-					ArrayList<String> result5 = bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName,
-							firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName,
-							dealTaggedTimeReference, isInstitutionRecord, null, null);
-					if (result5.isEmpty()) {
-						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The record name and Time reference are not verifed. " + result5,
-								YesNo.No);
-						sa.assertTrue(false, "The record name and Time reference are not verifed." + result5);
-					}
-
-					if (click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count",
-							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on the count of meeting and call of " + contactSectionName
-								+ " record on contact section", YesNo.No);
-
-						ArrayList<String> result6 = bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call",
-								taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
-						if (result6.isEmpty()) {
-							log(LogStatus.INFO,
-									"The records on meeting & calls popup have been verified for " + recordName,
-									YesNo.No);
+					if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject,20), "Edit button of "+taskSubject))
+					{
+						log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+						ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+						if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+							log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
 						} else {
-							log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "
-									+ recordName + ". " + result6, YesNo.No);
-							sa.assertTrue(false, "The records on meeting & calls popup are not verified for "
-									+ recordName + ". " + result6);
+							log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+							sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
 						}
-
-					} else {
-						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "
-								+ contactSectionName + " record on contact section", YesNo.No);
-						sa.assertTrue(false, "Not able to click on the count of meeting and call of "
-								+ contactSectionName + " record on contact section");
 					}
-
-					ArrayList<String> result7 = bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName,
-							connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall,
-							connectionEmail);
-					if (result7.isEmpty()) {
-						log(LogStatus.INFO,
-								"The records on Connection popup have been verified for " + contactSectionName,
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The records on Connection popup are not verified for "
-								+ contactSectionName + ". " + result7, YesNo.No);
-						sa.assertTrue(false, "The records on Connection popup are not verified for "
-								+ contactSectionName + ". " + result7);
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+						sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject);
 					}
+					refresh(driver);
 
-					if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30),
-							"Contact Name: " + contactSectionName, action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
-						String parentID = switchOnWindow(driver);
-						if (CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),
-								"Count of " + userName1 + " on contact section", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "clicked on count of " + userName1, YesNo.No);
-							ArrayList<String> result6 = bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call",
-									taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
-							if (result6.isEmpty()) {
-								log(LogStatus.INFO,
-										"The records on meeting & calls popup have been verified for " + recordName,
-										YesNo.No);
+					if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject, 20), "Subject name "+taskSubject))
+					{
+						log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+						if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+							ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+							if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
 							} else {
-								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "
-										+ recordName + ". " + result6, YesNo.No);
-								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "
-										+ recordName + ". " + result6);
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
 							}
-						} else {
-							log(LogStatus.ERROR, "Not able to click on count of " + contactSectionName, YesNo.No);
-							sa.assertTrue(false, "Not able to click on count of " + contactSectionName);
 						}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+							sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+						}
+
+					}
+					else
+					{
+						log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+						sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+					}
+
+					refresh(driver);
+					if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject1,20), "Edit button of "+taskSubject1))
+					{
+						log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+						ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+						if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+							log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+						} else {
+							log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+							sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+						sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject1);
+					}
+					refresh(driver);
+					if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject1, 20), "Subject name "+taskSubject1))
+					{
+						log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+						if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+							ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+							if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+						}
+
+
+					}
+					else
+					{
+						log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+						sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+					}
+
+
+
+					ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+					if(result4.isEmpty())
+					{
+						log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+						sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+					}
+
+					ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+					if(result5.isEmpty())
+					{
+						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+						sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+					}
+
+					if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+
+						ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
+						if(result6.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+							sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+						}
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+						sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+					}
+
+
+					ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+					if(result7.isEmpty())
+					{
+						log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+						sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+					}
+
+					if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+						String parentID=switchOnWindow(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+						}		
 						driver.close();
 						driver.switchTo().window(parentID);
-					} else {
-						log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName,
-								YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
 						sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
 					}
 
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj1);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
 		}
 
-		lp.CRMlogout();
-		sa.assertAll();
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc024_VerifyTaskCallFunctionalityOnAdvisorRecordType(String projectName) {
+	public void ATCETc024_VerifyTaskCallFunctionalityOnAdvisorRecordType(String projectName) { 
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord5;
-		String taskSubject = ATCE_ATSubject1;
-		String taskRelatedTo = ATCE_ATRelatedTo1;
-		String taskNotes = ATCE_ATNote1;
-		String taskStatus = ATCE_AdvanceStatus1;
-		String taskPriority = ATCE_AdvancePriority1;
-		String taskDueDate = ATCE_ATDueDate1;
+		String recordName=ATCERecord5;
+		String taskSubject=ATCE_ATSubject1;
+		String taskRelatedTo=ATCE_ATRelatedTo1;
+		String taskNotes=ATCE_ATNote1;
+		String taskStatus=ATCE_AdvanceStatus1;
+		String taskPriority=ATCE_AdvancePriority1;	
+		String taskDueDate =ATCE_ATDueDate1;
+		
+		String taskSubject1=ATCE_ATSubject2;
+		String taskRelatedTo1=ATCE_ATRelatedTo2;
+		String taskNotes1=ATCE_ATNote2;
+		
+		String taskDueDate1 =ATCE_ATDueDate2;
+		
+		String contactSectionName=ATCE_ConName2;
+		String contactSectionTitle=ATCE_ConTitle2;
+		String contactSectionDeal=ATCE_ConDeal2;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall2;
+		String contactSectionEmail=ATCE_ConEmail2;
 
-		String taskSubject1 = ATCE_ATSubject2;
-		String taskRelatedTo1 = ATCE_ATRelatedTo2;
-		String taskNotes1 = ATCE_ATNote2;
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName1,ATCE_TaggedFirmsName2,ATCE_TaggedFirmsName4,ATCE_TaggedFirmsName5,ATCE_TaggedFirmsName6,ATCE_TaggedFirmsName7,ATCE_TaggedFirmsName8,ATCE_TaggedFirmsName9,ATCE_TaggedFirmsName10};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount1,ATCE_TaggedFirmsCount2,ATCE_TaggedFirmsCount4,ATCE_TaggedFirmsCount5,ATCE_TaggedFirmsCount6,ATCE_TaggedFirmsCount7,ATCE_TaggedFirmsCount8,ATCE_TaggedFirmsCount9,ATCE_TaggedFirmsCount10};
 
-		String taskDueDate1 = ATCE_ATDueDate2;
-
-		String contactSectionName = ATCE_ConName2;
-		String contactSectionTitle = ATCE_ConTitle2;
-		String contactSectionDeal = ATCE_ConDeal2;
-		String contactSectionMeetingAndCalls = ATCE_ConMeetingAndCall2;
-		String contactSectionEmail = ATCE_ConEmail2;
-
-		String[] firmsTaggedName = { ATCE_TaggedFirmsName1, ATCE_TaggedFirmsName2, ATCE_TaggedFirmsName4,
-				ATCE_TaggedFirmsName5, ATCE_TaggedFirmsName6, ATCE_TaggedFirmsName7, ATCE_TaggedFirmsName8,
-				ATCE_TaggedFirmsName9, ATCE_TaggedFirmsName10 };
-		String[] firmsTaggedTimeReference = { ATCE_TaggedFirmsCount1, ATCE_TaggedFirmsCount2, ATCE_TaggedFirmsCount4,
-				ATCE_TaggedFirmsCount5, ATCE_TaggedFirmsCount6, ATCE_TaggedFirmsCount7, ATCE_TaggedFirmsCount8,
-				ATCE_TaggedFirmsCount9, ATCE_TaggedFirmsCount10 };
-
-		String[] peopleTaggedName = { ATCE_TaggedPeopleName1, ATCE_TaggedPeopleName2, ATCE_TaggedPeopleName3,
-				ATCE_TaggedPeopleName5, ATCE_TaggedPeopleName6, ATCE_TaggedPeopleName7 };
-		String[] peopleTaggedTimeReference = { ATCE_TaggedPeopleCount1, ATCE_TaggedPeopleCount2,
-				ATCE_TaggedPeopleCount3, ATCE_TaggedPeopleCount5, ATCE_TaggedPeopleCount6, ATCE_TaggedPeopleCount7 };
-
-		String[] dealTaggedName = { ATCE_TaggedDealName1 };
-		String[] dealTaggedTimeReference = { ATCE_TaggedDealCount1 };
-
-		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes },
-				{ "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, { "Status", taskStatus },
-				{ "Priority", taskPriority } };
-
-		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 },
-				{ "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Date", taskDueDate1 } };
-
-		String connectionUserName = crmUser6FirstName + " " + crmUser6LastName;
-		String connectionTitle = ATCE_ConnectionTitle1;
-		String connectionDeal = ATCE_ConnectionDeal1;
-		String connectionMeetingaAndCall = ATCE_ConnectionMeetingAndCall1;
-		String connectionEmail = ATCE_ConnectionEmail1;
-
-		String userName1 = crmUser6FirstName + " " + crmUser6LastName;
-		String userName2 = crmUser7FirstName + " " + crmUser7LastName;
-		String userName3 = crmUser8FirstName + " " + crmUser8LastName;
-
-		String[] participantArr = ATCE_ATParticipants1.split("<break>");
-		String[] participants = new String[participantArr.length];
-
-		for (int i = 0; i < participantArr.length; i++) {
-			if (participantArr[i].trim().equalsIgnoreCase("PE User 1")) {
-				participants[i] = userName1;
-			} else if (participantArr[i].trim().equalsIgnoreCase("PE User 2")) {
-				participants[i] = userName2;
-			} else if (participantArr[i].trim().equalsIgnoreCase("PE User 3")) {
-				participants[i] = userName3;
-			} else {
-				participants[i] = participantArr[i];
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName1,ATCE_TaggedPeopleName2,ATCE_TaggedPeopleName3,ATCE_TaggedPeopleName5,ATCE_TaggedPeopleName6,ATCE_TaggedPeopleName7};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount1,ATCE_TaggedPeopleCount2,ATCE_TaggedPeopleCount3,ATCE_TaggedPeopleCount5,ATCE_TaggedPeopleCount6,ATCE_TaggedPeopleCount7};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName1};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount1};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle1;
+		String connectionDeal=ATCE_ConnectionDeal1;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall1;
+		String connectionEmail=ATCE_ConnectionEmail1;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		String userName3=crmUser8FirstName+" "+crmUser8LastName;
+		
+		String[] participantArr=ATCE_ATParticipants2.split("<break>");
+		String[] participants=new String[participantArr.length];
+		
+		for(int i=0; i<participantArr.length; i++)
+		{
+			if(participantArr[i].trim().equalsIgnoreCase("PE User 1"))
+			{
+				participants[i]=userName1;
+			}
+			else if(participantArr[i].trim().equalsIgnoreCase("PE User 2"))
+			{
+				participants[i]=userName2;
+			}
+			else if(participantArr[i].trim().equalsIgnoreCase("PE User 3"))
+			{
+				participants[i]=userName3;
+			}
+			else
+			{
+				participants[i]=participantArr[i];
 			}
 		}
-
-		String[] tagsArr = ATCE_ATTags1.split("<break>");
-
+		
+		
+		String[] tagsArr=ATCE_ATTags1.split("<break>");
+		
+		
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (lp.clickOnTab(projectName, tabObj1)) {
+			if (lp.clickOnTab(projectName, tabObj1)) {
 
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
-				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
-					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-					ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate, IconType.Task, taskSubject,
-							taskNotes, true, false, null, null);
-					if (result.isEmpty()) {
-						log(LogStatus.PASS, taskSubject + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject + " record is not verified on intraction. " + result,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject + " record is not verified on intraction. " + result);
-					}
-
-					ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1, IconType.Call,
-							taskSubject1, taskNotes1, true, false, null, null);
-					if (result1.isEmpty()) {
-						log(LogStatus.PASS, taskSubject1 + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject1 + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject1 + " record is not verified on intraction. " + result1,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject1 + " record is not verified on intraction. " + result1);
-					}
-
-					ArrayList<String> result2 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection,
-							advanceSection, IconType.Task, PageName.AcuityDetails);
-
-					if (result2.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2);
-
-					}
-
-					ArrayList<String> result3 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1,
-							basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
-
-					if (result3.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject1 + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject1 + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3);
-
-					}
-
-					ArrayList<String> result4 = bp.verifyRecordOnContactSectionAcuity(contactSectionName,
-							contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls,
-							contactSectionEmail);
-					if (result4.isEmpty()) {
-						log(LogStatus.INFO,
-								contactSectionName + " record on Contact section has been verified for " + recordName,
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, contactSectionName + " record on Contact section is not verified for "
-								+ recordName + ". " + result4, YesNo.No);
-						sa.assertTrue(false, contactSectionName + " record on Contact section is not verified for "
-								+ recordName + ". " + result4);
-					}
-
-					ArrayList<String> result5 = bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName,
-							firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName,
-							dealTaggedTimeReference, isInstitutionRecord, null, null);
-					if (result5.isEmpty()) {
-						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The record name and Time reference are not verifed. " + result5,
-								YesNo.No);
-						sa.assertTrue(false, "The record name and Time reference are not verifed." + result5);
-					}
-
-					if (click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count",
-							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on the count of meeting and call of " + contactSectionName
-								+ " record on contact section", YesNo.No);
-
-						ArrayList<String> result6 = bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call",
-								taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
-						if (result6.isEmpty()) {
-							log(LogStatus.INFO,
-									"The records on meeting & calls popup have been verified for " + recordName,
-									YesNo.No);
+						ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Task,taskSubject, taskNotes, true, false,null,null);
+						if (result.isEmpty()) {
+							log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject + " record has been verified on intraction");
 						} else {
-							log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "
-									+ recordName + ". " + result6, YesNo.No);
-							sa.assertTrue(false, "The records on meeting & calls popup are not verified for "
-									+ recordName + ". " + result6);
+							log(LogStatus.ERROR,taskSubject + " record is not verified on intraction. "+result,YesNo.No);
+							sa.assertTrue(false,taskSubject + " record is not verified on intraction. "+result);
 						}
+						
+						ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1,IconType.Call,taskSubject1, taskNotes1, true, false,null,null);
+						if (result1.isEmpty()) {
+							log(LogStatus.PASS,taskSubject1 + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject1 + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject1 + " record is not verified on intraction. "+result1,YesNo.No);
+							sa.assertTrue(false,taskSubject1 + " record is not verified on intraction. "+result1);
+						}
+						
+						ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.AcuityDetails);
+						
+						if(result2.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+							sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+							
+						}
+						
+                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
+						
+						if(result3.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.ERROR,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+							sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+							
+						}
+						
+												
+						String currentUrl = getURL(driver, 10);
+						refresh(driver);
 
-					} else {
-						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "
-								+ contactSectionName + " record on contact section", YesNo.No);
-						sa.assertTrue(false, "Not able to click on the count of meeting and call of "
-								+ contactSectionName + " record on contact section");
-					}
-
-					ArrayList<String> result7 = bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName,
-							connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall,
-							connectionEmail);
-					if (result7.isEmpty()) {
-						log(LogStatus.INFO,
-								"The records on Connection popup have been verified for " + contactSectionName,
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The records on Connection popup are not verified for "
-								+ contactSectionName + ". " + result7, YesNo.No);
-						sa.assertTrue(false, "The records on Connection popup are not verified for "
-								+ contactSectionName + ". " + result7);
-					}
-
-					if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30),
-							"Contact Name: " + contactSectionName, action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
-						String parentID = switchOnWindow(driver);
-						if (CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),
-								"Count of " + userName1 + " on contact section", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "clicked on count of " + userName1, YesNo.No);
-							ArrayList<String> result6 = bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call",
-									taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
-							if (result6.isEmpty()) {
-								log(LogStatus.INFO,
-										"The records on meeting & calls popup have been verified for " + recordName,
-										YesNo.No);
+						if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject,20), "Edit button of "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
 							} else {
-								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "
-										+ recordName + ". " + result6, YesNo.No);
-								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "
-										+ recordName + ". " + result6);
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
 							}
-						} else {
-							log(LogStatus.ERROR, "Not able to click on count of " + contactSectionName, YesNo.No);
-							sa.assertTrue(false, "Not able to click on count of " + contactSectionName);
 						}
-						driver.close();
-						driver.switchTo().window(parentID);
-					} else {
-						log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName,
-								YesNo.No);
-						sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject);
+						}
+						refresh(driver);
+
+						if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject, 20), "Subject name "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+								ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+								if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+									log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+									sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+						}
+
+						refresh(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject1,20), "Edit button of "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject1);
+						}
+						refresh(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject1, 20), "Subject name "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+								ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+								if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+									log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+									sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+							}
+
+
+						}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+						}
+
+						
+						
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+						
 					}
-
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj1);
-		}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
 
-		lp.CRMlogout();
-		sa.assertAll();
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
-
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc025_VerifyTaskCallFunctionalityOnLendorRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord7;
-		String taskSubject = ATCE_ATSubject1;
-		String taskRelatedTo = ATCE_ATRelatedTo1;
-		String taskNotes = ATCE_ATNote1;
-		String taskStatus = ATCE_AdvanceStatus1;
-		String taskPriority = ATCE_AdvancePriority1;
-		String taskDueDate = ATCE_ATDueDate1;
+		String recordName=ATCERecord7;
+		String taskSubject=ATCE_ATSubject1;
+		String taskRelatedTo=ATCE_ATRelatedTo1;
+		String taskNotes=ATCE_ATNote1;
+		String taskStatus=ATCE_AdvanceStatus1;
+		String taskPriority=ATCE_AdvancePriority1;	
+		String taskDueDate =ATCE_ATDueDate1;
+		
+		String taskSubject1=ATCE_ATSubject2;
+		String taskRelatedTo1=ATCE_ATRelatedTo2;
+		String taskNotes1=ATCE_ATNote2;
+		
+		String taskDueDate1 =ATCE_ATDueDate2;
+		
+		String contactSectionName=ATCE_ConName3;
+		String contactSectionTitle=ATCE_ConTitle3;
+		String contactSectionDeal=ATCE_ConDeal3;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall3;
+		String contactSectionEmail=ATCE_ConEmail3;
 
-		String taskSubject1 = ATCE_ATSubject2;
-		String taskRelatedTo1 = ATCE_ATRelatedTo2;
-		String taskNotes1 = ATCE_ATNote2;
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName1,ATCE_TaggedFirmsName2,ATCE_TaggedFirmsName3,ATCE_TaggedFirmsName5,ATCE_TaggedFirmsName6,ATCE_TaggedFirmsName7,ATCE_TaggedFirmsName8,ATCE_TaggedFirmsName9,ATCE_TaggedFirmsName10};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount1,ATCE_TaggedFirmsCount3,ATCE_TaggedFirmsCount4,ATCE_TaggedFirmsCount5,ATCE_TaggedFirmsCount6,ATCE_TaggedFirmsCount7,ATCE_TaggedFirmsCount8,ATCE_TaggedFirmsCount9,ATCE_TaggedFirmsCount10};
 
-		String taskDueDate1 = ATCE_ATDueDate2;
-
-		String contactSectionName = ATCE_ConName3;
-		String contactSectionTitle = ATCE_ConTitle3;
-		String contactSectionDeal = ATCE_ConDeal3;
-		String contactSectionMeetingAndCalls = ATCE_ConMeetingAndCall3;
-		String contactSectionEmail = ATCE_ConEmail3;
-
-		String[] firmsTaggedName = { ATCE_TaggedFirmsName1, ATCE_TaggedFirmsName2, ATCE_TaggedFirmsName3,
-				ATCE_TaggedFirmsName5, ATCE_TaggedFirmsName6, ATCE_TaggedFirmsName7, ATCE_TaggedFirmsName8,
-				ATCE_TaggedFirmsName9, ATCE_TaggedFirmsName10 };
-		String[] firmsTaggedTimeReference = { ATCE_TaggedFirmsCount1, ATCE_TaggedFirmsCount3, ATCE_TaggedFirmsCount4,
-				ATCE_TaggedFirmsCount5, ATCE_TaggedFirmsCount6, ATCE_TaggedFirmsCount7, ATCE_TaggedFirmsCount8,
-				ATCE_TaggedFirmsCount9, ATCE_TaggedFirmsCount10 };
-
-		String[] peopleTaggedName = { ATCE_TaggedPeopleName1, ATCE_TaggedPeopleName2, ATCE_TaggedPeopleName3,
-				ATCE_TaggedPeopleName4, ATCE_TaggedPeopleName5, ATCE_TaggedPeopleName6, ATCE_TaggedPeopleName7 };
-		String[] peopleTaggedTimeReference = { ATCE_TaggedPeopleCount1, ATCE_TaggedPeopleCount2,
-				ATCE_TaggedPeopleCount3, ATCE_TaggedPeopleCount4, ATCE_TaggedPeopleCount5, ATCE_TaggedPeopleCount6,
-				ATCE_TaggedPeopleCount7 };
-
-		String[] dealTaggedName = { ATCE_TaggedDealName1 };
-		String[] dealTaggedTimeReference = { ATCE_TaggedDealCount1 };
-
-		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes },
-				{ "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, { "Status", taskStatus },
-				{ "Priority", taskPriority } };
-
-		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 },
-				{ "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Date", taskDueDate1 } };
-
-		String contactName = ATCE_ContactFullName7;
-		String message = bp.acuityDefaultMessage;
-
-		String[] meetingAndCall = ATCE_MeetingAndCallHeader.split("<break>");
-
-		ArrayList<String> headerNameMeetingAndCall = new ArrayList<String>();
-		for (String txt : meetingAndCall) {
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName1,ATCE_TaggedPeopleName2,ATCE_TaggedPeopleName3,ATCE_TaggedPeopleName4,ATCE_TaggedPeopleName5,ATCE_TaggedPeopleName6,ATCE_TaggedPeopleName7};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount1,ATCE_TaggedPeopleCount2,ATCE_TaggedPeopleCount3,ATCE_TaggedPeopleCount4,ATCE_TaggedPeopleCount5,ATCE_TaggedPeopleCount6,ATCE_TaggedPeopleCount7};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName1};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount1};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+	
+		String contactName=ATCE_ContactFullName7;
+		String message=bp.acuityDefaultMessage;
+		
+		String[] meetingAndCall=ATCE_MeetingAndCallHeader.split("<break>");
+		
+		ArrayList<String> headerNameMeetingAndCall=new ArrayList<String>();
+		for(String txt:meetingAndCall)
+		{
 			headerNameMeetingAndCall.add(txt);
 		}
 
-		String[] externalConnectionHeaderArr = ATCE_ConnectionHeader2.split("<break>");
-		ArrayList<String> exteralHeaderName = new ArrayList<String>();
-		for (String txt : externalConnectionHeaderArr) {
+		String[] externalConnectionHeaderArr=ATCE_ConnectionHeader2.split("<break>");
+		ArrayList<String> exteralHeaderName=new ArrayList<String>();
+		for(String txt:externalConnectionHeaderArr)
+		{
 			exteralHeaderName.add(txt);
-		}
-		String[] val = ATCE_ConnectionHeader1.split("<break>");
-		ArrayList<String> headerName = new ArrayList<String>();
-		for (String txt : val) {
+		}		
+		String[] val=ATCE_ConnectionHeader1.split("<break>");
+		ArrayList<String> headerName=new ArrayList<String>();
+		for(String txt:val)
+		{
 			headerName.add(txt);
 		}
-
+		
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
-		if (lp.clickOnTab(projectName, tabObj1)) {
+			if (lp.clickOnTab(projectName, tabObj1)) {
 
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
-				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
-					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-					ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate, IconType.Task, taskSubject,
-							taskNotes, true, false, null, null);
-					if (result.isEmpty()) {
-						log(LogStatus.PASS, taskSubject + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject + " record is not verified on intraction. " + result,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject + " record is not verified on intraction. " + result);
-					}
-
-					ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1, IconType.Call,
-							taskSubject1, taskNotes1, true, false, null, null);
-					if (result1.isEmpty()) {
-						log(LogStatus.PASS, taskSubject1 + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject1 + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject1 + " record is not verified on intraction. " + result1,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject1 + " record is not verified on intraction. " + result1);
-					}
-
-					ArrayList<String> result2 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection,
-							advanceSection, IconType.Task, PageName.AcuityDetails);
-
-					if (result2.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2);
-
-					}
-
-					ArrayList<String> result3 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1,
-							basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
-
-					if (result3.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject1 + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject1 + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3);
-
-					}
-
-					ArrayList<String> result4 = bp.verifyRecordOnContactSectionAcuity(contactSectionName,
-							contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls,
-							contactSectionEmail);
-					if (result4.isEmpty()) {
-						log(LogStatus.INFO,
-								contactSectionName + " record on Contact section has been verified for " + recordName,
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, contactSectionName + " record on Contact section is not verified for "
-								+ recordName + ". " + result4, YesNo.No);
-						sa.assertTrue(false, contactSectionName + " record on Contact section is not verified for "
-								+ recordName + ". " + result4);
-					}
-
-					ArrayList<String> result5 = bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName,
-							firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName,
-							dealTaggedTimeReference, isInstitutionRecord, null, null);
-					if (result5.isEmpty()) {
-						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The record name and Time reference are not verifed. " + result5,
-								YesNo.No);
-						sa.assertTrue(false, "The record name and Time reference are not verifed." + result5);
-					}
-
-					if (click(driver, bp.getConnectionIconOfContact(contactName, 20),
-							"Connection icon of " + contactName, action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "clicked on Connection icon of " + contactName, YesNo.No);
-
-						ArrayList<String> result6 = bp.verifyUIOfConnectionPopup(contactName, headerName, message,
-								exteralHeaderName, message);
-						if (result6.isEmpty()) {
-							log(LogStatus.INFO, "The UI of Connections popup have been verified", YesNo.No);
-							sa.assertTrue(true, "The UI of Connections popup have been verified");
+						ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Task,taskSubject, taskNotes, true, false,null,null);
+						if (result.isEmpty()) {
+							log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject + " record has been verified on intraction");
 						} else {
-							log(LogStatus.ERROR, "The UI of Connections popup are not verified. " + result6, YesNo.No);
-							sa.assertTrue(false, "The UI of Connections popup are not verified. " + result6);
+							log(LogStatus.ERROR,taskSubject + " record is not verified on intraction. "+result,YesNo.No);
+							sa.assertTrue(false,taskSubject + " record is not verified on intraction. "+result);
+						}
+						
+						ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1,IconType.Call,taskSubject1, taskNotes1, true, false,null,null);
+						if (result1.isEmpty()) {
+							log(LogStatus.PASS,taskSubject1 + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject1 + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject1 + " record is not verified on intraction. "+result1,YesNo.No);
+							sa.assertTrue(false,taskSubject1 + " record is not verified on intraction. "+result1);
+						}
+						
+						ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.AcuityDetails);
+						
+						if(result2.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.ERROR,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+							sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+							
+						}
+						
+                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
+						
+						if(result3.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.ERROR,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+							sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+							
+						}
+						
+						
+						String currentUrl = getURL(driver, 10);
+						refresh(driver);
+
+						if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject,20), "Edit button of "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject);
+						}
+						refresh(driver);
+
+						if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject, 20), "Subject name "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+								ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+								if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+									log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+									sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+							}
 
 						}
-					} else {
-						log(LogStatus.ERROR, "Not able to Connection icon of " + contactName, YesNo.No);
-						sa.assertTrue(false, "Not able to Connection icon of " + contactName);
-					}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+						}
 
-					if (click(driver, bp.getMeetingAndCallCount(contactName, 20), "Meeting and call count",
-							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on the count of meeting and call of " + contactName
-								+ " record on contact section", YesNo.No);
+						refresh(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject1,20), "Edit button of "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject1);
+						}
+						refresh(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject1, 20), "Subject name "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
 
-						ArrayList<String> result7 = bp.verifyUIOfMeetingAndCallsPopup(headerNameMeetingAndCall,
-								message);
-						if (result7.isEmpty()) {
-							log(LogStatus.INFO, "The UI of Meeting and call page have been verified", YesNo.No);
-							sa.assertTrue(true, "The UI of Meeting and call page have been verified");
-						} else {
-							log(LogStatus.ERROR, "The UI of Meeting and call page are not verified. " + result7,
-									YesNo.No);
-							sa.assertTrue(false, "The UI of Meeting and call page are not verified. " + result7);
+								ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+								if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+									log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+									sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+							}
+
 
 						}
-					} else {
-						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of " + contactName
-								+ " record on contact section", YesNo.No);
-						sa.assertTrue(false, "Not able to click on the count of meeting and call of " + contactName
-								+ " record on contact section");
-					}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+						}
 
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
+						
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName, action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on Connection icon of "+contactName, YesNo.No);
+
+							ArrayList<String> result6=bp.verifyUIOfConnectionPopup(contactName, headerName, message,exteralHeaderName,message);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The UI of Connections popup have been verified", YesNo.No);
+								sa.assertTrue(true,  "The UI of Connections popup have been verified");
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The UI of Connections popup are not verified. "+result6, YesNo.No);
+								sa.assertTrue(false,  "The UI of Connections popup are not verified. "+result6);
+
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to Connection icon of "+contactName, YesNo.No);
+							sa.assertTrue(false,  "Not able to Connection icon of "+contactName);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result7=bp.verifyUIOfMeetingAndCallsPopup( headerNameMeetingAndCall, message);
+							if(result7.isEmpty())
+							{
+								log(LogStatus.INFO, "The UI of Meeting and call page have been verified", YesNo.No);
+								sa.assertTrue(true,  "The UI of Meeting and call page have been verified");
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The UI of Meeting and call page are not verified. "+result7, YesNo.No);
+								sa.assertTrue(false,  "The UI of Meeting and call page are not verified. "+result7);
+
+							}					
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactName+" record on contact section");
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj1);
-		}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
 
-		lp.CRMlogout();
-		sa.assertAll();
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
 
 	@Parameters({ "projectName" })
@@ -3346,773 +3825,2559 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord9;
-		String taskSubject = ATCE_ATSubject1;
-		String taskRelatedTo = ATCE_ATRelatedTo1;
-		String taskNotes = ATCE_ATNote1;
-		String taskStatus = ATCE_AdvanceStatus1;
-		String taskPriority = ATCE_AdvancePriority1;
-		String taskDueDate = ATCE_ATDueDate1;
+		String recordName=ATCERecord9;
+		String taskSubject=ATCE_ATSubject1;
+		String taskRelatedTo=ATCE_ATRelatedTo1;
+		String taskNotes=ATCE_ATNote1;
+		String taskStatus=ATCE_AdvanceStatus1;
+		String taskPriority=ATCE_AdvancePriority1;	
+		String taskDueDate =ATCE_ATDueDate1;
+		
+		String taskSubject1=ATCE_ATSubject2;
+		String taskRelatedTo1=ATCE_ATRelatedTo2;
+		String taskNotes1=ATCE_ATNote2;
+		
+		String taskDueDate1 =ATCE_ATDueDate2;
+		
+		String contactSectionName=ATCE_ConName4;
+		String contactSectionTitle=ATCE_ConTitle4;
+		String contactSectionDeal=ATCE_ConDeal4;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall4;
+		String contactSectionEmail=ATCE_ConEmail4;
 
-		String taskSubject1 = ATCE_ATSubject2;
-		String taskRelatedTo1 = ATCE_ATRelatedTo2;
-		String taskNotes1 = ATCE_ATNote2;
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName1,ATCE_TaggedFirmsName2,ATCE_TaggedFirmsName3,ATCE_TaggedFirmsName4,ATCE_TaggedFirmsName5,ATCE_TaggedFirmsName7,ATCE_TaggedFirmsName8,ATCE_TaggedFirmsName9,ATCE_TaggedFirmsName10};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount1,ATCE_TaggedFirmsCount3,ATCE_TaggedFirmsCount4,ATCE_TaggedFirmsCount4,ATCE_TaggedFirmsCount5,ATCE_TaggedFirmsCount7,ATCE_TaggedFirmsCount8,ATCE_TaggedFirmsCount9,ATCE_TaggedFirmsCount10};
 
-		String taskDueDate1 = ATCE_ATDueDate2;
-
-		String contactSectionName = ATCE_ConName4;
-		String contactSectionTitle = ATCE_ConTitle4;
-		String contactSectionDeal = ATCE_ConDeal4;
-		String contactSectionMeetingAndCalls = ATCE_ConMeetingAndCall4;
-		String contactSectionEmail = ATCE_ConEmail4;
-
-		String[] firmsTaggedName = { ATCE_TaggedFirmsName1, ATCE_TaggedFirmsName2, ATCE_TaggedFirmsName3,
-				ATCE_TaggedFirmsName4, ATCE_TaggedFirmsName5, ATCE_TaggedFirmsName7, ATCE_TaggedFirmsName8,
-				ATCE_TaggedFirmsName9, ATCE_TaggedFirmsName10 };
-		String[] firmsTaggedTimeReference = { ATCE_TaggedFirmsCount1, ATCE_TaggedFirmsCount3, ATCE_TaggedFirmsCount4,
-				ATCE_TaggedFirmsCount4, ATCE_TaggedFirmsCount5, ATCE_TaggedFirmsCount7, ATCE_TaggedFirmsCount8,
-				ATCE_TaggedFirmsCount9, ATCE_TaggedFirmsCount10 };
-
-		String[] peopleTaggedName = { ATCE_TaggedPeopleName1, ATCE_TaggedPeopleName2, ATCE_TaggedPeopleName3,
-				ATCE_TaggedPeopleName4, ATCE_TaggedPeopleName5, ATCE_TaggedPeopleName6, ATCE_TaggedPeopleName7 };
-		String[] peopleTaggedTimeReference = { ATCE_TaggedPeopleCount1, ATCE_TaggedPeopleCount2,
-				ATCE_TaggedPeopleCount3, ATCE_TaggedPeopleCount4, ATCE_TaggedPeopleCount5, ATCE_TaggedPeopleCount6,
-				ATCE_TaggedPeopleCount7 };
-
-		String[] dealTaggedName = { ATCE_TaggedDealName1 };
-		String[] dealTaggedTimeReference = { ATCE_TaggedDealCount1 };
-
-		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes },
-				{ "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, { "Status", taskStatus },
-				{ "Priority", taskPriority } };
-
-		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 },
-				{ "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Date", taskDueDate1 } };
-
-		String contactName = ATCE_ContactFullName5;
-		String message = bp.acuityDefaultMessage;
-
-		String[] meetingAndCall = ATCE_MeetingAndCallHeader.split("<break>");
-
-		ArrayList<String> headerNameMeetingAndCall = new ArrayList<String>();
-		for (String txt : meetingAndCall) {
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName1,ATCE_TaggedPeopleName2,ATCE_TaggedPeopleName3,ATCE_TaggedPeopleName4,ATCE_TaggedPeopleName5,ATCE_TaggedPeopleName6,ATCE_TaggedPeopleName7};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount1,ATCE_TaggedPeopleCount2,ATCE_TaggedPeopleCount3,ATCE_TaggedPeopleCount4,ATCE_TaggedPeopleCount5,ATCE_TaggedPeopleCount6,ATCE_TaggedPeopleCount7};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName1};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount1};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+	
+		String contactName=ATCE_ContactFullName5;
+		String message=bp.acuityDefaultMessage;
+		
+		String[] meetingAndCall=ATCE_MeetingAndCallHeader.split("<break>");
+		
+		ArrayList<String> headerNameMeetingAndCall=new ArrayList<String>();
+		for(String txt:meetingAndCall)
+		{
 			headerNameMeetingAndCall.add(txt);
 		}
 
-		String[] externalConnectionHeaderArr = ATCE_ConnectionHeader2.split("<break>");
-		ArrayList<String> exteralHeaderName = new ArrayList<String>();
-		for (String txt : externalConnectionHeaderArr) {
+		String[] externalConnectionHeaderArr=ATCE_ConnectionHeader2.split("<break>");
+		ArrayList<String> exteralHeaderName=new ArrayList<String>();
+		for(String txt:externalConnectionHeaderArr)
+		{
 			exteralHeaderName.add(txt);
-		}
-		String[] val = ATCE_ConnectionHeader1.split("<break>");
-		ArrayList<String> headerName = new ArrayList<String>();
-		for (String txt : val) {
+		}		
+		String[] val=ATCE_ConnectionHeader1.split("<break>");
+		ArrayList<String> headerName=new ArrayList<String>();
+		for(String txt:val)
+		{
 			headerName.add(txt);
 		}
-
+		
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
-		if (lp.clickOnTab(projectName, tabObj1)) {
+			if (lp.clickOnTab(projectName, tabObj1)) {
 
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
-				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
-					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-					ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate, IconType.Task, taskSubject,
-							taskNotes, true, false, null, null);
-					if (result.isEmpty()) {
-						log(LogStatus.PASS, taskSubject + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject + " record is not verified on intraction. " + result,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject + " record is not verified on intraction. " + result);
-					}
-
-					ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1, IconType.Call,
-							taskSubject1, taskNotes1, true, false, null, null);
-					if (result1.isEmpty()) {
-						log(LogStatus.PASS, taskSubject1 + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject1 + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject1 + " record is not verified on intraction. " + result1,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject1 + " record is not verified on intraction. " + result1);
-					}
-
-					ArrayList<String> result2 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection,
-							advanceSection, IconType.Task, PageName.AcuityDetails);
-
-					if (result2.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2);
-
-					}
-
-					ArrayList<String> result3 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1,
-							basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
-
-					if (result3.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject1 + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject1 + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3);
-
-					}
-
-					ArrayList<String> result4 = bp.verifyRecordOnContactSectionAcuity(contactSectionName,
-							contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls,
-							contactSectionEmail);
-					if (result4.isEmpty()) {
-						log(LogStatus.INFO,
-								contactSectionName + " record on Contact section has been verified for " + recordName,
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, contactSectionName + " record on Contact section is not verified for "
-								+ recordName + ". " + result4, YesNo.No);
-						sa.assertTrue(false, contactSectionName + " record on Contact section is not verified for "
-								+ recordName + ". " + result4);
-					}
-
-					ArrayList<String> result5 = bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName,
-							firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName,
-							dealTaggedTimeReference, isInstitutionRecord, null, null);
-					if (result5.isEmpty()) {
-						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The record name and Time reference are not verifed. " + result5,
-								YesNo.No);
-						sa.assertTrue(false, "The record name and Time reference are not verifed." + result5);
-					}
-
-					if (click(driver, bp.getConnectionIconOfContact(contactName, 20),
-							"Connection icon of " + contactName, action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "clicked on Connection icon of " + contactName, YesNo.No);
-
-						ArrayList<String> result6 = bp.verifyUIOfConnectionPopup(contactName, headerName, message,
-								exteralHeaderName, message);
-						if (result6.isEmpty()) {
-							log(LogStatus.INFO, "The UI of Connections popup have been verified", YesNo.No);
-							sa.assertTrue(true, "The UI of Connections popup have been verified");
+						ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Task,taskSubject, taskNotes, true, false,null,null);
+						if (result.isEmpty()) {
+							log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject + " record has been verified on intraction");
 						} else {
-							log(LogStatus.ERROR, "The UI of Connections popup are not verified. " + result6, YesNo.No);
-							sa.assertTrue(false, "The UI of Connections popup are not verified. " + result6);
+							log(LogStatus.ERROR,taskSubject + " record is not verified on intraction. "+result,YesNo.No);
+							sa.assertTrue(false,taskSubject + " record is not verified on intraction. "+result);
+						}
+						
+						ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1,IconType.Call,taskSubject1, taskNotes1, true, false,null,null);
+						if (result1.isEmpty()) {
+							log(LogStatus.PASS,taskSubject1 + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject1 + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject1 + " record is not verified on intraction. "+result1,YesNo.No);
+							sa.assertTrue(false,taskSubject1 + " record is not verified on intraction. "+result1);
+						}
+						
+						ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.AcuityDetails);
+						
+						if(result2.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.ERROR,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+							sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+							
+						}
+						
+                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
+						
+						if(result3.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.ERROR,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+							sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+							
+						}
+						
+						
+						String currentUrl = getURL(driver, 10);
+						refresh(driver);
+
+						if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject,20), "Edit button of "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject);
+						}
+						refresh(driver);
+
+						if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject, 20), "Subject name "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+								ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+								if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+									log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+									sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+							}
 
 						}
-					} else {
-						log(LogStatus.ERROR, "Not able to Connection icon of " + contactName, YesNo.No);
-						sa.assertTrue(false, "Not able to Connection icon of " + contactName);
-					}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+						}
 
-					if (click(driver, bp.getMeetingAndCallCount(contactName, 20), "Meeting and call count",
-							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on the count of meeting and call of " + contactName
-								+ " record on contact section", YesNo.No);
+						refresh(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject1,20), "Edit button of "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject1);
+						}
+						refresh(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject1, 20), "Subject name "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
 
-						ArrayList<String> result7 = bp.verifyUIOfMeetingAndCallsPopup(headerNameMeetingAndCall,
-								message);
-						if (result7.isEmpty()) {
-							log(LogStatus.INFO, "The UI of Meeting and call page have been verified", YesNo.No);
-							sa.assertTrue(true, "The UI of Meeting and call page have been verified");
-						} else {
-							log(LogStatus.ERROR, "The UI of Meeting and call page are not verified. " + result7,
-									YesNo.No);
-							sa.assertTrue(false, "The UI of Meeting and call page are not verified. " + result7);
+								ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+								if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+									log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+									sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+							}
+
 
 						}
-					} else {
-						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of " + contactName
-								+ " record on contact section", YesNo.No);
-						sa.assertTrue(false, "Not able to click on the count of meeting and call of " + contactName
-								+ " record on contact section");
-					}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+						}
+						
 
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName, action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on Connection icon of "+contactName, YesNo.No);
+
+							ArrayList<String> result6=bp.verifyUIOfConnectionPopup(contactName, headerName, message,exteralHeaderName,message);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The UI of Connections popup have been verified", YesNo.No);
+								sa.assertTrue(true,  "The UI of Connections popup have been verified");
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The UI of Connections popup are not verified. "+result6, YesNo.No);
+								sa.assertTrue(false,  "The UI of Connections popup are not verified. "+result6);
+
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to Connection icon of "+contactName, YesNo.No);
+							sa.assertTrue(false,  "Not able to Connection icon of "+contactName);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result7=bp.verifyUIOfMeetingAndCallsPopup( headerNameMeetingAndCall, message);
+							if(result7.isEmpty())
+							{
+								log(LogStatus.INFO, "The UI of Meeting and call page have been verified", YesNo.No);
+								sa.assertTrue(true,  "The UI of Meeting and call page have been verified");
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The UI of Meeting and call page are not verified. "+result7, YesNo.No);
+								sa.assertTrue(false,  "The UI of Meeting and call page are not verified. "+result7);
+
+							}					
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactName+" record on contact section");
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj1);
-		}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
 
-		lp.CRMlogout();
-		sa.assertAll();
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
-
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc027_VerifyTaskCallFunctionalityOnInstitutionRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord3;
-		String taskSubject = ATCE_ATSubject1;
-		String taskRelatedTo = ATCE_ATRelatedTo1;
-		String taskNotes = ATCE_ATNote1;
-		String taskStatus = ATCE_AdvanceStatus1;
-		String taskPriority = ATCE_AdvancePriority1;
-		String taskDueDate = ATCE_ATDueDate1;
+		String recordName=ATCERecord3;
+		String taskSubject=ATCE_ATSubject1;
+		String taskRelatedTo=ATCE_ATRelatedTo1;
+		String taskNotes=ATCE_ATNote1;
+		String taskStatus=ATCE_AdvanceStatus1;
+		String taskPriority=ATCE_AdvancePriority1;	
+		String taskDueDate =ATCE_ATDueDate1;
+		
+		String taskSubject1=ATCE_ATSubject2;
+		String taskRelatedTo1=ATCE_ATRelatedTo2;
+		String taskNotes1=ATCE_ATNote2;
+		
+		String taskDueDate1 =ATCE_ATDueDate2;
+		
+		String contactSectionName=ATCE_ConName5;
+		String contactSectionTitle=ATCE_ConTitle5;
+		String contactSectionDeal=ATCE_ConDeal5;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall5;
+		String contactSectionEmail=ATCE_ConEmail5;
 
-		String taskSubject1 = ATCE_ATSubject2;
-		String taskRelatedTo1 = ATCE_ATRelatedTo2;
-		String taskNotes1 = ATCE_ATNote2;
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName2,ATCE_TaggedFirmsName3,ATCE_TaggedFirmsName4,ATCE_TaggedFirmsName5,ATCE_TaggedFirmsName7,ATCE_TaggedFirmsName8,ATCE_TaggedFirmsName9,ATCE_TaggedFirmsName10};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount3,ATCE_TaggedFirmsCount4,ATCE_TaggedFirmsCount4,ATCE_TaggedFirmsCount5,ATCE_TaggedFirmsCount7,ATCE_TaggedFirmsCount8,ATCE_TaggedFirmsCount9,ATCE_TaggedFirmsCount10};
 
-		String taskDueDate1 = ATCE_ATDueDate2;
-
-		String contactSectionName = ATCE_ConName5;
-		String contactSectionTitle = ATCE_ConTitle5;
-		String contactSectionDeal = ATCE_ConDeal5;
-		String contactSectionMeetingAndCalls = ATCE_ConMeetingAndCall5;
-		String contactSectionEmail = ATCE_ConEmail5;
-
-		String[] firmsTaggedName = { ATCE_TaggedFirmsName2, ATCE_TaggedFirmsName3, ATCE_TaggedFirmsName4,
-				ATCE_TaggedFirmsName5, ATCE_TaggedFirmsName7, ATCE_TaggedFirmsName8, ATCE_TaggedFirmsName9,
-				ATCE_TaggedFirmsName10 };
-		String[] firmsTaggedTimeReference = { ATCE_TaggedFirmsCount3, ATCE_TaggedFirmsCount4, ATCE_TaggedFirmsCount4,
-				ATCE_TaggedFirmsCount5, ATCE_TaggedFirmsCount7, ATCE_TaggedFirmsCount8, ATCE_TaggedFirmsCount9,
-				ATCE_TaggedFirmsCount10 };
-
-		String[] peopleTaggedName = { ATCE_TaggedPeopleName1, ATCE_TaggedPeopleName2, ATCE_TaggedPeopleName3,
-				ATCE_TaggedPeopleName4, ATCE_TaggedPeopleName5, ATCE_TaggedPeopleName6, ATCE_TaggedPeopleName7 };
-		String[] peopleTaggedTimeReference = { ATCE_TaggedPeopleCount1, ATCE_TaggedPeopleCount2,
-				ATCE_TaggedPeopleCount3, ATCE_TaggedPeopleCount4, ATCE_TaggedPeopleCount5, ATCE_TaggedPeopleCount6,
-				ATCE_TaggedPeopleCount7 };
-
-		String[] fundTaggedName = { ATCE_TaggedFundName1 };
-		String[] fundTaggedTimeReference = { ATCE_TaggedFundCount1 };
-
-		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes },
-				{ "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, { "Status", taskStatus },
-				{ "Priority", taskPriority } };
-
-		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 },
-				{ "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Date", taskDueDate1 } };
-
-		String contactName = ATCE_ContactFullName3;
-		String message = bp.acuityDefaultMessage;
-
-		String[] meetingAndCall = ATCE_MeetingAndCallHeader.split("<break>");
-
-		ArrayList<String> headerNameMeetingAndCall = new ArrayList<String>();
-		for (String txt : meetingAndCall) {
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName1,ATCE_TaggedPeopleName2,ATCE_TaggedPeopleName3,ATCE_TaggedPeopleName4,ATCE_TaggedPeopleName5,ATCE_TaggedPeopleName6,ATCE_TaggedPeopleName7};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount1,ATCE_TaggedPeopleCount2,ATCE_TaggedPeopleCount3,ATCE_TaggedPeopleCount4,ATCE_TaggedPeopleCount5,ATCE_TaggedPeopleCount6,ATCE_TaggedPeopleCount7};
+				
+		String[] fundTaggedName= {ATCE_TaggedFundName1};
+		String[] fundTaggedTimeReference= {ATCE_TaggedFundCount1};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+	
+		String contactName=ATCE_ContactFullName3;
+		String message=bp.acuityDefaultMessage;
+		
+		String[] meetingAndCall=ATCE_MeetingAndCallHeader.split("<break>");
+		
+		ArrayList<String> headerNameMeetingAndCall=new ArrayList<String>();
+		for(String txt:meetingAndCall)
+		{
 			headerNameMeetingAndCall.add(txt);
 		}
 
-		String[] externalConnectionHeaderArr = ATCE_ConnectionHeader2.split("<break>");
-		ArrayList<String> exteralHeaderName = new ArrayList<String>();
-		for (String txt : externalConnectionHeaderArr) {
+		String[] externalConnectionHeaderArr=ATCE_ConnectionHeader2.split("<break>");
+		ArrayList<String> exteralHeaderName=new ArrayList<String>();
+		for(String txt:externalConnectionHeaderArr)
+		{
 			exteralHeaderName.add(txt);
-		}
-		String[] val = ATCE_ConnectionHeader1.split("<break>");
-		ArrayList<String> headerName = new ArrayList<String>();
-		for (String txt : val) {
+		}		
+		String[] val=ATCE_ConnectionHeader1.split("<break>");
+		ArrayList<String> headerName=new ArrayList<String>();
+		for(String txt:val)
+		{
 			headerName.add(txt);
 		}
-
+		
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
-		if (lp.clickOnTab(projectName, tabObj1)) {
+			if (lp.clickOnTab(projectName, tabObj1)) {
 
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
-				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
-					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-					ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate, IconType.Task, taskSubject,
-							taskNotes, true, false, null, null);
-					if (result.isEmpty()) {
-						log(LogStatus.PASS, taskSubject + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject + " record is not verified on intraction. " + result,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject + " record is not verified on intraction. " + result);
-					}
-
-					ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1, IconType.Call,
-							taskSubject1, taskNotes1, true, false, null, null);
-					if (result1.isEmpty()) {
-						log(LogStatus.PASS, taskSubject1 + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject1 + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject1 + " record is not verified on intraction. " + result1,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject1 + " record is not verified on intraction. " + result1);
-					}
-
-					ArrayList<String> result2 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection,
-							advanceSection, IconType.Task, PageName.AcuityDetails);
-
-					if (result2.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2);
-
-					}
-
-					ArrayList<String> result3 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1,
-							basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
-
-					if (result3.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject1 + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject1 + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3);
-
-					}
-
-					ArrayList<String> result4 = bp.verifyRecordOnContactSectionAcuity(contactSectionName,
-							contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls,
-							contactSectionEmail);
-					if (result4.isEmpty()) {
-						log(LogStatus.INFO,
-								contactSectionName + " record on Contact section has been verified for " + recordName,
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, contactSectionName + " record on Contact section is not verified for "
-								+ recordName + ". " + result4, YesNo.No);
-						sa.assertTrue(false, contactSectionName + " record on Contact section is not verified for "
-								+ recordName + ". " + result4);
-					}
-
-					ArrayList<String> result5 = bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName,
-							firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null, null, true,
-							fundTaggedName, fundTaggedTimeReference);
-					if (result5.isEmpty()) {
-						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The record name and Time reference are not verifed. " + result5,
-								YesNo.No);
-						sa.assertTrue(false, "The record name and Time reference are not verifed." + result5);
-					}
-
-					if (click(driver, bp.getConnectionIconOfContact(contactName, 20),
-							"Connection icon of " + contactName, action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "clicked on Connection icon of " + contactName, YesNo.No);
-
-						ArrayList<String> result6 = bp.verifyUIOfConnectionPopup(contactName, headerName, message,
-								exteralHeaderName, message);
-						if (result6.isEmpty()) {
-							log(LogStatus.INFO, "The UI of Connections popup have been verified", YesNo.No);
-							sa.assertTrue(true, "The UI of Connections popup have been verified");
+						ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Task,taskSubject, taskNotes, true, false,null,null);
+						if (result.isEmpty()) {
+							log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject + " record has been verified on intraction");
 						} else {
-							log(LogStatus.ERROR, "The UI of Connections popup are not verified. " + result6, YesNo.No);
-							sa.assertTrue(false, "The UI of Connections popup are not verified. " + result6);
+							log(LogStatus.ERROR,taskSubject + " record is not verified on intraction. "+result,YesNo.No);
+							sa.assertTrue(false,taskSubject + " record is not verified on intraction. "+result);
+						}
+						
+						ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1,IconType.Call,taskSubject1, taskNotes1, true, false,null,null);
+						if (result1.isEmpty()) {
+							log(LogStatus.PASS,taskSubject1 + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject1 + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject1 + " record is not verified on intraction. "+result1,YesNo.No);
+							sa.assertTrue(false,taskSubject1 + " record is not verified on intraction. "+result1);
+						}
+						
+						ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.AcuityDetails);
+						
+						if(result2.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.ERROR,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+							sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+							
+						}
+						
+                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
+						
+						if(result3.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.ERROR,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+							sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+							
+						}
+						
+						String currentUrl = getURL(driver, 10);
+						refresh(driver);
+
+						if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject,20), "Edit button of "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject);
+						}
+						refresh(driver);
+
+						if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject, 20), "Subject name "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+								ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+								if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+									log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+									sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+							}
 
 						}
-					} else {
-						log(LogStatus.ERROR, "Not able to Connection icon of " + contactName, YesNo.No);
-						sa.assertTrue(false, "Not able to Connection icon of " + contactName);
-					}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+						}
 
-					if (click(driver, bp.getMeetingAndCallCount(contactName, 20), "Meeting and call count",
-							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on the count of meeting and call of " + contactName
-								+ " record on contact section", YesNo.No);
+						refresh(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject1,20), "Edit button of "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject1);
+						}
+						refresh(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject1, 20), "Subject name "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
 
-						ArrayList<String> result7 = bp.verifyUIOfMeetingAndCallsPopup(headerNameMeetingAndCall,
-								message);
-						if (result7.isEmpty()) {
-							log(LogStatus.INFO, "The UI of Meeting and call page have been verified", YesNo.No);
-							sa.assertTrue(true, "The UI of Meeting and call page have been verified");
-						} else {
-							log(LogStatus.ERROR, "The UI of Meeting and call page are not verified. " + result7,
-									YesNo.No);
-							sa.assertTrue(false, "The UI of Meeting and call page are not verified. " + result7);
+								ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+								if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+									log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+									sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+							}
+
 
 						}
-					} else {
-						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of " + contactName
-								+ " record on contact section", YesNo.No);
-						sa.assertTrue(false, "Not able to click on the count of meeting and call of " + contactName
-								+ " record on contact section");
-					}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+						}
 
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
+						
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null, null,true, fundTaggedName,fundTaggedTimeReference);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName, action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on Connection icon of "+contactName, YesNo.No);
+
+							ArrayList<String> result6=bp.verifyUIOfConnectionPopup(contactName, headerName, message,exteralHeaderName,message);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The UI of Connections popup have been verified", YesNo.No);
+								sa.assertTrue(true,  "The UI of Connections popup have been verified");
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The UI of Connections popup are not verified. "+result6, YesNo.No);
+								sa.assertTrue(false,  "The UI of Connections popup are not verified. "+result6);
+
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to Connection icon of "+contactName, YesNo.No);
+							sa.assertTrue(false,  "Not able to Connection icon of "+contactName);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result7=bp.verifyUIOfMeetingAndCallsPopup( headerNameMeetingAndCall, message);
+							if(result7.isEmpty())
+							{
+								log(LogStatus.INFO, "The UI of Meeting and call page have been verified", YesNo.No);
+								sa.assertTrue(true,  "The UI of Meeting and call page have been verified");
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The UI of Meeting and call page are not verified. "+result7, YesNo.No);
+								sa.assertTrue(false,  "The UI of Meeting and call page are not verified. "+result7);
+
+							}					
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactName+" record on contact section");
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj1);
-		}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
 
-		lp.CRMlogout();
-		sa.assertAll();
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
-
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc028_VerifyTaskCallFunctionalityOnPortfolioCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord11;
-		String taskSubject = ATCE_ATSubject1;
-		String taskRelatedTo = ATCE_ATRelatedTo1;
-		String taskNotes = ATCE_ATNote1;
-		String taskStatus = ATCE_AdvanceStatus1;
-		String taskPriority = ATCE_AdvancePriority1;
-		String taskDueDate = ATCE_ATDueDate1;
+		String recordName=ATCERecord11;
+		String taskSubject=ATCE_ATSubject1;
+		String taskRelatedTo=ATCE_ATRelatedTo1;
+		String taskNotes=ATCE_ATNote1;
+		String taskStatus=ATCE_AdvanceStatus1;
+		String taskPriority=ATCE_AdvancePriority1;	
+		String taskDueDate =ATCE_ATDueDate1;
+		
+		String taskSubject1=ATCE_ATSubject2;
+		String taskRelatedTo1=ATCE_ATRelatedTo2;
+		String taskNotes1=ATCE_ATNote2;
+		
+		String taskDueDate1 =ATCE_ATDueDate2;
+		
+		String contactSectionName=ATCE_ConName6;
+		String contactSectionTitle=ATCE_ConTitle6;
+		String contactSectionDeal=ATCE_ConDeal6;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall6;
+		String contactSectionEmail=ATCE_ConEmail6;
 
-		String taskSubject1 = ATCE_ATSubject2;
-		String taskRelatedTo1 = ATCE_ATRelatedTo2;
-		String taskNotes1 = ATCE_ATNote2;
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName1,ATCE_TaggedFirmsName2,ATCE_TaggedFirmsName3,ATCE_TaggedFirmsName4,ATCE_TaggedFirmsName5,ATCE_TaggedFirmsName6,ATCE_TaggedFirmsName7,ATCE_TaggedFirmsName9,ATCE_TaggedFirmsName10};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount1,ATCE_TaggedFirmsCount2,ATCE_TaggedFirmsCount3,ATCE_TaggedFirmsCount4,ATCE_TaggedFirmsCount5,ATCE_TaggedFirmsCount6,ATCE_TaggedFirmsCount7,ATCE_TaggedFirmsCount9,ATCE_TaggedFirmsCount10};
 
-		String taskDueDate1 = ATCE_ATDueDate2;
-
-		String contactSectionName = ATCE_ConName6;
-		String contactSectionTitle = ATCE_ConTitle6;
-		String contactSectionDeal = ATCE_ConDeal6;
-		String contactSectionMeetingAndCalls = ATCE_ConMeetingAndCall6;
-		String contactSectionEmail = ATCE_ConEmail6;
-
-		String[] firmsTaggedName = { ATCE_TaggedFirmsName1, ATCE_TaggedFirmsName2, ATCE_TaggedFirmsName3,
-				ATCE_TaggedFirmsName4, ATCE_TaggedFirmsName5, ATCE_TaggedFirmsName6, ATCE_TaggedFirmsName7,
-				ATCE_TaggedFirmsName9, ATCE_TaggedFirmsName10 };
-		String[] firmsTaggedTimeReference = { ATCE_TaggedFirmsCount1, ATCE_TaggedFirmsCount2, ATCE_TaggedFirmsCount3,
-				ATCE_TaggedFirmsCount4, ATCE_TaggedFirmsCount5, ATCE_TaggedFirmsCount6, ATCE_TaggedFirmsCount7,
-				ATCE_TaggedFirmsCount9, ATCE_TaggedFirmsCount10 };
-
-		String[] peopleTaggedName = { ATCE_TaggedPeopleName1, ATCE_TaggedPeopleName2, ATCE_TaggedPeopleName3,
-				ATCE_TaggedPeopleName6, ATCE_TaggedPeopleName7 };
-		String[] peopleTaggedTimeReference = { ATCE_TaggedPeopleCount1, ATCE_TaggedPeopleCount2,
-				ATCE_TaggedPeopleCount3, ATCE_TaggedPeopleCount6, ATCE_TaggedPeopleCount7 };
-
-		String[] dealTaggedName = { ATCE_TaggedDealName1 };
-		String[] dealTaggedTimeReference = { ATCE_TaggedDealCount1 };
-
-		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes },
-				{ "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, { "Status", taskStatus },
-				{ "Priority", taskPriority } };
-
-		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 },
-				{ "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Date", taskDueDate1 } };
-
-		String connectionUserName = crmUser6FirstName + " " + crmUser6LastName;
-		String connectionTitle = ATCE_ConnectionTitle1;
-		String connectionDeal = ATCE_ConnectionDeal1;
-		String connectionMeetingaAndCall = ATCE_ConnectionMeetingAndCall1;
-		String connectionEmail = ATCE_ConnectionEmail1;
-
-		String userName1 = crmUser6FirstName + " " + crmUser6LastName;
-		String userName2 = crmUser7FirstName + " " + crmUser7LastName;
-		String userName3 = crmUser8FirstName + " " + crmUser8LastName;
-
-		String[] participantArr = ATCE_ATParticipants1.split("<break>");
-		String[] participants = new String[participantArr.length];
-
-		for (int i = 0; i < participantArr.length; i++) {
-			if (participantArr[i].trim().equalsIgnoreCase("PE User 1")) {
-				participants[i] = userName1;
-			} else if (participantArr[i].trim().equalsIgnoreCase("PE User 2")) {
-				participants[i] = userName2;
-			} else if (participantArr[i].trim().equalsIgnoreCase("PE User 3")) {
-				participants[i] = userName3;
-			} else {
-				participants[i] = participantArr[i];
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName1,ATCE_TaggedPeopleName2,ATCE_TaggedPeopleName3,ATCE_TaggedPeopleName6,ATCE_TaggedPeopleName7};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount1,ATCE_TaggedPeopleCount2,ATCE_TaggedPeopleCount3,ATCE_TaggedPeopleCount6,ATCE_TaggedPeopleCount7};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName1};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount1};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle1;
+		String connectionDeal=ATCE_ConnectionDeal1;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall1;
+		String connectionEmail=ATCE_ConnectionEmail1;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		String userName3=crmUser8FirstName+" "+crmUser8LastName;
+		
+		String[] participantArr=ATCE_ATParticipants2.split("<break>");
+		String[] participants=new String[participantArr.length];
+		
+		for(int i=0; i<participantArr.length; i++)
+		{
+			if(participantArr[i].trim().equalsIgnoreCase("PE User 1"))
+			{
+				participants[i]=userName1;
+			}
+			else if(participantArr[i].trim().equalsIgnoreCase("PE User 2"))
+			{
+				participants[i]=userName2;
+			}
+			else if(participantArr[i].trim().equalsIgnoreCase("PE User 3"))
+			{
+				participants[i]=userName3;
+			}
+			else
+			{
+				participants[i]=participantArr[i];
 			}
 		}
-
-		String[] tagsArr = ATCE_ATTags1.split("<break>");
-
+		
+		
+		String[] tagsArr=ATCE_ATTags1.split("<break>");
+		
+		
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (lp.clickOnTab(projectName, tabObj1)) {
+			if (lp.clickOnTab(projectName, tabObj1)) {
 
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
-				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
-					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-					ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate, IconType.Task, taskSubject,
-							taskNotes, true, false, null, null);
-					if (result.isEmpty()) {
-						log(LogStatus.PASS, taskSubject + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject + " record is not verified on intraction. " + result,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject + " record is not verified on intraction. " + result);
-					}
-
-					ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1, IconType.Call,
-							taskSubject1, taskNotes1, true, false, null, null);
-					if (result1.isEmpty()) {
-						log(LogStatus.PASS, taskSubject1 + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject1 + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject1 + " record is not verified on intraction. " + result1,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject1 + " record is not verified on intraction. " + result1);
-					}
-
-					ArrayList<String> result2 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection,
-							advanceSection, IconType.Task, PageName.AcuityDetails);
-
-					if (result2.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2);
-
-					}
-
-					ArrayList<String> result3 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1,
-							basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
-
-					if (result3.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject1 + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject1 + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3);
-
-					}
-
-					ArrayList<String> result4 = bp.verifyRecordOnContactSectionAcuity(contactSectionName,
-							contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls,
-							contactSectionEmail);
-					if (result4.isEmpty()) {
-						log(LogStatus.INFO,
-								contactSectionName + " record on Contact section has been verified for " + recordName,
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, contactSectionName + " record on Contact section is not verified for "
-								+ recordName + ". " + result4, YesNo.No);
-						sa.assertTrue(false, contactSectionName + " record on Contact section is not verified for "
-								+ recordName + ". " + result4);
-					}
-
-					ArrayList<String> result5 = bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName,
-							firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName,
-							dealTaggedTimeReference, isInstitutionRecord, null, null);
-					if (result5.isEmpty()) {
-						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The record name and Time reference are not verifed. " + result5,
-								YesNo.No);
-						sa.assertTrue(false, "The record name and Time reference are not verifed." + result5);
-					}
-
-					if (click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count",
-							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on the count of meeting and call of " + contactSectionName
-								+ " record on contact section", YesNo.No);
-
-						ArrayList<String> result6 = bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call",
-								taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
-						if (result6.isEmpty()) {
-							log(LogStatus.INFO,
-									"The records on meeting & calls popup have been verified for " + recordName,
-									YesNo.No);
+						ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Task,taskSubject, taskNotes, true, false,null,null);
+						if (result.isEmpty()) {
+							log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject + " record has been verified on intraction");
 						} else {
-							log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "
-									+ recordName + ". " + result6, YesNo.No);
-							sa.assertTrue(false, "The records on meeting & calls popup are not verified for "
-									+ recordName + ". " + result6);
+							log(LogStatus.ERROR,taskSubject + " record is not verified on intraction. "+result,YesNo.No);
+							sa.assertTrue(false,taskSubject + " record is not verified on intraction. "+result);
 						}
+						
+						ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1,IconType.Call,taskSubject1, taskNotes1, true, false,null,null);
+						if (result1.isEmpty()) {
+							log(LogStatus.PASS,taskSubject1 + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject1 + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject1 + " record is not verified on intraction. "+result1,YesNo.No);
+							sa.assertTrue(false,taskSubject1 + " record is not verified on intraction. "+result1);
+						}
+						
+						ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.AcuityDetails);
+						
+						if(result2.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.ERROR,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+							sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+							
+						}
+						
+                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
+						
+						if(result3.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.ERROR,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+							sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+							
+						}
+						
+						String currentUrl = getURL(driver, 10);
+						refresh(driver);
 
-					} else {
-						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "
-								+ contactSectionName + " record on contact section", YesNo.No);
-						sa.assertTrue(false, "Not able to click on the count of meeting and call of "
-								+ contactSectionName + " record on contact section");
-					}
-
-					ArrayList<String> result7 = bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName,
-							connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall,
-							connectionEmail);
-					if (result7.isEmpty()) {
-						log(LogStatus.INFO,
-								"The records on Connection popup have been verified for " + contactSectionName,
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The records on Connection popup are not verified for "
-								+ contactSectionName + ". " + result7, YesNo.No);
-						sa.assertTrue(false, "The records on Connection popup are not verified for "
-								+ contactSectionName + ". " + result7);
-					}
-
-					if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30),
-							"Contact Name: " + contactSectionName, action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
-						String parentID = switchOnWindow(driver);
-						if (CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),
-								"Count of " + userName1 + " on contact section", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "clicked on count of " + userName1, YesNo.No);
-							ArrayList<String> result6 = bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call",
-									taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
-							if (result6.isEmpty()) {
-								log(LogStatus.INFO,
-										"The records on meeting & calls popup have been verified for " + recordName,
-										YesNo.No);
+						if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject,20), "Edit button of "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
 							} else {
-								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "
-										+ recordName + ". " + result6, YesNo.No);
-								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "
-										+ recordName + ". " + result6);
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
 							}
-						} else {
-							log(LogStatus.ERROR, "Not able to click on count of " + contactSectionName, YesNo.No);
-							sa.assertTrue(false, "Not able to click on count of " + contactSectionName);
 						}
-						driver.close();
-						driver.switchTo().window(parentID);
-					} else {
-						log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName,
-								YesNo.No);
-						sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject);
+						}
+						refresh(driver);
+
+						if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject, 20), "Subject name "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+								ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+								if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+									log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+									sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+						}
+
+						refresh(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject1,20), "Edit button of "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject1);
+						}
+						refresh(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject1, 20), "Subject name "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+								ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+								if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+									log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+									sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+							}
+
+
+						}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+						}
+
+						
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+						
 					}
-
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj1);
-		}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
 
-		lp.CRMlogout();
-		sa.assertAll();
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
-
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc029_VerifyTaskCallFunctionalityOnPrivateEquityRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord13;
-		String taskSubject = ATCE_ATSubject1;
-		String taskRelatedTo = ATCE_ATRelatedTo1;
-		String taskNotes = ATCE_ATNote1;
-		String taskStatus = ATCE_AdvanceStatus1;
-		String taskPriority = ATCE_AdvancePriority1;
-		String taskDueDate = ATCE_ATDueDate1;
+		String recordName=ATCERecord13;
+		String taskSubject=ATCE_ATSubject1;
+		String taskRelatedTo=ATCE_ATRelatedTo1;
+		String taskNotes=ATCE_ATNote1;
+		String taskStatus=ATCE_AdvanceStatus1;
+		String taskPriority=ATCE_AdvancePriority1;	
+		String taskDueDate =ATCE_ATDueDate1;
+		
+		String taskSubject1=ATCE_ATSubject2;
+		String taskRelatedTo1=ATCE_ATRelatedTo2;
+		String taskNotes1=ATCE_ATNote2;
+		
+		String taskDueDate1 =ATCE_ATDueDate2;
+		
+		String contactSectionName=ATCE_ConName7;
+		String contactSectionTitle=ATCE_ConTitle7;
+		String contactSectionDeal=ATCE_ConDeal7;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall7;
+		String contactSectionEmail=ATCE_ConEmail7;
 
-		String taskSubject1 = ATCE_ATSubject2;
-		String taskRelatedTo1 = ATCE_ATRelatedTo2;
-		String taskNotes1 = ATCE_ATNote2;
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName1,ATCE_TaggedFirmsName2,ATCE_TaggedFirmsName3,ATCE_TaggedFirmsName4,ATCE_TaggedFirmsName5,ATCE_TaggedFirmsName6,ATCE_TaggedFirmsName7,ATCE_TaggedFirmsName8,ATCE_TaggedFirmsName10};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount1,ATCE_TaggedFirmsCount2,ATCE_TaggedFirmsCount3,ATCE_TaggedFirmsCount4,ATCE_TaggedFirmsCount5,ATCE_TaggedFirmsCount6,ATCE_TaggedFirmsCount7,ATCE_TaggedFirmsCount8,ATCE_TaggedFirmsCount10};
 
-		String taskDueDate1 = ATCE_ATDueDate2;
-
-		String contactSectionName = ATCE_ConName7;
-		String contactSectionTitle = ATCE_ConTitle7;
-		String contactSectionDeal = ATCE_ConDeal7;
-		String contactSectionMeetingAndCalls = ATCE_ConMeetingAndCall7;
-		String contactSectionEmail = ATCE_ConEmail7;
-
-		String[] firmsTaggedName = { ATCE_TaggedFirmsName1, ATCE_TaggedFirmsName2, ATCE_TaggedFirmsName3,
-				ATCE_TaggedFirmsName4, ATCE_TaggedFirmsName5, ATCE_TaggedFirmsName6, ATCE_TaggedFirmsName7,
-				ATCE_TaggedFirmsName8, ATCE_TaggedFirmsName10 };
-		String[] firmsTaggedTimeReference = { ATCE_TaggedFirmsCount1, ATCE_TaggedFirmsCount2, ATCE_TaggedFirmsCount3,
-				ATCE_TaggedFirmsCount4, ATCE_TaggedFirmsCount5, ATCE_TaggedFirmsCount6, ATCE_TaggedFirmsCount7,
-				ATCE_TaggedFirmsCount8, ATCE_TaggedFirmsCount10 };
-
-		String[] peopleTaggedName = { ATCE_TaggedPeopleName1, ATCE_TaggedPeopleName2, ATCE_TaggedPeopleName3,
-				ATCE_TaggedPeopleName4, ATCE_TaggedPeopleName5, ATCE_TaggedPeopleName7 };
-		String[] peopleTaggedTimeReference = { ATCE_TaggedPeopleCount1, ATCE_TaggedPeopleCount2,
-				ATCE_TaggedPeopleCount3, ATCE_TaggedPeopleCount4, ATCE_TaggedPeopleCount5, ATCE_TaggedPeopleCount7 };
-
-		String[] dealTaggedName = { ATCE_TaggedDealName1 };
-		String[] dealTaggedTimeReference = { ATCE_TaggedDealCount1 };
-
-		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes },
-				{ "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, { "Status", taskStatus },
-				{ "Priority", taskPriority } };
-
-		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 },
-				{ "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Date", taskDueDate1 } };
-
-		String connectionUserName = crmUser6FirstName + " " + crmUser6LastName;
-		String connectionTitle = ATCE_ConnectionTitle1;
-		String connectionDeal = ATCE_ConnectionDeal1;
-		String connectionMeetingaAndCall = ATCE_ConnectionMeetingAndCall1;
-		String connectionEmail = ATCE_ConnectionEmail1;
-
-		String userName1 = crmUser6FirstName + " " + crmUser6LastName;
-		String userName2 = crmUser7FirstName + " " + crmUser7LastName;
-		String userName3 = crmUser8FirstName + " " + crmUser8LastName;
-
-		String[] participantArr = ATCE_ATParticipants1.split("<break>");
-		String[] participants = new String[participantArr.length];
-
-		for (int i = 0; i < participantArr.length; i++) {
-			if (participantArr[i].trim().equalsIgnoreCase("PE User 1")) {
-				participants[i] = userName1;
-			} else if (participantArr[i].trim().equalsIgnoreCase("PE User 2")) {
-				participants[i] = userName2;
-			} else if (participantArr[i].trim().equalsIgnoreCase("PE User 3")) {
-				participants[i] = userName3;
-			} else {
-				participants[i] = participantArr[i];
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName1,ATCE_TaggedPeopleName2,ATCE_TaggedPeopleName3,ATCE_TaggedPeopleName4,ATCE_TaggedPeopleName5,ATCE_TaggedPeopleName7};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount1,ATCE_TaggedPeopleCount2,ATCE_TaggedPeopleCount3,ATCE_TaggedPeopleCount4,ATCE_TaggedPeopleCount5,ATCE_TaggedPeopleCount7};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName1};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount1};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle1;
+		String connectionDeal=ATCE_ConnectionDeal1;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall1;
+		String connectionEmail=ATCE_ConnectionEmail1;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		String userName3=crmUser8FirstName+" "+crmUser8LastName;
+		
+		String[] participantArr=ATCE_ATParticipants2.split("<break>");
+		String[] participants=new String[participantArr.length];
+		
+		for(int i=0; i<participantArr.length; i++)
+		{
+			if(participantArr[i].trim().equalsIgnoreCase("PE User 1"))
+			{
+				participants[i]=userName1;
+			}
+			else if(participantArr[i].trim().equalsIgnoreCase("PE User 2"))
+			{
+				participants[i]=userName2;
+			}
+			else if(participantArr[i].trim().equalsIgnoreCase("PE User 3"))
+			{
+				participants[i]=userName3;
+			}
+			else
+			{
+				participants[i]=participantArr[i];
 			}
 		}
+		
+		
+		String[] tagsArr=ATCE_ATTags1.split("<break>");
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		String[] tagsArr = ATCE_ATTags1.split("<break>");
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+						ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Task,taskSubject, taskNotes, true, false,null,null);
+						if (result.isEmpty()) {
+							log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject + " record is not verified on intraction. "+result,YesNo.No);
+							sa.assertTrue(false,taskSubject + " record is not verified on intraction. "+result);
+						}
+						
+						ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1,IconType.Call,taskSubject1, taskNotes1, true, false,null,null);
+						if (result1.isEmpty()) {
+							log(LogStatus.PASS,taskSubject1 + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject1 + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject1 + " record is not verified on intraction. "+result1,YesNo.No);
+							sa.assertTrue(false,taskSubject1 + " record is not verified on intraction. "+result1);
+						}
+						
+						ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.AcuityDetails);
+						
+						if(result2.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.ERROR,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+							sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+							
+						}
+						
+                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
+						
+						if(result3.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.ERROR,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+							sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+							
+						}
+						
+						String currentUrl = getURL(driver, 10);
+						refresh(driver);
+
+						if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject,20), "Edit button of "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject);
+						}
+						refresh(driver);
+
+						if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject, 20), "Subject name "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+								ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+								if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+									log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+									sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+						}
+
+						refresh(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject1,20), "Edit button of "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject1);
+						}
+						refresh(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject1, 20), "Subject name "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+								ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+								if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+									log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+									sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+							}
+
+
+						}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+						}
+
+						
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc030_VerifyTaskCallFunctionalityOnContactRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Con1;
+		String taskSubject=ATCE_ATSubject1;
+		String taskRelatedTo=ATCE_ATRelatedTo1;
+		String taskNotes=ATCE_ATNote1;
+		String taskStatus=ATCE_AdvanceStatus1;
+		String taskPriority=ATCE_AdvancePriority1;	
+		String taskDueDate =ATCE_ATDueDate1;
+		
+		String taskSubject1=ATCE_ATSubject2;
+		String taskRelatedTo1=ATCE_ATRelatedTo2;
+		String taskNotes1=ATCE_ATNote2;
+		
+		String taskDueDate1 =ATCE_ATDueDate2;
+		
+		String contactSectionName=ATCE_ConName7;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName1,ATCE_TaggedFirmsName2,ATCE_TaggedFirmsName3,ATCE_TaggedFirmsName4,ATCE_TaggedFirmsName5,ATCE_TaggedFirmsName6,ATCE_TaggedFirmsName7,ATCE_TaggedFirmsName8,ATCE_TaggedFirmsName9};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount1,ATCE_TaggedFirmsCount2,ATCE_TaggedFirmsCount3,ATCE_TaggedFirmsCount4,ATCE_TaggedFirmsCount5,ATCE_TaggedFirmsCount6,ATCE_TaggedFirmsCount7,ATCE_TaggedFirmsCount8,ATCE_TaggedFirmsCount9};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName1,ATCE_TaggedPeopleName2,ATCE_TaggedPeopleName3,ATCE_TaggedPeopleName4,ATCE_TaggedPeopleName5,ATCE_TaggedPeopleName6};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount1,ATCE_TaggedPeopleCount2,ATCE_TaggedPeopleCount3,ATCE_TaggedPeopleCount4,ATCE_TaggedPeopleCount5,ATCE_TaggedPeopleCount6};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName1};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount1};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle1;
+		String connectionDeal=ATCE_ConnectionDeal1;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall1;
+		String connectionEmail=ATCE_ConnectionEmail1;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		String userName3=crmUser8FirstName+" "+crmUser8LastName;
+		
+		String[] participantArr=ATCE_ATParticipants2.split("<break>");
+		String[] participants=new String[participantArr.length];
+		
+		for(int i=0; i<participantArr.length; i++)
+		{
+			if(participantArr[i].trim().equalsIgnoreCase("PE User 1"))
+			{
+				participants[i]=userName1;
+			}
+			else if(participantArr[i].trim().equalsIgnoreCase("PE User 2"))
+			{
+				participants[i]=userName2;
+			}
+			else if(participantArr[i].trim().equalsIgnoreCase("PE User 3"))
+			{
+				participants[i]=userName3;
+			}
+			else
+			{
+				participants[i]=participantArr[i];
+			}
+		}
+		
+		
+		String[] tagsArr=ATCE_ATTags1.split("<break>");
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj2)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+						ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Task,taskSubject, taskNotes, true, false,null,null);
+						if (result.isEmpty()) {
+							log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject + " record is not verified on intraction. "+result,YesNo.No);
+							sa.assertTrue(false,taskSubject + " record is not verified on intraction. "+result);
+						}
+						
+						ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1,IconType.Call,taskSubject1, taskNotes1, true, false,null,null);
+						if (result1.isEmpty()) {
+							log(LogStatus.PASS,taskSubject1 + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject1 + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject1 + " record is not verified on intraction. "+result1,YesNo.No);
+							sa.assertTrue(false,taskSubject1 + " record is not verified on intraction. "+result1);
+						}
+						
+						ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.AcuityDetails);
+						
+						if(result2.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.ERROR,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+							sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+							
+						}
+						
+                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
+						
+						if(result3.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.ERROR,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+							sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+							
+						}
+						
+						String currentUrl = getURL(driver, 10);
+						refresh(driver);
+
+						if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject,20), "Edit button of "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject);
+						}
+						refresh(driver);
+
+						if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject, 20), "Subject name "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+								ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+								if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+									log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+									sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+						}
+
+						refresh(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject1,20), "Edit button of "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject1);
+						}
+						refresh(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject1, 20), "Subject name "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+								ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+								if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+									log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+									sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+							}
+
+
+						}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+						}
+
+						
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+					
+						ArrayList<String> result6=bp.verifyRecordOnConnectionsSectionInAcuity(recordName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+
+						if(result6.isEmpty())
+						{
+							log(LogStatus.INFO, "The records have been verified on Connection section in Acuity user : "+connectionUserName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records are not verified on Connection section in Acuity. user : "+connectionUserName+" "+result6, YesNo.No);
+							sa.assertTrue(false,  "The records are not verified on Connection section in Acuity.  user : "+connectionUserName+" "+result6);
+						}
+						
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(connectionUserName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result7=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
+							if(result7.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result7, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result7);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj2, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc031_VerifyTaskCallFunctionalityOnDealRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Deal1;
+	
+		String taskSubject=ATCE_ATSubject1;
+		String taskRelatedTo=ATCE_ATRelatedTo1;
+		String taskNotes=ATCE_ATNote1;
+		String taskStatus=ATCE_AdvanceStatus1;
+		String taskPriority=ATCE_AdvancePriority1;	
+		String taskDueDate =ATCE_ATDueDate1;
+		
+		String taskSubject1=ATCE_ATSubject2;
+		String taskRelatedTo1=ATCE_ATRelatedTo2;
+		String taskNotes1=ATCE_ATNote2;
+		
+		String taskDueDate1 =ATCE_ATDueDate2;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName1,ATCE_TaggedFirmsName2,ATCE_TaggedFirmsName3,ATCE_TaggedFirmsName4,ATCE_TaggedFirmsName5,ATCE_TaggedFirmsName6,ATCE_TaggedFirmsName7,ATCE_TaggedFirmsName8,ATCE_TaggedFirmsName9};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount1,ATCE_TaggedFirmsCount2,ATCE_TaggedFirmsCount3,ATCE_TaggedFirmsCount4,ATCE_TaggedFirmsCount5,ATCE_TaggedFirmsCount6,ATCE_TaggedFirmsCount7,ATCE_TaggedFirmsCount8,ATCE_TaggedFirmsCount9};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName1,ATCE_TaggedPeopleName2,ATCE_TaggedPeopleName3,ATCE_TaggedPeopleName4,ATCE_TaggedPeopleName5,ATCE_TaggedPeopleName6,ATCE_TaggedPeopleName7};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount1,ATCE_TaggedPeopleCount2,ATCE_TaggedPeopleCount3,ATCE_TaggedPeopleCount4,ATCE_TaggedPeopleCount5,ATCE_TaggedPeopleCount6,ATCE_TaggedPeopleCount7};
+	
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj4)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+						ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Task,taskSubject, taskNotes, true, false,null,null);
+						if (result.isEmpty()) {
+							log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject + " record is not verified on intraction. "+result,YesNo.No);
+							sa.assertTrue(false,taskSubject + " record is not verified on intraction. "+result);
+						}
+						
+						ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1,IconType.Call,taskSubject1, taskNotes1, true, false,null,null);
+						if (result1.isEmpty()) {
+							log(LogStatus.PASS,taskSubject1 + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject1 + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject1 + " record is not verified on intraction. "+result1,YesNo.No);
+							sa.assertTrue(false,taskSubject1 + " record is not verified on intraction. "+result1);
+						}
+						
+						ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.AcuityDetails);
+						
+						if(result2.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.ERROR,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+							sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+							
+						}
+						
+                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
+						
+						if(result3.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.ERROR,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+							sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+							
+						}
+						
+						String currentUrl = getURL(driver, 10);
+						refresh(driver);
+
+						if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject,20), "Edit button of "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject);
+						}
+						refresh(driver);
+
+						if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject, 20), "Subject name "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+								ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+								if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+									log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+									sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+						}
+
+						refresh(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject1,20), "Edit button of "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject1);
+						}
+						refresh(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject1, 20), "Subject name "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+								ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+								if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+									log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+									sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+							}
+
+
+						}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+						}
+
+												
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null, null,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc032_VerifyTaskCallFunctionalityOnFundraisingRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fundraising1;
+	
+		String taskSubject=ATCE_ATSubject1;
+		String taskRelatedTo=ATCE_ATRelatedTo1;
+		String taskNotes=ATCE_ATNote1;
+		String taskStatus=ATCE_AdvanceStatus1;
+		String taskPriority=ATCE_AdvancePriority1;	
+		String taskDueDate =ATCE_ATDueDate1;
+		
+		String taskSubject1=ATCE_ATSubject2;
+		String taskRelatedTo1=ATCE_ATRelatedTo2;
+		String taskNotes1=ATCE_ATNote2;
+		
+		String taskDueDate1 =ATCE_ATDueDate2;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName1,ATCE_TaggedFirmsName2,ATCE_TaggedFirmsName3,ATCE_TaggedFirmsName4,ATCE_TaggedFirmsName5,ATCE_TaggedFirmsName6,ATCE_TaggedFirmsName7,ATCE_TaggedFirmsName8,ATCE_TaggedFirmsName9,ATCE_TaggedFirmsName10};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount1,ATCE_TaggedFirmsCount2,ATCE_TaggedFirmsCount3,ATCE_TaggedFirmsCount4,ATCE_TaggedFirmsCount5,ATCE_TaggedFirmsCount6,ATCE_TaggedFirmsCount7,ATCE_TaggedFirmsCount8,ATCE_TaggedFirmsCount9,ATCE_TaggedFirmsCount10};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName1,ATCE_TaggedPeopleName2,ATCE_TaggedPeopleName3,ATCE_TaggedPeopleName4,ATCE_TaggedPeopleName5,ATCE_TaggedPeopleName6,ATCE_TaggedPeopleName7};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount1,ATCE_TaggedPeopleCount2,ATCE_TaggedPeopleCount3,ATCE_TaggedPeopleCount4,ATCE_TaggedPeopleCount5,ATCE_TaggedPeopleCount6,ATCE_TaggedPeopleCount7};
+	
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+						ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Task,taskSubject, taskNotes, true, false,null,null);
+						if (result.isEmpty()) {
+							log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject + " record is not verified on intraction. "+result,YesNo.No);
+							sa.assertTrue(false,taskSubject + " record is not verified on intraction. "+result);
+						}
+						
+						ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1,IconType.Call,taskSubject1, taskNotes1, true, false,null,null);
+						if (result1.isEmpty()) {
+							log(LogStatus.PASS,taskSubject1 + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject1 + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject1 + " record is not verified on intraction. "+result1,YesNo.No);
+							sa.assertTrue(false,taskSubject1 + " record is not verified on intraction. "+result1);
+						}
+						
+						ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.AcuityDetails);
+						
+						if(result2.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.ERROR,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+							sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+							
+						}
+						
+                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
+						
+						if(result3.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.ERROR,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+							sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+							
+						}
+						
+						String currentUrl = getURL(driver, 10);
+						refresh(driver);
+
+						if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject,20), "Edit button of "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject);
+						}
+						refresh(driver);
+
+						if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject, 20), "Subject name "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+								ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+								if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+									log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+									sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+						}
+
+						refresh(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject1,20), "Edit button of "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject1);
+						}
+						refresh(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject1, 20), "Subject name "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+								ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+								if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+									log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+									sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+							}
+
+
+						}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+						}
+
+												
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null, null,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc033_VerifyTaskCallFunctionalityOnFundRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fund1;
+	
+		String taskSubject=ATCE_ATSubject1;
+		String taskRelatedTo=ATCE_ATRelatedTo1;
+		String taskNotes=ATCE_ATNote1;
+		String taskStatus=ATCE_AdvanceStatus1;
+		String taskPriority=ATCE_AdvancePriority1;	
+		String taskDueDate =ATCE_ATDueDate1;
+		
+		String taskSubject1=ATCE_ATSubject2;
+		String taskRelatedTo1=ATCE_ATRelatedTo2;
+		String taskNotes1=ATCE_ATNote2;
+		
+		String taskDueDate1 =ATCE_ATDueDate2;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName1,ATCE_TaggedFirmsName2,ATCE_TaggedFirmsName3,ATCE_TaggedFirmsName4,ATCE_TaggedFirmsName5,ATCE_TaggedFirmsName6,ATCE_TaggedFirmsName7,ATCE_TaggedFirmsName8,ATCE_TaggedFirmsName9,ATCE_TaggedFirmsName10};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount1,ATCE_TaggedFirmsCount2,ATCE_TaggedFirmsCount3,ATCE_TaggedFirmsCount4,ATCE_TaggedFirmsCount5,ATCE_TaggedFirmsCount6,ATCE_TaggedFirmsCount7,ATCE_TaggedFirmsCount8,ATCE_TaggedFirmsCount9,ATCE_TaggedFirmsCount10};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName1,ATCE_TaggedPeopleName2,ATCE_TaggedPeopleName3,ATCE_TaggedPeopleName4,ATCE_TaggedPeopleName5,ATCE_TaggedPeopleName6,ATCE_TaggedPeopleName7};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount1,ATCE_TaggedPeopleCount2,ATCE_TaggedPeopleCount3,ATCE_TaggedPeopleCount4,ATCE_TaggedPeopleCount5,ATCE_TaggedPeopleCount6,ATCE_TaggedPeopleCount7};
+	
+		String[] dealTaggedName= {ATCE_TaggedDealName1};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount1};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj3)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj3, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+						ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Task,taskSubject, taskNotes, true, false,null,null);
+						if (result.isEmpty()) {
+							log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject + " record is not verified on intraction. "+result,YesNo.No);
+							sa.assertTrue(false,taskSubject + " record is not verified on intraction. "+result);
+						}
+						
+						ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1,IconType.Call,taskSubject1, taskNotes1, true, false,null,null);
+						if (result1.isEmpty()) {
+							log(LogStatus.PASS,taskSubject1 + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject1 + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject1 + " record is not verified on intraction. "+result1,YesNo.No);
+							sa.assertTrue(false,taskSubject1 + " record is not verified on intraction. "+result1);
+						}
+						
+						ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.AcuityDetails);
+						
+						if(result2.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.ERROR,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+							sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+							
+						}
+						
+                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
+						
+						if(result3.isEmpty())
+						{
+							log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+						}
+						else
+						{
+							log(LogStatus.ERROR,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+							sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+							
+						}
+						
+						String currentUrl = getURL(driver, 10);
+						refresh(driver);
+
+						if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject,20), "Edit button of "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject);
+						}
+						refresh(driver);
+
+						if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject, 20), "Subject name "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+								ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+								if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+									log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+									sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+						}
+
+						refresh(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject1,20), "Edit button of "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject1);
+						}
+						refresh(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject1, 20), "Subject name "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+								ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+								if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+									log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+									sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+							}
+
+
+						}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+						}
+
+												
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj3, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj3);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc034_VerifyTaskCallFunctionalityOnThemeRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Theme1;	
+
+		String taskSubject=ATCE_ATSubject1;
+		String taskRelatedTo=ATCE_ATRelatedTo1;
+		String taskNotes=ATCE_ATNote1;
+		String taskStatus=ATCE_AdvanceStatus1;
+		String taskPriority=ATCE_AdvancePriority1;	
+		String taskDueDate =ATCE_ATDueDate1;
+
+		String taskSubject1=ATCE_ATSubject2;
+		String taskRelatedTo1=ATCE_ATRelatedTo2;
+		String taskNotes1=ATCE_ATNote2;
+
+		String taskDueDate1 =ATCE_ATDueDate2;
+
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, TabName.Themes.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : "+TabName.Themes.toString(), YesNo.No);
+
+			String parentWindowID=bp.clickOnThemeRecord(recordName);
+
+			if (parentWindowID!=null) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Task,taskSubject, taskNotes, true, false,null,null);
+					if (result.isEmpty()) {
+						log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
+						sa.assertTrue(true,taskSubject + " record has been verified on intraction");
+					} else {
+						log(LogStatus.ERROR,taskSubject + " record is not verified on intraction. "+result,YesNo.No);
+						sa.assertTrue(false,taskSubject + " record is not verified on intraction. "+result);
+					}
+
+					ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1,IconType.Call,taskSubject1, taskNotes1, true, false,null,null);
+					if (result1.isEmpty()) {
+						log(LogStatus.PASS,taskSubject1 + " record has been verified on intraction",YesNo.No);
+						sa.assertTrue(true,taskSubject1 + " record has been verified on intraction");
+					} else {
+						log(LogStatus.ERROR,taskSubject1 + " record is not verified on intraction. "+result1,YesNo.No);
+						sa.assertTrue(false,taskSubject1 + " record is not verified on intraction. "+result1);
+					}
+
+					ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.AcuityDetails);
+
+					if(result2.isEmpty())
+					{
+						log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+						sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+					}
+					else
+					{
+						log(LogStatus.ERROR,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+						sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+
+					}
+
+					ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
+
+					if(result3.isEmpty())
+					{
+						log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+						sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+					}
+					else
+					{
+						log(LogStatus.ERROR,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+						sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+
+					}
+					
+					String currentUrl = getURL(driver, 10);
+					refresh(driver);
+
+					if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject,20), "Edit button of "+taskSubject))
+					{
+						log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+						ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+						if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+							log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+						} else {
+							log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+							sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject,YesNo.No);
+						sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject);
+					}
+					refresh(driver);
+
+					if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject, 20), "Subject name "+taskSubject))
+					{
+						log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+						if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+						{
+							log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+							ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+							if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+							sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+						}
+
+					}
+					else
+					{
+						log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+						sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+					}
+
+					refresh(driver);
+					if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject1,20), "Edit button of "+taskSubject1))
+					{
+						log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+						ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+						if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+							log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+						} else {
+							log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+							sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+taskSubject1,YesNo.No);
+						sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+taskSubject1);
+					}
+					refresh(driver);
+					if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionCard(taskSubject1, 20), "Subject name "+taskSubject1))
+					{
+						log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+						if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+						{
+							log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+							ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection1,advanceSection1, null);
+							if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+								log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+								sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+							sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+						}
+
+
+					}
+					else
+					{
+						log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+						sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+					}
+
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+			}
+			driver.close();
+			driver.switchTo().window(parentWindowID);
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+TabName.Themes.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+TabName.Themes.toString());
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc035_CreateATaskAndLogACallFromCompanyRecord(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord1;
+		String activityType=null;
+		if(ATCE_ATActivityType3.trim().equals("Task"))
+		{
+			activityType="Create Task";
+		}
+		else if(ATCE_ATActivityType3.trim().equals("Call"))
+		{
+			activityType="Log a Call";
+		}
+
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo=ATCE_ATRelatedTo3;
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus2;
+		String taskPriority=ATCE_AdvancePriority2;	
+		String dueDateDay=ATCE_ATDay3;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_003", excelLabel.Advance_Due_Date);
+
+		String activityType1=ATCE_ATActivityType4;
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1=ATCE_ATRelatedTo4;
+		String taskNotes1=ATCE_ATNote4;	
+		String dueDateDay1=ATCE_ATDay4;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_004", excelLabel.Advance_Due_Date);
+
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -4120,250 +6385,888 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-					ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate, IconType.Task, taskSubject,
-							taskNotes, true, false, null, null);
-					if (result.isEmpty()) {
-						log(LogStatus.PASS, taskSubject + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject + " record is not verified on intraction. " + result,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject + " record is not verified on intraction. " + result);
-					}
-
-					ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1, IconType.Call,
-							taskSubject1, taskNotes1, true, false, null, null);
-					if (result1.isEmpty()) {
-						log(LogStatus.PASS, taskSubject1 + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject1 + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject1 + " record is not verified on intraction. " + result1,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject1 + " record is not verified on intraction. " + result1);
-					}
-
-					ArrayList<String> result2 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection,
-							advanceSection, IconType.Task, PageName.AcuityDetails);
-
-					if (result2.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2);
+					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 
 					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+					}	 
 
-					ArrayList<String> result3 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1,
-							basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
-
-					if (result3.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject1 + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject1 + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3);
-
-					}
-
-					ArrayList<String> result4 = bp.verifyRecordOnContactSectionAcuity(contactSectionName,
-							contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls,
-							contactSectionEmail);
-					if (result4.isEmpty()) {
-						log(LogStatus.INFO,
-								contactSectionName + " record on Contact section has been verified for " + recordName,
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, contactSectionName + " record on Contact section is not verified for "
-								+ recordName + ". " + result4, YesNo.No);
-						sa.assertTrue(false, contactSectionName + " record on Contact section is not verified for "
-								+ recordName + ". " + result4);
-					}
-
-					ArrayList<String> result5 = bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName,
-							firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName,
-							dealTaggedTimeReference, isInstitutionRecord, null, null);
-					if (result5.isEmpty()) {
-						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The record name and Time reference are not verifed. " + result5,
-								YesNo.No);
-						sa.assertTrue(false, "The record name and Time reference are not verifed." + result5);
-					}
-
-					if (click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count",
-							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on the count of meeting and call of " + contactSectionName
-								+ " record on contact section", YesNo.No);
-
-						ArrayList<String> result6 = bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call",
-								taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
-						if (result6.isEmpty()) {
-							log(LogStatus.INFO,
-									"The records on meeting & calls popup have been verified for " + recordName,
-									YesNo.No);
-						} else {
-							log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "
-									+ recordName + ". " + result6, YesNo.No);
-							sa.assertTrue(false, "The records on meeting & calls popup are not verified for "
-									+ recordName + ". " + result6);
-						}
-
-					} else {
-						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "
-								+ contactSectionName + " record on contact section", YesNo.No);
-						sa.assertTrue(false, "Not able to click on the count of meeting and call of "
-								+ contactSectionName + " record on contact section");
-					}
-
-					ArrayList<String> result7 = bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName,
-							connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall,
-							connectionEmail);
-					if (result7.isEmpty()) {
-						log(LogStatus.INFO,
-								"The records on Connection popup have been verified for " + contactSectionName,
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The records on Connection popup are not verified for "
-								+ contactSectionName + ". " + result7, YesNo.No);
-						sa.assertTrue(false, "The records on Connection popup are not verified for "
-								+ contactSectionName + ". " + result7);
-					}
-
-					if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30),
-							"Contact Name: " + contactSectionName, action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
-						String parentID = switchOnWindow(driver);
-						if (CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),
-								"Count of " + userName1 + " on contact section", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "clicked on count of " + userName1, YesNo.No);
-							ArrayList<String> result6 = bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call",
-									taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
-							if (result6.isEmpty()) {
-								log(LogStatus.INFO,
-										"The records on meeting & calls popup have been verified for " + recordName,
-										YesNo.No);
-							} else {
-								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "
-										+ recordName + ". " + result6, YesNo.No);
-								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "
-										+ recordName + ". " + result6);
-							}
-						} else {
-							log(LogStatus.ERROR, "Not able to click on count of " + contactSectionName, YesNo.No);
-							sa.assertTrue(false, "Not able to click on count of " + contactSectionName);
-						}
-						driver.close();
-						driver.switchTo().window(parentID);
-					} else {
-						log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName,
-								YesNo.No);
-						sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
-					}
-
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj1);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
 		}
 
-		lp.CRMlogout();
-		sa.assertAll();
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+					}	 
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc036_CreateATaskAndLogACallFromAdvisorRecord(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord5;
+		String activityType=null;
+		if(ATCE_ATActivityType5.trim().equals("Task"))
+		{
+			activityType="Create Task";
+		}
+		else if(ATCE_ATActivityType5.trim().equals("Call"))
+		{
+			activityType="Log a Call";
+		}
+
+		String taskSubject=ATCE_ATSubject5;
+		String taskRelatedTo=ATCE_ATRelatedTo5;
+		String taskNotes=ATCE_ATNote5;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String dueDateDay=ATCE_ATDay5;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_005", excelLabel.Advance_Due_Date);
+
+		String activityType1=ATCE_ATActivityType6;
+		String taskSubject1=ATCE_ATSubject6;
+		String taskRelatedTo1=ATCE_ATRelatedTo6;
+		String taskNotes1=ATCE_ATNote6;	
+		String dueDateDay1=ATCE_ATDay6;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_006", excelLabel.Advance_Due_Date);
+
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+					}	 
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+					}	 
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc037_CreateATaskAndLogACallFromLendorRecord(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord7;
+		String activityType=null;
+		if(ATCE_ATActivityType7.trim().equals("Task"))
+		{
+			activityType="Create Task";
+		}
+		else if(ATCE_ATActivityType7.trim().equals("Call"))
+		{
+			activityType="Log a Call";
+		}
+
+		String taskSubject=ATCE_ATSubject7;
+		String taskRelatedTo=ATCE_ATRelatedTo7;
+		String taskNotes=ATCE_ATNote7;
+		String taskStatus=ATCE_AdvanceStatus4;
+		String taskPriority=ATCE_AdvancePriority4;	
+		String dueDateDay=ATCE_ATDay7;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_007", excelLabel.Advance_Due_Date);
+
+		String activityType1=ATCE_ATActivityType8;
+		String taskSubject1=ATCE_ATSubject8;
+		String taskRelatedTo1=ATCE_ATRelatedTo8;
+		String taskNotes1=ATCE_ATNote8;	
+		String dueDateDay1=ATCE_ATDay8;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_008", excelLabel.Advance_Due_Date);
+
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+					}	 
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+					}	 
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc038_CreateATaskAndLogACallFromIntermediaryRecord(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord9;
+		String activityType=null;
+		if(ATCE_ATActivityType9.trim().equals("Task"))
+		{
+			activityType="Create Task";
+		}
+		else if(ATCE_ATActivityType9.trim().equals("Call"))
+		{
+			activityType="Log a Call";
+		}
+
+		String taskSubject=ATCE_ATSubject9;
+		String taskRelatedTo=ATCE_ATRelatedTo9;
+		String taskNotes=ATCE_ATNote9;
+		String taskStatus=ATCE_AdvanceStatus5;
+		String taskPriority=ATCE_AdvancePriority5;	
+		String dueDateDay=ATCE_ATDay9;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_009", excelLabel.Advance_Due_Date);
+
+		String activityType1=ATCE_ATActivityType10;
+		String taskSubject1=ATCE_ATSubject10;
+		String taskRelatedTo1=ATCE_ATRelatedTo10;
+		String taskNotes1=ATCE_ATNote10;	
+		String dueDateDay1=ATCE_ATDay10;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_010", excelLabel.Advance_Due_Date);
+
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+					}	 
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+					}	 
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc039_CreateATaskAndLogACallFromInstitutionRecord(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord3;
+		String activityType=null;
+		if(ATCE_ATActivityType11.trim().equals("Task"))
+		{
+			activityType="Create Task";
+		}
+		else if(ATCE_ATActivityType11.trim().equals("Call"))
+		{
+			activityType="Log a Call";
+		}
+
+		String taskSubject=ATCE_ATSubject11;
+		String taskRelatedTo=ATCE_ATRelatedTo11;
+		String taskNotes=ATCE_ATNote11;
+		String taskStatus=ATCE_AdvanceStatus6;
+		String taskPriority=ATCE_AdvancePriority6;	
+		String dueDateDay=ATCE_ATDay11;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_011", excelLabel.Advance_Due_Date);
+
+		String activityType1=ATCE_ATActivityType12;
+		String taskSubject1=ATCE_ATSubject12;
+		String taskRelatedTo1=ATCE_ATRelatedTo12;
+		String taskNotes1=ATCE_ATNote12;	
+		String dueDateDay1=ATCE_ATDay12;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_012", excelLabel.Advance_Due_Date);
+
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+					}	 
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+					}	 
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc040_CreateATaskAndLogACallFromPortfolioCompanyRecord(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord11;
+		String activityType=null;
+		if(ATCE_ATActivityType13.trim().equals("Task"))
+		{
+			activityType="Create Task";
+		}
+		else if(ATCE_ATActivityType13.trim().equals("Call"))
+		{
+			activityType="Log a Call";
+		}
+
+		String taskSubject=ATCE_ATSubject13;
+		String taskRelatedTo=ATCE_ATRelatedTo13;
+		String taskNotes=ATCE_ATNote13;
+		String taskStatus=ATCE_AdvanceStatus7;
+		String taskPriority=ATCE_AdvancePriority7;	
+		String dueDateDay=ATCE_ATDay13;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_013", excelLabel.Advance_Due_Date);
+
+		String activityType1=ATCE_ATActivityType14;
+		String taskSubject1=ATCE_ATSubject14;
+		String taskRelatedTo1=ATCE_ATRelatedTo14;
+		String taskNotes1=ATCE_ATNote14;	
+		String dueDateDay1=ATCE_ATDay14;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_014", excelLabel.Advance_Due_Date);
+
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+					}	 
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+					}	 
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc041_CreateATaskAndLogACallFromPrivateEquityRecord(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord13;
+		String activityType=null;
+		if(ATCE_ATActivityType15.trim().equals("Task"))
+		{
+			activityType="Create Task";
+		}
+		else if(ATCE_ATActivityType15.trim().equals("Call"))
+		{
+			activityType="Log a Call";
+		}
+
+		String taskSubject=ATCE_ATSubject15;
+		String taskRelatedTo=ATCE_ATRelatedTo15;
+		String taskNotes=ATCE_ATNote15;
+		String taskStatus=ATCE_AdvanceStatus8;
+		String taskPriority=ATCE_AdvancePriority8;	
+		String dueDateDay=ATCE_ATDay15;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_015", excelLabel.Advance_Due_Date);
+
+		String activityType1=ATCE_ATActivityType16;
+		String taskSubject1=ATCE_ATSubject16;
+		String taskRelatedTo1=ATCE_ATRelatedTo16;
+		String taskNotes1=ATCE_ATNote16;	
+		String dueDateDay1=ATCE_ATDay16;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_016", excelLabel.Advance_Due_Date);
+
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+					}	 
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+					}	 
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc030_VerifyTaskCallFunctionalityOnContactRecordType(String projectName) {
+	public void ATCETc042_CreateATaskAndLogACallFromContactRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCE_Con1;
-		String taskSubject = ATCE_ATSubject1;
-		String taskRelatedTo = ATCE_ATRelatedTo1;
-		String taskNotes = ATCE_ATNote1;
-		String taskStatus = ATCE_AdvanceStatus1;
-		String taskPriority = ATCE_AdvancePriority1;
-		String taskDueDate = ATCE_ATDueDate1;
-
-		String taskSubject1 = ATCE_ATSubject2;
-		String taskRelatedTo1 = ATCE_ATRelatedTo2;
-		String taskNotes1 = ATCE_ATNote2;
-
-		String taskDueDate1 = ATCE_ATDueDate2;
-
-		String contactSectionName = ATCE_ConName7;
-
-		String[] firmsTaggedName = { ATCE_TaggedFirmsName1, ATCE_TaggedFirmsName2, ATCE_TaggedFirmsName3,
-				ATCE_TaggedFirmsName4, ATCE_TaggedFirmsName5, ATCE_TaggedFirmsName6, ATCE_TaggedFirmsName7,
-				ATCE_TaggedFirmsName8, ATCE_TaggedFirmsName9 };
-		String[] firmsTaggedTimeReference = { ATCE_TaggedFirmsCount1, ATCE_TaggedFirmsCount2, ATCE_TaggedFirmsCount3,
-				ATCE_TaggedFirmsCount4, ATCE_TaggedFirmsCount5, ATCE_TaggedFirmsCount6, ATCE_TaggedFirmsCount7,
-				ATCE_TaggedFirmsCount8, ATCE_TaggedFirmsCount9 };
-
-		String[] peopleTaggedName = { ATCE_TaggedPeopleName1, ATCE_TaggedPeopleName2, ATCE_TaggedPeopleName3,
-				ATCE_TaggedPeopleName4, ATCE_TaggedPeopleName5, ATCE_TaggedPeopleName6 };
-		String[] peopleTaggedTimeReference = { ATCE_TaggedPeopleCount1, ATCE_TaggedPeopleCount2,
-				ATCE_TaggedPeopleCount3, ATCE_TaggedPeopleCount4, ATCE_TaggedPeopleCount5, ATCE_TaggedPeopleCount6 };
-
-		String[] dealTaggedName = { ATCE_TaggedDealName1 };
-		String[] dealTaggedTimeReference = { ATCE_TaggedDealCount1 };
-
-		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes },
-				{ "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, { "Status", taskStatus },
-				{ "Priority", taskPriority } };
-
-		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 },
-				{ "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Date", taskDueDate1 } };
-
-		String connectionUserName = crmUser6FirstName + " " + crmUser6LastName;
-		String connectionTitle = ATCE_ConnectionTitle1;
-		String connectionDeal = ATCE_ConnectionDeal1;
-		String connectionMeetingaAndCall = ATCE_ConnectionMeetingAndCall1;
-		String connectionEmail = ATCE_ConnectionEmail1;
-
-		String userName1 = crmUser6FirstName + " " + crmUser6LastName;
-		String userName2 = crmUser7FirstName + " " + crmUser7LastName;
-		String userName3 = crmUser8FirstName + " " + crmUser8LastName;
-
-		String[] participantArr = ATCE_ATParticipants1.split("<break>");
-		String[] participants = new String[participantArr.length];
-
-		for (int i = 0; i < participantArr.length; i++) {
-			if (participantArr[i].trim().equalsIgnoreCase("PE User 1")) {
-				participants[i] = userName1;
-			} else if (participantArr[i].trim().equalsIgnoreCase("PE User 2")) {
-				participants[i] = userName2;
-			} else if (participantArr[i].trim().equalsIgnoreCase("PE User 3")) {
-				participants[i] = userName3;
-			} else {
-				participants[i] = participantArr[i];
-			}
+		String recordName=ATCE_Con1;
+		String activityType=null;
+		if(ATCE_ATActivityType17.trim().equals("Task"))
+		{
+			activityType="Create Task";
+		}
+		else if(ATCE_ATActivityType17.trim().equals("Call"))
+		{
+			activityType="Log a Call";
 		}
 
-		String[] tagsArr = ATCE_ATTags1.split("<break>");
+		String taskSubject=ATCE_ATSubject17;
+		String taskRelatedTo=ATCE_ATRelatedTo17;
+		String taskNotes=ATCE_ATNote17;
+		String taskStatus=ATCE_AdvanceStatus9;
+		String taskPriority=ATCE_AdvancePriority9;	
+		String dueDateDay=ATCE_ATDay17;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_017", excelLabel.Advance_Due_Date);
+
+		String activityType1=ATCE_ATActivityType18;
+		String taskSubject1=ATCE_ATSubject18;
+		String taskRelatedTo1=ATCE_ATRelatedTo18;
+		String taskNotes1=ATCE_ATNote18;	
+		String dueDateDay1=ATCE_ATDay18;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_018", excelLabel.Advance_Due_Date);
+
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -4371,175 +7274,126 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-					ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate, IconType.Task, taskSubject,
-							taskNotes, true, false, null, null);
-					if (result.isEmpty()) {
-						log(LogStatus.PASS, taskSubject + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject + " record is not verified on intraction. " + result,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject + " record is not verified on intraction. " + result);
-					}
-
-					ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1, IconType.Call,
-							taskSubject1, taskNotes1, true, false, null, null);
-					if (result1.isEmpty()) {
-						log(LogStatus.PASS, taskSubject1 + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject1 + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject1 + " record is not verified on intraction. " + result1,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject1 + " record is not verified on intraction. " + result1);
-					}
-
-					ArrayList<String> result2 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection,
-							advanceSection, IconType.Task, PageName.AcuityDetails);
-
-					if (result2.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2);
+					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 
 					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+					}	 
 
-					ArrayList<String> result3 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1,
-							basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
-
-					if (result3.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject1 + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject1 + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3);
-
-					}
-
-					ArrayList<String> result5 = bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName,
-							firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName,
-							dealTaggedTimeReference, isInstitutionRecord, null, null);
-					if (result5.isEmpty()) {
-						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The record name and Time reference are not verifed. " + result5,
-								YesNo.No);
-						sa.assertTrue(false, "The record name and Time reference are not verifed." + result5);
-					}
-
-					ArrayList<String> result6 = bp.verifyRecordOnConnectionsSectionInAcuity(recordName,
-							connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall,
-							connectionEmail);
-
-					if (result6.isEmpty()) {
-						log(LogStatus.INFO, "The records have been verified on Connection section in Acuity user : "
-								+ connectionUserName, YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The records are not verified on Connection section in Acuity. user : "
-								+ connectionUserName + " " + result6, YesNo.No);
-						sa.assertTrue(false, "The records are not verified on Connection section in Acuity.  user : "
-								+ connectionUserName + " " + result6);
-					}
-
-					if (click(driver, bp.getMeetingAndCallCount(connectionUserName, 20), "Meeting and call count",
-							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on the count of meeting and call of " + contactSectionName
-								+ " record on contact section", YesNo.No);
-
-						ArrayList<String> result7 = bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call",
-								taskDueDate1, taskSubject1, taskNotes1, participants, tagsArr);
-						if (result7.isEmpty()) {
-							log(LogStatus.INFO,
-									"The records on meeting & calls popup have been verified for " + recordName,
-									YesNo.No);
-						} else {
-							log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "
-									+ recordName + ". " + result7, YesNo.No);
-							sa.assertTrue(false, "The records on meeting & calls popup are not verified for "
-									+ recordName + ". " + result7);
-						}
-
-					} else {
-						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "
-								+ contactSectionName + " record on contact section", YesNo.No);
-						sa.assertTrue(false, "Not able to click on the count of meeting and call of "
-								+ contactSectionName + " record on contact section");
-					}
-
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj2, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj2);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj2, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
 		}
 
-		lp.CRMlogout();
-		sa.assertAll();
-	}
+		if (lp.clickOnTab(projectName, tabObj2)) {
 
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+					}	 
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj2, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc031_VerifyTaskCallFunctionalityOnDealRecordType(String projectName) {
+	public void ATCETc043_CreateATaskAndLogACallFromDealRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCE_Deal1;
+		String recordName=ATCE_Deal1;
+		String activityType=null;
+		if(ATCE_ATActivityType19.trim().equals("Task"))
+		{
+			activityType="Create Task";
+		}
+		else if(ATCE_ATActivityType19.trim().equals("Call"))
+		{
+			activityType="Log a Call";
+		}
 
-		String taskSubject = ATCE_ATSubject1;
-		String taskRelatedTo = ATCE_ATRelatedTo1;
-		String taskNotes = ATCE_ATNote1;
-		String taskStatus = ATCE_AdvanceStatus1;
-		String taskPriority = ATCE_AdvancePriority1;
-		String taskDueDate = ATCE_ATDueDate1;
+		String taskSubject=ATCE_ATSubject19;
+		String taskRelatedTo=ATCE_ATRelatedTo19;
+		String taskNotes=ATCE_ATNote19;
+		String taskStatus=ATCE_AdvanceStatus10;
+		String taskPriority=ATCE_AdvancePriority10;	
+		String dueDateDay=ATCE_ATDay19;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_019", excelLabel.Advance_Due_Date);
 
-		String taskSubject1 = ATCE_ATSubject2;
-		String taskRelatedTo1 = ATCE_ATRelatedTo2;
-		String taskNotes1 = ATCE_ATNote2;
+		String activityType1=ATCE_ATActivityType20;
+		String taskSubject1=ATCE_ATSubject20;
+		String taskRelatedTo1=ATCE_ATRelatedTo20;
+		String taskNotes1=ATCE_ATNote20;	
+		String dueDateDay1=ATCE_ATDay20;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_020", excelLabel.Advance_Due_Date);
 
-		String taskDueDate1 = ATCE_ATDueDate2;
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
-		String[] firmsTaggedName = { ATCE_TaggedFirmsName1, ATCE_TaggedFirmsName2, ATCE_TaggedFirmsName3,
-				ATCE_TaggedFirmsName4, ATCE_TaggedFirmsName5, ATCE_TaggedFirmsName6, ATCE_TaggedFirmsName7,
-				ATCE_TaggedFirmsName8, ATCE_TaggedFirmsName9 };
-		String[] firmsTaggedTimeReference = { ATCE_TaggedFirmsCount1, ATCE_TaggedFirmsCount2, ATCE_TaggedFirmsCount3,
-				ATCE_TaggedFirmsCount4, ATCE_TaggedFirmsCount5, ATCE_TaggedFirmsCount6, ATCE_TaggedFirmsCount7,
-				ATCE_TaggedFirmsCount8, ATCE_TaggedFirmsCount9 };
-
-		String[] peopleTaggedName = { ATCE_TaggedPeopleName1, ATCE_TaggedPeopleName2, ATCE_TaggedPeopleName3,
-				ATCE_TaggedPeopleName4, ATCE_TaggedPeopleName5, ATCE_TaggedPeopleName6, ATCE_TaggedPeopleName7 };
-		String[] peopleTaggedTimeReference = { ATCE_TaggedPeopleCount1, ATCE_TaggedPeopleCount2,
-				ATCE_TaggedPeopleCount3, ATCE_TaggedPeopleCount4, ATCE_TaggedPeopleCount5, ATCE_TaggedPeopleCount6,
-				ATCE_TaggedPeopleCount7 };
-
-		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes },
-				{ "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, { "Status", taskStatus },
-				{ "Priority", taskPriority } };
-
-		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 },
-				{ "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Date", taskDueDate1 } };
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -4547,136 +7401,126 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-					ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate, IconType.Task, taskSubject,
-							taskNotes, true, false, null, null);
-					if (result.isEmpty()) {
-						log(LogStatus.PASS, taskSubject + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject + " record is not verified on intraction. " + result,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject + " record is not verified on intraction. " + result);
-					}
-
-					ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1, IconType.Call,
-							taskSubject1, taskNotes1, true, false, null, null);
-					if (result1.isEmpty()) {
-						log(LogStatus.PASS, taskSubject1 + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject1 + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject1 + " record is not verified on intraction. " + result1,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject1 + " record is not verified on intraction. " + result1);
-					}
-
-					ArrayList<String> result2 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection,
-							advanceSection, IconType.Task, PageName.AcuityDetails);
-
-					if (result2.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2);
+					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 
 					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+					}	 
 
-					ArrayList<String> result3 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1,
-							basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
-
-					if (result3.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject1 + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject1 + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3);
-
-					}
-
-					ArrayList<String> result5 = bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName,
-							firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null, null,
-							isInstitutionRecord, null, null);
-					if (result5.isEmpty()) {
-						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The record name and Time reference are not verifed. " + result5,
-								YesNo.No);
-						sa.assertTrue(false, "The record name and Time reference are not verifed." + result5);
-					}
-
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj4, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj4);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
 		}
 
-		lp.CRMlogout();
-		sa.assertAll();
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+					}	 
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc032_VerifyTaskCallFunctionalityOnFundraisingRecordType(String projectName) {
+	public void ATCETc044_CreateATaskAndLogACallFromFundraisingRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCE_Fundraising1;
+		String recordName=ATCE_Fundraising1;
+		String activityType=null;
+		if(ATCE_ATActivityType21.trim().equals("Task"))
+		{
+			activityType="Create Task";
+		}
+		else if(ATCE_ATActivityType21.trim().equals("Call"))
+		{
+			activityType="Log a Call";
+		}
 
-		String taskSubject = ATCE_ATSubject1;
-		String taskRelatedTo = ATCE_ATRelatedTo1;
-		String taskNotes = ATCE_ATNote1;
-		String taskStatus = ATCE_AdvanceStatus1;
-		String taskPriority = ATCE_AdvancePriority1;
-		String taskDueDate = ATCE_ATDueDate1;
+		String taskSubject=ATCE_ATSubject21;
+		String taskRelatedTo=ATCE_ATRelatedTo21;
+		String taskNotes=ATCE_ATNote21;
+		String taskStatus=ATCE_AdvanceStatus11;
+		String taskPriority=ATCE_AdvancePriority11;	
+		String dueDateDay=ATCE_ATDay21;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_021", excelLabel.Advance_Due_Date);
 
-		String taskSubject1 = ATCE_ATSubject2;
-		String taskRelatedTo1 = ATCE_ATRelatedTo2;
-		String taskNotes1 = ATCE_ATNote2;
+		String activityType1=ATCE_ATActivityType22;
+		String taskSubject1=ATCE_ATSubject22;
+		String taskRelatedTo1=ATCE_ATRelatedTo22;
+		String taskNotes1=ATCE_ATNote22;	
+		String dueDateDay1=ATCE_ATDay22;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_022", excelLabel.Advance_Due_Date);
 
-		String taskDueDate1 = ATCE_ATDueDate2;
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
-		String[] firmsTaggedName = { ATCE_TaggedFirmsName1, ATCE_TaggedFirmsName2, ATCE_TaggedFirmsName3,
-				ATCE_TaggedFirmsName4, ATCE_TaggedFirmsName5, ATCE_TaggedFirmsName6, ATCE_TaggedFirmsName7,
-				ATCE_TaggedFirmsName8, ATCE_TaggedFirmsName9, ATCE_TaggedFirmsName10 };
-		String[] firmsTaggedTimeReference = { ATCE_TaggedFirmsCount1, ATCE_TaggedFirmsCount2, ATCE_TaggedFirmsCount3,
-				ATCE_TaggedFirmsCount4, ATCE_TaggedFirmsCount5, ATCE_TaggedFirmsCount6, ATCE_TaggedFirmsCount7,
-				ATCE_TaggedFirmsCount8, ATCE_TaggedFirmsCount9, ATCE_TaggedFirmsCount10 };
-
-		String[] peopleTaggedName = { ATCE_TaggedPeopleName1, ATCE_TaggedPeopleName2, ATCE_TaggedPeopleName3,
-				ATCE_TaggedPeopleName4, ATCE_TaggedPeopleName5, ATCE_TaggedPeopleName6, ATCE_TaggedPeopleName7 };
-		String[] peopleTaggedTimeReference = { ATCE_TaggedPeopleCount1, ATCE_TaggedPeopleCount2,
-				ATCE_TaggedPeopleCount3, ATCE_TaggedPeopleCount4, ATCE_TaggedPeopleCount5, ATCE_TaggedPeopleCount6,
-				ATCE_TaggedPeopleCount7 };
-
-		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes },
-				{ "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, { "Status", taskStatus },
-				{ "Priority", taskPriority } };
-
-		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 },
-				{ "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Date", taskDueDate1 } };
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -4684,139 +7528,126 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-					ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate, IconType.Task, taskSubject,
-							taskNotes, true, false, null, null);
-					if (result.isEmpty()) {
-						log(LogStatus.PASS, taskSubject + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject + " record is not verified on intraction. " + result,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject + " record is not verified on intraction. " + result);
-					}
-
-					ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1, IconType.Call,
-							taskSubject1, taskNotes1, true, false, null, null);
-					if (result1.isEmpty()) {
-						log(LogStatus.PASS, taskSubject1 + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject1 + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject1 + " record is not verified on intraction. " + result1,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject1 + " record is not verified on intraction. " + result1);
-					}
-
-					ArrayList<String> result2 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection,
-							advanceSection, IconType.Task, PageName.AcuityDetails);
-
-					if (result2.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2);
+					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 
 					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+					}	 
 
-					ArrayList<String> result3 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1,
-							basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
-
-					if (result3.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject1 + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject1 + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3);
-
-					}
-
-					ArrayList<String> result5 = bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName,
-							firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null, null,
-							isInstitutionRecord, null, null);
-					if (result5.isEmpty()) {
-						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The record name and Time reference are not verifed. " + result5,
-								YesNo.No);
-						sa.assertTrue(false, "The record name and Time reference are not verifed." + result5);
-					}
-
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + TabName.Fundraising.toString(), YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + TabName.Fundraising.toString());
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
 		}
 
-		lp.CRMlogout();
-		sa.assertAll();
-	}
+		if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
 
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+					}	 
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc033_VerifyTaskCallFunctionalityOnFundRecordType(String projectName) {
+	public void ATCETc045_CreateATaskAndLogACallFromFundRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCE_Fund1;
+		String recordName=ATCE_Fund1;
+		String activityType=null;
+		if(ATCE_ATActivityType23.trim().equals("Task"))
+		{
+			activityType="Create Task";
+		}
+		else if(ATCE_ATActivityType23.trim().equals("Call"))
+		{
+			activityType="Log a Call";
+		}
 
-		String taskSubject = ATCE_ATSubject1;
-		String taskRelatedTo = ATCE_ATRelatedTo1;
-		String taskNotes = ATCE_ATNote1;
-		String taskStatus = ATCE_AdvanceStatus1;
-		String taskPriority = ATCE_AdvancePriority1;
-		String taskDueDate = ATCE_ATDueDate1;
+		String taskSubject=ATCE_ATSubject23;
+		String taskRelatedTo=ATCE_ATRelatedTo23;
+		String taskNotes=ATCE_ATNote23;
+		String taskStatus=ATCE_AdvanceStatus12;
+		String taskPriority=ATCE_AdvancePriority12;	
+		String dueDateDay=ATCE_ATDay23;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_023", excelLabel.Advance_Due_Date);
 
-		String taskSubject1 = ATCE_ATSubject2;
-		String taskRelatedTo1 = ATCE_ATRelatedTo2;
-		String taskNotes1 = ATCE_ATNote2;
+		String activityType1=ATCE_ATActivityType24;
+		String taskSubject1=ATCE_ATSubject24;
+		String taskRelatedTo1=ATCE_ATRelatedTo24;
+		String taskNotes1=ATCE_ATNote24;	
+		String dueDateDay1=ATCE_ATDay24;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_024", excelLabel.Advance_Due_Date);
 
-		String taskDueDate1 = ATCE_ATDueDate2;
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
-		String[] firmsTaggedName = { ATCE_TaggedFirmsName1, ATCE_TaggedFirmsName2, ATCE_TaggedFirmsName3,
-				ATCE_TaggedFirmsName4, ATCE_TaggedFirmsName5, ATCE_TaggedFirmsName6, ATCE_TaggedFirmsName7,
-				ATCE_TaggedFirmsName8, ATCE_TaggedFirmsName9, ATCE_TaggedFirmsName10 };
-		String[] firmsTaggedTimeReference = { ATCE_TaggedFirmsCount1, ATCE_TaggedFirmsCount2, ATCE_TaggedFirmsCount3,
-				ATCE_TaggedFirmsCount4, ATCE_TaggedFirmsCount5, ATCE_TaggedFirmsCount6, ATCE_TaggedFirmsCount7,
-				ATCE_TaggedFirmsCount8, ATCE_TaggedFirmsCount9, ATCE_TaggedFirmsCount10 };
-
-		String[] peopleTaggedName = { ATCE_TaggedPeopleName1, ATCE_TaggedPeopleName2, ATCE_TaggedPeopleName3,
-				ATCE_TaggedPeopleName4, ATCE_TaggedPeopleName5, ATCE_TaggedPeopleName6, ATCE_TaggedPeopleName7 };
-		String[] peopleTaggedTimeReference = { ATCE_TaggedPeopleCount1, ATCE_TaggedPeopleCount2,
-				ATCE_TaggedPeopleCount3, ATCE_TaggedPeopleCount4, ATCE_TaggedPeopleCount5, ATCE_TaggedPeopleCount6,
-				ATCE_TaggedPeopleCount7 };
-
-		String[] dealTaggedName = { ATCE_TaggedDealName1 };
-		String[] dealTaggedTimeReference = { ATCE_TaggedDealCount1 };
-
-		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes },
-				{ "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, { "Status", taskStatus },
-				{ "Priority", taskPriority } };
-
-		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 },
-				{ "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Date", taskDueDate1 } };
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -4824,929 +7655,5916 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj3, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab, recordName, 30)) {
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab,
+					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-					ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate, IconType.Task, taskSubject,
-							taskNotes, true, false, null, null);
-					if (result.isEmpty()) {
-						log(LogStatus.PASS, taskSubject + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject + " record is not verified on intraction. " + result,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject + " record is not verified on intraction. " + result);
-					}
-
-					ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1, IconType.Call,
-							taskSubject1, taskNotes1, true, false, null, null);
-					if (result1.isEmpty()) {
-						log(LogStatus.PASS, taskSubject1 + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject1 + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject1 + " record is not verified on intraction. " + result1,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject1 + " record is not verified on intraction. " + result1);
-					}
-
-					ArrayList<String> result2 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection,
-							advanceSection, IconType.Task, PageName.AcuityDetails);
-
-					if (result2.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2);
+					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 
 					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+					}	 
 
-					ArrayList<String> result3 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1,
-							basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
-
-					if (result3.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject1 + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject1 + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3);
-
-					}
-
-					ArrayList<String> result5 = bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName,
-							firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName,
-							dealTaggedTimeReference, isInstitutionRecord, null, null);
-					if (result5.isEmpty()) {
-						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The record name and Time reference are not verifed. " + result5,
-								YesNo.No);
-						sa.assertTrue(false, "The record name and Time reference are not verifed." + result5);
-					}
-
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj3, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj3);
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj3, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj3);
 		}
 
-		lp.CRMlogout();
-		sa.assertAll();
-	}
+		if (lp.clickOnTab(projectName, tabObj3)) {
 
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj3, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+					}	 
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj3, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj3);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc034_VerifyTaskCallFunctionalityOnThemeRecordType(String projectName) {
+	public void ATCETc046_CreateATaskAndLogACallFromThemeRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCE_Theme1;
+		String recordName=ATCE_Theme1;
+		String activityType=null;
+		if(ATCE_ATActivityType25.trim().equals("Task"))
+		{
+			activityType="Create Task";
+		}
+		else if(ATCE_ATActivityType25.trim().equals("Call"))
+		{
+			activityType="Log a Call";
+		}
 
-		String taskSubject = ATCE_ATSubject1;
-		String taskRelatedTo = ATCE_ATRelatedTo1;
-		String taskNotes = ATCE_ATNote1;
-		String taskStatus = ATCE_AdvanceStatus1;
-		String taskPriority = ATCE_AdvancePriority1;
-		String taskDueDate = ATCE_ATDueDate1;
+		String taskSubject=ATCE_ATSubject25;
+		String taskRelatedTo=ATCE_ATRelatedTo25;
+		String taskNotes=ATCE_ATNote25;
+		String taskStatus=ATCE_AdvanceStatus13;
+		String taskPriority=ATCE_AdvancePriority13;	
+		String dueDateDay=ATCE_ATDay25;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_025", excelLabel.Advance_Due_Date);
 
-		String taskSubject1 = ATCE_ATSubject2;
-		String taskRelatedTo1 = ATCE_ATRelatedTo2;
-		String taskNotes1 = ATCE_ATNote2;
+		String activityType1=ATCE_ATActivityType26;
+		String taskSubject1=ATCE_ATSubject26;
+		String taskRelatedTo1=ATCE_ATRelatedTo26;
+		String taskNotes1=ATCE_ATNote26;	
+		String dueDateDay1=ATCE_ATDay26;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_026", excelLabel.Advance_Due_Date);
 
-		String taskDueDate1 = ATCE_ATDueDate2;
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
-		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes },
-				{ "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, { "Status", taskStatus },
-				{ "Priority", taskPriority } };
-
-		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 },
-				{ "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Date", taskDueDate1 } };
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 		if (lp.clickOnTab(projectName, TabName.Themes.toString())) {
 
-			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Themes.toString(), YesNo.No);
+			log(LogStatus.INFO, "Clicked on Tab : "+TabName.Themes.toString(), YesNo.No);
 
-			String parentWindowID = bp.clickOnThemeRecord(recordName);
+			String parentWindowID=bp.clickOnThemeRecord(recordName);
 
-			if (parentWindowID != null) {
+			if (parentWindowID!=null) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-					ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate, IconType.Task, taskSubject,
-							taskNotes, true, false, null, null);
-					if (result.isEmpty()) {
-						log(LogStatus.PASS, taskSubject + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject + " record is not verified on intraction. " + result,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject + " record is not verified on intraction. " + result);
-					}
-
-					ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(taskDueDate1, IconType.Call,
-							taskSubject1, taskNotes1, true, false, null, null);
-					if (result1.isEmpty()) {
-						log(LogStatus.PASS, taskSubject1 + " record has been verified on intraction", YesNo.No);
-						sa.assertTrue(true, taskSubject1 + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR, taskSubject1 + " record is not verified on intraction. " + result1,
-								YesNo.No);
-						sa.assertTrue(false, taskSubject1 + " record is not verified on intraction. " + result1);
-					}
-
-					ArrayList<String> result2 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection,
-							advanceSection, IconType.Task, PageName.AcuityDetails);
-
-					if (result2.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject + " are not verified. " + result2);
+					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 
 					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+					}	 
 
-					ArrayList<String> result3 = bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1,
-							basicsection1, advanceSection1, IconType.Call, PageName.AcuityDetails);
-
-					if (result3.isEmpty()) {
-						log(LogStatus.PASS, "The details on popup of subject " + taskSubject1 + " has been verified",
-								YesNo.No);
-						sa.assertTrue(true, "The details on popup of subject " + taskSubject1 + " has been verified");
-					} else {
-						log(LogStatus.PASS,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3,
-								YesNo.No);
-						sa.assertTrue(true,
-								"The details on popup of subject " + taskSubject1 + " are not verified. " + result3);
-
-					}
-
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open " + recordName + " reocrd", YesNo.No);
-				sa.assertTrue(false, "Not able to open " + recordName + " reocrd");
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
 			}
 			driver.close();
 			driver.switchTo().window(parentWindowID);
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab : " + TabName.Themes.toString(), YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab : " + TabName.Themes.toString());
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+TabName.Themes.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+TabName.Themes.toString());
 		}
 
-		lp.CRMlogout();
-		sa.assertAll();
+		if (lp.clickOnTab(projectName, TabName.Themes.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : "+TabName.Themes.toString(), YesNo.No);
+
+			String parentWindowID=bp.clickOnThemeRecord(recordName);
+
+			if (parentWindowID!=null) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null,null)) {
+						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+					}	 
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+			driver.close();
+			driver.switchTo().window(parentWindowID);
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab : "+TabName.Themes.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+TabName.Themes.toString());
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc035_CreateATaskAndLogACallFromCompanyRecord(String projectName) {
+	public void ATCETc047_VerifyTaskCallFunctionalityOnCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord1;
-		String activityType = null;
-		if (ATCE_ATActivityType3.trim().equals("Task")) {
-			activityType = "Create Task";
-		} else if (ATCE_ATActivityType3.trim().equals("Call")) {
-			activityType = "Log a Call";
+		String recordName=ATCERecord1;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
 		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+		
+		String contactSectionName=ATCE_ConName8;
+		String contactSectionTitle=ATCE_ConTitle8;
+		String contactSectionDeal=ATCE_ConDeal8;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall8;
+		String contactSectionEmail=ATCE_ConEmail8;
 
-		String taskSubject = ATCE_ATSubject3;
-		String taskRelatedTo = ATCE_ATRelatedTo3;
-		String taskNotes = ATCE_ATNote3;
-		String taskStatus = ATCE_AdvanceStatus2;
-		String taskPriority = ATCE_AdvancePriority2;
-		String dueDateDay = ATCE_ATDay3;
-		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy",
-				Integer.parseInt(dueDateDay));
-		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
-				"ATCE_003", excelLabel.Advance_Due_Date);
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName11,ATCE_TaggedFirmsName12,ATCE_TaggedFirmsName13,ATCE_TaggedFirmsName14,ATCE_TaggedFirmsName15,ATCE_TaggedFirmsName16,ATCE_TaggedFirmsName17,ATCE_TaggedFirmsName18,ATCE_TaggedFirmsName19,ATCE_TaggedFirmsName20,ATCE_TaggedFirmsName21,ATCE_TaggedFirmsName22,ATCE_TaggedFirmsName23};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount11,ATCE_TaggedFirmsCount12,ATCE_TaggedFirmsCount13,ATCE_TaggedFirmsCount14,ATCE_TaggedFirmsCount15,ATCE_TaggedFirmsCount16,ATCE_TaggedFirmsCount17,ATCE_TaggedFirmsCount18,ATCE_TaggedFirmsCount19,ATCE_TaggedFirmsCount20,ATCE_TaggedFirmsCount21,ATCE_TaggedFirmsCount22,ATCE_TaggedFirmsCount23};
 
-		String activityType1 = ATCE_ATActivityType4;
-		String taskSubject1 = ATCE_ATSubject4;
-		String taskRelatedTo1 = ATCE_ATRelatedTo4;
-		String taskNotes1 = ATCE_ATNote4;
-		String dueDateDay1 = ATCE_ATDay4;
-		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy",
-				Integer.parseInt(dueDateDay1));
-		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
-				"ATCE_004", excelLabel.Advance_Due_Date);
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName11,ATCE_TaggedPeopleName12,ATCE_TaggedPeopleName13,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount11,ATCE_TaggedPeopleCount12,ATCE_TaggedPeopleCount13,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName2};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount2};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle2;
+		String connectionDeal=ATCE_ConnectionDeal2;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall2;
+		String connectionEmail=ATCE_ConnectionEmail2;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String[] iconType= {ATCE_ATActivityType2,ATCE_ATActivityType12,ATCE_ATActivityType14,ATCE_ATActivityType16,ATCE_ATActivityType18,ATCE_ATActivityType20,ATCE_ATActivityType22,ATCE_ATActivityType24,ATCE_ATActivityType26};
+		String[] date= {ATCE_ATDueDate2,ATCE_ATDueDate12,ATCE_ATDueDate14,ATCE_ATDueDate16,ATCE_ATDueDate18,ATCE_ATDueDate20,ATCE_ATDueDate22,ATCE_ATDueDate24,ATCE_ATDueDate26};
+		String[] subject= {ATCE_ATSubject2,ATCE_ATSubject12,ATCE_ATSubject14,ATCE_ATSubject16,ATCE_ATSubject18,ATCE_ATSubject20,ATCE_ATSubject22,ATCE_ATSubject24,ATCE_ATSubject26};
+		String[] notes= {ATCE_ATNote2,ATCE_ATNote12,ATCE_ATNote14,ATCE_ATNote16,ATCE_ATNote18,ATCE_ATNote20,ATCE_ATNote22,ATCE_ATNote24,ATCE_ATNote26};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag= {ATCE_ATTags2.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags20.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
 
-		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes },
-				{ "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, { "Status", taskStatus },
-				{ "Priority", taskPriority } };
+			if (lp.clickOnTab(projectName, tabObj1)) {
 
-		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 },
-				{ "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Date", taskDueDate1 } };
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc048_VerifyTaskCallFunctionalityOnAdvisorRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord5;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+		
+		String contactSectionName=ATCE_ConName9;
+		String contactSectionTitle=ATCE_ConTitle9;
+		String contactSectionDeal=ATCE_ConDeal9;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall9;
+		String contactSectionEmail=ATCE_ConEmail9;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName11,ATCE_TaggedFirmsName13,ATCE_TaggedFirmsName14,ATCE_TaggedFirmsName15,ATCE_TaggedFirmsName16,ATCE_TaggedFirmsName17,ATCE_TaggedFirmsName18,ATCE_TaggedFirmsName19,ATCE_TaggedFirmsName20,ATCE_TaggedFirmsName21,ATCE_TaggedFirmsName22,ATCE_TaggedFirmsName23,ATCE_TaggedFirmsName24};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount11,ATCE_TaggedFirmsCount13,ATCE_TaggedFirmsCount14,ATCE_TaggedFirmsCount15,ATCE_TaggedFirmsCount16,ATCE_TaggedFirmsCount17,ATCE_TaggedFirmsCount18,ATCE_TaggedFirmsCount19,ATCE_TaggedFirmsCount20,ATCE_TaggedFirmsCount21,ATCE_TaggedFirmsCount22,ATCE_TaggedFirmsCount23,ATCE_TaggedFirmsCount24};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName12,ATCE_TaggedPeopleName13,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20,ATCE_TaggedPeopleName21};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount12,ATCE_TaggedPeopleCount13,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20,ATCE_TaggedPeopleCount21};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName2};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount2};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle2;
+		String connectionDeal=ATCE_ConnectionDeal2;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall2;
+		String connectionEmail=ATCE_ConnectionEmail2;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String[] iconType= {ATCE_ATActivityType2,ATCE_ATActivityType12,ATCE_ATActivityType14,ATCE_ATActivityType16,ATCE_ATActivityType18,ATCE_ATActivityType20,ATCE_ATActivityType22,ATCE_ATActivityType24,ATCE_ATActivityType26};
+		String[] date= {ATCE_ATDueDate2,ATCE_ATDueDate12,ATCE_ATDueDate14,ATCE_ATDueDate16,ATCE_ATDueDate18,ATCE_ATDueDate20,ATCE_ATDueDate22,ATCE_ATDueDate24,ATCE_ATDueDate26};
+		String[] subject= {ATCE_ATSubject2,ATCE_ATSubject12,ATCE_ATSubject14,ATCE_ATSubject16,ATCE_ATSubject18,ATCE_ATSubject20,ATCE_ATSubject22,ATCE_ATSubject24,ATCE_ATSubject26};
+		String[] notes= {ATCE_ATNote2,ATCE_ATNote12,ATCE_ATNote14,ATCE_ATNote16,ATCE_ATNote18,ATCE_ATNote20,ATCE_ATNote22,ATCE_ATNote24,ATCE_ATNote26};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag= {ATCE_ATTags2.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags20.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+			
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (lp.clickOnTab(projectName, tabObj1)) {
+			if (lp.clickOnTab(projectName, tabObj1)) {
 
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab, recordName, 30)) {
-				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
-					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
 
-					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null,
-							null, false, null, null, null, null, null, null)) {
-						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : " + taskSubject,
-								YesNo.No);
-						sa.assertTrue(true,
-								"Activity timeline record has been created,  Subject name : " + taskSubject);
-
-					} else {
-						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : " + taskSubject,
-								YesNo.No);
-						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : " + taskSubject);
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
 					}
-
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
-				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
-			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj1);
-		}
-
-		if (lp.clickOnTab(projectName, tabObj1)) {
-
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
-
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab, recordName, 30)) {
-				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
-					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-
-					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1,
-							null, null, false, null, null, null, null, null, null)) {
-						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : " + taskSubject1,
-								YesNo.No);
-						sa.assertTrue(true,
-								"Activity timeline record has been created,  Subject name : " + taskSubject1);
-					} else {
-						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : " + taskSubject1,
-								YesNo.No);
-						sa.assertTrue(false,
-								"Activity timeline record is not created,  Subject name : " + taskSubject1);
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
 					}
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj1);
-		}
-		lp.CRMlogout();
-		sa.assertAll();
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc049_VerifyTaskCallFunctionalityOnLendorRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord7;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+		
+		String contactSectionName=ATCE_ConName10;
+		String contactSectionTitle=ATCE_ConTitle10;
+		String contactSectionDeal=ATCE_ConDeal10;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall10;
+		String contactSectionEmail=ATCE_ConEmail10;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName11,ATCE_TaggedFirmsName12,ATCE_TaggedFirmsName14,ATCE_TaggedFirmsName15,ATCE_TaggedFirmsName16,ATCE_TaggedFirmsName17,ATCE_TaggedFirmsName18,ATCE_TaggedFirmsName19,ATCE_TaggedFirmsName20,ATCE_TaggedFirmsName21,ATCE_TaggedFirmsName22,ATCE_TaggedFirmsName23,ATCE_TaggedFirmsName24};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount11,ATCE_TaggedFirmsCount12,ATCE_TaggedFirmsCount14,ATCE_TaggedFirmsCount15,ATCE_TaggedFirmsCount16,ATCE_TaggedFirmsCount17,ATCE_TaggedFirmsCount18,ATCE_TaggedFirmsCount19,ATCE_TaggedFirmsCount20,ATCE_TaggedFirmsCount21,ATCE_TaggedFirmsCount22,ATCE_TaggedFirmsCount23,ATCE_TaggedFirmsCount24};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName11,ATCE_TaggedPeopleName12,ATCE_TaggedPeopleName13,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20,ATCE_TaggedPeopleName21};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount11,ATCE_TaggedPeopleCount12,ATCE_TaggedPeopleCount13,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20,ATCE_TaggedPeopleCount21};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName2};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount2};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle3;
+		String connectionDeal=ATCE_ConnectionDeal3;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall3;
+		String connectionEmail=ATCE_ConnectionEmail3;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String[] iconType= {ATCE_ATActivityType4,ATCE_ATActivityType6,ATCE_ATActivityType8,ATCE_ATActivityType10,ATCE_ATActivityType12,ATCE_ATActivityType14,ATCE_ATActivityType16,ATCE_ATActivityType18,ATCE_ATActivityType20,ATCE_ATActivityType22,ATCE_ATActivityType24,ATCE_ATActivityType26};
+		String[] date= {ATCE_ATDueDate4,ATCE_ATDueDate6,ATCE_ATDueDate8,ATCE_ATDueDate10,ATCE_ATDueDate12,ATCE_ATDueDate14,ATCE_ATDueDate16,ATCE_ATDueDate18,ATCE_ATDueDate20,ATCE_ATDueDate22,ATCE_ATDueDate24,ATCE_ATDueDate26};
+		String[] subject= {ATCE_ATSubject4,ATCE_ATSubject6,ATCE_ATSubject8,ATCE_ATSubject10,ATCE_ATSubject12,ATCE_ATSubject14,ATCE_ATSubject16,ATCE_ATSubject18,ATCE_ATSubject20,ATCE_ATSubject22,ATCE_ATSubject24,ATCE_ATSubject26};
+		String[] notes= {ATCE_ATNote4,ATCE_ATNote6,ATCE_ATNote8,ATCE_ATNote10,ATCE_ATNote12,ATCE_ATNote14,ATCE_ATNote16,ATCE_ATNote18,ATCE_ATNote20,ATCE_ATNote22,ATCE_ATNote24,ATCE_ATNote26};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag= {ATCE_ATTags4.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags20.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+			
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc050_VerifyTaskCallFunctionalityOnIntermediaryRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord9;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+		
+		String contactSectionName=ATCE_ConName11;
+		String contactSectionTitle=ATCE_ConTitle11;
+		String contactSectionDeal=ATCE_ConDeal11;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall11;
+		String contactSectionEmail=ATCE_ConEmail11;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName11,ATCE_TaggedFirmsName12,ATCE_TaggedFirmsName13,ATCE_TaggedFirmsName15,ATCE_TaggedFirmsName16,ATCE_TaggedFirmsName17,ATCE_TaggedFirmsName18,ATCE_TaggedFirmsName19,ATCE_TaggedFirmsName20,ATCE_TaggedFirmsName21,ATCE_TaggedFirmsName22,ATCE_TaggedFirmsName23,ATCE_TaggedFirmsName24};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount11,ATCE_TaggedFirmsCount12,ATCE_TaggedFirmsCount13,ATCE_TaggedFirmsCount15,ATCE_TaggedFirmsCount16,ATCE_TaggedFirmsCount17,ATCE_TaggedFirmsCount18,ATCE_TaggedFirmsCount19,ATCE_TaggedFirmsCount20,ATCE_TaggedFirmsCount21,ATCE_TaggedFirmsCount22,ATCE_TaggedFirmsCount23,ATCE_TaggedFirmsCount24};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName11,ATCE_TaggedPeopleName12,ATCE_TaggedPeopleName13,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20,ATCE_TaggedPeopleName21};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount11,ATCE_TaggedPeopleCount12,ATCE_TaggedPeopleCount13,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20,ATCE_TaggedPeopleCount21};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName2};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount2};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle3;
+		String connectionDeal=ATCE_ConnectionDeal3;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall3;
+		String connectionEmail=ATCE_ConnectionEmail3;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String[] iconType= {ATCE_ATActivityType4,ATCE_ATActivityType6,ATCE_ATActivityType8,ATCE_ATActivityType10,ATCE_ATActivityType12,ATCE_ATActivityType14,ATCE_ATActivityType16,ATCE_ATActivityType18,ATCE_ATActivityType20,ATCE_ATActivityType22,ATCE_ATActivityType24,ATCE_ATActivityType26};
+		String[] date= {ATCE_ATDueDate4,ATCE_ATDueDate6,ATCE_ATDueDate8,ATCE_ATDueDate10,ATCE_ATDueDate12,ATCE_ATDueDate14,ATCE_ATDueDate16,ATCE_ATDueDate18,ATCE_ATDueDate20,ATCE_ATDueDate22,ATCE_ATDueDate24,ATCE_ATDueDate26};
+		String[] subject= {ATCE_ATSubject4,ATCE_ATSubject6,ATCE_ATSubject8,ATCE_ATSubject10,ATCE_ATSubject12,ATCE_ATSubject14,ATCE_ATSubject16,ATCE_ATSubject18,ATCE_ATSubject20,ATCE_ATSubject22,ATCE_ATSubject24,ATCE_ATSubject26};
+		String[] notes= {ATCE_ATNote4,ATCE_ATNote6,ATCE_ATNote8,ATCE_ATNote10,ATCE_ATNote12,ATCE_ATNote14,ATCE_ATNote16,ATCE_ATNote18,ATCE_ATNote20,ATCE_ATNote22,ATCE_ATNote24,ATCE_ATNote26};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag= {ATCE_ATTags4.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags20.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+			
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc036_CreateATaskAndLogACallFromAdvisorRecord(String projectName) {
+	public void ATCETc051_VerifyTaskCallFunctionalityOnInstitutionRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord5;
-		String activityType = null;
-		if (ATCE_ATActivityType5.trim().equals("Task")) {
-			activityType = "Create Task";
-		} else if (ATCE_ATActivityType5.trim().equals("Call")) {
-			activityType = "Log a Call";
+		String recordName=ATCERecord3;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
 		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+		
+		String contactSectionName=ATCE_ConName12;
+		String contactSectionTitle=ATCE_ConTitle12;
+		String contactSectionDeal=ATCE_ConDeal12;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall12;
+		String contactSectionEmail=ATCE_ConEmail12;
 
-		String taskSubject = ATCE_ATSubject5;
-		String taskRelatedTo = ATCE_ATRelatedTo5;
-		String taskNotes = ATCE_ATNote5;
-		String taskStatus = ATCE_AdvanceStatus3;
-		String taskPriority = ATCE_AdvancePriority3;
-		String dueDateDay = ATCE_ATDay5;
-		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy",
-				Integer.parseInt(dueDateDay));
-		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
-				"ATCE_005", excelLabel.Advance_Due_Date);
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName12,ATCE_TaggedFirmsName13,ATCE_TaggedFirmsName14,ATCE_TaggedFirmsName15,ATCE_TaggedFirmsName16,ATCE_TaggedFirmsName17,ATCE_TaggedFirmsName18,ATCE_TaggedFirmsName19,ATCE_TaggedFirmsName20,ATCE_TaggedFirmsName21,ATCE_TaggedFirmsName22,ATCE_TaggedFirmsName23,ATCE_TaggedFirmsName24};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount12,ATCE_TaggedFirmsCount13,ATCE_TaggedFirmsCount14,ATCE_TaggedFirmsCount15,ATCE_TaggedFirmsCount16,ATCE_TaggedFirmsCount17,ATCE_TaggedFirmsCount18,ATCE_TaggedFirmsCount19,ATCE_TaggedFirmsCount20,ATCE_TaggedFirmsCount21,ATCE_TaggedFirmsCount22,ATCE_TaggedFirmsCount23,ATCE_TaggedFirmsCount24};
 
-		String activityType1 = ATCE_ATActivityType6;
-		String taskSubject1 = ATCE_ATSubject6;
-		String taskRelatedTo1 = ATCE_ATRelatedTo6;
-		String taskNotes1 = ATCE_ATNote6;
-		String dueDateDay1 = ATCE_ATDay6;
-		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy",
-				Integer.parseInt(dueDateDay1));
-		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
-				"ATCE_006", excelLabel.Advance_Due_Date);
-
-		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes },
-				{ "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, { "Status", taskStatus },
-				{ "Priority", taskPriority } };
-
-		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 },
-				{ "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Date", taskDueDate1 } };
-
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName11,ATCE_TaggedPeopleName12,ATCE_TaggedPeopleName13,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20,ATCE_TaggedPeopleName21};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount11,ATCE_TaggedPeopleCount12,ATCE_TaggedPeopleCount13,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20,ATCE_TaggedPeopleCount21};
+				
+		String[] fundTaggedName= {ATCE_TaggedFundName2};
+		String[] fundTaggedTimeReference= {ATCE_TaggedFundCount2};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle3;
+		String connectionDeal=ATCE_ConnectionDeal3;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall3;
+		String connectionEmail=ATCE_ConnectionEmail3;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String[] iconType= {ATCE_ATActivityType4,ATCE_ATActivityType6,ATCE_ATActivityType8,ATCE_ATActivityType10,ATCE_ATActivityType12,ATCE_ATActivityType14,ATCE_ATActivityType16,ATCE_ATActivityType18,ATCE_ATActivityType20,ATCE_ATActivityType22,ATCE_ATActivityType24,ATCE_ATActivityType26};
+		String[] date= {ATCE_ATDueDate4,ATCE_ATDueDate6,ATCE_ATDueDate8,ATCE_ATDueDate10,ATCE_ATDueDate12,ATCE_ATDueDate14,ATCE_ATDueDate16,ATCE_ATDueDate18,ATCE_ATDueDate20,ATCE_ATDueDate22,ATCE_ATDueDate24,ATCE_ATDueDate26};
+		String[] subject= {ATCE_ATSubject4,ATCE_ATSubject6,ATCE_ATSubject8,ATCE_ATSubject10,ATCE_ATSubject12,ATCE_ATSubject14,ATCE_ATSubject16,ATCE_ATSubject18,ATCE_ATSubject20,ATCE_ATSubject22,ATCE_ATSubject24,ATCE_ATSubject26};
+		String[] notes= {ATCE_ATNote4,ATCE_ATNote6,ATCE_ATNote8,ATCE_ATNote10,ATCE_ATNote12,ATCE_ATNote14,ATCE_ATNote16,ATCE_ATNote18,ATCE_ATNote20,ATCE_ATNote22,ATCE_ATNote24,ATCE_ATNote26};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag= {ATCE_ATTags4.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags20.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+			
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (lp.clickOnTab(projectName, tabObj1)) {
+			if (lp.clickOnTab(projectName, tabObj1)) {
 
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
-				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
-					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
 
-					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null,
-							null, false, null, null, null, null, null, null)) {
-						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : " + taskSubject,
-								YesNo.No);
-						sa.assertTrue(true,
-								"Activity timeline record has been created,  Subject name : " + taskSubject);
-
-					} else {
-						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : " + taskSubject,
-								YesNo.No);
-						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : " + taskSubject);
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null,null,true,fundTaggedName, fundTaggedTimeReference);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
 					}
-
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
-				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
-			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj1);
-		}
-
-		if (lp.clickOnTab(projectName, tabObj1)) {
-
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
-
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
-				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
-					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-
-					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1,
-							null, null, false, null, null, null, null, null, null)) {
-						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : " + taskSubject1,
-								YesNo.No);
-						sa.assertTrue(true,
-								"Activity timeline record has been created,  Subject name : " + taskSubject1);
-					} else {
-						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : " + taskSubject1,
-								YesNo.No);
-						sa.assertTrue(false,
-								"Activity timeline record is not created,  Subject name : " + taskSubject1);
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
 					}
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj1);
-		}
-		lp.CRMlogout();
-		sa.assertAll();
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc052_VerifyTaskCallFunctionalityOnPortfolioCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord11;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+		
+		String contactSectionName=ATCE_ConName13;
+		String contactSectionTitle=ATCE_ConTitle13;
+		String contactSectionDeal=ATCE_ConDeal13;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall13;
+		String contactSectionEmail=ATCE_ConEmail13;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName11,ATCE_TaggedFirmsName12,ATCE_TaggedFirmsName13,ATCE_TaggedFirmsName14,ATCE_TaggedFirmsName16,ATCE_TaggedFirmsName17,ATCE_TaggedFirmsName18,ATCE_TaggedFirmsName19,ATCE_TaggedFirmsName20,ATCE_TaggedFirmsName21,ATCE_TaggedFirmsName22,ATCE_TaggedFirmsName23,ATCE_TaggedFirmsName24};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount11,ATCE_TaggedFirmsCount12,ATCE_TaggedFirmsCount13,ATCE_TaggedFirmsCount14,ATCE_TaggedFirmsCount16,ATCE_TaggedFirmsCount17,ATCE_TaggedFirmsCount18,ATCE_TaggedFirmsCount19,ATCE_TaggedFirmsCount20,ATCE_TaggedFirmsCount21,ATCE_TaggedFirmsCount22,ATCE_TaggedFirmsCount23,ATCE_TaggedFirmsCount24};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName11,ATCE_TaggedPeopleName13,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20,ATCE_TaggedPeopleName21};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount11,ATCE_TaggedPeopleCount13,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20,ATCE_TaggedPeopleCount21};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName2};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount2};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle2;
+		String connectionDeal=ATCE_ConnectionDeal2;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall2;
+		String connectionEmail=ATCE_ConnectionEmail2;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String[] iconType= {ATCE_ATActivityType2,ATCE_ATActivityType12,ATCE_ATActivityType14,ATCE_ATActivityType16,ATCE_ATActivityType18,ATCE_ATActivityType20,ATCE_ATActivityType22,ATCE_ATActivityType24,ATCE_ATActivityType26};
+		String[] date= {ATCE_ATDueDate2,ATCE_ATDueDate12,ATCE_ATDueDate14,ATCE_ATDueDate16,ATCE_ATDueDate18,ATCE_ATDueDate20,ATCE_ATDueDate22,ATCE_ATDueDate24,ATCE_ATDueDate26};
+		String[] subject= {ATCE_ATSubject2,ATCE_ATSubject12,ATCE_ATSubject14,ATCE_ATSubject16,ATCE_ATSubject18,ATCE_ATSubject20,ATCE_ATSubject22,ATCE_ATSubject24,ATCE_ATSubject26};
+		String[] notes= {ATCE_ATNote2,ATCE_ATNote12,ATCE_ATNote14,ATCE_ATNote16,ATCE_ATNote18,ATCE_ATNote20,ATCE_ATNote22,ATCE_ATNote24,ATCE_ATNote26};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag= {ATCE_ATTags2.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags20.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+			
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc053_VerifyTaskCallFunctionalityOnPrivateEquityRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord13;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+		
+		String contactSectionName=ATCE_ConName14;
+		String contactSectionTitle=ATCE_ConTitle14;
+		String contactSectionDeal=ATCE_ConDeal14;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall14;
+		String contactSectionEmail=ATCE_ConEmail14;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName11,ATCE_TaggedFirmsName12,ATCE_TaggedFirmsName13,ATCE_TaggedFirmsName14,ATCE_TaggedFirmsName15,ATCE_TaggedFirmsName17,ATCE_TaggedFirmsName18,ATCE_TaggedFirmsName19,ATCE_TaggedFirmsName20,ATCE_TaggedFirmsName21,ATCE_TaggedFirmsName22,ATCE_TaggedFirmsName23,ATCE_TaggedFirmsName24};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount11,ATCE_TaggedFirmsCount12,ATCE_TaggedFirmsCount13,ATCE_TaggedFirmsCount14,ATCE_TaggedFirmsCount15,ATCE_TaggedFirmsCount17,ATCE_TaggedFirmsCount18,ATCE_TaggedFirmsCount19,ATCE_TaggedFirmsCount20,ATCE_TaggedFirmsCount21,ATCE_TaggedFirmsCount22,ATCE_TaggedFirmsCount23,ATCE_TaggedFirmsCount24};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName11,ATCE_TaggedPeopleName12,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20,ATCE_TaggedPeopleName21};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount11,ATCE_TaggedPeopleCount12,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20,ATCE_TaggedPeopleCount21};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName2};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount2};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle2;
+		String connectionDeal=ATCE_ConnectionDeal2;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall2;
+		String connectionEmail=ATCE_ConnectionEmail2;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String[] iconType= {ATCE_ATActivityType2,ATCE_ATActivityType12,ATCE_ATActivityType14,ATCE_ATActivityType16,ATCE_ATActivityType18,ATCE_ATActivityType20,ATCE_ATActivityType22,ATCE_ATActivityType24,ATCE_ATActivityType26};
+		String[] date= {ATCE_ATDueDate2,ATCE_ATDueDate12,ATCE_ATDueDate14,ATCE_ATDueDate16,ATCE_ATDueDate18,ATCE_ATDueDate20,ATCE_ATDueDate22,ATCE_ATDueDate24,ATCE_ATDueDate26};
+		String[] subject= {ATCE_ATSubject2,ATCE_ATSubject12,ATCE_ATSubject14,ATCE_ATSubject16,ATCE_ATSubject18,ATCE_ATSubject20,ATCE_ATSubject22,ATCE_ATSubject24,ATCE_ATSubject26};
+		String[] notes= {ATCE_ATNote2,ATCE_ATNote12,ATCE_ATNote14,ATCE_ATNote16,ATCE_ATNote18,ATCE_ATNote20,ATCE_ATNote22,ATCE_ATNote24,ATCE_ATNote26};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag= {ATCE_ATTags2.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags20.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+			
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection page have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection page are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection page are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc037_CreateATaskAndLogACallFromLendorRecord(String projectName) {
+	public void ATCETc054_VerifyTaskCallFunctionalityOnContactRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord7;
-		String activityType = null;
-		if (ATCE_ATActivityType7.trim().equals("Task")) {
-			activityType = "Create Task";
-		} else if (ATCE_ATActivityType7.trim().equals("Call")) {
-			activityType = "Log a Call";
+		String recordName=ATCE_Con1;
+		String taskSubject=ATCE_ATSubject11;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo11.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo11.replace("<Prefilled>", "");
 		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo11;
+		}
+	
+		String taskNotes=ATCE_ATNote11;
+		String taskStatus=ATCE_AdvanceStatus11;
+		String taskPriority=ATCE_AdvancePriority11;	
+		String taskDueDate =ATCE_ATDueDate11;
+		
+		String taskSubject1=ATCE_ATSubject12;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo12.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo12.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo12;
+		}
+		
+		String taskNotes1=ATCE_ATNote12;
+		
+		String taskDueDate1 =ATCE_ATDueDate12;
+		
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName25,ATCE_TaggedFirmsName26,ATCE_TaggedFirmsName27,ATCE_TaggedFirmsName28,ATCE_TaggedFirmsName29,ATCE_TaggedFirmsName30,ATCE_TaggedFirmsName31,ATCE_TaggedFirmsName32,ATCE_TaggedFirmsName33};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount25,ATCE_TaggedFirmsCount26,ATCE_TaggedFirmsCount27,ATCE_TaggedFirmsCount28,ATCE_TaggedFirmsCount29,ATCE_TaggedFirmsCount30,ATCE_TaggedFirmsCount31,ATCE_TaggedFirmsCount32,ATCE_TaggedFirmsCount33};
 
-		String taskSubject = ATCE_ATSubject7;
-		String taskRelatedTo = ATCE_ATRelatedTo7;
-		String taskNotes = ATCE_ATNote7;
-		String taskStatus = ATCE_AdvanceStatus4;
-		String taskPriority = ATCE_AdvancePriority4;
-		String dueDateDay = ATCE_ATDay7;
-		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy",
-				Integer.parseInt(dueDateDay));
-		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
-				"ATCE_007", excelLabel.Advance_Due_Date);
-
-		String activityType1 = ATCE_ATActivityType8;
-		String taskSubject1 = ATCE_ATSubject8;
-		String taskRelatedTo1 = ATCE_ATRelatedTo8;
-		String taskNotes1 = ATCE_ATNote8;
-		String dueDateDay1 = ATCE_ATDay8;
-		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy",
-				Integer.parseInt(dueDateDay1));
-		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
-				"ATCE_008", excelLabel.Advance_Due_Date);
-
-		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes },
-				{ "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, { "Status", taskStatus },
-				{ "Priority", taskPriority } };
-
-		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 },
-				{ "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Date", taskDueDate1 } };
-
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName11,ATCE_TaggedPeopleName12,ATCE_TaggedPeopleName13,ATCE_TaggedPeopleName22,ATCE_TaggedPeopleName23,ATCE_TaggedPeopleName24,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount11,ATCE_TaggedPeopleCount12,ATCE_TaggedPeopleCount13,ATCE_TaggedPeopleCount22,ATCE_TaggedPeopleCount23,ATCE_TaggedPeopleCount24,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName3};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount3};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle2;
+		String connectionDeal=ATCE_ConnectionDeal2;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall2;
+		String connectionEmail=ATCE_ConnectionEmail2;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String[] iconType= {ATCE_ATActivityType2,ATCE_ATActivityType12,ATCE_ATActivityType14,ATCE_ATActivityType16,ATCE_ATActivityType18,ATCE_ATActivityType20,ATCE_ATActivityType22,ATCE_ATActivityType24,ATCE_ATActivityType26};
+		String[] date= {ATCE_ATDueDate2,ATCE_ATDueDate12,ATCE_ATDueDate14,ATCE_ATDueDate16,ATCE_ATDueDate18,ATCE_ATDueDate20,ATCE_ATDueDate22,ATCE_ATDueDate24,ATCE_ATDueDate26};
+		String[] subject= {ATCE_ATSubject2,ATCE_ATSubject12,ATCE_ATSubject14,ATCE_ATSubject16,ATCE_ATSubject18,ATCE_ATSubject20,ATCE_ATSubject22,ATCE_ATSubject24,ATCE_ATSubject26};
+		String[] notes= {ATCE_ATNote2,ATCE_ATNote12,ATCE_ATNote14,ATCE_ATNote16,ATCE_ATNote18,ATCE_ATNote20,ATCE_ATNote22,ATCE_ATNote24,ATCE_ATNote26};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag= {ATCE_ATTags2.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags20.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		
+	
+			
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (lp.clickOnTab(projectName, tabObj1)) {
+			if (lp.clickOnTab(projectName, tabObj2)) {
 
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
-				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
-					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+						ArrayList<String> result6=bp.verifyRecordOnConnectionsSectionInAcuity(recordName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
 
-					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null,
-							null, false, null, null, null, null, null, null)) {
-						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : " + taskSubject,
-								YesNo.No);
-						sa.assertTrue(true,
-								"Activity timeline record has been created,  Subject name : " + taskSubject);
-
-					} else {
-						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : " + taskSubject,
-								YesNo.No);
-						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : " + taskSubject);
+						if(result6.isEmpty())
+						{
+							log(LogStatus.INFO, "The records have been verified on Connection section in Acuity user : "+connectionUserName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records are not verified on Connection section in Acuity. user : "+connectionUserName+" "+result6, YesNo.No);
+							sa.assertTrue(false,  "The records are not verified on Connection section in Acuity.  user : "+connectionUserName+" "+result6);
+						}
+						
+					
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(userName1, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+userName1+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result7=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result7.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+userName1, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+userName1+". "+result7, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+userName1+". "+result7);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+userName1+" record on contact section");
+						}
+						
+						
+						
+								
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subject, notes, subject, participant, tag);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
 					}
-
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
-				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
-			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj1);
-		}
-
-		if (lp.clickOnTab(projectName, tabObj1)) {
-
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
-
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
-				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
-					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-
-					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1,
-							null, null, false, null, null, null, null, null, null)) {
-						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : " + taskSubject1,
-								YesNo.No);
-						sa.assertTrue(true,
-								"Activity timeline record has been created,  Subject name : " + taskSubject1);
-					} else {
-						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : " + taskSubject1,
-								YesNo.No);
-						sa.assertTrue(false,
-								"Activity timeline record is not created,  Subject name : " + taskSubject1);
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
 					}
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj1);
-		}
-		lp.CRMlogout();
-		sa.assertAll();
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj2, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc055_VerifyTaskCallFunctionalityOnDealRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Deal1;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+		
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName11,ATCE_TaggedFirmsName12,ATCE_TaggedFirmsName13,ATCE_TaggedFirmsName14,ATCE_TaggedFirmsName15,ATCE_TaggedFirmsName16,ATCE_TaggedFirmsName17,ATCE_TaggedFirmsName18,ATCE_TaggedFirmsName19,ATCE_TaggedFirmsName20,ATCE_TaggedFirmsName21,ATCE_TaggedFirmsName22,ATCE_TaggedFirmsName23};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount11,ATCE_TaggedFirmsCount12,ATCE_TaggedFirmsCount13,ATCE_TaggedFirmsCount14,ATCE_TaggedFirmsCount15,ATCE_TaggedFirmsCount16,ATCE_TaggedFirmsCount17,ATCE_TaggedFirmsCount18,ATCE_TaggedFirmsCount19,ATCE_TaggedFirmsCount20,ATCE_TaggedFirmsCount21,ATCE_TaggedFirmsCount22,ATCE_TaggedFirmsCount23};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName11,ATCE_TaggedPeopleName12,ATCE_TaggedPeopleName13,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20,ATCE_TaggedPeopleName21};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount11,ATCE_TaggedPeopleCount12,ATCE_TaggedPeopleCount13,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20,ATCE_TaggedPeopleCount21};
+				
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj4)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null, null,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}	
+								
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1, date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc056_VerifyTaskCallFunctionalityOnFundraisingRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fundraising1;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+		
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName11,ATCE_TaggedFirmsName12,ATCE_TaggedFirmsName13,ATCE_TaggedFirmsName14,ATCE_TaggedFirmsName15,ATCE_TaggedFirmsName16,ATCE_TaggedFirmsName17,ATCE_TaggedFirmsName18,ATCE_TaggedFirmsName19,ATCE_TaggedFirmsName20,ATCE_TaggedFirmsName21,ATCE_TaggedFirmsName22,ATCE_TaggedFirmsName23,ATCE_TaggedFirmsName24};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount11,ATCE_TaggedFirmsCount12,ATCE_TaggedFirmsCount13,ATCE_TaggedFirmsCount14,ATCE_TaggedFirmsCount15,ATCE_TaggedFirmsCount16,ATCE_TaggedFirmsCount17,ATCE_TaggedFirmsCount18,ATCE_TaggedFirmsCount19,ATCE_TaggedFirmsCount20,ATCE_TaggedFirmsCount21,ATCE_TaggedFirmsCount22,ATCE_TaggedFirmsCount23,ATCE_TaggedFirmsCount24};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName11,ATCE_TaggedPeopleName12,ATCE_TaggedPeopleName13,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20,ATCE_TaggedPeopleName21};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount11,ATCE_TaggedPeopleCount12,ATCE_TaggedPeopleCount13,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20,ATCE_TaggedPeopleCount21};
+				
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+		
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null, null,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}	
+								
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1, date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc057_VerifyTaskCallFunctionalityOnFundRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fund1;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+		
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName11,ATCE_TaggedFirmsName12,ATCE_TaggedFirmsName13,ATCE_TaggedFirmsName14,ATCE_TaggedFirmsName15,ATCE_TaggedFirmsName16,ATCE_TaggedFirmsName17,ATCE_TaggedFirmsName18,ATCE_TaggedFirmsName19,ATCE_TaggedFirmsName20,ATCE_TaggedFirmsName21,ATCE_TaggedFirmsName22,ATCE_TaggedFirmsName23,ATCE_TaggedFirmsName24};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount11,ATCE_TaggedFirmsCount12,ATCE_TaggedFirmsCount13,ATCE_TaggedFirmsCount14,ATCE_TaggedFirmsCount15,ATCE_TaggedFirmsCount16,ATCE_TaggedFirmsCount17,ATCE_TaggedFirmsCount18,ATCE_TaggedFirmsCount19,ATCE_TaggedFirmsCount20,ATCE_TaggedFirmsCount21,ATCE_TaggedFirmsCount22,ATCE_TaggedFirmsCount23,ATCE_TaggedFirmsCount24};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName11,ATCE_TaggedPeopleName12,ATCE_TaggedPeopleName13,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20,ATCE_TaggedPeopleName21};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount11,ATCE_TaggedPeopleCount12,ATCE_TaggedPeopleCount13,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20,ATCE_TaggedPeopleCount21};
+				
+		
+		String[] dealTaggedName= {ATCE_TaggedDealName2};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount2};
+				
+		
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+		if (lp.clickOnTab(projectName, tabObj3)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj3, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}	
+								
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1, date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj3, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj3);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc058_VerifyTaskCallFunctionalityOnThemeRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Theme1;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+	
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, TabName.Themes.toString())) {
+
+				log(LogStatus.INFO, "Clicked on Tab : "+TabName.Themes.toString(), YesNo.No);
+
+				String parentWindowID=bp.clickOnThemeRecord(recordName);
+
+				if (parentWindowID!=null) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+						
+				
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1, date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchToWindowOpenNextToParentWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+				driver.close();
+				driver.switchTo().window(parentWindowID);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab : "+TabName.Themes.toString(), YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab : "+TabName.Themes.toString());
+			}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc059_LoginWithUser2AndVerifyTaskCallFunctionalityOnCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord1;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+		
+		String contactSectionName=ATCE_ConName8;
+		String contactSectionTitle=ATCE_ConTitle8;
+		String contactSectionDeal=ATCE_ConDeal8;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall8;
+		String contactSectionEmail=ATCE_ConEmail8;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName11,ATCE_TaggedFirmsName12,ATCE_TaggedFirmsName13,ATCE_TaggedFirmsName14,ATCE_TaggedFirmsName15,ATCE_TaggedFirmsName16,ATCE_TaggedFirmsName17,ATCE_TaggedFirmsName18,ATCE_TaggedFirmsName19,ATCE_TaggedFirmsName20,ATCE_TaggedFirmsName21,ATCE_TaggedFirmsName22,ATCE_TaggedFirmsName23};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount11,ATCE_TaggedFirmsCount12,ATCE_TaggedFirmsCount13,ATCE_TaggedFirmsCount14,ATCE_TaggedFirmsCount15,ATCE_TaggedFirmsCount16,ATCE_TaggedFirmsCount17,ATCE_TaggedFirmsCount18,ATCE_TaggedFirmsCount19,ATCE_TaggedFirmsCount20,ATCE_TaggedFirmsCount21,ATCE_TaggedFirmsCount22,ATCE_TaggedFirmsCount23};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName11,ATCE_TaggedPeopleName12,ATCE_TaggedPeopleName13,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount11,ATCE_TaggedPeopleCount12,ATCE_TaggedPeopleCount13,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName2};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount2};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle2;
+		String connectionDeal=ATCE_ConnectionDeal2;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall2;
+		String connectionEmail=ATCE_ConnectionEmail2;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String[] iconType= {ATCE_ATActivityType2,ATCE_ATActivityType12,ATCE_ATActivityType14,ATCE_ATActivityType16,ATCE_ATActivityType18,ATCE_ATActivityType20,ATCE_ATActivityType22,ATCE_ATActivityType24,ATCE_ATActivityType26};
+		String[] date= {ATCE_ATDueDate2,ATCE_ATDueDate12,ATCE_ATDueDate14,ATCE_ATDueDate16,ATCE_ATDueDate18,ATCE_ATDueDate20,ATCE_ATDueDate22,ATCE_ATDueDate24,ATCE_ATDueDate26};
+		String[] subject= {ATCE_ATSubject2,ATCE_ATSubject12,ATCE_ATSubject14,ATCE_ATSubject16,ATCE_ATSubject18,ATCE_ATSubject20,ATCE_ATSubject22,ATCE_ATSubject24,ATCE_ATSubject26};
+		String[] notes= {ATCE_ATNote2,ATCE_ATNote12,ATCE_ATNote14,ATCE_ATNote16,ATCE_ATNote18,ATCE_ATNote20,ATCE_ATNote22,ATCE_ATNote24,ATCE_ATNote26};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag= {ATCE_ATTags2.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags20.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		
+		
+		
+		lp.CRMLogin(crmUser7EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc060_LoginWithUser2AndVerifyTaskCallFunctionalityOnAdvisorRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord5;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+		
+		String contactSectionName=ATCE_ConName9;
+		String contactSectionTitle=ATCE_ConTitle9;
+		String contactSectionDeal=ATCE_ConDeal9;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall9;
+		String contactSectionEmail=ATCE_ConEmail9;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName11,ATCE_TaggedFirmsName13,ATCE_TaggedFirmsName14,ATCE_TaggedFirmsName15,ATCE_TaggedFirmsName16,ATCE_TaggedFirmsName17,ATCE_TaggedFirmsName18,ATCE_TaggedFirmsName19,ATCE_TaggedFirmsName20,ATCE_TaggedFirmsName21,ATCE_TaggedFirmsName22,ATCE_TaggedFirmsName23,ATCE_TaggedFirmsName24};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount11,ATCE_TaggedFirmsCount13,ATCE_TaggedFirmsCount14,ATCE_TaggedFirmsCount15,ATCE_TaggedFirmsCount16,ATCE_TaggedFirmsCount17,ATCE_TaggedFirmsCount18,ATCE_TaggedFirmsCount19,ATCE_TaggedFirmsCount20,ATCE_TaggedFirmsCount21,ATCE_TaggedFirmsCount22,ATCE_TaggedFirmsCount23,ATCE_TaggedFirmsCount24};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName12,ATCE_TaggedPeopleName13,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20,ATCE_TaggedPeopleName21};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount12,ATCE_TaggedPeopleCount13,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20,ATCE_TaggedPeopleCount21};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName2};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount2};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle2;
+		String connectionDeal=ATCE_ConnectionDeal2;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall2;
+		String connectionEmail=ATCE_ConnectionEmail2;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String[] iconType= {ATCE_ATActivityType2,ATCE_ATActivityType12,ATCE_ATActivityType14,ATCE_ATActivityType16,ATCE_ATActivityType18,ATCE_ATActivityType20,ATCE_ATActivityType22,ATCE_ATActivityType24,ATCE_ATActivityType26};
+		String[] date= {ATCE_ATDueDate2,ATCE_ATDueDate12,ATCE_ATDueDate14,ATCE_ATDueDate16,ATCE_ATDueDate18,ATCE_ATDueDate20,ATCE_ATDueDate22,ATCE_ATDueDate24,ATCE_ATDueDate26};
+		String[] subject= {ATCE_ATSubject2,ATCE_ATSubject12,ATCE_ATSubject14,ATCE_ATSubject16,ATCE_ATSubject18,ATCE_ATSubject20,ATCE_ATSubject22,ATCE_ATSubject24,ATCE_ATSubject26};
+		String[] notes= {ATCE_ATNote2,ATCE_ATNote12,ATCE_ATNote14,ATCE_ATNote16,ATCE_ATNote18,ATCE_ATNote20,ATCE_ATNote22,ATCE_ATNote24,ATCE_ATNote26};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag= {ATCE_ATTags2.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags20.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+			
+		lp.CRMLogin(crmUser7EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc061_LoginWithUser2AndVerifyTaskCallFunctionalityOnLendorRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord7;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+		
+		String contactSectionName=ATCE_ConName10;
+		String contactSectionTitle=ATCE_ConTitle10;
+		String contactSectionDeal=ATCE_ConDeal10;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall10;
+		String contactSectionEmail=ATCE_ConEmail10;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName11,ATCE_TaggedFirmsName12,ATCE_TaggedFirmsName14,ATCE_TaggedFirmsName15,ATCE_TaggedFirmsName16,ATCE_TaggedFirmsName17,ATCE_TaggedFirmsName18,ATCE_TaggedFirmsName19,ATCE_TaggedFirmsName20,ATCE_TaggedFirmsName21,ATCE_TaggedFirmsName22,ATCE_TaggedFirmsName23,ATCE_TaggedFirmsName24};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount11,ATCE_TaggedFirmsCount12,ATCE_TaggedFirmsCount14,ATCE_TaggedFirmsCount15,ATCE_TaggedFirmsCount16,ATCE_TaggedFirmsCount17,ATCE_TaggedFirmsCount18,ATCE_TaggedFirmsCount19,ATCE_TaggedFirmsCount20,ATCE_TaggedFirmsCount21,ATCE_TaggedFirmsCount22,ATCE_TaggedFirmsCount23,ATCE_TaggedFirmsCount24};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName11,ATCE_TaggedPeopleName12,ATCE_TaggedPeopleName13,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20,ATCE_TaggedPeopleName21};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount11,ATCE_TaggedPeopleCount12,ATCE_TaggedPeopleCount13,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20,ATCE_TaggedPeopleCount21};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName2};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount2};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle3;
+		String connectionDeal=ATCE_ConnectionDeal3;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall3;
+		String connectionEmail=ATCE_ConnectionEmail3;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String[] iconType= {ATCE_ATActivityType4,ATCE_ATActivityType6,ATCE_ATActivityType8,ATCE_ATActivityType10,ATCE_ATActivityType12,ATCE_ATActivityType14,ATCE_ATActivityType16,ATCE_ATActivityType18,ATCE_ATActivityType20,ATCE_ATActivityType22,ATCE_ATActivityType24,ATCE_ATActivityType26};
+		String[] date= {ATCE_ATDueDate4,ATCE_ATDueDate6,ATCE_ATDueDate8,ATCE_ATDueDate10,ATCE_ATDueDate12,ATCE_ATDueDate14,ATCE_ATDueDate16,ATCE_ATDueDate18,ATCE_ATDueDate20,ATCE_ATDueDate22,ATCE_ATDueDate24,ATCE_ATDueDate26};
+		String[] subject= {ATCE_ATSubject4,ATCE_ATSubject6,ATCE_ATSubject8,ATCE_ATSubject10,ATCE_ATSubject12,ATCE_ATSubject14,ATCE_ATSubject16,ATCE_ATSubject18,ATCE_ATSubject20,ATCE_ATSubject22,ATCE_ATSubject24,ATCE_ATSubject26};
+		String[] notes= {ATCE_ATNote4,ATCE_ATNote6,ATCE_ATNote8,ATCE_ATNote10,ATCE_ATNote12,ATCE_ATNote14,ATCE_ATNote16,ATCE_ATNote18,ATCE_ATNote20,ATCE_ATNote22,ATCE_ATNote24,ATCE_ATNote26};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag= {ATCE_ATTags4.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags20.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+			
+		lp.CRMLogin(crmUser7EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc062_LoginWithUser2AndVerifyTaskCallFunctionalityOnIntermediaryRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord9;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+		
+		String contactSectionName=ATCE_ConName11;
+		String contactSectionTitle=ATCE_ConTitle11;
+		String contactSectionDeal=ATCE_ConDeal11;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall11;
+		String contactSectionEmail=ATCE_ConEmail11;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName11,ATCE_TaggedFirmsName12,ATCE_TaggedFirmsName13,ATCE_TaggedFirmsName15,ATCE_TaggedFirmsName16,ATCE_TaggedFirmsName17,ATCE_TaggedFirmsName18,ATCE_TaggedFirmsName19,ATCE_TaggedFirmsName20,ATCE_TaggedFirmsName21,ATCE_TaggedFirmsName22,ATCE_TaggedFirmsName23,ATCE_TaggedFirmsName24};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount11,ATCE_TaggedFirmsCount12,ATCE_TaggedFirmsCount13,ATCE_TaggedFirmsCount15,ATCE_TaggedFirmsCount16,ATCE_TaggedFirmsCount17,ATCE_TaggedFirmsCount18,ATCE_TaggedFirmsCount19,ATCE_TaggedFirmsCount20,ATCE_TaggedFirmsCount21,ATCE_TaggedFirmsCount22,ATCE_TaggedFirmsCount23,ATCE_TaggedFirmsCount24};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName11,ATCE_TaggedPeopleName12,ATCE_TaggedPeopleName13,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20,ATCE_TaggedPeopleName21};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount11,ATCE_TaggedPeopleCount12,ATCE_TaggedPeopleCount13,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20,ATCE_TaggedPeopleCount21};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName2};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount2};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle3;
+		String connectionDeal=ATCE_ConnectionDeal3;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall3;
+		String connectionEmail=ATCE_ConnectionEmail3;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String[] iconType= {ATCE_ATActivityType4,ATCE_ATActivityType6,ATCE_ATActivityType8,ATCE_ATActivityType10,ATCE_ATActivityType12,ATCE_ATActivityType14,ATCE_ATActivityType16,ATCE_ATActivityType18,ATCE_ATActivityType20,ATCE_ATActivityType22,ATCE_ATActivityType24,ATCE_ATActivityType26};
+		String[] date= {ATCE_ATDueDate4,ATCE_ATDueDate6,ATCE_ATDueDate8,ATCE_ATDueDate10,ATCE_ATDueDate12,ATCE_ATDueDate14,ATCE_ATDueDate16,ATCE_ATDueDate18,ATCE_ATDueDate20,ATCE_ATDueDate22,ATCE_ATDueDate24,ATCE_ATDueDate26};
+		String[] subject= {ATCE_ATSubject4,ATCE_ATSubject6,ATCE_ATSubject8,ATCE_ATSubject10,ATCE_ATSubject12,ATCE_ATSubject14,ATCE_ATSubject16,ATCE_ATSubject18,ATCE_ATSubject20,ATCE_ATSubject22,ATCE_ATSubject24,ATCE_ATSubject26};
+		String[] notes= {ATCE_ATNote4,ATCE_ATNote6,ATCE_ATNote8,ATCE_ATNote10,ATCE_ATNote12,ATCE_ATNote14,ATCE_ATNote16,ATCE_ATNote18,ATCE_ATNote20,ATCE_ATNote22,ATCE_ATNote24,ATCE_ATNote26};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag= {ATCE_ATTags4.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags20.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+			
+		lp.CRMLogin(crmUser7EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc038_CreateATaskAndLogACallFromIntermediaryRecord(String projectName) {
+	public void ATCETc063_LoginWithUser2AndVerifyTaskCallFunctionalityOnInstitutionRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord9;
-		String activityType = null;
-		if (ATCE_ATActivityType9.trim().equals("Task")) {
-			activityType = "Create Task";
-		} else if (ATCE_ATActivityType9.trim().equals("Call")) {
-			activityType = "Log a Call";
+		String recordName=ATCERecord3;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
 		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+		
+		String contactSectionName=ATCE_ConName12;
+		String contactSectionTitle=ATCE_ConTitle12;
+		String contactSectionDeal=ATCE_ConDeal12;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall12;
+		String contactSectionEmail=ATCE_ConEmail12;
 
-		String taskSubject = ATCE_ATSubject9;
-		String taskRelatedTo = ATCE_ATRelatedTo9;
-		String taskNotes = ATCE_ATNote9;
-		String taskStatus = ATCE_AdvanceStatus5;
-		String taskPriority = ATCE_AdvancePriority5;
-		String dueDateDay = ATCE_ATDay9;
-		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy",
-				Integer.parseInt(dueDateDay));
-		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
-				"ATCE_009", excelLabel.Advance_Due_Date);
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName12,ATCE_TaggedFirmsName13,ATCE_TaggedFirmsName14,ATCE_TaggedFirmsName15,ATCE_TaggedFirmsName16,ATCE_TaggedFirmsName17,ATCE_TaggedFirmsName18,ATCE_TaggedFirmsName19,ATCE_TaggedFirmsName20,ATCE_TaggedFirmsName21,ATCE_TaggedFirmsName22,ATCE_TaggedFirmsName23,ATCE_TaggedFirmsName24};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount12,ATCE_TaggedFirmsCount13,ATCE_TaggedFirmsCount14,ATCE_TaggedFirmsCount15,ATCE_TaggedFirmsCount16,ATCE_TaggedFirmsCount17,ATCE_TaggedFirmsCount18,ATCE_TaggedFirmsCount19,ATCE_TaggedFirmsCount20,ATCE_TaggedFirmsCount21,ATCE_TaggedFirmsCount22,ATCE_TaggedFirmsCount23,ATCE_TaggedFirmsCount24};
 
-		String activityType1 = ATCE_ATActivityType10;
-		String taskSubject1 = ATCE_ATSubject10;
-		String taskRelatedTo1 = ATCE_ATRelatedTo10;
-		String taskNotes1 = ATCE_ATNote10;
-		String dueDateDay1 = ATCE_ATDay10;
-		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy",
-				Integer.parseInt(dueDateDay1));
-		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
-				"ATCE_010", excelLabel.Advance_Due_Date);
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName11,ATCE_TaggedPeopleName12,ATCE_TaggedPeopleName13,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20,ATCE_TaggedPeopleName21};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount11,ATCE_TaggedPeopleCount12,ATCE_TaggedPeopleCount13,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20,ATCE_TaggedPeopleCount21};
+				
+		String[] fundTaggedName= {ATCE_TaggedFundName2};
+		String[] fundTaggedTimeReference= {ATCE_TaggedFundCount2};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle3;
+		String connectionDeal=ATCE_ConnectionDeal3;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall3;
+		String connectionEmail=ATCE_ConnectionEmail3;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String[] iconType= {ATCE_ATActivityType4,ATCE_ATActivityType6,ATCE_ATActivityType8,ATCE_ATActivityType10,ATCE_ATActivityType12,ATCE_ATActivityType14,ATCE_ATActivityType16,ATCE_ATActivityType18,ATCE_ATActivityType20,ATCE_ATActivityType22,ATCE_ATActivityType24,ATCE_ATActivityType26};
+		String[] date= {ATCE_ATDueDate4,ATCE_ATDueDate6,ATCE_ATDueDate8,ATCE_ATDueDate10,ATCE_ATDueDate12,ATCE_ATDueDate14,ATCE_ATDueDate16,ATCE_ATDueDate18,ATCE_ATDueDate20,ATCE_ATDueDate22,ATCE_ATDueDate24,ATCE_ATDueDate26};
+		String[] subject= {ATCE_ATSubject4,ATCE_ATSubject6,ATCE_ATSubject8,ATCE_ATSubject10,ATCE_ATSubject12,ATCE_ATSubject14,ATCE_ATSubject16,ATCE_ATSubject18,ATCE_ATSubject20,ATCE_ATSubject22,ATCE_ATSubject24,ATCE_ATSubject26};
+		String[] notes= {ATCE_ATNote4,ATCE_ATNote6,ATCE_ATNote8,ATCE_ATNote10,ATCE_ATNote12,ATCE_ATNote14,ATCE_ATNote16,ATCE_ATNote18,ATCE_ATNote20,ATCE_ATNote22,ATCE_ATNote24,ATCE_ATNote26};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag= {ATCE_ATTags4.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags20.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+			
+		lp.CRMLogin(crmUser7EmailID, adminPassword, appName);
 
-		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes },
-				{ "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, { "Status", taskStatus },
-				{ "Priority", taskPriority } };
+			if (lp.clickOnTab(projectName, tabObj1)) {
 
-		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 },
-				{ "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Date", taskDueDate1 } };
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-		if (lp.clickOnTab(projectName, tabObj1)) {
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
 
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
-
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
-				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
-					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-
-					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null,
-							null, false, null, null, null, null, null, null)) {
-						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : " + taskSubject,
-								YesNo.No);
-						sa.assertTrue(true,
-								"Activity timeline record has been created,  Subject name : " + taskSubject);
-
-					} else {
-						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : " + taskSubject,
-								YesNo.No);
-						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : " + taskSubject);
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null,null,true,fundTaggedName, fundTaggedTimeReference);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
 					}
-
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
-				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
-			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj1);
-		}
-
-		if (lp.clickOnTab(projectName, tabObj1)) {
-
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
-
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
-				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
-					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-
-					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1,
-							null, null, false, null, null, null, null, null, null)) {
-						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : " + taskSubject1,
-								YesNo.No);
-						sa.assertTrue(true,
-								"Activity timeline record has been created,  Subject name : " + taskSubject1);
-					} else {
-						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : " + taskSubject1,
-								YesNo.No);
-						sa.assertTrue(false,
-								"Activity timeline record is not created,  Subject name : " + taskSubject1);
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
 					}
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj1);
-		}
-		lp.CRMlogout();
-		sa.assertAll();
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc064_LoginWithUser2AndVerifyTaskCallFunctionalityOnPortfolioCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord11;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+		
+		String contactSectionName=ATCE_ConName13;
+		String contactSectionTitle=ATCE_ConTitle13;
+		String contactSectionDeal=ATCE_ConDeal13;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall13;
+		String contactSectionEmail=ATCE_ConEmail13;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName11,ATCE_TaggedFirmsName12,ATCE_TaggedFirmsName13,ATCE_TaggedFirmsName14,ATCE_TaggedFirmsName16,ATCE_TaggedFirmsName17,ATCE_TaggedFirmsName18,ATCE_TaggedFirmsName19,ATCE_TaggedFirmsName20,ATCE_TaggedFirmsName21,ATCE_TaggedFirmsName22,ATCE_TaggedFirmsName23,ATCE_TaggedFirmsName24};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount11,ATCE_TaggedFirmsCount12,ATCE_TaggedFirmsCount13,ATCE_TaggedFirmsCount14,ATCE_TaggedFirmsCount16,ATCE_TaggedFirmsCount17,ATCE_TaggedFirmsCount18,ATCE_TaggedFirmsCount19,ATCE_TaggedFirmsCount20,ATCE_TaggedFirmsCount21,ATCE_TaggedFirmsCount22,ATCE_TaggedFirmsCount23,ATCE_TaggedFirmsCount24};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName11,ATCE_TaggedPeopleName13,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20,ATCE_TaggedPeopleName21};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount11,ATCE_TaggedPeopleCount13,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20,ATCE_TaggedPeopleCount21};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName2};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount2};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle2;
+		String connectionDeal=ATCE_ConnectionDeal2;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall2;
+		String connectionEmail=ATCE_ConnectionEmail2;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String[] iconType= {ATCE_ATActivityType2,ATCE_ATActivityType12,ATCE_ATActivityType14,ATCE_ATActivityType16,ATCE_ATActivityType18,ATCE_ATActivityType20,ATCE_ATActivityType22,ATCE_ATActivityType24,ATCE_ATActivityType26};
+		String[] date= {ATCE_ATDueDate2,ATCE_ATDueDate12,ATCE_ATDueDate14,ATCE_ATDueDate16,ATCE_ATDueDate18,ATCE_ATDueDate20,ATCE_ATDueDate22,ATCE_ATDueDate24,ATCE_ATDueDate26};
+		String[] subject= {ATCE_ATSubject2,ATCE_ATSubject12,ATCE_ATSubject14,ATCE_ATSubject16,ATCE_ATSubject18,ATCE_ATSubject20,ATCE_ATSubject22,ATCE_ATSubject24,ATCE_ATSubject26};
+		String[] notes= {ATCE_ATNote2,ATCE_ATNote12,ATCE_ATNote14,ATCE_ATNote16,ATCE_ATNote18,ATCE_ATNote20,ATCE_ATNote22,ATCE_ATNote24,ATCE_ATNote26};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag= {ATCE_ATTags2.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags20.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+			
+		lp.CRMLogin(crmUser7EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc065_LoginWithUser2AndVerifyTaskCallFunctionalityOnPrivateEquityRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord13;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+		
+		String contactSectionName=ATCE_ConName14;
+		String contactSectionTitle=ATCE_ConTitle14;
+		String contactSectionDeal=ATCE_ConDeal14;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall14;
+		String contactSectionEmail=ATCE_ConEmail14;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName11,ATCE_TaggedFirmsName12,ATCE_TaggedFirmsName13,ATCE_TaggedFirmsName14,ATCE_TaggedFirmsName15,ATCE_TaggedFirmsName17,ATCE_TaggedFirmsName18,ATCE_TaggedFirmsName19,ATCE_TaggedFirmsName20,ATCE_TaggedFirmsName21,ATCE_TaggedFirmsName22,ATCE_TaggedFirmsName23,ATCE_TaggedFirmsName24};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount11,ATCE_TaggedFirmsCount12,ATCE_TaggedFirmsCount13,ATCE_TaggedFirmsCount14,ATCE_TaggedFirmsCount15,ATCE_TaggedFirmsCount17,ATCE_TaggedFirmsCount18,ATCE_TaggedFirmsCount19,ATCE_TaggedFirmsCount20,ATCE_TaggedFirmsCount21,ATCE_TaggedFirmsCount22,ATCE_TaggedFirmsCount23,ATCE_TaggedFirmsCount24};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName11,ATCE_TaggedPeopleName12,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20,ATCE_TaggedPeopleName21};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount11,ATCE_TaggedPeopleCount12,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20,ATCE_TaggedPeopleCount21};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName2};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount2};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle2;
+		String connectionDeal=ATCE_ConnectionDeal2;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall2;
+		String connectionEmail=ATCE_ConnectionEmail2;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String[] iconType= {ATCE_ATActivityType2,ATCE_ATActivityType12,ATCE_ATActivityType14,ATCE_ATActivityType16,ATCE_ATActivityType18,ATCE_ATActivityType20,ATCE_ATActivityType22,ATCE_ATActivityType24,ATCE_ATActivityType26};
+		String[] date= {ATCE_ATDueDate2,ATCE_ATDueDate12,ATCE_ATDueDate14,ATCE_ATDueDate16,ATCE_ATDueDate18,ATCE_ATDueDate20,ATCE_ATDueDate22,ATCE_ATDueDate24,ATCE_ATDueDate26};
+		String[] subject= {ATCE_ATSubject2,ATCE_ATSubject12,ATCE_ATSubject14,ATCE_ATSubject16,ATCE_ATSubject18,ATCE_ATSubject20,ATCE_ATSubject22,ATCE_ATSubject24,ATCE_ATSubject26};
+		String[] notes= {ATCE_ATNote2,ATCE_ATNote12,ATCE_ATNote14,ATCE_ATNote16,ATCE_ATNote18,ATCE_ATNote20,ATCE_ATNote22,ATCE_ATNote24,ATCE_ATNote26};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag= {ATCE_ATTags2.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags20.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+			
+		lp.CRMLogin(crmUser7EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection page have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection page are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection page are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc039_CreateATaskAndLogACallFromInstitutionRecord(String projectName) {
+	public void ATCETc066_LoginWithUser2AndVerifyTaskCallFunctionalityOnContactRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord3;
-		String activityType = null;
-		if (ATCE_ATActivityType11.trim().equals("Task")) {
-			activityType = "Create Task";
-		} else if (ATCE_ATActivityType11.trim().equals("Call")) {
-			activityType = "Log a Call";
+		String recordName=ATCE_Con1;
+		String taskSubject=ATCE_ATSubject11;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo11.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo11.replace("<Prefilled>", "");
 		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo11;
+		}
+	
+		String taskNotes=ATCE_ATNote11;
+		String taskStatus=ATCE_AdvanceStatus11;
+		String taskPriority=ATCE_AdvancePriority11;	
+		String taskDueDate =ATCE_ATDueDate11;
+		
+		String taskSubject1=ATCE_ATSubject12;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo12.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo12.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo12;
+		}
+		
+		String taskNotes1=ATCE_ATNote12;
+		
+		String taskDueDate1 =ATCE_ATDueDate12;
+		
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName25,ATCE_TaggedFirmsName26,ATCE_TaggedFirmsName27,ATCE_TaggedFirmsName28,ATCE_TaggedFirmsName29,ATCE_TaggedFirmsName30,ATCE_TaggedFirmsName31,ATCE_TaggedFirmsName32,ATCE_TaggedFirmsName33};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount25,ATCE_TaggedFirmsCount26,ATCE_TaggedFirmsCount27,ATCE_TaggedFirmsCount28,ATCE_TaggedFirmsCount29,ATCE_TaggedFirmsCount30,ATCE_TaggedFirmsCount31,ATCE_TaggedFirmsCount32,ATCE_TaggedFirmsCount33};
 
-		String taskSubject = ATCE_ATSubject11;
-		String taskRelatedTo = ATCE_ATRelatedTo11;
-		String taskNotes = ATCE_ATNote11;
-		String taskStatus = ATCE_AdvanceStatus5;
-		String taskPriority = ATCE_AdvancePriority5;
-		String dueDateDay = ATCE_ATDay11;
-		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy",
-				Integer.parseInt(dueDateDay));
-		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
-				"ATCE_011", excelLabel.Advance_Due_Date);
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName11,ATCE_TaggedPeopleName12,ATCE_TaggedPeopleName13,ATCE_TaggedPeopleName22,ATCE_TaggedPeopleName23,ATCE_TaggedPeopleName24,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount11,ATCE_TaggedPeopleCount12,ATCE_TaggedPeopleCount13,ATCE_TaggedPeopleCount22,ATCE_TaggedPeopleCount23,ATCE_TaggedPeopleCount24,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName3};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount3};
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle2;
+		String connectionDeal=ATCE_ConnectionDeal2;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall2;
+		String connectionEmail=ATCE_ConnectionEmail2;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String[] iconType= {ATCE_ATActivityType2,ATCE_ATActivityType12,ATCE_ATActivityType14,ATCE_ATActivityType16,ATCE_ATActivityType18,ATCE_ATActivityType20,ATCE_ATActivityType22,ATCE_ATActivityType24,ATCE_ATActivityType26};
+		String[] date= {ATCE_ATDueDate2,ATCE_ATDueDate12,ATCE_ATDueDate14,ATCE_ATDueDate16,ATCE_ATDueDate18,ATCE_ATDueDate20,ATCE_ATDueDate22,ATCE_ATDueDate24,ATCE_ATDueDate26};
+		String[] subject= {ATCE_ATSubject2,ATCE_ATSubject12,ATCE_ATSubject14,ATCE_ATSubject16,ATCE_ATSubject18,ATCE_ATSubject20,ATCE_ATSubject22,ATCE_ATSubject24,ATCE_ATSubject26};
+		String[] notes= {ATCE_ATNote2,ATCE_ATNote12,ATCE_ATNote14,ATCE_ATNote16,ATCE_ATNote18,ATCE_ATNote20,ATCE_ATNote22,ATCE_ATNote24,ATCE_ATNote26};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag= {ATCE_ATTags2.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags20.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		
+	
+			
+		lp.CRMLogin(crmUser7EmailID, adminPassword, appName);
 
-		String activityType1 = ATCE_ATActivityType12;
-		String taskSubject1 = ATCE_ATSubject12;
-		String taskRelatedTo1 = ATCE_ATRelatedTo12;
-		String taskNotes1 = ATCE_ATNote12;
-		String dueDateDay1 = ATCE_ATDay12;
-		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy",
-				Integer.parseInt(dueDateDay1));
-		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
-				"ATCE_012", excelLabel.Advance_Due_Date);
+			if (lp.clickOnTab(projectName, tabObj2)) {
 
-		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes },
-				{ "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, { "Status", taskStatus },
-				{ "Priority", taskPriority } };
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
 
-		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 },
-				{ "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Date", taskDueDate1 } };
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+						ArrayList<String> result6=bp.verifyRecordOnConnectionsSectionInAcuity(recordName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
 
-		if (lp.clickOnTab(projectName, tabObj1)) {
-
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
-
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
-				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
-					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-
-					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null,
-							null, false, null, null, null, null, null, null)) {
-						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : " + taskSubject,
-								YesNo.No);
-						sa.assertTrue(true,
-								"Activity timeline record has been created,  Subject name : " + taskSubject);
-
-					} else {
-						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : " + taskSubject,
-								YesNo.No);
-						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : " + taskSubject);
+						if(result6.isEmpty())
+						{
+							log(LogStatus.INFO, "The records have been verified on Connection section in Acuity user : "+connectionUserName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records are not verified on Connection section in Acuity. user : "+connectionUserName+" "+result6, YesNo.No);
+							sa.assertTrue(false,  "The records are not verified on Connection section in Acuity.  user : "+connectionUserName+" "+result6);
+						}
+						
+					
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(userName1, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+userName1+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result7=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result7.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+userName1, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+userName1+". "+result7, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+userName1+". "+result7);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+userName1+" record on contact section");
+						}
+						
+						
+						
+								
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subject, notes, subject, participant, tag);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
 					}
-
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
-				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
-			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj1);
-		}
-
-		if (lp.clickOnTab(projectName, tabObj1)) {
-
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
-
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
-				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
-					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-
-					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1,
-							null, null, false, null, null, null, null, null, null)) {
-						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : " + taskSubject1,
-								YesNo.No);
-						sa.assertTrue(true,
-								"Activity timeline record has been created,  Subject name : " + taskSubject1);
-					} else {
-						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : " + taskSubject1,
-								YesNo.No);
-						sa.assertTrue(false,
-								"Activity timeline record is not created,  Subject name : " + taskSubject1);
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
 					}
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj1);
-		}
-		lp.CRMlogout();
-		sa.assertAll();
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj2, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
-
+	
+	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc040_CreateATaskAndLogACallFromPortfolioCompanyRecord(String projectName) {
+	public void ATCETc067_LoginWithUser2AndVerifyTaskCallFunctionalityOnDealRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName = ATCERecord11;
-		String activityType = null;
-		if (ATCE_ATActivityType13.trim().equals("Task")) {
-			activityType = "Create Task";
-		} else if (ATCE_ATActivityType13.trim().equals("Call")) {
-			activityType = "Log a Call";
+		String recordName=ATCE_Deal1;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
 		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+		
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName11,ATCE_TaggedFirmsName12,ATCE_TaggedFirmsName13,ATCE_TaggedFirmsName14,ATCE_TaggedFirmsName15,ATCE_TaggedFirmsName16,ATCE_TaggedFirmsName17,ATCE_TaggedFirmsName18,ATCE_TaggedFirmsName19,ATCE_TaggedFirmsName20,ATCE_TaggedFirmsName21,ATCE_TaggedFirmsName22,ATCE_TaggedFirmsName23};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount11,ATCE_TaggedFirmsCount12,ATCE_TaggedFirmsCount13,ATCE_TaggedFirmsCount14,ATCE_TaggedFirmsCount15,ATCE_TaggedFirmsCount16,ATCE_TaggedFirmsCount17,ATCE_TaggedFirmsCount18,ATCE_TaggedFirmsCount19,ATCE_TaggedFirmsCount20,ATCE_TaggedFirmsCount21,ATCE_TaggedFirmsCount22,ATCE_TaggedFirmsCount23};
 
-		String taskSubject = ATCE_ATSubject13;
-		String taskRelatedTo = ATCE_ATRelatedTo13;
-		String taskNotes = ATCE_ATNote13;
-		String taskStatus = ATCE_AdvanceStatus6;
-		String taskPriority = ATCE_AdvancePriority6;
-		String dueDateDay = ATCE_ATDay13;
-		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy",
-				Integer.parseInt(dueDateDay));
-		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
-				"ATCE_013", excelLabel.Advance_Due_Date);
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName11,ATCE_TaggedPeopleName12,ATCE_TaggedPeopleName13,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20,ATCE_TaggedPeopleName21};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount11,ATCE_TaggedPeopleCount12,ATCE_TaggedPeopleCount13,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20,ATCE_TaggedPeopleCount21};
+				
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		lp.CRMLogin(crmUser7EmailID, adminPassword, appName);
 
-		String activityType1 = ATCE_ATActivityType14;
-		String taskSubject1 = ATCE_ATSubject14;
-		String taskRelatedTo1 = ATCE_ATRelatedTo14;
-		String taskNotes1 = ATCE_ATNote14;
-		String dueDateDay1 = ATCE_ATDay14;
-		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy",
-				Integer.parseInt(dueDateDay1));
-		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
-				"ATCE_014", excelLabel.Advance_Due_Date);
+			if (lp.clickOnTab(projectName, tabObj4)) {
 
-		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes },
-				{ "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, { "Status", taskStatus },
-				{ "Priority", taskPriority } };
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
 
-		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 },
-				{ "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Date", taskDueDate1 } };
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
-
-		if (lp.clickOnTab(projectName, tabObj1)) {
-
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
-
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
-				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
-					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-
-					if (bp.createActivityTimeline(projectName, false, activityType, basicsection, advanceSection, null,
-							null, false, null, null, null, null, null, null)) {
-						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : " + taskSubject,
-								YesNo.No);
-						sa.assertTrue(true,
-								"Activity timeline record has been created,  Subject name : " + taskSubject);
-
-					} else {
-						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : " + taskSubject,
-								YesNo.No);
-						sa.assertTrue(false, "Activity timeline record is not created,  Subject name : " + taskSubject);
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null, null,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}	
+								
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1, date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
 					}
-
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
-				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
-			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj1);
-		}
-
-		if (lp.clickOnTab(projectName, tabObj1)) {
-
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
-
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordName, 30)) {
-				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
-					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-
-					if (bp.createActivityTimeline(projectName, false, activityType1, basicsection1, advanceSection1,
-							null, null, false, null, null, null, null, null, null)) {
-						log(LogStatus.PASS, "Activity timeline record has been created, Subject name : " + taskSubject1,
-								YesNo.No);
-						sa.assertTrue(true,
-								"Activity timeline record has been created,  Subject name : " + taskSubject1);
-					} else {
-						log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : " + taskSubject1,
-								YesNo.No);
-						sa.assertTrue(false,
-								"Activity timeline record is not created,  Subject name : " + taskSubject1);
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
 					}
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Acuity tab");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to open record " + recordName, YesNo.No);
-				sa.assertTrue(false, "Not able to open record " + recordName);
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
 			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on tab " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on tab " + tabObj1);
-		}
-		lp.CRMlogout();
-		sa.assertAll();
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
 	}
+	
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc068_LoginWithUser2AndVerifyTaskCallFunctionalityOnFundraisingRecordType(String projectName) {
 
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fundraising1;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+		
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName11,ATCE_TaggedFirmsName12,ATCE_TaggedFirmsName13,ATCE_TaggedFirmsName14,ATCE_TaggedFirmsName15,ATCE_TaggedFirmsName16,ATCE_TaggedFirmsName17,ATCE_TaggedFirmsName18,ATCE_TaggedFirmsName19,ATCE_TaggedFirmsName20,ATCE_TaggedFirmsName21,ATCE_TaggedFirmsName22,ATCE_TaggedFirmsName23,ATCE_TaggedFirmsName24};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount11,ATCE_TaggedFirmsCount12,ATCE_TaggedFirmsCount13,ATCE_TaggedFirmsCount14,ATCE_TaggedFirmsCount15,ATCE_TaggedFirmsCount16,ATCE_TaggedFirmsCount17,ATCE_TaggedFirmsCount18,ATCE_TaggedFirmsCount19,ATCE_TaggedFirmsCount20,ATCE_TaggedFirmsCount21,ATCE_TaggedFirmsCount22,ATCE_TaggedFirmsCount23,ATCE_TaggedFirmsCount24};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName11,ATCE_TaggedPeopleName12,ATCE_TaggedPeopleName13,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20,ATCE_TaggedPeopleName21};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount11,ATCE_TaggedPeopleCount12,ATCE_TaggedPeopleCount13,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20,ATCE_TaggedPeopleCount21};
+				
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		lp.CRMLogin(crmUser7EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+		
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null, null,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}	
+								
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1, date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc069_LoginWithUser2AndVerifyTaskCallFunctionalityOnFundRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fund1;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+		
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName11,ATCE_TaggedFirmsName12,ATCE_TaggedFirmsName13,ATCE_TaggedFirmsName14,ATCE_TaggedFirmsName15,ATCE_TaggedFirmsName16,ATCE_TaggedFirmsName17,ATCE_TaggedFirmsName18,ATCE_TaggedFirmsName19,ATCE_TaggedFirmsName20,ATCE_TaggedFirmsName21,ATCE_TaggedFirmsName22,ATCE_TaggedFirmsName23,ATCE_TaggedFirmsName24};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount11,ATCE_TaggedFirmsCount12,ATCE_TaggedFirmsCount13,ATCE_TaggedFirmsCount14,ATCE_TaggedFirmsCount15,ATCE_TaggedFirmsCount16,ATCE_TaggedFirmsCount17,ATCE_TaggedFirmsCount18,ATCE_TaggedFirmsCount19,ATCE_TaggedFirmsCount20,ATCE_TaggedFirmsCount21,ATCE_TaggedFirmsCount22,ATCE_TaggedFirmsCount23,ATCE_TaggedFirmsCount24};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName11,ATCE_TaggedPeopleName12,ATCE_TaggedPeopleName13,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20,ATCE_TaggedPeopleName21};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount11,ATCE_TaggedPeopleCount12,ATCE_TaggedPeopleCount13,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20,ATCE_TaggedPeopleCount21};
+				
+		
+		String[] dealTaggedName= {ATCE_TaggedDealName2};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount2};
+				
+		
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		lp.CRMLogin(crmUser7EmailID, adminPassword, appName);
+		if (lp.clickOnTab(projectName, tabObj3)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj3, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}	
+								
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1, date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchOnWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj3, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj3);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc070_LoginWithUser2AndVerifyTaskCallFunctionalityOnThemeRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Theme1;
+		String taskSubject=ATCE_ATSubject3;
+		String taskRelatedTo;
+		if(ATCE_ATRelatedTo3.contains("<Prefilled>"))
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo=ATCE_ATRelatedTo3;
+		}
+	
+		String taskNotes=ATCE_ATNote3;
+		String taskStatus=ATCE_AdvanceStatus3;
+		String taskPriority=ATCE_AdvancePriority3;	
+		String taskDueDate =ATCE_ATDueDate3;
+		
+		String taskSubject1=ATCE_ATSubject4;
+		String taskRelatedTo1;
+		if(ATCE_ATRelatedTo4.contains("<Prefilled>"))
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4.replace("<Prefilled>", "");
+		}
+		else
+		{
+			taskRelatedTo1=ATCE_ATRelatedTo4;
+		}
+		
+		String taskNotes1=ATCE_ATNote4;
+		
+		String taskDueDate1 =ATCE_ATDueDate4;
+	
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType1,ATCE_ATActivityType2,ATCE_ATActivityType3,ATCE_ATActivityType4,ATCE_ATActivityType5,ATCE_ATActivityType6,ATCE_ATActivityType7,ATCE_ATActivityType8,ATCE_ATActivityType9,ATCE_ATActivityType10,ATCE_ATActivityType11,ATCE_ATActivityType12,ATCE_ATActivityType13,ATCE_ATActivityType14,ATCE_ATActivityType15,ATCE_ATActivityType16,ATCE_ATActivityType17,ATCE_ATActivityType18,ATCE_ATActivityType19,ATCE_ATActivityType20,ATCE_ATActivityType21,ATCE_ATActivityType22,ATCE_ATActivityType23,ATCE_ATActivityType24,ATCE_ATActivityType25,ATCE_ATActivityType26};
+		String[] date1= {ATCE_ATDueDate1,ATCE_ATDueDate2,ATCE_ATDueDate3,ATCE_ATDueDate4,ATCE_ATDueDate5,ATCE_ATDueDate6,ATCE_ATDueDate7,ATCE_ATDueDate8,ATCE_ATDueDate9,ATCE_ATDueDate10,ATCE_ATDueDate11,ATCE_ATDueDate12,ATCE_ATDueDate13,ATCE_ATDueDate14,ATCE_ATDueDate15,ATCE_ATDueDate16,ATCE_ATDueDate17,ATCE_ATDueDate18,ATCE_ATDueDate19,ATCE_ATDueDate20,ATCE_ATDueDate21,ATCE_ATDueDate22,ATCE_ATDueDate23,ATCE_ATDueDate24,ATCE_ATDueDate25,ATCE_ATDueDate26};
+		String[] subject1= {ATCE_ATSubject1,ATCE_ATSubject2,ATCE_ATSubject3,ATCE_ATSubject4,ATCE_ATSubject5,ATCE_ATSubject6,ATCE_ATSubject7,ATCE_ATSubject8,ATCE_ATSubject9,ATCE_ATSubject10,ATCE_ATSubject11,ATCE_ATSubject12,ATCE_ATSubject13,ATCE_ATSubject14,ATCE_ATSubject15,ATCE_ATSubject16,ATCE_ATSubject17,ATCE_ATSubject18,ATCE_ATSubject19,ATCE_ATSubject20,ATCE_ATSubject21,ATCE_ATSubject22,ATCE_ATSubject23,ATCE_ATSubject24,ATCE_ATSubject25,ATCE_ATSubject26};
+		String[] notes1= {ATCE_ATNote1,ATCE_ATNote2,ATCE_ATNote3,ATCE_ATNote4,ATCE_ATNote5,ATCE_ATNote6,ATCE_ATNote7,ATCE_ATNote8,ATCE_ATNote9,ATCE_ATNote10,ATCE_ATNote11,ATCE_ATNote12,ATCE_ATNote13,ATCE_ATNote14,ATCE_ATNote15,ATCE_ATNote16,ATCE_ATNote17,ATCE_ATNote18,ATCE_ATNote19,ATCE_ATNote20,ATCE_ATNote21,ATCE_ATNote22,ATCE_ATNote23,ATCE_ATNote24,ATCE_ATNote25,ATCE_ATNote26};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants1),bp.getParticipantData(ATCE_ATParticipants2),bp.getParticipantData(ATCE_ATParticipants3),bp.getParticipantData(ATCE_ATParticipants4),bp.getParticipantData(ATCE_ATParticipants5),bp.getParticipantData(ATCE_ATParticipants6),bp.getParticipantData(ATCE_ATParticipants7),bp.getParticipantData(ATCE_ATParticipants8),bp.getParticipantData(ATCE_ATParticipants9),bp.getParticipantData(ATCE_ATParticipants10),bp.getParticipantData(ATCE_ATParticipants11),bp.getParticipantData(ATCE_ATParticipants12),bp.getParticipantData(ATCE_ATParticipants13),
+				bp.getParticipantData(ATCE_ATParticipants14),bp.getParticipantData(ATCE_ATParticipants15),bp.getParticipantData(ATCE_ATParticipants16),bp.getParticipantData(ATCE_ATParticipants17),bp.getParticipantData(ATCE_ATParticipants18),bp.getParticipantData(ATCE_ATParticipants19),bp.getParticipantData(ATCE_ATParticipants20),bp.getParticipantData(ATCE_ATParticipants21),bp.getParticipantData(ATCE_ATParticipants22),bp.getParticipantData(ATCE_ATParticipants23),bp.getParticipantData(ATCE_ATParticipants24),bp.getParticipantData(ATCE_ATParticipants25),bp.getParticipantData(ATCE_ATParticipants26)};
+		String[][] tag1= {ATCE_ATTags1.split("<break>"),ATCE_ATTags2.split("<break>"),ATCE_ATTags3.split("<break>"),ATCE_ATTags4.split("<break>"),ATCE_ATTags5.split("<break>"),ATCE_ATTags6.split("<break>"),ATCE_ATTags7.split("<break>"),ATCE_ATTags8.split("<break>"),ATCE_ATTags9.split("<break>"),ATCE_ATTags10.split("<break>"),ATCE_ATTags11.split("<break>"),ATCE_ATTags12.split("<break>"),ATCE_ATTags13.split("<break>"),ATCE_ATTags14.split("<break>"),ATCE_ATTags15.split("<break>"),ATCE_ATTags16.split("<break>"),ATCE_ATTags17.split("<break>"),ATCE_ATTags18.split("<break>"),ATCE_ATTags19.split("<break>"),ATCE_ATTags20.split("<break>"),
+				ATCE_ATTags21.split("<break>"),ATCE_ATTags22.split("<break>"),ATCE_ATTags23.split("<break>"),ATCE_ATTags24.split("<break>"),ATCE_ATTags25.split("<break>"),ATCE_ATTags26.split("<break>")};
+		
+		lp.CRMLogin(crmUser7EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, TabName.Themes.toString())) {
+
+				log(LogStatus.INFO, "Clicked on Tab : "+TabName.Themes.toString(), YesNo.No);
+
+				String parentWindowID=bp.clickOnThemeRecord(recordName);
+
+				if (parentWindowID!=null) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+						
+				
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType1, date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchToWindowOpenNextToParentWindow(driver);
+							
+							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
+							
+							if(result2.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject+" are not verified. "+result2,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject+" are not verified. "+result2);
+								
+							}
+							
+	                       ArrayList<String> result3=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject1, basicsection1, advanceSection1, IconType.Call, PageName.Interaction);
+							
+							if(result3.isEmpty())
+							{
+								log(LogStatus.PASS,"The details on popup of subject "+taskSubject1+" has been verified",YesNo.No);
+								sa.assertTrue(true,"The details on popup of subject "+taskSubject1+" has been verified");							
+							}
+							else
+							{
+								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
+								
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+				driver.close();
+				driver.switchTo().window(parentWindowID);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab : "+TabName.Themes.toString(), YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab : "+TabName.Themes.toString());
+			}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	
 }
+
+

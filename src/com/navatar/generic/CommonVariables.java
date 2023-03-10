@@ -1200,9 +1200,9 @@ public class CommonVariables {
 	    public static String ADEIns13,ADEIns13RecordType;
 	    public static String ADEIns14,ADEIns14RecordType;
 	    public static String ADEIns16,ADEIns16RecordType;
+	    public static String ADEIns17,ADEIns17RecordType;
 	    
-	    //RG FIRM
-	    public static String RGEIns1,RGEIns1RecordType;
+	   
 	    
 	    //contact
 	    public static String ADEContact1FName,ADEContact1LName,ADEContact1EmailID,ADEContact1RecordType;
@@ -1226,14 +1226,9 @@ public class CommonVariables {
 	    public static String ADEContact19FName,ADEContact19LName,ADEContact19EmailID,ADEContact19RecordType;
 	    public static String ADEContact23FName,ADEContact23LName,ADEContact23EmailID,ADEContact23RecordType;
 	    public static String ADEContact24FName,ADEContact24LName,ADEContact24EmailID,ADEContact24RecordType;
+	    public static String ADEContact25FName,ADEContact25LName,ADEContact25EmailID,ADEContact25RecordType;
 	    
-	    //RG Contact
-	    public static String RGEContact1FName,RGEContact1LName,RGEContact1EmailID,RGEContact1RecordType;
-	    public static String RGEContact2FName,RGEContact2LName,RGEContact2EmailID,RGEContact2RecordType;
-	    public static String RGEContact3FName,RGEContact3LName,RGEContact3EmailID,RGEContact3RecordType;
-	    public static String RGEUser01FName,RGEUser01LName;
-	    
-	    //deal
+	     //deal
 	    
 	    public static String ADEDealName1;
 		public static String ADEDealCompany1;
@@ -1281,6 +1276,8 @@ public class CommonVariables {
 		public static String ADEDeal29,ADEDeal29CompanyName,ADEDeal29RecordType,ADEDeal29Stage,ADEDeal29SourceContact,ADEDeal29SourceFirm,ADEDeal29HighestStageReached;
 		public static String ADEDeal30,ADEDeal30CompanyName,ADEDeal30RecordType,ADEDeal30Stage,ADEDeal30SourceContact,ADEDeal30SourceFirm,ADEDeal30HighestStageReached;
 		public static String ADEDeal31,ADEDeal31CompanyName,ADEDeal31RecordType,ADEDeal31Stage,ADEDeal31SourceContact,ADEDeal31SourceFirm,ADEDeal31HighestStageReached;
+		public static String ADEDeal32,ADEDeal32CompanyName,ADEDeal32RecordType,ADEDeal32Stage,ADEDeal32SourceContact,ADEDeal32SourceFirm,ADEDeal32HighestStageReached;
+		public static String ADEDeal33,ADEDeal33CompanyName,ADEDeal33RecordType,ADEDeal33Stage,ADEDeal33SourceContact,ADEDeal33SourceFirm,ADEDeal33HighestStageReached;
 
 
 		
@@ -1411,6 +1408,12 @@ public class CommonVariables {
 	  		public static String ADEDealTeamMember21;
 	  		public static String ADEDealTeamRole21;
 	  		public static String ADEDealTeamID21;
+	  		
+	  		public static String ADEDealTeamName22;
+	  		public static String ADEDealContact22;
+	  		public static String ADEDealTeamMember22;
+	  		public static String ADEDealTeamRole22;
+	  		public static String ADEDealTeamID22;
 	  		//financing
 	  		public static String ADEFinancingDealName1;
 	  		public static String ADEFinancingCompany1;
@@ -1423,9 +1426,18 @@ public class CommonVariables {
 			public static String ADEFundType;
 			public static String ADEInvestmentCategory;
 			
+			public static String ADEFundName1;
+			public static String ADEFundType1;
+			public static String ADEInvestmentCategory1;
+			public static String ADERecordType1;
+			
 			//FR
 			public static String ADEFundraisingName,ADEInstitutionName,ADERFundName,ADEStage,ADEClosing,ADEInvestmentLikelyAmountMN,ADENote,ADETargetClosingDate;
 			public static String ADEFundraisingName1,ADEInstitutionName1,ADERFundName1,ADEStage1,ADEClosing1,ADEInvestmentLikelyAmountMN1,ADENote1,ADETargetClosingDate1;
+			public static String ADEFundraisingName2,ADEInstitutionName2,ADERFundName2,ADEStage2,ADEClosing2,ADEInvestmentLikelyAmountMN2,ADENote2,ADETargetClosingDate2;
+			public static String ADEFundraisingName3,ADEInstitutionName3,ADERFundName3,ADEStage3,ADEClosing3,ADEInvestmentLikelyAmountMN3,ADENote3,ADETargetClosingDate3;
+			public static String ADEFundraisingName4,ADEInstitutionName4,ADERFundName4,ADEStage4,ADEClosing4,ADEInvestmentLikelyAmountMN4,ADENote4,ADETargetClosingDate4;
+			public static String ADEFundraisingName5,ADEInstitutionName5,ADERFundName5,ADEStage5,ADEClosing5,ADEInvestmentLikelyAmountMN5,ADENote5,ADETargetClosingDate5;
 	    
 			//meta data
 			public static String RGFieldname1,RGvalue1,RGNewValue1;
@@ -1439,8 +1451,53 @@ public class CommonVariables {
 			public static String ADEFieldname4,ADEvalue4,ADENewValue4;
 			public static String ADEFieldname5,ADEvalue5,ADENewValue5;
 			public static String ADEFieldname6,ADEvalue6,ADENewValue6;
+			public static String ADEFieldname7,ADEvalue7,ADENewValue7;
+			public static String ADEFieldname8,ADEvalue8,ADENewValue8;
+			public static String ADEFieldname9,ADEvalue9,ADENewValue9;
 			
+		 /***************************************************RG *************************************/
+			 //RG FIRM
+		    public static String RGEIns1,RGEIns1RecordType;
+		    public static String RGEIns2,RGEIns2RecordType;
+		    
+		    //RG Contact
+		    public static String RGEContact1FName,RGEContact1LName,RGEContact1EmailID,RGEContact1RecordType;
+		    public static String RGEContact2FName,RGEContact2LName,RGEContact2EmailID,RGEContact2RecordType;
+		    public static String RGEContact3FName,RGEContact3LName,RGEContact3EmailID,RGEContact3RecordType;
+		    public static String RGEUser01FName,RGEUser01LName;
+		    public static String RGEContact4FName,RGEContact4LName,RGEContact4EmailID,RGEContact4RecordType;
+		    public static String RGEContact5FName,RGEContact5LName,RGEContact5EmailID,RGEContact5RecordType;
+		    public static String RGEContact6FName,RGEContact6LName,RGEContact6EmailID,RGEContact6RecordType;
+		    public static String RGEContact7FName,RGEContact7LName,RGEContact7EmailID,RGEContact7RecordType;
+		   
+		    //RG DEAL
+			public static String RGDeal1,RGDeal1CompanyName,RGDeal1RecordType,RGDeal1Stage,RGDeal1SourceContact,RGDeal1SourceFirm,RGDeal1HighestStageReached;
 			
+			//RG deal Team
+			public static String RGDealTeamName1;
+	  		public static String RGDealContact1;
+	  		public static String RGDealTeamMember1;
+	  		public static String RGDealTeamRole1;
+	  		public static String RGDealTeamID1;
+	  		
+	  		public static String RGDealTeamName2;
+	  		public static String RGDealContact2;
+	  		public static String RGDealTeamMember2;
+	  		public static String RGDealTeamRole2;
+	  		public static String RGDealTeamID2;
+	  		
+	  		//fund
+	  		public static String RGFundName1;
+			public static String RGFundType1;
+			public static String RGInvestmentCategory1;
+			public static String RGRecordType1;
+	  		
+			//fundraising
+			public static String RGFundraisingName1,RGInstitutionName1,RGRFundName1,RGStage1,RGClosing1,RGInvestmentLikelyAmountMN1,RGNote1,RGTargetClosingDate1;
+
+			//fundraising Contact
+			public static String RGContact1,RGRole1;
+			public static String RGContact2,RGRole2;
 		   /***************************** Acuity (Task Call & Event) ******************************/
 		//firm 
 		public static String ATCERecord1,ATCERecord2,ATCERecord3,ATCERecord4,ATCERecord5,ATCERecord6,ATCERecord7,ATCERecord8,ATCERecord9,ATCERecord10,ATCERecord11,ATCERecord12,ATCERecord13,ATCERecord14;
@@ -1498,41 +1555,47 @@ public class CommonVariables {
 	    public static String ATCE_AdvancePriority1,ATCE_AdvancePriority2,ATCE_AdvancePriority3,ATCE_AdvancePriority4,ATCE_AdvancePriority5,ATCE_AdvancePriority6,ATCE_AdvancePriority7,ATCE_AdvancePriority8,ATCE_AdvancePriority9,ATCE_AdvancePriority10,ATCE_AdvancePriority11,ATCE_AdvancePriority12,ATCE_AdvancePriority13;	    
 	    public static String ATCE_ATDay1,ATCE_ATDay2,ATCE_ATDay3,ATCE_ATDay4,ATCE_ATDay5,ATCE_ATDay6,ATCE_ATDay7,ATCE_ATDay8,ATCE_ATDay9,ATCE_ATDay10,ATCE_ATDay11,ATCE_ATDay12,ATCE_ATDay13,ATCE_ATDay14,ATCE_ATDay15,ATCE_ATDay16,ATCE_ATDay17,ATCE_ATDay18,ATCE_ATDay19,ATCE_ATDay20
 	    ,ATCE_ATDay21,ATCE_ATDay22,ATCE_ATDay23,ATCE_ATDay24,ATCE_ATDay25,ATCE_ATDay26;
-	    public static String ATCE_ATParticipants1;
-	    public static String ATCE_ATTags1;
+	    public static String ATCE_ATParticipants1,ATCE_ATParticipants2,ATCE_ATParticipants3,ATCE_ATParticipants4,ATCE_ATParticipants5,ATCE_ATParticipants6,ATCE_ATParticipants7,ATCE_ATParticipants8,ATCE_ATParticipants9,ATCE_ATParticipants10,ATCE_ATParticipants11,ATCE_ATParticipants12,ATCE_ATParticipants13,ATCE_ATParticipants14,ATCE_ATParticipants15,ATCE_ATParticipants16,ATCE_ATParticipants17,ATCE_ATParticipants18,ATCE_ATParticipants19,ATCE_ATParticipants20,
+	    ATCE_ATParticipants21,ATCE_ATParticipants22,ATCE_ATParticipants23,ATCE_ATParticipants24,ATCE_ATParticipants25,ATCE_ATParticipants26;
+	    public static String ATCE_ATTags1,ATCE_ATTags2,ATCE_ATTags3,ATCE_ATTags4,ATCE_ATTags5,ATCE_ATTags6,ATCE_ATTags7,ATCE_ATTags8,ATCE_ATTags9,ATCE_ATTags10,ATCE_ATTags11,ATCE_ATTags12,ATCE_ATTags13,ATCE_ATTags14,ATCE_ATTags15,ATCE_ATTags16,ATCE_ATTags17,ATCE_ATTags18,ATCE_ATTags19,ATCE_ATTags20,
+	    ATCE_ATTags21,ATCE_ATTags22,ATCE_ATTags23,ATCE_ATTags24,ATCE_ATTags25,ATCE_ATTags26;
 	    
 	    
 	    //Tagged Section
 	    //Firms
-	    public static String ATCE_TaggedFirmsName1,ATCE_TaggedFirmsName2,ATCE_TaggedFirmsName3,ATCE_TaggedFirmsName4,ATCE_TaggedFirmsName5,ATCE_TaggedFirmsName6,ATCE_TaggedFirmsName7,ATCE_TaggedFirmsName8,ATCE_TaggedFirmsName9,ATCE_TaggedFirmsName10;
-	    public static String ATCE_TaggedFirmsCount1,ATCE_TaggedFirmsCount2,ATCE_TaggedFirmsCount3,ATCE_TaggedFirmsCount4,ATCE_TaggedFirmsCount5,ATCE_TaggedFirmsCount6,ATCE_TaggedFirmsCount7,ATCE_TaggedFirmsCount8,ATCE_TaggedFirmsCount9,ATCE_TaggedFirmsCount10;
+	    public static String ATCE_TaggedFirmsName1,ATCE_TaggedFirmsName2,ATCE_TaggedFirmsName3,ATCE_TaggedFirmsName4,ATCE_TaggedFirmsName5,ATCE_TaggedFirmsName6,ATCE_TaggedFirmsName7,ATCE_TaggedFirmsName8,ATCE_TaggedFirmsName9,ATCE_TaggedFirmsName10,ATCE_TaggedFirmsName11,ATCE_TaggedFirmsName12,ATCE_TaggedFirmsName13,ATCE_TaggedFirmsName14,ATCE_TaggedFirmsName15,ATCE_TaggedFirmsName16,ATCE_TaggedFirmsName17,ATCE_TaggedFirmsName18,ATCE_TaggedFirmsName19,ATCE_TaggedFirmsName20,
+	    ATCE_TaggedFirmsName21,ATCE_TaggedFirmsName22,ATCE_TaggedFirmsName23,ATCE_TaggedFirmsName24,ATCE_TaggedFirmsName25,ATCE_TaggedFirmsName26,ATCE_TaggedFirmsName27,ATCE_TaggedFirmsName28,ATCE_TaggedFirmsName29,ATCE_TaggedFirmsName30,ATCE_TaggedFirmsName31,ATCE_TaggedFirmsName32,ATCE_TaggedFirmsName33,ATCE_TaggedFirmsName34,ATCE_TaggedFirmsName35,ATCE_TaggedFirmsName36,ATCE_TaggedFirmsName37,ATCE_TaggedFirmsName38,ATCE_TaggedFirmsName39,ATCE_TaggedFirmsName40;
+	    public static String ATCE_TaggedFirmsCount1,ATCE_TaggedFirmsCount2,ATCE_TaggedFirmsCount3,ATCE_TaggedFirmsCount4,ATCE_TaggedFirmsCount5,ATCE_TaggedFirmsCount6,ATCE_TaggedFirmsCount7,ATCE_TaggedFirmsCount8,ATCE_TaggedFirmsCount9,ATCE_TaggedFirmsCount10,ATCE_TaggedFirmsCount11,ATCE_TaggedFirmsCount12,ATCE_TaggedFirmsCount13,ATCE_TaggedFirmsCount14,ATCE_TaggedFirmsCount15,ATCE_TaggedFirmsCount16,ATCE_TaggedFirmsCount17,ATCE_TaggedFirmsCount18,ATCE_TaggedFirmsCount19,ATCE_TaggedFirmsCount20,
+	    ATCE_TaggedFirmsCount21,ATCE_TaggedFirmsCount22,ATCE_TaggedFirmsCount23,ATCE_TaggedFirmsCount24,ATCE_TaggedFirmsCount25,ATCE_TaggedFirmsCount26,ATCE_TaggedFirmsCount27,ATCE_TaggedFirmsCount28,ATCE_TaggedFirmsCount29,ATCE_TaggedFirmsCount30,ATCE_TaggedFirmsCount31,ATCE_TaggedFirmsCount32,ATCE_TaggedFirmsCount33,ATCE_TaggedFirmsCount34,ATCE_TaggedFirmsCount35,ATCE_TaggedFirmsCount36,ATCE_TaggedFirmsCount37,ATCE_TaggedFirmsCount38,ATCE_TaggedFirmsCount39,ATCE_TaggedFirmsCount40;
 	    
 	    //People
-	    public static String ATCE_TaggedPeopleName1,ATCE_TaggedPeopleName2,ATCE_TaggedPeopleName3,ATCE_TaggedPeopleName4,ATCE_TaggedPeopleName5,ATCE_TaggedPeopleName6,ATCE_TaggedPeopleName7,ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9;
-	    public static String ATCE_TaggedPeopleCount1,ATCE_TaggedPeopleCount2,ATCE_TaggedPeopleCount3,ATCE_TaggedPeopleCount4,ATCE_TaggedPeopleCount5,ATCE_TaggedPeopleCount6,ATCE_TaggedPeopleCount7,ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9;
+	    public static String ATCE_TaggedPeopleName1,ATCE_TaggedPeopleName2,ATCE_TaggedPeopleName3,ATCE_TaggedPeopleName4,ATCE_TaggedPeopleName5,ATCE_TaggedPeopleName6,ATCE_TaggedPeopleName7,ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName11,ATCE_TaggedPeopleName12,ATCE_TaggedPeopleName13,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName18,ATCE_TaggedPeopleName19,ATCE_TaggedPeopleName20,
+	    ATCE_TaggedPeopleName21,ATCE_TaggedPeopleName22,ATCE_TaggedPeopleName23,ATCE_TaggedPeopleName24,ATCE_TaggedPeopleName25,ATCE_TaggedPeopleName26,ATCE_TaggedPeopleName27,ATCE_TaggedPeopleName28,ATCE_TaggedPeopleName29,ATCE_TaggedPeopleName30;
+	    public static String ATCE_TaggedPeopleCount1,ATCE_TaggedPeopleCount2,ATCE_TaggedPeopleCount3,ATCE_TaggedPeopleCount4,ATCE_TaggedPeopleCount5,ATCE_TaggedPeopleCount6,ATCE_TaggedPeopleCount7,ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount11,ATCE_TaggedPeopleCount12,ATCE_TaggedPeopleCount13,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount18,ATCE_TaggedPeopleCount19,ATCE_TaggedPeopleCount20,
+	    ATCE_TaggedPeopleCount21,ATCE_TaggedPeopleCount22,ATCE_TaggedPeopleCount23,ATCE_TaggedPeopleCount24,ATCE_TaggedPeopleCount25,ATCE_TaggedPeopleCount26,ATCE_TaggedPeopleCount27,ATCE_TaggedPeopleCount28,ATCE_TaggedPeopleCount29,ATCE_TaggedPeopleCount30;
 	    
 	    //Deal
-	    public static String ATCE_TaggedDealName1;
-	    public static String ATCE_TaggedDealCount1;
+	    public static String ATCE_TaggedDealName1,ATCE_TaggedDealName2,ATCE_TaggedDealName3;
+	    public static String ATCE_TaggedDealCount1,ATCE_TaggedDealCount2,ATCE_TaggedDealCount3;
 	    
 	    //Fund
-	    public static String ATCE_TaggedFundName1;
-	    public static String ATCE_TaggedFundCount1;
+	    public static String ATCE_TaggedFundName1,ATCE_TaggedFundName2;
+	    public static String ATCE_TaggedFundCount1,ATCE_TaggedFundCount2;
 	    
 	    
 	    /********** Contact Section ****************/
-	    public static String ATCE_ConName1,ATCE_ConName2,ATCE_ConName3,ATCE_ConName4,ATCE_ConName5,ATCE_ConName6,ATCE_ConName7;
-	    public static String ATCE_ConTitle1,ATCE_ConTitle2,ATCE_ConTitle3,ATCE_ConTitle4,ATCE_ConTitle5,ATCE_ConTitle6,ATCE_ConTitle7;
-	    public static String ATCE_ConDeal1,ATCE_ConDeal2,ATCE_ConDeal3,ATCE_ConDeal4,ATCE_ConDeal5,ATCE_ConDeal6,ATCE_ConDeal7;
-	    public static String ATCE_ConMeetingAndCall1,ATCE_ConMeetingAndCall2,ATCE_ConMeetingAndCall3,ATCE_ConMeetingAndCall4,ATCE_ConMeetingAndCall5,ATCE_ConMeetingAndCall6,ATCE_ConMeetingAndCall7;
-	    public static String ATCE_ConEmail1,ATCE_ConEmail2,ATCE_ConEmail3,ATCE_ConEmail4,ATCE_ConEmail5,ATCE_ConEmail6,ATCE_ConEmail7;
+	    public static String ATCE_ConName1,ATCE_ConName2,ATCE_ConName3,ATCE_ConName4,ATCE_ConName5,ATCE_ConName6,ATCE_ConName7,ATCE_ConName8,ATCE_ConName9,ATCE_ConName10,ATCE_ConName11,ATCE_ConName12,ATCE_ConName13,ATCE_ConName14;
+	    public static String ATCE_ConTitle1,ATCE_ConTitle2,ATCE_ConTitle3,ATCE_ConTitle4,ATCE_ConTitle5,ATCE_ConTitle6,ATCE_ConTitle7,ATCE_ConTitle8,ATCE_ConTitle9,ATCE_ConTitle10,ATCE_ConTitle11,ATCE_ConTitle12,ATCE_ConTitle13,ATCE_ConTitle14;
+	    public static String ATCE_ConDeal1,ATCE_ConDeal2,ATCE_ConDeal3,ATCE_ConDeal4,ATCE_ConDeal5,ATCE_ConDeal6,ATCE_ConDeal7,ATCE_ConDeal8,ATCE_ConDeal9,ATCE_ConDeal10,ATCE_ConDeal11,ATCE_ConDeal12,ATCE_ConDeal13,ATCE_ConDeal14;
+	    public static String ATCE_ConMeetingAndCall1,ATCE_ConMeetingAndCall2,ATCE_ConMeetingAndCall3,ATCE_ConMeetingAndCall4,ATCE_ConMeetingAndCall5,ATCE_ConMeetingAndCall6,ATCE_ConMeetingAndCall7,ATCE_ConMeetingAndCall8,ATCE_ConMeetingAndCall9,ATCE_ConMeetingAndCall10,ATCE_ConMeetingAndCall11,ATCE_ConMeetingAndCall12,ATCE_ConMeetingAndCall13,ATCE_ConMeetingAndCall14;
+	    public static String ATCE_ConEmail1,ATCE_ConEmail2,ATCE_ConEmail3,ATCE_ConEmail4,ATCE_ConEmail5,ATCE_ConEmail6,ATCE_ConEmail7,ATCE_ConEmail8,ATCE_ConEmail9,ATCE_ConEmail10,ATCE_ConEmail11,ATCE_ConEmail12,ATCE_ConEmail13,ATCE_ConEmail14;
 	    
 	    /******** Connection page ****************/
-	    public static String ATCE_ConnectionUserName1;
-	    public static String ATCE_ConnectionTitle1;
-	    public static String ATCE_ConnectionDeal1;
-	    public static String ATCE_ConnectionMeetingAndCall1;
-	    public static String ATCE_ConnectionEmail1;
+	    public static String ATCE_ConnectionUserName1,ATCE_ConnectionUserName2,ATCE_ConnectionUserName3;
+	    public static String ATCE_ConnectionTitle1,ATCE_ConnectionTitle2,ATCE_ConnectionTitle3;
+	    public static String ATCE_ConnectionDeal1,ATCE_ConnectionDeal2,ATCE_ConnectionDeal3;
+	    public static String ATCE_ConnectionMeetingAndCall1,ATCE_ConnectionMeetingAndCall2,ATCE_ConnectionMeetingAndCall3;
+	    public static String ATCE_ConnectionEmail1,ATCE_ConnectionEmail2,ATCE_ConnectionEmail3;
 	    
 	    
 	    
@@ -7076,6 +7139,9 @@ public class CommonVariables {
 					ADEIns16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ADEIns16", excelLabel.Legal_Name);
 					ADEIns16RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ADEIns16", excelLabel.Record_Type);
 					
+					ADEIns17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ADEIns17", excelLabel.Legal_Name);
+					ADEIns17RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ADEIns17", excelLabel.Record_Type);
+					
 					ADEContact1FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact1", excelLabel.Contact_FirstName);
 					ADEContact1LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact1", excelLabel.Contact_LastName);
 					ADEContact1EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact1", excelLabel.Contact_EmailId);
@@ -7302,22 +7368,6 @@ public class CommonVariables {
 					
 					
 					
-					//Fund
-					
-					ADEFundName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "ADEF1", excelLabel.Fund_Name);
-					ADEFundType = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "ADEF1", excelLabel.Fund_Type);
-					ADEInvestmentCategory = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "ADEF1", excelLabel.Fund_Investment_Category);
-					
-					//Fundrasing
-					ADEFundraisingName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR1", excelLabel.FundRaising_Name);
-					ADEInstitutionName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR1", excelLabel.Institutions_Name);
-					ADERFundName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR1", excelLabel.Fund_Name);
-					ADETargetClosingDate = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR1", excelLabel.Target_Close_Date);
-					
-					ADEFundraisingName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR2", excelLabel.FundRaising_Name);
-					ADEInstitutionName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR2", excelLabel.Institutions_Name);
-					ADERFundName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR2", excelLabel.Fund_Name);
-					ADEStage1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR2", excelLabel.Stage);
 					
 								
 						
@@ -8805,11 +8855,65 @@ public class CommonVariables {
 					 ATCE_ATDay21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_021", excelLabel.Day);
 					 ATCE_ATDay22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_022", excelLabel.Day);
 					 ATCE_ATDay23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_023", excelLabel.Day);
+					 ATCE_ATDay24=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_024", excelLabel.Day);
+					 ATCE_ATDay25=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_025", excelLabel.Day);
+					 ATCE_ATDay26=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_026", excelLabel.Day);
 					 
 					 
-					 ATCE_ATParticipants1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_002", excelLabel.Participants);
-					 ATCE_ATTags1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_002", excelLabel.Tags);
-				 			
+					 ATCE_ATParticipants1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_001", excelLabel.Participants);
+					 ATCE_ATParticipants2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_002", excelLabel.Participants);
+					 ATCE_ATParticipants3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_003", excelLabel.Participants);
+					 ATCE_ATParticipants4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_004", excelLabel.Participants);
+					 ATCE_ATParticipants5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_005", excelLabel.Participants);
+					 ATCE_ATParticipants6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_006", excelLabel.Participants);
+					 ATCE_ATParticipants7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_007", excelLabel.Participants);
+					 ATCE_ATParticipants8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_008", excelLabel.Participants);
+					 ATCE_ATParticipants9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_009", excelLabel.Participants);
+					 ATCE_ATParticipants10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_010", excelLabel.Participants);
+					 ATCE_ATParticipants11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_011", excelLabel.Participants);
+					 ATCE_ATParticipants12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_012", excelLabel.Participants);
+					 ATCE_ATParticipants13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_013", excelLabel.Participants);
+					 ATCE_ATParticipants14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_014", excelLabel.Participants);
+					 ATCE_ATParticipants15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_015", excelLabel.Participants);
+					 ATCE_ATParticipants16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_016", excelLabel.Participants);
+					 ATCE_ATParticipants17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_017", excelLabel.Participants);
+					 ATCE_ATParticipants18=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_018", excelLabel.Participants);
+					 ATCE_ATParticipants19=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_019", excelLabel.Participants);
+					 ATCE_ATParticipants20=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_020", excelLabel.Participants);
+					 ATCE_ATParticipants21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_021", excelLabel.Participants);
+					 ATCE_ATParticipants22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_022", excelLabel.Participants);
+					 ATCE_ATParticipants23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_023", excelLabel.Participants);
+					 ATCE_ATParticipants24=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_024", excelLabel.Participants);
+					 ATCE_ATParticipants25=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_025", excelLabel.Participants);
+					 ATCE_ATParticipants26=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_026", excelLabel.Participants);
+							
+					 ATCE_ATTags1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_001", excelLabel.Tags);
+					 ATCE_ATTags2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_002", excelLabel.Tags);
+					 ATCE_ATTags3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_003", excelLabel.Tags);
+					 ATCE_ATTags4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_004", excelLabel.Tags);
+					 ATCE_ATTags5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_005", excelLabel.Tags);
+					 ATCE_ATTags6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_006", excelLabel.Tags);
+					 ATCE_ATTags7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_007", excelLabel.Tags);
+					 ATCE_ATTags8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_008", excelLabel.Tags);
+					 ATCE_ATTags9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_009", excelLabel.Tags);
+					 ATCE_ATTags10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_010", excelLabel.Tags);
+					 ATCE_ATTags11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_011", excelLabel.Tags);
+					 ATCE_ATTags12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_012", excelLabel.Tags);
+					 ATCE_ATTags13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_013", excelLabel.Tags);
+					 ATCE_ATTags14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_014", excelLabel.Tags);
+					 ATCE_ATTags15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_015", excelLabel.Tags);
+					 ATCE_ATTags16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_016", excelLabel.Tags);
+					 ATCE_ATTags17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_017", excelLabel.Tags);
+					 ATCE_ATTags18=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_018", excelLabel.Tags);
+					 ATCE_ATTags19=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_019", excelLabel.Tags);
+					 ATCE_ATTags20=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_020", excelLabel.Tags);
+					 ATCE_ATTags21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_021", excelLabel.Tags);
+					 ATCE_ATTags22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_022", excelLabel.Tags);
+					 ATCE_ATTags23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_023", excelLabel.Tags);
+					 ATCE_ATTags24=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_024", excelLabel.Tags);
+					 ATCE_ATTags25=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_025", excelLabel.Tags);
+					 ATCE_ATTags26=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATCE_026", excelLabel.Tags);
+					 			
 			
 					 /****************Tagged Section********************/
 					 //firms
@@ -8823,7 +8927,37 @@ public class CommonVariables {
 					 ATCE_TaggedFirmsName8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE008", excelLabel.Company);
 					 ATCE_TaggedFirmsName9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE009", excelLabel.Company);
 					 ATCE_TaggedFirmsName10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE010", excelLabel.Company);
-					 	
+					 ATCE_TaggedFirmsName11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE011", excelLabel.Company);
+					 ATCE_TaggedFirmsName12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE012", excelLabel.Company);
+					 ATCE_TaggedFirmsName13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE013", excelLabel.Company);
+					 ATCE_TaggedFirmsName14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE014", excelLabel.Company);
+					 ATCE_TaggedFirmsName15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE015", excelLabel.Company);
+					 ATCE_TaggedFirmsName16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE016", excelLabel.Company);
+					 ATCE_TaggedFirmsName17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE017", excelLabel.Company);
+					 ATCE_TaggedFirmsName18=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE018", excelLabel.Company);
+					 ATCE_TaggedFirmsName19=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE019", excelLabel.Company);
+					 ATCE_TaggedFirmsName20=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE020", excelLabel.Company);
+					 ATCE_TaggedFirmsName21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE021", excelLabel.Company);
+					 ATCE_TaggedFirmsName22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE022", excelLabel.Company);
+					 ATCE_TaggedFirmsName23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE023", excelLabel.Company);
+					 ATCE_TaggedFirmsName24=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE024", excelLabel.Company);
+					 ATCE_TaggedFirmsName25=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE025", excelLabel.Company);
+					 ATCE_TaggedFirmsName26=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE026", excelLabel.Company);
+					 ATCE_TaggedFirmsName27=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE027", excelLabel.Company);
+					 ATCE_TaggedFirmsName28=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE028", excelLabel.Company);
+					 ATCE_TaggedFirmsName29=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE029", excelLabel.Company);
+					 ATCE_TaggedFirmsName30=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE030", excelLabel.Company);
+					 ATCE_TaggedFirmsName31=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE031", excelLabel.Company);
+					 ATCE_TaggedFirmsName32=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE032", excelLabel.Company);
+					 ATCE_TaggedFirmsName33=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE033", excelLabel.Company);
+					 ATCE_TaggedFirmsName34=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE034", excelLabel.Company);
+					 ATCE_TaggedFirmsName35=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE035", excelLabel.Company);
+					 ATCE_TaggedFirmsName36=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE036", excelLabel.Company);
+					 ATCE_TaggedFirmsName37=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE037", excelLabel.Company);
+					 ATCE_TaggedFirmsName38=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE038", excelLabel.Company);
+					 ATCE_TaggedFirmsName39=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE039", excelLabel.Company);
+					 ATCE_TaggedFirmsName40=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE040", excelLabel.Company);
+							  	
 					 ATCE_TaggedFirmsCount1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.Companies_Count);
 					 ATCE_TaggedFirmsCount2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.Companies_Count);
 					 ATCE_TaggedFirmsCount3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE003", excelLabel.Companies_Count);
@@ -8834,6 +8968,36 @@ public class CommonVariables {
 					 ATCE_TaggedFirmsCount8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE008", excelLabel.Companies_Count);
 					 ATCE_TaggedFirmsCount9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE009", excelLabel.Companies_Count);
 					 ATCE_TaggedFirmsCount10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE010", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE011", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE012", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE013", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE014", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE015", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE016", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE017", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount18=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE018", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount19=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE019", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount20=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE020", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE021", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE022", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE023", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount24=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE024", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount25=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE025", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount26=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE026", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount27=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE027", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount28=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE028", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount29=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE029", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount30=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE030", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount31=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE031", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount32=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE032", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount33=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE033", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount34=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE034", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount35=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE035", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount36=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE036", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount37=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE037", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount38=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE038", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount39=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE039", excelLabel.Companies_Count);
+					 ATCE_TaggedFirmsCount40=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE040", excelLabel.Companies_Count);
 					 	
 					 
 					 
@@ -8847,7 +9011,28 @@ public class CommonVariables {
 					 ATCE_TaggedPeopleName7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE007", excelLabel.People);
 					 ATCE_TaggedPeopleName8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE008", excelLabel.People);
 					 ATCE_TaggedPeopleName9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE009", excelLabel.People);
-				 	
+					 ATCE_TaggedPeopleName10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE010", excelLabel.People);
+					 ATCE_TaggedPeopleName11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE011", excelLabel.People);
+					 ATCE_TaggedPeopleName12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE012", excelLabel.People);
+					 ATCE_TaggedPeopleName13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE013", excelLabel.People);
+					 ATCE_TaggedPeopleName14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE014", excelLabel.People);
+					 ATCE_TaggedPeopleName15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE015", excelLabel.People);
+					 ATCE_TaggedPeopleName16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE016", excelLabel.People);
+					 ATCE_TaggedPeopleName17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE017", excelLabel.People);
+					 ATCE_TaggedPeopleName18=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE018", excelLabel.People);
+					 ATCE_TaggedPeopleName19=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE019", excelLabel.People);
+					 ATCE_TaggedPeopleName20=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE020", excelLabel.People);
+					 ATCE_TaggedPeopleName21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE021", excelLabel.People);
+					 ATCE_TaggedPeopleName22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE022", excelLabel.People);
+					 ATCE_TaggedPeopleName23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE023", excelLabel.People);
+					 ATCE_TaggedPeopleName24=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE024", excelLabel.People);
+					 ATCE_TaggedPeopleName25=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE025", excelLabel.People);
+					 ATCE_TaggedPeopleName26=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE026", excelLabel.People);
+					 ATCE_TaggedPeopleName27=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE027", excelLabel.People);
+					 ATCE_TaggedPeopleName28=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE028", excelLabel.People);
+					 ATCE_TaggedPeopleName29=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE029", excelLabel.People);
+					 ATCE_TaggedPeopleName30=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE030", excelLabel.People);
+					 	
 					 ATCE_TaggedPeopleCount1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.People_Count);
 					 ATCE_TaggedPeopleCount2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.People_Count);
 					 ATCE_TaggedPeopleCount3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE003", excelLabel.People_Count);
@@ -8857,17 +9042,44 @@ public class CommonVariables {
 					 ATCE_TaggedPeopleCount7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE007", excelLabel.People_Count);
 					 ATCE_TaggedPeopleCount8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE008", excelLabel.People_Count);
 					 ATCE_TaggedPeopleCount9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE009", excelLabel.People_Count);
-					 	
+					 ATCE_TaggedPeopleCount10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE010", excelLabel.People_Count);
+					 ATCE_TaggedPeopleCount11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE011", excelLabel.People_Count);
+					 ATCE_TaggedPeopleCount12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE012", excelLabel.People_Count);
+					 ATCE_TaggedPeopleCount13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE013", excelLabel.People_Count);
+					 ATCE_TaggedPeopleCount14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE014", excelLabel.People_Count);
+					 ATCE_TaggedPeopleCount15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE015", excelLabel.People_Count);
+					 ATCE_TaggedPeopleCount16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE016", excelLabel.People_Count);
+					 ATCE_TaggedPeopleCount17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE017", excelLabel.People_Count);
+					 ATCE_TaggedPeopleCount18=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE018", excelLabel.People_Count);
+					 ATCE_TaggedPeopleCount19=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE019", excelLabel.People_Count);
+					 ATCE_TaggedPeopleCount20=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE020", excelLabel.People_Count);
+					 ATCE_TaggedPeopleCount21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE021", excelLabel.People_Count);
+					 ATCE_TaggedPeopleCount22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE022", excelLabel.People_Count);
+					 ATCE_TaggedPeopleCount23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE023", excelLabel.People_Count);
+					 ATCE_TaggedPeopleCount24=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE024", excelLabel.People_Count);
+					 ATCE_TaggedPeopleCount25=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE025", excelLabel.People_Count);
+					 ATCE_TaggedPeopleCount26=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE026", excelLabel.People_Count);
+					 ATCE_TaggedPeopleCount27=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE027", excelLabel.People_Count);
+					 ATCE_TaggedPeopleCount28=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE028", excelLabel.People_Count);
+					 ATCE_TaggedPeopleCount29=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE029", excelLabel.People_Count);
+					 ATCE_TaggedPeopleCount30=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE030", excelLabel.People_Count);
+						
 					 //Deal
 					 ATCE_TaggedDealName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.Deals);
+					 ATCE_TaggedDealName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.Deals);
+					 ATCE_TaggedDealName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE003", excelLabel.Deals);
 					 
 					 ATCE_TaggedDealCount1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.Deals_Count);
-					 
+					 ATCE_TaggedDealCount2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.Deals_Count);
+					 ATCE_TaggedDealCount3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE003", excelLabel.Deals_Count);
+						 
 					 
 					 //Fund
 					 ATCE_TaggedFundName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.Fund);
+					 ATCE_TaggedFundName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.Fund);
 					 
 					 ATCE_TaggedFundCount1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.Fund_Count);
+					 ATCE_TaggedFundCount2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.Fund_Count);
 					 
 					 /************ Contact Section ********************/
 					 ATCE_ConName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.Contact_Name);
@@ -8877,6 +9089,13 @@ public class CommonVariables {
 					 ATCE_ConName5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE005", excelLabel.Contact_Name);
 					 ATCE_ConName6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE006", excelLabel.Contact_Name);
 					 ATCE_ConName7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE007", excelLabel.Contact_Name);
+					 ATCE_ConName8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE008", excelLabel.Contact_Name);
+					 ATCE_ConName9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE009", excelLabel.Contact_Name);
+					 ATCE_ConName10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE010", excelLabel.Contact_Name);
+					 ATCE_ConName11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE011", excelLabel.Contact_Name);
+					 ATCE_ConName12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE012", excelLabel.Contact_Name);
+					 ATCE_ConName13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE013", excelLabel.Contact_Name);
+					 ATCE_ConName14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE014", excelLabel.Contact_Name);
 					 
 					 ATCE_ConTitle1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.Contact_Title);
 					 ATCE_ConTitle2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.Contact_Title);
@@ -8885,6 +9104,13 @@ public class CommonVariables {
 					 ATCE_ConTitle5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE005", excelLabel.Contact_Title);
 					 ATCE_ConTitle6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE006", excelLabel.Contact_Title);
 					 ATCE_ConTitle7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE007", excelLabel.Contact_Title);
+					 ATCE_ConTitle8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE008", excelLabel.Contact_Title);
+					 ATCE_ConTitle9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE009", excelLabel.Contact_Title);
+					 ATCE_ConTitle10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE010", excelLabel.Contact_Title);
+					 ATCE_ConTitle11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE011", excelLabel.Contact_Title);
+					 ATCE_ConTitle12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE012", excelLabel.Contact_Title);
+					 ATCE_ConTitle13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE013", excelLabel.Contact_Title);
+					 ATCE_ConTitle14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE014", excelLabel.Contact_Title);
 					 
 					 ATCE_ConDeal1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.Contact_Deals);
 					 ATCE_ConDeal2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.Contact_Deals);
@@ -8893,6 +9119,13 @@ public class CommonVariables {
 					 ATCE_ConDeal5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE005", excelLabel.Contact_Deals);
 					 ATCE_ConDeal6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE006", excelLabel.Contact_Deals);
 					 ATCE_ConDeal7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE007", excelLabel.Contact_Deals);
+					 ATCE_ConDeal8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE008", excelLabel.Contact_Deals);
+					 ATCE_ConDeal9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE009", excelLabel.Contact_Deals);
+					 ATCE_ConDeal10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE010", excelLabel.Contact_Deals);
+					 ATCE_ConDeal11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE011", excelLabel.Contact_Deals);
+					 ATCE_ConDeal12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE012", excelLabel.Contact_Deals);
+					 ATCE_ConDeal13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE013", excelLabel.Contact_Deals);
+					 ATCE_ConDeal14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE014", excelLabel.Contact_Deals);
 					 
 					 ATCE_ConMeetingAndCall1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.Contact_Meetings_And_Calls);
 					 ATCE_ConMeetingAndCall2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.Contact_Meetings_And_Calls);
@@ -8901,7 +9134,14 @@ public class CommonVariables {
 					 ATCE_ConMeetingAndCall5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE005", excelLabel.Contact_Meetings_And_Calls);
 					 ATCE_ConMeetingAndCall6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE006", excelLabel.Contact_Meetings_And_Calls);
 					 ATCE_ConMeetingAndCall7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE007", excelLabel.Contact_Meetings_And_Calls);
-										
+					 ATCE_ConMeetingAndCall8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE008", excelLabel.Contact_Meetings_And_Calls);
+					 ATCE_ConMeetingAndCall9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE009", excelLabel.Contact_Meetings_And_Calls);
+					 ATCE_ConMeetingAndCall10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE010", excelLabel.Contact_Meetings_And_Calls);
+					 ATCE_ConMeetingAndCall11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE011", excelLabel.Contact_Meetings_And_Calls);
+					 ATCE_ConMeetingAndCall12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE012", excelLabel.Contact_Meetings_And_Calls);
+					 ATCE_ConMeetingAndCall13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE013", excelLabel.Contact_Meetings_And_Calls);
+					 ATCE_ConMeetingAndCall14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE014", excelLabel.Contact_Meetings_And_Calls);
+											
 					 ATCE_ConEmail1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.Contact_Email);
 					 ATCE_ConEmail2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.Contact_Email);
 					 ATCE_ConEmail3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE003", excelLabel.Contact_Email);
@@ -8909,15 +9149,36 @@ public class CommonVariables {
 					 ATCE_ConEmail5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE005", excelLabel.Contact_Email);
 					 ATCE_ConEmail6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE006", excelLabel.Contact_Email);
 					 ATCE_ConEmail7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE007", excelLabel.Contact_Email);
+					 ATCE_ConEmail8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE008", excelLabel.Contact_Email);
+					 ATCE_ConEmail9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE009", excelLabel.Contact_Email);
+					 ATCE_ConEmail10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE010", excelLabel.Contact_Email);
+					 ATCE_ConEmail11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE011", excelLabel.Contact_Email);
+					 ATCE_ConEmail12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE012", excelLabel.Contact_Email);
+					 ATCE_ConEmail13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE013", excelLabel.Contact_Email);
+					 ATCE_ConEmail14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE014", excelLabel.Contact_Email);
 					 
 					   
 					 
 					 /************ Connection Page ***************/
 					 ATCE_ConnectionUserName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.Connection_TeamMember);
+					 ATCE_ConnectionUserName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.Connection_TeamMember);
+					 ATCE_ConnectionUserName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE003", excelLabel.Connection_TeamMember);
+					 
 					 ATCE_ConnectionTitle1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.Connection_Title);
+					 ATCE_ConnectionTitle2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.Connection_Title);
+					 ATCE_ConnectionTitle3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE003", excelLabel.Connection_Title);
+					 
 					 ATCE_ConnectionDeal1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.Connection_Deal);
+					 ATCE_ConnectionDeal2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.Connection_Deal);
+					 ATCE_ConnectionDeal3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE003", excelLabel.Connection_Deal);
+					 
 					 ATCE_ConnectionMeetingAndCall1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.Connection_MeetingsAndCall);
+					 ATCE_ConnectionMeetingAndCall2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.Connection_MeetingsAndCall);
+					 ATCE_ConnectionMeetingAndCall3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE003", excelLabel.Connection_MeetingsAndCall);
+					 
 					 ATCE_ConnectionEmail1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.Connection_Email);
+					 ATCE_ConnectionEmail2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.Connection_Email);
+					 ATCE_ConnectionEmail3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE003", excelLabel.Connection_Email);
 					 
 					 
 					 
@@ -9240,6 +9501,11 @@ public class CommonVariables {
 				ADEContact24EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact24", excelLabel.Contact_EmailId);
 				ADEContact24RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact24", excelLabel.Record_Type);
 				
+				ADEContact25FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact25", excelLabel.Contact_FirstName);
+				ADEContact25LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact25", excelLabel.Contact_LastName);
+				ADEContact25EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact25", excelLabel.Contact_EmailId);
+				ADEContact25RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact25", excelLabel.Record_Type);
+				
 			
 				ADEDeal3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal3", excelLabel.Deal_Name);
 				ADEDeal3CompanyName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal3", excelLabel.Company_Name);
@@ -9444,6 +9710,19 @@ public class CommonVariables {
 				ADEDeal31SourceFirm=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal31", excelLabel.Source_Firm);
 				ADEDeal31HighestStageReached=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal31", excelLabel.Highest_Stage_Reached);
 				
+				ADEDeal32=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal32", excelLabel.Deal_Name);
+				ADEDeal32CompanyName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal32", excelLabel.Company_Name);
+				ADEDeal32Stage=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal32", excelLabel.Stage);
+				ADEDeal32SourceContact=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal32", excelLabel.Source_Contact);
+				ADEDeal32SourceFirm=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal32", excelLabel.Source_Firm);
+				ADEDeal32HighestStageReached=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal32", excelLabel.Highest_Stage_Reached);
+				
+				ADEDeal33=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal33", excelLabel.Deal_Name);
+				ADEDeal33CompanyName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal33", excelLabel.Company_Name);
+				ADEDeal33Stage=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal33", excelLabel.Stage);
+				ADEDeal33SourceContact=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal33", excelLabel.Source_Contact);
+				ADEDeal33SourceFirm=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal33", excelLabel.Source_Firm);
+				ADEDeal33HighestStageReached=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "ADEDeal33", excelLabel.Highest_Stage_Reached);
 				
 				//Deal Team
 				ADEDealTeamName20=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_20", excelLabel.Deal_Name);
@@ -9457,6 +9736,12 @@ public class CommonVariables {
 				ADEDealTeamMember21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_21", excelLabel.Member);
 				ADEDealTeamRole21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_21", excelLabel.Role);
 				ADEDealTeamID21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_21", excelLabel.DealTeamID);
+
+				ADEDealTeamName22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_22", excelLabel.Deal_Name);
+				ADEDealContact22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_22", excelLabel.Contact);
+				ADEDealTeamMember22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_22", excelLabel.Member);
+				ADEDealTeamRole22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_22", excelLabel.Role);
+				ADEDealTeamID22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_22", excelLabel.DealTeamID);
 
 				//financing
 				ADEFinancingDealName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Financing",excelLabel.Variable_Name, "F_01", excelLabel.Deal_Name);
@@ -9490,6 +9775,69 @@ public class CommonVariables {
 				ADEvalue6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_3", excelLabel.Value);
 				ADENewValue6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_3", excelLabel.New_Value);
 				
+				ADEFieldname7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_7", excelLabel.FieldName);
+				ADEvalue7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_7", excelLabel.Value);
+				ADENewValue7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_7", excelLabel.New_Value);
+				
+				ADEFieldname8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_8", excelLabel.FieldName);
+				ADEvalue8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_8", excelLabel.Value);
+				ADENewValue8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_8", excelLabel.New_Value);
+				
+				ADEFieldname9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_9", excelLabel.FieldName);
+				ADEvalue9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_9", excelLabel.Value);
+				ADENewValue9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ADE_9", excelLabel.New_Value);
+				
+				//Fund
+				
+				ADEFundName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "ADEF1", excelLabel.Fund_Name);
+				ADEFundType = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "ADEF1", excelLabel.Fund_Type);
+				ADEInvestmentCategory = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "ADEF1", excelLabel.Fund_Investment_Category);
+				
+				ADEFundName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "ADEF2", excelLabel.Fund_Name);
+				ADEFundType1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "ADEF2", excelLabel.Fund_Type);
+				ADEInvestmentCategory1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "ADEF2", excelLabel.Fund_Investment_Category);
+				ADERecordType1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "ADEF2", excelLabel.Record_Type);
+				
+				//Fundrasing
+				ADEFundraisingName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR1", excelLabel.FundRaising_Name);
+				ADEInstitutionName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR1", excelLabel.Institutions_Name);
+				ADERFundName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR1", excelLabel.Fund_Name);
+				ADETargetClosingDate = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR1", excelLabel.Target_Close_Date);
+				
+				ADEFundraisingName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR2", excelLabel.FundRaising_Name);
+				ADEInstitutionName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR2", excelLabel.Company_Name);
+				ADERFundName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR2", excelLabel.Fund_Name);
+				ADEStage1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR2", excelLabel.Stage);
+				
+				ADEFundraisingName2 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR3", excelLabel.FundRaising_Name);
+				ADEInstitutionName2 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR3", excelLabel.Company_Name);
+				ADERFundName2 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR3", excelLabel.Fund_Name);
+				ADETargetClosingDate2 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR3", excelLabel.Target_Close_Date);
+				ADEInvestmentLikelyAmountMN2 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR3", excelLabel.Investment_Likely_Amount);
+				ADEStage2 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR3", excelLabel.Stage);
+				
+				ADEFundraisingName3 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR4", excelLabel.FundRaising_Name);
+				ADEInstitutionName3 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR4", excelLabel.Company_Name);
+				ADERFundName3 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR4", excelLabel.Fund_Name);
+				ADETargetClosingDate3 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR4", excelLabel.Target_Close_Date);
+				ADEInvestmentLikelyAmountMN3 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR4", excelLabel.Investment_Likely_Amount);
+				ADEStage3 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR4", excelLabel.Stage);
+				
+				ADEFundraisingName4 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR5", excelLabel.FundRaising_Name);
+				ADEInstitutionName4 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR5", excelLabel.Company_Name);
+				ADERFundName4 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR5", excelLabel.Fund_Name);
+				ADETargetClosingDate4 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR5", excelLabel.Target_Close_Date);
+				ADEInvestmentLikelyAmountMN4 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR5", excelLabel.Investment_Likely_Amount);
+				ADEStage4 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR5", excelLabel.Stage);
+				
+				ADEFundraisingName5 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR6", excelLabel.FundRaising_Name);
+				ADEInstitutionName5 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR6", excelLabel.Company_Name);
+				ADERFundName5 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR6", excelLabel.Fund_Name);
+				ADETargetClosingDate5 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR6", excelLabel.Target_Close_Date);
+				ADEInvestmentLikelyAmountMN5 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR6", excelLabel.Investment_Likely_Amount);
+				ADEStage5 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR6", excelLabel.Stage);
+				
+
 				break;
 				
                 case "AcuityResearch" :
@@ -10459,6 +10807,9 @@ public class CommonVariables {
 						RGEIns1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGEIns1", excelLabel.Legal_Name);
 						RGEIns1RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGEIns1", excelLabel.Record_Type);
 						
+						RGEIns2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGEIns2", excelLabel.Legal_Name);
+						RGEIns2RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGEIns2", excelLabel.Record_Type);
+						
 						//Contact
 						RGEContact1FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact1", excelLabel.Contact_FirstName);
 						RGEContact1LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact1", excelLabel.Contact_LastName);
@@ -10477,6 +10828,70 @@ public class CommonVariables {
 						
 						RGEUser01FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEUser01", excelLabel.Contact_FirstName);
 						RGEUser01LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEUser01", excelLabel.Contact_LastName);
+						
+						RGEContact4FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact4", excelLabel.Contact_FirstName);
+						RGEContact4LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact4", excelLabel.Contact_LastName);
+						RGEContact4EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact4", excelLabel.Contact_EmailId);
+						RGEContact4RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact4", excelLabel.Record_Type);
+						
+						RGEContact5FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact5", excelLabel.Contact_FirstName);
+						RGEContact5LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact5", excelLabel.Contact_LastName);
+						RGEContact5EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact5", excelLabel.Contact_EmailId);
+						RGEContact5RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact5", excelLabel.Record_Type);
+						
+						RGEContact6FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact6", excelLabel.Contact_FirstName);
+						RGEContact6LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact6", excelLabel.Contact_LastName);
+						RGEContact6EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact6", excelLabel.Contact_EmailId);
+						RGEContact6RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact6", excelLabel.Record_Type);
+						
+						RGEContact7FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact7", excelLabel.Contact_FirstName);
+						RGEContact7LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact7", excelLabel.Contact_LastName);
+						RGEContact7EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact7", excelLabel.Contact_EmailId);
+						RGEContact7RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact7", excelLabel.Record_Type);
+						
+						//RG Deals
+						RGDeal1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "RGDeal1", excelLabel.Deal_Name);
+						RGDeal1CompanyName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "RGDeal1", excelLabel.Company_Name);
+						RGDeal1Stage=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "RGDeal1", excelLabel.Stage);
+						RGDeal1SourceContact=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "RGDeal1", excelLabel.Source_Contact);
+						RGDeal1SourceFirm=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "RGDeal1", excelLabel.Source_Firm);
+						RGDeal1HighestStageReached=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "RGDeal1", excelLabel.Highest_Stage_Reached);
+						
+						//RG DealTeam
+						RGDealTeamName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "RGDT_01", excelLabel.Deal_Name);
+						RGDealContact1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "RGDT_01", excelLabel.Contact);
+						RGDealTeamMember1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "RGDT_01", excelLabel.Member);
+						RGDealTeamRole1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "RGDT_01", excelLabel.Role);
+						RGDealTeamID1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "RGDT_01", excelLabel.DealTeamID);
+						
+						RGDealTeamName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "RGDT_02", excelLabel.Deal_Name);
+						RGDealContact2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "RGDT_02", excelLabel.Contact);
+						RGDealTeamMember2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "RGDT_02", excelLabel.Member);
+						RGDealTeamRole2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "RGDT_02", excelLabel.Role);
+						RGDealTeamID2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "RGDT_02", excelLabel.DealTeamID);
+						
+						//RG FUND
+						RGFundName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "RGF_01", excelLabel.Fund_Name);
+						RGFundType1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "RGF_01", excelLabel.Fund_Type);
+						RGInvestmentCategory1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "RGF_01", excelLabel.Fund_Investment_Category);
+						RGRecordType1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "RGF_01", excelLabel.Record_Type);
+						
+						//RG Fundraising
+						RGFundraisingName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "RGFR1", excelLabel.FundRaising_Name);
+						RGInstitutionName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "RGFR1", excelLabel.Institutions_Name);
+						RGRFundName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "RGFR1", excelLabel.Fund_Name);
+						RGTargetClosingDate1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "RGFR1", excelLabel.Target_Close_Date);
+						
+						//RG Fundraising Contact
+						RGContact1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings Contact",excelLabel.Variable_Name, "RGFRC_01", excelLabel.Contact);
+						RGRole1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "RGFRC_01", excelLabel.Role);
+						
+						RGContact1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings Contact",excelLabel.Variable_Name, "RGFRC_01", excelLabel.Contact);
+						RGRole1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "RGFRC_01", excelLabel.Role);
+						
+						RGContact2 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings Contact",excelLabel.Variable_Name, "RGFRC_02", excelLabel.Contact);
+						RGRole2 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "RGFRC_02", excelLabel.Role);
+						
 						
 						//METADATA
 						
