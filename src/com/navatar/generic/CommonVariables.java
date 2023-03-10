@@ -1819,7 +1819,7 @@ public class CommonVariables {
 	 		//--------AcuityMeetingNotesNotificationReminder-------------
 	 		
 	 		
-	 		public static String AMNNR_FundraisingNames1 , AMNNR_FundraisingFundName1, AMNNR_FundraisingInstitutionName1;
+	 		public static String AMNNR_FundraisingNames1 , AMNNR_FundraisingFundName1, AMNNR_FundraisingInstitutionName1, AMNNR_FundraisingStageName1;
 	 		public static String AMNNR_DealName1, AMNNR_DealCompany1, AMNNR_DealStage1;
 	 		public static String AMNNR_CustomObjectTab1,  AMNNR_CustomObjectField1, AMNNR_CustomObjectRecord1;  
 	 		public static String AMNNR_FundNames1, AMNNR_FundTypes1, AMNNR_FundInvestmentCategories1;
@@ -9710,6 +9710,7 @@ public class CommonVariables {
     				AMNNR_FundraisingNames1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "AMNNR_Fundraising1", excelLabel.FundRaising_Name);
     				AMNNR_FundraisingFundName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "AMNNR_Fundraising1", excelLabel.Fund_Name);
     				AMNNR_FundraisingInstitutionName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "AMNNR_Fundraising1", excelLabel.Institutions_Name);
+    				AMNNR_FundraisingStageName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "AMNNR_Fundraising1", excelLabel.Stage);
     				
     				AMNNR_DealName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "AMNNR_Deal1", excelLabel.Deal_Name);        
     				    //deal Company

@@ -8574,18 +8574,21 @@ public abstract class BasePage extends BaseLib {
 		return ele = isDisplayed(driver, FindElement(driver, xpath, "New Sourced Deal Icon: " + "NewSourcedDealIcon",
 				action.SCROLLANDBOOLEAN, timeOut), "Visibility", 10, "New Sourced Deal Icon");
 	}
-	
+
 	public WebElement DateReciviedSortingIcon(int timeOut) {
 		WebElement ele;
 		String xpath = "//li[@class='sortby_css']//button[@name='progress']";
-		return ele = isDisplayed(driver, FindElement(driver, xpath, "Date Recivied Sorting Icon: " + "DateReciviedSortingIcon",
-				action.SCROLLANDBOOLEAN, timeOut), "Visibility", 10, "Date Recivied Sorting Icon");
+		return ele = isDisplayed(driver, FindElement(driver, xpath,
+				"Date Recivied Sorting Icon: " + "DateReciviedSortingIcon", action.SCROLLANDBOOLEAN, timeOut),
+				"Visibility", 10, "Date Recivied Sorting Icon");
 	}
+
 	public WebElement sortingorder(String order, int timeOut) {
 		WebElement ele;
-		String xpath = "//li[@class='sortby_css']//*[@data-value='" +order+ "']";
-		return ele = isDisplayed(driver, FindElement(driver, xpath, "Date Recivied Sorting Icon: " + "DateReciviedSortingIcon",
-				action.SCROLLANDBOOLEAN, timeOut), "Visibility", 10, "Date Recivied Sorting Icon");
+		String xpath = "//li[@class='sortby_css']//*[@data-value='" + order + "']";
+		return ele = isDisplayed(driver, FindElement(driver, xpath,
+				"Date Recivied Sorting Icon: " + "DateReciviedSortingIcon", action.SCROLLANDBOOLEAN, timeOut),
+				"Visibility", 10, "Date Recivied Sorting Icon");
 	}
 
 //	public WebElement dealAcuityDateReceived2(String dealName, int timeOut) {
@@ -8599,7 +8602,7 @@ public abstract class BasePage extends BaseLib {
 //		}
 //
 //	}
-	
+
 	public WebElement SourcedTab(int timeOut, action action) {
 		WebElement ele;
 		String xpath = "//input[@name='radioGroups']/..//span[text()='Sourced']";
@@ -9596,6 +9599,25 @@ public abstract class BasePage extends BaseLib {
 
 		String xPath = "//a[@class=\"interaction_sub subject_text\" and text()='" + subjectName + "']";
 		return FindElement(driver, xPath, "info popup message", action.BOOLEAN, timeOut);
+	}
+
+	public WebElement recordNameInNotesSuggestionBox(String recordName, int timeOut) {
+
+		String xpath = "//span[contains(@class,\"slds-listbox__option-text_entity\")][text()=\"" + recordName
+				+ "\"]/ancestor::div[contains(@class,\"slds-listbox__option_has-meta\")]";
+		try {
+			return FindElement(driver, xpath, "Label name: " + recordName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Label name: " + recordName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+
+	public List<String> recordNameListInNotesSuggestionBox() {
+
+		String xpath = "//div[@class=\"hover\"]//span[contains(@class,\"slds-listbox__option-text_entity\")]/ancestor::div[contains(@class,\"slds-listbox__option_has-meta\")]/span[2]";
+		return FindElements(driver, xpath).stream().map(x -> x.getText()).collect(Collectors.toList());
+
 	}
 
 }
