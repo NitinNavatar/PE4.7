@@ -551,7 +551,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getAddBtn(int timeOut) {
 		return isDisplayed(driver, AddBtn, "Visibility", timeOut, "Custom Tab Add Button");
 	}
-	
+
 	@FindBy(xpath = "//a//img[@title='Remove']")
 	private WebElement RemoveBtn;
 
@@ -7200,10 +7200,10 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
+
 	public WebElement dealAcuityDateReceived2(String dealName, int timeOut) {
 
-		String xpath = "//a[text()='" + dealName
-				+ "']/ancestor::tr//td[@data-label='Date Received']//div/*";
+		String xpath = "//a[text()='" + dealName + "']/ancestor::tr//td[@data-label='Date Received']//div/*";
 		try {
 			return FindElement(driver, xpath, "Header: " + "dateReceived", action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -8143,7 +8143,8 @@ public abstract class BasePage extends BaseLib {
 	}
 
 	public WebElement subjectOfInteractionPage(String subjectName, int timeOut) {
-		String xpath = "//td[@data-label='Subject']//button[@name='subject' and text()='" + subjectName + "']";
+
+		String xpath = "//td[@data-label=\"Subject\"]//button[@name=\"subject\" and text()='" + subjectName + "']";
 		WebElement ele = FindElement(driver, xpath, "subject of Interaction page: " + subjectName,
 				action.SCROLLANDBOOLEAN, timeOut);
 		try {
@@ -9142,8 +9143,9 @@ public abstract class BasePage extends BaseLib {
 
 		String xpath = "//section//lightning-layout-item[contains(@class,'slds-carousel__panel')]//lightning-button";
 		String xpath2 = "//button[text()='Edjidst']";
-		WebElement editButton = isDisplayed(driver, FindElement(driver, xpath, "editButton", action.BOOLEAN, timeOut), "visibility", timeOut, "editButton", action.BOOLEAN) ;
-		//section//lightning-layout-item[contains(@class,'slds-carousel__panel')]//lightning-button
+		WebElement editButton = isDisplayed(driver, FindElement(driver, xpath, "editButton", action.BOOLEAN, timeOut),
+				"visibility", timeOut, "editButton", action.BOOLEAN);
+		// section//lightning-layout-item[contains(@class,'slds-carousel__panel')]//lightning-button
 		return editButton;
 
 	}
@@ -9281,7 +9283,7 @@ public abstract class BasePage extends BaseLib {
 				"errorMsgInFieldLevelOfNotePopup");
 	}
 
-	@FindBy(xpath = "//span[text()=\"Log a Call\"]/ancestor::lightning-icon")
+	@FindBy(xpath = "//span[text()='Log a Call' or text()='new_direct_message']/ancestor::lightning-icon")
 	private WebElement logACallIconButtonInInteraction;
 
 	public WebElement logACallIconButtonInInteraction(int timeOut) {
@@ -9410,17 +9412,25 @@ public abstract class BasePage extends BaseLib {
 
 	public List<WebElement> addContactsToDealTeamPopUpCheckBoxes() {
 
-		String xpath = "//h1[text()=\"Add Contacts to Deal Team\"]/../following-sibling::div//lightning-layout[contains(@class,\"slds-p-around_x-small\")]//lightning-layout-item[1]";
-		List<WebElement> listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox");
+		String xpath = "//h1[text()=\"Add Contacts to Deal Team\"]/../following-sibling::div//lightning-layout[contains(@class,\"slds-p-around_x-small\")]//lightning-layout-item[1]//input";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath, "addContactsToDealTeamPopUpCheckBoxes");
 		if (listOfNameElements.size() == 0) {
 			return listOfNameElements = FindElements(driver, xpath, "addContactsToDealTeamPopUpCheckBoxes");
 		} else
 			return listOfNameElements;
 	}
 
+	@FindBy(xpath = "//h1[text()=\"Add Contacts to Deal Team\"]/../following-sibling::div//lightning-layout//lightning-input[@data-id=\"dealGlobalCheckId\"]//input")
+	private WebElement addContactsToDealTeamPopUpAllRecordCheckBox;
+
+	public WebElement addContactsToDealTeamPopUpAllRecordCheckBox(int timeOut) {
+		return isDisplayed(driver, addContactsToDealTeamPopUpAllRecordCheckBox, "Visibility", timeOut,
+				"addContactsToDealTeamPopUpAllRecordCheckBox");
+	}
+
 	public List<WebElement> addContactsToDealTeamPopUpRoleDropDown() {
 
-		String xpath = "//h1[text()=\"Add Contacts to Deal Team\"]/../following-sibling::div//lightning-layout[contains(@class,\"slds-p-around_x-small\")]//lightning-layout-item[4]";
+		String xpath = "//h1[text()=\"Add Contacts to Deal Team\"]/../following-sibling::div//lightning-layout[contains(@class,\"slds-p-around_x-small\")]//lightning-layout-item[4]//button";
 		List<WebElement> listOfNameElements = FindElements(driver, xpath, "addContactsToDealTeamPopUpRoleDropDown");
 		if (listOfNameElements.size() == 0) {
 			return listOfNameElements = FindElements(driver, xpath, "addContactsToDealTeamPopUpRoleDropDown");
@@ -9460,17 +9470,25 @@ public abstract class BasePage extends BaseLib {
 
 	public List<WebElement> addToFundraisingContactsPopUpCheckBoxes() {
 
-		String xpath = "//h1[text()=\"Add to Fundraising Contacts\"]/../following-sibling::div//lightning-layout[contains(@class,\"slds-p-around_x-small\")]//lightning-layout-item[1]";
-		List<WebElement> listOfNameElements = FindElements(driver, xpath, "createRecordPopUpNameInputBox");
+		String xpath = "//h1[text()=\"Add to Fundraising Contacts\"]/../following-sibling::div//lightning-layout[contains(@class,\"slds-p-around_x-small\")]//lightning-layout-item[1]//input";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath, "addToFundraisingContactsPopUpCheckBoxes");
 		if (listOfNameElements.size() == 0) {
 			return listOfNameElements = FindElements(driver, xpath, "addContactsToDealTeamPopUpCheckBoxes");
 		} else
 			return listOfNameElements;
 	}
 
+	@FindBy(xpath = "//h1[text()=\"Add to Fundraising Contacts\"]/../following-sibling::div//lightning-layout[1]//input")
+	private WebElement addToFundraisingContactsPopUpAllRecordCheckBox;
+
+	public WebElement addToFundraisingContactsPopUpAllRecordCheckBox(int timeOut) {
+		return isDisplayed(driver, addToFundraisingContactsPopUpAllRecordCheckBox, "Visibility", timeOut,
+				"addToFundraisingContactsPopUpAllRecordCheckBox");
+	}
+
 	public List<WebElement> addToFundraisingContactsPopUpRoleDropDown() {
 
-		String xpath = "//h1[text()=\"Add to Fundraising Contacts\"]/../following-sibling::div//lightning-layout[contains(@class,\"slds-p-around_x-small\")]//lightning-layout-item[4]";
+		String xpath = "//h1[text()=\"Add to Fundraising Contacts\"]/../following-sibling::div//lightning-layout[contains(@class,\"slds-p-around_x-small\")]//lightning-layout-item[4]//button";
 		List<WebElement> listOfNameElements = FindElements(driver, xpath, "addContactsToDealTeamPopUpRoleDropDown");
 		if (listOfNameElements.size() == 0) {
 			return listOfNameElements = FindElements(driver, xpath, "addContactsToDealTeamPopUpRoleDropDown");
@@ -9592,19 +9610,83 @@ public abstract class BasePage extends BaseLib {
 	private WebElement createRecordsPopupSuccessMsg;
 
 	public WebElement infoIconOfSectionName(String sectionName, int timeOut) {
-		
-		String path = "//span[text()='"+sectionName+"']/../..//lightning-helptext//button/lightning-primitive-icon";
-		return FindElement(driver, path, "info icon of section", action.BOOLEAN,
-				timeOut);
+
+		String path = "//span[text()='" + sectionName + "']/../..//lightning-helptext//button/lightning-primitive-icon";
+		return FindElement(driver, path, "info icon of section", action.BOOLEAN, timeOut);
 	}
-	
-   public WebElement infoPopupMessageOfSection(int timeOut) {
-		
+
+	// Deal Team Added Successfully
+	public WebElement addContactsToDealTeamPopupSuccessMsg(int timeOut) {
+		return isDisplayed(driver, addContactsToDealTeamPopupSuccessMsg, "Visibility", timeOut,
+				"createRecordsPopupSuccessMsg");
+	}
+
+	@FindBy(xpath = "//div[contains(@id,\"toast\")]/span")
+	private WebElement addContactsToDealTeamPopupSuccessMsg;
+
+	public WebElement infoPopupMessageOfSection(int timeOut) {
+
 		String path = "//lightning-primitive-bubble[@role='tooltip']//div[@class='slds-popover__body']";
-		return FindElement(driver, path, "info popup message", action.BOOLEAN,
-				timeOut);
+		return FindElement(driver, path, "info popup message", action.BOOLEAN, timeOut);
 	}
-	
-	//lightning-primitive-bubble[@role='tooltip']//div[@class='slds-popover__body']
-	
+
+	// lightning-primitive-bubble[@role='tooltip']//div[@class='slds-popover__body']
+
+	public WebElement createRecordsPopupHeader(int timeOut) {
+		return isDisplayed(driver, createRecordsPopupHeader, "Visibility", timeOut, "createRecordsPopupHeader");
+	}
+
+	@FindBy(xpath = "//h1[text()=\"Create Records\"]")
+	private WebElement createRecordsPopupHeader;
+
+	public WebElement addContactsToDealTeamPopUpHeader(int timeOut) {
+		return isDisplayed(driver, addContactsToDealTeamPopUpHeader, "Visibility", timeOut,
+				"addContactsToDealTeamPopUpHeader");
+	}
+
+	@FindBy(xpath = "//h1[text()=\"Add Contacts to Deal Team\"]")
+	private WebElement addContactsToDealTeamPopUpHeader;
+
+	public WebElement addToFundraisingContactsPopUpHeader(int timeOut) {
+		return isDisplayed(driver, addToFundraisingContactsPopUpHeader, "Visibility", timeOut,
+				"addToFundraisingContactsPopUpHeader");
+	}
+
+	@FindBy(xpath = "//h1[text()=\"Add to Fundraising Contacts\"]")
+	private WebElement addToFundraisingContactsPopUpHeader;
+
+	public WebElement valueOfLabelInDetailSectionUnderSuggestedTag(String labelName, int timeOut) {
+
+		String xpath = "//section//div[contains(@id,\"lgt-accordion-section\")]//label[text()=\"" + labelName
+				+ "\"]/following-sibling::*";
+		try {
+			return FindElement(driver, xpath, "Label name: " + labelName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Label name: " + labelName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+
+	public List<String> valueOfTagsInDetailSectionUnderSuggestedTag(String labelName) {
+
+		String xpath = "//section//div[contains(@id,\"lgt-accordion-section\")]//label[text()=\"" + labelName
+				+ "\"]/following-sibling::*//lightning-pill//span/span/following-sibling::span";
+		return FindElements(driver, xpath).stream().map(x -> x.getText()).collect(Collectors.toList());
+
+	}
+
+	public WebElement detailsButtonUnderSuggestedTag(int timeOut) {
+		return isDisplayed(driver, detailsButtonUnderSuggestedTag, "Visibility", timeOut,
+				"detailsButtonUnderSuggestedTag");
+	}
+
+	@FindBy(xpath = "//span[text()=\"Details\"]/ancestor::button")
+	private WebElement detailsButtonUnderSuggestedTag;
+
+	public WebElement taskSubjectOfInteractionCard(String subjectName, int timeOut) {
+
+		String xPath = "//a[@class=\"interaction_sub subject_text\" and text()='" + subjectName + "']";
+		return FindElement(driver, xPath, "info popup message", action.BOOLEAN, timeOut);
+	}
+
 }

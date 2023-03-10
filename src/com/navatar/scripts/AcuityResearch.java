@@ -2514,7 +2514,7 @@ public class AcuityResearch extends BaseLib{
 						ThreadSleep(5000);
 
 							if (BP.updateActivityTimelineRecord(projectName, task1BasicSection, null,
-									null, null, null)) {
+									null, null, null, false, null, null, null, null, null, null)) {
 								log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
 
 								CommonLib.refresh(driver);
@@ -2723,7 +2723,7 @@ public class AcuityResearch extends BaseLib{
 							ThreadSleep(5000);
 
 								if (BP.updateActivityTimelineRecord(projectName, task1BasicSection, null,
-										null, null, null)) {
+										null, null, null, false, null, null, null, null, null, null)) {
 									log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
 
 									CommonLib.refresh(driver);

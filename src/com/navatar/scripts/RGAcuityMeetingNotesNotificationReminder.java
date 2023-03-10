@@ -386,7 +386,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 					"Add Note Button of Event: " + eventTitle, action.BOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on Add Note Button of Event: " + eventTitle, YesNo.No);
 				if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection, task1UpdateAdvancedSection,
-						null, updatedSuggestedTags, null)) {
+						null, updatedSuggestedTags, null, false, null, null, null, null, null, null)) {
 					log(LogStatus.PASS, "Activity timeline record has been Updated for: " + eventTitle, YesNo.No);
 
 				} else {
@@ -808,7 +808,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 									}
 
 									if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection,
-											task1UpdateAdvancedSection, null, updatedSuggestedTags, null)) {
+											task1UpdateAdvancedSection, null, updatedSuggestedTags, null, false, null, null, null, null, null, null)) {
 										log(LogStatus.PASS,
 												"Activity timeline record has been Updated for: " + eventTitle,
 												YesNo.No);
@@ -1697,7 +1697,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 							}
 
 							if (BP.updateActivityTimelineRecord(projectName, event1UpdateBasicSection,
-									event1UpdateAdvancedSection, null, updatedSuggestedTags, null)) {
+									event1UpdateAdvancedSection, null, updatedSuggestedTags, null, false, null, null, null, null, null, null)) {
 								log(LogStatus.PASS,
 										"Activity timeline record has been Updated for: " + eventTitleUpdated,
 										YesNo.No);
@@ -1741,7 +1741,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 											if (BP.updateActivityTimelineRecord(projectName,
 													event1UpdateBasicSectionOnHomepageNotePopup,
 													event1UpdateAdvancedSectionOnHomepageNotePopup, null,
-													eventupdatedSuggestedTagsOnHomepageNotePopup, null)) {
+													eventupdatedSuggestedTagsOnHomepageNotePopup, null, false, null, null, null, null, null, null)) {
 												log(LogStatus.PASS, "Activity timeline record has been Updated for: "
 														+ eventTitleUpdated, YesNo.No);
 												driver.close();
@@ -1886,7 +1886,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 											if (BP.updateActivityTimelineRecord(projectName,
 													event1UpdateBasicSectionOnHomepageNotePopup2,
 													event1UpdateAdvancedSectionOnHomepageNotePopup2, null,
-													eventupdatedSuggestedTagsOnHomepageNotePopup2, null)) {
+													eventupdatedSuggestedTagsOnHomepageNotePopup2, null, false, null, null, null, null, null, null)) {
 												log(LogStatus.PASS, "Activity timeline record has been Updated for: "
 														+ eventTitleUpdated, YesNo.No);
 												driver.close();
@@ -2152,7 +2152,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 						}
 
 						if (BP.updateActivityTimelineRecord(projectName, event1UpdateBasicSection,
-								event1UpdateAdvancedSection, null, event1UpdatedSuggestedTags, null)) {
+								event1UpdateAdvancedSection, null, event1UpdatedSuggestedTags, null, false, null, null, null, null, null, null)) {
 							log(LogStatus.PASS, "Activity timeline record has been Updated for: " + eventTitleUpdated,
 									YesNo.No);
 
@@ -2389,7 +2389,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.INFO, "Clicked on Add Note Button of Event: " + eventTitle, YesNo.No);
 
 						if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection,
-								task1UpdateAdvancedSection, null, updatedSuggestedTags, null)) {
+								task1UpdateAdvancedSection, null, updatedSuggestedTags, null, false, null, null, null, null, null, null)) {
 							log(LogStatus.PASS, "Activity timeline record has been Updated for: " + eventTitle,
 									YesNo.No);
 
@@ -2657,7 +2657,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 										log(LogStatus.INFO, "Clicked on Edit Button of Event: " + eventTitle, YesNo.No);
 
 										if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection,
-												task1UpdateAdvancedSection, null, updatedSuggestedTags, null)) {
+												task1UpdateAdvancedSection, null, updatedSuggestedTags, null, false, null, null, null, null, null, null)) {
 											log(LogStatus.PASS,
 													"Activity timeline record has been Updated for: " + eventTitle,
 													YesNo.No);
@@ -3773,7 +3773,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 								if (BP.updateActivityTimelineRecord(projectName,
 										event1UpdateBasicSectionOnHomepageNotePopup,
 										event1UpdateAdvancedSectionOnHomepageNotePopup, null,
-										eventupdatedSuggestedTagsOnHomepageNotePopup, null)) {
+										eventupdatedSuggestedTagsOnHomepageNotePopup, null, false, null, null, null, null, null, null)) {
 									log(LogStatus.PASS, "Activity timeline record has been Updated for: " + eventTitle,
 											YesNo.No);
 									driver.close();
@@ -4435,7 +4435,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 							if (BP.updateActivityTimelineRecord(projectName,
 									event1UpdateBasicSectionOnHomepageNotePopup,
 									event1UpdateAdvancedSectionOnHomepageNotePopup, null,
-									eventupdatedSuggestedTagsOnHomepageNotePopup, null)) {
+									eventupdatedSuggestedTagsOnHomepageNotePopup, null, false, null, null, null, null, null, null)) {
 								log(LogStatus.PASS, "Activity timeline record has been Updated for: " + eventTitle,
 										YesNo.No);
 								driver.close();
@@ -4609,7 +4609,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
 			home.notificationPopUpClose();
 			if (BP.createActivityTimeline(projectName, true, task1ButtonName, task1BasicSection, task1AdvancedSection,
-					null, null, false, null, null, null, null, null)) {
+					null, null, false, null, null, null, null, null, null)) {
 				log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
 
 			} else {
@@ -4781,7 +4781,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
 			home.notificationPopUpClose();
 			if (BP.createActivityTimeline(projectName, true, task1ButtonName, task1BasicSection, task1AdvancedSection,
-					null, null, false, null, null, null, null, null)) {
+					null, null, false, null, null, null, null, null, null)) {
 				log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
 
 			} else {
@@ -5018,7 +5018,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 							}
 
 							if (BP.updateActivityTimelineRecord(projectName, event1UpdateBasicSection,
-									event1UpdateAdvancedSection, null, updatedSuggestedTags, null)) {
+									event1UpdateAdvancedSection, null, updatedSuggestedTags, null, false, null, null, null, null, null, null)) {
 								log(LogStatus.PASS, "Activity timeline record has been Updated for: " + eventTitle,
 										YesNo.No);
 
@@ -5403,7 +5403,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 									if (BP.updateActivityTimelineRecord(projectName,
 											event1UpdateBasicSectionOnHomepageNotePopup,
 											event1UpdateAdvancedSectionOnHomepageNotePopup, null,
-											eventupdatedSuggestedTagsOnHomepageNotePopup, null)) {
+											eventupdatedSuggestedTagsOnHomepageNotePopup, null, false, null, null, null, null, null, null)) {
 										log(LogStatus.PASS,
 												"Activity timeline record has been Updated for: " + eventTitle,
 												YesNo.No);
@@ -6179,7 +6179,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 					"Add Note Button of Event: " + eventTitle, action.BOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on Add Note Button of Event: " + eventTitle, YesNo.No);
 				if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection, task1UpdateAdvancedSection,
-						null, updatedSuggestedTags, null)) {
+						null, updatedSuggestedTags, null, false, null, null, null, null, null, null)) {
 					log(LogStatus.PASS, "Activity timeline record has been Updated for: " + eventTitle, YesNo.No);
 
 				} else {
@@ -6701,7 +6701,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 							log(LogStatus.INFO, "Clicked on Edit Button", YesNo.No);
 
 							if (BP.updateActivityTimelineRecord(projectName, event1UpdateBasicSection,
-									event1UpdateAdvancedSection, null, updatedSuggestedTags, null)) {
+									event1UpdateAdvancedSection, null, updatedSuggestedTags, null, false, null, null, null, null, null, null)) {
 								log(LogStatus.PASS, "Activity timeline record has been Updated for: "
 										+ eventTitleExisting + " , also verified Suggested PopUp not Open", YesNo.No);
 

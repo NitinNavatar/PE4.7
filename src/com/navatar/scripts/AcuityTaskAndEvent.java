@@ -466,7 +466,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 
@@ -828,7 +828,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 		
-		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 		 
@@ -1839,7 +1839,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 		}
@@ -1984,7 +1984,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 
@@ -4655,7 +4655,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, user, subjectName);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, subjectName, null, null);
 						if(result2.isEmpty())
 						{
 							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
@@ -4940,7 +4940,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
 						{
 							log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
-							ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(icon, date, subjectName, details, meetingAndCallUser);
+							ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(icon, date, subjectName, details, null, null);
 							if(result4.isEmpty())
 							{
 								log(LogStatus.INFO, "Records have been verified on meeting and call popup",YesNo.No);
@@ -4961,7 +4961,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						{
 							ThreadSleep(2000);
 							log(LogStatus.INFO, "clicked on count of "+userName2,YesNo.No);
-							ArrayList<String> result5=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(icon1, date1, subjectName1, details1, meetingAndCallUser1);
+							ArrayList<String> result5=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(icon1, date1, subjectName1, details1, null, null);
 							if(result5.isEmpty())
 							{
 								log(LogStatus.INFO, "Records have been verified on meeting and call popup",YesNo.No);
@@ -5391,7 +5391,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(interactionIconType,interactionDate, interactionSubjectName, interactionDetails, interactionUserData, interactionSubjectName);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(interactionIconType,interactionDate, interactionSubjectName, interactionDetails, interactionSubjectName, null, null);
 						if(result2.isEmpty())
 						{
 							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
@@ -5424,7 +5424,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on connection section" , action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
-						ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(icon, date, subjectName, details, meetingAndCallUser);
+						ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(icon, date, subjectName, details, null, null);
 						if(result4.isEmpty())
 						{
 							log(LogStatus.INFO, "Records have been verified on meeting and call popup",YesNo.No);
@@ -5447,7 +5447,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					{
 						ThreadSleep(2000);
 						log(LogStatus.INFO, "clicked on count of "+userName2,YesNo.No);
-						ArrayList<String> result5=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(icon1, date1, subjectName1, details1, meetingAndCallUser1);
+						ArrayList<String> result5=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(icon1, date1, subjectName1, details1, null, null);
 						if(result5.isEmpty())
 						{
 							log(LogStatus.INFO, "Records have been verified on meeting and call popup",YesNo.No);
@@ -6249,7 +6249,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 */
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 
@@ -6260,7 +6260,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
 		}	
 
-		if (bp.createActivityTimeline(projectName, true, activityType1, basicsection1, advanceSection1, null, null, false, null, null, null, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType1, basicsection1, advanceSection1, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
 
@@ -6438,7 +6438,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, user, subjectName);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, subjectName, null, null);
 						if(result2.isEmpty())
 						{
 							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
@@ -6664,7 +6664,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
 						{
 							log(LogStatus.INFO, "clicked on count of "+contactName,YesNo.No);
-							ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(icon, date, subjectName, details, meetingAndCallUser);
+							ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(icon, date, subjectName, details, null, null);
 							if(result4.isEmpty())
 							{
 								log(LogStatus.INFO, "Records have been verified on meeting and call popup",YesNo.No);
@@ -6957,7 +6957,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, user, subjectName);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, subjectName, null, null);
 						if(result2.isEmpty())
 						{
 							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
@@ -7003,7 +7003,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					{
 						log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
 
-						ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(meetingAndCallIcon, meetingAndCalldate, meetingAndCallsubjectName, meetingAndCalldetails, meetingAndCallUser);
+						ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(meetingAndCallIcon, meetingAndCalldate, meetingAndCallsubjectName, meetingAndCalldetails, null, null);
 						if(result4.isEmpty())
 						{
 							log(LogStatus.INFO, "Records have been verified on meeting and call popup for user "+userName1,YesNo.No);
@@ -7102,7 +7102,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 */
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 		
-		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 
@@ -7113,7 +7113,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
 		}	
 
-		if (bp.createActivityTimeline(projectName, true, activityType1, basicsection1, advanceSection1, null, null, false, null, null, null, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType1, basicsection1, advanceSection1, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
 
@@ -7304,7 +7304,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, user, subjectName);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, subjectName, null, null);
 						if(result2.isEmpty())
 						{
 							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
@@ -7801,7 +7801,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 */
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 
@@ -7812,7 +7812,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
 		}	
 
-		if (bp.createActivityTimeline(projectName, true, activityType1, basicsection1, advanceSection1, null, null, false, null, null, null, null, null)) {
+		if (bp.createActivityTimeline(projectName, true, activityType1, basicsection1, advanceSection1, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
 
@@ -8008,7 +8008,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, user, subjectName);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, subjectName, null, null);
 						if(result2.isEmpty())
 						{
 							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
@@ -8507,7 +8507,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 										log(LogStatus.INFO, "clicked on followup button" , YesNo.No);
 										CommonLib.ThreadSleep(7000);
 										if (BP.updateActivityTimelineRecord(projectName, basicsection, advanceSection, null, null,
-												null)) {
+												null, false, null, null, null, null, null, null)) {
 											log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
 										
 										} else {
@@ -8725,7 +8725,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, user, subjectName);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, subjectName, null, null);
 						if(result2.isEmpty())
 						{
 							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
@@ -10073,7 +10073,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.INFO, "clicked on edit button of "+task1SubjectNameNavigation , YesNo.No);
 								CommonLib.ThreadSleep(10000);
 								if (BP.updateActivityTimelineRecord(projectName, basicsection, advanceSection, null, null,
-										null)) {
+										null, false, null, null, null, null, null, null)) {
 									log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
 									driver.close();
 									driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
@@ -10149,7 +10149,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								CommonLib.ThreadSleep(10000);
 
 								if (BP.updateActivityTimelineRecord(projectName, basicsection1, advanceSection1, null, null,
-										null)) {
+										null, false, null, null, null, null, null, null)) {
 									log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
 									driver.close();
 									driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
@@ -10360,7 +10360,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, user, subjectName);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, subjectName, null, null);
 						if(result2.isEmpty())
 						{
 							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
@@ -10788,7 +10788,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, user, subjectName);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, subjectName, null, null);
 						if(result2.isEmpty())
 						{
 							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
@@ -11973,7 +11973,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			log(LogStatus.INFO,"Able to click on Calendar/Event Link",YesNo.No);
 
 			refresh(driver);
-			if (bp.updateActivityTimelineRecord(projectName, basicsection, advanceSection, null, null,null)) {
+			if (bp.updateActivityTimelineRecord(projectName, basicsection, advanceSection, null, null,null, false, null, null, null, null, null, null)) {
 				log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 				sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
 

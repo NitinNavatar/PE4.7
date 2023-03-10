@@ -14233,7 +14233,7 @@ public class OldSmokeTestCases extends BaseLib {
 		String[][] basic = {{ActivityRelatedLabel.Subject.toString(),Smoke_NewTask1Subject},{excelLabel.Related_To.toString(),contactName}};
 		String task = Smoke_NewTask1Subject;
 
-		if (home.createActivityTimeline("", true, NewInteractions_DefaultValues.Task.toString(), basic, new String[][] {{"Due Date Only",todaysDate}}, null, null, false, null, null, null, null, null)) {
+		if (home.createActivityTimeline("", true, NewInteractions_DefaultValues.Task.toString(), basic, new String[][] {{"Due Date Only",todaysDate}}, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.INFO,"Able to create task : "+task,YesNo.No);
 			
 		} else {
@@ -14248,7 +14248,7 @@ public class OldSmokeTestCases extends BaseLib {
 		String[][] basicCall= {{excelLabel.Subject.toString(),task},{excelLabel.Related_To.toString(),contactName},{excelLabel.Related_To.toString(),Smoke_Fund1}};
 		String[][] advanceCall= {{"Due Date Only",startDate}};
 		
-		if (home.createActivityTimeline("", true, NewInteractions_DefaultValues.Call.toString(), basicCall,advanceCall , null, null, false, null, null, null, null, null)) {
+		if (home.createActivityTimeline("", true, NewInteractions_DefaultValues.Call.toString(), basicCall,advanceCall , null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.INFO,"Able to create call : "+task,YesNo.No);
 			
 		} else {
@@ -14926,7 +14926,7 @@ public class OldSmokeTestCases extends BaseLib {
 			
 			String[][] basic = {{ActivityRelatedLabel.Subject.toString(),Smoke_NewTask2Subject},{excelLabel.Related_To.toString(),contactName}};
 
-			if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Task.toString(), basic, new String[][] {{"Due Date Only",todaysDate}}, null, null, false, null, null, null, null, null)) {
+			if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Task.toString(), basic, new String[][] {{"Due Date Only",todaysDate}}, null, null, false, null, null, null, null, null, null)) {
 				log(LogStatus.INFO,"Able to create task : "+task,YesNo.No);
 				
 			} else {
@@ -14941,7 +14941,7 @@ public class OldSmokeTestCases extends BaseLib {
 			String[][] basicCall= {{excelLabel.Subject.toString(),task},{excelLabel.Related_To.toString(),contactName},{excelLabel.Related_To.toString(),Smoke_Fund2}};
 			String[][] advanceCall= {{"Due Date Only",startDate}};
 			
-			if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Call.toString(), basicCall,advanceCall , null, null, false, null, null, null, null, null)) {
+			if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Call.toString(), basicCall,advanceCall , null, null, false, null, null, null, null, null, null)) {
 				log(LogStatus.INFO,"Able to create call : "+task,YesNo.No);
 				
 			} else {
