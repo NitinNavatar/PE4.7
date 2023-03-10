@@ -17107,8 +17107,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			result.add(" Popup is not open on the same page");
 		}
 
-		// click(driver, crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of
-		// PopUp", action.SCROLLANDBOOLEAN);
+		 clickUsingJavaScript(driver, crossIconButtonInNotePopUp(20), "Clicked on Cross Icon ofPopUp", action.SCROLLANDBOOLEAN);
 
 		return result;
 	}
