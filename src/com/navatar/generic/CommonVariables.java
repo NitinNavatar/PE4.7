@@ -1968,7 +1968,7 @@ public class CommonVariables {
 		 	
 		 	public static String AMNNR_Subject55, AMNNR_Notes55, AMNNR_RelatedTo55, AMNNR_Contact5;
 		 	
-		 	public static String AMNNR_TaskLabel1, AMNNR_TaskLabel2, AMNNR_TaskLabel3, AMNNR_TaskLabel4, AMNNR_TaskLabel5, AMNNR_TaskLabel6, AMNNR_TaskLabel7;
+		 	public static String AMNNR_TaskLabel1, AMNNR_TaskLabel2, AMNNR_TaskLabel3, AMNNR_TaskLabel4, AMNNR_TaskLabel5, AMNNR_TaskLabel6, AMNNR_TaskLabel7, AMNNR_TaskLabel8;
 		 	public static String AMNNR_CallLabel1, AMNNR_CallLabel2, AMNNR_CallLabel3, AMNNR_CallLabel4, AMNNR_CallLabel5;
 	 	
 		 	
@@ -10408,6 +10408,7 @@ public class CommonVariables {
     			 	AMNNR_TaskLabel5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel005", excelLabel.Field_Label);	 	
     			 	AMNNR_TaskLabel6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel006", excelLabel.Field_Label);	 	
     			 	AMNNR_TaskLabel7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel007", excelLabel.Field_Label);
+    			 	AMNNR_TaskLabel8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel008", excelLabel.Field_Label);
     			 	
     			 		 	
     			 	AMNNR_CallLabel1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_CallLabel001", excelLabel.Field_Label);	

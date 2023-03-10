@@ -655,7 +655,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", "-None-" } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "-None-" } };
 
 		String[][] task1TaskSection = { { AMNNR_TaskLabel1, taskSectionSubject },
 				{ AMNNR_TaskLabel7, crmUser1FirstName + " " + crmUser1LastName },
@@ -13836,7 +13836,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel3, relatedTo } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", classification } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, classification } };
 
 		String task1ButtonName = "Create Task";
 		String recordName = "Sumo Logic";
@@ -13903,7 +13903,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", classification } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, classification } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
@@ -14056,7 +14056,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyBeforeTagging } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", classification } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, classification } };
 		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
 				task1BasicSectionVerificationForDetailsSection, task1AdvancedSection };
 
@@ -15097,7 +15097,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel3, relatedTo } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", "B" } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "B" } };
 
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
@@ -15327,7 +15327,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel3, relatedTo } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", "C" } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "C" } };
 
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
@@ -15537,7 +15537,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel3, relatedTo } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", "A" } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
 
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
@@ -15802,7 +15802,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel3, relatedTo } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", "A" } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
 
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
@@ -16002,7 +16002,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel3, relatedTo } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", "A" } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
 
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
@@ -16262,7 +16262,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel3, relatedTo } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", "C" } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "C" } };
 
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
@@ -16401,7 +16401,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel3, relatedTo } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", "A" } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
 
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
@@ -16543,7 +16543,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel3, relatedTo } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", "A" } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
 
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
@@ -16784,7 +16784,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel3, relatedTo } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", "B" } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "B" } };
 
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
@@ -17000,7 +17000,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel3, relatedTo } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", "A" } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
 
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
@@ -17284,7 +17284,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel3, relatedTo } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", "A" } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
 
 		String updatedRelatedTo = "smith11<break>smith12";
 
@@ -17396,7 +17396,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 	 * 
 	 * String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate },
 	 * { AMNNR_TaskLabel5, status }, { AMNNR_TaskLabel6, priority }, {
-	 * "Classification", "A" } };
+	 * AMNNR_TaskLabel8, "A" } };
 	 * 
 	 * String updatedRelatedTo = "smith11<break>smith12";
 	 * 
@@ -17505,7 +17505,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel3, relatedTo } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", "A" } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
 
 		String[] SuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
 		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
@@ -17919,7 +17919,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel3, relatedTo } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", "B" } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "B" } };
 
 		String[] SuggestedTags = "Vitara Deal<break>FCR 2".split("<break>", -1);
 		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
@@ -17993,7 +17993,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", "C" } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "C" } };
 
 		String[] SuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
 		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
@@ -18232,7 +18232,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", "A" } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
 
 		String[] SuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
 		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
@@ -18493,7 +18493,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", "B" } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "B" } };
 
 		String[] SuggestedTags = null;
 		String[][] createNewRecordPopUp = { "Ignore".split("<break>") };
@@ -18563,7 +18563,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", "B" } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "B" } };
 
 		String[] SuggestedTags = "Mutual Fund<break>Ispro Deal<break>Litz<break>Maxtra<break>FCR 3<break>Theme A<break>Theme B<break>Theme C"
 				.split("<break>", -1);
@@ -18724,7 +18724,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", "A" } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
 
 		String[][] followUptask1 = { { AMNNR_TaskLabel1, followUptask1SubjectName },
 				{ AMNNR_TaskLabel5, followUpStatus }, { AMNNR_TaskLabel4, followUpgetAdvanceDueDate } };
@@ -18733,7 +18733,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
 		String[][] followUptask1AdvancedSectionVerification = { { AMNNR_TaskLabel4, followUpgetAdvanceDueDate },
-				{ AMNNR_TaskLabel5, followUpStatus }, { AMNNR_TaskLabel6, priority }, { "Classification", "A" } };
+				{ AMNNR_TaskLabel5, followUpStatus }, { AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
 
 		String[] SuggestedTags = "Mutual Fund<break>Ispro Deal<break>Litz<break>Maxtra<break>FCR 3<break>Theme A<break>Theme B<break>Theme C<break>Golden Ret<break>Smuklin"
 				.split("<break>", -1);
@@ -18983,7 +18983,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { "Classification", "C" } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "C" } };
 
 		String[][] followUptask1 = null;
 
