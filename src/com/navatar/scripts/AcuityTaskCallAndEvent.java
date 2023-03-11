@@ -31,6 +31,7 @@ import com.navatar.generic.EnumConstants.Environment;
 import com.navatar.generic.EnumConstants.IconType;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.TabName;
+import com.navatar.generic.EnumConstants.TaggedName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
@@ -15229,8 +15230,1372 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	}
 	
 	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc072_VerifyHighligtedFirmOnDeclineDealStageOnCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord1;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm1.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyNotHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead"+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead"+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
 	
 	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc073_VerifyHighligtedFirmOnDeclineDealStageOnAdvisorRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord5;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm2.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyNotHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead. "+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc074_VerifyHighligtedFirmOnDeclineDealStageOnLendorRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord7;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm2.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyNotHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead. "+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc075_VerifyHighligtedFirmOnDeclineDealStageOnIntermediaryRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord9;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm4.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyNotHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead. "+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc076_VerifyHighligtedFirmOnDeclineDealStageOnInstitutionRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord3;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm3.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyNotHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead. "+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc077_VerifyHighligtedFirmOnDeclineDealStageOnPortfolioCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord11;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm2.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyNotHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead. "+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc077_VerifyHighligtedFirmOnDeclineDealStageOnPrivateEquityRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord13;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm2.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyNotHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead. "+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc078_VerifyHighligtedFirmOnDeclineDealStageOnContactRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Con1;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm1.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, tabObj2)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyNotHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead. "+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj2, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc079_VerifyHighligtedFirmOnDeclineDealStageOnDealRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Deal1;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm1.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, tabObj4)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyNotHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead. "+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc080_VerifyHighligtedFirmOnDeclineDealStageOnFundraisingRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fundraising1;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm2.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyNotHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead. "+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc081_VerifyHighligtedFirmOnDeclineDealStageOnFundRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fund1;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm2.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, tabObj3)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " +tabObj3, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyNotHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead. "+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj3, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj3);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc082_ChangeDealStageToDealRecieved(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		FundsPageBusinessLayer fb=new FundsPageBusinessLayer(driver);
+		String[] dealName=ATCE_Deal3.split("<break>");
+		String[] dealStage=ATCE_DealStage2.split("<break>");
+		
+	
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if(dealName.length==dealStage.length)
+		{
+		for(int i=0; i<dealName.length; i++)
+		{
+			if (lp.clickOnTab(projectName, tabObj4)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+						dealName[i], 30)) {
+					log(LogStatus.INFO, dealName[i] + " reocrd has been open", YesNo.No);
+					
+					if(fb.changeStage(projectName, dealStage[i],20))
+					{
+						log(LogStatus.INFO,"Deal Stage "+dealStage[i]+" has been changed of record "+dealName[i], YesNo.No);	
+					}
+					else
+					{
+						log(LogStatus.ERROR,"Deal Stage "+dealStage[i]+" is not changed of record "+dealName[i], YesNo.No);
+						sa.assertTrue(false,  "Deal Stage "+dealStage[i]+" is not changed of record "+dealName[i]);
+					}				
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+dealName[i], YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+dealName[i]);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+		}
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc083_VerifyHighligtedFirmOnDealRecievedDealStageOnCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord1;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm1.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead"+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead"+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc084_VerifyHighligtedFirmOnDealRecievedDealStageOnAdvisorRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord5;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm2.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead. "+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc085_VerifyHighligtedFirmOnDealRecievedDealStageOnLendorRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord7;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm2.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead. "+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc086_VerifyHighligtedFirmOnDealRecievedDealStageOnIntermediaryRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord9;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm4.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead. "+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc087_VerifyHighligtedFirmOnDealRecievedDealStageOnInstitutionRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord3;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm3.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead. "+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc088_VerifyHighligtedFirmOnDealRecievedDealStageOnPortfolioCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord11;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm2.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead. "+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc089_VerifyHighligtedFirmOnDealRecievedDealStageOnPrivateEquityRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord13;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm2.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead. "+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc090_VerifyHighligtedFirmOnDealRecievedDealStageOnContactRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Con1;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm5.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, tabObj2)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead. "+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj2, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc091_VerifyHighligtedFirmOnDealRecievedDealStageOnDealRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Deal1;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm1.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, tabObj4)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead. "+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc092_VerifyHighligtedFirmOnDealRecievedDealStageOnFundraisingRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fundraising1;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm2.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead. "+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc093_VerifyHighligtedFirmOnDealRecievedDealStageOnFundRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fund1;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm2.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, tabObj3)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " +tabObj3, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead. "+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj3, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj3);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc094_VerifyHighligtedFirmOnDealRecievedDealStageOnCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord1;
+		
+		String[] highlightedFirm=ATCE_HighlightedFirm1.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms, highlightedFirm);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The Firms records are not highligted on deal stage of Decline/Dead", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The Firms records are highligted on deal stage of Decline/Dead"+result, YesNo.No);
+							sa.assertTrue(false, "The Firms records are highligted on deal stage of Decline/Dead"+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
 }
 
 

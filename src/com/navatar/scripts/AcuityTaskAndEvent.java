@@ -4620,7 +4620,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The record name and Time reference are not verifed "+result);
 					}
 
-					ArrayList<String> result5=bp.verifyHighlightedCompanyNameOnCompanyTaggedSection(TaggedName.Firms,highlightedCompany);
+					ArrayList<String> result5=bp.verifyHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms,highlightedCompany);
 					if(result5.isEmpty())
 					{
 						log(LogStatus.INFO, "The highlighted firm record have been verifid on Tagged section", YesNo.No);
@@ -5330,7 +5330,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The record name and Time reference are not verifed "+result);
 					}
 
-					ArrayList<String> result7=bp.verifyHighlightedCompanyNameOnCompanyTaggedSection(TaggedName.Firms ,highlightedCompany);
+					ArrayList<String> result7=bp.verifyHighlightedFirmNameOnFirmTaggedSection(TaggedName.Firms ,highlightedCompany);
 					if(result7.isEmpty())
 					{
 						log(LogStatus.INFO, "The highlighted firm record have been verifid on Tagged section", YesNo.No);

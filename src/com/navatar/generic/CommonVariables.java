@@ -1506,9 +1506,9 @@ public class CommonVariables {
 		public static String ATCE_Con1,ATCE_Con2,ATCE_Con3,ATCE_Con4,ATCE_Con5,ATCE_Con6,ATCE_Con7;
 		
 		//Deal
-		public static String ATCE_Deal1,ATCE_Deal2;
+		public static String ATCE_Deal1,ATCE_Deal2,ATCE_Deal3;
 
-		public static String ATCE_DealStage1;
+		public static String ATCE_DealStage1,ATCE_DealStage2;
 		
 		// Fund
 		public static String ATCE_Fund1;
@@ -1598,6 +1598,9 @@ public class CommonVariables {
 	    public static String ATCE_ConnectionDeal1,ATCE_ConnectionDeal2,ATCE_ConnectionDeal3;
 	    public static String ATCE_ConnectionMeetingAndCall1,ATCE_ConnectionMeetingAndCall2,ATCE_ConnectionMeetingAndCall3;
 	    public static String ATCE_ConnectionEmail1,ATCE_ConnectionEmail2,ATCE_ConnectionEmail3;
+	    
+	    /************ Hightlighed Firm *************/
+	    public static String ATCE_HighlightedFirm1,ATCE_HighlightedFirm2,ATCE_HighlightedFirm3,ATCE_HighlightedFirm4,ATCE_HighlightedFirm5;
 	    
 	    
 	    
@@ -8573,9 +8576,11 @@ public class CommonVariables {
 					 /************ Deal ***********/
 					 ATCE_Deal1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "ATCE_Deal1", excelLabel.Deal_Name);
 					 ATCE_Deal2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "ATCE_Deal2", excelLabel.Deal_Name);
-					
-					 ATCE_DealStage1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "ATCE_Deal2", excelLabel.Stage);
+					 ATCE_Deal3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "ATCE_Deal3", excelLabel.Deal_Name);
 						
+					 ATCE_DealStage1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "ATCE_Deal2", excelLabel.Stage);
+					 ATCE_DealStage2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "ATCE_Deal3", excelLabel.Stage);
+							
 					 
 					 /*************Fund **********/
 					 ATCE_Fund1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "ATCE_Fund01", excelLabel.Fund_Name);
@@ -9186,6 +9191,11 @@ public class CommonVariables {
 					 ATCE_ConnectionEmail2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.Connection_Email);
 					 ATCE_ConnectionEmail3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE003", excelLabel.Connection_Email);
 					 
+					 ATCE_HighlightedFirm1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.Highlighted_Firm);
+					 ATCE_HighlightedFirm2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.Highlighted_Firm);
+					 ATCE_HighlightedFirm3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE003", excelLabel.Highlighted_Firm);
+					 ATCE_HighlightedFirm4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE004", excelLabel.Highlighted_Firm);
+					 ATCE_HighlightedFirm5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE005", excelLabel.Highlighted_Firm);
 					 
 					 
 			 		try {

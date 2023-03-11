@@ -21854,7 +21854,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	}
 
-	public ArrayList<String> verifyHighlightedCompanyNameOnCompanyTaggedSection(TaggedName tabName,
+	public ArrayList<String> verifyHighlightedFirmNameOnFirmTaggedSection(TaggedName tabName,
 			String[] highlightedRecord) {
 		ArrayList<String> result = new ArrayList<String>();
 		if (click(driver, getTaggedRecordName(tabName.toString(), 30), tabName.toString() + " tab",
@@ -21862,7 +21862,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			log(LogStatus.INFO, "Clicked on " + tabName.toString() + " tab name", YesNo.No);
 
 			for (int i = 0; i < highlightedRecord.length; i++) {
-				if (getHighlightedCompanyName(highlightedRecord[i], 15) != null) {
+				if (getHighlightedCompanyName(highlightedRecord[i], 5) != null) {
 					log(LogStatus.INFO, highlightedRecord[i] + " is highlighted in " + tabName.toString() + " list",
 							YesNo.No);
 				} else {
@@ -21877,6 +21877,32 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return result;
 	}
+	
+	
+	public ArrayList<String> verifyNotHighlightedFirmNameOnFirmTaggedSection(TaggedName tabName,
+			String[] highlightedRecord) {
+		ArrayList<String> result = new ArrayList<String>();
+		if (click(driver, getTaggedRecordName(tabName.toString(), 30), tabName.toString() + " tab",
+				action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on " + tabName.toString() + " tab name", YesNo.No);
+
+			for (int i = 0; i < highlightedRecord.length; i++) {
+				if (getHighlightedCompanyName(highlightedRecord[i], 5) == null) {
+					log(LogStatus.INFO, highlightedRecord[i] + " is not highlighted in " + tabName.toString() + " list",
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							highlightedRecord[i] + " is highlighted in " + tabName.toString() + " list", YesNo.No);
+					result.add(highlightedRecord[i] + " is  highlighted in " + tabName.toString() + " list");
+				}
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + tabName.toString() + " tab name", YesNo.No);
+			result.add("Not able to click on " + tabName.toString() + " tab name");
+		}
+		return result;
+	}
+	
 
 	public boolean verifySubjectOfInteractionEitherOnCardOrInViewAllPopUp(String subjectName) {
 		boolean flag = false;
