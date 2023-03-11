@@ -36,6 +36,7 @@ import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
+import com.navatar.pageObjects.FundsPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
@@ -5444,8 +5445,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
-	
+		
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc031_VerifyTaskCallFunctionalityOnDealRecordType(String projectName) {
@@ -8113,6 +8113,74 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -8389,6 +8457,74 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -8665,6 +8801,74 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -8942,6 +9146,74 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -9219,6 +9491,73 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -9493,9 +9832,74 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							else
 							{
 								log(LogStatus.FAIL,"The details on popup of subject "+taskSubject1+" are not verified. "+result3,YesNo.No);
-								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
-								
+								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);	
 							}
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -9772,6 +10176,73 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -9996,6 +10467,72 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -10170,6 +10707,73 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -10344,6 +10948,72 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -10522,6 +11192,72 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -10680,6 +11416,73 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -10962,6 +11765,73 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -11238,6 +12108,73 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -11514,6 +12451,73 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -11791,6 +12795,73 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -12068,6 +13139,73 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -12280,7 +13418,11 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							{
 								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
 								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
-							}		
+							}	
+							
+							
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -12345,6 +13487,74 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -12621,6 +13831,73 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -12845,6 +14122,73 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -13019,6 +14363,73 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -13193,6 +14604,73 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -13371,6 +14849,73 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -13529,6 +15074,73 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,"The details on popup of subject "+taskSubject1+" are not verified. "+result3);
 								
 							}
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject, 20), "Subject name "+taskSubject))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject, 20), "Edit button of popup of subject name "+taskSubject))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+									if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject);
+							}
+
+							
+							
+							refresh(driver);
+							ThreadSleep(3000);
+							String currentUrl1=driver.getCurrentUrl();
+							if(CommonLib.clickUsingJavaScript(driver, bp.subjectOfInteractionPage(taskSubject1, 20), "Subject name "+taskSubject1))
+							{
+								log(LogStatus.INFO,"Clicked on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+								{
+									log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+
+									ArrayList<String> NotesPopUpPrefilledNegativeResult1 = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl1, basicsection1,advanceSection1, null);
+									if (NotesPopUpPrefilledNegativeResult1.isEmpty()) {
+										log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+									} else {
+										log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1,YesNo.No);
+										sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult1);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to clicked on edit button of subject "+taskSubject1,YesNo.No);
+									sa.assertTrue(false, "Not able to clicked on edit button of subject "+taskSubject1);
+								}
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
+							}
+
+							
+							
 							driver.close();
 							driver.switchTo().window(parentID);
 						}
@@ -13562,6 +15174,60 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc071_ChangeDealStageToDecline(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		FundsPageBusinessLayer fb=new FundsPageBusinessLayer(driver);
+		String[] dealName=ATCE_Deal2.split("<break>");
+		String[] dealStage=ATCE_DealStage1.split("<break>");
+		
+	
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if(dealName.length==dealStage.length)
+		{
+		for(int i=0; i<dealName.length; i++)
+		{
+			if (lp.clickOnTab(projectName, tabObj4)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+						dealName[i], 30)) {
+					log(LogStatus.INFO, dealName[i] + " reocrd has been open", YesNo.No);
+					
+					if(fb.changeStage(projectName, dealStage[i],20))
+					{
+						log(LogStatus.INFO,"Deal Stage "+dealStage[i]+" has been changed of record "+dealName[i], YesNo.No);	
+					}
+					else
+					{
+						log(LogStatus.ERROR,"Deal Stage "+dealStage[i]+" is not changed of record "+dealName[i], YesNo.No);
+						sa.assertTrue(false,  "Deal Stage "+dealStage[i]+" is not changed of record "+dealName[i]);
+					}				
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+dealName[i], YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+dealName[i]);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+		}
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
 	
 	
 	
