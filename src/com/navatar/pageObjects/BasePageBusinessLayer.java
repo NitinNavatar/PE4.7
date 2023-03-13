@@ -19946,7 +19946,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
-	public ArrayList<String> verifyRecordsonInteractionsViewAllPopup(String[] icon, String[] date, String[] subject,
+	public ArrayList<String> verifyRecordsonInteractionsViewAllPopup(String recordName, String[] icon, String[] date, String[] subject,
 			String[] details, String[] correspondenceHeader, String[][] participants, String[][] tags) {
 		String xPath;
 		WebElement ele;
@@ -19954,6 +19954,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ArrayList<String> result = new ArrayList<String>();
 		String parentId = switchToWindowOpenNextToParentWindow(driver);
 		if (parentId != null) {
+			
+			if(headingOfInteractionPage(recordName,20)!=null)
+			{
+				log(LogStatus.INFO,recordName+" interaction page has been open ",YesNo.No);
 			if (correspondenceHeader != null && correspondenceHeader.length != 0) {
 				for (int i = 0; i < correspondenceHeader.length; i++) {
 
@@ -20202,6 +20206,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						YesNo.No);
 				result.add(
 						"Either correspondence is null or Empty. Please provide data to verify data on interaction popup");
+			}
+			}
+			else
+			{
+				log(LogStatus.ERROR,recordName+" interaction page is not open ",YesNo.No);
+				result.add(recordName+" interaction page is not open ");
 			}
 			driver.close();
 			driver.switchTo().window(parentId);
@@ -24373,6 +24383,139 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		else
 			return false;
 
+	}
+	
+	
+	public ArrayList<String> verifyRedirectionFromParticipantAndTagPopup(String[] participantRecord, String[] participantRecordObjectName, String[] tagRecord, String[] tagRecordObjectname)
+	{
+		ArrayList<String> result=new ArrayList<String>();
+		if(participantRecord!=null && participantRecordObjectName!=null)
+		{
+		if(participantRecord.length==participantRecordObjectName.length)
+		{
+			
+			for(int i=0; i<participantRecord.length; i++)
+			{
+			    if(clickUsingJavaScript(driver, getRecordofInteractionPage(participantRecord[i],15), participantRecord[i]+" on participant popup"))
+			    {
+			    	log(LogStatus.INFO, "Clicked on Record: " + participantRecord[i] + " on participant popup",
+							YesNo.No);
+			    	String parentID=switchToWindowOpenNextToParentWindow(driver);
+			    	if(getObjectPageName(participantRecordObjectName[i],15)!=null && getRecordNameOnPage(participantRecord[i],15)!=null)
+			    	{
+			    		log(LogStatus.INFO, "The redirection of record : "+participantRecord[i]+", Object: "+participantRecordObjectName[i]+" is working properly.",YesNo.No);
+			    	}
+			    	else
+			    	{
+			    		log(LogStatus.ERROR, "The redirection of record : "+participantRecord[i]+", Object: "+participantRecordObjectName[i]+" is not working properly.",YesNo.No);
+			    		result.add("The redirection of record : "+participantRecord[i]+", Object: "+participantRecordObjectName[i]+" is not working properly.");
+			    	}
+			    	driver.close();
+			    	driver.switchTo().window(parentID);
+			    }
+			    else
+			    {
+			    	log(LogStatus.ERROR, "Not able to click on Record: " + participantRecord[i] + " on participant popup",
+							YesNo.No);
+			    	result.add("Not able to click on Record: " + participantRecord[i] + " on participant popup");
+			    }
+			}
+			
+			clickUsingJavaScript(driver, getCloseIconOfParticipantPopup(20), "close icon of participant tag popup");
+		}
+		else
+		{
+			log(LogStatus.ERROR, "The length of participant record and participant object name are not equal",YesNo.Yes);
+			result.add("The length of participant record and participant object name are not equal");
+		}
+		}
+		
+		if(tagRecord!=null && tagRecordObjectname!=null)
+		{
+			if(tagRecord.length == tagRecordObjectname.length)
+			{
+				for(int i=0; i<tagRecord.length; i++)
+				{
+				 if(clickUsingJavaScript(driver, getRecordofTagPopup(tagRecord[i],15), tagRecord[i]+" on Tags popup"))
+				    {
+				    	log(LogStatus.INFO, "Clicked on Record: " + tagRecord[i] + " on Tags popup",
+								YesNo.No);
+				    	String parentID=switchToWindowOpenNextToParentWindow(driver);
+				    	if(getObjectPageName(tagRecordObjectname[i],15)!=null && getRecordNameOnPage(tagRecord[i],15)!=null)
+				    	{
+				    		log(LogStatus.INFO, "The redirection of record : "+tagRecord[i]+", Object: "+tagRecordObjectname[i]+" is working properly.",YesNo.No);
+				    	}
+				    	else
+				    	{
+				    		log(LogStatus.ERROR, "The redirection of record : "+tagRecord[i]+", Object: "+tagRecordObjectname[i]+" is not working properly.",YesNo.No);
+				    		result.add("The redirection of record : "+tagRecord[i]+", Object: "+tagRecordObjectname[i]+" is not working properly.");
+				    	}
+				    	driver.close();
+				    	driver.switchTo().window(parentID);
+				    }
+				    else
+				    {
+				    	log(LogStatus.ERROR, "Not able to click on Record: " + tagRecord[i] + " on Tags popup",
+								YesNo.No);
+				    	result.add("Not able to click on Record: " + tagRecord[i] + " on Tags popup");
+				    }
+				}
+				clickUsingJavaScript(driver, getCloseIconOfTagPopup(20), "close icon of participant tag popup");
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The length of tag record and tag object name are not equal",YesNo.Yes);
+				result.add("The length of tag record and tag object name are not equal");	
+			}
+		}
+		
+		return result;
+		
+	}
+	
+	public ArrayList<String> verifyRedirectionOfActivityPopup(String[] recordName, String[] objectName)
+	{
+		ArrayList<String> result=new ArrayList<String>();
+		if(recordName!=null && objectName!=null)
+		{
+			if(recordName.length==objectName.length)
+			{
+				
+				for(int i=0; i<recordName.length; i++)
+				{
+				   if(clickUsingJavaScript(driver, getTagRecordNameOnActivityPopup(recordName[i],15), "record "+recordName[i]+" on popup"))
+				   {
+					   log(LogStatus.INFO, "Clicked on Record: " + recordName[i] + " on popup",YesNo.No);
+					   
+					   String parentID=switchToWindowOpenNextToParentWindow(driver);
+				    	if(getObjectPageName(objectName[i],15)!=null && getRecordNameOnPage(recordName[i],15)!=null)
+				    	{
+				    		log(LogStatus.INFO, "The redirection of record : "+recordName[i]+", Object: "+objectName[i]+" is working properly.",YesNo.No);
+				    	}
+				    	else
+				    	{
+				    		log(LogStatus.ERROR, "The redirection of record : "+recordName[i]+", Object: "+objectName[i]+" is not working properly.",YesNo.No);
+				    		result.add("The redirection of record : "+recordName[i]+", Object: "+objectName[i]+" is not working properly.");
+				    	}
+				    	driver.close();
+				    	driver.switchTo().window(parentID);
+					   
+				   }
+				   else
+				   {
+					   log(LogStatus.ERROR, "Not able to click on Record: " + recordName[i] + " on popup",YesNo.No);
+					   result.add("Not able to click on Record: " + recordName[i] + " on popup");
+				   }
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The length of record name and object name are not equal",YesNo.No);
+				   result.add("The length of record name and object name are not equal");
+			}
+		}
+		return result;
+		
 	}
 
 }

@@ -880,7 +880,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
 
-							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType, date, subjectName, details, subjectName, null, null);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType, date, subjectName, details, subjectName, null, null);
 							if(result2.isEmpty())
 							{
 								log(LogStatus.INFO, "All records on Interaction card have been verified for "+companyTagName+" record", YesNo.No);
@@ -945,7 +945,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
 
-							ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(iconType, date, subjectName, details, subjectName, null, null);
+							ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType, date, subjectName, details, subjectName, null, null);
 							if(result3.isEmpty())
 							{
 								log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
@@ -1010,7 +1010,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, subjectName, null, null);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType,date, subjectName, details, subjectName, null, null);
 						if(result2.isEmpty())
 						{
 							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
@@ -1578,7 +1578,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
 
-							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType, date, subjectName, details, subjectName, null, null);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType, date, subjectName, details, subjectName, null, null);
 							if(result2.isEmpty())
 							{
 								log(LogStatus.INFO, "All records on Interaction card have been verified for "+companyTagName+" record", YesNo.No);
@@ -1645,7 +1645,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
 
-							ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(iconType, date, subjectName, details, subjectName, null, null);
+							ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType, date, subjectName, details, subjectName, null, null);
 							if(result3.isEmpty())
 							{
 								log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
@@ -1709,7 +1709,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, subjectName, null, null);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType,date, subjectName, details, subjectName, null, null);
 						if(result2.isEmpty())
 						{
 							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
@@ -2386,7 +2386,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, subjectName, null, null);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType,date, subjectName, details, subjectName, null, null);
 						if(result2.isEmpty())
 						{
 							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
@@ -2485,7 +2485,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, subjectName, null, null);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType,date, subjectName, details, subjectName, null, null);
 						if(result2.isEmpty())
 						{
 							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
@@ -2826,7 +2826,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, subjectName, null, null);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType,date, subjectName, details, subjectName, null, null);
 						if(result2.isEmpty())
 						{
 							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
@@ -2935,7 +2935,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType,date, subjectName, details, subjectName, null, null);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType,date, subjectName, details, subjectName, null, null);
 						if(result2.isEmpty())
 						{
 							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
