@@ -20087,7 +20087,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void AcuityMNNRTc085_VerifyTheUIOfMeetingNotesPopUpOfCallFromLogACallButtonPlacedOnAcuityTabInteractionSection(
+	public void AcuityMNNRAMNNR_FirmLegalName15_VerifyTheUIOfMeetingNotesPopUpOfCallFromLogACallButtonPlacedOnAcuityTabInteractionSection(
 			String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -20703,7 +20703,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				AMNNR_CreateNewRecordPopUp145.split("<break>", -1) };
 		String firmRecord1 = AMNNR_CreateNewRecordPopUp143.split("<break>", -1)[1];
 		String firmRecord2 = AMNNR_CreateNewRecordPopUp145.split("<break>", -1)[1];
-		String firmRecord3ShouldNotThere = AMNNR_FirmLegalName14;
+		String firmRecord3ShouldNotThere = AMNNR_FirmLegalName16;
 		String contactRecord = AMNNR_CreateNewRecordPopUp144.split("<break>", -1)[1];
 		String subTabName = "Details";
 
@@ -23237,7 +23237,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String task1ButtonName = AMNNR_ActivityType142;
-		String recordName = AMNNR_FirmLegalName13;
+		String recordName = AMNNR_FirmLegalName15;
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
 
 		String getAdvanceDueDate = AdvanceDueDate;
@@ -23406,7 +23406,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String task1ButtonName = AMNNR_ActivityType142;
-		String recordName = AMNNR_FirmLegalName13;
+		String recordName = AMNNR_FirmLegalName15;
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
 
 		String getAdvanceDueDate = AdvanceDueDate;
@@ -23687,7 +23687,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String task1ButtonName = AMNNR_ActivityType142;
-		String recordName = AMNNR_FirmLegalName13;
+		String recordName = AMNNR_FirmLegalName15;
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
 
 		String getAdvanceDueDate = AdvanceDueDate;
@@ -23951,7 +23951,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String task1ButtonName = AMNNR_ActivityType142;
-		String recordName = AMNNR_FirmLegalName13;
+		String recordName = AMNNR_FirmLegalName15;
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("0"));
 
 		String getAdvanceDueDate = AdvanceDueDate;
@@ -24003,7 +24003,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][][] detailSectionVerifcation = null;
 
 //		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = AMNNR_FirmLegalName13;
+//		String recordName = AMNNR_FirmLegalName15;
 //		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("0"));
 //
 //		String getAdvanceDueDate = AdvanceDueDate;

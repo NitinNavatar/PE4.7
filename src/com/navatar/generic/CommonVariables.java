@@ -2186,6 +2186,8 @@ public class CommonVariables {
 		 	public static String AMNNR_RelatedTo201,AMNNR_Notes201,AMNNR_CreateNewRecordPopUp201,AMNNR_AddContactsToDealTeamPopUp201,AMNNR_AddContactsToFundraisingPopup201;
             
 
+		 	public static String AMNNR_FirmLegalName15,AMNNR_FirmLegalName16;
+		 	
 	    
 	public CommonVariables(Object obj) {
 		//TODO Auto-generated constructor stub
@@ -11742,6 +11744,8 @@ public class CommonVariables {
     			 	AMNNR_AddContactsToDealTeamPopUp201=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity201", excelLabel.AddContactsToDealTeamPopUp);
     			 	AMNNR_AddContactsToFundraisingPopup201=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity201", excelLabel.AddContactsToFundraisingPopup);
     			 	
+    			 	AMNNR_FirmLegalName15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AMNNR_Record015", excelLabel.Legal_Name);
+    				AMNNR_FirmLegalName16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AMNNR_Record016", excelLabel.Legal_Name);
     			 	
     			 	
     			 	try {
