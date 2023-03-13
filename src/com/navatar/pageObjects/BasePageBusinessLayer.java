@@ -784,35 +784,35 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 */
 	public boolean verifyDate(String date, String dateFormat, String typeOfDate) {
 		if (dateFormat == null) {
-			if (date.contains(getDateAccToTimeZone("America/New_York", "M/dd/yyyy"))) {
+			if (date.contains(getDateAccToTimeZone(AmericaLosAngelesTimeZone, "M/dd/yyyy"))) {
 				appLog.info(
-						typeOfDate + " date is verified : " + getDateAccToTimeZone("America/New_York", "M/dd/yyyy"));
+						typeOfDate + " date is verified : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "M/dd/yyyy"));
 				return true;
-			} else if (date.contains(getDateAccToTimeZone("America/New_York", "MM/dd/yyyy"))) {
+			} else if (date.contains(getDateAccToTimeZone(AmericaLosAngelesTimeZone, "MM/dd/yyyy"))) {
 				appLog.info(
-						typeOfDate + " date is verified : " + getDateAccToTimeZone("America/New_York", "MM/dd/yyyy"));
+						typeOfDate + " date is verified : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "MM/dd/yyyy"));
 				return true;
-			} else if (date.contains(getDateAccToTimeZone("America/New_York", "dd/M/yyyy"))) {
+			} else if (date.contains(getDateAccToTimeZone(AmericaLosAngelesTimeZone, "dd/M/yyyy"))) {
 				appLog.info(
-						typeOfDate + " date is verified : " + getDateAccToTimeZone("America/New_York", "dd/M/yyyy"));
+						typeOfDate + " date is verified : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "dd/M/yyyy"));
 				return true;
-			} else if (date.contains(getDateAccToTimeZone("America/New_York", "dd/MM/yyyy"))) {
+			} else if (date.contains(getDateAccToTimeZone(AmericaLosAngelesTimeZone, "dd/MM/yyyy"))) {
 				appLog.info(
-						typeOfDate + " date is verified : " + getDateAccToTimeZone("America/New_York", "dd/MM/yyyy"));
+						typeOfDate + " date is verified : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "dd/MM/yyyy"));
 				return true;
-			} else if (date.contains(getDateAccToTimeZone("America/New_York", "M/d/yyyy"))) {
-				appLog.info(typeOfDate + " date is verified : " + getDateAccToTimeZone("America/New_York", "M/d/yyyy"));
+			} else if (date.contains(getDateAccToTimeZone(AmericaLosAngelesTimeZone, "M/d/yyyy"))) {
+				appLog.info(typeOfDate + " date is verified : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "M/d/yyyy"));
 				return true;
-			} else if (date.contains(getDateAccToTimeZone("America/New_York", "d/M/yyyy"))) {
-				appLog.info(typeOfDate + " date is verified : " + getDateAccToTimeZone("America/New_York", "d/M/yyyy"));
+			} else if (date.contains(getDateAccToTimeZone(AmericaLosAngelesTimeZone, "d/M/yyyy"))) {
+				appLog.info(typeOfDate + " date is verified : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "d/M/yyyy"));
 				return true;
 			} else {
 				appLog.info(typeOfDate + " date is not verified. found result : " + date);
-				appLog.info("Expected Date is : " + getDateAccToTimeZone("America/New_York", "M/dd/yyyy") + " or "
-						+ getDateAccToTimeZone("America/New_York", "MM/dd/yyyy") + " or "
-						+ getDateAccToTimeZone("America/New_York", "dd/M/yyyy") + " or "
-						+ getDateAccToTimeZone("America/New_York", "dd/MM/yyyy") + " or "
-						+ getDateAccToTimeZone("America/New_York", "M/d/yyyy"));
+				appLog.info("Expected Date is : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "M/dd/yyyy") + " or "
+						+ getDateAccToTimeZone(AmericaLosAngelesTimeZone, "MM/dd/yyyy") + " or "
+						+ getDateAccToTimeZone(AmericaLosAngelesTimeZone, "dd/M/yyyy") + " or "
+						+ getDateAccToTimeZone(AmericaLosAngelesTimeZone, "dd/MM/yyyy") + " or "
+						+ getDateAccToTimeZone(AmericaLosAngelesTimeZone, "M/d/yyyy"));
 				return false;
 			}
 		} else {
@@ -11478,7 +11478,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (basicSection != null) {
 
 			for (String[] val : basicSection) {
-				String labelName = val[0];
+				String labelName = val[0].replaceAll("_", " ");
 				String value = val[1];
 
 				if (labelName.contains(excelLabel.Subject.toString())) {
@@ -11527,7 +11527,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 					}
 
-				} else if (labelName.equalsIgnoreCase(excelLabel.Related_To.toString())) {
+				} else if (labelName.equalsIgnoreCase("Related To")) {
 					ArrayList<String> tagList = new ArrayList<String>();
 
 					if (value.contains("<break>")) {
@@ -11612,7 +11612,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 				log(LogStatus.INFO, "clicked on Advanced section", YesNo.No);
 				for (String[] val : advanceSection) {
-					String labelName = val[0];
+					String labelName = val[0].replaceAll("_", " ");
 					String value = val[1];
 					// String fieldType=val[2];
 
@@ -11797,7 +11797,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				log(LogStatus.INFO, "clicked on Tasks section", YesNo.No);
 
 				for (String[] val : taskSection) {
-					String labelName = val[0];
+					String labelName = val[0].replaceAll("_", " ");
 					String value = val[1];
 
 					if (labelName.contains(excelLabel.Subject.toString()) || labelName.contains("Due Date")

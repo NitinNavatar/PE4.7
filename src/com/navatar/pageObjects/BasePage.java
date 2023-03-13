@@ -588,7 +588,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement getCustomTabSaveBtn(String projectName, int timeOut) {
 
-		List<WebElement> eleList = FindElements(driver, "//button[text()='Save' or @name='SaveEdit']", "Save Button");
+		List<WebElement> eleList = FindElements(driver, "//button[@title='Save' or text()='Save'or @name='SaveEdit']", "Save Button");
 
 		for (WebElement webElement : eleList) {
 			webElement = isDisplayed(driver, webElement, "Visibility", 2, "Custom Tab Save Button lightning");
@@ -6237,7 +6237,7 @@ public abstract class BasePage extends BaseLib {
 				"listOfButtons");
 	}
 
-	@FindBy(xpath = "//ul[@class='slds-button-group-list']/li//button[contains(@class,'slds-button_icon-border-filled')]")
+	@FindBy(xpath = "//div[@class='forceVirtualActionMarker forceVirtualAction']//a")
 	private WebElement downArrowButton;
 
 	public WebElement downArrowButton(int timeOut) {
