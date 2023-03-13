@@ -785,35 +785,35 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 */
 	public boolean verifyDate(String date, String dateFormat, String typeOfDate) {
 		if (dateFormat == null) {
-			if (date.contains(getDateAccToTimeZone("America/New_York", "M/dd/yyyy"))) {
+			if (date.contains(getDateAccToTimeZone(AmericaLosAngelesTimeZone, "M/dd/yyyy"))) {
 				appLog.info(
-						typeOfDate + " date is verified : " + getDateAccToTimeZone("America/New_York", "M/dd/yyyy"));
+						typeOfDate + " date is verified : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "M/dd/yyyy"));
 				return true;
-			} else if (date.contains(getDateAccToTimeZone("America/New_York", "MM/dd/yyyy"))) {
+			} else if (date.contains(getDateAccToTimeZone(AmericaLosAngelesTimeZone, "MM/dd/yyyy"))) {
 				appLog.info(
-						typeOfDate + " date is verified : " + getDateAccToTimeZone("America/New_York", "MM/dd/yyyy"));
+						typeOfDate + " date is verified : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "MM/dd/yyyy"));
 				return true;
-			} else if (date.contains(getDateAccToTimeZone("America/New_York", "dd/M/yyyy"))) {
+			} else if (date.contains(getDateAccToTimeZone(AmericaLosAngelesTimeZone, "dd/M/yyyy"))) {
 				appLog.info(
-						typeOfDate + " date is verified : " + getDateAccToTimeZone("America/New_York", "dd/M/yyyy"));
+						typeOfDate + " date is verified : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "dd/M/yyyy"));
 				return true;
-			} else if (date.contains(getDateAccToTimeZone("America/New_York", "dd/MM/yyyy"))) {
+			} else if (date.contains(getDateAccToTimeZone(AmericaLosAngelesTimeZone, "dd/MM/yyyy"))) {
 				appLog.info(
-						typeOfDate + " date is verified : " + getDateAccToTimeZone("America/New_York", "dd/MM/yyyy"));
+						typeOfDate + " date is verified : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "dd/MM/yyyy"));
 				return true;
-			} else if (date.contains(getDateAccToTimeZone("America/New_York", "M/d/yyyy"))) {
-				appLog.info(typeOfDate + " date is verified : " + getDateAccToTimeZone("America/New_York", "M/d/yyyy"));
+			} else if (date.contains(getDateAccToTimeZone(AmericaLosAngelesTimeZone, "M/d/yyyy"))) {
+				appLog.info(typeOfDate + " date is verified : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "M/d/yyyy"));
 				return true;
-			} else if (date.contains(getDateAccToTimeZone("America/New_York", "d/M/yyyy"))) {
-				appLog.info(typeOfDate + " date is verified : " + getDateAccToTimeZone("America/New_York", "d/M/yyyy"));
+			} else if (date.contains(getDateAccToTimeZone(AmericaLosAngelesTimeZone, "d/M/yyyy"))) {
+				appLog.info(typeOfDate + " date is verified : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "d/M/yyyy"));
 				return true;
 			} else {
 				appLog.info(typeOfDate + " date is not verified. found result : " + date);
-				appLog.info("Expected Date is : " + getDateAccToTimeZone("America/New_York", "M/dd/yyyy") + " or "
-						+ getDateAccToTimeZone("America/New_York", "MM/dd/yyyy") + " or "
-						+ getDateAccToTimeZone("America/New_York", "dd/M/yyyy") + " or "
-						+ getDateAccToTimeZone("America/New_York", "dd/MM/yyyy") + " or "
-						+ getDateAccToTimeZone("America/New_York", "M/d/yyyy"));
+				appLog.info("Expected Date is : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "M/dd/yyyy") + " or "
+						+ getDateAccToTimeZone(AmericaLosAngelesTimeZone, "MM/dd/yyyy") + " or "
+						+ getDateAccToTimeZone(AmericaLosAngelesTimeZone, "dd/M/yyyy") + " or "
+						+ getDateAccToTimeZone(AmericaLosAngelesTimeZone, "dd/MM/yyyy") + " or "
+						+ getDateAccToTimeZone(AmericaLosAngelesTimeZone, "M/d/yyyy"));
 				return false;
 			}
 		} else {
@@ -11493,7 +11493,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (basicSection != null) {
 
 			for (String[] val : basicSection) {
-				String labelName = val[0];
+				String labelName = val[0].replaceAll("_", " ");
 				String value = val[1];
 
 				if (labelName.contains(excelLabel.Subject.toString())) {
@@ -11542,7 +11542,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 					}
 
-				} else if (labelName.equalsIgnoreCase(excelLabel.Related_To.toString())) {
+				} else if (labelName.equalsIgnoreCase("Related To")) {
 					ArrayList<String> tagList = new ArrayList<String>();
 
 					if (value.contains("<break>")) {
@@ -11627,7 +11627,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 				log(LogStatus.INFO, "clicked on Advanced section", YesNo.No);
 				for (String[] val : advanceSection) {
-					String labelName = val[0];
+					String labelName = val[0].replaceAll("_", " ");
 					String value = val[1];
 					// String fieldType=val[2];
 
@@ -11812,7 +11812,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				log(LogStatus.INFO, "clicked on Tasks section", YesNo.No);
 
 				for (String[] val : taskSection) {
-					String labelName = val[0];
+					String labelName = val[0].replaceAll("_", " ");
 					String value = val[1];
 
 					if (labelName.contains(excelLabel.Subject.toString()) || labelName.contains("Due Date")
@@ -19971,7 +19971,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
-	public ArrayList<String> verifyRecordsonInteractionsViewAllPopup(String[] icon, String[] date, String[] subject,
+	public ArrayList<String> verifyRecordsonInteractionsViewAllPopup(String recordName, String[] icon, String[] date, String[] subject,
 			String[] details, String[] correspondenceHeader, String[][] participants, String[][] tags) {
 		String xPath;
 		WebElement ele;
@@ -19979,6 +19979,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ArrayList<String> result = new ArrayList<String>();
 		String parentId = switchToWindowOpenNextToParentWindow(driver);
 		if (parentId != null) {
+			
+			if(headingOfInteractionPage(recordName,20)!=null)
+			{
+				log(LogStatus.INFO,recordName+" interaction page has been open ",YesNo.No);
 			if (correspondenceHeader != null && correspondenceHeader.length != 0) {
 				for (int i = 0; i < correspondenceHeader.length; i++) {
 
@@ -20232,6 +20236,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						YesNo.No);
 				result.add(
 						"Either correspondence is null or Empty. Please provide data to verify data on interaction popup");
+			}
+			}
+			else
+			{
+				log(LogStatus.ERROR,recordName+" interaction page is not open ",YesNo.No);
+				result.add(recordName+" interaction page is not open ");
 			}
 			driver.close();
 			driver.switchTo().window(parentId);
@@ -21894,7 +21904,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	}
 
-	public ArrayList<String> verifyHighlightedCompanyNameOnCompanyTaggedSection(TaggedName tabName,
+	public ArrayList<String> verifyHighlightedFirmNameOnFirmTaggedSection(TaggedName tabName,
 			String[] highlightedRecord) {
 		ArrayList<String> result = new ArrayList<String>();
 		if (click(driver, getTaggedRecordName(tabName.toString(), 30), tabName.toString() + " tab",
@@ -21902,7 +21912,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			log(LogStatus.INFO, "Clicked on " + tabName.toString() + " tab name", YesNo.No);
 
 			for (int i = 0; i < highlightedRecord.length; i++) {
-				if (getHighlightedCompanyName(highlightedRecord[i], 15) != null) {
+				if (getHighlightedCompanyName(highlightedRecord[i], 5) != null) {
 					log(LogStatus.INFO, highlightedRecord[i] + " is highlighted in " + tabName.toString() + " list",
 							YesNo.No);
 				} else {
@@ -21917,6 +21927,32 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return result;
 	}
+	
+	
+	public ArrayList<String> verifyNotHighlightedFirmNameOnFirmTaggedSection(TaggedName tabName,
+			String[] highlightedRecord) {
+		ArrayList<String> result = new ArrayList<String>();
+		if (click(driver, getTaggedRecordName(tabName.toString(), 30), tabName.toString() + " tab",
+				action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on " + tabName.toString() + " tab name", YesNo.No);
+
+			for (int i = 0; i < highlightedRecord.length; i++) {
+				if (getHighlightedCompanyName(highlightedRecord[i], 5) == null) {
+					log(LogStatus.INFO, highlightedRecord[i] + " is not highlighted in " + tabName.toString() + " list",
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							highlightedRecord[i] + " is highlighted in " + tabName.toString() + " list", YesNo.No);
+					result.add(highlightedRecord[i] + " is  highlighted in " + tabName.toString() + " list");
+				}
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + tabName.toString() + " tab name", YesNo.No);
+			result.add("Not able to click on " + tabName.toString() + " tab name");
+		}
+		return result;
+	}
+	
 
 	public boolean verifySubjectOfInteractionEitherOnCardOrInViewAllPopUp(String subjectName) {
 		boolean flag = false;
@@ -24367,6 +24403,139 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		else
 			return false;
 
+	}
+	
+	
+	public ArrayList<String> verifyRedirectionFromParticipantAndTagPopup(String[] participantRecord, String[] participantRecordObjectName, String[] tagRecord, String[] tagRecordObjectname)
+	{
+		ArrayList<String> result=new ArrayList<String>();
+		if(participantRecord!=null && participantRecordObjectName!=null)
+		{
+		if(participantRecord.length==participantRecordObjectName.length)
+		{
+			
+			for(int i=0; i<participantRecord.length; i++)
+			{
+			    if(clickUsingJavaScript(driver, getRecordofInteractionPage(participantRecord[i],15), participantRecord[i]+" on participant popup"))
+			    {
+			    	log(LogStatus.INFO, "Clicked on Record: " + participantRecord[i] + " on participant popup",
+							YesNo.No);
+			    	String parentID=switchToWindowOpenNextToParentWindow(driver);
+			    	if(getObjectPageName(participantRecordObjectName[i],15)!=null && getRecordNameOnPage(participantRecord[i],15)!=null)
+			    	{
+			    		log(LogStatus.INFO, "The redirection of record : "+participantRecord[i]+", Object: "+participantRecordObjectName[i]+" is working properly.",YesNo.No);
+			    	}
+			    	else
+			    	{
+			    		log(LogStatus.ERROR, "The redirection of record : "+participantRecord[i]+", Object: "+participantRecordObjectName[i]+" is not working properly.",YesNo.No);
+			    		result.add("The redirection of record : "+participantRecord[i]+", Object: "+participantRecordObjectName[i]+" is not working properly.");
+			    	}
+			    	driver.close();
+			    	driver.switchTo().window(parentID);
+			    }
+			    else
+			    {
+			    	log(LogStatus.ERROR, "Not able to click on Record: " + participantRecord[i] + " on participant popup",
+							YesNo.No);
+			    	result.add("Not able to click on Record: " + participantRecord[i] + " on participant popup");
+			    }
+			}
+			
+			clickUsingJavaScript(driver, getCloseIconOfParticipantPopup(20), "close icon of participant tag popup");
+		}
+		else
+		{
+			log(LogStatus.ERROR, "The length of participant record and participant object name are not equal",YesNo.Yes);
+			result.add("The length of participant record and participant object name are not equal");
+		}
+		}
+		
+		if(tagRecord!=null && tagRecordObjectname!=null)
+		{
+			if(tagRecord.length == tagRecordObjectname.length)
+			{
+				for(int i=0; i<tagRecord.length; i++)
+				{
+				 if(clickUsingJavaScript(driver, getRecordofTagPopup(tagRecord[i],15), tagRecord[i]+" on Tags popup"))
+				    {
+				    	log(LogStatus.INFO, "Clicked on Record: " + tagRecord[i] + " on Tags popup",
+								YesNo.No);
+				    	String parentID=switchToWindowOpenNextToParentWindow(driver);
+				    	if(getObjectPageName(tagRecordObjectname[i],15)!=null && getRecordNameOnPage(tagRecord[i],15)!=null)
+				    	{
+				    		log(LogStatus.INFO, "The redirection of record : "+tagRecord[i]+", Object: "+tagRecordObjectname[i]+" is working properly.",YesNo.No);
+				    	}
+				    	else
+				    	{
+				    		log(LogStatus.ERROR, "The redirection of record : "+tagRecord[i]+", Object: "+tagRecordObjectname[i]+" is not working properly.",YesNo.No);
+				    		result.add("The redirection of record : "+tagRecord[i]+", Object: "+tagRecordObjectname[i]+" is not working properly.");
+				    	}
+				    	driver.close();
+				    	driver.switchTo().window(parentID);
+				    }
+				    else
+				    {
+				    	log(LogStatus.ERROR, "Not able to click on Record: " + tagRecord[i] + " on Tags popup",
+								YesNo.No);
+				    	result.add("Not able to click on Record: " + tagRecord[i] + " on Tags popup");
+				    }
+				}
+				clickUsingJavaScript(driver, getCloseIconOfTagPopup(20), "close icon of participant tag popup");
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The length of tag record and tag object name are not equal",YesNo.Yes);
+				result.add("The length of tag record and tag object name are not equal");	
+			}
+		}
+		
+		return result;
+		
+	}
+	
+	public ArrayList<String> verifyRedirectionOfActivityPopup(String[] recordName, String[] objectName)
+	{
+		ArrayList<String> result=new ArrayList<String>();
+		if(recordName!=null && objectName!=null)
+		{
+			if(recordName.length==objectName.length)
+			{
+				
+				for(int i=0; i<recordName.length; i++)
+				{
+				   if(clickUsingJavaScript(driver, getTagRecordNameOnActivityPopup(recordName[i],15), "record "+recordName[i]+" on popup"))
+				   {
+					   log(LogStatus.INFO, "Clicked on Record: " + recordName[i] + " on popup",YesNo.No);
+					   
+					   String parentID=switchToWindowOpenNextToParentWindow(driver);
+				    	if(getObjectPageName(objectName[i],15)!=null && getRecordNameOnPage(recordName[i],15)!=null)
+				    	{
+				    		log(LogStatus.INFO, "The redirection of record : "+recordName[i]+", Object: "+objectName[i]+" is working properly.",YesNo.No);
+				    	}
+				    	else
+				    	{
+				    		log(LogStatus.ERROR, "The redirection of record : "+recordName[i]+", Object: "+objectName[i]+" is not working properly.",YesNo.No);
+				    		result.add("The redirection of record : "+recordName[i]+", Object: "+objectName[i]+" is not working properly.");
+				    	}
+				    	driver.close();
+				    	driver.switchTo().window(parentID);
+					   
+				   }
+				   else
+				   {
+					   log(LogStatus.ERROR, "Not able to click on Record: " + recordName[i] + " on popup",YesNo.No);
+					   result.add("Not able to click on Record: " + recordName[i] + " on popup");
+				   }
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The length of record name and object name are not equal",YesNo.No);
+				   result.add("The length of record name and object name are not equal");
+			}
+		}
+		return result;
+		
 	}
 
 	public void verifyUIOfCallPopUp(String url, String[][] basicSectionVerificationData,
