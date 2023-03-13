@@ -20699,7 +20699,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp143.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp144.split("<break>", -1), AMNNR_CreateNewRecordPopUp145.split("<break>", -1) };
+				AMNNR_CreateNewRecordPopUp144.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp145.split("<break>", -1) };
 		String firmRecord1 = AMNNR_CreateNewRecordPopUp143.split("<break>", -1)[1];
 		String firmRecord2 = AMNNR_CreateNewRecordPopUp145.split("<break>", -1)[1];
 		String firmRecord3ShouldNotThere = AMNNR_FirmLegalName14;
@@ -21333,7 +21334,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String subTabName = "Details";
 
 		String[] labelAndValueSeprateByBreakForContact = { AMNNR_DetailPageRecord4 + "<break>" + contactRecord,
-				AMNNR_DetailPageRecord5, AMNNR_DetailPageRecord6 };
+				AMNNR_DetailPageRecord11, AMNNR_DetailPageRecord6 };
 		String[] labelAndValueSeprateByBreakForFirm = { AMNNR_DetailPageRecord7 + "<break>" + firmRecord1,
 				AMNNR_DetailPageRecord8 };
 
@@ -21700,11 +21701,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject77 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes77;
+		String task1Notes = AMNNR_Notes149;
 		String relatedTo = AMNNR_RelatedTo77;
 		String priority = AMNNR_AdvancePriority77;
 		String status = AMNNR_AdvanceStatus77;
-		String updatedRelatedToVerify = relatedTo + AMNNR_RelatedTo78 + recordName + "<break>"
+		String updatedRelatedToVerify = relatedTo + AMNNR_RelatedTo149 + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 		String task1NotesVerify = task1Notes.replace("@", "");
 
@@ -21717,10 +21718,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp77.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp78.split("<break>", -1) };
-		String firmRecord1 = AMNNR_CreateNewRecordPopUp78.split("<break>", -1)[2];
-		String contactRecord = AMNNR_CreateNewRecordPopUp77.split("<break>", -1)[2];
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp149.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp150.split("<break>", -1) };
+		String firmRecord1 = AMNNR_CreateNewRecordPopUp150.split("<break>", -1)[2];
+		String contactRecord = AMNNR_CreateNewRecordPopUp149.split("<break>", -1)[2];
 
 		String subTabName = "Details";
 
@@ -21965,13 +21966,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject79 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes79;
+		String task1Notes = AMNNR_Notes151;
 		String relatedTo = AMNNR_RelatedTo79;
 		String priority = AMNNR_AdvancePriority79;
 		String status = AMNNR_AdvanceStatus79;
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
-		String updatedRelatedToNotContainsVerify = AMNNR_RelatedTo80;
+		String updatedRelatedToNotContainsVerify = AMNNR_RelatedTo151;
 		String task1NotesVerify = task1Notes.replace("@", "");
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
@@ -21983,10 +21984,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp79.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp80.split("<break>", -1) };
-		String record1 = AMNNR_CreateNewRecordPopUp79.split("<break>", -1)[1];
-		String record2 = AMNNR_CreateNewRecordPopUp80.split("<break>", -1)[1];
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp151.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp152.split("<break>", -1) };
+		String record1 = AMNNR_CreateNewRecordPopUp151.split("<break>", -1)[1];
+		String record2 = AMNNR_CreateNewRecordPopUp152.split("<break>", -1)[1];
 
 		String[][] relatedAssociationNotContains = { { AMNNR_CallLabel3, updatedRelatedToNotContainsVerify } };
 
@@ -22206,13 +22207,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject81 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes81;
+		String task1Notes = AMNNR_Notes153;
 		String relatedTo = AMNNR_RelatedTo81;
 		String priority = AMNNR_AdvancePriority81;
 		String status = AMNNR_AdvanceStatus81;
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_SuggestedTag81;
-		String updatedRelatedToNotContainsVerify = AMNNR_RelatedTo82;
+		String updatedRelatedToNotContainsVerify = AMNNR_RelatedTo153;
 		String task1NotesVerify = task1Notes.replace("@", "");
 		String[] SuggestedTags = AMNNR_SuggestedTag81.split("<break>", -1);
 
@@ -22225,16 +22226,16 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp81.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp82.split("<break>", -1), AMNNR_CreateNewRecordPopUp83.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp84.split("<break>", -1), AMNNR_CreateNewRecordPopUp85.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp86.split("<break>", -1), AMNNR_CreateNewRecordPopUp87.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp88.split("<break>", -1), AMNNR_CreateNewRecordPopUp89.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp90.split("<break>", -1), AMNNR_CreateNewRecordPopUp91.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp92.split("<break>", -1), AMNNR_CreateNewRecordPopUp93.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp94.split("<break>", -1) };
-		String firmRecord1 = AMNNR_CreateNewRecordPopUp88.split("<break>", -1)[1];
-		String firmRecord2 = AMNNR_CreateNewRecordPopUp92.split("<break>", -1)[1];
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp153.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp154.split("<break>", -1), AMNNR_CreateNewRecordPopUp155.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp156.split("<break>", -1), AMNNR_CreateNewRecordPopUp157.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp158.split("<break>", -1), AMNNR_CreateNewRecordPopUp159.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp160.split("<break>", -1), AMNNR_CreateNewRecordPopUp161.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp162.split("<break>", -1), AMNNR_CreateNewRecordPopUp163.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp164.split("<break>", -1), AMNNR_CreateNewRecordPopUp165.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp166.split("<break>", -1) };
+		String firmRecord1 = AMNNR_CreateNewRecordPopUp160.split("<break>", -1)[1];
+		String firmRecord2 = AMNNR_CreateNewRecordPopUp164.split("<break>", -1)[1];
 
 		boolean flag = false;
 
@@ -22507,7 +22508,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject95 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes95;
+		String task1Notes = AMNNR_Notes167;
 		String relatedTo = AMNNR_RelatedTo95;
 		String priority = AMNNR_AdvancePriority95;
 		String status = AMNNR_AdvanceStatus95;
@@ -22515,7 +22516,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_SuggestedTag95;
 		String updatedRelatedToNotContainsVerify = "";
 		for (int i = 1; i <= 51; i++) {
-			updatedRelatedToNotContainsVerify = updatedRelatedToNotContainsVerify + AMNNR_RelatedTo96 + i + "<break>";
+			updatedRelatedToNotContainsVerify = updatedRelatedToNotContainsVerify + AMNNR_RelatedTo167 + i + "<break>";
 			if (i == 51)
 				updatedRelatedToNotContainsVerify = updatedRelatedToNotContainsVerify.substring(0,
 						(updatedRelatedToNotContainsVerify.length() - 7));
@@ -22536,7 +22537,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		for (int i = 1; i <= 51; i++) {
 
-			String temp = AMNNR_CreateNewRecordPopUp95 + i + AMNNR_CreateNewRecordPopUp96;
+			String temp = AMNNR_CreateNewRecordPopUp167 + i + AMNNR_CreateNewRecordPopUp96;
 			createRecordPopupRecordsList.add(temp.split("<break>", -1));
 
 		}
@@ -22549,8 +22550,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		}
 
 		System.out.println(createNewRecordPopUp.length);
-		String contactRecord1 = AMNNR_RelatedTo96 + (new Random().nextInt(51) + 1);
-		String contactRecord2 = AMNNR_RelatedTo96 + (new Random().nextInt(51) + 1);
+		String contactRecord1 = AMNNR_RelatedTo167 + (new Random().nextInt(51) + 1);
+		String contactRecord2 = AMNNR_RelatedTo167 + (new Random().nextInt(51) + 1);
 
 		System.out.println(contactRecord1);
 		System.out.println(contactRecord2);
@@ -22769,7 +22770,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject97 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes97;
+		String task1Notes = AMNNR_Notes168;
 		String relatedTo = AMNNR_RelatedTo97;
 		String priority = AMNNR_AdvancePriority97;
 		String status = AMNNR_AdvanceStatus97;
@@ -22789,13 +22790,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp97.split("<break>", -1) };
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp168.split("<break>", -1) };
 
-		String updatedNotesOfTask = AMNNR_Notes98;
+		String updatedNotesOfTask = AMNNR_Notes169;
 		String[][] task1UpdateBasicSection = { { AMNNR_CallLabel2, updatedNotesOfTask } };
 
-		String[][] updateCreateNewRecordPopUp = { AMNNR_CreateNewRecordPopUp98.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp99.split("<break>", -1), AMNNR_CreateNewRecordPopUp100.split("<break>", -1) };
+		String[][] updateCreateNewRecordPopUp = { AMNNR_CreateNewRecordPopUp169.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp170.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp171.split("<break>", -1) };
 
 		String updatedRelatedToAfterUpdate = BP.matcherOfAtTheRate(updatedNotesOfTask);
 		String updatedRelatedToVerifyAfterUpdate = updatedRelatedToVerify + "<break>" + updatedRelatedToAfterUpdate;
@@ -23072,15 +23074,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject101 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes101;
-		String relatedTo = AMNNR_RelatedTo101;
+		String task1Notes = AMNNR_Notes172;
+		String relatedTo = AMNNR_RelatedTo172;
 		String priority = AMNNR_AdvancePriority101;
 		String status = AMNNR_AdvanceStatus101;
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_RelatedTo102;
+				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_RelatedTo173;
 
 		String task1NotesVerify = task1Notes.split("<Section>", -1)[1].replace("@", "");
-		String[] SuggestedTags = AMNNR_SuggestedTag101.split("<break>", -1);
+		String[] SuggestedTags = AMNNR_SuggestedTag172.split("<break>", -1);
 
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp101.split("<break>") };
 
@@ -23242,7 +23244,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String task1SubjectName = AMNNR_Subject103 + " " + AMNNR_ActivityType54;
 		String task1Notes = AMNNR_Notes103;
-		String relatedTo = AMNNR_RelatedTo103;
+		String relatedTo = AMNNR_RelatedTo174;
 		String priority = AMNNR_AdvancePriority103;
 		String status = AMNNR_AdvanceStatus103;
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
@@ -23411,7 +23413,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String task1SubjectName = AMNNR_Subject104 + " " + AMNNR_ActivityType54;
 		String task1Notes = AMNNR_Notes104;
-		String relatedTo = AMNNR_RelatedTo104;
+		String relatedTo = AMNNR_RelatedTo175;
 		String priority = AMNNR_AdvancePriority104;
 		String status = AMNNR_AdvanceStatus104;
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
@@ -23691,9 +23693,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject106 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes106;
-		String relatedTo = AMNNR_RelatedTo106;
-		String priority = AMNNR_AdvancePriority106;
+		String task1Notes = AMNNR_Notes176;
+		String relatedTo = AMNNR_RelatedTo176;
+		String priority = AMNNR_SuggestedTag176;
 		String status = AMNNR_AdvanceStatus106;
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
@@ -23712,21 +23714,21 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] createNewRecordPopUp = null;
 
-		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp106.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp107.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp108.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp109.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp110.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp111.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp112.split("<break>", -1) };
+		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp176.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp177.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp178.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp179.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp180.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp181.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp182.split("<break>", -1) };
 
-		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup106.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup107.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup108.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup109.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup110.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup111.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup112.split("<break>", -1) };
+		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup176.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup177.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup178.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup179.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup180.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup181.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup182.split("<break>", -1) };
 
 		String[][][] detailSectionVerifcation = { { { AMNNR_CallLabel1, task1SubjectName } },
 				task1BasicSectionVerification, task1AdvancedSection };
@@ -23941,7 +23943,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
 	@Test
 	public void AcuityMNNRTc101_VerifyWhenCallIsCreatedWith3Deal4FundraisingAnd10ContactsAreTagged(String projectName) {
 
@@ -23957,7 +23958,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String task1SubjectName = AMNNR_Subject113 + " " + AMNNR_ActivityType54;
 		String task1Notes = AMNNR_Notes113;
-		String relatedTo = AMNNR_RelatedTo113;
+		String relatedTo = AMNNR_RelatedTo183;
 		String priority = AMNNR_AdvancePriority113;
 		String status = AMNNR_AdvanceStatus113;
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
@@ -23977,27 +23978,27 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp113.split("<break>") };
 
-		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp113.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp114.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp115.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp116.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp117.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp118.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp119.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp120.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp121.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp122.split("<break>", -1) };
+		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp183.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp184.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp185.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp186.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp187.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp188.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp189.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp190.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp191.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp192.split("<break>", -1) };
 
-		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup113.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup114.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup115.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup116.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup117.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup118.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup119.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup120.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup121.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup122.split("<break>", -1) };
+		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup183.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup184.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup185.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup186.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup187.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup188.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup189.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup190.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup191.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup192.split("<break>", -1) };
 
 		String[][][] detailSectionVerifcation = null;
 
@@ -24323,7 +24324,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate },
 				{ AMNNR_CallLabel8, AMNNR_Classification124 } };
 
-		String updatedRelatedTo = AMNNR_RelatedTo125;
+		String updatedRelatedTo = AMNNR_RelatedTo193;
 
 		String[] SuggestedTags = AMNNR_SuggestedTag124.split("<break>", -1);
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp124.split("<break>") };
@@ -24457,7 +24458,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String task1SubjectName = AMNNR_Subject126 + " " + AMNNR_ActivityType54;
 		String task1Notes = AMNNR_Notes126;
-		String relatedTo = AMNNR_RelatedTo126;
+		String relatedTo = AMNNR_RelatedTo194;
 		String priority = AMNNR_AdvancePriority126;
 		String status = AMNNR_AdvanceStatus126;
 
@@ -24469,10 +24470,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[] SuggestedTags = AMNNR_SuggestedTag126.split("<break>", -1);
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp126.split("<break>") };
-		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp126.split("<break>", -1) };
+		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp194.split("<break>", -1) };
 
 		String[][] addContactsToFundraisingObjectPopup = {
-				AMNNR_AddContactsToFundraisingPopup126.split("<break>", -1) };
+				AMNNR_AddContactsToFundraisingPopup194.split("<break>", -1) };
 
 		String[][][] detailSectionVerifcation = null;
 
@@ -24597,14 +24598,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[] SuggestedTags = AMNNR_SuggestedTag127.split("<break>", -1);
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp127.split("<break>") };
-		String[][] addContactsToDealTeamPopUp1 = { AMNNR_AddContactsToDealTeamPopUp127.split("<break>", -1) };
+		String[][] addContactsToDealTeamPopUp1 = { AMNNR_AddContactsToDealTeamPopUp195.split("<break>", -1) };
 
 		String[][] addContactsToFundraisingObjectPopup1 = null;
 
 		String[][] addContactsToDealTeamPopUp2 = null;
 
 		String[][] addContactsToFundraisingObjectPopup2 = {
-				AMNNR_AddContactsToFundraisingPopup127.split("<break>", -1) };
+				AMNNR_AddContactsToFundraisingPopup195.split("<break>", -1) };
 
 		String[][][] detailSectionVerifcation = null;
 
@@ -24802,7 +24803,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][][] detailSectionVerifcation = null;
 
-		String updatedRelatedTo1 = AMNNR_RelatedTo129;
+		String updatedRelatedTo1 = AMNNR_RelatedTo196;
 		String[][] updateTask1BasicSection1 = { { AMNNR_CallLabel3, updatedRelatedTo1 } };
 
 		String[][] updateTask1AdvancedSection = null;
@@ -24940,8 +24941,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject131 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes131;
-		String relatedTo = AMNNR_RelatedTo131;
+		String task1Notes = AMNNR_Notes197;
+		String relatedTo = AMNNR_RelatedTo197;
 		String priority = AMNNR_AdvancePriority131;
 		String status = AMNNR_AdvanceStatus131;
 
@@ -25034,8 +25035,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject132 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes132;
-		String relatedTo = AMNNR_RelatedTo132;
+		String task1Notes = AMNNR_Notes198;
+		String relatedTo = AMNNR_RelatedTo198;
 		String priority = AMNNR_AdvancePriority132;
 		String status = AMNNR_AdvanceStatus132;
 		String task1NotesVerify = task1Notes.replace("@", "");
@@ -25307,8 +25308,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject134 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes134;
-		String relatedTo = AMNNR_RelatedTo134;
+		String task1Notes = AMNNR_Notes199;
+		String relatedTo = AMNNR_RelatedTo199;
 		String priority = AMNNR_AdvancePriority134;
 		String status = AMNNR_AdvanceStatus134;
 		String task1NotesVerify = task1Notes.replace("@", "");
@@ -25695,7 +25696,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject138 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes138;
+		String task1Notes = AMNNR_Notes200;
 		String relatedTo = AMNNR_RelatedTo138;
 		String priority = AMNNR_AdvancePriority138;
 		String status = AMNNR_AdvanceStatus138;
@@ -25714,8 +25715,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[] SuggestedTags = AMNNR_SuggestedTag138.split("<break>", -1);
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp138.split("<break>") };
-		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp138.split("<break>") };
-		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup138.split("<break>") };
+		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp200.split("<break>") };
+		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup200.split("<break>") };
 
 		String[][][] detailSectionVerifcation = null;
 
@@ -25877,8 +25878,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject140 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes140;
-		String relatedTo = AMNNR_RelatedTo140;
+		String task1Notes = AMNNR_Notes201;
+		String relatedTo = AMNNR_RelatedTo201;
 		String priority = AMNNR_AdvancePriority140;
 		String status = AMNNR_AdvanceStatus140;
 		String task1NotesVerify = task1Notes.replace("@", "");
@@ -25914,9 +25915,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_CallLabel8, AMNNR_Classification140 } };
 
 		String[] SuggestedTags = AMNNR_SuggestedTag140.split("<break>", -1);
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp140.split("<break>") };
-		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp140.split("<break>") };
-		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup140.split("<break>") };
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp201.split("<break>") };
+		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp201.split("<break>") };
+		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup201.split("<break>") };
 
 		String[][][] detailSectionVerifcation = { { { AMNNR_CallLabel1, task1SubjectName } },
 				task1BasicSectionVerificationForDetailsSection, task1AdvancedSection };
