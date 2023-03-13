@@ -20087,7 +20087,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void AcuityMNNRAMNNR_FirmLegalName15_VerifyTheUIOfMeetingNotesPopUpOfCallFromLogACallButtonPlacedOnAcuityTabInteractionSection(
+	public void AcuityMNNRTc085_VerifyTheUIOfMeetingNotesPopUpOfCallFromLogACallButtonPlacedOnAcuityTabInteractionSection(
 			String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
