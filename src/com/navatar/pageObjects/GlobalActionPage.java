@@ -9,6 +9,8 @@ import com.navatar.generic.EnumConstants.action;
 
 import static com.navatar.generic.CommonLib.*;
 
+import java.util.List;
+
 public class GlobalActionPage extends BasePageBusinessLayer {
 
 	public GlobalActionPage(WebDriver driver) {
@@ -51,14 +53,24 @@ public class GlobalActionPage extends BasePageBusinessLayer {
 	}
 	
 	
-	@FindBy(xpath = "//div[@class='slds-grid bottomBar']//button/span[text()='Save']")
+	@FindBy(xpath = "//button[text()='Save' and @name='SaveEdit']")
 	 private WebElement saveButtonForEvent;
 	
 	/**
 	 * @return the saveButtonForEvent
 	 */
 	public WebElement getSaveButtonForEvent(String projectName,int timeOut) {
-		return isDisplayed(driver, saveButtonForEvent, "Visibility", timeOut, "save Button For Event");
+		List<WebElement> eleList = FindElements(driver, "//button[@title='Save' or text()='Save'or @name='SaveEdit']", "Save Button");
+
+		for (WebElement webElement : eleList) {
+			webElement = isDisplayed(driver, webElement, "Visibility", 2, " Save Button lightning");
+			if (webElement != null) {
+				return webElement;
+			} else {
+
+			}
+		}
+		return isDisplayed(driver, saveButtonForEvent, "Visibility", timeOut, " Save Button lightning");
 	}
 	
 }

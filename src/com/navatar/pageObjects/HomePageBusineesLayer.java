@@ -5909,4 +5909,409 @@ public class HomePageBusineesLayer extends HomePage {
 		return flag;
 	}
 
+	
+	public boolean globalSearchAndDeleteTaskorCall(String recordName, String sideNavOption, boolean noResultMsg) {
+		boolean flag = false;
+		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
+
+		if (click(driver, globalSearchButton(20), "globalSearchButton", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on globalSearchButton", YesNo.No);
+			CommonLib.ThreadSleep(1000);
+			if (sendKeysAndPressEnter(driver, globalSearchInput(20), recordName, "globalSearchInput",
+					action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Pass the Value to Input Box: " + recordName, YesNo.No);
+
+				if ("".equals(sideNavOption) || sideNavOption == null) {
+					if (noResultMsg) {
+						if (globalSearchNoResultMsg(7) != null) {
+
+							log(LogStatus.INFO, "No Result Msg showing for record: " + recordName, YesNo.No);
+
+							flag = true;
+
+						}
+
+						else {
+							log(LogStatus.ERROR, "No Result Msg nt showing for record: " + recordName, YesNo.Yes);
+							sa.assertTrue(false, "No Result Msg nt showing for record: " + recordName);
+
+						}
+					} else {
+
+						if (globalSearchRecord(recordName, 7) != null) {
+							log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
+//							if (click(driver, globalSearchRecord(recordName, 7), "globalSearchRecord: " + recordName,
+//									action.SCROLLANDBOOLEAN)) {
+//								log(LogStatus.INFO, "Clicked on Record: " + recordName, YesNo.No);
+//
+//								if (sideNavOption.equalsIgnoreCase("Tasks")) {
+//									CommonLib.ThreadSleep(4000);
+//									String parentID = CommonLib.switchOnWindow(driver);
+//									CommonLib.ThreadSleep(4000);
+//									if (parentID != null) {
+//
+//										log(LogStatus.INFO, "Subject: " + recordName + " found on All Interaction Page",
+//												YesNo.No);
+//
+//										flag = true;
+//
+//									}
+//
+//									else {
+//										log(LogStatus.ERROR, "No New Window Open after click on Record: " + recordName,
+//												YesNo.Yes);
+//									}
+//								} else {
+//									flag = true;
+//								}
+//
+//							} else {
+//								log(LogStatus.ERROR, "Not able to Click on Record: " + recordName, YesNo.Yes);
+//								sa.assertTrue(false, "Not able to Click on Record: " + recordName);
+//
+//							}
+
+						} else {
+							log(LogStatus.ERROR, "No Record found in Top Results for record: " + recordName, YesNo.Yes);
+							sa.assertTrue(false, "No Record found in Top Results for record: " + recordName);
+						}
+
+					}
+				} else {
+					if (click(driver, globalSearchSideNavShowMoreButton(15), "globalSearchSideNavShowMoreButton",
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on globalSearchSideNavShowMoreButton", YesNo.No);
+
+						if (globalSearchSideNavOptionLink(sideNavOption, 7) != null) {
+							log(LogStatus.INFO, "Option found named: " + sideNavOption, YesNo.No);
+
+							if (click(driver, globalSearchSideNavOptionLink(sideNavOption, 7),
+									"globalSearchSideNavOptionLink", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on globalSearchSideNavOptionLink", YesNo.No);
+
+								if (noResultMsg) {
+									if (globalSearchNoResultMsg(7) != null) {
+
+										log(LogStatus.INFO, "No Result Msg showing for record: " + recordName,
+												YesNo.No);
+
+										flag = true;
+
+									}
+
+									else {
+										log(LogStatus.ERROR, "No Result Msg nt showing for record: " + recordName,
+												YesNo.Yes);
+										sa.assertTrue(false, "No Result Msg nt showing for record: " + recordName);
+
+									}
+								} else {
+
+									if (globalSearchRecord(recordName, 7) != null) {
+										log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
+//										if (click(driver, globalSearchRecord(recordName, 7),
+//												"globalSearchRecord: " + recordName, action.SCROLLANDBOOLEAN)) {
+//											log(LogStatus.INFO, "Clicked on Record: " + recordName, YesNo.No);
+//											if (sideNavOption.equalsIgnoreCase("Tasks")) {
+//												CommonLib.ThreadSleep(4000);
+//												String parentID = CommonLib.switchOnWindow(driver);
+//												CommonLib.ThreadSleep(4000);
+//												if (parentID != null) {
+//
+//													log(LogStatus.INFO,
+//															"Subject: " + recordName + " found on All Interaction Page",
+//															YesNo.No);
+//
+//													flag = true;
+//
+//												}
+//
+//												else {
+//													log(LogStatus.ERROR,
+//															"No New Window Open after click on Record: " + recordName,
+//															YesNo.Yes);
+//												}
+//											} else {
+//												flag = true;
+//											}
+//										} else {
+//											log(LogStatus.ERROR, "Not able to Click on Record: " + recordName,
+//													YesNo.Yes);
+//											sa.assertTrue(false, "Not able to Click on Record: " + recordName);
+//
+//										}
+
+									} else {
+										log(LogStatus.ERROR, "No Record found in side nav: " + sideNavOption
+												+ " for record: " + recordName, YesNo.Yes);
+										sa.assertTrue(false, "No Record found in side nav: " + sideNavOption
+												+ " for record: " + recordName);
+									}
+
+								}
+
+							} else {
+								log(LogStatus.ERROR, "Not able to click on globalSearchSideNavOptionLink", YesNo.Yes);
+								sa.assertTrue(false, "Not able to click on globalSearchSideNavOptionLink");
+							}
+
+						} else {
+							log(LogStatus.ERROR, "No Option found named: " + sideNavOption, YesNo.Yes);
+							sa.assertTrue(false, "No Option found named: " + sideNavOption);
+
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not able to click on globalSearchSideNavShowMoreButton", YesNo.Yes);
+						sa.assertTrue(false, "Not able to click on globalSearchSideNavShowMoreButton");
+					}
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to Pass the Value to Input Box: " + recordName, YesNo.Yes);
+				sa.assertTrue(false, "Not able to Pass the Value to Input Box: " + recordName);
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not able to click on globalSearchButton", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on globalSearchButton");
+
+		}
+		
+		ThreadSleep(2000);
+		if (click(driver, downArrowButton(20), "downArrowButton", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
+
+			if (click(driver, taskBP.buttonInTheDownArrowList("Delete", 20), "Delete Button in downArrowButton",
+					action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Delete Button in  Down Arrow Button", YesNo.No);
+
+				if (click(driver, taskBP.taskDeleteConfirmButton(15), "Delete Button in downArrowButton",
+						action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Delete Confirm Button", YesNo.No);
+
+					if (taskBP.taskDeletedMsg(15) != null) {
+						log(LogStatus.ERROR, "Task Delete Msg display, So Task gets deleted", YesNo.Yes);
+
+						flag=true;
+					} else {
+						log(LogStatus.ERROR, "Task Delete Msg not display, So Task not gets deleted", YesNo.Yes);
+						sa.assertTrue(false, "Task Delete Msg not display, So Task not gets deleted");
+
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not ABle to Click on Delete Confirm Button", YesNo.Yes);
+					sa.assertTrue(false, "Not ABle to Click on Delete Confirm Button");
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able Click on Delete button in Down Arrow Button", YesNo.Yes);
+				sa.assertTrue(false, "Not Able Click on Delete button in Down Arrow Button");
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not Able Click on Down Arrow Button", YesNo.Yes);
+			sa.assertTrue(false, "Not Able Click on Down Arrow Button");
+
+		}
+		return flag;
+	}
+	
+	public boolean globalSearchAndEditTaskorCall(String recordName, String sideNavOption, boolean noResultMsg) {
+		boolean flag = false;
+		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
+
+		if (click(driver, globalSearchButton(20), "globalSearchButton", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on globalSearchButton", YesNo.No);
+			CommonLib.ThreadSleep(1000);
+			if (sendKeysAndPressEnter(driver, globalSearchInput(20), recordName, "globalSearchInput",
+					action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Pass the Value to Input Box: " + recordName, YesNo.No);
+
+				if ("".equals(sideNavOption) || sideNavOption == null) {
+					if (noResultMsg) {
+						if (globalSearchNoResultMsg(7) != null) {
+
+							log(LogStatus.INFO, "No Result Msg showing for record: " + recordName, YesNo.No);
+
+							flag = true;
+
+						}
+
+						else {
+							log(LogStatus.ERROR, "No Result Msg nt showing for record: " + recordName, YesNo.Yes);
+							sa.assertTrue(false, "No Result Msg nt showing for record: " + recordName);
+
+						}
+					} else {
+
+						if (globalSearchRecord(recordName, 7) != null) {
+							log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
+//							if (click(driver, globalSearchRecord(recordName, 7), "globalSearchRecord: " + recordName,
+//									action.SCROLLANDBOOLEAN)) {
+//								log(LogStatus.INFO, "Clicked on Record: " + recordName, YesNo.No);
+//
+//								if (sideNavOption.equalsIgnoreCase("Tasks")) {
+//									CommonLib.ThreadSleep(4000);
+//									String parentID = CommonLib.switchOnWindow(driver);
+//									CommonLib.ThreadSleep(4000);
+//									if (parentID != null) {
+//
+//										log(LogStatus.INFO, "Subject: " + recordName + " found on All Interaction Page",
+//												YesNo.No);
+//
+//										flag = true;
+//
+//									}
+//
+//									else {
+//										log(LogStatus.ERROR, "No New Window Open after click on Record: " + recordName,
+//												YesNo.Yes);
+//									}
+//								} else {
+//									flag = true;
+//								}
+//
+//							} else {
+//								log(LogStatus.ERROR, "Not able to Click on Record: " + recordName, YesNo.Yes);
+//								sa.assertTrue(false, "Not able to Click on Record: " + recordName);
+//
+//							}
+
+						} else {
+							log(LogStatus.ERROR, "No Record found in Top Results for record: " + recordName, YesNo.Yes);
+							sa.assertTrue(false, "No Record found in Top Results for record: " + recordName);
+						}
+
+					}
+				} else {
+					if (click(driver, globalSearchSideNavShowMoreButton(15), "globalSearchSideNavShowMoreButton",
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on globalSearchSideNavShowMoreButton", YesNo.No);
+
+						if (globalSearchSideNavOptionLink(sideNavOption, 7) != null) {
+							log(LogStatus.INFO, "Option found named: " + sideNavOption, YesNo.No);
+
+							if (click(driver, globalSearchSideNavOptionLink(sideNavOption, 7),
+									"globalSearchSideNavOptionLink", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on globalSearchSideNavOptionLink", YesNo.No);
+
+								if (noResultMsg) {
+									if (globalSearchNoResultMsg(7) != null) {
+
+										log(LogStatus.INFO, "No Result Msg showing for record: " + recordName,
+												YesNo.No);
+
+										flag = true;
+
+									}
+
+									else {
+										log(LogStatus.ERROR, "No Result Msg nt showing for record: " + recordName,
+												YesNo.Yes);
+										sa.assertTrue(false, "No Result Msg nt showing for record: " + recordName);
+
+									}
+								} else {
+
+									if (globalSearchRecord(recordName, 7) != null) {
+										log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
+//										if (click(driver, globalSearchRecord(recordName, 7),
+//												"globalSearchRecord: " + recordName, action.SCROLLANDBOOLEAN)) {
+//											log(LogStatus.INFO, "Clicked on Record: " + recordName, YesNo.No);
+//											if (sideNavOption.equalsIgnoreCase("Tasks")) {
+//												CommonLib.ThreadSleep(4000);
+//												String parentID = CommonLib.switchOnWindow(driver);
+//												CommonLib.ThreadSleep(4000);
+//												if (parentID != null) {
+//
+//													log(LogStatus.INFO,
+//															"Subject: " + recordName + " found on All Interaction Page",
+//															YesNo.No);
+//
+//													flag = true;
+//
+//												}
+//
+//												else {
+//													log(LogStatus.ERROR,
+//															"No New Window Open after click on Record: " + recordName,
+//															YesNo.Yes);
+//												}
+//											} else {
+//												flag = true;
+//											}
+//										} else {
+//											log(LogStatus.ERROR, "Not able to Click on Record: " + recordName,
+//													YesNo.Yes);
+//											sa.assertTrue(false, "Not able to Click on Record: " + recordName);
+//
+//										}
+
+									} else {
+										log(LogStatus.ERROR, "No Record found in side nav: " + sideNavOption
+												+ " for record: " + recordName, YesNo.Yes);
+										sa.assertTrue(false, "No Record found in side nav: " + sideNavOption
+												+ " for record: " + recordName);
+									}
+
+								}
+
+							} else {
+								log(LogStatus.ERROR, "Not able to click on globalSearchSideNavOptionLink", YesNo.Yes);
+								sa.assertTrue(false, "Not able to click on globalSearchSideNavOptionLink");
+							}
+
+						} else {
+							log(LogStatus.ERROR, "No Option found named: " + sideNavOption, YesNo.Yes);
+							sa.assertTrue(false, "No Option found named: " + sideNavOption);
+
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not able to click on globalSearchSideNavShowMoreButton", YesNo.Yes);
+						sa.assertTrue(false, "Not able to click on globalSearchSideNavShowMoreButton");
+					}
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to Pass the Value to Input Box: " + recordName, YesNo.Yes);
+				sa.assertTrue(false, "Not able to Pass the Value to Input Box: " + recordName);
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not able to click on globalSearchButton", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on globalSearchButton");
+
+		}
+		
+		ThreadSleep(2000);
+		if (click(driver, downArrowButton(20), "downArrowButton", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
+
+			if (click(driver, taskBP.buttonInTheDownArrowList("Edit", 20), "Edit Button in downArrowButton",
+					action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Edit Button in  Down Arrow Button", YesNo.No);
+
+				flag = true;
+
+			} else {
+				log(LogStatus.ERROR, "Not Able Click on Edit button in Down Arrow Button", YesNo.Yes);
+				sa.assertTrue(false, "Not Able Click on Edit button in Down Arrow Button");
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not Able Click on Down Arrow Button", YesNo.Yes);
+			sa.assertTrue(false, "Not Able Click on Down Arrow Button");
+
+		}
+		return flag;
+	}
+
 }
