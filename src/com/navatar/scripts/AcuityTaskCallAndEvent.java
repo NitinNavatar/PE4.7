@@ -20029,7 +20029,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName=ATCE_Fund1;
+		String recordName=ATCE_Theme1;
 		
 		
 		
@@ -20065,7 +20065,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+							String parentID=CommonLib.switchToWindowOpenNextToParentWindow(driver);
 							
 							if(CommonLib.clickUsingJavaScript(driver, bp.getParticipantColumn(taskSubjectName, 20), "Participant"))
 							{
