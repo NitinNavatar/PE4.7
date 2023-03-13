@@ -1233,7 +1233,7 @@ public static enum PermissionType{
 			public String toString() {
 				return "Q&A";
 			}
-		}, Overview,Events, Fund_Management, Fund_Investments, Fundraising_Contacts, Fundraising_Contact, Communications, SDG_Tab;	  
+		}, Overview,Events, Fund_Management, Fund_Investments, Fundraising_Contacts, Fundraising_Contact, Communications, SDG_Tab, Team;	  
 	};
 	
 	public static enum Header{

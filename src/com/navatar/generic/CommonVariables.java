@@ -1176,7 +1176,7 @@ public class CommonVariables {
 	    public static String MRSD_1_ResearchFindings,MRSD_2_ResearchFindings,MRSD_3_ResearchFindings,MRSD_4_ResearchFindings,MRSD_5_ResearchFindings,MRSD_6_ResearchFindings,MRSD_7_ResearchFindings,MRSD_8_ResearchFindings,MRSD_9_ResearchFindings;
 	    public static String AR_Firm1Name,AR_Contact1Name;
 	    public static String AR_Firm1,AR_Firm2,AR_Firm3,AR_Firm4,AR_Firm5,AR_Firm6,AR_Firm7,AR_Firm8,AR_Firm9,AR_Firm10,AR_Firm11,AR_Firm12,AR_Firm13,AR_Firm14,AR_Firm15,AR_Firm16,AR_Firm17,AR_Firm18,AR_Firm19,AR_Firm20,AR_Firm21,AR_Firm22,
-	    AR_Firm23,AR_Firm24,AR_Firm25,AR_Firm26,AR_Firm27,AR_Firm28,AR_Firm29,AR_Firm30,AR_Firm31,AR_Firm32,AR_Firm33,AR_Firm34,AR_Firm35,AR_Firm36,AR_Firm37,AR_Firm38,AR_Firm39,AR_Firm40,AR_Firm41,AR_Firm42,AR_Firm43,AR_Firm44,AR_Firm45,AR_Firm46,
+	    AR_Firm23,AR_Firm24,AR_Firm25,AR_Firm26,AR_Firm27,AR_Firm28,AR_Firm281,AR_Firm29,AR_Firm30,AR_Firm31,AR_Firm32,AR_Firm33,AR_Firm34,AR_Firm35,AR_Firm36,AR_Firm37,AR_Firm38,AR_Firm39,AR_Firm40,AR_Firm41,AR_Firm42,AR_Firm43,AR_Firm44,AR_Firm45,AR_Firm46,
 	    AR_Firm47,AR_Firm48,AR_Firm49,AR_Firm50,AR_Firm51,AR_Firm52,AR_Firm53,AR_Firm54,AR_Firm55,AR_Firm56,AR_Firm57,AR_Data1,AR_Data2,AR_Data3,
 	    AR_Research1,AR_Research2,AR_Research3,AR_Research4,AR_Research5,AR_Research6,AR_Research7,AR_Research54,AR_Research55,
 	    ARNewFirm1Name,ARNewFirm2Name,ARNewFirm1RecordType,ARNewFirm2RecordType;
@@ -1669,6 +1669,8 @@ public class CommonVariables {
 	    //Contact
 	    public static String ATE_Contact1,ATE_Contact2,ATE_Contact3,ATE_Contact4,ATE_Contact5,ATE_Contact6;
 	    
+	    public static String ACDealTeamName1,ACDealContact1,ACDealTeamMember1,ACDealTeamRole1,ACDealTeamID1;
+  		
 	    public static String ATE_ContactNameTitle1;
 	    
 	    public static String ATE_ContactLastName1;
@@ -1800,22 +1802,22 @@ public class CommonVariables {
 	 		/*******************RG Acuity Task and Event*********************************/
 	 		
 	 		//Firm
-	 		public static String RGATE_FirmLegalName1,RGATE_FirmLegalName2,RGATE_FirmLegalName3;
-	 		public static String RGATE_FirmRecordType1,RGATE_FirmRecordType2;
+	 		public static String RGATE_FirmLegalName1,RGATE_FirmLegalName2,RGATE_FirmLegalName3,RGATE_FirmLegalName4;
+	 		public static String RGATE_FirmRecordType1,RGATE_FirmRecordType2,RGATE_FirmRecordType3;
 	 		
 	 		
 	 		//Contact
-	 		public static String RGATE_ContactFirstName1,RGATE_ContactFirstName2;
-	 		public static String RGATE_ContactLastName1,RGATE_ContactLastName2;
-	 		public static String RGATE_ContactLegalName1,RGATE_ContactLegalName2;
-	 		public static String RGATE_ContactEmail1,RGATE_ContactEmail2;
-	 		public static String RGATE_ContactFullName1,RGATE_ContactFullName2;
+	 		public static String RGATE_ContactFirstName1,RGATE_ContactFirstName2,RGATE_ContactFirstName3;
+	 		public static String RGATE_ContactLastName1,RGATE_ContactLastName2,RGATE_ContactLastName3;
+	 		public static String RGATE_ContactLegalName1,RGATE_ContactLegalName2,RGATE_ContactLegalName3;
+	 		public static String RGATE_ContactEmail1,RGATE_ContactEmail2,RGATE_ContactEmail3;
+	 		public static String RGATE_ContactFullName1,RGATE_ContactFullName2,RGATE_ContactFullName3;
 	 		
 	 		
 	 		//Deal  
-	 		public static String RGATE_DealName1,RGATE_DealName2;
-	 		public static String RGATE_DealCompany1,RGATE_DealCompany2;
-	 		public static String RGATE_DealStage1,RGATE_DealStage2;
+	 		public static String RGATE_DealName1,RGATE_DealName2,RGATE_DealName3;
+	 		public static String RGATE_DealCompany1,RGATE_DealCompany2,RGATE_DealCompany3;
+	 		public static String RGATE_DealStage1,RGATE_DealStage2,RGATE_DealStage3;
 	 		
 	 		//Fund
 	 		public static String RGATE_FundName1,RGATE_FundName2;
@@ -7714,7 +7716,10 @@ public class CommonVariables {
 			      
 			    // contact last name
 			    
-			    
+			    ACDealTeamName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "AC_DT01", excelLabel.Deal_Name);
+				ACDealContact1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "AC_DT01", excelLabel.Contact);
+				ACDealTeamMember1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "AC_DT01", excelLabel.Member);
+				ACDealTeamRole1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "AC_DT01", excelLabel.Role);
 			    
 			    //contact title
 			    ATE_ContactNameTitle1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATE_Con6", excelLabel.Title);
@@ -9382,36 +9387,44 @@ public class CommonVariables {
 		 		 RGATE_FirmLegalName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGATERecord001", excelLabel.Legal_Name);
 		 		 RGATE_FirmLegalName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGATERecord002", excelLabel.Legal_Name);
 		 		 RGATE_FirmLegalName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGATERecord003", excelLabel.Legal_Name);
-				 		
+		 		 RGATE_FirmLegalName4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGATERecord004", excelLabel.Legal_Name);
+		 		
 			 	 RGATE_FirmRecordType1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGATERecord001", excelLabel.Record_Type);
 			   	 RGATE_FirmRecordType2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGATERecord003", excelLabel.Record_Type);
-		 		
+			   	 RGATE_FirmRecordType3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGATERecord004", excelLabel.Record_Type);
 		 		//Contact
 			 	RGATE_ContactFirstName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con1", excelLabel.Contact_FirstName);
 			 	RGATE_ContactFirstName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con2", excelLabel.Contact_FirstName);
-		 		
+			 	RGATE_ContactFirstName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con3", excelLabel.Contact_FirstName);
+			 	
 		 		RGATE_ContactLastName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con1", excelLabel.Contact_LastName);
 		 		RGATE_ContactLastName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con2", excelLabel.Contact_LastName);
+		 		RGATE_ContactLastName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con3", excelLabel.Contact_LastName);
 		 		
 		 		RGATE_ContactLegalName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con1", excelLabel.Legal_Name);
 		 		RGATE_ContactLegalName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con2", excelLabel.Legal_Name);
-		 				 		
+		 		RGATE_ContactLegalName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con3", excelLabel.Legal_Name);		 		
+		 		
 		 		RGATE_ContactEmail1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con1", excelLabel.Contact_EmailId);
 		 		RGATE_ContactEmail2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con2", excelLabel.Contact_EmailId);
+		 		RGATE_ContactEmail3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con3", excelLabel.Contact_EmailId);
 		 		
 		 		RGATE_ContactFullName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con1", excelLabel.ContactName);
 		 		RGATE_ContactFullName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con2", excelLabel.ContactName);
-		 		
+		 		RGATE_ContactFullName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con3", excelLabel.ContactName);
 		 		
 		 		//Deal 
 		 		RGATE_DealName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal1", excelLabel.Deal_Name);
 		 		RGATE_DealName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal2", excelLabel.Deal_Name);
+		 		RGATE_DealName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal3", excelLabel.Deal_Name);
 		 		
 		 		RGATE_DealCompany1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal1", excelLabel.Company);
 		 		RGATE_DealCompany2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal2", excelLabel.Company);
+		 		RGATE_DealCompany3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal3", excelLabel.Company);
 		 		
 		 		RGATE_DealStage1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal1", excelLabel.Stage);
 		 		RGATE_DealStage2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal2", excelLabel.Stage);
+		 		RGATE_DealStage3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal3", excelLabel.Stage);
 		 		
 		 		//Fund
 		 		RGATE_FundName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "RGATE_Fund01", excelLabel.Fund_Name);
@@ -10113,6 +10126,7 @@ public class CommonVariables {
 					AR_Firm26=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up26", excelLabel.Name);
 					AR_Firm27=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up27", excelLabel.Name);
 					AR_Firm28=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up28", excelLabel.Name);
+					AR_Firm281=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up281", excelLabel.Name);
 					AR_Firm29=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up29", excelLabel.Name);
 					AR_Firm30=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up30", excelLabel.Name);
 					AR_Firm31=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up31", excelLabel.Name);
