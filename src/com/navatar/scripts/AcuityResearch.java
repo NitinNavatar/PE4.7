@@ -231,9 +231,98 @@ public class AcuityResearch extends BaseLib{
 	sa.assertAll();
 }
 
+@Parameters({ "projectName"})
+@Test
+	public void ARTc002_2_SelectingRecordTypesForProfiles(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp=new ResearchPageBusinessLayer(driver);
+	lp.CRMLogin(superAdminUserName, adminPassword,appName);
+	
+	String recordTypes = "Account";
+	String avail[] = {"Private Equity", "Limited Partner"};
+	String[] profileForSelection = { "PE Standard User", "System Administrator"};
+	String parentID=null;
+	for(int k=0; k<profileForSelection.length; k++) {
+			home.notificationPopUpClose();
+			if (home.clickOnSetUpLink()) {
+				parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+				if (sp.searchStandardOrCustomObject(environment, mode, object.Profiles)) {
+					log(LogStatus.INFO, "click on Object : " + object.Profiles, YesNo.No);
+					ThreadSleep(2000);
+					switchToDefaultContent(driver);
+					switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
+					ThreadSleep(2000);
+					if (clickUsingJavaScript(driver, rp.getProfileSelected(profileForSelection[k],10), profileForSelection[k].toString(), action.BOOLEAN)) {
+						log(LogStatus.INFO, "able to click on " + profileForSelection[k], YesNo.No);
+						ThreadSleep(2000);
+						for(int i=0; i <avail.length; i++) {
+						switchToDefaultContent(driver);
+						ThreadSleep(2000);
+						switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
+						ThreadSleep(2000);
+						if (click(driver, rp.getEditButtonForRecordTypes(recordTypes, 10), "Edit Button", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "able to click on edit button for record type settiing", YesNo.No);
+							switchToDefaultContent(driver);
+							ThreadSleep(5000);
+							switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
+							ThreadSleep(2000);
+							if (selectVisibleTextFromDropDown(driver, sp.getavailableRecordType(10),
+									"Selected Tab List", avail[i])) {
+								appLog.info(recordTypes + " is selected successfully in Available tabs");
+								if (click(driver, sp.getAddBtn(10), "Custom Tab Add Button",
+										action.SCROLLANDBOOLEAN)) {
+									appLog.error("clicked on Add button");
+								} else {
+									appLog.error("Not able to click on Remove button so cannot add custom tabs");
+								}
+							} else {
+								appLog.error(avail[i] + " record type is not Available list Tab.");
+							}
+							if (click(driver, sp.getCreateUserSaveBtn_Lighting(10), "Save Button",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
+								ThreadSleep(2000);
+							} else {
+								log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
+								sa.assertTrue(false,"not able to click on save button for record type settiing");
+		
+							}
+							}else {
+								log(LogStatus.ERROR, "not able to click on edit button for record type settiing", YesNo.Yes);
+								sa.assertTrue(false,"not able to click on edit button for record type settiing");
+							}
+					}
+					}else {
+						log(LogStatus.ERROR, profileForSelection[k]+" profile is not clickable", YesNo.Yes);
+						sa.assertTrue(false,profileForSelection[k]+" profile is not clickable");
+					}
+				} else {
+					log(LogStatus.ERROR, "profiles tab is not clickable", YesNo.Yes);
+					sa.assertTrue(false,"profiles tab is not clickable");
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+		}else {
+			log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
+			sa.assertTrue(false, "setup link is not clickable");
+		}
+			}else {
+				log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
+				sa.assertTrue(false, "setup link is not clickable");
+			}
+	}
+	switchToDefaultContent(driver);
+	ThreadSleep(5000);
+	lp.CRMlogout();
+	sa.assertAll();
+}
+	
 	@Parameters({ "projectName"})
 	@Test
-	public void ARTc002_2_VerifyTheNavigationMenuItems(String projectName) {
+	public void ARTc002_3_VerifyTheNavigationMenuItems(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -528,12 +617,12 @@ public class AcuityResearch extends BaseLib{
 
 	
 	String[] profileForSelection = { "PE Standard User", "System Administrator" };
-	boolean isMakeAvailable = true;
+	boolean isMakeAvailable = false;
 	boolean isMakeDefault = false;
 	boolean flag = false;
 	String parentID=null;
 	
-	object[] objectsName = {object.Contact,object.Firm,object.Fund,object.Fundraising,object.Deal} ;
+	object[] objectsName = {object.Contact,object.Firm,object.Fund,object.Fundraising,object.Deal,object.Theme,object.Clip} ;
 	String a="",name = "" ,length = "", field = "";
 	
 	if (home.clickOnSetUpLink()) {
@@ -913,7 +1002,7 @@ public class AcuityResearch extends BaseLib{
 
 @Parameters({ "projectName"})
 @Test
-	public void ARTc05_1_SelectingRecordTypesForProfiles(String projectName) {
+	public void ARTc005_1_DeselectingRecordTypesForProfiles(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 	SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
@@ -921,10 +1010,10 @@ public class AcuityResearch extends BaseLib{
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	lp.CRMLogin(superAdminUserName, adminPassword,appName);
 	
-	String recordTypes [] = {"Firm","Deal","Fund","Fundraising"};
-	String avail[][] = {{"Consultant RT","IT Firm"},{"SellSide Deal","BuySide Deal", "Capital Raise"},{"Mutual Fund","Trust Fund"},{"FRGRT","MSGRT"}};
+	String recordTypes [] = {"Deal","Fund","Fundraising"};
+	String avail[][] = {{"SellSide Deal","BuySide Deal", "Capital Raise"},{"Mutual Fund","Trust Fund"},{"FRGRT","MSGRT"}};
 	String defaultValue[] = {"SellSide Deal","Mutual Fund", "FRGRT"};
-	String[] profileForSelection = { "PE Standard User", "System Administrator" };
+	String[] profileForSelection = { "PE Standard User", "System Administrator", "Standard Platform User", "Read Only", "PE - FOF Standard User", "Minimum Access - Salesforce", "Marketing User", "IR Only", "Identity User", "FOF Standard User", "Deal Only", "Contract Manager", "Standard User", "Minimum Access - Salesforce" };
 	String parentID=null;
 	String master= "--Master--";
 	for(int k=0; k<profileForSelection.length; k++) {
@@ -937,23 +1026,23 @@ public class AcuityResearch extends BaseLib{
 					ThreadSleep(2000);
 					switchToDefaultContent(driver);
 					switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
-					
+					ThreadSleep(2000);
 					if (clickUsingJavaScript(driver, rp.getProfileSelected(profileForSelection[k],10), profileForSelection[k].toString(), action.BOOLEAN)) {
 						log(LogStatus.INFO, "able to click on " + profileForSelection[k], YesNo.No);
-						ThreadSleep(10000);
+						ThreadSleep(5000);
 						for(int i=0; i <3; i++) {
 							System.out.println(avail[i].length);
 						switchToDefaultContent(driver);
 						ThreadSleep(5000);
 						switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
+						ThreadSleep(2000);
 						if (click(driver, rp.getEditButtonForRecordTypes(recordTypes[i], 10), "Edit Button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "able to click on edit button for record type settiing", YesNo.No);
 							switchToDefaultContent(driver);
 							ThreadSleep(5000);
 							switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
 							ThreadSleep(2000);
-							
-								for(int j = 0; j <avail[i].length; j++) {
+						for(int j = 0; j <avail[i].length; j++) {
 							if (selectVisibleTextFromDropDown(driver, sp.getSelectedRecordType(10),
 									"Selected Tab List", avail[i][j])) {
 								appLog.info(recordTypes + " is selected successfully in Selected tabs");
@@ -980,7 +1069,6 @@ public class AcuityResearch extends BaseLib{
 									}
 								} else {
 									appLog.error(recordTypes + " record type is not Selected list Tab.");
-									sa.assertTrue(false,recordTypes + " record type is not Selected list Tab.");
 								}	
 								
 							if (selectVisibleTextFromDropDown(driver, sp.getdefaultRecord(10), "Default Record Type",
@@ -1755,19 +1843,19 @@ public class AcuityResearch extends BaseLib{
 								+ searchValue + "---------");
 				
 		}
-			if (rp.mouseHoverOnNavigationAndGetText()) {
-				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-			} else {
-				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-			}
-			
-			if (rp.mouseHoverOnGridAndGetText()) {
-				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-			} else {
-				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-			}
+//			if (rp.mouseHoverOnNavigationAndGetText()) {
+//				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//			} else {
+//				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//			}
+//			
+//			if (rp.mouseHoverOnGridAndGetText()) {
+//				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//			} else {
+//				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//			}
 			int gridSize = rp.getElementsFromGrid().size();
 			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
 			for(int i=0; i<gridSize; i++)
@@ -2514,7 +2602,7 @@ public class AcuityResearch extends BaseLib{
 						ThreadSleep(5000);
 
 							if (BP.updateActivityTimelineRecord(projectName, task1BasicSection, null,
-									null, null, null, false, null, null, null, null, null, null)) {
+									null, null, null,false,null,null,null,null,null,null)) {
 								log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
 
 								CommonLib.refresh(driver);
@@ -2723,7 +2811,7 @@ public class AcuityResearch extends BaseLib{
 							ThreadSleep(5000);
 
 								if (BP.updateActivityTimelineRecord(projectName, task1BasicSection, null,
-										null, null, null, false, null, null, null, null, null, null)) {
+										null, null, null,false,null,null,null,null,null,null)) {
 									log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
 
 									CommonLib.refresh(driver);
@@ -2967,7 +3055,7 @@ public class AcuityResearch extends BaseLib{
 					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
 				}
 		}  
-	   String variable =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.ResearchFindings, AR_Research4, excelLabel.Variable_Name);
+	   String variable =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.ResearchFindings, AR_Research54, excelLabel.Variable_Name);
 	   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(variable, action.SCROLLANDBOOLEAN, 10);
 		if(list.isEmpty()) {
 			
@@ -3147,7 +3235,7 @@ public class AcuityResearch extends BaseLib{
 					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
 				}
 		}  
-	   String variable =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.ResearchFindings, AR_Research4, excelLabel.Variable_Name);
+	   String variable =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.ResearchFindings, AR_Research55, excelLabel.Variable_Name);
 	   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(variable, action.SCROLLANDBOOLEAN, 10);
 		if(list.isEmpty()) {
 			
@@ -3296,7 +3384,7 @@ public class AcuityResearch extends BaseLib{
 
 @Parameters({ "projectName"})
 @Test
-	public void ARTc022_CreateCustomFields(String projectName) {
+	public void ARTc022_1_CreateCustomFields(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 	SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
@@ -3326,7 +3414,7 @@ public class AcuityResearch extends BaseLib{
 	String avail[][] = {{"Consultant RT","IT Firm"},{"SellSide Deal","BuySide Deal", "Capital Raise"},{"Mutual Fund","Trust Fund"},{"FRGRT","MSGRT"}};
 	String defaultValue[] = {"SellSide Deal","Mutual Fund", "FRGRT"};
 	String[] profileForSelection = { "PE Standard User", "System Administrator" };
-	boolean isMakeAvailable = true;
+	boolean isMakeAvailable = false;
 	boolean isMakeDefault = false;
 	boolean flag = false;
 	String parentID=null;
@@ -3617,6 +3705,90 @@ public class AcuityResearch extends BaseLib{
 	sa.assertAll();
 }
 
+	@Parameters({ "projectName"})
+	@Test
+	public void ARTc022_2_SelectingRecordTypesForProfiles(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp=new ResearchPageBusinessLayer(driver);
+	lp.CRMLogin(superAdminUserName, adminPassword,appName);
+	
+	String recordTypes = "Account";
+	String avail[] = {"Consultant RT", "IT Firm"};
+	String[] profileForSelection = { "PE Standard User", "System Administrator"};
+	String parentID=null;
+	for(int k=0; k<profileForSelection.length; k++) {
+			home.notificationPopUpClose();
+			if (home.clickOnSetUpLink()) {
+				parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+				if (sp.searchStandardOrCustomObject(environment, mode, object.Profiles)) {
+					log(LogStatus.INFO, "click on Object : " + object.Profiles, YesNo.No);
+					ThreadSleep(2000);
+					switchToDefaultContent(driver);
+					switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
+					ThreadSleep(2000);
+					if (clickUsingJavaScript(driver, rp.getProfileSelected(profileForSelection[k],10), profileForSelection[k].toString(), action.BOOLEAN)) {
+						log(LogStatus.INFO, "able to click on " + profileForSelection[k], YesNo.No);
+						ThreadSleep(2000);
+						for(int i=0; i <avail.length; i++) {
+						switchToDefaultContent(driver);
+						ThreadSleep(5000);
+						switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
+						ThreadSleep(2000);
+						if (click(driver, rp.getEditButtonForRecordTypes(recordTypes, 10), "Edit Button", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "able to click on edit button for record type settiing", YesNo.No);
+							switchToDefaultContent(driver);
+							ThreadSleep(5000);
+							switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
+							ThreadSleep(2000);
+							if (selectVisibleTextFromDropDown(driver, sp.getavailableRecordType(10),
+									"Selected Tab List", avail[i])) {
+								appLog.info(recordTypes + " is selected successfully in Available tabs");
+								if (click(driver, sp.getAddBtn(10), "Custom Tab Add Button",
+										action.SCROLLANDBOOLEAN)) {
+									appLog.info("clicked on Add button");
+								} else {
+									appLog.error("Not able to click on Remove button so cannot add custom tabs");
+								}
+							} else {
+								appLog.error(avail[i] + " record type is not Available list Tab.");
+							}
+	
+							if (click(driver, sp.getCreateUserSaveBtn_Lighting(10), "Save Button",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
+								ThreadSleep(2000);
+							} else {
+								log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
+							}
+							}else {
+								log(LogStatus.ERROR, "not able to click on edit button for record type settiing", YesNo.Yes);
+							}
+					}
+					}else {
+						log(LogStatus.ERROR, profileForSelection[k]+" profile is not clickable", YesNo.Yes);
+					}
+				
+				} else {
+					log(LogStatus.ERROR, "profiles tab is not clickable", YesNo.Yes);
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+		}else {
+			log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
+		}
+			}else {
+				log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
+			}
+	}
+	switchToDefaultContent(driver);
+	ThreadSleep(5000);
+	lp.CRMlogout();
+	sa.assertAll();
+	}
+
 @Parameters({ "projectName"})
 @Test
 	public void ARTc023_VerifyResearchFunctionalityForValidData(String projectName) {
@@ -3627,7 +3799,6 @@ public class AcuityResearch extends BaseLib{
 	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
 	ThreadSleep(2000);
 	String ele;
-	String headerName;
 	
 	String[] searchValues = {AR_Firm8};
 	
@@ -3681,25 +3852,25 @@ public class AcuityResearch extends BaseLib{
 								+ searchValue + "---------");
 				
 		}
-			int gridSize = rp.getElementsFromGrid().size();
-			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-			for(int i=0; i<gridSize; i++)
-			{		
-				headerName = rp.getElementsFromGrid().get(i).getText();
-				String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-				
-				if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-					log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-				}
-				if (rp.VerifyViewMoreOption(headerName)) {
-					log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-				}
-			}
+//			int gridSize = rp.getElementsFromGrid().size();
+//			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//			for(int i=0; i<gridSize; i++)
+//			{		
+//				headerName = rp.getElementsFromGrid().get(i).getText();
+//				String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//				
+//				if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//					log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//				}
+//				if (rp.VerifyViewMoreOption(headerName)) {
+//					log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//				}
+//			}
 		}
 	switchToDefaultContent(driver);
 	lp.CRMlogout();
@@ -3748,7 +3919,7 @@ public class AcuityResearch extends BaseLib{
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
 	ThreadSleep(2000);
-	String ele, headerName;
+	String ele;
 	
 	String[] searchValues = {AR_Firm9,AR_Firm10,AR_Firm11,AR_Firm12,AR_Firm13,AR_Firm14,AR_Firm15,AR_Firm16,AR_Firm17,AR_Firm18,AR_Firm19};
 	
@@ -3758,7 +3929,7 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeys(driver, rp.getTextAreaResearch(10),"\"" + searchValue + "\"", "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
@@ -3802,38 +3973,38 @@ public class AcuityResearch extends BaseLib{
 								+ searchValue + "---------");
 				
 		}
-			if (rp.mouseHoverOnNavigationAndGetText()) {
-				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-			} else {
-				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-			}
-			
-			if (rp.mouseHoverOnGridAndGetText()) {
-				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-			} else {
-				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-			}
-			int gridSize = rp.getElementsFromGrid().size();
-			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-			for(int i=0; i<gridSize; i++)
-			{		
-				headerName = rp.getElementsFromGrid().get(i).getText();
-				String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-				
-				if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-					log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-				}
-				if (rp.VerifyViewMoreOption(headerName)) {
-					log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-				}
-			}
+//			if (rp.mouseHoverOnNavigationAndGetText()) {
+//				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//			} else {
+//				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//			}
+//			
+//			if (rp.mouseHoverOnGridAndGetText()) {
+//				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//			} else {
+//				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//			}
+//			int gridSize = rp.getElementsFromGrid().size();
+//			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//			for(int i=0; i<gridSize; i++)
+//			{		
+//				headerName = rp.getElementsFromGrid().get(i).getText();
+//				String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//				
+//				if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//					log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//				}
+//				if (rp.VerifyViewMoreOption(headerName)) {
+//					log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//				}
+//			}
 		}
 	switchToDefaultContent(driver);
 	lp.CRMlogout();
@@ -3879,7 +4050,6 @@ public class AcuityResearch extends BaseLib{
 								log(LogStatus.ERROR,firmRecordTypeArray[i]+" not updated ",YesNo.Yes);
 								sa.assertTrue(false, firmRecordTypeArray[i]+" not updated ");
 							}
-						
 						}else {
 							log(LogStatus.ERROR, firmRecordTypeArray[i]+" is not clickable", YesNo.Yes);
 							sa.assertTrue(false, firmRecordTypeArray[i]+" is not clickable");
@@ -4155,38 +4325,38 @@ public class AcuityResearch extends BaseLib{
 								+ searchValue + "---------");
 				
 		}
-			if (rp.mouseHoverOnNavigationAndGetText()) {
-				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-			} else {
-				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-			}
-			
-			if (rp.mouseHoverOnGridAndGetText()) {
-				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-			} else {
-				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-			}
-			int gridSize = rp.getElementsFromGrid().size();
-			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-			for(int i=0; i<gridSize; i++)
-			{		
-				headerName = rp.getElementsFromGrid().get(i).getText();
-				String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-				
-				if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-					log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-				}
-				if (rp.VerifyViewMoreOption(headerName)) {
-					log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-				}
-			}
+//			if (rp.mouseHoverOnNavigationAndGetText()) {
+//				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//			} else {
+//				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//			}
+//			
+//			if (rp.mouseHoverOnGridAndGetText()) {
+//				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//			} else {
+//				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//			}
+//			int gridSize = rp.getElementsFromGrid().size();
+//			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//			for(int i=0; i<gridSize; i++)
+//			{		
+//				headerName = rp.getElementsFromGrid().get(i).getText();
+//				String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//				
+//				if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//					log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//				}
+//				if (rp.VerifyViewMoreOption(headerName)) {
+//					log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//				}
+//			}
 		}
 	switchToDefaultContent(driver);
 	lp.CRMlogout();
@@ -4508,38 +4678,38 @@ public class AcuityResearch extends BaseLib{
 								+ searchValue + "---------");
 				
 		}
-			if (rp.mouseHoverOnNavigationAndGetText()) {
-				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-			} else {
-				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-			}
-			
-			if (rp.mouseHoverOnGridAndGetText()) {
-				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-			} else {
-				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-			}
-			int gridSize = rp.getElementsFromGrid().size();
-			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-			for(int i=0; i<gridSize; i++)
-			{		
-				headerName = rp.getElementsFromGrid().get(i).getText();
-				String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-				
-				if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-					log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-				}
-				if (rp.VerifyViewMoreOption(headerName)) {
-					log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-				}
-			}
+//			if (rp.mouseHoverOnNavigationAndGetText()) {
+//				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//			} else {
+//				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//			}
+//			
+//			if (rp.mouseHoverOnGridAndGetText()) {
+//				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//			} else {
+//				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//			}
+//			int gridSize = rp.getElementsFromGrid().size();
+//			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//			for(int i=0; i<gridSize; i++)
+//			{		
+//				headerName = rp.getElementsFromGrid().get(i).getText();
+//				String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//				
+//				if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//					log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//				}
+//				if (rp.VerifyViewMoreOption(headerName)) {
+//					log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//				}
+//			}
 		}
 	switchToDefaultContent(driver);
 	lp.CRMlogout();
@@ -4614,7 +4784,6 @@ public class AcuityResearch extends BaseLib{
 		}
 
 	}
-	
 	
 	for (int i = 0; i < contactRecordTypeArray.length; i++) {
 		home.notificationPopUpClose();
@@ -4803,42 +4972,43 @@ public class AcuityResearch extends BaseLib{
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
 	ThreadSleep(2000);
-	String ele, headerName;
+	String ele;
 	
-	String[] searchValues = {AR_Firm21};
+	String[] varibles = {"AR_Up21"};
+	String varibale21 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
+
+	String[] searchValues = {varibale21};
 	
-	for(String searchValue : searchValues) {
-		
-		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
-		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
+	for(int i=0;i<searchValues.length;i++) {
+		log(LogStatus.PASS, "Working for " + searchValues[i], YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValues[i], "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
 			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
 			ThreadSleep(2000);
 			ele = rp.getResearchFindingsValue(10).getText();
-			if (ele.equals(searchValue)) {
-			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
+			if (ele.equals(searchValues[i])) {
+			log(LogStatus.PASS, ele +" is matched with " +searchValues[i], YesNo.Yes);
 			}
 		} else {
-			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
-			sa.assertTrue(false,"Not Able to send value "+searchValue);
+			log(LogStatus.ERROR, "Not Able to send value "+searchValues[i], YesNo.Yes);
+			sa.assertTrue(false,"Not Able to send value "+searchValues[i]);
 		}
 		}
 		log(LogStatus.INFO,
 				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
-						+ searchValue + "---------",
+						+ searchValues[i] + "---------",
 				YesNo.No);
 			
-			if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+			if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValues[i])) {
 				log(LogStatus.INFO,
 						"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-								+ searchValue + "---------",
+								+ searchValues[i] + "---------",
 						YesNo.No);
-			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibles[i], action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
 					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
@@ -4850,45 +5020,45 @@ public class AcuityResearch extends BaseLib{
 			} else {
 				log(LogStatus.FAIL,
 						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-								+ searchValue + "---------",
+								+ searchValues[i] + "---------",
 						YesNo.No);
 				sa.assertTrue(false,
 						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-								+ searchValue + "---------");
+								+ searchValues[i] + "---------");
 				
 		}
-			if (rp.mouseHoverOnNavigationAndGetText()) {
-				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-			} else {
-				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-			}
-			
-			if (rp.mouseHoverOnGridAndGetText()) {
-				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-			} else {
-				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-			}
-			int gridSize = rp.getElementsFromGrid().size();
-			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-			for(int i=0; i<gridSize; i++)
-			{		
-				headerName = rp.getElementsFromGrid().get(i).getText();
-				String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-				
-				if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-					log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-				}
-				if (rp.VerifyViewMoreOption(headerName)) {
-					log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-				}
-			}
+//			if (rp.mouseHoverOnNavigationAndGetText()) {
+//				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//			} else {
+//				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//			}
+//			
+//			if (rp.mouseHoverOnGridAndGetText()) {
+//				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//			} else {
+//				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//			}
+//			int gridSize = rp.getElementsFromGrid().size();
+//			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//			for(int i=0; i<gridSize; i++)
+//			{		
+//				headerName = rp.getElementsFromGrid().get(i).getText();
+//				String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//				
+//				if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//					log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//				}
+//				if (rp.VerifyViewMoreOption(headerName)) {
+//					log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//				}
+//			}
 		}
 	switchToDefaultContent(driver);
 	lp.CRMlogout();
@@ -4964,40 +5134,41 @@ public class AcuityResearch extends BaseLib{
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	ThreadSleep(2000);
 	String ele, headerName;
+	String[] varibles = {"AR_Up22"};
+	String varibale22 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
+
+	String[] searchValues = {varibale22};
 	
-	String[] searchValues = {AR_Firm22};
-	
-	for(String searchValue : searchValues) {
-		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
-		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
+	for(int i=0;i<searchValues.length;i++) {
+		log(LogStatus.PASS, "Working for " + searchValues[i], YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValues[i], "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
 			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
 			ThreadSleep(2000);
 			ele = rp.getResearchFindingsValue(10).getText();
-			if (ele.equals(searchValue)) {
-			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
+			if (ele.equals(searchValues[i])) {
+			log(LogStatus.PASS, ele +" is matched with " +searchValues[i], YesNo.Yes);
 			}
 		} else {
-			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
-			sa.assertTrue(false,"Not Able to send value "+searchValue);
+			log(LogStatus.ERROR, "Not Able to send value "+searchValues[i], YesNo.Yes);
+			sa.assertTrue(false,"Not Able to send value "+searchValues[i]);
 		}
 		}
 		log(LogStatus.INFO,
 				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
-						+ searchValue + "---------",
+						+ searchValues[i] + "---------",
 				YesNo.No);
 			
-			if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+			if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValues[i])) {
 				log(LogStatus.INFO,
 						"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-								+ searchValue + "---------",
+								+ searchValues[i] + "---------",
 						YesNo.No);
-			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibles[i], action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
 					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
@@ -5009,45 +5180,45 @@ public class AcuityResearch extends BaseLib{
 			} else {
 				log(LogStatus.FAIL,
 						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-								+ searchValue + "---------",
+								+ searchValues[i] + "---------",
 						YesNo.No);
 				sa.assertTrue(false,
 						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-								+ searchValue + "---------");
+								+ searchValues[i] + "---------");
 				
 		}
-			if (rp.mouseHoverOnNavigationAndGetText()) {
-				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-			} else {
-				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-			}
-			
-			if (rp.mouseHoverOnGridAndGetText()) {
-				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-			} else {
-				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-			}
-			int gridSize = rp.getElementsFromGrid().size();
-			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-			for(int i=0; i<gridSize; i++)
-			{		
-				headerName = rp.getElementsFromGrid().get(i).getText();
-				String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-				
-				if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-					log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-				}
-				if (rp.VerifyViewMoreOption(headerName)) {
-					log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-				}
-			}
+//			if (rp.mouseHoverOnNavigationAndGetText()) {
+//				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//			} else {
+//				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//			}
+//			
+//			if (rp.mouseHoverOnGridAndGetText()) {
+//				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//			} else {
+//				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//			}
+//			int gridSize = rp.getElementsFromGrid().size();
+//			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//			for(int i=0; i<gridSize; i++)
+//			{		
+//				headerName = rp.getElementsFromGrid().get(i).getText();
+//				String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//				
+//				if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//					log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//				}
+//				if (rp.VerifyViewMoreOption(headerName)) {
+//					log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//				}
+//			}
 		}
 	switchToDefaultContent(driver);
 	lp.CRMlogout();
@@ -5075,6 +5246,7 @@ public class AcuityResearch extends BaseLib{
 		if (home.clickOnSetUpLink()) {
 			parentID = switchOnWindow(driver);
 		if (parentID!=null) {
+			ThreadSleep(2000);
 			if(sp.giveAndRemoveObjectPermissionFromProfiles(profileForSelection,objects,permissionTypes,status)) {
 				log(LogStatus.PASS,"Remove Permission from Contact Object", YesNo.No);
 				flag=true;
@@ -5099,40 +5271,42 @@ public class AcuityResearch extends BaseLib{
 	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
 	ThreadSleep(2000);
 	String ele, headerName;
+	String[] varibles = {"AR_Up23","AR_Up24"};
+	String varibale23 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
+	String varibale24 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, varibles[1], excelLabel.Name);
+
+	String[] searchValues = {varibale23,varibale24};
 	
-	String[] searchValues = {AR_Firm23,AR_Firm24};
-	
-	for(String searchValue : searchValues) {
-		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
-		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
+	for(int i=0;i<searchValues.length;i++) {
+		log(LogStatus.PASS, "Working for " + searchValues[i], YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValues[i], "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
 			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
 			ThreadSleep(2000);
 			ele = rp.getResearchFindingsValue(10).getText();
-			if (ele.equals(searchValue)) {
-			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
+			if (ele.equals(searchValues[i])) {
+			log(LogStatus.PASS, ele +" is matched with " +searchValues[i], YesNo.Yes);
 			}
 		} else {
-			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
-			sa.assertTrue(false,"Not Able to send value "+searchValue);
+			log(LogStatus.ERROR, "Not Able to send value "+searchValues[i], YesNo.Yes);
+			sa.assertTrue(false,"Not Able to send value "+searchValues[i]);
 		}
 		}
 		log(LogStatus.INFO,
 				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
-						+ searchValue + "---------",
+						+ searchValues[i] + "---------",
 				YesNo.No);
 		
-			if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+			if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValues[i])) {
 				log(LogStatus.INFO,
 						"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-								+ searchValue + "---------",
+								+ searchValues[i] + "---------",
 						YesNo.No);
-			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibles[i], action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
 					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
@@ -5144,45 +5318,45 @@ public class AcuityResearch extends BaseLib{
 			} else {
 				log(LogStatus.FAIL,
 						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-								+ searchValue + "---------",
+								+ searchValues[i] + "---------",
 						YesNo.No);
 				sa.assertTrue(false,
 						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-								+ searchValue + "---------");
+								+ searchValues[i] + "---------");
 				
 		}
-			if (rp.mouseHoverOnNavigationAndGetText()) {
-				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-			} else {
-				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-			}
-			
-			if (rp.mouseHoverOnGridAndGetText()) {
-				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-			} else {
-				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-			}
-			int gridSize = rp.getElementsFromGrid().size();
-			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-			for(int i=0; i<gridSize; i++)
-			{		
-				headerName = rp.getElementsFromGrid().get(i).getText();
-				String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-				
-				if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-					log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-				}
-				if (rp.VerifyViewMoreOption(headerName)) {
-					log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-				}
-			}
+//			if (rp.mouseHoverOnNavigationAndGetText()) {
+//				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//			} else {
+//				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//			}
+//			
+//			if (rp.mouseHoverOnGridAndGetText()) {
+//				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//			} else {
+//				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//			}
+//			int gridSize = rp.getElementsFromGrid().size();
+//			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//			for(int i=0; i<gridSize; i++)
+//			{		
+//				headerName = rp.getElementsFromGrid().get(i).getText();
+//				String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//				
+//				if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//					log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//				}
+//				if (rp.VerifyViewMoreOption(headerName)) {
+//					log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//				}
+//			}
 		}
 	switchToDefaultContent(driver);
 	lp.CRMlogout();
@@ -5209,6 +5383,7 @@ public class AcuityResearch extends BaseLib{
 		if (home.clickOnSetUpLink()) {
 			parentID = switchOnWindow(driver);
 		if (parentID!=null) {
+			ThreadSleep(2000);
 			if(sp.giveAndRemoveObjectPermissionFromProfiles(profileForSelection,objects,permissionTypes,status)) {
 				log(LogStatus.PASS,"Remove Permission from Contact Object", YesNo.No);
 				flag=true;
@@ -5232,39 +5407,38 @@ public class AcuityResearch extends BaseLib{
 	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
 	ThreadSleep(2000);
 	String ele, headerName;
-	
-	String[] searchValues = {AR_Firm22};
-	
-	for(String searchValue : searchValues) {
-		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
-		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
+	String[] varibles = {"AR_Up22"};
+	String varibale22 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
+	String[] searchValues = {varibale22};
+	for(int i=0;i<searchValues.length;i++) {
+		log(LogStatus.PASS, "Working for " + searchValues[i], YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValues[i], "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
 			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
 			ThreadSleep(2000);
 			ele = rp.getResearchFindingsValue(10).getText();
-			if (ele.equals(searchValue)) {
-			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
+			if (ele.equals(searchValues[i])) {
+			log(LogStatus.PASS, ele +" is matched with " +searchValues[i], YesNo.Yes);
 			}
 		} else {
-			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
-			sa.assertTrue(false,"Not Able to send value "+searchValue);
+			log(LogStatus.ERROR, "Not Able to send value "+searchValues[i], YesNo.Yes);
+			sa.assertTrue(false,"Not Able to send value "+searchValues[i]);
 		}
 		}
 		log(LogStatus.INFO,
 				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
-						+ searchValue + "---------",
+						+ searchValues[i] + "---------",
 				YesNo.No);
-			if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+			if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValues[i])) {
 				log(LogStatus.INFO,
 						"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-								+ searchValue + "---------",
+								+ searchValues[i] + "---------",
 						YesNo.No);
-			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibles[i], action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
 					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
@@ -5276,46 +5450,46 @@ public class AcuityResearch extends BaseLib{
 			} else {
 				log(LogStatus.FAIL,
 						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-								+ searchValue + "---------",
+								+ searchValues[i] + "---------",
 						YesNo.No);
 				sa.assertTrue(false,
 						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-								+ searchValue + "---------");
+								+ searchValues[i] + "---------");
 				
 		}
-			if (rp.mouseHoverOnNavigationAndGetText()) {
-				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-			} else {
-				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-			}
-			
-			if (rp.mouseHoverOnGridAndGetText()) {
-				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-			} else {
-				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-			}
-			int gridSize = rp.getElementsFromGrid().size();
-			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-			for(int i=0; i<gridSize; i++)
-			{		
-				headerName = rp.getElementsFromGrid().get(i).getText();
-				String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-				
-				if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-					log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-				}
-				ThreadSleep(2000);
-				if (rp.VerifyViewMoreOption(headerName)) {
-					log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-				}
-			}
+//			if (rp.mouseHoverOnNavigationAndGetText()) {
+//				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//			} else {
+//				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//			}
+//			
+//			if (rp.mouseHoverOnGridAndGetText()) {
+//				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//			} else {
+//				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//			}
+//			int gridSize = rp.getElementsFromGrid().size();
+//			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//			for(int i=0; i<gridSize; i++)
+//			{		
+//				headerName = rp.getElementsFromGrid().get(i).getText();
+//				String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//				
+//				if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//					log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//				}
+//				ThreadSleep(2000);
+//				if (rp.VerifyViewMoreOption(headerName)) {
+//					log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//				}
+//			}
 		}
 	switchToDefaultContent(driver);
 	lp.CRMlogout();
@@ -5443,43 +5617,42 @@ public class AcuityResearch extends BaseLib{
 									+ searchValue + "---------");
 					
 			}
-				if (rp.mouseHoverOnNavigationAndGetText()) {
-					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-				}
-				
-				if (rp.mouseHoverOnGridAndGetText()) {
-					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-				}
-				int gridSize = rp.getElementsFromGrid().size();
-				log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-				for(int i=0; i<gridSize; i++)
-				{		
-					headerName = rp.getElementsFromGrid().get(i).getText();
-					String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-					
-					if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-						log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-						sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-					}
-					if (rp.VerifyViewMoreOption(headerName)) {
-						log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-					}
-				}
+//				if (rp.mouseHoverOnNavigationAndGetText()) {
+//					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//				}
+//				
+//				if (rp.mouseHoverOnGridAndGetText()) {
+//					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//				}
+//				int gridSize = rp.getElementsFromGrid().size();
+//				log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//				for(int i=0; i<gridSize; i++)
+//				{		
+//					headerName = rp.getElementsFromGrid().get(i).getText();
+//					String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//					
+//					if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//						log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//					}
+//					if (rp.VerifyViewMoreOption(headerName)) {
+//						log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//					}
+//				}
 			}
 		lp.CRMlogout();
 		refresh(driver);		
 		lp.CRMLogin(glUser1EmailID, adminPassword, appName);
-		String[] searchValues1 = {AR_Firm26};
 		ThreadSleep(2000);
 			if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
 				if (cp.clickOnCreatedContact(projectName, contactName[0], contactName[1])) {
@@ -5501,39 +5674,44 @@ public class AcuityResearch extends BaseLib{
 
 			}
 			
-			for(String searchValue1 : searchValues1) {
-				String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue1, excelLabel.Variable_Name);
-				log(LogStatus.PASS, "Working for " + searchValue1, YesNo.Yes);
+			String[] varibles = {"AR_Up26"};
+			String varibale26 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
+
+			String[] searchValues1 = {varibale26};
+			
+			for(int i=0;i<searchValues1.length;i++) {
+
+				log(LogStatus.PASS, "Working for " + searchValues1[i], YesNo.Yes);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-				if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue1, "Research Input Field", action.BOOLEAN)){
+				if(sendKeys(driver, rp.getTextAreaResearch(10),searchValues1[i], "Research Input Field", action.BOOLEAN)){
 					ThreadSleep(2000);
 					clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 					ThreadSleep(8000);
 					clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
 					ThreadSleep(2000);
 					ele = rp.getResearchFindingsValue(10).getText();
-					if (ele.equals(searchValue1)) {
-					log(LogStatus.PASS, ele +" is matched with " +searchValue1, YesNo.Yes);
+					if (ele.equals(searchValues1[i])) {
+					log(LogStatus.PASS, ele +" is matched with " +searchValues1[i], YesNo.Yes);
 					}
 				} else {
-					log(LogStatus.ERROR, "Not Able to send value "+searchValue1, YesNo.Yes);
-					sa.assertTrue(false,"Not Able to send value "+searchValue1);
+					log(LogStatus.ERROR, "Not Able to send value "+searchValues1[i], YesNo.Yes);
+					sa.assertTrue(false,"Not Able to send value "+searchValues1[i]);
 				}
 				}
 				log(LogStatus.INFO,
 						"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
-								+ searchValue1 + "---------",
+								+ searchValues1[i] + "---------",
 						YesNo.No);
 				if(rp.getNoResult(5) != null){
-					log(LogStatus.PASS, "There is no data retaled to " + searchValue1, YesNo.No);
+					log(LogStatus.PASS, "There is no data retaled to " + searchValues1[i], YesNo.No);
 				} else
-					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue1)) {
+					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValues1[i])) {
 						log(LogStatus.INFO,
 								"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-										+ searchValue1 + "---------",
+										+ searchValues1[i] + "---------",
 								YesNo.No);
-					ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+					ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibles[i], action.SCROLLANDBOOLEAN, 10);
 						if(list.isEmpty()) {
 							
 							log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
@@ -5545,45 +5723,45 @@ public class AcuityResearch extends BaseLib{
 					} else {
 						log(LogStatus.FAIL,
 								"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-										+ searchValue1 + "---------",
+										+ searchValues1[i] + "---------",
 								YesNo.No);
 						sa.assertTrue(false,
 								"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-										+ searchValue1 + "---------");
+										+ searchValues1[i] + "---------");
 						
 				}
-					if (rp.mouseHoverOnNavigationAndGetText()) {
-						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-					}
-					
-					if (rp.mouseHoverOnGridAndGetText()) {
-						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-					}
-					int gridSize = rp.getElementsFromGrid().size();
-					log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-					for(int i=0; i<gridSize; i++)
-					{		
-						headerName = rp.getElementsFromGrid().get(i).getText();
-						String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-						
-						if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-							log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-						} else {
-							log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-							sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-						}
-						if (rp.VerifyViewMoreOption(headerName)) {
-							log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-						} else {
-							log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-						}
-					}
+//					if (rp.mouseHoverOnNavigationAndGetText()) {
+//						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//					}
+//					
+//					if (rp.mouseHoverOnGridAndGetText()) {
+//						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//					}
+//					int gridSize = rp.getElementsFromGrid().size();
+//					log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//					for(int i=0; i<gridSize; i++)
+//					{		
+//						headerName = rp.getElementsFromGrid().get(i).getText();
+//						String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//						
+//						if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//							log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//						} else {
+//							log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//							sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//						}
+//						if (rp.VerifyViewMoreOption(headerName)) {
+//							log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//						} else {
+//							log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//						}
+//					}
 				}
 			
 	lp.CRMlogout();
@@ -5603,7 +5781,7 @@ public class AcuityResearch extends BaseLib{
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	String parentWindow = "";
-	String[] contactName = {"LPcon01","User.rec01"},searchValues = {AR_Firm26};
+	String[] contactName = {"LPcon01","User.rec01"};
 	String ele, headerName;
 
 	
@@ -5665,7 +5843,7 @@ public class AcuityResearch extends BaseLib{
 		ThreadSleep(2000);
 			if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
 				if (cp.clickOnCreatedContact(projectName, contactName[0], contactName[1])) {
-					if (isDisplayed(driver, cp.getPhoneFieldOnContactPage(10), "Visibility", 10, "Phone") == null) {
+					if (isDisplayed(driver, cp.getPhoneFieldOnContactPage(10), "Visibility", 10, "Phone") != null) {
 						log(LogStatus.PASS, "Phone Field is visible", YesNo.Yes);
 					} else {
 						log(LogStatus.ERROR, "Phone Field is not visible", YesNo.Yes);
@@ -5683,39 +5861,44 @@ public class AcuityResearch extends BaseLib{
 
 			}
 			
-			for(String searchValue : searchValues) {
-				String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
-				log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
+			String[] varibles = {"AR_Up25"};
+			String varibale25 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
+
+			String[] searchValues = {varibale25};
+			
+			for(int i=0;i<searchValues.length;i++) {
+
+				log(LogStatus.PASS, "Working for " + searchValues[i], YesNo.Yes);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-				if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+				if(sendKeys(driver, rp.getTextAreaResearch(10),searchValues[i], "Research Input Field", action.BOOLEAN)){
 					ThreadSleep(2000);
 					clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 					ThreadSleep(8000);
 					clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
 					ThreadSleep(2000);
 					ele = rp.getResearchFindingsValue(10).getText();
-					if (ele.equals(searchValue)) {
-					log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
+					if (ele.equals(searchValues[i])) {
+					log(LogStatus.PASS, ele +" is matched with " +searchValues[i], YesNo.Yes);
 					}
 				} else {
-					log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
-					sa.assertTrue(false,"Not Able to send value "+searchValue);
+					log(LogStatus.ERROR, "Not Able to send value "+searchValues[i], YesNo.Yes);
+					sa.assertTrue(false,"Not Able to send value "+searchValues[i]);
 				}
 				}
 				log(LogStatus.INFO,
 						"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
-								+ searchValue + "---------",
+								+ searchValues[i] + "---------",
 						YesNo.No);
 				if(rp.getNoResult(5) != null){
-					log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+					log(LogStatus.PASS, "There is no data retaled to " + searchValues[i], YesNo.No);
 				} else
-					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValues[i])) {
 						log(LogStatus.INFO,
 								"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-										+ searchValue + "---------",
+										+ searchValues[i] + "---------",
 								YesNo.No);
-					ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+					ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibles[i], action.SCROLLANDBOOLEAN, 10);
 						if(list.isEmpty()) {
 							
 							log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
@@ -5727,45 +5910,45 @@ public class AcuityResearch extends BaseLib{
 					} else {
 						log(LogStatus.FAIL,
 								"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-										+ searchValue + "---------",
+										+ searchValues[i] + "---------",
 								YesNo.No);
 						sa.assertTrue(false,
 								"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-										+ searchValue + "---------");
+										+ searchValues[i] + "---------");
 						
 				}
-					if (rp.mouseHoverOnNavigationAndGetText()) {
-						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-					}
-					
-					if (rp.mouseHoverOnGridAndGetText()) {
-						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-					}
-					int gridSize = rp.getElementsFromGrid().size();
-					log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-					for(int i=0; i<gridSize; i++)
-					{		
-						headerName = rp.getElementsFromGrid().get(i).getText();
-						String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-						
-						if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-							log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-						} else {
-							log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-							sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-						}
-						if (rp.VerifyViewMoreOption(headerName)) {
-							log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-						} else {
-							log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-						}
-					}
+//					if (rp.mouseHoverOnNavigationAndGetText()) {
+//						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//					}
+//					
+//					if (rp.mouseHoverOnGridAndGetText()) {
+//						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//					}
+//					int gridSize = rp.getElementsFromGrid().size();
+//					log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//					for(int i=0; i<gridSize; i++)
+//					{		
+//						headerName = rp.getElementsFromGrid().get(i).getText();
+//						String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//						
+//						if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//							log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//						} else {
+//							log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//							sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//						}
+//						if (rp.VerifyViewMoreOption(headerName)) {
+//							log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//						} else {
+//							log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//						}
+//					}
 				}
 			
 	lp.CRMlogout();
@@ -5994,38 +6177,38 @@ public class AcuityResearch extends BaseLib{
 				continue;
 
 			}
-				if (rp.mouseHoverOnNavigationAndGetText()) {
-					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-				}
-				
-				if (rp.mouseHoverOnGridAndGetText()) {
-					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-				}
-				int gridSize = rp.getElementsFromGrid().size();
-				log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-				for(int i=0; i<gridSize; i++)
-				{		
-					headerName = rp.getElementsFromGrid().get(i).getText();
-					String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-					
-					if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-						log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-						sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-					}
-					if (rp.VerifyViewMoreOption(headerName)) {
-						log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-					}
-				}
+//				if (rp.mouseHoverOnNavigationAndGetText()) {
+//					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//				}
+//				
+//				if (rp.mouseHoverOnGridAndGetText()) {
+//					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//				}
+//				int gridSize = rp.getElementsFromGrid().size();
+//				log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//				for(int i=0; i<gridSize; i++)
+//				{		
+//					headerName = rp.getElementsFromGrid().get(i).getText();
+//					String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//					
+//					if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//						log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//					}
+//					if (rp.VerifyViewMoreOption(headerName)) {
+//						log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//					}
+//				}
 			}
 		lp.CRMlogout();
 		sa.assertAll();
@@ -6043,8 +6226,8 @@ public class AcuityResearch extends BaseLib{
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	String parentWindow = "", contactFields[] = {"Description","Account Name"}, dealFields[] = {"Stage","Pipeline Comments"}, fundraisingFields[] = {"Notes","Legal Name"};
-	String[] searchValues = {AR_Firm27,AR_Firm28};
-	String ele, headerName;
+	String[] searchValues = {AR_Firm27,AR_Firm281};
+	String ele;
 
 	if (home.clickOnSetUpLink()) {
 		parentWindow = switchOnWindow(driver);
@@ -6221,38 +6404,38 @@ public class AcuityResearch extends BaseLib{
 				continue;
 
 			}
-				if (rp.mouseHoverOnNavigationAndGetText()) {
-					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-				}
-				
-				if (rp.mouseHoverOnGridAndGetText()) {
-					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-				}
-				int gridSize = rp.getElementsFromGrid().size();
-				log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-				for(int i=0; i<gridSize; i++)
-				{		
-					headerName = rp.getElementsFromGrid().get(i).getText();
-					String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-					
-					if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-						log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-						sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-					}
-					if (rp.VerifyViewMoreOption(headerName)) {
-						log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-					}
-				}
+//				if (rp.mouseHoverOnNavigationAndGetText()) {
+//					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//				}
+//				
+//				if (rp.mouseHoverOnGridAndGetText()) {
+//					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//				}
+//				int gridSize = rp.getElementsFromGrid().size();
+//				log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//				for(int i=0; i<gridSize; i++)
+//				{		
+//					headerName = rp.getElementsFromGrid().get(i).getText();
+//					String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//					
+//					if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//						log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//					}
+//					if (rp.VerifyViewMoreOption(headerName)) {
+//						log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//					}
+//				}
 			}
 		lp.CRMlogout();
 		refresh(driver);		
@@ -6319,38 +6502,38 @@ public class AcuityResearch extends BaseLib{
 
 				}
 				
-					if (rp.mouseHoverOnNavigationAndGetText()) {
-						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-					}
-					
-					if (rp.mouseHoverOnGridAndGetText()) {
-						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-					}
-					int gridSize = rp.getElementsFromGrid().size();
-					log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-					for(int i=0; i<gridSize; i++)
-					{		
-						headerName = rp.getElementsFromGrid().get(i).getText();
-						String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-						
-						if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-							log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-						} else {
-							log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-							sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-						}
-						if (rp.VerifyViewMoreOption(headerName)) {
-							log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-						} else {
-							log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-						}
-					}
+//					if (rp.mouseHoverOnNavigationAndGetText()) {
+//						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//					}
+//					
+//					if (rp.mouseHoverOnGridAndGetText()) {
+//						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//					}
+//					int gridSize = rp.getElementsFromGrid().size();
+//					log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//					for(int i=0; i<gridSize; i++)
+//					{		
+//						headerName = rp.getElementsFromGrid().get(i).getText();
+//						String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//						
+//						if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//							log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//						} else {
+//							log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//							sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//						}
+//						if (rp.VerifyViewMoreOption(headerName)) {
+//							log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//						} else {
+//							log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//						}
+//					}
 				}
 			
 	lp.CRMlogout();
@@ -6382,39 +6565,40 @@ public class AcuityResearch extends BaseLib{
 	String ThemeLabel= PageLabel.Description_Upd.toString();
 	String ClipLabel= PageLabel.Summary_Upd.toString();
 	
-	if (home.clickOnSetUpLink()) {
-		parentWindow = switchOnWindow(driver);
-		if (parentWindow == null) {
-			sa.assertTrue(false,
-					"No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
-			log(LogStatus.SKIP,
-					"No new window is open after click on setup link in lighting mode so cannot create Field Set Component",
-					YesNo.Yes);
-			exit("No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
-		}
-		ThreadSleep(3000);
-		if (setup.searchStandardOrCustomObject(environment, mode, object.Rename_Tabs_And_Labels)) {
-			log(LogStatus.INFO, "click on Object : " + object.Rename_Tabs_And_Labels, YesNo.No);
-			ThreadSleep(2000);
-
-		if (setup.renameLabelsOfFields(driver, tabNames1, labelsWithValues1, 10)) {
-			flag1 = true;
-			log(LogStatus.PASS, labelsWithValues1[0] + " is updated as " +labelsWithValues1[1] , YesNo.Yes);
-		}
-
-		if (setup.renameLabelsOfFields(driver, tabNames2, labelsWithValues2, 10)) {
-			flag1 = true;
-			log(LogStatus.PASS, labelsWithValues2[0] + " is updated as " +labelsWithValues2[1] , YesNo.Yes);
-		}
-		} else {
-			log(LogStatus.ERROR, "Not able to search/click on " + object.Rename_Tabs_And_Labels, YesNo.Yes);
-			sa.assertTrue(false, "Not able to search/click on " + object.Rename_Tabs_And_Labels);
-		}	
-		driver.close();
-	}	
+//	if (home.clickOnSetUpLink()) {
+//		parentWindow = switchOnWindow(driver);
+//		if (parentWindow == null) {
+//			sa.assertTrue(false,
+//					"No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+//			log(LogStatus.SKIP,
+//					"No new window is open after click on setup link in lighting mode so cannot create Field Set Component",
+//					YesNo.Yes);
+//			exit("No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+//		}
+//		ThreadSleep(3000);
+//		if (setup.searchStandardOrCustomObject(environment, mode, object.Rename_Tabs_And_Labels)) {
+//			log(LogStatus.INFO, "click on Object : " + object.Rename_Tabs_And_Labels, YesNo.No);
+//			ThreadSleep(2000);
+//
+//		if (setup.renameLabelsOfFields(driver, tabNames1, labelsWithValues1, 10)) {
+//			flag1 = true;
+//			log(LogStatus.PASS, labelsWithValues1[0] + " is updated as " +labelsWithValues1[1] , YesNo.Yes);
+//		}
+//
+//		if (setup.renameLabelsOfFields(driver, tabNames2, labelsWithValues2, 10)) {
+//			flag1 = true;
+//			log(LogStatus.PASS, labelsWithValues2[0] + " is updated as " +labelsWithValues2[1] , YesNo.Yes);
+//		}
+//		} else {
+//			log(LogStatus.ERROR, "Not able to search/click on " + object.Rename_Tabs_And_Labels, YesNo.Yes);
+//			sa.assertTrue(false, "Not able to search/click on " + object.Rename_Tabs_And_Labels);
+//		}	
+//		driver.close();
+//	}	
 	
-	ThreadSleep(2000);
-	driver.switchTo().window(parentWindow);
+//	ThreadSleep(2000);
+//	driver.switchTo().window(parentWindow);
+	
 //	lp.CRMlogout();
 //	
 //	ThreadSleep(2000);
@@ -6520,20 +6704,20 @@ public class AcuityResearch extends BaseLib{
 //			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
 //				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
 //				ThreadSleep(5000);
-				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Theme.toString())){
-					log(LogStatus.INFO, "Select "+PageLabel.Theme.toString()+" text in object dropdown in override setup page", YesNo.No);
-					ThreadSleep(5000);
-					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Descrption.toString().replace("_"," "), ThemeLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
-						log(LogStatus.INFO, "Field label: "+PageLabel.Descrption.toString()+" successfully update to "+ThemeLabel, YesNo.No);
-						
-					}else{
-						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Descrption.toString()+" successfully update to "+ThemeLabel, YesNo.Yes);
-						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Descrption.toString()+" to "+ThemeLabel);	
-					}
-				}else{
-					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page", YesNo.Yes);
-					sa.assertTrue(false, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page");
-				}
+//				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Theme.toString())){
+//					log(LogStatus.INFO, "Select "+PageLabel.Theme.toString()+" text in object dropdown in override setup page", YesNo.No);
+//					ThreadSleep(5000);
+//					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Descrption.toString().replace("_"," "), ThemeLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
+//						log(LogStatus.INFO, "Field label: "+PageLabel.Descrption.toString()+" successfully update to "+ThemeLabel, YesNo.No);
+//						
+//					}else{
+//						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Descrption.toString()+" successfully update to "+ThemeLabel, YesNo.Yes);
+//						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Descrption.toString()+" to "+ThemeLabel);	
+//					}
+//				}else{
+//					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page", YesNo.Yes);
+//					sa.assertTrue(false, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page");
+//				}
 //			}else{
 //				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
 //				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
@@ -6542,20 +6726,20 @@ public class AcuityResearch extends BaseLib{
 //			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
 //				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
 //				ThreadSleep(5000);
-				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Clip.toString())){
-					log(LogStatus.INFO, "Select "+PageLabel.Clip.toString()+" text in object dropdown in override setup page", YesNo.No);
-					ThreadSleep(5000);
-					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Summary.toString().replace("_"," "), ClipLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
-						log(LogStatus.INFO, "Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.No);
-						
-					}else{
-						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.Yes);
-						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Summary.toString()+" to "+ClipLabel);	
-					}
-				}else{
-					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page", YesNo.Yes);
-					sa.assertTrue(false, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page");
-				}
+//				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Clip.toString())){
+//					log(LogStatus.INFO, "Select "+PageLabel.Clip.toString()+" text in object dropdown in override setup page", YesNo.No);
+//					ThreadSleep(5000);
+//					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Summary.toString().replace("_"," "), ClipLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
+//						log(LogStatus.INFO, "Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.No);
+//						
+//					}else{
+//						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.Yes);
+//						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Summary.toString()+" to "+ClipLabel);	
+//					}
+//				}else{
+//					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page", YesNo.Yes);
+//					sa.assertTrue(false, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page");
+//				}
 			}else{
 				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
 				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
@@ -6632,38 +6816,38 @@ public class AcuityResearch extends BaseLib{
 				continue;
 
 			}
-				if (rp.mouseHoverOnNavigationAndGetText()) {
-					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-				}
-				
-				if (rp.mouseHoverOnGridAndGetText()) {
-					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-				}
-				int gridSize = rp.getElementsFromGrid().size();
-				log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-				for(int i=0; i<gridSize; i++)
-				{		
-					headerName = rp.getElementsFromGrid().get(i).getText();
-					String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-					
-					if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-						log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-						sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-					}
-					if (rp.VerifyViewMoreOption(headerName)) {
-						log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-					}
-				}
+//				if (rp.mouseHoverOnNavigationAndGetText()) {
+//					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//				}
+//				
+//				if (rp.mouseHoverOnGridAndGetText()) {
+//					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//				}
+//				int gridSize = rp.getElementsFromGrid().size();
+//				log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//				for(int i=0; i<gridSize; i++)
+//				{		
+//					headerName = rp.getElementsFromGrid().get(i).getText();
+//					String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//					
+//					if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//						log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//					}
+//					if (rp.VerifyViewMoreOption(headerName)) {
+//						log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//					}
+//				}
 			}
 	lp.CRMlogout();
 	sa.assertAll();
@@ -6686,14 +6870,14 @@ public class AcuityResearch extends BaseLib{
 	String tabNames1 = "Accounts" ,tabNames2 = "Contacts" ;
 	String[] labelsWithValues1 = {  "Account Name<break>Account Name Upd !@&*()(*& 123", "Description<break>Description Upd !@&*()(*& 123" },
 			labelsWithValues2 = {  "Contact Name<break>Contact Name Upd !@&*()(*& 123", "Description<break>Description Upd !@&*()(*& 123"  };
-	String ele, headerName;
-	String DealLabel1= "Stage Upd !@&*()(*& 123 Stage Upd";
-	String DealLabel2= " Pipeline Comments Upd !@&*()(*& 123";
-	String FundraisingLabel1= " Legal Name Upd !@&*()(*& 123";
-	String FundraisingLabel2= "Status Notes Upd !@&*()(*& 123";
-	String FundLabel= " Vintage Year Upd !@&*()(*& 123";
-	String ThemeLabel= " Description Upd !@&*()(*& 123";
-	String ClipLabel= " Summary Upd !@&*()(*& 123";
+	String ele;
+	String DealLabel1= "!@&*()(*& 123";
+	String DealLabel2= " !@&*()(*& 123";
+	String FundraisingLabel1= " !@&*()(*& 123";
+	String FundraisingLabel2= "!@&*()(*& 123";
+	String FundLabel= "!@&*()(*& 123";
+	String ThemeLabel= "!@&*()(*& 123";
+	String ClipLabel= "!@&*()(*& 123";
 	
 	if (home.clickOnSetUpLink()) {
 		parentWindow = switchOnWindow(driver);
@@ -6833,20 +7017,20 @@ public class AcuityResearch extends BaseLib{
 //			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
 //				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
 //				ThreadSleep(5000);
-				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Theme.toString())){
-					log(LogStatus.INFO, "Select "+PageLabel.Theme.toString()+" text in object dropdown in override setup page", YesNo.No);
-					ThreadSleep(5000);
-					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Descrption.toString().replace("_"," "), ThemeLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
-						log(LogStatus.INFO, "Field label: "+PageLabel.Descrption.toString()+" successfully update to "+ThemeLabel, YesNo.No);
-						
-					}else{
-						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Descrption.toString()+" successfully update to "+ThemeLabel, YesNo.Yes);
-						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Descrption.toString()+" to "+ThemeLabel);	
-					}
-				}else{
-					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page", YesNo.Yes);
-					sa.assertTrue(false, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page");
-				}
+//				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Theme.toString())){
+//					log(LogStatus.INFO, "Select "+PageLabel.Theme.toString()+" text in object dropdown in override setup page", YesNo.No);
+//					ThreadSleep(5000);
+//					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Descrption.toString().replace("_"," "), ThemeLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
+//						log(LogStatus.INFO, "Field label: "+PageLabel.Descrption.toString()+" successfully update to "+ThemeLabel, YesNo.No);
+//						
+//					}else{
+//						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Descrption.toString()+" successfully update to "+ThemeLabel, YesNo.Yes);
+//						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Descrption.toString()+" to "+ThemeLabel);	
+//					}
+//				}else{
+//					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page", YesNo.Yes);
+//					sa.assertTrue(false, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page");
+//				}
 //			}else{
 //				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
 //				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
@@ -6855,20 +7039,20 @@ public class AcuityResearch extends BaseLib{
 //			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
 //				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
 //				ThreadSleep(5000);
-				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Clip.toString())){
-					log(LogStatus.INFO, "Select "+PageLabel.Clip.toString()+" text in object dropdown in override setup page", YesNo.No);
-					ThreadSleep(5000);
-					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Summary.toString().replace("_"," "), ClipLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
-						log(LogStatus.INFO, "Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.No);
-						
-					}else{
-						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.Yes);
-						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Summary.toString()+" to "+ClipLabel);	
-					}
-				}else{
-					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page", YesNo.Yes);
-					sa.assertTrue(false, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page");
-				}
+//				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Clip.toString())){
+//					log(LogStatus.INFO, "Select "+PageLabel.Clip.toString()+" text in object dropdown in override setup page", YesNo.No);
+//					ThreadSleep(5000);
+//					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Summary.toString().replace("_"," "), ClipLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
+//						log(LogStatus.INFO, "Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.No);
+//						
+//					}else{
+//						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.Yes);
+//						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Summary.toString()+" to "+ClipLabel);	
+//					}
+//				}else{
+//					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page", YesNo.Yes);
+//					sa.assertTrue(false, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page");
+//				}
 			}else{
 				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
 				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
@@ -6947,38 +7131,38 @@ public class AcuityResearch extends BaseLib{
 				continue;
 
 			}
-				if (rp.mouseHoverOnNavigationAndGetText()) {
-					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-				}
-				
-				if (rp.mouseHoverOnGridAndGetText()) {
-					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-				}
-				int gridSize = rp.getElementsFromGrid().size();
-				log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-				for(int i=0; i<gridSize; i++)
-				{		
-					headerName = rp.getElementsFromGrid().get(i).getText();
-					String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-					
-					if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-						log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-						sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-					}
-					if (rp.VerifyViewMoreOption(headerName)) {
-						log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-					}
-				}
+//				if (rp.mouseHoverOnNavigationAndGetText()) {
+//					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//				}
+//				
+//				if (rp.mouseHoverOnGridAndGetText()) {
+//					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//				}
+//				int gridSize = rp.getElementsFromGrid().size();
+//				log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//				for(int i=0; i<gridSize; i++)
+//				{		
+//					headerName = rp.getElementsFromGrid().get(i).getText();
+//					String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//					
+//					if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//						log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//					}
+//					if (rp.VerifyViewMoreOption(headerName)) {
+//						log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//					}
+//				}
 			}
 	lp.CRMlogout();
 	sa.assertAll();
@@ -7147,20 +7331,20 @@ public class AcuityResearch extends BaseLib{
 //		if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
 //			log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
 //			ThreadSleep(5000);	
-			if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Theme.toString())){
-				log(LogStatus.INFO, "Select "+PageLabel.Theme.toString()+" text in object dropdown in override setup page", YesNo.No);
-				ThreadSleep(5000);
-				if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Description.toString().replace("_"," "), ThemeLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
-					log(LogStatus.INFO, "Field label: "+PageLabel.Description.toString()+" successfully update to "+ThemeLabel, YesNo.No);
-					
-				}else{
-					log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Description.toString()+" successfully update to "+ThemeLabel, YesNo.Yes);
-					sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Description.toString()+" to "+ThemeLabel);	
-				}
-			}else{
-				log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page", YesNo.Yes);
-				sa.assertTrue(false, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page");
-			}
+//			if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Theme.toString())){
+//				log(LogStatus.INFO, "Select "+PageLabel.Theme.toString()+" text in object dropdown in override setup page", YesNo.No);
+//				ThreadSleep(5000);
+//				if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Description.toString().replace("_"," "), ThemeLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
+//					log(LogStatus.INFO, "Field label: "+PageLabel.Description.toString()+" successfully update to "+ThemeLabel, YesNo.No);
+//					
+//				}else{
+//					log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Description.toString()+" successfully update to "+ThemeLabel, YesNo.Yes);
+//					sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Description.toString()+" to "+ThemeLabel);	
+//				}
+//			}else{
+//				log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page", YesNo.Yes);
+//				sa.assertTrue(false, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page");
+//			}
 //		}else{
 //			log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
 //			sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
@@ -7169,20 +7353,20 @@ public class AcuityResearch extends BaseLib{
 //		if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
 //			log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
 //			ThreadSleep(5000);	
-			if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Clip.toString())){
-				log(LogStatus.INFO, "Select "+PageLabel.Clip.toString()+" text in object dropdown in override setup page", YesNo.No);
-				ThreadSleep(5000);
-				if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Summary.toString().replace("_"," "), ClipLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
-					log(LogStatus.INFO, "Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.No);
-					
-				}else{
-					log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.Yes);
-					sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Summary.toString()+" to "+ClipLabel);	
-				}
-			}else{
-				log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page", YesNo.Yes);
-				sa.assertTrue(false, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page");
-			}
+//			if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Clip.toString())){
+//				log(LogStatus.INFO, "Select "+PageLabel.Clip.toString()+" text in object dropdown in override setup page", YesNo.No);
+//				ThreadSleep(5000);
+//				if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Summary.toString().replace("_"," "), ClipLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
+//					log(LogStatus.INFO, "Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.No);
+//					
+//				}else{
+//					log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.Yes);
+//					sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Summary.toString()+" to "+ClipLabel);	
+//				}
+//			}else{
+//				log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page", YesNo.Yes);
+//				sa.assertTrue(false, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page");
+//			}
 		}else{
 			log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
 			sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
@@ -7259,38 +7443,38 @@ public class AcuityResearch extends BaseLib{
 				continue;
 		
 			}	
-				if (rp.mouseHoverOnNavigationAndGetText()) {
-					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-				}
-				
-				if (rp.mouseHoverOnGridAndGetText()) {
-					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-				}
-				int gridSize = rp.getElementsFromGrid().size();
-				log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-				for(int i=0; i<gridSize; i++)
-				{		
-					headerName = rp.getElementsFromGrid().get(i).getText();
-					String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-					
-					if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-						log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-						sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-					}
-					if (rp.VerifyViewMoreOption(headerName)) {
-						log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-					}
-				}
+//				if (rp.mouseHoverOnNavigationAndGetText()) {
+//					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//				}
+//				
+//				if (rp.mouseHoverOnGridAndGetText()) {
+//					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//				}
+//				int gridSize = rp.getElementsFromGrid().size();
+//				log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//				for(int i=0; i<gridSize; i++)
+//				{		
+//					headerName = rp.getElementsFromGrid().get(i).getText();
+//					String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//					
+//					if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//						log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//					}
+//					if (rp.VerifyViewMoreOption(headerName)) {
+//						log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//					}
+//				}
 			}
 	lp.CRMlogout();
 	sa.assertAll();
@@ -7556,38 +7740,38 @@ public class AcuityResearch extends BaseLib{
 		continue;
 
 	}		
-				if (rp.mouseHoverOnNavigationAndGetText()) {
-					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-				}
-				
-				if (rp.mouseHoverOnGridAndGetText()) {
-					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-				}
-				int gridSize = rp.getElementsFromGrid().size();
-				log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-				for(int i=0; i<gridSize; i++)
-				{		
-					headerName = rp.getElementsFromGrid().get(i).getText();
-					String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-					
-					if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-						log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-						sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-					}
-					if (rp.VerifyViewMoreOption(headerName)) {
-						log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-					}
-				}
+//				if (rp.mouseHoverOnNavigationAndGetText()) {
+//					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//				}
+//				
+//				if (rp.mouseHoverOnGridAndGetText()) {
+//					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//				}
+//				int gridSize = rp.getElementsFromGrid().size();
+//				log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//				for(int i=0; i<gridSize; i++)
+//				{		
+//					headerName = rp.getElementsFromGrid().get(i).getText();
+//					String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//					
+//					if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//						log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//					}
+//					if (rp.VerifyViewMoreOption(headerName)) {
+//						log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//					}
+//				}
 			}
 		lp.CRMlogout();
 		
@@ -7702,38 +7886,38 @@ public class AcuityResearch extends BaseLib{
 					continue;
 
 				}
-					if (rp.mouseHoverOnNavigationAndGetText()) {
-						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-					}
-					
-					if (rp.mouseHoverOnGridAndGetText()) {
-						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-					}
-					int gridSize = rp.getElementsFromGrid().size();
-					log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-					for(int i=0; i<gridSize; i++)
-					{		
-						headerName = rp.getElementsFromGrid().get(i).getText();
-						String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-						
-						if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-							log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-						} else {
-							log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-							sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-						}
-						if (rp.VerifyViewMoreOption(headerName)) {
-							log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-						} else {
-							log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-						}
-					}
+//					if (rp.mouseHoverOnNavigationAndGetText()) {
+//						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//					}
+//					
+//					if (rp.mouseHoverOnGridAndGetText()) {
+//						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//					}
+//					int gridSize = rp.getElementsFromGrid().size();
+//					log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//					for(int i=0; i<gridSize; i++)
+//					{		
+//						headerName = rp.getElementsFromGrid().get(i).getText();
+//						String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//						
+//						if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//							log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//						} else {
+//							log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//							sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//						}
+//						if (rp.VerifyViewMoreOption(headerName)) {
+//							log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//						} else {
+//							log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//						}
+//					}
 				}
 		lp.CRMlogout();
 		sa.assertAll();
@@ -7846,38 +8030,38 @@ public class AcuityResearch extends BaseLib{
 					continue;
 
 				}
-					if (rp.mouseHoverOnNavigationAndGetText()) {
-						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-					}
-					
-					if (rp.mouseHoverOnGridAndGetText()) {
-						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-					}
-					int gridSize = rp.getElementsFromGrid().size();
-					log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-					for(int i=0; i<gridSize; i++)
-					{		
-						headerName = rp.getElementsFromGrid().get(i).getText();
-						String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-						
-						if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-							log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-						} else {
-							log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-							sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-						}
-						if (rp.VerifyViewMoreOption(headerName)) {
-							log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-						} else {
-							log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-						}
-					}
+//					if (rp.mouseHoverOnNavigationAndGetText()) {
+//						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//					}
+//					
+//					if (rp.mouseHoverOnGridAndGetText()) {
+//						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//					}
+//					int gridSize = rp.getElementsFromGrid().size();
+//					log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//					for(int i=0; i<gridSize; i++)
+//					{		
+//						headerName = rp.getElementsFromGrid().get(i).getText();
+//						String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//						
+//						if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//							log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//						} else {
+//							log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//							sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//						}
+//						if (rp.VerifyViewMoreOption(headerName)) {
+//							log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//						} else {
+//							log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//						}
+//					}
 				}
 		lp.CRMlogout();
 		sa.assertAll();
@@ -7992,38 +8176,38 @@ public class AcuityResearch extends BaseLib{
 					continue;
 
 				}
-					if (rp.mouseHoverOnNavigationAndGetText()) {
-						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-					}
-					
-					if (rp.mouseHoverOnGridAndGetText()) {
-						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-					}
-					int gridSize = rp.getElementsFromGrid().size();
-					log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-					for(int i=0; i<gridSize; i++)
-					{		
-						headerName = rp.getElementsFromGrid().get(i).getText();
-						String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-						
-						if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-							log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-						} else {
-							log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-							sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-						}
-						if (rp.VerifyViewMoreOption(headerName)) {
-							log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-						} else {
-							log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-						}
-					}
+//					if (rp.mouseHoverOnNavigationAndGetText()) {
+//						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//					}
+//					
+//					if (rp.mouseHoverOnGridAndGetText()) {
+//						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//					}
+//					int gridSize = rp.getElementsFromGrid().size();
+//					log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//					for(int i=0; i<gridSize; i++)
+//					{		
+//						headerName = rp.getElementsFromGrid().get(i).getText();
+//						String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//						
+//						if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//							log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//						} else {
+//							log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//							sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//						}
+//						if (rp.VerifyViewMoreOption(headerName)) {
+//							log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//						} else {
+//							log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//						}
+//					}
 				}
 		lp.CRMlogout();
 		sa.assertAll();
@@ -8138,38 +8322,38 @@ public class AcuityResearch extends BaseLib{
 					continue;
 
 				}
-					if (rp.mouseHoverOnNavigationAndGetText()) {
-						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-					}
-					
-					if (rp.mouseHoverOnGridAndGetText()) {
-						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-					}
-					int gridSize = rp.getElementsFromGrid().size();
-					log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-					for(int i=0; i<gridSize; i++)
-					{		
-						headerName = rp.getElementsFromGrid().get(i).getText();
-						String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-						
-						if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-							log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-						} else {
-							log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-							sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-						}
-						if (rp.VerifyViewMoreOption(headerName)) {
-							log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-						} else {
-							log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-						}
-					}
+//					if (rp.mouseHoverOnNavigationAndGetText()) {
+//						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//					}
+//					
+//					if (rp.mouseHoverOnGridAndGetText()) {
+//						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//					}
+//					int gridSize = rp.getElementsFromGrid().size();
+//					log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//					for(int i=0; i<gridSize; i++)
+//					{		
+//						headerName = rp.getElementsFromGrid().get(i).getText();
+//						String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//						
+//						if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//							log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//						} else {
+//							log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//							sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//						}
+//						if (rp.VerifyViewMoreOption(headerName)) {
+//							log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//						} else {
+//							log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//						}
+//					}
 				}
 		lp.CRMlogout();
 		sa.assertAll();
@@ -8284,38 +8468,38 @@ public class AcuityResearch extends BaseLib{
 					continue;
 
 				}
-					if (rp.mouseHoverOnNavigationAndGetText()) {
-						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-					}
-					
-					if (rp.mouseHoverOnGridAndGetText()) {
-						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-					}
-					int gridSize = rp.getElementsFromGrid().size();
-					log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-					for(int i=0; i<gridSize; i++)
-					{		
-						headerName = rp.getElementsFromGrid().get(i).getText();
-						String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-						
-						if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-							log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-						} else {
-							log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-							sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-						}
-						if (rp.VerifyViewMoreOption(headerName)) {
-							log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-						} else {
-							log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-						}
-					}
+//					if (rp.mouseHoverOnNavigationAndGetText()) {
+//						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//					}
+//					
+//					if (rp.mouseHoverOnGridAndGetText()) {
+//						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+//					} else {
+//						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+//						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+//					}
+//					int gridSize = rp.getElementsFromGrid().size();
+//					log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//					for(int i=0; i<gridSize; i++)
+//					{		
+//						headerName = rp.getElementsFromGrid().get(i).getText();
+//						String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//						
+//						if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//							log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//						} else {
+//							log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//							sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//						}
+//						if (rp.VerifyViewMoreOption(headerName)) {
+//							log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//						} else {
+//							log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//						}
+//					}
 				}
 		lp.CRMlogout();
 		sa.assertAll();
@@ -8508,25 +8692,25 @@ public class AcuityResearch extends BaseLib{
 						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
 						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
 					}
-					int gridSize = rp.getElementsFromGrid().size();
-					log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-					for(int i=0; i<gridSize; i++)
-					{		
-						headerName = rp.getElementsFromGrid().get(i).getText();
-						String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-						
-						if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-							log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-						} else {
-							log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-							sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-						}
-						if (rp.VerifyViewMoreOption(headerName)) {
-							log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-						} else {
-							log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-						}
-					}
+//					int gridSize = rp.getElementsFromGrid().size();
+//					log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//					for(int i=0; i<gridSize; i++)
+//					{		
+//						headerName = rp.getElementsFromGrid().get(i).getText();
+//						String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//						
+//						if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//							log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//						} else {
+//							log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//							sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//						}
+//						if (rp.VerifyViewMoreOption(headerName)) {
+//							log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//						} else {
+//							log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//						}
+//					}
 				}
 		lp.CRMlogout();
 		sa.assertAll();

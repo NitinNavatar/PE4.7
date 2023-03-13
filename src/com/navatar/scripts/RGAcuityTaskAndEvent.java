@@ -2987,5 +2987,172 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}	
 
+public void RGATETc018_CreateAccountDeals(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		FundsPageBusinessLayer fd = new FundsPageBusinessLayer(driver);
+
+		String[] accountName = RGATE_FirmLegalName4.split("<break>");
+		String[] recordType = RGATE_FirmRecordType3.split("<break>");
+
+		String[] contactFirstName = {RGATE_ContactFirstName3};
+		String[] contactLastName = {RGATE_ContactLastName3};
+		String[] contactLegalName = {RGATE_ContactLegalName3};
+		String[] contactEmail = {RGATE_ContactEmail3};
+
+		String dealName = RGATE_DealName3;
+		String dealCompany = RGATE_DealCompany3;
+		String dealStage = RGATE_DealStage3;
+
+		lp.CRMLogin(RGcrmUser1EmailID, adminPassword, appName);
+		if (accountName.length == recordType.length) {
+			for (int i = 0; i < accountName.length; i++) {
+				if (lp.clickOnTab(projectName, tabObj1)) {
+
+					log(LogStatus.INFO, "Click on Tab : " + tabObj1, YesNo.No);
+					ThreadSleep(3000);
+					if (ip.createEntityOrAccount(environment, mode, accountName[i], recordType[i], null, null, 30)) {
+						log(LogStatus.INFO,
+								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i],
+								YesNo.No);
+						sa.assertTrue(true,
+								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i]);
+
+
+					} else {
+						sa.assertTrue(false,
+								"Not Able to Create Firm : " + accountName[i] + " of record type : " + recordType[i]);
+						log(LogStatus.SKIP,
+								"Not Able to Create Firm : " + accountName[i] + " of record type :" + recordType[i],
+								YesNo.Yes);
+					}
+
+				} else {
+					log(LogStatus.FAIL, "Not able to click on " + tabObj1 + " Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on " + tabObj1 + " Tab");
+				}
+
+			}
+		} else {
+			log(LogStatus.FAIL,
+					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper",
+					YesNo.No);
+			sa.assertTrue(false,
+					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper");
+		}
+
+		for (int i = 0; i < contactLastName.length; i++) {
+			if (lp.clickOnTab(projectName, tabObj2)) {
+
+				log(LogStatus.INFO, "Click on Tab : " + tabObj2, YesNo.No);
+				ThreadSleep(3000);
+
+				if (cp.createContact(projectName, contactFirstName[i], contactLastName[i], contactLegalName[i],
+						contactEmail[i], "", null, null, CreationPage.ContactPage, null, null)) {
+					log(LogStatus.INFO,
+							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i],
+							YesNo.No);
+					sa.assertTrue(true,
+							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i]);
+
+
+				} else {
+					log(LogStatus.FAIL,
+							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i],
+							YesNo.No);
+					sa.assertTrue(false,
+							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i]);
+				}
+
+			} else {
+				log(LogStatus.FAIL, "Not able to click on " + tabObj2 + " Tab", YesNo.No);
+				sa.assertTrue(false, "Not able to click on " + tabObj2 + " Tab");
+			}
+		}
+
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
+			ThreadSleep(3000);
+
+			if (dp.createDeal(projectName, dealName, dealCompany, dealStage)) {
+				log(LogStatus.INFO, dealName + " deal has been created", YesNo.No);
+				sa.assertTrue(true, dealName + " deal has been created");
+
+			} else {
+				log(LogStatus.ERROR, dealName + " deal is not created", YesNo.No);
+				sa.assertTrue(false, dealName + " deal is not created");
+			}
+		}
+		else {
+			log(LogStatus.ERROR, "Not able to click on " + tabObj4 + " Tab", YesNo.No);
+			sa.assertTrue(false, "Not able to click on " + tabObj4 + " Tab");
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ADETRGc031_CreateDealfromDealTeamandVerifyImpactonDealTeamCountContactsUsersatFirmandContactpage(String projectName) {	
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		DealTeamPageBusinessLayer DTP = new DealTeamPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String dealName[] = ACDealTeamName1.split("<break>");
+		String TeamMember[] = ACDealTeamMember1.split("<break>");
+		String contactName[] = ACDealContact1.split("<break>");
+		String teamRole[] = ACDealTeamRole1.split("<break>");
+		for (int i = 0; i < dealName.length; i++) {
+		String[][] data = { { PageLabel.Deal.toString(), dealName[i] }, { PageLabel.Deal_Contact.toString(), contactName[i] },
+				{ PageLabel.Team_Member.toString(), TeamMember[i] }, { PageLabel.Role.toString(), teamRole[i] } };
+		if (BP.openAppFromAppLauchner(60, "Deal Team")) {
+			log(LogStatus.INFO, "Deal Team has been open from the app launcher", YesNo.No);
+
+			if (DTP.createDealTeam(projectName, dealName[i], data, "Acuity", action.SCROLLANDBOOLEAN, 25)) {
+				log(LogStatus.INFO, "----Successfully Created the Deal Team for Deal: " + dealName + "----", YesNo.No);
+
+				log(LogStatus.INFO,
+						"---------Now Going to Check Deal Team Count should get increase by one for Contact named "
+								+ contactName + " at Firm Tab under Acuity section---------",
+						YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "could not create a new deal team", YesNo.Yes);
+				sa.assertTrue(false,"could not create a new deal team" );
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "could not open a deal team tab", YesNo.Yes);
+			sa.assertTrue(false,"could not open a deal team tab" );
+		}
+		}
+		
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
+			ThreadSleep(3000);
+		
+		if(lp.clickOnAlreadyCreated(environment, mode,TabName.DealTab , dealName[0], 10)){
+			log(LogStatus.INFO, "Click on deal : " + dealName[0], YesNo.No);
+			
+			WebElement ele2 = BP.getRelatedTab(projectName, RelatedTab.Team.toString(), 10);
+			click(driver, ele2, RelatedTab.Team.toString(), action.BOOLEAN);
+			ThreadSleep(2000);
+			
+			}
+		}else {
+			log(LogStatus.ERROR, "could not click on new task button", YesNo.Yes);
+			sa.assertTrue(false,"could not click on new task button" );
+		}
+	}
+
 
 }
