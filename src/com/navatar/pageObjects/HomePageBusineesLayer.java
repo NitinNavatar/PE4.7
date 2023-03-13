@@ -5742,6 +5742,7 @@ public class HomePageBusineesLayer extends HomePage {
 
 	public boolean globalSearchAndNavigate(String recordName, String sideNavOption, boolean noResultMsg) {
 		boolean flag = false;
+		CommonLib.ThreadSleep(1500);
 		if (click(driver, globalSearchButton(20), "globalSearchButton", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on globalSearchButton", YesNo.No);
 			CommonLib.ThreadSleep(1000);
@@ -5772,26 +5773,23 @@ public class HomePageBusineesLayer extends HomePage {
 									action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Record: " + recordName, YesNo.No);
 
-								if (sideNavOption.equalsIgnoreCase("Tasks")) {
-									CommonLib.ThreadSleep(4000);
-									String parentID = CommonLib.switchOnWindow(driver);
-									CommonLib.ThreadSleep(4000);
-									if (parentID != null) {
+								/*
+								 * if (sideNavOption.equalsIgnoreCase("Tasks")) { CommonLib.ThreadSleep(4000);
+								 * String parentID = CommonLib.switchOnWindow(driver);
+								 * CommonLib.ThreadSleep(4000); if (parentID != null) {
+								 * 
+								 * log(LogStatus.INFO, "Subject: " + recordName +
+								 * " found on All Interaction Page", YesNo.No);
+								 * 
+								 * flag = true;
+								 * 
+								 * }
+								 * 
+								 * else { log(LogStatus.ERROR, "No New Window Open after click on Record: " +
+								 * recordName, YesNo.Yes); } } else { flag = true; }
+								 */
 
-										log(LogStatus.INFO, "Subject: " + recordName + " found on All Interaction Page",
-												YesNo.No);
-
-										flag = true;
-
-									}
-
-									else {
-										log(LogStatus.ERROR, "No New Window Open after click on Record: " + recordName,
-												YesNo.Yes);
-									}
-								} else {
-									flag = true;
-								}
+								flag = true;
 
 							} else {
 								log(LogStatus.ERROR, "Not able to Click on Record: " + recordName, YesNo.Yes);
@@ -5840,28 +5838,24 @@ public class HomePageBusineesLayer extends HomePage {
 										if (click(driver, globalSearchRecord(recordName, 7),
 												"globalSearchRecord: " + recordName, action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "Clicked on Record: " + recordName, YesNo.No);
-											if (sideNavOption.equalsIgnoreCase("Tasks")) {
-												CommonLib.ThreadSleep(4000);
-												String parentID = CommonLib.switchOnWindow(driver);
-												CommonLib.ThreadSleep(4000);
-												if (parentID != null) {
+											/*
+											 * if (sideNavOption.equalsIgnoreCase("Tasks")) {
+											 * CommonLib.ThreadSleep(4000); String parentID =
+											 * CommonLib.switchOnWindow(driver); CommonLib.ThreadSleep(4000); if
+											 * (parentID != null) {
+											 * 
+											 * log(LogStatus.INFO, "Subject: " + recordName +
+											 * " found on All Interaction Page", YesNo.No);
+											 * 
+											 * flag = true;
+											 * 
+											 * }
+											 * 
+											 * else { log(LogStatus.ERROR, "No New Window Open after click on Record: "
+											 * + recordName, YesNo.Yes); } } else { flag = true; }
+											 */
 
-													log(LogStatus.INFO,
-															"Subject: " + recordName + " found on All Interaction Page",
-															YesNo.No);
-
-													flag = true;
-
-												}
-
-												else {
-													log(LogStatus.ERROR,
-															"No New Window Open after click on Record: " + recordName,
-															YesNo.Yes);
-												}
-											} else {
-												flag = true;
-											}
+											flag = true;
 										} else {
 											log(LogStatus.ERROR, "Not able to Click on Record: " + recordName,
 													YesNo.Yes);

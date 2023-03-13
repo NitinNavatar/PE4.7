@@ -388,7 +388,41 @@ public class FundRaisingPage extends BasePage {
 		
 
 	}
+	@FindBy(xpath = "//*[text()='Fund Name']/..//..//..//..//input[@type='Search' or contains(@placeholder,'Search')]")
+	private WebElement PopUpfundraisingFundName;
 
+	public WebElement getPopUpfundraisingFundName(int timeOut) {
+		return isDisplayed(driver, PopUpfundraisingFundName, "Visibility", timeOut, "fundraising Company Name");
+	}
+	
+	@FindBy(xpath = "//*[text()='Contact']/..//..//..//..//input[@type='Search' or contains(@placeholder,'Search')]")
+	private WebElement PopUpfundraisingContact;
+
+	public WebElement getPopUpfundraisingContact(int timeOut) {
+		return isDisplayed(driver, PopUpfundraisingContact, "Visibility", timeOut, "PopUp fundraising Contact");
+	}
+	
+	@FindBy(xpath = "//*[@data-key='new']")
+	private WebElement FundraisingContactIcon;
+
+	public WebElement getFundraisingContactIcon(int timeOut) {
+		return isDisplayed(driver, FundraisingContactIcon, "Visibility", timeOut, "Fundraising Contact Icon");
+	}
+	
+	@FindBy(xpath = "//footer//span[text()='Save']")
+	private WebElement NewFinancingPopupSaveIcon;
+	
+	public WebElement getNewFinancingPopupSaveIcon(int timeOut) {
+		return isDisplayed(driver, NewFinancingPopupSaveIcon, "Visibility", timeOut,
+				"New Financing Popup Save Icon");
+	}
+	
+	@FindBy(xpath = "//*[text()='Company']/..//..//..//..//input[@type='Search' or contains(@placeholder,'Search')]")
+	private WebElement fundraisingCompanyName;
+
+	public WebElement getfundraisingCompanyName(int timeOut) {
+		return isDisplayed(driver, fundraisingCompanyName, "Visibility", timeOut, "fundraising Company Name");
+	}
 	
 	@FindBy(xpath = "//a[text()='Fundraising Contacts' and @role='tab']")
 	private WebElement fundraisingContactTab;
@@ -410,6 +444,17 @@ public class FundRaisingPage extends BasePage {
 	public WebElement getLegalNameCrossIcon(String projectName, int timeOut) {
 		return isDisplayed(driver, LegalNameCrossIcon, "Visibility", timeOut, "LegalNameCrossIcon");
 	}
-	
+	@FindBy(xpath = "//label[text()='Fund Name']/following-sibling::div//button")
+	private WebElement FundNameCrossIcon;
+
+	public WebElement getFundNameCrossIcon(String projectName, int timeOut) {
+		return isDisplayed(driver, FundNameCrossIcon, "Visibility", timeOut, "Fund Name Cross Icon");
+	}
+	@FindBy(xpath = "//label[text()='Fund Name']/following-sibling::div//button")
+	private WebElement CompanyNameCrossIcon;
+
+	public WebElement getCompanyNameCrossIcon(String projectName, int timeOut) {
+		return isDisplayed(driver, CompanyNameCrossIcon, "Visibility", timeOut, "Company Name Cross Icon ");
+	}
 
 }
