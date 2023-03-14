@@ -1397,18 +1397,18 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 				if (CommonLib.click(driver, getpopupsaveButton(30), tabObj4 + " save button",
 						action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on save button", YesNo.No);
-
-					String xPath = "//lightning-formatted-text[contains(text(),'" + dealName + "')]";
-					ele = CommonLib.FindElement(driver, xPath, dealName, action.SCROLLANDBOOLEAN, 40);
-					if (ele != null) {
-						log(LogStatus.INFO, dealName + " deal has been created", YesNo.No);
-
-						flag = true;
-
-					} else {
-						log(LogStatus.ERROR, dealName + " deal is not created", YesNo.No);
-
-					}
+//
+//					String xPath = "//lightning-formatted-text[contains(text(),'" + dealName + "')]";
+//					ele = CommonLib.FindElement(driver, xPath, dealName, action.SCROLLANDBOOLEAN, 40);
+//					if (ele != null) {
+//						log(LogStatus.INFO, dealName + " deal has been created", YesNo.No);
+//
+//						flag = true;
+//
+//					} else {
+//						log(LogStatus.ERROR, dealName + " deal is not created", YesNo.No);
+//
+//					}
 				} else {
 					log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
 

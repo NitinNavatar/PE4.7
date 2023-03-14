@@ -402,7 +402,7 @@ public class FundRaisingPage extends BasePage {
 		return isDisplayed(driver, PopUpfundraisingContact, "Visibility", timeOut, "PopUp fundraising Contact");
 	}
 	
-	@FindBy(xpath = "//*[@data-key='new']")
+	@FindBy(xpath = "//*[@title='New Fundraising Contact']")
 	private WebElement FundraisingContactIcon;
 
 	public WebElement getFundraisingContactIcon(int timeOut) {
@@ -450,7 +450,7 @@ public class FundRaisingPage extends BasePage {
 	public WebElement getFundNameCrossIcon(String projectName, int timeOut) {
 		return isDisplayed(driver, FundNameCrossIcon, "Visibility", timeOut, "Fund Name Cross Icon");
 	}
-	@FindBy(xpath = "//label[text()='Fund Name']/following-sibling::div//button")
+	@FindBy(xpath = "//label[text()='Company']/following-sibling::div//button")
 	private WebElement CompanyNameCrossIcon;
 
 	public WebElement getCompanyNameCrossIcon(String projectName, int timeOut) {

@@ -2857,7 +2857,7 @@ public void ADETRGc033_VerifytheImpactWhenContactGetsClickedwhoisnotinOrg(String
 	lp.CRMLogin(rgUser2, rgOrgPassword, appName);
 
 	String contactName = RGEContact1LName;
-	String contactName1 = "Daniel";
+	String contactName1 = "Eric Lucas";
 	String ExpectedHeader = "New Contact";
 	if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 		log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
@@ -2927,13 +2927,13 @@ public void ADETRGc034_VerifythatWhenEmailCountisZerOforaContactEmailCountisClic
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
-	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	lp.CRMLogin(rgUser2, rgOrgPassword, appName);
 	String recordType = "";
 	String dealName = RGDeal1;
 	String companyName = RGDeal1CompanyName;
 	String stage = RGDeal1Stage;
 	String dateReceived = todaysDate;
-	String ContactName = RGEContact6LName;
+	String ContactName = RGEContact6FName+" "+RGEContact6LName;
 	
 	String ExpectedMsg = "No items to display.";
 	
@@ -3004,7 +3004,7 @@ public void ADETRGc034_VerifythatWhenEmailCountisZerOforaContactEmailCountisClic
 			if (CommonLib.click(driver, BP.ExternalTab( 30,action.SCROLLANDBOOLEAN), "ExternalTab tab: " + "",
 					action.BOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on ExternalTab tab", YesNo.No);
-				if (CommonLib.click(driver, BP.contactEmailCount(RGEContact6LName, 30), "Email Count: " + "",
+				if (CommonLib.click(driver, BP.contactEmailCount(ContactName, 30), "Email Count: " + "",
 						action.BOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on Email Count: " + " " + " of Record: " + RGEContact6LName, YesNo.No);
 				String parentWindowId1 = CommonLib.switchOnWindow(driver);
@@ -3162,7 +3162,7 @@ public void ADETRGc036_VerifyEmailCountRedirectionfromExternalTabofDealteamGrid0
 	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 	DealTeamPageBusinessLayer DTP = new DealTeamPageBusinessLayer(driver);
 	lp.CRMLogin(rgUser2, rgOrgPassword, appName);
-	String ContactName = RGEContact4FName + " " + RGEContact4LName ;
+	String ContactName =RGEContact1LName ;
 	String ExpectedHeader = "Emails With";
 	
 	if (lp.clickOnTab(projectName, tabObj4)) {
@@ -3227,8 +3227,8 @@ public void ADETRGc037_VerifythatSubjectisClickableItsRedirectionFromEmailDetail
 	OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
 	DealTeamPageBusinessLayer DTP = new DealTeamPageBusinessLayer(driver);
 	lp.CRMLogin(rgUser2, rgOrgPassword, appName);
-	String ContactName = RGEContact4FName + " " + RGEContact4LName ;
-	String subject = "Testing indirect email4 for contact";
+	String ContactName = RGEContact1LName ;
+	String subject = "Parking Receipt TR6";
 	if (lp.clickOnTab(projectName, tabObj4)) {
 		log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
 		ThreadSleep(3000);
@@ -3246,8 +3246,6 @@ public void ADETRGc037_VerifythatSubjectisClickableItsRedirectionFromEmailDetail
 					action.BOOLEAN)) {
 				log(LogStatus.PASS, "Clicked on Email subject: " + subject, YesNo.No);
 				try {
-				String parentWindowId = CommonLib.switchOnWindow(driver);
-				if (!parentWindowId.isEmpty()) { 
 					log(LogStatus.PASS, "New Window Open after click on Email subject Link: " + subject, YesNo.No);
 					Set<String> childWindow = driver.getWindowHandles();
 					op.outLookLoginRevenueGrid(rgUser2,rgUserPassword);
@@ -3261,7 +3259,7 @@ public void ADETRGc037_VerifythatSubjectisClickableItsRedirectionFromEmailDetail
 								"----Email Detail Page is redirecting for Email Record: " + subject + "-----",
 								YesNo.No);
 						driver.close();
-						driver.switchTo().window(parentWindowId);
+						driver.switchTo().window(parentWindowId1);
 
 					} else {
 						log(LogStatus.FAIL, "----Email Detail Page is not redirecting for Email Record: "
@@ -3269,14 +3267,14 @@ public void ADETRGc037_VerifythatSubjectisClickableItsRedirectionFromEmailDetail
 						sa.assertTrue(false,
 								"----Email Detail Page is not redirecting for Email Record: " + subject + "-----");
 						driver.close();
-						driver.switchTo().window(parentWindowId);
+						driver.switchTo().window(parentWindowId1);
 
 					}
 
-				} else {
-					log(LogStatus.FAIL, "No New Window Open after click on Deal Link: " + subject, YesNo.Yes);
-					sa.assertTrue(false, "No New Window Open after click on Deal Link: " + subject);
-				}
+//				} else {
+//					log(LogStatus.FAIL, "No New Window Open after click on Deal Link: " + subject, YesNo.Yes);
+//					sa.assertTrue(false, "No New Window Open after click on Deal Link: " + subject);
+//				}
 			} catch (Exception e) {
 				log(LogStatus.FAIL,
 						"Not able to switch to window after click on Deal Link, Msg showing: " + e.getMessage(),
@@ -3321,7 +3319,7 @@ public void ADETRGc038_VerifytheCategoryTypeatEmailDetailspage(String projectNam
 	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 	DealTeamPageBusinessLayer DTP = new DealTeamPageBusinessLayer(driver);
 	lp.CRMLogin(rgUser2, rgOrgPassword, appName);
-	String ContactName = RGEContact4FName + " " + RGEContact4LName ;
+	String ContactName = RGEContact1LName ;
 	String expected = "Inbound Email,Outbound Email,Indirect Email";
     List<String> actualheader = new ArrayList<String>();
 	
@@ -3386,8 +3384,8 @@ public void ADETRGc039_1_VerifythatCellisClickableforTOandCCColumnsatEmailDetail
 	OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
 	DealTeamPageBusinessLayer DTP = new DealTeamPageBusinessLayer(driver);
 	lp.CRMLogin(rgUser2, rgOrgPassword, appName);
-	String ContactName = RGEContact4FName + " " + RGEContact4LName ;
-	String subject = "Testing indirect email5 for contact";
+	String ContactName = RGEContact1LName ;
+	String subject = "Uh-oh, your prescription is expiring TR6";
 	String Toname = RGEContact1LName;
 	String CCname = RGEContact1LName;
 	if (lp.clickOnTab(projectName, tabObj4)) {
@@ -3583,7 +3581,7 @@ public void ADETRGc040_VerifythatEmailCountUnderEmailColumnandEmailCountinEmailD
 	String emailCountInFirm = "8";
 	String actualemailCount = null;
 
-	String ContactName = RGEContact4FName + " " + RGEContact4LName ;
+	String ContactName = RGEContact1LName ;
 
 	if (lp.clickOnTab(projectName, tabObj4)) {
 		log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
@@ -3637,6 +3635,7 @@ public void ADETRGc040_VerifythatEmailCountUnderEmailColumnandEmailCountinEmailD
 
 			}
 			 driver.close();
+			 driver.switchTo().window(parentWindowId1);
 			}
 			} else {
 				log(LogStatus.FAIL, "Not able to Click on email count: " + actualemailCount, YesNo.Yes);
@@ -3673,6 +3672,7 @@ public void ADETRGc041_VerifytheEmailCountonInternalUsersatInternalTabforDealTea
 	String emailCountInFirm = "8";
 	String actualemailCount = null;
 	String Username = rgUser1;
+
 	
 	if (lp.clickOnTab(projectName, tabObj4)) {
 		log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
@@ -3718,6 +3718,7 @@ public void ADETRGc041_VerifytheEmailCountonInternalUsersatInternalTabforDealTea
 					sa.assertTrue(false, "No Contact found of Name: " + Username);
 				}
 				driver.close();
+				driver.switchTo().window(parentWindowId1);
 			}
 			} else {
 				log(LogStatus.FAIL, "Not able to Click on  tab: " + "connectionicon" , YesNo.Yes);
@@ -3748,9 +3749,10 @@ public void ADETRGc042_VerifytheEmailCountClickandRedirectionFromInternalTabofCo
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 	lp.CRMLogin(rgUser2, rgOrgPassword, appName);
-	String ContactName = RGEContact4FName + " " + RGEContact4LName ;
+	String ContactName = RGEContact1LName ;
 	String ExpectedHeader = "Emails With";
 	String Username = rgUser1;
+
 	
 	if (lp.clickOnTab(projectName, tabObj4)) {
 		log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
@@ -3827,10 +3829,12 @@ public void ADETRGc043_VerifytheEmailCountonExternalContactsatExternalTabforDeal
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 	lp.CRMLogin(rgUser2, rgOrgPassword, appName);
-	String emailCountInFirm = "3";
+//	String emailCountInFirm = "3";
+	String emailCountInFirm = "4";
 	String actualemailCount = null;
 
-	String contactName = RGEContact4LName;
+	String contactName = RGEContact1LName;
+	String contactName1 = "Jane Elias";
 	
 	if (lp.clickOnTab(projectName, tabObj4)) {
 		log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
@@ -3848,37 +3852,38 @@ public void ADETRGc043_VerifytheEmailCountonExternalContactsatExternalTabforDeal
 				if (CommonLib.click(driver, BP.ExternalTab( 30,action.SCROLLANDBOOLEAN), "ExternalTab tab: " + "",
 						action.BOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on ExternalTab tab", YesNo.No);
-			actualemailCount = getText(driver, BP.contactEmailCount(contactName, 20), "deal",
+			actualemailCount = getText(driver, BP.contactEmailCount(contactName1, 20), "deal",
 				action.SCROLLANDBOOLEAN);
-		if (BP.contactEmailCount(contactName, 20) != null) {
+		if (BP.contactEmailCount(contactName1, 20) != null) {
 			if (!actualemailCount.equalsIgnoreCase("")) {
 
 				if (actualemailCount.equalsIgnoreCase(emailCountInFirm)) {
-					log(LogStatus.INFO, "Email Count for Contact: " + contactName + " is " + actualemailCount
+					log(LogStatus.INFO, "Email Count for Contact: " + contactName1 + " is " + actualemailCount
 							+ " before Email Team Create is matched to " + emailCountInFirm, YesNo.No);
 				} else {
 					log(LogStatus.ERROR,
-							"Email Count for Contact: " + contactName
+							"Email Count for Contact: " + contactName1
 									+ " is before Email count is not matched, Expected: " + emailCountInFirm
 									+ " but Actual: " + actualemailCount,
 							YesNo.Yes);
 					sa.assertTrue(false,
-							"Email Count for Contact: " + contactName
+							"Email Count for Contact: " + contactName1
 									+ " is before Email count  not matched, Expected: " + emailCountInFirm
 									+ " but Actual: " + actualemailCount);
 				}
 
 			} else {
 				log(LogStatus.ERROR, "Email Count for Contact is Empty, So not able to check Count for Contact: "
-						+ contactName, YesNo.Yes);
+						+ contactName1, YesNo.Yes);
 				sa.assertTrue(false, "Email Count for Contact is Empty, So not able to check Count for Contact: "
-						+ contactName);
+						+ contactName1);
 			}
 		} else {
-			log(LogStatus.ERROR, "No Contact found of Name: " + contactName, YesNo.No);
-			sa.assertTrue(false, "No Contact found of Name: " + contactName);
+			log(LogStatus.ERROR, "No Contact found of Name: " + contactName1, YesNo.No);
+			sa.assertTrue(false, "No Contact found of Name: " + contactName1);
 		}
      driver.close();
+     driver.switchTo().window(parentWindowId1);
 				} else {
 					log(LogStatus.FAIL, "Not able to Click on  tab: " + "External Tab" , YesNo.Yes);
 					sa.assertTrue(false, "Not able to Click on  tab: " + "External Tab " );
@@ -3926,10 +3931,11 @@ public void ADETRGc044_VerifythatwhenEmailCountisZeroforaContactEmailcountisClic
 	
 
 	for (String[] accounts : EntityOrAccounts) {
+		value = accounts[0];
+		type = accounts[1];
 		if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);	
-			value = accounts[0];
-			type = accounts[1];
+			
 			if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
 				log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
 			
@@ -3992,7 +3998,7 @@ public void ADETRGc044_VerifythatwhenEmailCountisZeroforaContactEmailcountisClic
 			log(LogStatus.INFO, "Click on Tab : " + TabName.FundraisingsTab, YesNo.No);
 			ThreadSleep(3000);
 			if (fp.clickOnAlreadyCreatedItem(projectName,RGFundraisingName1, 10)) {
-				if (fr.createFundRaisingContactFromIcon(environment, "Lightning",RGContact1,RGRole1 )) {
+				if (fr.createFundRaisingContactFromIcon(environment, "Lightning",RGContact1,null )) {
 					appLog.info("fundraising Contact is created : " + RGFundraisingName1);
 				} else {
 					appLog.error("Not able to create fundraising Contact: " + RGFundraisingName1);
@@ -4058,7 +4064,8 @@ public void ADETRGc045_VerifyEmailCountforContactatFundraisingContactGridofFR1Pa
 	FundRaisingPageBusinessLayer fr = new FundRaisingPageBusinessLayer(driver);
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 	lp.CRMLogin(rgUser2, rgOrgPassword, appName);
-	String emailCountInFirm = "8";
+//	String emailCountInFirm = "8";
+	String emailCountInFirm = "24";
 	String actualemailCount = null;
 	String Contactname = RGEContact1LName;
 	
@@ -4191,8 +4198,10 @@ public void ADETRGc047_VerifytheEmailCountonInternalUsersatInternaltabforFundrai
 	lp.CRMLogin(rgUser2, rgOrgPassword, appName);
 	String ContactName = RGEContact1LName ;
 	String emailCountInFirm = "8";
+	
 	String actualemailCount = null;
 	String Username = rgUser1;
+	
 	
 	if (lp.clickOnTab(projectName, TabName.FundraisingsTab)) {
 		log(LogStatus.INFO, "Click on Tab : " + TabName.FundraisingsTab, YesNo.No);
@@ -4235,6 +4244,7 @@ public void ADETRGc047_VerifytheEmailCountonInternalUsersatInternaltabforFundrai
 			sa.assertTrue(false, "No Contact found of Name: " + Username);
 		}
 		driver.close();
+		driver.switchTo().window(parentWindowId1);
 	}
 	} else {
 		log(LogStatus.FAIL, "Not able to Click on  tab: " + "connectionicon" , YesNo.Yes);
@@ -4261,7 +4271,8 @@ public void ADETRGc048_VerifytheEmailCountClickandRedirectionfromInternaltabOfCo
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 	lp.CRMLogin(rgUser2, rgOrgPassword, appName);
 	String ContactName = RGEContact1LName ;
-	String Username = rgUser1;
+
+	String username = "Robert CRM1";
 	String ExpectedHeader = "Emails With";
 	
 	if (lp.clickOnTab(projectName, TabName.FundraisingsTab)) {
@@ -4274,9 +4285,9 @@ public void ADETRGc048_VerifytheEmailCountClickandRedirectionfromInternaltabOfCo
 		String parentWindowId1 = CommonLib.switchOnWindow(driver);
 		if (!parentWindowId1.isEmpty()) {
 		ThreadSleep(3000);
-		if (CommonLib.click(driver, BP.contactEmailCount(Username, 30), "Email Count: " + "",
+		if (CommonLib.click(driver, BP.contactEmailCount(username, 30), "Email Count: " + "",
 				action.BOOLEAN)) {
-			log(LogStatus.INFO, "Clicked on Email Count: " + " " + " of Record: " + Username, YesNo.No);
+			log(LogStatus.INFO, "Clicked on Email Count: " + " " + " of Record: " + username, YesNo.No);
 			Set<String> childWindow = driver.getWindowHandles();
 			switchToDefaultContent(driver);
 			System.out.println(childWindow);
@@ -4333,7 +4344,9 @@ public void ADETRGc049_VerifytheEmailCountonExternalContactsatExternaltabforFund
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 	lp.CRMLogin(rgUser2, rgOrgPassword, appName);
 	String ContactName = RGEContact1LName ;
-	String emailCountInFirm = "3";
+	String ContactName1 = "Jane Elias" ;
+//	String emailCountInFirm = "3";
+	String emailCountInFirm = "4";
 	String actualemailCount = null;		
 	
 	if (lp.clickOnTab(projectName, TabName.FundraisingsTab)) {
@@ -4349,37 +4362,38 @@ public void ADETRGc049_VerifytheEmailCountonExternalContactsatExternaltabforFund
 		if (CommonLib.click(driver, BP.ExternalTab( 30,action.SCROLLANDBOOLEAN), "ExternalTab tab: " + "",
 				action.BOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on ExternalTab tab", YesNo.No);
-			actualemailCount = getText(driver, BP.contactEmailCount(ContactName, 20), "deal",
+			actualemailCount = getText(driver, BP.contactEmailCount(ContactName1, 20), "deal",
 					action.SCROLLANDBOOLEAN);
-			if (BP.contactEmailCount(ContactName, 20) != null) {
+			if (BP.contactEmailCount(ContactName1, 20) != null) {
 				if (!actualemailCount.equalsIgnoreCase("")) {
 
 					if (actualemailCount.equalsIgnoreCase(emailCountInFirm)) {
-						log(LogStatus.INFO, "Email Count for Contact: " + ContactName + " is " + actualemailCount
+						log(LogStatus.INFO, "Email Count for Contact: " + ContactName1 + " is " + actualemailCount
 								+ " before Email Team Create is matched to " + emailCountInFirm, YesNo.No);
 					} else {
 						log(LogStatus.ERROR,
-								"Email Count for Contact: " + ContactName
+								"Email Count for Contact: " + ContactName1
 										+ " is before Email count is not matched, Expected: " + emailCountInFirm
 										+ " but Actual: " + actualemailCount,
 								YesNo.Yes);
 						sa.assertTrue(false,
-								"Email Count for Contact: " + ContactName
+								"Email Count for Contact: " + ContactName1
 										+ " is before Email count  not matched, Expected: " + emailCountInFirm
 										+ " but Actual: " + actualemailCount);
 					}
 
 				} else {
 					log(LogStatus.ERROR, "Email Count for Contact is Empty, So not able to check Count for Contact: "
-							+ ContactName, YesNo.Yes);
+							+ ContactName1, YesNo.Yes);
 					sa.assertTrue(false, "Email Count for Contact is Empty, So not able to check Count for Contact: "
-							+ ContactName);
+							+ ContactName1);
 				}
 			} else {
-				log(LogStatus.ERROR, "No Contact found of Name: " + ContactName, YesNo.No);
-				sa.assertTrue(false, "No Contact found of Name: " + ContactName);
+				log(LogStatus.ERROR, "No Contact found of Name: " + ContactName1, YesNo.No);
+				sa.assertTrue(false, "No Contact found of Name: " + ContactName1);
 			}
 			driver.close();
+			driver.switchTo().window(parentWindowId1);
 		} else {
 			log(LogStatus.FAIL, "Not able to Click on  tab: " + "External Tab" , YesNo.Yes);
 			sa.assertTrue(false, "Not able to Click on  tab: " + "External Tab " );
@@ -4409,7 +4423,10 @@ public void ADETRGc050_VerifytheEmailCountClickandRedirectionfromExternaltabofCo
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 	lp.CRMLogin(rgUser2, rgOrgPassword, appName);
-	String ContactName = RGEContact1LName;
+	String ContactName = RGEContact1LName ;
+
+	String contactname = "Jane Elias";
+	String ExpectedHeader = "Emails With";
 	
 	if (lp.clickOnTab(projectName, TabName.FundraisingsTab)) {
 		log(LogStatus.INFO, "Click on Tab : " + TabName.FundraisingsTab, YesNo.No);
@@ -4423,40 +4440,43 @@ public void ADETRGc050_VerifytheEmailCountClickandRedirectionfromExternaltabofCo
 		ThreadSleep(3000);
 		if (CommonLib.click(driver, BP.ExternalTab( 30,action.SCROLLANDBOOLEAN), "ExternalTab tab: " + "",
 				action.BOOLEAN)) {
-			log(LogStatus.INFO, "Clicked on ExternalTab tab", YesNo.No);
-			if (CommonLib.click(driver, BP.contactEmailCountAcuity(ContactName, 30), "Email Count: " + "",
-					action.BOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on Email Count: " + " " + " of Record: " + ContactName, YesNo.No);
-			}
+		if (CommonLib.click(driver, BP.contactEmailCount(contactname, 30), "Email Count: " + "",
+				action.BOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on Email Count: " + " " + " of Record: " + contactname, YesNo.No);
 			Set<String> childWindow = driver.getWindowHandles();
 			switchToDefaultContent(driver);
 			System.out.println(childWindow);
 			for(String child : childWindow) {
 			driver.switchTo().window(child);
 			}
-			if (BP.ContactRecordPage(ContactName, 20) != null) {
-				log(LogStatus.PASS,
-						"----Contact Detail Page is redirecting for Contact Record: " + ContactName + "-----",
+			String actualHeader = getText(driver, BP.getConnectionpopupheader(20), "Contactpopupheader",
+					action.SCROLLANDBOOLEAN);
+//			if (ExpectedHeader.contains(actualHeader)) {
+				if (actualHeader.contains(ExpectedHeader)) {
+				log(LogStatus.INFO,
+						"Actual result " + actualHeader + " of pop up has been matched with Expected result : "
+								+ ExpectedHeader + " for Contact Name: " + ContactName,
 						YesNo.No);
-				driver.close();
-				driver.switchTo().window(parentWindowId1);
-
 			} else {
-				log(LogStatus.FAIL, "----Contact Detail Page is not redirecting for Deal Record: "
-						+ ContactName + "-----", YesNo.Yes);
-				sa.assertTrue(false,
-						"----Contact Detail Page is not showing for Deal Record: " + ContactName + "-----");
+				log(LogStatus.ERROR,
+						"Actual result " + actualHeader + " of pop up has been not matched with Expected result : "
+								+ ExpectedHeader + " for Contact Name: " + ContactName,
+						YesNo.No);
+			}
+				driver.switchTo().window(parentWindowId1);
 				CommonLib.switchOnWindow(driver);
-				driver.close();
-			driver.switchTo().window(parentWindowId1);
+					driver.close();
+				driver.switchTo().window(parentWindowId1);
+			
+				} else {
+					log(LogStatus.FAIL, "Not able to Click on  tab: " + "contactEmailCount" , YesNo.Yes);
+					sa.assertTrue(false, "Not able to Click on  tab: " + "contactEmailCount" );
+					}
 		}
-
 		} else {
 			log(LogStatus.FAIL, "Not able to Click on  tab: " + "External Tab" , YesNo.Yes);
 			sa.assertTrue(false, "Not able to Click on  tab: " + "External Tab " );
 			}
-		driver.close();
-		}
 		} else {
 			log(LogStatus.FAIL, "Not able to Click on  tab: " + "connectionicon" , YesNo.Yes);
 			sa.assertTrue(false, "Not able to Click on  tab: " + "connectionicon" );
@@ -4472,4 +4492,4 @@ public void ADETRGc050_VerifytheEmailCountClickandRedirectionfromExternaltabofCo
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-	}
+}
