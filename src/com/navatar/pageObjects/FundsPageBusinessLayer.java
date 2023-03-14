@@ -1019,7 +1019,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			}
 			ThreadSleep(2000);
 			if (click(driver, getCustomTabSaveBtn(projectName, 30), "Save Button", action.SCROLLANDBOOLEAN)) {
-				appLog.error("Click on save Button");
+				appLog.info("Clicked on save button");
 				flag = true;
 				ThreadSleep(2000);
 			} else {
