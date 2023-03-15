@@ -1465,10 +1465,12 @@ public class CommonVariables {
 		    public static String RGEContact2FName,RGEContact2LName,RGEContact2EmailID,RGEContact2RecordType;
 		    public static String RGEContact3FName,RGEContact3LName,RGEContact3EmailID,RGEContact3RecordType;
 		    public static String RGEUser01FName,RGEUser01LName;
+		    public static String RGEUser02FName,RGEUser02LName;
 		    public static String RGEContact4FName,RGEContact4LName,RGEContact4EmailID,RGEContact4RecordType;
 		    public static String RGEContact5FName,RGEContact5LName,RGEContact5EmailID,RGEContact5RecordType;
 		    public static String RGEContact6FName,RGEContact6LName,RGEContact6EmailID,RGEContact6RecordType;
 		    public static String RGEContact7FName,RGEContact7LName,RGEContact7EmailID,RGEContact7RecordType;
+		    public static String RGEContact8LName;
 		   
 		    //RG DEAL
 			public static String RGDeal1,RGDeal1CompanyName,RGDeal1RecordType,RGDeal1Stage,RGDeal1SourceContact,RGDeal1SourceFirm,RGDeal1HighestStageReached;
@@ -10602,6 +10604,9 @@ public class CommonVariables {
 						RGEUser01FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEUser01", excelLabel.Contact_FirstName);
 						RGEUser01LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEUser01", excelLabel.Contact_LastName);
 						
+						RGEUser02FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEUser02", excelLabel.Contact_FirstName);
+						RGEUser02LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEUser02", excelLabel.Contact_LastName);
+						
 						RGEContact4FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact4", excelLabel.Contact_FirstName);
 						RGEContact4LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact4", excelLabel.Contact_LastName);
 						RGEContact4EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact4", excelLabel.Contact_EmailId);
@@ -10622,6 +10627,8 @@ public class CommonVariables {
 						RGEContact7EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact7", excelLabel.Contact_EmailId);
 						RGEContact7RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact7", excelLabel.Record_Type);
 						
+						RGEContact8LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGEContact8", excelLabel.Contact_LastName);
+					
 						//RG Deals
 						RGDeal1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "RGDeal1", excelLabel.Deal_Name);
 						RGDeal1CompanyName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deals",excelLabel.Variable_Name, "RGDeal1", excelLabel.Company_Name);
