@@ -6572,6 +6572,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case FundsTab:
 			viewList = "All";
 			break;
+		case DealTab:
+			viewList = "All";
+			break;
 		case CommitmentsTab:
 			viewList = "All";
 			break;
@@ -6625,9 +6628,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							"//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//a[text()='"
 									+ alreadyCreated + "']",
 							alreadyCreated, action.BOOLEAN, 30);
-					ThreadSleep(2000);
+					ThreadSleep(5000);
 					if (click(driver, ele, alreadyCreated, action.BOOLEAN)) {
-						ThreadSleep(3000);
+						ThreadSleep(5000);
 						return true;
 					} else {
 						appLog.error("Not able to Click on Already Created : " + alreadyCreated);

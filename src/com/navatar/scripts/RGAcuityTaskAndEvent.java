@@ -7,6 +7,7 @@ import static com.navatar.generic.CommonLib.clickUsingJavaScript;
 import static com.navatar.generic.CommonLib.exit;
 import static com.navatar.generic.CommonLib.getURL;
 import static com.navatar.generic.CommonLib.log;
+import static com.navatar.generic.CommonLib.refresh;
 import static com.navatar.generic.CommonLib.removeNumbersFromString;
 import static com.navatar.generic.CommonLib.switchOnWindow;
 import static com.navatar.generic.CommonLib.switchToDefaultContent;
@@ -14,6 +15,8 @@ import static com.navatar.generic.CommonVariables.*;
 import static com.navatar.generic.SmokeCommonVariables.adminPassword;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.xml.transform.Result;
 
@@ -2683,7 +2686,6 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void RGATETc015_CreateEmailTaskFromRGUser(String projectName) {
@@ -2878,7 +2880,6 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}	
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void RGATETc017_VerifyEmailTaskInTheFirmAccountContactPage(String projectName) {
@@ -2987,32 +2988,33 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}	
 
-public void RGATETc018_CreateAccountDeals(String projectName) {
+	@Parameters({ "projectName" })
+	@Test
+	public void RGATETc018_CreateAccountDeals(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
-		FundsPageBusinessLayer fd = new FundsPageBusinessLayer(driver);
 
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		
 		String[] accountName = RGATE_FirmLegalName4.split("<break>");
 		String[] recordType = RGATE_FirmRecordType3.split("<break>");
 
-		String[] contactFirstName = {RGATE_ContactFirstName3};
-		String[] contactLastName = {RGATE_ContactLastName3};
-		String[] contactLegalName = {RGATE_ContactLegalName3};
-		String[] contactEmail = {RGATE_ContactEmail3};
-
+		String[] contactFirstName = RGATE_ContactFirstName3.split("<break>");
+		String[] contactLastName = RGATE_ContactLastName3.split("<break>");
+		String[] contactLegalName = RGATE_ContactLegalName3.split("<break>");
+		String[] contactEmail = RGATE_ContactEmail3.split("<break>");
+		String[] contactTitle = RGATE_Title3.split("<break>");
 		String dealName = RGATE_DealName3;
 		String dealCompany = RGATE_DealCompany3;
 		String dealStage = RGATE_DealStage3;
 
-		lp.CRMLogin(RGcrmUser1EmailID, adminPassword, appName);
-		if (accountName.length == recordType.length) {
 			for (int i = 0; i < accountName.length; i++) {
-				if (lp.clickOnTab(projectName, tabObj1)) {
+				if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
 
-					log(LogStatus.INFO, "Click on Tab : " + tabObj1, YesNo.No);
+					log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 					ThreadSleep(3000);
 					if (ip.createEntityOrAccount(environment, mode, accountName[i], recordType[i], null, null, 30)) {
 						log(LogStatus.INFO,
@@ -3034,16 +3036,9 @@ public void RGATETc018_CreateAccountDeals(String projectName) {
 					log(LogStatus.FAIL, "Not able to click on " + tabObj1 + " Tab", YesNo.No);
 					sa.assertTrue(false, "Not able to click on " + tabObj1 + " Tab");
 				}
-
+				refresh(driver);
 			}
-		} else {
-			log(LogStatus.FAIL,
-					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper",
-					YesNo.No);
-			sa.assertTrue(false,
-					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper");
-		}
-
+			ThreadSleep(2000);
 		for (int i = 0; i < contactLastName.length; i++) {
 			if (lp.clickOnTab(projectName, tabObj2)) {
 
@@ -3051,14 +3046,12 @@ public void RGATETc018_CreateAccountDeals(String projectName) {
 				ThreadSleep(3000);
 
 				if (cp.createContact(projectName, contactFirstName[i], contactLastName[i], contactLegalName[i],
-						contactEmail[i], "", null, null, CreationPage.ContactPage, null, null)) {
+						contactEmail[i], "", Fields.Title.toString(),contactTitle[i], CreationPage.ContactPage, null, null)) {
 					log(LogStatus.INFO,
 							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i],
 							YesNo.No);
 					sa.assertTrue(true,
 							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i]);
-
-
 				} else {
 					log(LogStatus.FAIL,
 							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i],
@@ -3071,9 +3064,10 @@ public void RGATETc018_CreateAccountDeals(String projectName) {
 				log(LogStatus.FAIL, "Not able to click on " + tabObj2 + " Tab", YesNo.No);
 				sa.assertTrue(false, "Not able to click on " + tabObj2 + " Tab");
 			}
+			refresh(driver);
 		}
-
-		if (lp.clickOnTab(projectName, tabObj4)) {
+		ThreadSleep(2000);
+		if (lp.clickOnTab(projectName, TabName.Deals)) {
 
 			log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
 			ThreadSleep(3000);
@@ -3098,60 +3092,1002 @@ public void RGATETc018_CreateAccountDeals(String projectName) {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ADETRGc031_CreateDealfromDealTeamandVerifyImpactonDealTeamCountContactsUsersatFirmandContactpage(String projectName) {	
+	public void RGATETc019_CreateDealTeamAndVerifyOnInternalAndExternalTabOfDeal(String projectName) {	
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		DealTeamPageBusinessLayer DTP = new DealTeamPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		String dealName[] = ACDealTeamName1.split("<break>");
-		String TeamMember[] = ACDealTeamMember1.split("<break>");
-		String contactName[] = ACDealContact1.split("<break>");
-		String teamRole[] = ACDealTeamRole1.split("<break>");
-		for (int i = 0; i < dealName.length; i++) {
-		String[][] data = { { PageLabel.Deal.toString(), dealName[i] }, { PageLabel.Deal_Contact.toString(), contactName[i] },
-				{ PageLabel.Team_Member.toString(), TeamMember[i] }, { PageLabel.Role.toString(), teamRole[i] } };
-		if (BP.openAppFromAppLauchner(60, "Deal Team")) {
-			log(LogStatus.INFO, "Deal Team has been open from the app launcher", YesNo.No);
-
-			if (DTP.createDealTeam(projectName, dealName[i], data, "Acuity", action.SCROLLANDBOOLEAN, 25)) {
-				log(LogStatus.INFO, "----Successfully Created the Deal Team for Deal: " + dealName + "----", YesNo.No);
-
-				log(LogStatus.INFO,
-						"---------Now Going to Check Deal Team Count should get increase by one for Contact named "
-								+ contactName + " at Firm Tab under Acuity section---------",
-						YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "could not create a new deal team", YesNo.Yes);
-				sa.assertTrue(false,"could not create a new deal team" );
-			}
-		}
-		else
-		{
-			log(LogStatus.ERROR, "could not open a deal team tab", YesNo.Yes);
-			sa.assertTrue(false,"could not open a deal team tab" );
-		}
-		}
 		
-		if (lp.clickOnTab(projectName, tabObj4)) {
+		String[] TeamMember = ACDealTeamMember1.split("<break>");
+		String[] contactName = ACDealContact1.split("<break>");
+		String[] teamRole = ACDealTeamRole1.split("<break>");
+		String dealName = ACDealName1;
+		String[] accountName = RGATE_FirmLegalName4.split("<break>");
+		String[] dealContact = ACDealContact1.split("<break>");
+		String[] title = RGATEConnectionTitle9.split("<break>");
+		String[] role = RGATEConnectionRole9.split("<break>");
+		String[] dealCount = RGATEConnectionsDeal9.split("<break>");
+		String[] meetCount = RGATEConnectionsCallCount9.split("<break>");
+		String[] emailCount = RGATEConnectionsEmailCount9.split("<break>");
+		String[] user = ACDealTeamMember1.split("<break>");
+		String[] userTitle = ACDealTeamTitle1.split("<break>");
+		String[] userRole = ACDealTeamRole1.split("<break>");
+		
+		log(LogStatus.INFO, TeamMember.length + " is length", YesNo.No);
+//		for (int i = 0; i < TeamMember.length; i++) {
+//		String[][] data = { { PageLabel.Deal.toString(), dealName }, { PageLabel.Deal_Contact.toString(), contactName[i] },
+//				{ PageLabel.Team_Member.toString(), TeamMember[i] }, { PageLabel.Role.toString(), teamRole[i] } };
+//		if (BP.openAppFromAppLauchner(10, "Deal Team")) {
+//			log(LogStatus.INFO, "Deal Team has been open from the app launcher", YesNo.No);
+//
+//			if (DTP.createDealTeam(projectName, TeamMember[i], data, "Acuity", action.SCROLLANDBOOLEAN, 25)) {
+//				log(LogStatus.INFO, "----Successfully Created the Deal Team for Deal: " + dealName + "----", YesNo.No);
+//
+//				log(LogStatus.INFO,
+//						"---------Now Going to Check Deal Team Count should get increase by one for Contact named "
+//								+ contactName + " at Firm Tab under Acuity section---------",
+//						YesNo.No);
+//			}
+//			else
+//			{
+//				log(LogStatus.ERROR, "could not create a new deal team", YesNo.Yes);
+//				sa.assertTrue(false,"could not create a new deal team" );
+//			}
+//		}
+//		else
+//		{
+//			log(LogStatus.ERROR, "could not open a deal team tab", YesNo.Yes);
+//			sa.assertTrue(false,"could not open a deal team tab" );
+//		}
+//		}
+		
+		ThreadSleep(2000);
+		
+		if (lp.clickOnTab(projectName, TabName.Deals)) {
 
 			log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
-			ThreadSleep(3000);
+			ThreadSleep(5000);
 		
-		if(lp.clickOnAlreadyCreated(environment, mode,TabName.DealTab , dealName[0], 10)){
-			log(LogStatus.INFO, "Click on deal : " + dealName[0], YesNo.No);
+		if(lp.clickOnAlreadyCreated(environment, mode,TabName.DealTab , dealName, 10)){
+			log(LogStatus.INFO, "Click on deal : " + dealName, YesNo.No);
 			
-			WebElement ele2 = BP.getRelatedTab(projectName, RelatedTab.Team.toString(), 10);
-			click(driver, ele2, RelatedTab.Team.toString(), action.BOOLEAN);
-			ThreadSleep(2000);
-			
+			for(int i=0; i<accountName.length;i++) {
+				if(BP.ExternalTab(10, action.SCROLLANDBOOLEAN) != null) {
+					log(LogStatus.PASS, "External Tab is present", YesNo.No);
+					clickUsingJavaScript(driver, BP.ExternalTab(10,action.SCROLLANDBOOLEAN), "External Tab");
+					log(LogStatus.PASS, "Clicked on External Tab", YesNo.No);
+					ThreadSleep(2000);
+					if (BP.dealTeamAcuityDealName(dealContact[i], 30) != null) {
+						log(LogStatus.PASS, "Deal Name: " + dealContact[i] + " is hyperlink and is present", YesNo.No);
+						if (BP.dealTeamAcuityTitleName(dealContact[i], title[i], 30) != null) {
+							log(LogStatus.PASS, "Title Name: " + title[i] + " is present", YesNo.No);
+							if (BP.dealTeamAcuityAccountName(dealContact[i], accountName[i], 30) != null) {
+								log(LogStatus.PASS, "Account Name : " + accountName + " is present", YesNo.No);
+								if (BP.dealTeamAcuityRole(dealContact[i], role[i], 30) != null) {
+									log(LogStatus.PASS, "HSR: " + role[i] + " is present", YesNo.No);								
+									if (BP.dealTeamAcuityDeals(dealContact[i], dealCount[i], 30) != null) {
+										log(LogStatus.INFO,"Deal Count : " + dealCount[i] + " is present", YesNo.No);
+										if (BP.dealTeamAcuityMeetingsAndCalls(dealContact[i], meetCount[i], 30) != null) {
+											log(LogStatus.INFO,"Meetings & Calls Count : " + meetCount[i] + " is present", YesNo.No);
+											if (BP.dealTeamAcuityEmail(dealContact[i], emailCount[i], 30) != null) {
+												log(LogStatus.INFO,"Email Count : " + emailCount[i] + " is present", YesNo.No);
+											}
+											else {
+											log(LogStatus.ERROR, "Email Count is not matched with "+emailCount[i], YesNo.Yes);
+												sa.assertTrue(false,"Email Count is not matched with "+emailCount[i] );
+											}
+										}
+										else {
+										log(LogStatus.ERROR, "Meetings & Calls Count is not matched with "+meetCount[i], YesNo.Yes);
+											sa.assertTrue(false,"Meetings & Calls Count is not matched with "+meetCount[i] );
+										}
+									}
+									else {
+									log(LogStatus.ERROR, "Deal Count is not matched with "+dealCount[i], YesNo.Yes);
+										sa.assertTrue(false,"Deal Count is not matched with "+dealCount[i] );
+									}
+								} else {
+									log(LogStatus.ERROR, "Role name not present: " + role[i], YesNo.Yes);
+									sa.assertTrue(false, "Role name not present: " + role[i]);
+								}
+							} else {
+								log(LogStatus.ERROR, "Not able to Click on Account Name: " + accountName[i], YesNo.Yes);
+								sa.assertTrue(false, "Not able to Click on Account Name: " + accountName[i]);
+
+							}
+							} else {
+								log(LogStatus.ERROR, "Not able to Click on Title: " + title[i], YesNo.Yes);
+								sa.assertTrue(false, "Not able to Click on Title: " + title[i]);
+							}
+						} else {
+							log(LogStatus.ERROR, "Contact not present: " + dealContact[i], YesNo.Yes);
+							sa.assertTrue(false, "Contact not present: " + dealContact[i]);
+						}
+					} else {
+						log(LogStatus.ERROR, "External Tab not present.", YesNo.Yes);
+						sa.assertTrue(false, "External Tab not present.");
+					}	
+				
+				ThreadSleep(2000);
+				
+			if(BP.InternalTab(10, action.SCROLLANDBOOLEAN) != null) {
+				log(LogStatus.PASS, "Internal Tab is present", YesNo.No);
+				clickUsingJavaScript(driver, BP.InternalTab(10,action.SCROLLANDBOOLEAN), "Internal Tab");
+				log(LogStatus.PASS, "Clicked on Internal Tab", YesNo.No);
+				ThreadSleep(2000);
+				if (BP.dealTeamAcuityUserName(user[i], 30) != null) {
+					log(LogStatus.PASS, "User Name: " + user[i] + " is hyperlink and is present", YesNo.No);
+					if (BP.dealTeamAcuityUserTitle(user[i], userTitle[i], 10) != null) {
+						log(LogStatus.PASS, "Title Name: " + userTitle[i] + " is present", YesNo.No);
+							if (BP.dealTeamAcuityRoleForInternal(user[i], userRole[i], 30) != null) {
+								log(LogStatus.PASS, "Role : " + userRole[i] + " is present", YesNo.No);								
+							} else {
+								log(LogStatus.ERROR, "Role name not present: " + userRole[i], YesNo.Yes);
+								sa.assertTrue(false, "Role name not present: " + userRole[i]);
+							}
+						} else {
+							log(LogStatus.ERROR, "Not visible : " + userTitle[i], YesNo.Yes);
+							sa.assertTrue(false, "Not visible : " + userTitle[i]);
+						}
+					} else {
+						log(LogStatus.ERROR, "User Name name not present: " + user[i], YesNo.Yes);
+						sa.assertTrue(false, "User name not present: " + user[i]);
+					}
+				} else {
+					log(LogStatus.ERROR, "Internal Tab not present.", YesNo.Yes);
+					sa.assertTrue(false, "Internal Tab not present.");
+				}
+		}
 			}
 		}else {
 			log(LogStatus.ERROR, "could not click on new task button", YesNo.Yes);
 			sa.assertTrue(false,"could not click on new task button" );
 		}
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void RGATETc020_CreateSomeRevenueInboxEvents(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		
+//		String username1=RGcrmUser1EmailID;
+//		String username2=RGcrmUser2EmailID;
+//		String username3=RGcrmUser3EmailID;
+		String dealName = ACDealName1;
+		
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		
+		String[] accountName = RGATE_FirmLegalName4.split("<break>");
+		String[] firmsTaggedName= {RGATE_TaggedFirmName8};
+		String[] firmsTaggedTimeReference= {RGATE_TaggedFirmCount8};
+		String dealContact[] = ACDealContact1.split("<break>");
+		String[] peopleTaggedName= {RGATE_TaggedPeopleName8};
+		String[] peopleTaggedTimeReference= {RGATE_TaggedPeopleCount8};
+		String[] title = RGATEConnectionTitle9.split("<break>");
+		String[] role = RGATEConnectionRole9.split("<break>");
+		String[] dealCount = RGATEConnectionsDeal9.split("<break>");
+		String[] meetCount = RGATEConnectionsMeetCount9.split("<break>");
+		String[] emailCount = RGATEConnectionsEmailCount9.split("<break>");
+		String eventTitle8= RGATE_Subject8;
+		String stage = RGATE_DealStage3;
+		String hsr = RGATE_DealHSR3;
+		String dateReceived = "";
+		String[] user = ACDealTeamMember1.split("<break>");
+		String[] userTitle = ACDealTeamTitle1.split("<break>");
+		String[] userRole = ACDealTeamRole1.split("<break>");
+		ArrayList<String> subjectNames = new ArrayList<String>();
+		for (String subjectName : subjectNames) {
+			subjectNames.add(subjectName);
+		}
+		String eventAttendees8=RGATE_RelatedTo8;
+//		for(String userAndContact : userAndContact8)
+//		{
+//			if(userAndContact.equalsIgnoreCase("user 1"))
+//			{
+//				eventAttendees8=eventAttendees8+","+username1;
+//			}
+//			else if(userAndContact.equalsIgnoreCase("user 2"))
+//			{
+//				eventAttendees8=eventAttendees8+","+username2;
+//			}
+//			else if(userAndContact.equalsIgnoreCase("user 3"))
+//			{
+//				eventAttendees8=eventAttendees8+","+username3;
+//			}
+//			else
+//			{
+//				Assertion hardAssert = new Assertion();
+//				log(LogStatus.ERROR, "user data is not correct on excel", YesNo.No);
+//				hardAssert.assertTrue(true == false);
+//			}		
+//		}
+		
+		
+//		String startDate8 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt(RGATE_StartDay8));
+//		ExcelUtils.writeData(AcuityDataSheetFilePath, startDate8, "Activity Timeline", excelLabel.Variable_Name,
+//				"RGATE_008", excelLabel.Advance_Start_Date);
+//
+//		String endDate8 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt(RGATE_EndDay8));
+//		ExcelUtils.writeData(AcuityDataSheetFilePath, endDate8, "Activity Timeline", excelLabel.Variable_Name,
+//				"RGATE_008", excelLabel.Advance_End_Date);
+//
+//		String startTime8 = null;
+//		String endTime8 = null;
+//		String descriptionBox6 = RGATE_Notes8;
+//
+//		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle8 + " through Outlook---------",
+//				YesNo.No);
+//		if (op.loginAndCreateEventThroughOutLook(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle8,
+//				eventAttendees8, startDate8, endDate8, startTime8, endTime8, descriptionBox6, true)) {
+//			log(LogStatus.INFO,
+//					"-----Event Created Msg is showing, So Event of Title: " + eventTitle8 + " has been created-----",
+//					YesNo.No);
+//		}
+//
+//		else {
+//			log(LogStatus.ERROR, "-----Event Created Msg is not showing, So Event of Title: " + eventTitle8
+//					+ " has not been created-----", YesNo.Yes);
+//			BaseLib.sa.assertTrue(false, "-----Event Created Msg is not showing, So Event of Title: " + eventTitle8
+//					+ " has not been created-----");
+//		}
+//
+//		ThreadSleep(5000);
+
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
+			ThreadSleep(3000);
+		
+		if(lp.clickOnAlreadyCreated(environment, mode,TabName.DealTab , dealName, 10)){
+			log(LogStatus.INFO, "Click on deal : " + dealName, YesNo.No);
+			
+			if (BP.clicktabOnPage(TabName.Acuity.toString())) {
+				log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+				
+				refresh(driver);
+				ThreadSleep(5000);
+				if (BP.InteractionRecord(eventTitle8,10) != null) {
+					log(LogStatus.INFO,
+							"All records on Intraction card have been verified " + eventTitle8,
+							YesNo.No);
+					ThreadSleep(2000);
+					sa.assertTrue(true,
+							"All records on Intraction card have been verified " + eventTitle8);
+				} else {
+					log(LogStatus.ERROR, "All records on Intraction card is not created", YesNo.No);
+					sa.assertTrue(false, "All records on Intraction card is not created");
+				}
+				
+				clickUsingJavaScript(driver, BP.getPeopleTabOnTagged(10), "People Tab");
+				ThreadSleep(4000);
+				
+				ArrayList<String> result5=BP.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, null, null, null, null,isInstitutionRecord, null,null);
+				if(result5.isEmpty())
+				{
+					log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+					sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+				}
+				
+				ArrayList<String> result=BP.verifyRecordAndReferencedTypeOnTagged(null, null, peopleTaggedName, peopleTaggedTimeReference, null, null,isInstitutionRecord, null,null);
+				if(result5.isEmpty())
+				{
+					log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+					sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+				}
+				
+				if(BP.ExternalTab(10, action.SCROLLANDBOOLEAN) != null) {
+					log(LogStatus.PASS, "External Tab is present", YesNo.No);
+					clickUsingJavaScript(driver, BP.ExternalTab(10,action.SCROLLANDBOOLEAN), "External Tab");
+					log(LogStatus.PASS, "Clicked on External Tab", YesNo.No);
+					ThreadSleep(2000);
+					for(int i=0; i<accountName.length;i++) {
+					if (BP.dealTeamAcuityDealName(dealContact[i], 30) != null) {
+						log(LogStatus.PASS, "Deal Name: " + dealContact[i] + " is hyperlink and is present", YesNo.No);
+						if (BP.dealTeamAcuityTitleName(dealContact[i], title[i], 30) != null) {
+							log(LogStatus.PASS, "Title Name: " + title[i] + " is present", YesNo.No);
+							if (BP.dealTeamAcuityAccountName(dealContact[i], accountName[i], 30) != null) {
+								log(LogStatus.PASS, "Account Name : " + accountName + " is present", YesNo.No);
+								if (BP.dealTeamAcuityRole(dealContact[i], role[i], 30) != null) {
+									log(LogStatus.PASS, "Role : " + role[i] + " is present", YesNo.No);								
+									if (BP.dealTeamAcuityDeals(dealContact[i], dealCount[i], 30) != null) {
+										log(LogStatus.INFO,"Deal Count : " + dealCount[i] + " is present", YesNo.No);
+										if (BP.dealTeamAcuityMeetingsAndCalls(dealContact[i], meetCount[i], 30) != null) {
+											log(LogStatus.INFO,"Meetings & Calls Count : " + meetCount[i] + " is present", YesNo.No);
+											if (BP.dealTeamAcuityEmail(dealContact[i], emailCount[i], 30) != null) {
+												log(LogStatus.INFO,"Email Count : " + emailCount[i] + " is present", YesNo.No);
+											}
+											else {
+											log(LogStatus.ERROR, "Email Count is not matched with "+emailCount[i], YesNo.Yes);
+												sa.assertTrue(false,"Email Count is not matched with "+emailCount[i] );
+											}
+										}
+										else {
+										log(LogStatus.ERROR, "Meetings & Calls Count is not matched with "+meetCount[i], YesNo.Yes);
+											sa.assertTrue(false,"Meetings & Calls Count is not matched with "+meetCount[i] );
+										}
+									}
+									else {
+									log(LogStatus.ERROR, "Deal Count is not matched with "+dealCount[i], YesNo.Yes);
+										sa.assertTrue(false,"Deal Count is not matched with "+dealCount[i] );
+									}
+								} else {
+									log(LogStatus.ERROR, "Role name not present: " + role[i], YesNo.Yes);
+									sa.assertTrue(false, "Role name not present: " + role[i]);
+								}
+							} else {
+								log(LogStatus.ERROR, "Not able to Click on Account Name: " + accountName[i], YesNo.Yes);
+								sa.assertTrue(false, "Not able to Click on Account Name: " + accountName[i]);
+
+							}
+							} else {
+								log(LogStatus.ERROR, "Not able to Click on Title: " + title[i], YesNo.Yes);
+								sa.assertTrue(false, "Not able to Click on Title: " + title[i]);
+							}
+						} else {
+							log(LogStatus.ERROR, "Contact not present: " + dealContact[i], YesNo.Yes);
+							sa.assertTrue(false, "Contact not present: " + dealContact[i]);
+						}
+				}
+					} else {
+						log(LogStatus.ERROR, "External Tab not present.", YesNo.Yes);
+						sa.assertTrue(false, "External Tab not present.");
+					}	
+				
+				ThreadSleep(2000);
+				
+			if(BP.InternalTab(10, action.SCROLLANDBOOLEAN) != null) {
+				log(LogStatus.PASS, "Internal Tab is present", YesNo.No);
+				clickUsingJavaScript(driver, BP.InternalTab(10,action.SCROLLANDBOOLEAN), "Internal Tab");
+				log(LogStatus.PASS, "Clicked on Internal Tab", YesNo.No);
+				ThreadSleep(2000);
+				for(int i=0; i<accountName.length;i++) {
+				if (BP.dealTeamAcuityUserName(user[i], 30) != null) {
+					log(LogStatus.PASS, "User Name: " + user[i] + " is hyperlink and is present", YesNo.No);
+					if (BP.dealTeamAcuityUserTitle(user[i], userTitle[i], 30) != null) {
+						log(LogStatus.PASS, "Title Name: " + userTitle[i] + " is present", YesNo.No);
+							if (BP.dealTeamAcuityRoleForInternal(user[i], userRole[i], 30) != null) {
+								log(LogStatus.PASS, "Role : " + userRole[i] + " is present", YesNo.No);								
+							} else {
+								log(LogStatus.ERROR, "Role name not present: " + userRole[i], YesNo.Yes);
+								sa.assertTrue(false, "Role name not present: " + userRole[i]);
+							}
+						} else {
+							log(LogStatus.ERROR, "Not visible : " + userTitle[i], YesNo.Yes);
+							sa.assertTrue(false, "Not visible : " + userTitle[i]);
+						}
+					} else {
+						log(LogStatus.ERROR, "User Name name not present: " + user[i], YesNo.Yes);
+						sa.assertTrue(false, "User name not present: " + user[i]);
+					}
+				}
+				} else {
+					log(LogStatus.ERROR, "Internal Tab not present.", YesNo.Yes);
+					sa.assertTrue(false, "Internal Tab not present.");
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to Click on Acuity Tab", YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on Acuity Tab");
+			}
+		} else
+		{
+			log(LogStatus.ERROR, "Not able to Click on deal : " + dealName, YesNo.Yes);
+			sa.assertTrue(false, "Not able to Click on deal : " + dealName);
+		}
+		
+		}else {
+			log(LogStatus.ERROR, "could not click on new task button", YesNo.Yes);
+			sa.assertTrue(false,"could not click on new task button" );
+		}
+		
+		if (lp.clickOnTab(projectName, tabObj2)) {
+
+			log(LogStatus.INFO, "Click on Tab : " + tabObj2, YesNo.No);
+			ThreadSleep(3000);
+		
+		if(lp.clickOnAlreadyCreated(environment, mode,TabName.ContactTab , peopleTaggedName[0], 10)){
+			log(LogStatus.INFO, "Click on deal : " + peopleTaggedName[0], YesNo.No);
+			ThreadSleep(5000);
+			if (BP.InteractionRecord(eventTitle8,10) != null) {
+				log(LogStatus.INFO,
+						"All records on Intraction card have been verified " + eventTitle8,
+						YesNo.No);
+				ThreadSleep(2000);
+				if (BP.dealAcuityDealName(dealName, 30) != null) {
+				log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
+				if (BP.dealAcuityStageName(dealName, stage, 30) != null) {
+					log(LogStatus.PASS, "Stage Name: " + stage + " is present", YesNo.No);
+//					if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
+//						log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
+						if (BP.dealAcuityHSRName(dealName, hsr, 30) != null) {
+							log(LogStatus.PASS, "HSR: " + hsr + " is present", YesNo.No);
+							
+						} else {
+							log(LogStatus.FAIL, "HSR stage name not present: " + hsr, YesNo.Yes);
+							sa.assertTrue(false, "HSR stage name not present: " + hsr);
+
+						}
+					} else {
+						log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+						sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
+
+					}
+				} else {
+					log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
+					sa.assertTrue(false, "stage name not present: " + stage);
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "All records on Intraction card is not created", YesNo.No);
+				sa.assertTrue(false, "All records on Intraction card is not created");
+			}
+		}
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	public void RGATETc021_CreateAccountDeals(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		
+		String[] accountName = RGATE_FirmLegalName4.split("<break>");
+		String[] recordType = RGATE_FirmRecordType3.split("<break>");
+
+		String[] contactFirstName = RGATE_ContactFirstName3.split("<break>");
+		String[] contactLastName = RGATE_ContactLastName3.split("<break>");
+		String[] contactLegalName = RGATE_ContactLegalName3.split("<break>");
+		String[] contactEmail = RGATE_ContactEmail3.split("<break>");
+		String[] contactTitle = RGATE_Title3.split("<break>");
+		String dealName = RGATE_DealName3;
+		String dealCompany = RGATE_DealCompany3;
+		String dealStage = RGATE_DealStage3;
+
+			for (int i = 0; i < accountName.length; i++) {
+				if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
+
+					log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
+					ThreadSleep(3000);
+					if (ip.createEntityOrAccount(environment, mode, accountName[i], recordType[i], null, null, 30)) {
+						log(LogStatus.INFO,
+								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i],
+								YesNo.No);
+						sa.assertTrue(true,
+								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i]);
+
+
+					} else {
+						sa.assertTrue(false,
+								"Not Able to Create Firm : " + accountName[i] + " of record type : " + recordType[i]);
+						log(LogStatus.SKIP,
+								"Not Able to Create Firm : " + accountName[i] + " of record type :" + recordType[i],
+								YesNo.Yes);
+					}
+
+				} else {
+					log(LogStatus.FAIL, "Not able to click on " + tabObj1 + " Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on " + tabObj1 + " Tab");
+				}
+				refresh(driver);
+			}
+			ThreadSleep(2000);
+		for (int i = 0; i < contactLastName.length; i++) {
+			if (lp.clickOnTab(projectName, tabObj2)) {
+
+				log(LogStatus.INFO, "Click on Tab : " + tabObj2, YesNo.No);
+				ThreadSleep(3000);
+
+				if (cp.createContact(projectName, contactFirstName[i], contactLastName[i], contactLegalName[i],
+						contactEmail[i], "", Fields.Title.toString(),contactTitle[i], CreationPage.ContactPage, null, null)) {
+					log(LogStatus.INFO,
+							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i],
+							YesNo.No);
+					sa.assertTrue(true,
+							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i]);
+				} else {
+					log(LogStatus.FAIL,
+							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i],
+							YesNo.No);
+					sa.assertTrue(false,
+							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i]);
+				}
+
+			} else {
+				log(LogStatus.FAIL, "Not able to click on " + tabObj2 + " Tab", YesNo.No);
+				sa.assertTrue(false, "Not able to click on " + tabObj2 + " Tab");
+			}
+			refresh(driver);
+		}
+		ThreadSleep(2000);
+		if (lp.clickOnTab(projectName, TabName.Deals)) {
+
+			log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
+			ThreadSleep(3000);
+
+			if (dp.createDeal(projectName, dealName, dealCompany, dealStage)) {
+				log(LogStatus.INFO, dealName + " deal has been created", YesNo.No);
+				sa.assertTrue(true, dealName + " deal has been created");
+
+			} else {
+				log(LogStatus.ERROR, dealName + " deal is not created", YesNo.No);
+				sa.assertTrue(false, dealName + " deal is not created");
+			}
+		}
+		else {
+			log(LogStatus.ERROR, "Not able to click on " + tabObj4 + " Tab", YesNo.No);
+			sa.assertTrue(false, "Not able to click on " + tabObj4 + " Tab");
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void RGATETc019_CreateDealTeamAndVerifyOnInternalAndExternalTabOfDeal(String projectName) {	
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		DealTeamPageBusinessLayer DTP = new DealTeamPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		
+		String[] TeamMember = ACDealTeamMember1.split("<break>");
+		String[] contactName = ACDealContact1.split("<break>");
+		String[] teamRole = ACDealTeamRole1.split("<break>");
+		String dealName = ACDealName1;
+		String[] accountName = RGATE_FirmLegalName4.split("<break>");
+		String[] dealContact = ACDealContact1.split("<break>");
+		String[] title = RGATEConnectionTitle9.split("<break>");
+		String[] role = RGATEConnectionRole9.split("<break>");
+		String[] dealCount = RGATEConnectionsDeal9.split("<break>");
+		String[] meetCount = RGATEConnectionsCallCount9.split("<break>");
+		String[] emailCount = RGATEConnectionsEmailCount9.split("<break>");
+		String[] user = ACDealTeamMember1.split("<break>");
+		String[] userTitle = ACDealTeamTitle1.split("<break>");
+		String[] userRole = ACDealTeamRole1.split("<break>");
+		
+		log(LogStatus.INFO, TeamMember.length + " is length", YesNo.No);
+//		for (int i = 0; i < TeamMember.length; i++) {
+//		String[][] data = { { PageLabel.Deal.toString(), dealName }, { PageLabel.Deal_Contact.toString(), contactName[i] },
+//				{ PageLabel.Team_Member.toString(), TeamMember[i] }, { PageLabel.Role.toString(), teamRole[i] } };
+//		if (BP.openAppFromAppLauchner(10, "Deal Team")) {
+//			log(LogStatus.INFO, "Deal Team has been open from the app launcher", YesNo.No);
+//
+//			if (DTP.createDealTeam(projectName, TeamMember[i], data, "Acuity", action.SCROLLANDBOOLEAN, 25)) {
+//				log(LogStatus.INFO, "----Successfully Created the Deal Team for Deal: " + dealName + "----", YesNo.No);
+//
+//				log(LogStatus.INFO,
+//						"---------Now Going to Check Deal Team Count should get increase by one for Contact named "
+//								+ contactName + " at Firm Tab under Acuity section---------",
+//						YesNo.No);
+//			}
+//			else
+//			{
+//				log(LogStatus.ERROR, "could not create a new deal team", YesNo.Yes);
+//				sa.assertTrue(false,"could not create a new deal team" );
+//			}
+//		}
+//		else
+//		{
+//			log(LogStatus.ERROR, "could not open a deal team tab", YesNo.Yes);
+//			sa.assertTrue(false,"could not open a deal team tab" );
+//		}
+//		}
+		
+		ThreadSleep(2000);
+		
+		if (lp.clickOnTab(projectName, TabName.Deals)) {
+
+			log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
+			ThreadSleep(5000);
+		
+		if(lp.clickOnAlreadyCreated(environment, mode,TabName.DealTab , dealName, 10)){
+			log(LogStatus.INFO, "Click on deal : " + dealName, YesNo.No);
+			
+			for(int i=0; i<accountName.length;i++) {
+				if(BP.ExternalTab(10, action.SCROLLANDBOOLEAN) != null) {
+					log(LogStatus.PASS, "External Tab is present", YesNo.No);
+					clickUsingJavaScript(driver, BP.ExternalTab(10,action.SCROLLANDBOOLEAN), "External Tab");
+					log(LogStatus.PASS, "Clicked on External Tab", YesNo.No);
+					ThreadSleep(2000);
+					if (BP.dealTeamAcuityDealName(dealContact[i], 30) != null) {
+						log(LogStatus.PASS, "Deal Name: " + dealContact[i] + " is hyperlink and is present", YesNo.No);
+						if (BP.dealTeamAcuityTitleName(dealContact[i], title[i], 30) != null) {
+							log(LogStatus.PASS, "Title Name: " + title[i] + " is present", YesNo.No);
+							if (BP.dealTeamAcuityAccountName(dealContact[i], accountName[i], 30) != null) {
+								log(LogStatus.PASS, "Account Name : " + accountName + " is present", YesNo.No);
+								if (BP.dealTeamAcuityRole(dealContact[i], role[i], 30) != null) {
+									log(LogStatus.PASS, "HSR: " + role[i] + " is present", YesNo.No);								
+									if (BP.dealTeamAcuityDeals(dealContact[i], dealCount[i], 30) != null) {
+										log(LogStatus.INFO,"Deal Count : " + dealCount[i] + " is present", YesNo.No);
+										if (BP.dealTeamAcuityMeetingsAndCalls(dealContact[i], meetCount[i], 30) != null) {
+											log(LogStatus.INFO,"Meetings & Calls Count : " + meetCount[i] + " is present", YesNo.No);
+											if (BP.dealTeamAcuityEmail(dealContact[i], emailCount[i], 30) != null) {
+												log(LogStatus.INFO,"Email Count : " + emailCount[i] + " is present", YesNo.No);
+											}
+											else {
+											log(LogStatus.ERROR, "Email Count is not matched with "+emailCount[i], YesNo.Yes);
+												sa.assertTrue(false,"Email Count is not matched with "+emailCount[i] );
+											}
+										}
+										else {
+										log(LogStatus.ERROR, "Meetings & Calls Count is not matched with "+meetCount[i], YesNo.Yes);
+											sa.assertTrue(false,"Meetings & Calls Count is not matched with "+meetCount[i] );
+										}
+									}
+									else {
+									log(LogStatus.ERROR, "Deal Count is not matched with "+dealCount[i], YesNo.Yes);
+										sa.assertTrue(false,"Deal Count is not matched with "+dealCount[i] );
+									}
+								} else {
+									log(LogStatus.ERROR, "Role name not present: " + role[i], YesNo.Yes);
+									sa.assertTrue(false, "Role name not present: " + role[i]);
+								}
+							} else {
+								log(LogStatus.ERROR, "Not able to Click on Account Name: " + accountName[i], YesNo.Yes);
+								sa.assertTrue(false, "Not able to Click on Account Name: " + accountName[i]);
+
+							}
+							} else {
+								log(LogStatus.ERROR, "Not able to Click on Title: " + title[i], YesNo.Yes);
+								sa.assertTrue(false, "Not able to Click on Title: " + title[i]);
+							}
+						} else {
+							log(LogStatus.ERROR, "Contact not present: " + dealContact[i], YesNo.Yes);
+							sa.assertTrue(false, "Contact not present: " + dealContact[i]);
+						}
+					} else {
+						log(LogStatus.ERROR, "External Tab not present.", YesNo.Yes);
+						sa.assertTrue(false, "External Tab not present.");
+					}	
+				
+				ThreadSleep(2000);
+				
+			if(BP.InternalTab(10, action.SCROLLANDBOOLEAN) != null) {
+				log(LogStatus.PASS, "Internal Tab is present", YesNo.No);
+				clickUsingJavaScript(driver, BP.InternalTab(10,action.SCROLLANDBOOLEAN), "Internal Tab");
+				log(LogStatus.PASS, "Clicked on Internal Tab", YesNo.No);
+				ThreadSleep(2000);
+				if (BP.dealTeamAcuityUserName(user[i], 30) != null) {
+					log(LogStatus.PASS, "User Name: " + user[i] + " is hyperlink and is present", YesNo.No);
+					if (BP.dealTeamAcuityUserTitle(user[i], userTitle[i], 10) != null) {
+						log(LogStatus.PASS, "Title Name: " + userTitle[i] + " is present", YesNo.No);
+							if (BP.dealTeamAcuityRoleForInternal(user[i], userRole[i], 30) != null) {
+								log(LogStatus.PASS, "Role : " + userRole[i] + " is present", YesNo.No);								
+							} else {
+								log(LogStatus.ERROR, "Role name not present: " + userRole[i], YesNo.Yes);
+								sa.assertTrue(false, "Role name not present: " + userRole[i]);
+							}
+						} else {
+							log(LogStatus.ERROR, "Not visible : " + userTitle[i], YesNo.Yes);
+							sa.assertTrue(false, "Not visible : " + userTitle[i]);
+						}
+					} else {
+						log(LogStatus.ERROR, "User Name name not present: " + user[i], YesNo.Yes);
+						sa.assertTrue(false, "User name not present: " + user[i]);
+					}
+				} else {
+					log(LogStatus.ERROR, "Internal Tab not present.", YesNo.Yes);
+					sa.assertTrue(false, "Internal Tab not present.");
+				}
+		}
+			}
+		}else {
+			log(LogStatus.ERROR, "could not click on new task button", YesNo.Yes);
+			sa.assertTrue(false,"could not click on new task button" );
+		}
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void RGATETc020_CreateSomeRevenueInboxEvents(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		
+//		String username1=RGcrmUser1EmailID;
+//		String username2=RGcrmUser2EmailID;
+//		String username3=RGcrmUser3EmailID;
+		String dealName = ACDealName1;
+		
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		
+		String[] accountName = RGATE_FirmLegalName4.split("<break>");
+		String[] firmsTaggedName= {RGATE_TaggedFirmName8};
+		String[] firmsTaggedTimeReference= {RGATE_TaggedFirmCount8};
+		String dealContact[] = ACDealContact1.split("<break>");
+		String[] peopleTaggedName= {RGATE_TaggedPeopleName8};
+		String[] peopleTaggedTimeReference= {RGATE_TaggedPeopleCount8};
+		String[] title = RGATEConnectionTitle9.split("<break>");
+		String[] role = RGATEConnectionRole9.split("<break>");
+		String[] dealCount = RGATEConnectionsDeal9.split("<break>");
+		String[] meetCount = RGATEConnectionsMeetCount9.split("<break>");
+		String[] emailCount = RGATEConnectionsEmailCount9.split("<break>");
+		String eventTitle8= RGATE_Subject8;
+		String stage = RGATE_DealStage3;
+		String hsr = RGATE_DealHSR3;
+		String dateReceived = "";
+		String[] user = ACDealTeamMember1.split("<break>");
+		String[] userTitle = ACDealTeamTitle1.split("<break>");
+		String[] userRole = ACDealTeamRole1.split("<break>");
+		ArrayList<String> subjectNames = new ArrayList<String>();
+		for (String subjectName : subjectNames) {
+			subjectNames.add(subjectName);
+		}
+		String eventAttendees8=RGATE_RelatedTo8;
+//		for(String userAndContact : userAndContact8)
+//		{
+//			if(userAndContact.equalsIgnoreCase("user 1"))
+//			{
+//				eventAttendees8=eventAttendees8+","+username1;
+//			}
+//			else if(userAndContact.equalsIgnoreCase("user 2"))
+//			{
+//				eventAttendees8=eventAttendees8+","+username2;
+//			}
+//			else if(userAndContact.equalsIgnoreCase("user 3"))
+//			{
+//				eventAttendees8=eventAttendees8+","+username3;
+//			}
+//			else
+//			{
+//				Assertion hardAssert = new Assertion();
+//				log(LogStatus.ERROR, "user data is not correct on excel", YesNo.No);
+//				hardAssert.assertTrue(true == false);
+//			}		
+//		}
+		
+		
+//		String startDate8 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt(RGATE_StartDay8));
+//		ExcelUtils.writeData(AcuityDataSheetFilePath, startDate8, "Activity Timeline", excelLabel.Variable_Name,
+//				"RGATE_008", excelLabel.Advance_Start_Date);
+//
+//		String endDate8 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt(RGATE_EndDay8));
+//		ExcelUtils.writeData(AcuityDataSheetFilePath, endDate8, "Activity Timeline", excelLabel.Variable_Name,
+//				"RGATE_008", excelLabel.Advance_End_Date);
+//
+//		String startTime8 = null;
+//		String endTime8 = null;
+//		String descriptionBox6 = RGATE_Notes8;
+//
+//		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle8 + " through Outlook---------",
+//				YesNo.No);
+//		if (op.loginAndCreateEventThroughOutLook(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle8,
+//				eventAttendees8, startDate8, endDate8, startTime8, endTime8, descriptionBox6, true)) {
+//			log(LogStatus.INFO,
+//					"-----Event Created Msg is showing, So Event of Title: " + eventTitle8 + " has been created-----",
+//					YesNo.No);
+//		}
+//
+//		else {
+//			log(LogStatus.ERROR, "-----Event Created Msg is not showing, So Event of Title: " + eventTitle8
+//					+ " has not been created-----", YesNo.Yes);
+//			BaseLib.sa.assertTrue(false, "-----Event Created Msg is not showing, So Event of Title: " + eventTitle8
+//					+ " has not been created-----");
+//		}
+//
+//		ThreadSleep(5000);
+
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
+			ThreadSleep(3000);
+		
+		if(lp.clickOnAlreadyCreated(environment, mode,TabName.DealTab , dealName, 10)){
+			log(LogStatus.INFO, "Click on deal : " + dealName, YesNo.No);
+			
+			if (BP.clicktabOnPage(TabName.Acuity.toString())) {
+				log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+				
+				refresh(driver);
+				ThreadSleep(5000);
+				if (BP.InteractionRecord(eventTitle8,10) != null) {
+					log(LogStatus.INFO,
+							"All records on Intraction card have been verified " + eventTitle8,
+							YesNo.No);
+					ThreadSleep(2000);
+					sa.assertTrue(true,
+							"All records on Intraction card have been verified " + eventTitle8);
+				} else {
+					log(LogStatus.ERROR, "All records on Intraction card is not created", YesNo.No);
+					sa.assertTrue(false, "All records on Intraction card is not created");
+				}
+				
+				clickUsingJavaScript(driver, BP.getPeopleTabOnTagged(10), "People Tab");
+				ThreadSleep(4000);
+				
+				ArrayList<String> result5=BP.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, null, null, null, null,isInstitutionRecord, null,null);
+				if(result5.isEmpty())
+				{
+					log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+					sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+				}
+				
+				ArrayList<String> result=BP.verifyRecordAndReferencedTypeOnTagged(null, null, peopleTaggedName, peopleTaggedTimeReference, null, null,isInstitutionRecord, null,null);
+				if(result5.isEmpty())
+				{
+					log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+					sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+				}
+				
+				if(BP.ExternalTab(10, action.SCROLLANDBOOLEAN) != null) {
+					log(LogStatus.PASS, "External Tab is present", YesNo.No);
+					clickUsingJavaScript(driver, BP.ExternalTab(10,action.SCROLLANDBOOLEAN), "External Tab");
+					log(LogStatus.PASS, "Clicked on External Tab", YesNo.No);
+					ThreadSleep(2000);
+					for(int i=0; i<accountName.length;i++) {
+					if (BP.dealTeamAcuityDealName(dealContact[i], 30) != null) {
+						log(LogStatus.PASS, "Deal Name: " + dealContact[i] + " is hyperlink and is present", YesNo.No);
+						if (BP.dealTeamAcuityTitleName(dealContact[i], title[i], 30) != null) {
+							log(LogStatus.PASS, "Title Name: " + title[i] + " is present", YesNo.No);
+							if (BP.dealTeamAcuityAccountName(dealContact[i], accountName[i], 30) != null) {
+								log(LogStatus.PASS, "Account Name : " + accountName + " is present", YesNo.No);
+								if (BP.dealTeamAcuityRole(dealContact[i], role[i], 30) != null) {
+									log(LogStatus.PASS, "Role : " + role[i] + " is present", YesNo.No);								
+									if (BP.dealTeamAcuityDeals(dealContact[i], dealCount[i], 30) != null) {
+										log(LogStatus.INFO,"Deal Count : " + dealCount[i] + " is present", YesNo.No);
+										if (BP.dealTeamAcuityMeetingsAndCalls(dealContact[i], meetCount[i], 30) != null) {
+											log(LogStatus.INFO,"Meetings & Calls Count : " + meetCount[i] + " is present", YesNo.No);
+											if (BP.dealTeamAcuityEmail(dealContact[i], emailCount[i], 30) != null) {
+												log(LogStatus.INFO,"Email Count : " + emailCount[i] + " is present", YesNo.No);
+											}
+											else {
+											log(LogStatus.ERROR, "Email Count is not matched with "+emailCount[i], YesNo.Yes);
+												sa.assertTrue(false,"Email Count is not matched with "+emailCount[i] );
+											}
+										}
+										else {
+										log(LogStatus.ERROR, "Meetings & Calls Count is not matched with "+meetCount[i], YesNo.Yes);
+											sa.assertTrue(false,"Meetings & Calls Count is not matched with "+meetCount[i] );
+										}
+									}
+									else {
+									log(LogStatus.ERROR, "Deal Count is not matched with "+dealCount[i], YesNo.Yes);
+										sa.assertTrue(false,"Deal Count is not matched with "+dealCount[i] );
+									}
+								} else {
+									log(LogStatus.ERROR, "Role name not present: " + role[i], YesNo.Yes);
+									sa.assertTrue(false, "Role name not present: " + role[i]);
+								}
+							} else {
+								log(LogStatus.ERROR, "Not able to Click on Account Name: " + accountName[i], YesNo.Yes);
+								sa.assertTrue(false, "Not able to Click on Account Name: " + accountName[i]);
+
+							}
+							} else {
+								log(LogStatus.ERROR, "Not able to Click on Title: " + title[i], YesNo.Yes);
+								sa.assertTrue(false, "Not able to Click on Title: " + title[i]);
+							}
+						} else {
+							log(LogStatus.ERROR, "Contact not present: " + dealContact[i], YesNo.Yes);
+							sa.assertTrue(false, "Contact not present: " + dealContact[i]);
+						}
+				}
+					} else {
+						log(LogStatus.ERROR, "External Tab not present.", YesNo.Yes);
+						sa.assertTrue(false, "External Tab not present.");
+					}	
+				
+				ThreadSleep(2000);
+				
+			if(BP.InternalTab(10, action.SCROLLANDBOOLEAN) != null) {
+				log(LogStatus.PASS, "Internal Tab is present", YesNo.No);
+				clickUsingJavaScript(driver, BP.InternalTab(10,action.SCROLLANDBOOLEAN), "Internal Tab");
+				log(LogStatus.PASS, "Clicked on Internal Tab", YesNo.No);
+				ThreadSleep(2000);
+				for(int i=0; i<accountName.length;i++) {
+				if (BP.dealTeamAcuityUserName(user[i], 30) != null) {
+					log(LogStatus.PASS, "User Name: " + user[i] + " is hyperlink and is present", YesNo.No);
+					if (BP.dealTeamAcuityUserTitle(user[i], userTitle[i], 30) != null) {
+						log(LogStatus.PASS, "Title Name: " + userTitle[i] + " is present", YesNo.No);
+							if (BP.dealTeamAcuityRoleForInternal(user[i], userRole[i], 30) != null) {
+								log(LogStatus.PASS, "Role : " + userRole[i] + " is present", YesNo.No);								
+							} else {
+								log(LogStatus.ERROR, "Role name not present: " + userRole[i], YesNo.Yes);
+								sa.assertTrue(false, "Role name not present: " + userRole[i]);
+							}
+						} else {
+							log(LogStatus.ERROR, "Not visible : " + userTitle[i], YesNo.Yes);
+							sa.assertTrue(false, "Not visible : " + userTitle[i]);
+						}
+					} else {
+						log(LogStatus.ERROR, "User Name name not present: " + user[i], YesNo.Yes);
+						sa.assertTrue(false, "User name not present: " + user[i]);
+					}
+				}
+				} else {
+					log(LogStatus.ERROR, "Internal Tab not present.", YesNo.Yes);
+					sa.assertTrue(false, "Internal Tab not present.");
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to Click on Acuity Tab", YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on Acuity Tab");
+			}
+		} else
+		{
+			log(LogStatus.ERROR, "Not able to Click on deal : " + dealName, YesNo.Yes);
+			sa.assertTrue(false, "Not able to Click on deal : " + dealName);
+		}
+		
+		}else {
+			log(LogStatus.ERROR, "could not click on new task button", YesNo.Yes);
+			sa.assertTrue(false,"could not click on new task button" );
+		}
+		
+		if (lp.clickOnTab(projectName, tabObj2)) {
+
+			log(LogStatus.INFO, "Click on Tab : " + tabObj2, YesNo.No);
+			ThreadSleep(3000);
+		
+		if(lp.clickOnAlreadyCreated(environment, mode,TabName.ContactTab , peopleTaggedName[0], 10)){
+			log(LogStatus.INFO, "Click on deal : " + peopleTaggedName[0], YesNo.No);
+			ThreadSleep(5000);
+			if (BP.InteractionRecord(eventTitle8,10) != null) {
+				log(LogStatus.INFO,
+						"All records on Intraction card have been verified " + eventTitle8,
+						YesNo.No);
+				ThreadSleep(2000);
+				if (BP.dealAcuityDealName(dealName, 30) != null) {
+				log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
+				if (BP.dealAcuityStageName(dealName, stage, 30) != null) {
+					log(LogStatus.PASS, "Stage Name: " + stage + " is present", YesNo.No);
+//					if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
+//						log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
+						if (BP.dealAcuityHSRName(dealName, hsr, 30) != null) {
+							log(LogStatus.PASS, "HSR: " + hsr + " is present", YesNo.No);
+							
+						} else {
+							log(LogStatus.FAIL, "HSR stage name not present: " + hsr, YesNo.Yes);
+							sa.assertTrue(false, "HSR stage name not present: " + hsr);
+
+						}
+					} else {
+						log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+						sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
+
+					}
+				} else {
+					log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
+					sa.assertTrue(false, "stage name not present: " + stage);
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "All records on Intraction card is not created", YesNo.No);
+				sa.assertTrue(false, "All records on Intraction card is not created");
+			}
+		}
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
 	}
 
 
