@@ -3642,7 +3642,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void RGATETc019_CreateDealTeamAndVerifyOnInternalAndExternalTabOfDeal(String projectName) {	
+	public void RGATETc022_CreateDealTeamAndVerifyOnInternalAndExternalTabOfDeal(String projectName) {	
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		DealTeamPageBusinessLayer DTP = new DealTeamPageBusinessLayer(driver);
@@ -3664,32 +3664,32 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		String[] userRole = ACDealTeamRole1.split("<break>");
 		
 		log(LogStatus.INFO, TeamMember.length + " is length", YesNo.No);
-//		for (int i = 0; i < TeamMember.length; i++) {
-//		String[][] data = { { PageLabel.Deal.toString(), dealName }, { PageLabel.Deal_Contact.toString(), contactName[i] },
-//				{ PageLabel.Team_Member.toString(), TeamMember[i] }, { PageLabel.Role.toString(), teamRole[i] } };
-//		if (BP.openAppFromAppLauchner(10, "Deal Team")) {
-//			log(LogStatus.INFO, "Deal Team has been open from the app launcher", YesNo.No);
-//
-//			if (DTP.createDealTeam(projectName, TeamMember[i], data, "Acuity", action.SCROLLANDBOOLEAN, 25)) {
-//				log(LogStatus.INFO, "----Successfully Created the Deal Team for Deal: " + dealName + "----", YesNo.No);
-//
-//				log(LogStatus.INFO,
-//						"---------Now Going to Check Deal Team Count should get increase by one for Contact named "
-//								+ contactName + " at Firm Tab under Acuity section---------",
-//						YesNo.No);
-//			}
-//			else
-//			{
-//				log(LogStatus.ERROR, "could not create a new deal team", YesNo.Yes);
-//				sa.assertTrue(false,"could not create a new deal team" );
-//			}
-//		}
-//		else
-//		{
-//			log(LogStatus.ERROR, "could not open a deal team tab", YesNo.Yes);
-//			sa.assertTrue(false,"could not open a deal team tab" );
-//		}
-//		}
+		for (int i = 0; i < TeamMember.length; i++) {
+		String[][] data = { { PageLabel.Deal.toString(), dealName }, { PageLabel.Deal_Contact.toString(), contactName[i] },
+				{ PageLabel.Team_Member.toString(), TeamMember[i] }, { PageLabel.Role.toString(), teamRole[i] } };
+		if (BP.openAppFromAppLauchner(10, "Deal Team")) {
+			log(LogStatus.INFO, "Deal Team has been open from the app launcher", YesNo.No);
+
+			if (DTP.createDealTeam(projectName, TeamMember[i], data, "Acuity", action.SCROLLANDBOOLEAN, 25)) {
+				log(LogStatus.INFO, "----Successfully Created the Deal Team for Deal: " + dealName + "----", YesNo.No);
+
+				log(LogStatus.INFO,
+						"---------Now Going to Check Deal Team Count should get increase by one for Contact named "
+								+ contactName + " at Firm Tab under Acuity section---------",
+						YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "could not create a new deal team", YesNo.Yes);
+				sa.assertTrue(false,"could not create a new deal team" );
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "could not open a deal team tab", YesNo.Yes);
+			sa.assertTrue(false,"could not open a deal team tab" );
+		}
+		}
 		
 		ThreadSleep(2000);
 		
@@ -3797,7 +3797,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void RGATETc020_CreateSomeRevenueInboxEvents(String projectName) {
+	public void RGATETc023_CreateSomeRevenueInboxEvents(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
@@ -3857,35 +3857,35 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 //		}
 		
 		
-//		String startDate8 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt(RGATE_StartDay8));
-//		ExcelUtils.writeData(AcuityDataSheetFilePath, startDate8, "Activity Timeline", excelLabel.Variable_Name,
-//				"RGATE_008", excelLabel.Advance_Start_Date);
-//
-//		String endDate8 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt(RGATE_EndDay8));
-//		ExcelUtils.writeData(AcuityDataSheetFilePath, endDate8, "Activity Timeline", excelLabel.Variable_Name,
-//				"RGATE_008", excelLabel.Advance_End_Date);
-//
-//		String startTime8 = null;
-//		String endTime8 = null;
-//		String descriptionBox6 = RGATE_Notes8;
-//
-//		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle8 + " through Outlook---------",
-//				YesNo.No);
-//		if (op.loginAndCreateEventThroughOutLook(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle8,
-//				eventAttendees8, startDate8, endDate8, startTime8, endTime8, descriptionBox6, true)) {
-//			log(LogStatus.INFO,
-//					"-----Event Created Msg is showing, So Event of Title: " + eventTitle8 + " has been created-----",
-//					YesNo.No);
-//		}
-//
-//		else {
-//			log(LogStatus.ERROR, "-----Event Created Msg is not showing, So Event of Title: " + eventTitle8
-//					+ " has not been created-----", YesNo.Yes);
-//			BaseLib.sa.assertTrue(false, "-----Event Created Msg is not showing, So Event of Title: " + eventTitle8
-//					+ " has not been created-----");
-//		}
-//
-//		ThreadSleep(5000);
+		String startDate8 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt(RGATE_StartDay8));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, startDate8, "Activity Timeline", excelLabel.Variable_Name,
+				"RGATE_008", excelLabel.Advance_Start_Date);
+
+		String endDate8 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt(RGATE_EndDay8));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, endDate8, "Activity Timeline", excelLabel.Variable_Name,
+				"RGATE_008", excelLabel.Advance_End_Date);
+
+		String startTime8 = null;
+		String endTime8 = null;
+		String descriptionBox6 = RGATE_Notes8;
+
+		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle8 + " through Outlook---------",
+				YesNo.No);
+		if (op.loginAndCreateEventThroughOutLook(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle8,
+				eventAttendees8, startDate8, endDate8, startTime8, endTime8, descriptionBox6, true)) {
+			log(LogStatus.INFO,
+					"-----Event Created Msg is showing, So Event of Title: " + eventTitle8 + " has been created-----",
+					YesNo.No);
+		}
+
+		else {
+			log(LogStatus.ERROR, "-----Event Created Msg is not showing, So Event of Title: " + eventTitle8
+					+ " has not been created-----", YesNo.Yes);
+			BaseLib.sa.assertTrue(false, "-----Event Created Msg is not showing, So Event of Title: " + eventTitle8
+					+ " has not been created-----");
+		}
+
+		ThreadSleep(5000);
 
 		if (lp.clickOnTab(projectName, tabObj4)) {
 

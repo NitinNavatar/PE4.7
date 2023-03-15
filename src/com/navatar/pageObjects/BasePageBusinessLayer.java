@@ -786,31 +786,33 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	public boolean verifyDate(String date, String dateFormat, String typeOfDate) {
 		if (dateFormat == null) {
 			if (date.contains(getDateAccToTimeZone(AmericaLosAngelesTimeZone, "M/dd/yyyy"))) {
-				appLog.info(
-						typeOfDate + " date is verified : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "M/dd/yyyy"));
+				appLog.info(typeOfDate + " date is verified : "
+						+ getDateAccToTimeZone(AmericaLosAngelesTimeZone, "M/dd/yyyy"));
 				return true;
 			} else if (date.contains(getDateAccToTimeZone(AmericaLosAngelesTimeZone, "MM/dd/yyyy"))) {
-				appLog.info(
-						typeOfDate + " date is verified : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "MM/dd/yyyy"));
+				appLog.info(typeOfDate + " date is verified : "
+						+ getDateAccToTimeZone(AmericaLosAngelesTimeZone, "MM/dd/yyyy"));
 				return true;
 			} else if (date.contains(getDateAccToTimeZone(AmericaLosAngelesTimeZone, "dd/M/yyyy"))) {
-				appLog.info(
-						typeOfDate + " date is verified : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "dd/M/yyyy"));
+				appLog.info(typeOfDate + " date is verified : "
+						+ getDateAccToTimeZone(AmericaLosAngelesTimeZone, "dd/M/yyyy"));
 				return true;
 			} else if (date.contains(getDateAccToTimeZone(AmericaLosAngelesTimeZone, "dd/MM/yyyy"))) {
-				appLog.info(
-						typeOfDate + " date is verified : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "dd/MM/yyyy"));
+				appLog.info(typeOfDate + " date is verified : "
+						+ getDateAccToTimeZone(AmericaLosAngelesTimeZone, "dd/MM/yyyy"));
 				return true;
 			} else if (date.contains(getDateAccToTimeZone(AmericaLosAngelesTimeZone, "M/d/yyyy"))) {
-				appLog.info(typeOfDate + " date is verified : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "M/d/yyyy"));
+				appLog.info(typeOfDate + " date is verified : "
+						+ getDateAccToTimeZone(AmericaLosAngelesTimeZone, "M/d/yyyy"));
 				return true;
 			} else if (date.contains(getDateAccToTimeZone(AmericaLosAngelesTimeZone, "d/M/yyyy"))) {
-				appLog.info(typeOfDate + " date is verified : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "d/M/yyyy"));
+				appLog.info(typeOfDate + " date is verified : "
+						+ getDateAccToTimeZone(AmericaLosAngelesTimeZone, "d/M/yyyy"));
 				return true;
 			} else {
 				appLog.info(typeOfDate + " date is not verified. found result : " + date);
-				appLog.info("Expected Date is : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "M/dd/yyyy") + " or "
-						+ getDateAccToTimeZone(AmericaLosAngelesTimeZone, "MM/dd/yyyy") + " or "
+				appLog.info("Expected Date is : " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "M/dd/yyyy")
+						+ " or " + getDateAccToTimeZone(AmericaLosAngelesTimeZone, "MM/dd/yyyy") + " or "
 						+ getDateAccToTimeZone(AmericaLosAngelesTimeZone, "dd/M/yyyy") + " or "
 						+ getDateAccToTimeZone(AmericaLosAngelesTimeZone, "dd/MM/yyyy") + " or "
 						+ getDateAccToTimeZone(AmericaLosAngelesTimeZone, "M/d/yyyy"));
@@ -19231,7 +19233,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 				if (click(driver, getfooterSaveOrCancelButton("Save", 20), "Save button", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "clicked on Save button", YesNo.No);
-
+					ThreadSleep(10000);
 					if (suggestedTags != null) {
 						/*
 						 * for(int i=0; i<suggestedTags.length; i++) {
@@ -19324,6 +19326,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						flag = true;
 
 					}
+					
+					
 				} else {
 					log(LogStatus.ERROR, "Not able to click on Save button", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Save button");
@@ -19974,277 +19978,287 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
-	public ArrayList<String> verifyRecordsonInteractionsViewAllPopup(String recordName, String[] icon, String[] date, String[] subject,
-			String[] details, String[] correspondenceHeader, String[][] participants, String[][] tags) {
+	public ArrayList<String> verifyRecordsonInteractionsViewAllPopup(String recordName, String[] icon, String[] date,
+			String[] subject, String[] details, String[] correspondenceHeader, String[][] participants,
+			String[][] tags) {
 		String xPath;
 		WebElement ele;
 
 		ArrayList<String> result = new ArrayList<String>();
 		String parentId = switchToWindowOpenNextToParentWindow(driver);
 		if (parentId != null) {
-			
-			if(headingOfInteractionPage(recordName,20)!=null)
-			{
-				log(LogStatus.INFO,recordName+" interaction page has been open ",YesNo.No);
-			if (correspondenceHeader != null && correspondenceHeader.length != 0) {
-				for (int i = 0; i < correspondenceHeader.length; i++) {
 
-					if (icon[i] != null && icon.length != 0 && icon[i] != "" && icon[i] != null) {
-						xPath = "//button[text()='" + correspondenceHeader[i]
-								+ "']/ancestor::tr//th[@data-label='Type']//lightning-icon";
-						ele = FindElement(driver, xPath, "Icon type of " + correspondenceHeader[i],
-								action.SCROLLANDBOOLEAN, 20);
-						String iconVal = getAttribute(driver, ele, "Icon type", "class");
-						if (iconVal.contains(icon[i].toLowerCase())) {
-							log(LogStatus.INFO, "The icon :" + icon[i] + " has been verified against "
-									+ correspondenceHeader[i] + " record", YesNo.No);
-						} else {
-							log(LogStatus.ERROR, "The icon :" + icon[i] + " is not verified against "
-									+ correspondenceHeader[i] + " record", YesNo.No);
-							result.add("The icon :" + icon[i] + " is not verified against " + correspondenceHeader[i]
-									+ " record");
+			if (headingOfInteractionPage(recordName, 20) != null) {
+				log(LogStatus.INFO, recordName + " interaction page has been open ", YesNo.No);
+				if (correspondenceHeader != null && correspondenceHeader.length != 0) {
+					for (int i = 0; i < correspondenceHeader.length; i++) {
 
-						}
-					}
+						if (icon[i] != null && icon.length != 0 && icon[i] != "" && icon[i] != null) {
+							xPath = "//button[text()='" + correspondenceHeader[i]
+									+ "']/ancestor::tr//th[@data-label='Type']//lightning-icon";
+							ele = FindElement(driver, xPath, "Icon type of " + correspondenceHeader[i],
+									action.SCROLLANDBOOLEAN, 20);
+							String iconVal = getAttribute(driver, ele, "Icon type", "class");
+							if (iconVal.contains(icon[i].toLowerCase())) {
+								log(LogStatus.INFO, "The icon :" + icon[i] + " has been verified against "
+										+ correspondenceHeader[i] + " record", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "The icon :" + icon[i] + " is not verified against "
+										+ correspondenceHeader[i] + " record", YesNo.No);
+								result.add("The icon :" + icon[i] + " is not verified against "
+										+ correspondenceHeader[i] + " record");
 
-					if (date != null && date.length != 0 && date[i] != "" && date[i] != null) {
-						xPath = "//button[text()='" + correspondenceHeader[i]
-								+ "']/ancestor::tr//td[@data-label='Date']//lightning-base-formatted-text";
-						ele = FindElement(driver, xPath, "date ", action.SCROLLANDBOOLEAN, 25);
-						String actDate = getText(driver, ele, "date ", action.SCROLLANDBOOLEAN);
-						String actualDate = null;
-
-						if (actDate.contains(",")) {
-							actualDate = actDate.split(",")[0];
-						} else {
-							actualDate = actDate;
+							}
 						}
 
-						String dueDate;
-						if (date[i].contains(",")) {
-							dueDate = date[i].split(",")[0];
-						} else {
-							dueDate = date[i];
-						}
+						if (date != null && date.length != 0 && date[i] != "" && date[i] != null) {
+							xPath = "//button[text()='" + correspondenceHeader[i]
+									+ "']/ancestor::tr//td[@data-label='Date']//lightning-base-formatted-text";
+							ele = FindElement(driver, xPath, "date ", action.SCROLLANDBOOLEAN, 25);
+							String actDate = getText(driver, ele, "date ", action.SCROLLANDBOOLEAN);
+							String actualDate = null;
 
-						String[] splittedDate = dueDate.split("/");
-						char dayMonth = splittedDate[0].charAt(0);
-						char day = splittedDate[1].charAt(0);
-						String month;
-						if (dayMonth == '0') {
-							month = splittedDate[0].replaceAll("0", "");
-						} else {
-							month = splittedDate[0];
-						}
-						String finalDay;
-						if (day == '0') {
-							finalDay = splittedDate[1].replaceAll("0", "");
-						} else {
-							finalDay = splittedDate[1];
-						}
+							if (actDate.contains(",")) {
+								actualDate = actDate.split(",")[0];
+							} else {
+								actualDate = actDate;
+							}
 
-						String expectedDate = month + "/" + finalDay + "/" + splittedDate[2];
+							String dueDate;
+							if (date[i].contains(",")) {
+								dueDate = date[i].split(",")[0];
+							} else {
+								dueDate = date[i];
+							}
 
-						if (actualDate.trim().equalsIgnoreCase(expectedDate.trim())) {
-							log(LogStatus.INFO,
-									"actual date : " + actualDate + " has been matched with the Expected date : "
-											+ expectedDate + " of subject : " + subject[i],
-									YesNo.No);
-						} else {
-							log(LogStatus.ERROR,
-									"actual date : " + actualDate + " is not matched with the Expected date : "
-											+ expectedDate + " of subject : " + subject[i],
-									YesNo.No);
-							result.add("actual date : " + actualDate + " is not matched with the Expected date : "
-									+ expectedDate + " of subject : " + subject[i]);
-						}
-					}
-					if (subject != null && subject.length != 0 && subject[i] != "" && subject[i] != null) {
-						xPath = "//tr//td[@data-label='Subject']//button[text()='" + correspondenceHeader[i] + "']";
-						ele = FindElement(driver, xPath, "subject ", action.SCROLLANDBOOLEAN, 25);
-						String actSubject = getText(driver, ele, "subject ", action.SCROLLANDBOOLEAN);
-						if (actSubject.equalsIgnoreCase(subject[i])) {
-							log(LogStatus.INFO, "actual subject : " + actSubject
-									+ " has been matched with the Expected subject : " + subject[i], YesNo.No);
-						} else {
-							log(LogStatus.ERROR, "actual subject : " + actSubject
-									+ " is not matched with the Expected subject : " + subject[i], YesNo.No);
-							result.add("actual subject : " + actSubject + " is not matched with the Expected subject : "
-									+ subject[i]);
-						}
-					}
-					if (details != null && details.length != 0 && details[i] != "" && details[i] != null) {
-						xPath = "//button[text()='" + correspondenceHeader[i]
-								+ "']/ancestor::tr//td[@data-label='Details']//button";
-						ele = FindElement(driver, xPath, "details ", action.SCROLLANDBOOLEAN, 25);
-						String actDetails = getText(driver, ele, "details ", action.SCROLLANDBOOLEAN);
-						if (actDetails.trim().equalsIgnoreCase(details[i].trim().replaceAll(" +", " "))) {
-							log(LogStatus.INFO,
-									"actual details : " + actDetails + " has been matched with the Expected details : "
-											+ details[i] + " of subject : " + subject[i],
-									YesNo.No);
+							String[] splittedDate = dueDate.split("/");
+							char dayMonth = splittedDate[0].charAt(0);
+							char day = splittedDate[1].charAt(0);
+							String month;
+							if (dayMonth == '0') {
+								month = splittedDate[0].replaceAll("0", "");
+							} else {
+								month = splittedDate[0];
+							}
+							String finalDay;
+							if (day == '0') {
+								finalDay = splittedDate[1].replaceAll("0", "");
+							} else {
+								finalDay = splittedDate[1];
+							}
 
-						} else {
-							log(LogStatus.ERROR,
-									"actual details : " + actDetails + " is not matched with the Expected details : "
-											+ details[i] + " of subject : " + subject[i],
-									YesNo.No);
-							result.add("actual details : " + actDetails + " is not matched with the Expected details : "
-									+ details[i] + " of subject : " + subject[i]);
-						}
-					}
+							String expectedDate = month + "/" + finalDay + "/" + splittedDate[2];
 
-					if (participants != null) {
-						ArrayList<String> actualParticipantTag = new ArrayList<String>();
-
-						if (click(driver, getParticipantOnMeetingAndCallPopup(subject[i], 30), "participant",
-								action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on participant of " + subject[i], YesNo.No);
-							if (getHeadingOfParticipantsPopup(10) != null) {
-								log(LogStatus.INFO, "The heading \"Participant\" is visible on popup Participant popup",
+							if (actualDate.trim().equalsIgnoreCase(expectedDate.trim())) {
+								log(LogStatus.INFO,
+										"actual date : " + actualDate + " has been matched with the Expected date : "
+												+ expectedDate + " of subject : " + subject[i],
 										YesNo.No);
 							} else {
 								log(LogStatus.ERROR,
-										"The heading \"Participant\" is not visible on popup Participant popup",
+										"actual date : " + actualDate + " is not matched with the Expected date : "
+												+ expectedDate + " of subject : " + subject[i],
 										YesNo.No);
-								result.add("The heading \"Participant\" is not visible on popup Participant popup");
+								result.add("actual date : " + actualDate + " is not matched with the Expected date : "
+										+ expectedDate + " of subject : " + subject[i]);
 							}
-							if (getCloseIconOfParticipantPopup(10) != null) {
-								log(LogStatus.INFO, "The close icon is visible on popup of Participant", YesNo.No);
+						}
+						if (subject != null && subject.length != 0 && subject[i] != "" && subject[i] != null) {
+							xPath = "//tr//td[@data-label='Subject']//button[text()='" + correspondenceHeader[i] + "']";
+							ele = FindElement(driver, xPath, "subject ", action.SCROLLANDBOOLEAN, 25);
+							String actSubject = getText(driver, ele, "subject ", action.SCROLLANDBOOLEAN);
+							if (actSubject.equalsIgnoreCase(subject[i])) {
+								log(LogStatus.INFO,
+										"actual subject : " + actSubject
+												+ " has been matched with the Expected subject : " + subject[i],
+										YesNo.No);
 							} else {
-								log(LogStatus.ERROR, "The close icon is not visible on popup of Participant", YesNo.No);
-								result.add("The close icon is not visible on popup of Participant");
+								log(LogStatus.ERROR,
+										"actual subject : " + actSubject
+												+ " is not matched with the Expected subject : " + subject[i],
+										YesNo.No);
+								result.add("actual subject : " + actSubject
+										+ " is not matched with the Expected subject : " + subject[i]);
 							}
+						}
+						if (details != null && details.length != 0 && details[i] != "" && details[i] != null) {
+							xPath = "//button[text()='" + correspondenceHeader[i]
+									+ "']/ancestor::tr//td[@data-label='Details']//button";
+							ele = FindElement(driver, xPath, "details ", action.SCROLLANDBOOLEAN, 25);
+							String actDetails = getText(driver, ele, "details ", action.SCROLLANDBOOLEAN);
+							if (actDetails.trim().equalsIgnoreCase(details[i].trim().replaceAll(" +", " "))) {
+								log(LogStatus.INFO,
+										"actual details : " + actDetails
+												+ " has been matched with the Expected details : " + details[i]
+												+ " of subject : " + subject[i],
+										YesNo.No);
 
-							if (getOkButtonOnParticipantPopup(10) != null) {
-								log(LogStatus.INFO, "The Ok button is visible on popup of Participant", YesNo.No);
 							} else {
-								log(LogStatus.ERROR, "The Ok button is not visible on popup of Participant", YesNo.No);
-								result.add("The Ok button is not visible on popup of Participant");
+								log(LogStatus.ERROR,
+										"actual details : " + actDetails
+												+ " is not matched with the Expected details : " + details[i]
+												+ " of subject : " + subject[i],
+										YesNo.No);
+								result.add("actual details : " + actDetails
+										+ " is not matched with the Expected details : " + details[i] + " of subject : "
+										+ subject[i]);
 							}
+						}
 
-							for (WebElement element : getRecordsOfParticipantTagPopup()) {
-								actualParticipantTag.add(
-										getText(driver, element, "Participant tag record", action.SCROLLANDBOOLEAN));
-							}
-							Object[] actualParticipant = actualParticipantTag.toArray();
+						if (participants != null) {
+							ArrayList<String> actualParticipantTag = new ArrayList<String>();
 
-							String[] expectedParticipant = participants[i];
-
-							for (int a = 0; a < expectedParticipant.length; a++) {
-								int k = 0;
-								for (int j = 0; j < actualParticipant.length; j++) {
-									if (expectedParticipant[a].equals(actualParticipant[j])) {
-										log(LogStatus.INFO,
-												"Expected record " + expectedParticipant[a]
-														+ " have been matched with actual record "
-														+ actualParticipant[j] + " on participant popup",
-												YesNo.No);
-										k++;
-									}
-								}
-								if (k == 0) {
-									log(LogStatus.ERROR,
-											"Expected record " + expectedParticipant[a]
-													+ " is not matched with actual record on participant popup",
+							if (click(driver, getParticipantOnMeetingAndCallPopup(subject[i], 30), "participant",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on participant of " + subject[i], YesNo.No);
+								if (getHeadingOfParticipantsPopup(10) != null) {
+									log(LogStatus.INFO,
+											"The heading \"Participant\" is visible on popup Participant popup",
 											YesNo.No);
-									result.add("Expected record " + expectedParticipant[a]
-											+ " is not matched with actual record on participant popup");
+								} else {
+									log(LogStatus.ERROR,
+											"The heading \"Participant\" is not visible on popup Participant popup",
+											YesNo.No);
+									result.add("The heading \"Participant\" is not visible on popup Participant popup");
 								}
-							}
-							if (click(driver, getCloseIconOfParticipantPopup(20), "close icon of Participant",
-									action.BOOLEAN)) {
-								log(LogStatus.INFO, "Clicked on close icon of participant popup", YesNo.No);
+								if (getCloseIconOfParticipantPopup(10) != null) {
+									log(LogStatus.INFO, "The close icon is visible on popup of Participant", YesNo.No);
+								} else {
+									log(LogStatus.ERROR, "The close icon is not visible on popup of Participant",
+											YesNo.No);
+									result.add("The close icon is not visible on popup of Participant");
+								}
 
-							} else {
-								log(LogStatus.ERROR, "Not able to click on close icon of participant popup", YesNo.No);
-								result.add("Not able to click on close icon of participant popup");
+								if (getOkButtonOnParticipantPopup(10) != null) {
+									log(LogStatus.INFO, "The Ok button is visible on popup of Participant", YesNo.No);
+								} else {
+									log(LogStatus.ERROR, "The Ok button is not visible on popup of Participant",
+											YesNo.No);
+									result.add("The Ok button is not visible on popup of Participant");
+								}
 
-							}
-						} else {
-							log(LogStatus.ERROR, "Not able to click on participant of " + subject[i], YesNo.No);
-							result.add("Not able to click on participant of " + subject[i]);
+								for (WebElement element : getRecordsOfParticipantTagPopup()) {
+									actualParticipantTag.add(getText(driver, element, "Participant tag record",
+											action.SCROLLANDBOOLEAN));
+								}
+								Object[] actualParticipant = actualParticipantTag.toArray();
 
-						}
-					}
-					if (tags != null) {
-						ArrayList<String> actualTags = new ArrayList<String>();
-						if (click(driver, getTagOnMeetingAndCallPopup(subject[i], 30), "Tags",
-								action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on tags of " + subject[i], YesNo.No);
+								String[] expectedParticipant = participants[i];
 
-							if (getHeadingOfTagPopup(10) != null) {
-								log(LogStatus.INFO, "The heading \"Tag\" is visible on popup Tag popup", YesNo.No);
-							} else {
-								log(LogStatus.ERROR, "The heading \"Tag\" is not visible on popup Tag popup", YesNo.No);
-								result.add("The heading \"Tag\" is not visible on popup Tag popup");
-							}
-							if (getCloseIconOfTagPopup(10) != null) {
-								log(LogStatus.INFO, "The close icon is visible on popup of Tag", YesNo.No);
-							} else {
-								log(LogStatus.ERROR, "The close icon is not visible on popup of Tag", YesNo.No);
-								result.add("The close icon is not visible on popup of Tag");
-							}
-							if (getOkButtonOnTagsPopup(10) != null) {
-								log(LogStatus.INFO, "The Ok button is visible on popup of Tag", YesNo.No);
-							} else {
-								log(LogStatus.ERROR, "The Ok button is not visible on popup of Tag", YesNo.No);
-								result.add("The Ok button is not visible on popup of Tag");
-							}
-							for (WebElement element : getRecordsOfTagPopup()) {
-								actualTags.add(
-										getText(driver, element, "Participant tag record", action.SCROLLANDBOOLEAN));
-							}
-							Object[] actualTag = actualTags.toArray();
-							String[] expectedTag = tags[i];
-
-							for (int a = 0; a < expectedTag.length; a++) {
-								int k = 0;
-								for (int j = 0; j < actualTag.length; j++) {
-									if (expectedTag[a].equals(actualTag[j])) {
-										log(LogStatus.INFO,
-												"Expected record " + expectedTag[a]
-														+ " have been matched with actual record " + actualTag[j]
-														+ " on expectedTag popup",
+								for (int a = 0; a < expectedParticipant.length; a++) {
+									int k = 0;
+									for (int j = 0; j < actualParticipant.length; j++) {
+										if (expectedParticipant[a].equals(actualParticipant[j])) {
+											log(LogStatus.INFO,
+													"Expected record " + expectedParticipant[a]
+															+ " have been matched with actual record "
+															+ actualParticipant[j] + " on participant popup",
+													YesNo.No);
+											k++;
+										}
+									}
+									if (k == 0) {
+										log(LogStatus.ERROR,
+												"Expected record " + expectedParticipant[a]
+														+ " is not matched with actual record on participant popup",
 												YesNo.No);
-										k++;
+										result.add("Expected record " + expectedParticipant[a]
+												+ " is not matched with actual record on participant popup");
 									}
 								}
-								if (k == 0) {
-									log(LogStatus.ERROR, "Expected record " + expectedTag[a]
-											+ " is not matched with actual record on Tag popup", YesNo.No);
-									result.add("Expected record " + expectedTag[a]
-											+ " is not matched with actual record on Tag popup");
+								if (click(driver, getCloseIconOfParticipantPopup(20), "close icon of Participant",
+										action.BOOLEAN)) {
+									log(LogStatus.INFO, "Clicked on close icon of participant popup", YesNo.No);
+
+								} else {
+									log(LogStatus.ERROR, "Not able to click on close icon of participant popup",
+											YesNo.No);
+									result.add("Not able to click on close icon of participant popup");
+
 								}
-							}
-							if (click(driver, getCloseIconOfTagPopup(20), "close icon of Tag", action.BOOLEAN)) {
-								log(LogStatus.INFO, "Clicked on close icon of tag popup", YesNo.No);
-
 							} else {
-								log(LogStatus.ERROR, "Not able to click on close icon of tag popup", YesNo.No);
-								result.add("Not able to click on close icon of tag popup");
+								log(LogStatus.ERROR, "Not able to click on participant of " + subject[i], YesNo.No);
+								result.add("Not able to click on participant of " + subject[i]);
 
 							}
-						} else {
-							log(LogStatus.ERROR, "Not able to click on tags of " + subject[i], YesNo.No);
-							result.add("Not able to click on tags of " + subject[i]);
-
 						}
-					}
+						if (tags != null) {
+							ArrayList<String> actualTags = new ArrayList<String>();
+							if (click(driver, getTagOnMeetingAndCallPopup(subject[i], 30), "Tags",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on tags of " + subject[i], YesNo.No);
 
+								if (getHeadingOfTagPopup(10) != null) {
+									log(LogStatus.INFO, "The heading \"Tag\" is visible on popup Tag popup", YesNo.No);
+								} else {
+									log(LogStatus.ERROR, "The heading \"Tag\" is not visible on popup Tag popup",
+											YesNo.No);
+									result.add("The heading \"Tag\" is not visible on popup Tag popup");
+								}
+								if (getCloseIconOfTagPopup(10) != null) {
+									log(LogStatus.INFO, "The close icon is visible on popup of Tag", YesNo.No);
+								} else {
+									log(LogStatus.ERROR, "The close icon is not visible on popup of Tag", YesNo.No);
+									result.add("The close icon is not visible on popup of Tag");
+								}
+								if (getOkButtonOnTagsPopup(10) != null) {
+									log(LogStatus.INFO, "The Ok button is visible on popup of Tag", YesNo.No);
+								} else {
+									log(LogStatus.ERROR, "The Ok button is not visible on popup of Tag", YesNo.No);
+									result.add("The Ok button is not visible on popup of Tag");
+								}
+								for (WebElement element : getRecordsOfTagPopup()) {
+									actualTags.add(getText(driver, element, "Participant tag record",
+											action.SCROLLANDBOOLEAN));
+								}
+								Object[] actualTag = actualTags.toArray();
+								String[] expectedTag = tags[i];
+
+								for (int a = 0; a < expectedTag.length; a++) {
+									int k = 0;
+									for (int j = 0; j < actualTag.length; j++) {
+										if (expectedTag[a].equals(actualTag[j])) {
+											log(LogStatus.INFO,
+													"Expected record " + expectedTag[a]
+															+ " have been matched with actual record " + actualTag[j]
+															+ " on expectedTag popup",
+													YesNo.No);
+											k++;
+										}
+									}
+									if (k == 0) {
+										log(LogStatus.ERROR, "Expected record " + expectedTag[a]
+												+ " is not matched with actual record on Tag popup", YesNo.No);
+										result.add("Expected record " + expectedTag[a]
+												+ " is not matched with actual record on Tag popup");
+									}
+								}
+								if (click(driver, getCloseIconOfTagPopup(20), "close icon of Tag", action.BOOLEAN)) {
+									log(LogStatus.INFO, "Clicked on close icon of tag popup", YesNo.No);
+
+								} else {
+									log(LogStatus.ERROR, "Not able to click on close icon of tag popup", YesNo.No);
+									result.add("Not able to click on close icon of tag popup");
+
+								}
+							} else {
+								log(LogStatus.ERROR, "Not able to click on tags of " + subject[i], YesNo.No);
+								result.add("Not able to click on tags of " + subject[i]);
+
+							}
+						}
+
+					}
+				} else {
+					log(LogStatus.ERROR,
+							"Either correspondence is null or Empty. Please provide data to verify data on interaction popup ",
+							YesNo.No);
+					result.add(
+							"Either correspondence is null or Empty. Please provide data to verify data on interaction popup");
 				}
 			} else {
-				log(LogStatus.ERROR,
-						"Either correspondence is null or Empty. Please provide data to verify data on interaction popup ",
-						YesNo.No);
-				result.add(
-						"Either correspondence is null or Empty. Please provide data to verify data on interaction popup");
-			}
-			}
-			else
-			{
-				log(LogStatus.ERROR,recordName+" interaction page is not open ",YesNo.No);
-				result.add(recordName+" interaction page is not open ");
+				log(LogStatus.ERROR, recordName + " interaction page is not open ", YesNo.No);
+				result.add(recordName + " interaction page is not open ");
 			}
 			driver.close();
 			driver.switchTo().window(parentId);
@@ -20825,6 +20839,51 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
+	
+	public ArrayList<String> verifyDefaultSortingOfReferencedTypeOnTaggedSectionFormFirmAndPeopleTab() {
+		String xPath;
+		List<WebElement> elements;
+		ArrayList<String> result = new ArrayList<String>();
+		if (click(driver, getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+			xPath = "//span[text()='Firms']/ancestor::table//button[@name='timesRef']";
+			elements = FindElements(driver, xPath, "Time Reference Count");
+			if (CommonLib.checkSorting(driver, SortOrder.Decending, elements)) {
+				log(LogStatus.INFO, "Default Decending order of Time Referenced count have been verified on Firms tag",
+						YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Default Decending order of Time Referenced count are not verified on Firms tag",
+						YesNo.No);
+				result.add("Default Decending order of Time Referenced count are not verified on Firms tag");
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+			result.add("Not able to click on Firms tab name");
+		}
+
+		if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+			xPath = "//span[text()='People']/ancestor::table//button[@name='timesRef']";
+			elements = FindElements(driver, xPath, "Time Reference Count");
+			if (CommonLib.checkSorting(driver, SortOrder.Decending, elements)) {
+				log(LogStatus.INFO, "Default Decending order of Time Referenced count have been verified on People tag",
+						YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Default Decending order of Time Referenced count are not verified on People tag",
+						YesNo.No);
+				result.add("Default Decending order of Time Referenced count are not verified on People tag");
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+			result.add("Not able to click on People tab name");
+		}
+		
+
+		return result;
+	}
+
+	
 	public ArrayList<String> verifyActivityTimeLineRecordShouldNotVisibleOnViewAllInteractionPopup(
 			String[] subjectName) {
 		String xPath;
@@ -21623,6 +21682,48 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
+	public ArrayList<String> verifyRecordShouldNotVisibleOnTagged(String[] companyTag, String peopleTag[]) {
+		ArrayList<String> result = new ArrayList<String>();
+		if (companyTag != null) {
+
+			if (click(driver, getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+				for (int i = 0; i < companyTag.length; i++) {
+					if (getTaggedRecordName("Firms", companyTag[i], 10) == null) {
+						log(LogStatus.INFO, companyTag[i] + " record is not available on company tab", YesNo.No);
+					} else {
+						log(LogStatus.ERROR, companyTag[i] + " record is available on company tab", YesNo.No);
+						result.add(companyTag[i] + " record is available on company tab");
+					}
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+				result.add("Not able to click on Firms tab name");
+			}
+		}
+		if (peopleTag != null) {
+
+			if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+
+				for (int i = 0; i < peopleTag.length; i++) {
+					if (getTaggedRecordName("People", peopleTag[i], 10) == null) {
+						log(LogStatus.INFO, peopleTag[i] + " record is not available on people tab", YesNo.No);
+					} else {
+						log(LogStatus.ERROR, peopleTag[i] + " record is available on people tab", YesNo.No);
+						result.add(peopleTag[i] + " record is available on people tab");
+					}
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+				result.add("Not able to click on People tab name");
+			}
+		}
+
+		return result;
+	}
+
+	
 	public List<String> verifyNotificationOptionsNotContainsInRecordDetailPage(String... eventName) {
 
 		List<WebElement> notificationOptionsList = getNotificationOptions();
@@ -21930,8 +22031,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return result;
 	}
-	
-	
+
 	public ArrayList<String> verifyNotHighlightedFirmNameOnFirmTaggedSection(TaggedName tabName,
 			String[] highlightedRecord) {
 		ArrayList<String> result = new ArrayList<String>();
@@ -21944,8 +22044,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.INFO, highlightedRecord[i] + " is not highlighted in " + tabName.toString() + " list",
 							YesNo.No);
 				} else {
-					log(LogStatus.ERROR,
-							highlightedRecord[i] + " is highlighted in " + tabName.toString() + " list", YesNo.No);
+					log(LogStatus.ERROR, highlightedRecord[i] + " is highlighted in " + tabName.toString() + " list",
+							YesNo.No);
 					result.add(highlightedRecord[i] + " is  highlighted in " + tabName.toString() + " list");
 				}
 			}
@@ -21955,7 +22055,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return result;
 	}
-	
 
 	public boolean verifySubjectOfInteractionEitherOnCardOrInViewAllPopUp(String subjectName) {
 		boolean flag = false;
@@ -22074,7 +22173,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		}
 
-		if (activitySubjetLinkPopupHeaderOnInteraction(9) != null) {
+		if (activitySubjetLinkPopupHeaderOnInteraction(20) != null) {
 
 			if (editButtonOfSubjectLinkPopUpInInteractionSection(5) != null) {
 
@@ -24407,138 +24506,119 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			return false;
 
 	}
-	
-	
-	public ArrayList<String> verifyRedirectionFromParticipantAndTagPopup(String[] participantRecord, String[] participantRecordObjectName, String[] tagRecord, String[] tagRecordObjectname)
-	{
-		ArrayList<String> result=new ArrayList<String>();
-		if(participantRecord!=null && participantRecordObjectName!=null)
-		{
-		if(participantRecord.length==participantRecordObjectName.length)
-		{
-			
-			for(int i=0; i<participantRecord.length; i++)
-			{
-			    if(clickUsingJavaScript(driver, getRecordofInteractionPage(participantRecord[i],15), participantRecord[i]+" on participant popup"))
-			    {
-			    	log(LogStatus.INFO, "Clicked on Record: " + participantRecord[i] + " on participant popup",
-							YesNo.No);
-			    	String parentID=switchToWindowOpenNextToParentWindow(driver);
-			    	if(getObjectPageName(participantRecordObjectName[i],15)!=null && getRecordNameOnPage(participantRecord[i],15)!=null)
-			    	{
-			    		log(LogStatus.INFO, "The redirection of record : "+participantRecord[i]+", Object: "+participantRecordObjectName[i]+" is working properly.",YesNo.No);
-			    	}
-			    	else
-			    	{
-			    		log(LogStatus.ERROR, "The redirection of record : "+participantRecord[i]+", Object: "+participantRecordObjectName[i]+" is not working properly.",YesNo.No);
-			    		result.add("The redirection of record : "+participantRecord[i]+", Object: "+participantRecordObjectName[i]+" is not working properly.");
-			    	}
-			    	driver.close();
-			    	driver.switchTo().window(parentID);
-			    }
-			    else
-			    {
-			    	log(LogStatus.ERROR, "Not able to click on Record: " + participantRecord[i] + " on participant popup",
-							YesNo.No);
-			    	result.add("Not able to click on Record: " + participantRecord[i] + " on participant popup");
-			    }
+
+	public ArrayList<String> verifyRedirectionFromParticipantAndTagPopup(String[] participantRecord,
+			String[] participantRecordObjectName, String[] tagRecord, String[] tagRecordObjectname) {
+		ArrayList<String> result = new ArrayList<String>();
+		if (participantRecord != null && participantRecordObjectName != null) {
+			if (participantRecord.length == participantRecordObjectName.length) {
+
+				for (int i = 0; i < participantRecord.length; i++) {
+					if (clickUsingJavaScript(driver, getRecordofInteractionPage(participantRecord[i], 15),
+							participantRecord[i] + " on participant popup")) {
+						log(LogStatus.INFO, "Clicked on Record: " + participantRecord[i] + " on participant popup",
+								YesNo.No);
+						String parentID = switchToWindowOpenNextToParentWindow(driver);
+						if (getObjectPageName(participantRecordObjectName[i], 15) != null
+								&& getRecordNameOnPage(participantRecord[i], 15) != null) {
+							log(LogStatus.INFO, "The redirection of record : " + participantRecord[i] + ", Object: "
+									+ participantRecordObjectName[i] + " is working properly.", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "The redirection of record : " + participantRecord[i] + ", Object: "
+									+ participantRecordObjectName[i] + " is not working properly.", YesNo.No);
+							result.add("The redirection of record : " + participantRecord[i] + ", Object: "
+									+ participantRecordObjectName[i] + " is not working properly.");
+						}
+						driver.close();
+						driver.switchTo().window(parentID);
+					} else {
+						log(LogStatus.ERROR,
+								"Not able to click on Record: " + participantRecord[i] + " on participant popup",
+								YesNo.No);
+						result.add("Not able to click on Record: " + participantRecord[i] + " on participant popup");
+					}
+				}
+
+				clickUsingJavaScript(driver, getCloseIconOfParticipantPopup(20), "close icon of participant tag popup");
+			} else {
+				log(LogStatus.ERROR, "The length of participant record and participant object name are not equal",
+						YesNo.Yes);
+				result.add("The length of participant record and participant object name are not equal");
 			}
-			
-			clickUsingJavaScript(driver, getCloseIconOfParticipantPopup(20), "close icon of participant tag popup");
 		}
-		else
-		{
-			log(LogStatus.ERROR, "The length of participant record and participant object name are not equal",YesNo.Yes);
-			result.add("The length of participant record and participant object name are not equal");
-		}
-		}
-		
-		if(tagRecord!=null && tagRecordObjectname!=null)
-		{
-			if(tagRecord.length == tagRecordObjectname.length)
-			{
-				for(int i=0; i<tagRecord.length; i++)
-				{
-				 if(clickUsingJavaScript(driver, getRecordofTagPopup(tagRecord[i],15), tagRecord[i]+" on Tags popup"))
-				    {
-				    	log(LogStatus.INFO, "Clicked on Record: " + tagRecord[i] + " on Tags popup",
+
+		if (tagRecord != null && tagRecordObjectname != null) {
+			if (tagRecord.length == tagRecordObjectname.length) {
+				for (int i = 0; i < tagRecord.length; i++) {
+					if (clickUsingJavaScript(driver, getRecordofTagPopup(tagRecord[i], 15),
+							tagRecord[i] + " on Tags popup")) {
+						log(LogStatus.INFO, "Clicked on Record: " + tagRecord[i] + " on Tags popup", YesNo.No);
+						String parentID = switchToWindowOpenNextToParentWindow(driver);
+						if (getObjectPageName(tagRecordObjectname[i], 15) != null
+								&& getRecordNameOnPage(tagRecord[i], 15) != null) {
+							log(LogStatus.INFO, "The redirection of record : " + tagRecord[i] + ", Object: "
+									+ tagRecordObjectname[i] + " is working properly.", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "The redirection of record : " + tagRecord[i] + ", Object: "
+									+ tagRecordObjectname[i] + " is not working properly.", YesNo.No);
+							result.add("The redirection of record : " + tagRecord[i] + ", Object: "
+									+ tagRecordObjectname[i] + " is not working properly.");
+						}
+						driver.close();
+						driver.switchTo().window(parentID);
+					} else {
+						log(LogStatus.ERROR, "Not able to click on Record: " + tagRecord[i] + " on Tags popup",
 								YesNo.No);
-				    	String parentID=switchToWindowOpenNextToParentWindow(driver);
-				    	if(getObjectPageName(tagRecordObjectname[i],15)!=null && getRecordNameOnPage(tagRecord[i],15)!=null)
-				    	{
-				    		log(LogStatus.INFO, "The redirection of record : "+tagRecord[i]+", Object: "+tagRecordObjectname[i]+" is working properly.",YesNo.No);
-				    	}
-				    	else
-				    	{
-				    		log(LogStatus.ERROR, "The redirection of record : "+tagRecord[i]+", Object: "+tagRecordObjectname[i]+" is not working properly.",YesNo.No);
-				    		result.add("The redirection of record : "+tagRecord[i]+", Object: "+tagRecordObjectname[i]+" is not working properly.");
-				    	}
-				    	driver.close();
-				    	driver.switchTo().window(parentID);
-				    }
-				    else
-				    {
-				    	log(LogStatus.ERROR, "Not able to click on Record: " + tagRecord[i] + " on Tags popup",
-								YesNo.No);
-				    	result.add("Not able to click on Record: " + tagRecord[i] + " on Tags popup");
-				    }
+						result.add("Not able to click on Record: " + tagRecord[i] + " on Tags popup");
+					}
 				}
 				clickUsingJavaScript(driver, getCloseIconOfTagPopup(20), "close icon of participant tag popup");
-			}
-			else
-			{
-				log(LogStatus.ERROR, "The length of tag record and tag object name are not equal",YesNo.Yes);
-				result.add("The length of tag record and tag object name are not equal");	
+			} else {
+				log(LogStatus.ERROR, "The length of tag record and tag object name are not equal", YesNo.Yes);
+				result.add("The length of tag record and tag object name are not equal");
 			}
 		}
-		
+
 		return result;
-		
+
 	}
-	
-	public ArrayList<String> verifyRedirectionOfActivityPopup(String[] recordName, String[] objectName)
-	{
-		ArrayList<String> result=new ArrayList<String>();
-		if(recordName!=null && objectName!=null)
-		{
-			if(recordName.length==objectName.length)
-			{
-				
-				for(int i=0; i<recordName.length; i++)
-				{
-				   if(clickUsingJavaScript(driver, getTagRecordNameOnActivityPopup(recordName[i],15), "record "+recordName[i]+" on popup"))
-				   {
-					   log(LogStatus.INFO, "Clicked on Record: " + recordName[i] + " on popup",YesNo.No);
-					   
-					   String parentID=switchToWindowOpenNextToParentWindow(driver);
-				    	if(getObjectPageName(objectName[i],15)!=null && getRecordNameOnPage(recordName[i],15)!=null)
-				    	{
-				    		log(LogStatus.INFO, "The redirection of record : "+recordName[i]+", Object: "+objectName[i]+" is working properly.",YesNo.No);
-				    	}
-				    	else
-				    	{
-				    		log(LogStatus.ERROR, "The redirection of record : "+recordName[i]+", Object: "+objectName[i]+" is not working properly.",YesNo.No);
-				    		result.add("The redirection of record : "+recordName[i]+", Object: "+objectName[i]+" is not working properly.");
-				    	}
-				    	driver.close();
-				    	driver.switchTo().window(parentID);
-					   
-				   }
-				   else
-				   {
-					   log(LogStatus.ERROR, "Not able to click on Record: " + recordName[i] + " on popup",YesNo.No);
-					   result.add("Not able to click on Record: " + recordName[i] + " on popup");
-				   }
+
+	public ArrayList<String> verifyRedirectionOfActivityPopup(String[] recordName, String[] objectName) {
+		ArrayList<String> result = new ArrayList<String>();
+		if (recordName != null && objectName != null) {
+			if (recordName.length == objectName.length) {
+
+				for (int i = 0; i < recordName.length; i++) {
+					if (clickUsingJavaScript(driver, getTagRecordNameOnActivityPopup(recordName[i], 15),
+							"record " + recordName[i] + " on popup")) {
+						log(LogStatus.INFO, "Clicked on Record: " + recordName[i] + " on popup", YesNo.No);
+
+						String parentID = switchToWindowOpenNextToParentWindow(driver);
+						if (getObjectPageName(objectName[i], 15) != null
+								&& getRecordNameOnPage(recordName[i], 15) != null) {
+							log(LogStatus.INFO, "The redirection of record : " + recordName[i] + ", Object: "
+									+ objectName[i] + " is working properly.", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "The redirection of record : " + recordName[i] + ", Object: "
+									+ objectName[i] + " is not working properly.", YesNo.No);
+							result.add("The redirection of record : " + recordName[i] + ", Object: " + objectName[i]
+									+ " is not working properly.");
+						}
+						driver.close();
+						driver.switchTo().window(parentID);
+
+					} else {
+						log(LogStatus.ERROR, "Not able to click on Record: " + recordName[i] + " on popup", YesNo.No);
+						result.add("Not able to click on Record: " + recordName[i] + " on popup");
+					}
 				}
-			}
-			else
-			{
-				log(LogStatus.ERROR, "The length of record name and object name are not equal",YesNo.No);
-				   result.add("The length of record name and object name are not equal");
+			} else {
+				log(LogStatus.ERROR, "The length of record name and object name are not equal", YesNo.No);
+				result.add("The length of record name and object name are not equal");
 			}
 		}
 		return result;
-		
+
 	}
 
 	public void verifyUIOfCallPopUp(String url, String[][] basicSectionVerificationData,
@@ -24643,21 +24723,23 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							+ NotesPopUpPrefilledNegativeResult);
 		}
 
-		if (click(driver, notePopUpCrossButton(7), "Note Popup Cross Button", action.BOOLEAN)) {
-			log(LogStatus.INFO, "Clicked on Note Popup Cross button", YesNo.No);
+		if (notePopUpCrossButton(2) != null) {
+			if (click(driver, notePopUpCrossButton(7), "Note Popup Cross Button", action.BOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Note Popup Cross button", YesNo.No);
 
-			if (notePopUpHeading(expectedHeaderName, 3) == null) {
-				log(LogStatus.INFO, "PopUp has been closed", YesNo.No);
+				if (notePopUpHeading(expectedHeaderName, 3) == null) {
+					log(LogStatus.INFO, "PopUp has been closed", YesNo.No);
+				}
+
+				else {
+					log(LogStatus.ERROR, "PopUp has not been closed after click on Cross icon", YesNo.No);
+					sa.assertTrue(false, "PopUp has not been closed after click on Cross icon");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to Click on Note Popup Cross button", YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on Note Popup Cross button");
 			}
-
-			else {
-				log(LogStatus.ERROR, "PopUp has not been closed after click on Cross icon", YesNo.No);
-				sa.assertTrue(false, "PopUp has not been closed after click on Cross icon");
-			}
-
-		} else {
-			log(LogStatus.ERROR, "Not able to Click on Note Popup Cross button", YesNo.Yes);
-			sa.assertTrue(false, "Not able to Click on Note Popup Cross button");
 		}
 
 	}

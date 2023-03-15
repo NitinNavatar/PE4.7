@@ -84,5 +84,16 @@ public class FundraisingsPage extends BasePageBusinessLayer {
 			return isDisplayed(driver, fundraisingNameInViewMode_Lighting, "Visibility", timeOut, "Fundraising Name in view Mode Lighting");
 		}
 	}
+	
+	
+	@FindBy(xpath = "//h2[text()='Delete Fundraising']/../..//button[@title='Delete']")
+	private WebElement deleteFundRaisingConfirmationMsg;
+
+	public WebElement getDeleteFundraisingConfirmationMsg(int timeOut) {
+		return isDisplayed(driver, deleteFundRaisingConfirmationMsg, "Visibility", timeOut, "fundraising delete confirmation message");
+	}
+	
+	
+	
 
 }

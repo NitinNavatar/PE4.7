@@ -79,6 +79,7 @@ public interface BasePageErrorMessage {
 	public static String onclickTitle="Event_Invitees";
 	public static String HitASnagMessage="Record Type ID: this ID value isn't valid for the user:";
 	public static String ErrorMessage="No item display";
+	public static String ErrorMessageAcuity="No items to display.";
 	public static String OldTaskMsg(String user,String contactName,  int otherContactNum) {
 		String msg="a Task";
 		if (user==null) {

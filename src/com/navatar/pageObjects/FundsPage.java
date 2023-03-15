@@ -298,4 +298,14 @@ public class FundsPage extends BasePageBusinessLayer {
 	public WebElement getLegalNameCrossIcon(String projectName, int timeOut) {
 		return isDisplayed(driver, LegalNameCrossIcon, "Visibility", timeOut, "LegalNameCrossIcon");
 	}
+	
+
+	@FindBy(xpath = "//h2[text()='Delete Fund']/../..//button[@title='Delete']")
+	private WebElement deleteFundConfirmationMsg;
+
+	public WebElement getDeleteFundConfirmationMsg(int timeOut) {
+		return isDisplayed(driver, deleteFundConfirmationMsg, "Visibility", timeOut, "fund delete confirmation message");
+	}
+	
+	
 }

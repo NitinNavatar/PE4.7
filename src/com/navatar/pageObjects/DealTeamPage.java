@@ -55,6 +55,14 @@ public class DealTeamPage extends BasePageBusinessLayer{
 	public WebElement getDealContactCrossIcon(String projectName, int timeOut) {
 		return isDisplayed(driver, DealContactCrossIcon, "Visibility", timeOut, "DealContactCrossIcon");
 	}
+	
+	@FindBy(xpath = "//*[text()='Deal Team']/parent::h1//slot/lightning-formatted-text")
+	private WebElement DealTeamID;
+
+	public WebElement getDealTeamID( int timeOut) {
+		return isDisplayed(driver, DealTeamID, "Visibility", timeOut, "Deal Team ID");
+	}
+	
 	@FindBy(xpath = "//label[text()='Team Member']/following-sibling::div//button")
 	private WebElement TeamMemberCrossIcon;
 
