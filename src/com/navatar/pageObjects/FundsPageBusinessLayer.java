@@ -1462,6 +1462,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		}
 		return flag;
 	}
+	
 
 	/**
 	 * @author sahil bansal
@@ -1516,4 +1517,31 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		}
 		return flag;
 	}
+
+	
+	public boolean deleteFund(String projectName, String fundName,int timeOut)
+	{
+		boolean flag=false;
+		if (clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Delete, 10)) {
+			ThreadSleep(2000);
+			if(clickUsingJavaScript(driver, getDeleteFundConfirmationMsg(20), "fund delete", action.SCROLLANDBOOLEAN))
+			{
+				appLog.info("Fund has been deleted");
+				flag=true;
+			}
+			else
+			{
+				appLog.info("Fund is not deleted");
+			}
+		}
+		else
+		{
+			appLog.error("Not Able to Click on delete Button");
+		}
+		
+		return flag;
+		
+		
+	}
+
 }

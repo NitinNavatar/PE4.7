@@ -9810,6 +9810,7 @@ public abstract class BasePage extends BaseLib {
 		return FindElement(driver, path, "contact name: "+contactName, action.BOOLEAN, timeOut);
 	}
 	
+
 	public List<WebElement> listOfemailCategory(int timeout) {
 		return FindElements(driver,
 				"//table//th[@data-label='Category']//button");
@@ -9819,4 +9820,11 @@ public abstract class BasePage extends BaseLib {
 		String path = "//*[text()='"+ subject + "']/ancestor::tr";
 		return FindElement(driver, path, "subject name: "+subject, action.BOOLEAN, timeOut);
 	}
+	
+	public WebElement getEditButtonOnEventDetailsPage(int timeOut) {
+
+		String path = "//div[text()='Event']/ancestor::div//div[text()='Edit']";
+		return FindElement(driver, path, "Edit button", action.BOOLEAN, timeOut);
+	}
+	
 }
