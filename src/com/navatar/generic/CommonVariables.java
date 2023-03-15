@@ -2181,7 +2181,7 @@ public class CommonVariables {
 			
 			public static String AMNNR_RelatedTo199,AMNNR_Notes199;
 			
-		 	public static String AMNNR_Notes200, AMNNR_AddContactsToDealTeamPopUp200,AMNNR_AddContactsToFundraisingPopup200;
+		 	public static String AMNNR_RelatedTo200, AMNNR_AddContactsToDealTeamPopUp200,AMNNR_AddContactsToFundraisingPopup200;
 		 	
 		 	public static String AMNNR_RelatedTo201,AMNNR_Notes201,AMNNR_CreateNewRecordPopUp201,AMNNR_AddContactsToDealTeamPopUp201,AMNNR_AddContactsToFundraisingPopup201;
             
@@ -11733,7 +11733,7 @@ public class CommonVariables {
     				AMNNR_RelatedTo199=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity199", excelLabel.Related_To);
     			 	AMNNR_Notes199=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity199", excelLabel.Notes);
     			 	
-    			 	AMNNR_Notes200=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity200", excelLabel.Notes);
+    			 	AMNNR_RelatedTo200=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity200", excelLabel.Related_To);
     			 	AMNNR_AddContactsToDealTeamPopUp200=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity200", excelLabel.AddContactsToDealTeamPopUp);
     			 	AMNNR_AddContactsToFundraisingPopup200=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity200", excelLabel.AddContactsToFundraisingPopup);
     			 	
