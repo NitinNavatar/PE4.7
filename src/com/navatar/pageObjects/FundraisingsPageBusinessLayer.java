@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EnumConstants.Mode;
+import com.navatar.generic.EnumConstants.PageName;
+import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.relevantcodes.extentreports.LogStatus;
@@ -24,7 +26,7 @@ import java.util.List;
 
 
 public class FundraisingsPageBusinessLayer extends FundraisingsPage {
-
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	public FundraisingsPageBusinessLayer(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
@@ -406,4 +408,24 @@ public class FundraisingsPageBusinessLayer extends FundraisingsPage {
 		return flag;
 	}
 
+	public boolean deleteFundraising(String projectName, int timeout)
+	{
+		boolean flag=false;
+		if (bp.clickOnShowMoreActionDownArrow(projectName, PageName.FundraisingPage, ShowMoreActionDropDownList.Delete, 10)) {
+			ThreadSleep(2000);
+			if(clickUsingJavaScript(driver, getDeleteFundraisingConfirmationMsg(20), projectName))
+			{
+				log(LogStatus.INFO,"Clicked on Fundraising delete confirmation message " , YesNo.No);
+				flag=true;
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Not able to click on Fundraising delete confirmation message " , YesNo.No);
+			}
+		}
+		else {
+			appLog.error("Not Able to Click on edit Button");
+		}
+		return flag;
+	}
 }

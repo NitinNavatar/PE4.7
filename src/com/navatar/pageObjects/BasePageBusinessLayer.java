@@ -19228,7 +19228,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 				if (click(driver, getfooterSaveOrCancelButton("Save", 20), "Save button", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "clicked on Save button", YesNo.No);
-
+					ThreadSleep(10000);
 					if (suggestedTags != null) {
 						/*
 						 * for(int i=0; i<suggestedTags.length; i++) {
@@ -19321,6 +19321,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						flag = true;
 
 					}
+					
+					
 				} else {
 					log(LogStatus.ERROR, "Not able to click on Save button", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Save button");
@@ -20822,6 +20824,51 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
+	
+	public ArrayList<String> verifyDefaultSortingOfReferencedTypeOnTaggedSectionFormFirmAndPeopleTab() {
+		String xPath;
+		List<WebElement> elements;
+		ArrayList<String> result = new ArrayList<String>();
+		if (click(driver, getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+			xPath = "//span[text()='Firms']/ancestor::table//button[@name='timesRef']";
+			elements = FindElements(driver, xPath, "Time Reference Count");
+			if (CommonLib.checkSorting(driver, SortOrder.Decending, elements)) {
+				log(LogStatus.INFO, "Default Decending order of Time Referenced count have been verified on Firms tag",
+						YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Default Decending order of Time Referenced count are not verified on Firms tag",
+						YesNo.No);
+				result.add("Default Decending order of Time Referenced count are not verified on Firms tag");
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+			result.add("Not able to click on Firms tab name");
+		}
+
+		if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+			xPath = "//span[text()='People']/ancestor::table//button[@name='timesRef']";
+			elements = FindElements(driver, xPath, "Time Reference Count");
+			if (CommonLib.checkSorting(driver, SortOrder.Decending, elements)) {
+				log(LogStatus.INFO, "Default Decending order of Time Referenced count have been verified on People tag",
+						YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Default Decending order of Time Referenced count are not verified on People tag",
+						YesNo.No);
+				result.add("Default Decending order of Time Referenced count are not verified on People tag");
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+			result.add("Not able to click on People tab name");
+		}
+		
+
+		return result;
+	}
+
+	
 	public ArrayList<String> verifyActivityTimeLineRecordShouldNotVisibleOnViewAllInteractionPopup(
 			String[] subjectName) {
 		String xPath;
@@ -21620,6 +21667,48 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
+	public ArrayList<String> verifyRecordShouldNotVisibleOnTagged(String[] companyTag, String peopleTag[]) {
+		ArrayList<String> result = new ArrayList<String>();
+		if (companyTag != null) {
+
+			if (click(driver, getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+				for (int i = 0; i < companyTag.length; i++) {
+					if (getTaggedRecordName("Firms", companyTag[i], 10) == null) {
+						log(LogStatus.INFO, companyTag[i] + " record is not available on company tab", YesNo.No);
+					} else {
+						log(LogStatus.ERROR, companyTag[i] + " record is available on company tab", YesNo.No);
+						result.add(companyTag[i] + " record is available on company tab");
+					}
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+				result.add("Not able to click on Firms tab name");
+			}
+		}
+		if (peopleTag != null) {
+
+			if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+
+				for (int i = 0; i < peopleTag.length; i++) {
+					if (getTaggedRecordName("People", peopleTag[i], 10) == null) {
+						log(LogStatus.INFO, peopleTag[i] + " record is not available on people tab", YesNo.No);
+					} else {
+						log(LogStatus.ERROR, peopleTag[i] + " record is available on people tab", YesNo.No);
+						result.add(peopleTag[i] + " record is available on people tab");
+					}
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+				result.add("Not able to click on People tab name");
+			}
+		}
+
+		return result;
+	}
+
+	
 	public List<String> verifyNotificationOptionsNotContainsInRecordDetailPage(String... eventName) {
 
 		List<WebElement> notificationOptionsList = getNotificationOptions();

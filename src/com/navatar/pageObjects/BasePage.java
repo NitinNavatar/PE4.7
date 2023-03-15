@@ -9774,5 +9774,12 @@ public abstract class BasePage extends BaseLib {
 	}
 	
 	
+	public WebElement getEditButtonOnEventDetailsPage(int timeOut) {
+
+		String path = "//div[text()='Event']/ancestor::div//div[text()='Edit']";
+		return FindElement(driver, path, "Edit button", action.BOOLEAN, timeOut);
+	}
+	
+	
 	
 }
