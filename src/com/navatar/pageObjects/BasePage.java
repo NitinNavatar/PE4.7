@@ -8692,7 +8692,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement ExternalTab(int timeOut, action action) {
 		WebElement ele;
-		String xpath = "//input[@name='radioGroupss']/..//span[text()='External']";
+		String xpath = "//input[contains(@name,'radioGroups')]/..//span[text()='External']";
 		return ele = isDisplayed(driver,
 				FindElement(driver, xpath, "External Tab: " + "ExternalTab", action.SCROLLANDBOOLEAN, timeOut),
 				"Visibility", 10, "External Tab");
@@ -9328,7 +9328,44 @@ public abstract class BasePage extends BaseLib {
 		} else
 			return listOfNameElements;
 	}
+	
+	public List<WebElement> getsortingDateRecived(int timeOut) {
 
+		String xpath = "//*[@class='for_desk dealDataTable tabcont shadowremovedatatable']//td[@data-label='Date Received']//lightning-formatted-date-time";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath, "sorting Date Recived");
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "sorting Date Recived");
+		} else
+			return listOfNameElements;
+	}
+	public List<WebElement> getsortingStage(int timeOut) {
+
+		String xpath = "//*[@class='for_desk dealDataTable tabcont shadowremovedatatable']//td[@data-label='Stage']";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath, "sorting Stage");
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "sorting Stage");
+		} else
+			return listOfNameElements;
+	}
+	public List<WebElement> getsortingStage1(int timeOut) {
+
+		String xpath = "//*[@class='for_desk dealDataTable tabcont shadowremovedatatable']//lightning-primitive-cell-factory[@data-label='Stage']//lightning-base-formatted-text";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath, "sorting Stage1");
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "sorting Stage1");
+		} else
+			return listOfNameElements;
+	}
+	
+	public List<WebElement> getsortintTCD(int timeOut) {
+
+		String xpath = "//*[@class='for_desk dealDataTable tabcont shadowremovedatatable']//lightning-primitive-cell-factory[@data-label='Stage']//lightning-base-formatted-text";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath, "sorting target close date");
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "sorting target close date");
+		} else
+			return listOfNameElements;
+	}
 	@FindBy(xpath = "//h1[text()=\"Create Records\"]/../following-sibling::div//lightning-layout-item//input[@type=\"text\"]/parent::div/following::div[contains(@id,\"help-message\")]")
 	private WebElement errorMsgInCreateRecordPopUp;
 

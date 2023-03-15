@@ -478,16 +478,16 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage {
 	 */
 	public boolean createFundRaisingContactFromIcon(String environment, String mode, String ContactName, String Role) {
 		Boolean flag = false;
-		if (click(driver, getFundraisingContactIcon( 60), "Fundraising Contact Icon", action.SCROLLANDBOOLEAN)) {
+		if (clickUsingJavaScript(driver, getFundraisingContactIcon( 60), "Fundraising Contact Icon", action.SCROLLANDBOOLEAN)) {
 			ThreadSleep(500);
 			if (sendKeys(driver, getPopUpfundraisingContact(60), ContactName, "Contact Name", action.BOOLEAN)) {
 				ThreadSleep(500);
 				if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 					ThreadSleep(2000);
+					//*[contains(@class,'slds')]/*[text()='" + ContactName+ "']
 					if (click(driver,
-							FindElement(driver,
-									"//*[contains(@class,'slds-p-around')]/*[text()='" + ContactName
-											+ "']",
+							FindElement(driver,"//div[@title='" + ContactName
+											+ "']/ancestor::a",
 									"Fund Name List", action.THROWEXCEPTION, 30),
 							ContactName + "   :   Fund Name", action.BOOLEAN)) {
 						appLog.info(ContactName + "  is present in list.");

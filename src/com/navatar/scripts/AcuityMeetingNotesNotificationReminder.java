@@ -1,11 +1,22 @@
 
 package com.navatar.scripts;
 
-import static com.navatar.generic.CommonLib.*;
+import static com.navatar.generic.CommonLib.ThreadSleep;
+import static com.navatar.generic.CommonLib.click;
+import static com.navatar.generic.CommonLib.clickUsingJavaScript;
+import static com.navatar.generic.CommonLib.exit;
+import static com.navatar.generic.CommonLib.getURL;
+import static com.navatar.generic.CommonLib.log;
+import static com.navatar.generic.CommonLib.refresh;
+import static com.navatar.generic.CommonLib.removeNumbersFromString;
+import static com.navatar.generic.CommonLib.switchOnWindow;
+import static com.navatar.generic.CommonLib.switchToDefaultContent;
 import static com.navatar.generic.CommonVariables.*;
 import static com.navatar.generic.SmokeCommonVariables.adminPassword;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.WebElement;
@@ -15,8 +26,21 @@ import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
+import com.navatar.generic.EnumConstants.CreationPage;
+import com.navatar.generic.EnumConstants.Environment;
+import com.navatar.generic.EnumConstants.IconType;
+import com.navatar.generic.EnumConstants.Mode;
+import com.navatar.generic.EnumConstants.NavigationMenuItems;
+import com.navatar.generic.EnumConstants.ObjectFeatureName;
+import com.navatar.generic.EnumConstants.PageName;
+import com.navatar.generic.EnumConstants.PermissionType;
+import com.navatar.generic.EnumConstants.TabName;
+import com.navatar.generic.EnumConstants.YesNo;
+import com.navatar.generic.EnumConstants.action;
+import com.navatar.generic.EnumConstants.excelLabel;
+import com.navatar.generic.EnumConstants.object;
+import com.navatar.generic.EnumConstants.recordTypeLabel;
 import com.navatar.generic.ExcelUtils;
-import com.navatar.generic.EnumConstants.*;
 import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
 import com.navatar.pageObjects.CustomObjPageBusinessLayer;
@@ -24,11 +48,8 @@ import com.navatar.pageObjects.DealPageBusinessLayer;
 import com.navatar.pageObjects.FundRaisingPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
-
 import com.navatar.pageObjects.LoginPageBusinessLayer;
-
 import com.navatar.pageObjects.NavigationPageBusineesLayer;
-import com.navatar.pageObjects.OutlookPageBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.navatar.pageObjects.TaskPageBusinessLayer;
 import com.navatar.pageObjects.ThemePageBusinessLayer;
@@ -1429,7 +1450,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
 
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("-1"));
 		String getAdvanceDueDate = AdvanceDueDate;
@@ -1695,7 +1715,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
 
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("2"));
 		String getAdvanceDueDate = AdvanceDueDate;
@@ -2196,7 +2215,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
 
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
 		String getAdvanceDueDate = AdvanceDueDate;
@@ -2895,7 +2913,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
+
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String AdvanceDueDate = ExcelUtils.readData(AcuityDataSheetFilePath, "Activity Timeline",
@@ -6685,12 +6703,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1AdvancedSectionVerification = { { "Due Date updated", getAdvanceDueDate },
 				{ AMNNR_TaskLabel7, crmUser1FirstName + " " + crmUser1LastName }, { "Status updated", status } };
 
-		String[] labelAndValueSeprateByBreak = {
-				AMNNR_TaskLabel7 + "<break>" + crmUser1FirstName + " " + crmUser1LastName,
-				"Status updated" + "<break>" + status, "Subject updated" + "<break>" + task1SubjectName,
-				"Due Date updated" + "<break>" + getAdvanceDueDate,
-				"Related Associations" + "<break>" + "Sumo Logic, Vertica, Demo Deal" };
-
 		boolean flag1 = false;
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
@@ -6943,39 +6955,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								}
 
 								CommonLib.refresh(driver);
-
-								// Out of Scope Functionality
-								/*
-								 * CommonLib.ThreadSleep(8000); if
-								 * (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
-								 * 
-								 * log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName +
-								 * " found in Tasks Object-----", YesNo.No);
-								 * 
-								 * CommonLib.ThreadSleep(8000); List<String> taskDetailPageNegativeResult = BP
-								 * .fieldValueVerification(labelAndValueSeprateByBreak);
-								 * 
-								 * if (taskDetailPageNegativeResult.isEmpty()) { log(LogStatus.PASS, "------" +
-								 * task1SubjectName +
-								 * " labels and their values in Detail page has been verified------", YesNo.No);
-								 * 
-								 * } else { log(LogStatus.ERROR, "------" + task1SubjectName +
-								 * " labels and their values in Detail page has not been verified, Reason: " +
-								 * taskDetailPageNegativeResult + "------", YesNo.No); sa.assertTrue(false,
-								 * "------" + task1SubjectName +
-								 * " labels and their values in Detail page has not been verified, Reason: " +
-								 * taskDetailPageNegativeResult + "------");
-								 * 
-								 * }
-								 * 
-								 * } else {
-								 * 
-								 * log(LogStatus.ERROR, "-----Task named: " + task1SubjectName +
-								 * " not found in Tasks Object-----", YesNo.Yes); BaseLib.sa.assertTrue(false,
-								 * "-----Task named: " + task1SubjectName + " not found in Tasks Object-----");
-								 * 
-								 * }
-								 */
 
 							} else {
 								log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
@@ -7360,9 +7339,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String getAdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT-08:00", "M/d/yyyy", Integer.parseInt("0"));
 
-		String priority = AMNNR_AdvancePriority54;
-		String status = AMNNR_AdvanceStatus54;
-
 		String taskSectionSubject = AMNNR_TaskSubject54;
 		String taskSectionStatus = AMNNR_TaskStatus54;
 		String taskSectionDueDateOnly = "";
@@ -7491,7 +7467,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
 
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("4"));
 
@@ -7679,8 +7654,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 									+ task1SubjectName);
 						}
 
-						driver.close();
-						driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 					} else {
 
 						log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -7726,8 +7699,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1Notes = AMNNR_Notes4;
 		String relatedTo = AMNNR_RelatedTo4;
 
-		String priority = AMNNR_AdvancePriority4;
-		String status = AMNNR_AdvanceStatus4;
 		String task1ButtonName = AMNNR_ActivityType54;
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
@@ -8217,7 +8188,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
 
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("2"));
 		String getAdvanceDueDate = AdvanceDueDate;
@@ -8438,8 +8408,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 										+ task1SubjectName);
 							}
 
-							driver.close();
-							driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 						} else {
 
 							log(LogStatus.ERROR,
@@ -8484,7 +8452,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
 
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("4"));
 		String getAdvanceDueDate = AdvanceDueDate;
@@ -8713,8 +8680,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 										+ task1SubjectName);
 							}
 
-							driver.close();
-							driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 						} else {
 
 							log(LogStatus.ERROR,
@@ -8996,7 +8961,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
 
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("5"));
 		String getAdvanceDueDate = AdvanceDueDate;
@@ -9027,8 +8991,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] task1UpdateBasicSectionVerification = { { AMNNR_CallLabel1, task1UpdatedSubjectName },
 				{ AMNNR_CallLabel2, task1Notes }, { AMNNR_CallLabel3, relatedTo } };
-
-		String[][] updateFollowUpTask1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate } };
 
 		String[] suggestedTags = null;
 
@@ -9146,8 +9108,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 									+ task1SubjectName);
 						}
 
-						driver.close();
-						driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 					} else {
 
 						log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -9714,7 +9674,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
+
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String AdvanceDueDate = ExcelUtils.readData(AcuityDataSheetFilePath, "Activity Timeline",
@@ -9725,9 +9685,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String relatedTo = AMNNR_RelatedTo17;
 
 		String verificationRelatedTo = relatedTo + AMNNR_RelatedTo21;
-
-//		String priority = AMNNR_AdvancePriority17;
-//		String status = AMNNR_AdvanceStatus17;
 
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1Notes }, { AMNNR_CallLabel3, verificationRelatedTo } };
@@ -9963,8 +9920,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 										+ task1SubjectName);
 							}
 
-							driver.close();
-							driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 						} else {
 
 							log(LogStatus.ERROR,
@@ -11553,8 +11508,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1Notes = AMNNR_Notes42;
 		String relatedTo = AMNNR_RelatedTo42;
 
-		String priority = AMNNR_AdvancePriority42;
-		String status = AMNNR_AdvanceStatus42;
 		String task1ButtonName = AMNNR_ActivityType54;
 		String[] suggestedTags = AMNNR_SuggestedTag42.split("<break>", -1);
 		String verificationRelatedTo = relatedTo + AMNNR_RelatedTo43;
@@ -13419,7 +13372,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1Notes = AMNNR_Notes55;
 		String relatedTo = AMNNR_RelatedTo55;
 
-		String recordName = AMNNR_Contact5;
 		String recordNameVerify = AMNNR_RelatedTo55;
 
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
@@ -13591,42 +13543,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String recordPageButtonName = AMNNR_ActivityType59;
 
-//		String recordName = "Sumo Logic";
-//		String task1SubjectName = "Notes Test";
-//		String task1Notes = "<suggestionShouldThere><Section> @sumo ";
-//		String[] suggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
-//		String relatedTo = recordName + "<Prefilled>";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("4"));
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1UpdatedNotes1 = "<recordsVerify>Sumo Kind<break>Sumo Kind<break>Sumo Kind Theme<break>Sumo Kind Fund<break>Sumo Kind Fundraising<break>Sumo Kind<Section>@sumo Ki";
-//		String[] updatedSuggestedTags1 = null;
-//
-//		String task1UpdatedNotes2 = "<suggestionShouldNotThere><Section>";
-//		String[] updatedSuggestedTags2 = null;
-//
-//		String task1UpdatedNotes3 = "<suggestionShouldNotThere><Section>@ sumo kind";
-//		String[] updatedSuggestedTags3 = null;
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate } };
-//
-//		String[][] task1UpdateBasicSection1 = { { AMNNR_TaskLabel2, task1UpdatedNotes1 } };
-//
-//		String[][] task1UpdateAdvancedSection1 = null;
-//
-//		String[][] task1UpdateBasicSection2 = { { AMNNR_TaskLabel2, task1UpdatedNotes2 } };
-//
-//		String[][] task1UpdateAdvancedSection2 = null;
-//
-//		String[][] task1UpdateBasicSection3 = { { AMNNR_TaskLabel2, task1UpdatedNotes3 } };
-//
-//		String[][] task1UpdateAdvancedSection3 = null;
-//
-//		String recordPageButtonName = AMNNR_ActivityType59;
-
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
@@ -13775,14 +13691,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel5, status } };
 		String task1ButtonName = AMNNR_ActivityType1;
 
-//		String validationRuleMessage = "These required fields must be completed: Subject(s), Status";
-//		String validationRuleErrorMsgLocation = "Field<break>Status";
-//		String status = "-None-";
-//		String[][] task1BasicSection = null;
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel5, status } };
-//		String task1ButtonName = AMNNR_ActivityType1;
-
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
@@ -13824,7 +13732,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String validationRuleFormula = " ISBLANK( " + AMNNR_TaskLabel1 + " ) ";
 		String validationRuleMessage = "Please enter the " + AMNNR_TaskLabel1 + " Name";
 		String validationRuleErrorMsgLocation = AMNNR_ErrorMsgLocation64;
-		String task1Notes = "";
 
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, "" } };
 
@@ -13832,20 +13739,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1ButtonName = AMNNR_ActivityType59;
 
 		String recordName = AMNNR_FirmLegalName1;
-
-//		String fieldName = AMNNR_TaskLabel1;
-//		String validationRuleName = "Validation_Rule_" + AMNNR_TaskLabel1;
-//		String validationRuleFormula = " ISBLANK( Subject ) ";
-//		String validationRuleMessage = "Please enter the " + AMNNR_TaskLabel1 + " Name";
-//		String validationRuleErrorMsgLocation = "Top of Page";
-//		String task1Notes = "";
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, "" } };
-//
-//		String[][] task1AdvancedSection = null;
-//		String task1ButtonName = AMNNR_ActivityType59;
-//
-//		String recordName = "Sumo Logic";
 
 		lp.CRMLogin(superAdminUserName, adminPassword);
 
@@ -13920,26 +13813,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String task1ButtonName = AMNNR_ActivityType59;
 		String recordName = AMNNR_FirmLegalName1;
-
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Prepare Invoice";
-//		String task1Notes = "";
-//		String relatedTo = "Houlihan Lokey<break>Glomez";
-//		String priority = "Normal";
-//		String status = "Not Started";
-//		String classification = "A";
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, classification } };
-//
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "Sumo Logic";
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
@@ -14079,37 +13952,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
 				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, classification } };
 
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "Sumo Logic";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("-1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Send Invoice Tagged";
-//		String task1Notes = "@Max<break>@James<Section>This is to take into consideration about @Max and @James should be linked in the task";
-//		String relatedTo = "Houlihan Lokey<break>Glomez";
-//		String priority = "Normal";
-//		String status = "Completed";
-//		String classification = "B";
-//		String task1NotesVerify = task1Notes.split("<Section>", -1)[1].replace("@", "");
-//
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + "Max<break>James";
-//
-//		String[] SuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = { "addContactsToDealTeamPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"addContactsToFundraisingPopUpShouldNotThere".split("<break>") };
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, classification } };
-
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
 			log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
@@ -14185,8 +14027,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.ERROR, "not able to click on " + task1SubjectName, YesNo.No);
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -14261,46 +14102,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, classification } };
 		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
 				task1BasicSectionVerificationForDetailsSection, task1AdvancedSection };
-
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = AMNNR_FirmLegalName4;
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("-1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Send Letter Not Tagged";
-//		String task1Notes = "This is to check Con 2 , Con 3 , Logic should be the part of the kind";
-//		String relatedTo = "Houlihan Lokey<break>Glomez";
-//		String priority = "Normal";
-//		String status = "Completed";
-//		String classification = "A";
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//
-//		String updatedRelatedToVerifyBeforeTagging = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName);
-//
-//		String updatedRelatedToVerify = updatedRelatedToVerifyBeforeTagging + "<break>"
-//				+ "con 2<break>con 3<break>Sumo Kind<break>Sumo Logic";
-//
-//		String[] SuggestedTags = "con 2==Contact<break>con 3==Contact<break>Sumo Kind==Firm<break>Sumo Logic==Firm"
-//				.split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = { "addContactsToDealTeamPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"addContactsToFundraisingPopUpShouldNotThere".split("<break>") };
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyBeforeTagging } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, classification } };
-//		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
-//				task1BasicSectionVerificationForDetailsSection, task1AdvancedSection };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
@@ -14377,8 +14178,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.ERROR, "not able to click on " + task1SubjectName, YesNo.No);
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -14450,43 +14250,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[] labelAndValueSeprateByBreak1 = { AMNNR_DetailPageRecord1 };
 		String[] labelAndValueSeprateByBreak2 = { AMNNR_DetailPageRecord2 };
-
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = AMNNR_FirmLegalName4;
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("-1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "IntroductionNewRecordPopup";
-//		String task1Notes = "This is to check @Alaksa ahemd and @Bruno ecostic , quest should be part of the deal, @ahemd and @ecostic";
-//		String relatedTo = "Houlihan Lokey<break>Glomez";
-//		String priority = "Normal";
-//		String status = "Completed";
-//		String updatedRelatedToVerify = relatedTo + "<break>Alaska<break>Bruno<break>" + recordName;
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = {
-//				"checked<break>Alaksa<break><AsItIs><break>Firm<break><break>Create".split("<break>", -1),
-//				"checked<break>Bruno<break><AsItIs><break>Contact<break>Alaksa<break>Create".split("<break>", -1),
-//				"checked<break>ecostic<break><AsItIs><break>Firm<break>Private Equity<break>Create".split("<break>",
-//						-1) };
-//		String firmRecord1 = "Alaksa";
-//		String firmRecord2 = "ecostic";
-//		String firmRecord3ShouldNotThere = "ahemd";
-//		String contactRecord = "Bruno";
-//		String subTabName = "Details";
-//
-//		String[] labelAndValueSeprateByBreak1 = { "Record Type" + "<break>" + "Company" };
-//		String[] labelAndValueSeprateByBreak2 = { "Record Type" + "<break>" + "Private Equity" };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -14711,8 +14474,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -14780,39 +14541,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[] labelAndValueSeprateByBreakForContact = { AMNNR_DetailPageRecord3 + "<break>" + firmRecord1 };
 		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, firmRecord1 } };
-
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = AMNNR_FirmLegalName4;
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("0"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Pitching";
-//		String task1Notes = "This is to check @ahmed and @ecostic , quest should be part of the deal";
-//		String relatedTo = "Houlihan Lokey<break>Glomez";
-//		String priority = "Normal";
-//		String status = "In Progress";
-//		String updatedRelatedToVerify = relatedTo + "<break>ahmed<break>" + recordName;
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = {
-//				"checked<break>ahmed<break><AsItIs><break>Contact<break>exrogen<break>Create".split("<break>", -1) };
-//		String firmRecord1 = "exrogen";
-//		String contactRecord = "ahmed";
-//
-//		String subTabName = "Details";
-//
-//		String[] labelAndValueSeprateByBreakForContact = { "Legal Name" + "<break>" + firmRecord1 };
-//		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, firmRecord1 } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -14947,8 +14675,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -14992,8 +14718,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -15079,58 +14803,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				AMNNR_DetailPageRecord5, AMNNR_DetailPageRecord6 };
 		String[] labelAndValueSeprateByBreakForFirm = { AMNNR_DetailPageRecord7 + "<break>" + firmRecord1,
 				AMNNR_DetailPageRecord8 };
-
-//		String contactRecordTypeList = "Contact<break>Banker";
-//		String contactRecordTypeArray[] = contactRecordTypeList.split(breakSP, -1);
-//		String[] profileForSelection = { "PE Standard User" };
-//		boolean isMakeAvailable = false;
-//		boolean isMakeDefault = true;
-//		boolean flag = false;
-//		String recordTypeDescription = "Description Record Type";
-//		String[][][] contactRecordType = {
-//				{ { recordTypeLabel.Record_Type_Label.toString(), contactRecordTypeArray[0] },
-//						{ recordTypeLabel.Description.toString(), contactRecordTypeArray[0] + recordTypeDescription },
-//						{ recordTypeLabel.Active.toString(), "" } },
-//				{ { recordTypeLabel.Record_Type_Label.toString(), contactRecordTypeArray[1] },
-//						{ recordTypeLabel.Description.toString(), contactRecordTypeArray[1] + recordTypeDescription },
-//						{ recordTypeLabel.Active.toString(), "" } } };
-//
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = AMNNR_FirmLegalName4;
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("-1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Pitching 1.1";
-//		String task1Notes = "This is to check @Owem and @AQUA quest should be part of the deal";
-//		String relatedTo = "Houlihan Lokey<break>Glomez";
-//		String priority = "Normal";
-//		String status = "Completed";
-//		String updatedRelatedToVerify = relatedTo + "<break>Owem D'souza<break>AQUA<break>" + recordName;
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = {
-//				"checked<break>Owem<break>Owem D'souza<break>Contact<break>Maxtra<existing><break>Create"
-//						.split("<break>", -1),
-//				"checked<break>AQUA<break><AsItIs><break>Firm<break><break>Create".split("<break>", -1) };
-//		String firmRecord1 = "AQUA";
-//		String contactRecord = "Owem D'souza";
-//
-//		String subTabName = "Details";
-//
-//		String[] labelAndValueSeprateByBreakForContact = { "Name" + "<break>" + contactRecord,
-//				"Contact Record Type" + "<break>" + "Contact", "Legal Name" + "<break>" + "Maxtra" };
-//		String[] labelAndValueSeprateByBreakForFirm = { "Legal Name" + "<break>" + firmRecord1,
-//				"Record Type" + "<break>" + "Company" };
 
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		for (int i = 0; i < contactRecordTypeArray.length; i++) {
@@ -15234,9 +14906,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -15472,43 +15141,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[] labelAndValueSeprateByBreakForFirm = { AMNNR_DetailPageRecord7 + "<break>" + firmRecord1,
 				AMNNR_DetailPageRecord10 };
 
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = AMNNR_FirmLegalName4;
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Pitching 1.10";
-//		String task1Notes = "Had been assigned in the task with @Sqwab who belongs to @Qazx firm.";
-//		String relatedTo = "Martha<break>Vertica";
-//		String priority = "High";
-//		String status = "Not Started";
-//		String updatedRelatedToVerify = relatedTo + "<break>Mack cronto<break>Cheex<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName);
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "B" } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = {
-//				"checked<break>Sqwab<break>Mack cronto<break>Contact<break><break>Create".split("<break>", -1),
-//				"checked<break>Qazx<break>Cheex<break>Firm<break><break>Create".split("<break>", -1) };
-//		String firmRecord1 = "Cheex";
-//		String contactRecord = "Mack cronto";
-//
-//		String subTabName = "Details";
-//
-//		String[] labelAndValueSeprateByBreakForContact = { "Name" + "<break>" + contactRecord,
-//				"Legal Name<break>Dummy Account" };
-//		String[] labelAndValueSeprateByBreakForFirm = { "Legal Name" + "<break>" + firmRecord1,
-//				"Record Type<break>Company" };
-
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
 			log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
@@ -15543,9 +15175,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -15733,41 +15362,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify } };
 
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = AMNNR_FirmLegalName4;
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Pitching 1.2";
-//		String task1Notes = "Had been assigned in the task with @SqwabNew who belongs to @QazxNew firm.";
-//		String relatedTo = "Martha<break>Vertica";
-//		String priority = "High";
-//		String status = "Not Started";
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName);
-//		String updatedRelatedToNotContainsVerify = "SqwabNew<break>QazxNew";
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "C" } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = {
-//				"checked<break>SqwabNew<break><Error>Complete this field.<break>Contact<break><break>Ignore"
-//						.split("<break>", -1),
-//				"checked<break>QazxNew<break><Error>Complete this field.<break>Firm<break><break>Ignore"
-//						.split("<break>", -1) };
-//		String record1 = "SqwabNew";
-//		String record2 = "QazxNew";
-//
-//		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify } };
-
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
 			log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
@@ -15802,9 +15396,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -15911,9 +15502,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
 				}
 
-//				driver.close();
-//				driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
 			} else {
 				log(LogStatus.FAIL, "-----Activity timeline record is not created-----", YesNo.No);
 				sa.assertTrue(false, "-----Activity timeline record is not created-----");
@@ -15982,69 +15570,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		boolean flag = false;
 
 		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify } };
-
-//		
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "Max";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("0"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Lineup announcement";
-//		String task1Notes = "Had a good talk with Litz regarding @THECARLYLEGROUP , @WARBUG ,  @PINCUS , @BAINCAPITAL , @TPGGROWTH CAPITAL , @CVCCAPITALPARTNERS , @THEBLACKSTONEGROUP , @KKR&COMPANY , @EVERSTONECAPITAL , @BARINGPRIVATEEQUITY , @CLSACAPITALPARTNERS , @KOTAKPRIVATEEQUITY , @CHRYSCAPITAL , @TRUENORTH’SINDIAVALUEFUND , @CHRYSCAPITALNEW";
-//		String relatedTo = "Martha<break>Vertica<break>Sumo Logic";
-//		String priority = "Normal";
-//		String status = "In Progress";
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + "Litz";
-//		String updatedRelatedToNotContainsVerify = "THECARLYLEGROUP<break>WARBUG<break>PINCUS<break>BAINCAPITAL<break>TPGGROWTH<break>CVCCAPITALPARTNERS<break>THEBLACKSTONEGROUP<break>KKR&COMPANY<break>EVERSTONECAPITAL<break>BARINGPRIVATEEQUITY<break>CLSACAPITALPARTNERS<break>CHRYSCAPITAL<break>TRUENORTH’SINDIAVALUEFUND<break>CHRYSCAPITALNEW";
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//		String[] SuggestedTags = "Litz".split("<break>", -1);
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = {
-//				"checked<break>THECARLYLEGROUP<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>WARBUG<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>PINCUS<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>BAINCAPITAL<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>TPGGROWTH<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>CVCCAPITALPARTNERS<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>THEBLACKSTONEGROUP<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>KKR&COMPANY<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>EVERSTONECAPITAL<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>BARINGPRIVATEEQUITY<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>CLSACAPITALPARTNERS<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>CHRYSCAPITAL<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>TRUENORTH’SINDIAVALUEFUND<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>CHRYSCAPITALNEW<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1) };
-//		String firmRecord1 = "KKR&COMPANY";
-//		String firmRecord2 = "CHRYSCAPITAL";
-//
-//		boolean flag = false;
-//
-//		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify } };
 
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (home.clickOnSetUpLink()) {
@@ -16126,9 +15651,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 						}
 
-//						driver.close();
-//						driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-						CommonLib.ThreadSleep(4000);
 					} else {
 
 						log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -16208,9 +15730,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
 				} else {
 					log(LogStatus.FAIL, "-----Activity timeline record is not created-----", YesNo.No);
 					sa.assertTrue(false, "-----Activity timeline record is not created-----");
@@ -16221,6 +15740,46 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			{
 				log(LogStatus.ERROR, "Not able to Open the Record: " + recordName, YesNo.No);
 				sa.assertTrue(false, "Not able to Open the Record: " + recordName);
+			}
+
+			lp.CRMlogout();
+			ThreadSleep(5000);
+			lp.CRMLogin(superAdminUserName, adminPassword);
+			if (home.clickOnSetUpLink()) {
+
+				String parentID = switchOnWindow(driver);
+				if (parentID != null) {
+
+					if (sp.searchStandardOrCustomObject(projectName, mode, object.Profiles)) {
+						log(LogStatus.INFO, "Profile has been open", YesNo.Yes);
+
+						if (sp.defaultRecordTypeSelect("PE Standard User", "Account", "Company")) {
+							log(LogStatus.INFO,
+									"-----The record type of Account has been selected to: " + "Company" + "-----",
+									YesNo.No);
+
+						} else {
+							log(LogStatus.ERROR,
+									"-----The record type of Account has not been selected to: " + "Company" + "-----",
+									YesNo.No);
+							sa.assertTrue(false,
+									"-----The record type of Account has not been selected to: " + "Company" + "-----");
+						}
+					} else {
+						log(LogStatus.ERROR, "Not Able to Search the " + object.Profiles + " object", YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Search the Object" + object.Profiles + " object");
+					}
+
+					driver.close();
+					driver.switchTo().window(parentID);
+					switchToDefaultContent(driver);
+				} else {
+					log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+					sa.assertTrue(false, "could not find new window to switch");
+				}
+			} else {
+				log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
+				sa.assertTrue(false, "could not click on setup link");
 			}
 
 		} else {
@@ -16300,61 +15859,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify } };
 
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = AMNNR_Contact3;
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("0"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Lineup announcement 2";
-//		String task1Notes = "Had a good talk with Litz regarding @smith1 @smith2 @smith3 @smith4 @smith5 @smith6 @smith7 @smith8  @smith9 @smith10 @smith11 @smith12 @smith13 @smith14 @smith15 @smith16 @smith17 @smith18 @smith19 @smith20 @smith21 @smith22 @smith23 @smith24 @smith25 @smith26 @smith27 @smith28 @smith29 @smith30 @smith31 @smith32 @smith33 @smith34 @smith35 @smith36 @smith37 @smith38 @smith39 @smith40 @smith41 @smith42 @smith43 @smith44 @smith45 @smith46 @smith47 @smith48 @smith49 @smith50 @smith51";
-//		String relatedTo = "Martha<break>Vertica<break>Sumo Logic";
-//		String priority = "Normal";
-//		String status = "In Progress";
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + "Litz";
-//		String updatedRelatedToNotContainsVerify = "";
-//		for (int i = 1; i <= 51; i++) {
-//			updatedRelatedToNotContainsVerify = updatedRelatedToNotContainsVerify + "smith" + i + "<break>";
-//			if (i == 51)
-//				updatedRelatedToNotContainsVerify = updatedRelatedToNotContainsVerify.substring(0,
-//						(updatedRelatedToNotContainsVerify.length() - 7));
-//		}
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//		String[] SuggestedTags = "Litz".split("<break>", -1);
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		ArrayList<String[]> createRecordPopupRecordsList = new ArrayList<String[]>();
-//
-//		for (int i = 1; i <= 51; i++) {
-//
-//			String temp = "checked<break>smith" + i
-//					+ "<break><AsItIs><break>Contact<break>Maxjonic<existing><break>Create";
-//			createRecordPopupRecordsList.add(temp.split("<break>", -1));
-//
-//		}
-//
-//		Integer createRecordPopupRecordsListSize = createRecordPopupRecordsList.size();
-//		String[][] createNewRecordPopUp = new String[createRecordPopupRecordsListSize][];
-//		for (int i = 0; i < createRecordPopupRecordsListSize; i++) {
-//			createNewRecordPopUp[i] = createRecordPopupRecordsList.get(i);
-//
-//		}
-//
-//		System.out.println(createNewRecordPopUp.length);
-//		String contactRecord1 = "smith2";
-//		String contactRecord2 = "smith51";
-//
-//		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify } };
-
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj2, recordName, null)) {
@@ -16390,9 +15894,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -16475,9 +15976,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
 				}
 
-//				driver.close();
-//				driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
 			} else {
 				log(LogStatus.FAIL, "-----Activity timeline record is not created-----", YesNo.No);
 				sa.assertTrue(false, "-----Activity timeline record is not created-----");
@@ -16548,54 +16046,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel3, updatedRelatedToVerifyAfterUpdate } };
 
 		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify } };
-
-//		
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "Acc 1";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("0"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 1";
-//		String task1Notes = "Had been assigned in task with @jenkins who belongs to @MAVEN firm Acc .";
-//		String relatedTo = "Martha<break>Vertica";
-//		String priority = "Normal";
-//		String status = "In Progress";
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName);
-//		String updatedRelatedToNotContainsVerify = BP.matcherOfAtTheRate(task1Notes);
-//
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//		String[] SuggestedTags = "Cancel".split("<break>", -1);
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = {
-//				"checked<break>jenkins<break><AsItIs><break>Firm<break><break>Ignore".split("<break>", -1) };
-//
-//		String updatedNotesOfTask = "Had been assigned in the task with @jenkins @williams who belongs to @MAVEN firm";
-//		String[][] task1UpdateBasicSection = { { AMNNR_TaskLabel2, updatedNotesOfTask } };
-//
-//		String[][] updateCreateNewRecordPopUp = {
-//				"checked<break>jenkins<break><AsItIs><break>Contact<break><break>Create".split("<break>", -1),
-//				"checked<break>williams<break><AsItIs><break>Contact<break><break>Create".split("<break>", -1),
-//				"checked<break>MAVEN<break><AsItIs><break>Contact<break><break>Create".split("<break>", -1) };
-//
-//		String updatedRelatedToAfterUpdate = BP.matcherOfAtTheRate(updatedNotesOfTask);
-//		String updatedRelatedToVerifyAfterUpdate = updatedRelatedToVerify + "<break>" + updatedRelatedToAfterUpdate;
-//
-//		String[][] task1BasicSectionVerificationAfterUpdate = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, updatedNotesOfTask.replace("@", "") },
-//				{ AMNNR_TaskLabel3, updatedRelatedToVerifyAfterUpdate } };
-//
-//		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -16770,9 +16220,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -16836,34 +16283,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "Nexus";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 2";
-//		String task1Notes = "@Mack cronto<break>@Cheex<Section>Had been assigned in task with @Mack cronto who belongs to , @Cheex firm also need to check on Maven";
-//		String relatedTo = "Martha<break>Vertica<break>jenkins<break>williams";
-//		String priority = "High";
-//		String status = "Not Started";
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + "MAVEN<break>Mack cronto<break>Cheex";
-//
-//		String task1NotesVerify = task1Notes.split("<Section>", -1)[1].replace("@", "");
-//		String[] SuggestedTags = "MAVEN".split("<break>", -1);
-//
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "C" } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -16938,9 +16357,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.ERROR, "not able to click on " + task1SubjectName, YesNo.No);
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
-
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 
 				} else {
 
@@ -17006,34 +16422,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp103.split("<break>") };
 
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "THECARLYLEGROUP";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 4";
-//		String task1Notes = "Contact having email id : Dealroom1.3+mst@gmail.com, Phone : 9889767655 , Fax :8767653 enagaged  with firm Maven and having stage of the LOI";
-//		String relatedTo = "Martha<break>Vertica<break>jenkins<break>williams";
-//		String priority = "High";
-//		String status = "Not Started";
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName);
-//
-//		String task1NotesVerify = task1Notes;
-//		String[] SuggestedTags = "Cancel".split("<break>", -1);
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
@@ -17108,9 +16496,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -17185,48 +16570,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
 				task1BasicSectionVerification, task1AdvancedSection };
-
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "THECARLYLEGROUP";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 5";
-//		String task1Notes = AMNNR_Notes33;
-//		String relatedTo = "Martha<break>Vertica<break>jenkins<break>williams";
-//		String priority = "High";
-//		String status = "Not Started";
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName);
-//
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//		String[] SuggestedTags = "Con 1<break>con 2<break>con 3<break>con 4<break>con 5<break>con 6<break>con 7<break>con 8<break>con 9<break>con 10<break>con 11<break>con 12<break>con 13<break>con 14<break>con 15<break>con 16<break>con 17<break>con 18<break>con 19<break>con 20<break>con 21<break>con 22<break>con 23<break>con 24<break>con 25<break>con 26<break>con 27<break>con 28<break>con 29<break>con 30<break>con 31<break>con 32<break>con 33<break>con 34<break>con 35<break>con 36<break>con 37<break>con 38<break>con 39<break>con 40<break>con 41<break>con 42<break>con 43<break>con 44<break>con 45<break>con 46<break>con 47<break>con 48<break>con 49<break>con 50<break>Acc 1<break>Acc 2<break>Acc 3<break>Acc 4<break>Acc 5<break>Acc 6<break>Acc 7<break>Acc 8<break>Acc 9<break>Acc 10<break>Acc 11<break>Acc 12<break>Acc 13"
-//				.split("<break>", -1);
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String updatedRelatedToNotContainsVerify = "Con 1<break>con 2<break>con 3<break>con 4<break>con 5<break>con 6<break>con 7<break>con 8<break>con 9<break>con 10<break>con 11<break>con 12<break>con 13<break>con 14<break>con 15<break>con 16<break>con 17<break>con 18<break>con 19<break>con 20<break>con 21<break>con 22<break>con 23<break>con 24<break>con 25<break>con 26<break>con 27<break>con 28<break>con 29<break>con 30<break>con 31<break>con 32<break>con 33<break>con 34<break>con 35<break>con 36<break>con 37<break>con 38<break>con 39<break>con 40<break>con 41<break>con 42<break>con 43<break>con 44<break>con 45<break>con 46<break>con 47<break>con 48<break>con 49<break>con 50<break>Acc 1<break>Acc 2<break>Acc 3<break>Acc 4<break>Acc 5<break>Acc 6<break>Acc 7<break>Acc 8<break>Acc 9<break>Acc 10<break>Acc 11<break>Acc 12<break>Acc 13";
-//		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify } };
-//		String[] updatedSuggestedTags = "Con 1<break>con 2<break>con 3<break>con 4<break>con 5<break>con 6<break>con 7<break>con 8<break>con 9<break>con 10<break>con 11<break>con 12<break>con 13<break>con 14<break>con 15<break>con 16<break>con 17<break>con 18<break>con 19<break>con 20<break>con 21<break>con 22<break>con 23<break>con 24<break>con 25<break>con 26<break>con 27<break>con 28<break>con 29<break>con 30<break>con 31<break>con 32<break>con 33<break>con 34<break>con 35<break>con 36<break>con 37<break>con 38<break>con 39<break>con 40<break>con 41<break>con 42<break>con 43<break>con 44<break>con 45<break>con 46<break>Acc 1<break>Acc 2<break>Acc 3<break>Acc 4<break>Acc 5<break>Acc 6<break>Acc 7<break>Acc 8<break>Acc 9<break>Acc 10<break>Acc 11"
-//				.split("<break>", -1);
-//
-//		String updatedRelatedToVerifyAfterUpdate = updatedRelatedToVerify + "<break>"
-//				+ "Con 1<break>con 2<break>con 3<break>con 4<break>con 5<break>con 6<break>con 7<break>con 8<break>con 9<break>con 10<break>con 11<break>con 12<break>con 13<break>con 14<break>con 15<break>con 16<break>con 17<break>con 18<break>con 19<break>con 20<break>con 21<break>con 22<break>con 23<break>con 24<break>con 25<break>con 26<break>con 27<break>con 28<break>con 29<break>con 30<break>con 31<break>con 32<break>con 33<break>con 34<break>con 35<break>con 36<break>con 37<break>con 38<break>con 39<break>con 40<break>con 41<break>con 42<break>con 43<break>con 44<break>con 45<break>con 46<break>Acc 1<break>Acc 2<break>Acc 3<break>Acc 4<break>Acc 5<break>Acc 6<break>Acc 7<break>Acc 8<break>Acc 9<break>Acc 10<break>Acc 11";
-//
-//		String[][] task1BasicSectionVerificationAfterUpdate = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyAfterUpdate } };
-//
-//		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
-//				task1BasicSectionVerification, task1AdvancedSection };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -17390,9 +16733,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -17474,55 +16814,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
 				task1BasicSectionVerification, task1AdvancedSection };
-
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "THECARLYLEGROUP";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 6";
-//		String task1Notes = "Had a good talk with smith1 smith2 smith3 smith4 smith5 about vitara deal and FCR 1";
-//		String relatedTo = "Martha<break>Vertica<break>jenkins";
-//		String priority = "High";
-//		String status = "Not Started";
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName);
-//
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//		String[] SuggestedTags = "smith1<break>smith2<break>smith3<break>smith4<break>smith5<break>Vitara Deal<break>FCR 1"
-//				.split("<break>", -1);
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "B" } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = null;
-//
-//		String[][] addContactsToDealTeamPopUp = { "checked<break>smith1<break>Partner<break>Add".split("<break>", -1),
-//				"checked<break>smith2<break>Vice President<break>Add".split("<break>", -1),
-//				"checked<break>smith3<break>Analyst<break>Add".split("<break>", -1),
-//				"checked<break>smith4<break>Accountant<break>Add".split("<break>", -1),
-//				"checked<break>smith5<break>Attorney<break>Add".split("<break>", -1),
-//				"checked<break>Martha<break>Banker<break>Add".split("<break>", -1),
-//				"checked<break>jenkins<break>Consultant<break>Add".split("<break>", -1) };
-//
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"checked<break>smith1<break>Advisor<break>Add".split("<break>", -1),
-//				"checked<break>smith2<break>Business User<break>Add".split("<break>", -1),
-//				"checked<break>smith3<break>Decision Maker<break>Add".split("<break>", -1),
-//				"checked<break>smith4<break>Evaluator<break>Add".split("<break>", -1),
-//				"checked<break>smith5<break>Executive Sponsor<break>Add".split("<break>", -1),
-//				"checked<break>Martha<break>Gatekeeper<break>Add".split("<break>", -1),
-//				"checked<break>jenkins<break>Other<break>Add".split("<break>", -1) };
-//
-//		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
-//				task1BasicSectionVerification, task1AdvancedSection };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -17655,9 +16946,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 										+ fundraisingContactDifference.size());
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-//					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -17744,59 +17032,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				AMNNR_AddContactsToFundraisingPopup122.split("<break>", -1) };
 
 		String[][][] detailSectionVerifcation = null;
-
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = AMNNR_FirmLegalName13;
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("0"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 7";
-//		String task1Notes = "";
-//		String relatedTo = "Martha<break>Vertica<break>jenkins<break>smith1<break>smith2<break>smith3<break>smith4<break>smith5<break>smith8<break>smith9<break>smith10<break>Vitara Deal<break>Breeza Deal<break>Conved Deal<break>FCR 1<break>FCR 2<break>FCR 3<break>FCR 4";
-//		String priority = "High";
-//		String status = "Completed";
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName);
-//
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//		String[] SuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//
-//		String[][] addContactsToDealTeamPopUp = { "checked<break>smith1<break>Analyst<break>Add".split("<break>", -1),
-//				"checked<break>smith2<break>Analyst<break>Add".split("<break>", -1),
-//				"checked<break>smith3<break>Analyst<break>Add".split("<break>", -1),
-//				"checked<break>smith4<break>Analyst<break>Add".split("<break>", -1),
-//				"checked<break>smith5<break>Analyst<break>Add".split("<break>", -1),
-//				"checked<break>smith8<break>Analyst<break>Add".split("<break>", -1),
-//				"checked<break>smith9<break>Analyst<break>Add".split("<break>", -1),
-//				"checked<break>smith10<break>Analyst<break>Add".split("<break>", -1),
-//				"checked<break>Martha<break>Analyst<break>Add".split("<break>", -1),
-//				"checked<break>jenkins<break>Analyst<break>Add".split("<break>", -1) };
-//
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"checked<break>smith1<break>Advisor<break>Add".split("<break>", -1),
-//				"checked<break>smith2<break>Advisor<break>Add".split("<break>", -1),
-//				"checked<break>smith3<break>Advisor<break>Add".split("<break>", -1),
-//				"checked<break>smith4<break>Advisor<break>Add".split("<break>", -1),
-//				"checked<break>smith5<break>Advisor<break>Add".split("<break>", -1),
-//				"checked<break>smith8<break>Advisor<break>Add".split("<break>", -1),
-//				"checked<break>smith9<break>Advisor<break>Add".split("<break>", -1),
-//				"checked<break>smith10<break>Advisor<break>Add".split("<break>", -1),
-//				"checked<break>Martha<break>Advisor<break>Add".split("<break>", -1),
-//				"checked<break>jenkins<break>Advisor<break>Add".split("<break>", -1) };
-//
-//		String[][][] detailSectionVerifcation = null;
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -17901,31 +17136,28 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					List<String> fundraisingContactDifference = CommonLib
 							.getDifference(afterCreateFundraisingContactList, beforeCreateFundraisingContactList);
 
-					if (dealTeamDifference.size() == 30) {
+					if (dealTeamDifference.size() == 23) {
 
 						log(LogStatus.INFO, "Same no. of Deal Team Created and i.e. " + dealTeamDifference.size(),
 								YesNo.No);
 					} else {
-						log(LogStatus.ERROR, "No. of Deal Team Created not matched, Expected size: " + 30
+						log(LogStatus.ERROR, "No. of Deal Team Created not matched, Expected size: " + 23
 								+ " but Actual: " + dealTeamDifference.size(), YesNo.Yes);
-						BaseLib.sa.assertTrue(false, "No. of Deal Team Created not matched, Expected size: " + 30
+						BaseLib.sa.assertTrue(false, "No. of Deal Team Created not matched, Expected size: " + 23
 								+ " but Actual: " + dealTeamDifference.size());
 					}
 
-					if (fundraisingContactDifference.size() == 40) {
+					if (fundraisingContactDifference.size() == 33) {
 
 						log(LogStatus.INFO, "Same no. of Fundraising Contacts Created and i.e. "
 								+ fundraisingContactDifference.size(), YesNo.No);
 					} else {
-						log(LogStatus.ERROR, "No. of Fundraising Contacts Created not matched, Expected size: " + 40
+						log(LogStatus.ERROR, "No. of Fundraising Contacts Created not matched, Expected size: " + 33
 								+ " but Actual: " + fundraisingContactDifference.size(), YesNo.Yes);
 						BaseLib.sa.assertTrue(false, "No. of Fundraising Contacts Created not matched, Expected size: "
-								+ 40 + " but Actual: " + fundraisingContactDifference.size());
+								+ 33 + " but Actual: " + fundraisingContactDifference.size());
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-//					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -17975,20 +17207,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][][] detailSectionVerifcation = null;
 
-//		String task1SubjectName = "Task 7";
-//
-//		String[] SuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = { "addContactsToDealTeamPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"addContactsToFundraisingPopUpShouldNotThere".split("<break>") };
-//
-//		String[][] task1BasicSection = null;
-//
-//		String[][] task1AdvancedSection = null;
-//
-//		String[][][] detailSectionVerifcation = null;
-
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		CommonLib.refresh(driver);
@@ -18023,9 +17241,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				sa.assertTrue(false,
 						"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 			}
-
-//			driver.close();
-//			driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 
 		} else {
 
@@ -18080,39 +17295,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][][] detailSectionVerifcation = null;
 
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "Vitara Deal";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("0"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 8";
-//		String task1Notes = "";
-//		String relatedTo = "Vertica<break>Ispro Deal<break>FCR 5";
-//		String priority = "High";
-//		String status = "Completed";
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
-//
-//		String updatedRelatedTo = "smith11<break>smith12";
-//
-//		String[] SuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = { "addContactsToDealTeamPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"addContactsToFundraisingPopUpShouldNotThere".split("<break>") };
-//
-//		String[][] updateTask1BasicSection = { { AMNNR_TaskLabel3, updatedRelatedTo } };
-//
-//		String[][] updateTask1AdvancedSection = null;
-//
-//		String[][][] detailSectionVerifcation = null;
-//		
-
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, "Deals", recordName, null)) {
@@ -18155,9 +17337,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false,
 								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 					}
-
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 
 				} else {
 
@@ -18219,34 +17398,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				AMNNR_AddContactsToFundraisingPopup126.split("<break>", -1) };
 
 		String[][][] detailSectionVerifcation = null;
-
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "Vitara Deal";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("4"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 9";
-//		String task1Notes = "";
-//		String relatedTo = "Vertica<break>Ispro Deal<break>FCR 4<break>smith15";
-//		String priority = "Normal";
-//		String status = "Not Started";
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
-//
-//		String[] SuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = {
-//				"checked<break>smith15<break>Partner<break>Cancel".split("<break>", -1) };
-//
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"checked<break>smith15<break>Advisor<break>Cancel".split("<break>", -1) };
-//
-//		String[][][] detailSectionVerifcation = null;
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -18360,30 +17511,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] updateTask1AdvancedSection = null;
 
-//		String task1SubjectName = "Task 9";
-//
-//		String[] SuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp1 = {
-//				"checked<break>smith15<break>Analyst<break>Add".split("<break>", -1) };
-//
-//		String[][] addContactsToFundraisingObjectPopup1 = null;
-//
-//		String[][] addContactsToDealTeamPopUp2 = null;
-//
-//		String[][] addContactsToFundraisingObjectPopup2 = {
-//				"checked<break>smith15<break>Advisor<break>Add".split("<break>", -1) };
-//
-//		String[][][] detailSectionVerifcation = null;
-//
-//		String updatedRelatedTo1 = "Breeza Deal";
-//		String[][] updateTask1BasicSection1 = { { AMNNR_TaskLabel3, updatedRelatedTo1 } };
-//
-//		String updatedRelatedTo2 = "FCR 1";
-//		String[][] updateTask1BasicSection2 = { { AMNNR_TaskLabel3, updatedRelatedTo2 } };
-//
-//		String[][] updateTask1AdvancedSection = null;
-
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		List<String> beforeCreateDealTeamList = BP.navigateAndFindRecordsInTab(projectName, "Deal Team");
@@ -18445,9 +17572,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				sa.assertTrue(false,
 						"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 			}
-
-//			driver.close();
-//			driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 
 		} else {
 
@@ -18511,9 +17635,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 			}
 
-//			driver.close();
-//			driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
 		} else {
 
 			log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----", YesNo.Yes);
@@ -18551,23 +17672,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] updateTask1AdvancedSection = null;
 		String[] updatedRemoveRelatedAssociation = AMNNR_RelatedTo130.split("<break>", -1);
-
-//		String task1SubjectName = "Task 9";
-//
-//		String[] SuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp1 = null;
-//
-//		String[][] addContactsToFundraisingObjectPopup1 = null;
-//
-//		String[][][] detailSectionVerifcation = null;
-//
-//		String updatedRelatedTo1 = "smith16";
-//		String[][] updateTask1BasicSection1 = { { AMNNR_TaskLabel3, updatedRelatedTo1 } };
-//
-//		String[][] updateTask1AdvancedSection = null;
-//		String[] updatedRemoveRelatedAssociation = "Breeza Deal<break>FCR 1".split("<break>", -1);
-//		
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -18653,9 +17757,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 			}
 
-//			driver.close();
-//			driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
 		} else {
 
 			log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----", YesNo.Yes);
@@ -18703,34 +17804,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				AMNNR_AddContactsToFundraisingPopup131.split("<break>", -1) };
 
 		String[][][] detailSectionVerifcation = null;
-
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "FCR 1";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("0"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 11";
-//		String task1Notes = "Had a good talk with smith1 smith2 vitara deal and FCR 1";
-//		String relatedTo = "Martha<break>Vertica<break>jenkins";
-//		String priority = "High";
-//		String status = "Not Started";
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "B" } };
-//
-//		String[] SuggestedTags = "Vitara Deal<break>FCR 2".split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = {
-//				"<break>Martha<break><break>Add<Select atleast a record>".split("<break>", -1) };
-//
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"<break>Martha<break><break>Add<Select atleast a record>".split("<break>", -1) };
-//
-//		String[][][] detailSectionVerifcation = null;
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -18801,41 +17874,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup132.split("<break>") };
 
 		String[][][] detailSectionVerifcation = null;
-
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "Mutual Fund";
-//		String dealRecordName = "Vitara Deal";
-//		String fundraisingRecordName = "FCR 1";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("10"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 10";
-//		String task1Notes = "Jenkins and Martha ";
-//		String relatedTo = "Martha<break>Vertica<break>jenkins";
-//		String priority = "High";
-//		String status = "Not Started";
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>"
-//				+ "Vitara Deal<break>Breeza Deal<break>Conved Deal<break>FCR 1<break>FCR 2<break>FCR 3<break>FCR 4";
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "C" } };
-//
-//		String[] SuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = { "addContactsToDealTeamPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"addContactsToFundraisingPopUpShouldNotThere".split("<break>") };
-//
-//		String[][][] detailSectionVerifcation = null;
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -19000,9 +18038,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "Not able to Open the Record: " + fundraisingRecordName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-//					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -19076,42 +18111,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify } };
 
 		String[][][] detailSectionVerifcation = null;
-
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "Mutual Fund";
-//		String dealRecordName = "Ispro Deal";
-//		String fundraisingRecordName = "FCR 5";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("10"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 12";
-//		String task1Notes = "smith11 smith12 smith15";
-//		String relatedTo = "smith11<break>smith12<break>smith15";
-//		String priority = "High";
-//		String status = "Not Started";
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + "Breeza Deal<break>FCR 1";
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
-//
-//		String[] SuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = { "addContactsToDealTeamPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"addContactsToFundraisingPopUpShouldNotThere".split("<break>") };
-//		String updatedRelatedToNotContainsVerify = "Ispro Deal<break>FCR 5";
-//		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify } };
-//
-//		String[][][] detailSectionVerifcation = null;
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -19307,9 +18306,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "Not able to Open the Record: " + fundraisingRecordName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-//					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -19370,29 +18366,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] addContactsToFundraisingObjectPopup = null;
 
 		String[][][] detailSectionVerifcation = null;
-
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "Con 1";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("2"));
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 13";
-//		String task1Notes = "<suggestionShouldNotThere><Section>" + "@" + (crmUser2FirstName + " " + crmUser2LastName);
-//
-//		String priority = "High";
-//		String status = "Not Started";
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "B" } };
-//
-//		String[] SuggestedTags = null;
-//		String[][] createNewRecordPopUp = { "Ignore".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = null;
-//		String[][] addContactsToFundraisingObjectPopup = null;
-//
-//		String[][][] detailSectionVerifcation = null;
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -19462,38 +18435,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup138.split("<break>") };
 
 		String[][][] detailSectionVerifcation = null;
-
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "Vertix Fund";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("2"));
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 13A";
-//		String task1Notes = "Mutual Fund , Ispro Deal , Litz , Maxtra , FCR 3 , Theme A , Theme B , Theme C";
-//		String relatedTo = "smith11<break>smith12<break>smith15";
-//		String priority = "High";
-//		String status = "Not Started";
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>"
-//				+ "Mutual Fund<break>Ispro Deal<break>Litz<break>Maxtra<break>FCR 3<break>Theme A<break>Theme B<break>Theme C";
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "B" } };
-//
-//		String[] SuggestedTags = "Mutual Fund<break>Ispro Deal<break>Litz<break>Maxtra<break>FCR 3<break>Theme A<break>Theme B<break>Theme C"
-//				.split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = { "<break>smith11<break><break>Cancel".split("<break>") };
-//		String[][] addContactsToFundraisingObjectPopup = { "<break>smith11<break><break>Cancel".split("<break>") };
-//
-//		String[][][] detailSectionVerifcation = null;
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -19573,9 +18514,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-//					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -19665,59 +18603,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
 				task1BasicSectionVerificationForDetailsSection, task1AdvancedSection };
 
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "Vertix Fund";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("2"));
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 14";
-//		String task1Notes = "Mutual Fund , Ispro Deal , Litz , Maxtra , FCR 3 ,  Theme A , Theme B , Theme C , Golden Ret , Smuklin , @jhonson";
-//		String relatedTo = "smith11<break>smith12<break>smith15";
-//		String priority = "High";
-//		String status = "Not Started";
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//		String updatedRelatedToVerifyForDetails = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName);
-//		String updatedRelatedToVerify = updatedRelatedToVerifyForDetails + "<break>"
-//				+ "Mutual Fund<break>Ispro Deal<break>Litz<break>Maxtra<break>FCR 3<break>Theme A<break>Theme B<break>Theme C<break>Golden Ret<break>Smuklin";
-//
-//		String followUptask1SubjectName = "Task 14.1";
-//		String followUpAdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy",
-//				Integer.parseInt("0"));
-//		String followUpgetAdvanceDueDate = followUpAdvanceDueDate;
-//		String followUpStatus = "In Progress";
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyForDetails } };
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
-//
-//		String[][] followUptask1 = { { AMNNR_TaskLabel1, followUptask1SubjectName },
-//				{ AMNNR_TaskLabel5, followUpStatus }, { AMNNR_TaskLabel4, followUpgetAdvanceDueDate } };
-//
-//		String[][] followUptask1BasicSectionVerification = { { AMNNR_TaskLabel1, followUptask1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] followUptask1AdvancedSectionVerification = { { AMNNR_TaskLabel4, followUpgetAdvanceDueDate },
-//				{ AMNNR_TaskLabel5, followUpStatus }, { AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
-//
-//		String[] SuggestedTags = "Mutual Fund<break>Ispro Deal<break>Litz<break>Maxtra<break>FCR 3<break>Theme A<break>Theme B<break>Theme C<break>Golden Ret<break>Smuklin"
-//				.split("<break>", -1);
-//		String[][] createNewRecordPopUp = {
-//				"checked<break>jhonson<break><AsItIs><break>Contact<break><break>Create".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = { "allRecords<break>smith11<break><break>Add".split("<break>") };
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"allRecords<break>smith11<break><break>Add".split("<break>") };
-//
-//		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
-//				task1BasicSectionVerificationForDetailsSection, task1AdvancedSection };
-
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, "Funds", recordName, null)) {
@@ -19796,9 +18681,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-//					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -19878,9 +18760,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "not able to click on " + followUptask1SubjectName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-//					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR,
@@ -19925,8 +18804,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String recordName = "WARBUG";
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("2"));
 		String getAdvanceDueDate = AdvanceDueDate;
-
-//		String notes = "@Jhon<break>@Max<Section>Hi @Jhon and @Max doing so far";
 
 		String task1SubjectName = "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated  nsuser firm record 1608 updated";
 		String task1Notes = "Jasbinder singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdgg"
@@ -20052,9 +18929,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-//					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -20097,9 +18971,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1Notes = AMNNR_Notes54;
 
 		String getAdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT-08:00", "M/d/yyyy", Integer.parseInt("0"));
-
-		String priority = AMNNR_AdvancePriority54;
-		String status = AMNNR_AdvanceStatus54;
 
 		String taskSectionSubject = AMNNR_TaskSubject54;
 		String taskSectionStatus = AMNNR_TaskStatus54;
@@ -20167,8 +19038,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		;
 		String task1Notes = AMNNR_Notes65;
 		String relatedTo = AMNNR_RelatedTo65;
-		String priority = AMNNR_AdvancePriority65;
-		String status = AMNNR_AdvanceStatus65;
+
 		String classification = AMNNR_Classification65;
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
@@ -20179,26 +19049,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String task1ButtonName = AMNNR_ActivityType142;
 		String recordName = AMNNR_FirmLegalName1;
-
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Prepare Invoice";
-//		String task1Notes = "";
-//		String relatedTo = "Houlihan Lokey<break>Glomez";
-//		String priority = "Normal";
-//		String status = "Not Started";
-//		String classification = "A";
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, classification } };
-//
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "Sumo Logic";
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
@@ -20215,7 +19065,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSection, task1AdvancedSection, IconType.Call,
 							PageName.TaskPage);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -20317,8 +19167,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1SubjectName = AMNNR_Subject66 + " " + AMNNR_ActivityType54;
 		String task1Notes = AMNNR_Notes66;
 		String relatedTo = AMNNR_RelatedTo66;
-		String priority = AMNNR_AdvancePriority66;
-		String status = AMNNR_AdvanceStatus66;
+
 		String classification = AMNNR_Classification66;
 		String task1NotesVerify = task1Notes.split("<Section>", -1)[1].replace("@", "");
 
@@ -20338,37 +19187,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate },
 				{ AMNNR_CallLabel8, classification } };
 
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "Sumo Logic";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("-1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Send Invoice Tagged";
-//		String task1Notes = "@Max<break>@James<Section>This is to take into consideration about @Max and @James should be linked in the task";
-//		String relatedTo = "Houlihan Lokey<break>Glomez";
-//		String priority = "Normal";
-//		String status = "Completed";
-//		String classification = "B";
-//		String task1NotesVerify = task1Notes.split("<Section>", -1)[1].replace("@", "");
-//
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + "Max<break>James";
-//
-//		String[] SuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = { "addContactsToDealTeamPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"addContactsToFundraisingPopUpShouldNotThere".split("<break>") };
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, classification } };
-
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
 			log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
@@ -20387,7 +19205,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.TaskPage);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -20444,8 +19262,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.ERROR, "not able to click on " + task1SubjectName, YesNo.No);
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -20493,8 +19310,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1SubjectName = AMNNR_Subject68 + " " + AMNNR_ActivityType54;
 		String task1Notes = AMNNR_Notes68;
 		String relatedTo = AMNNR_RelatedTo68;
-		String priority = AMNNR_AdvancePriority68;
-		String status = AMNNR_AdvanceStatus68;
+
 		String classification = AMNNR_Classification68;
 		String task1NotesVerify = task1Notes.replace("@", "");
 
@@ -20521,46 +19337,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][][] detailSectionVerifcation = { { { AMNNR_CallLabel1, task1SubjectName } },
 				task1BasicSectionVerificationForDetailsSection, task1AdvancedSection };
 
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = AMNNR_FirmLegalName4;
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("-1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Send Letter Not Tagged";
-//		String task1Notes = "This is to check Con 2 , Con 3 , Logic should be the part of the kind";
-//		String relatedTo = "Houlihan Lokey<break>Glomez";
-//		String priority = "Normal";
-//		String status = "Completed";
-//		String classification = "A";
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//
-//		String updatedRelatedToVerifyBeforeTagging = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName);
-//
-//		String updatedRelatedToVerify = updatedRelatedToVerifyBeforeTagging + "<break>"
-//				+ "con 2<break>con 3<break>Sumo Kind<break>Sumo Logic";
-//
-//		String[] SuggestedTags = "con 2==Contact<break>con 3==Contact<break>Sumo Kind==Firm<break>Sumo Logic==Firm"
-//				.split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = { "addContactsToDealTeamPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"addContactsToFundraisingPopUpShouldNotThere".split("<break>") };
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyBeforeTagging } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, classification } };
-//		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
-//				task1BasicSectionVerificationForDetailsSection, task1AdvancedSection };
-
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
 			log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
@@ -20579,7 +19355,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.TaskPage);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -20636,8 +19412,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.ERROR, "not able to click on " + task1SubjectName, YesNo.No);
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -20685,8 +19460,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1SubjectName = AMNNR_Subject70 + " " + AMNNR_ActivityType54;
 		String task1Notes = AMNNR_Notes143;
 		String relatedTo = AMNNR_RelatedTo70;
-		String priority = AMNNR_AdvancePriority70;
-		String status = AMNNR_AdvanceStatus70;
+
 		String updatedRelatedToVerify = relatedTo + AMNNR_RelatedTo143 + recordName;
 		String task1NotesVerify = task1Notes.replace("@", "");
 
@@ -20699,52 +19473,16 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp143.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp144.split("<break>", -1), AMNNR_CreateNewRecordPopUp145.split("<break>", -1) };
+				AMNNR_CreateNewRecordPopUp144.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp145.split("<break>", -1) };
 		String firmRecord1 = AMNNR_CreateNewRecordPopUp143.split("<break>", -1)[1];
 		String firmRecord2 = AMNNR_CreateNewRecordPopUp145.split("<break>", -1)[1];
-		String firmRecord3ShouldNotThere = AMNNR_FirmLegalName14;
+		String firmRecord3ShouldNotThere = AMNNR_FirmLegalName16;
 		String contactRecord = AMNNR_CreateNewRecordPopUp144.split("<break>", -1)[1];
 		String subTabName = "Details";
 
 		String[] labelAndValueSeprateByBreak1 = { AMNNR_DetailPageRecord1 };
 		String[] labelAndValueSeprateByBreak2 = { AMNNR_DetailPageRecord2 };
-
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = AMNNR_FirmLegalName4;
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("-1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "IntroductionNewRecordPopup";
-//		String task1Notes = "This is to check @Alaksa ahemd and @Bruno ecostic , quest should be part of the deal, @ahemd and @ecostic";
-//		String relatedTo = "Houlihan Lokey<break>Glomez";
-//		String priority = "Normal";
-//		String status = "Completed";
-//		String updatedRelatedToVerify = relatedTo + "<break>Alaska<break>Bruno<break>" + recordName;
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = {
-//				"checked<break>Alaksa<break><AsItIs><break>Firm<break><break>Create".split("<break>", -1),
-//				"checked<break>Bruno<break><AsItIs><break>Contact<break>Alaksa<break>Create".split("<break>", -1),
-//				"checked<break>ecostic<break><AsItIs><break>Firm<break>Private Equity<break>Create".split("<break>",
-//						-1) };
-//		String firmRecord1 = "Alaksa";
-//		String firmRecord2 = "ecostic";
-//		String firmRecord3ShouldNotThere = "ahemd";
-//		String contactRecord = "Bruno";
-//		String subTabName = "Details";
-//
-//		String[] labelAndValueSeprateByBreak1 = { "Record Type" + "<break>" + "Company" };
-//		String[] labelAndValueSeprateByBreak2 = { "Record Type" + "<break>" + "Private Equity" };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -20764,7 +19502,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 					CommonLib.refresh(driver);
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.AcuityDetails);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -20830,7 +19568,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 					CommonLib.refresh(driver);
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.AcuityDetails);
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
 						log(LogStatus.PASS,
@@ -20914,7 +19652,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 					CommonLib.refresh(driver);
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.AcuityDetails);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -20950,7 +19688,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.TaskPage);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -20969,8 +19707,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -21016,8 +19752,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1SubjectName = AMNNR_Subject73 + " " + AMNNR_ActivityType54;
 		String task1Notes = AMNNR_Notes146;
 		String relatedTo = AMNNR_RelatedTo73;
-		String priority = AMNNR_AdvancePriority73;
-		String status = AMNNR_AdvanceStatus73;
+
 		String updatedRelatedToVerify = relatedTo + AMNNR_RelatedTo146 + recordName;
 		String task1NotesVerify = task1Notes.replace("@", "");
 
@@ -21038,39 +19773,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[] labelAndValueSeprateByBreakForContact = { AMNNR_DetailPageRecord3 + "<break>" + firmRecord1 };
 		String[][] relatedAssociationNotContains = { { AMNNR_CallLabel3, firmRecord1 } };
 
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = AMNNR_FirmLegalName4;
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("0"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Pitching";
-//		String task1Notes = "This is to check @ahmed and @ecostic , quest should be part of the deal";
-//		String relatedTo = "Houlihan Lokey<break>Glomez";
-//		String priority = "Normal";
-//		String status = "In Progress";
-//		String updatedRelatedToVerify = relatedTo + "<break>ahmed<break>" + recordName;
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = {
-//				"checked<break>ahmed<break><AsItIs><break>Contact<break>exrogen<break>Create".split("<break>", -1) };
-//		String firmRecord1 = "exrogen";
-//		String contactRecord = "ahmed";
-//
-//		String subTabName = "Details";
-//
-//		String[] labelAndValueSeprateByBreakForContact = { "Legal Name" + "<break>" + firmRecord1 };
-//		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, firmRecord1 } };
-
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
@@ -21090,7 +19792,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 					CommonLib.refresh(driver);
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.AcuityDetails);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -21204,8 +19906,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -21249,8 +19949,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -21312,8 +20010,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1SubjectName = AMNNR_Subject75 + " " + AMNNR_ActivityType54;
 		String task1Notes = AMNNR_Notes147;
 		String relatedTo = AMNNR_RelatedTo75;
-		String priority = AMNNR_AdvancePriority75;
-		String status = AMNNR_AdvanceStatus75;
+
 		String updatedRelatedToVerify = relatedTo + AMNNR_RelatedTo147 + recordName;
 		String task1NotesVerify = task1Notes.replace("@", "");
 
@@ -21333,61 +20030,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String subTabName = "Details";
 
 		String[] labelAndValueSeprateByBreakForContact = { AMNNR_DetailPageRecord4 + "<break>" + contactRecord,
-				AMNNR_DetailPageRecord5, AMNNR_DetailPageRecord6 };
+				AMNNR_DetailPageRecord11, AMNNR_DetailPageRecord6 };
 		String[] labelAndValueSeprateByBreakForFirm = { AMNNR_DetailPageRecord7 + "<break>" + firmRecord1,
 				AMNNR_DetailPageRecord8 };
-
-//		String contactRecordTypeList = "Contact<break>Banker";
-//		String contactRecordTypeArray[] = contactRecordTypeList.split(breakSP, -1);
-//		String[] profileForSelection = { "PE Standard User" };
-//		boolean isMakeAvailable = false;
-//		boolean isMakeDefault = true;
-//		boolean flag = false;
-//		String recordTypeDescription = "Description Record Type";
-//		String[][][] contactRecordType = {
-//				{ { recordTypeLabel.Record_Type_Label.toString(), contactRecordTypeArray[0] },
-//						{ recordTypeLabel.Description.toString(), contactRecordTypeArray[0] + recordTypeDescription },
-//						{ recordTypeLabel.Active.toString(), "" } },
-//				{ { recordTypeLabel.Record_Type_Label.toString(), contactRecordTypeArray[1] },
-//						{ recordTypeLabel.Description.toString(), contactRecordTypeArray[1] + recordTypeDescription },
-//						{ recordTypeLabel.Active.toString(), "" } } };
-//
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = AMNNR_FirmLegalName4;
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("-1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Pitching 1.1";
-//		String task1Notes = "This is to check @Owem and @AQUA quest should be part of the deal";
-//		String relatedTo = "Houlihan Lokey<break>Glomez";
-//		String priority = "Normal";
-//		String status = "Completed";
-//		String updatedRelatedToVerify = relatedTo + "<break>Owem D'souza<break>AQUA<break>" + recordName;
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = {
-//				"checked<break>Owem<break>Owem D'souza<break>Contact<break>Maxtra<existing><break>Create"
-//						.split("<break>", -1),
-//				"checked<break>AQUA<break><AsItIs><break>Firm<break><break>Create".split("<break>", -1) };
-//		String firmRecord1 = "AQUA";
-//		String contactRecord = "Owem D'souza";
-//
-//		String subTabName = "Details";
-//
-//		String[] labelAndValueSeprateByBreakForContact = { "Name" + "<break>" + contactRecord,
-//				"Contact Record Type" + "<break>" + "Contact", "Legal Name" + "<break>" + "Maxtra" };
-//		String[] labelAndValueSeprateByBreakForFirm = { "Legal Name" + "<break>" + firmRecord1,
-//				"Record Type" + "<break>" + "Company" };
 
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		for (int i = 0; i < contactRecordTypeArray.length; i++) {
@@ -21472,7 +20117,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.TaskPage);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -21491,9 +20136,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -21562,7 +20204,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 					CommonLib.refresh(driver);
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.AcuityDetails);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -21700,11 +20342,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject77 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes77;
+		String task1Notes = AMNNR_Notes149;
 		String relatedTo = AMNNR_RelatedTo77;
-		String priority = AMNNR_AdvancePriority77;
-		String status = AMNNR_AdvanceStatus77;
-		String updatedRelatedToVerify = relatedTo + AMNNR_RelatedTo78 + recordName + "<break>"
+
+		String updatedRelatedToVerify = relatedTo + AMNNR_RelatedTo149 + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 		String task1NotesVerify = task1Notes.replace("@", "");
 
@@ -21717,10 +20358,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp77.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp78.split("<break>", -1) };
-		String firmRecord1 = AMNNR_CreateNewRecordPopUp78.split("<break>", -1)[2];
-		String contactRecord = AMNNR_CreateNewRecordPopUp77.split("<break>", -1)[2];
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp149.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp150.split("<break>", -1) };
+		String firmRecord1 = AMNNR_CreateNewRecordPopUp150.split("<break>", -1)[2];
+		String contactRecord = AMNNR_CreateNewRecordPopUp149.split("<break>", -1)[2];
 
 		String subTabName = "Details";
 
@@ -21728,43 +20369,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				AMNNR_DetailPageRecord9 };
 		String[] labelAndValueSeprateByBreakForFirm = { AMNNR_DetailPageRecord7 + "<break>" + firmRecord1,
 				AMNNR_DetailPageRecord10 };
-
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = AMNNR_FirmLegalName4;
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Pitching 1.10";
-//		String task1Notes = "Had been assigned in the task with @Sqwab who belongs to @Qazx firm.";
-//		String relatedTo = "Martha<break>Vertica";
-//		String priority = "High";
-//		String status = "Not Started";
-//		String updatedRelatedToVerify = relatedTo + "<break>Mack cronto<break>Cheex<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName);
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "B" } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = {
-//				"checked<break>Sqwab<break>Mack cronto<break>Contact<break><break>Create".split("<break>", -1),
-//				"checked<break>Qazx<break>Cheex<break>Firm<break><break>Create".split("<break>", -1) };
-//		String firmRecord1 = "Cheex";
-//		String contactRecord = "Mack cronto";
-//
-//		String subTabName = "Details";
-//
-//		String[] labelAndValueSeprateByBreakForContact = { "Name" + "<break>" + contactRecord,
-//				"Legal Name<break>Dummy Account" };
-//		String[] labelAndValueSeprateByBreakForFirm = { "Legal Name" + "<break>" + firmRecord1,
-//				"Record Type<break>Company" };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
@@ -21781,7 +20385,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.TaskPage);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -21800,9 +20404,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -21870,7 +20471,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 					CommonLib.refresh(driver);
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.AcuityDetails);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -21965,13 +20566,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject79 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes79;
+		String task1Notes = AMNNR_Notes151;
 		String relatedTo = AMNNR_RelatedTo79;
-		String priority = AMNNR_AdvancePriority79;
-		String status = AMNNR_AdvanceStatus79;
+
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
-		String updatedRelatedToNotContainsVerify = AMNNR_RelatedTo80;
+		String updatedRelatedToNotContainsVerify = AMNNR_RelatedTo151;
 		String task1NotesVerify = task1Notes.replace("@", "");
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
@@ -21983,47 +20583,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp79.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp80.split("<break>", -1) };
-		String record1 = AMNNR_CreateNewRecordPopUp79.split("<break>", -1)[1];
-		String record2 = AMNNR_CreateNewRecordPopUp80.split("<break>", -1)[1];
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp151.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp152.split("<break>", -1) };
+		String record1 = AMNNR_CreateNewRecordPopUp151.split("<break>", -1)[1];
+		String record2 = AMNNR_CreateNewRecordPopUp152.split("<break>", -1)[1];
 
 		String[][] relatedAssociationNotContains = { { AMNNR_CallLabel3, updatedRelatedToNotContainsVerify } };
-
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = AMNNR_FirmLegalName4;
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Pitching 1.2";
-//		String task1Notes = "Had been assigned in the task with @SqwabNew who belongs to @QazxNew firm.";
-//		String relatedTo = "Martha<break>Vertica";
-//		String priority = "High";
-//		String status = "Not Started";
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName);
-//		String updatedRelatedToNotContainsVerify = "SqwabNew<break>QazxNew";
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "C" } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = {
-//				"checked<break>SqwabNew<break><Error>Complete this field.<break>Contact<break><break>Ignore"
-//						.split("<break>", -1),
-//				"checked<break>QazxNew<break><Error>Complete this field.<break>Firm<break><break>Ignore"
-//						.split("<break>", -1) };
-//		String record1 = "SqwabNew";
-//		String record2 = "QazxNew";
-//
-//		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
@@ -22040,7 +20605,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.TaskPage);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -22059,9 +20624,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -22206,13 +20768,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject81 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes81;
+		String task1Notes = AMNNR_Notes153;
 		String relatedTo = AMNNR_RelatedTo81;
 		String priority = AMNNR_AdvancePriority81;
 		String status = AMNNR_AdvanceStatus81;
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_SuggestedTag81;
-		String updatedRelatedToNotContainsVerify = AMNNR_RelatedTo82;
+		String updatedRelatedToNotContainsVerify = AMNNR_RelatedTo153;
 		String task1NotesVerify = task1Notes.replace("@", "");
 		String[] SuggestedTags = AMNNR_SuggestedTag81.split("<break>", -1);
 
@@ -22225,83 +20787,20 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp81.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp82.split("<break>", -1), AMNNR_CreateNewRecordPopUp83.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp84.split("<break>", -1), AMNNR_CreateNewRecordPopUp85.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp86.split("<break>", -1), AMNNR_CreateNewRecordPopUp87.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp88.split("<break>", -1), AMNNR_CreateNewRecordPopUp89.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp90.split("<break>", -1), AMNNR_CreateNewRecordPopUp91.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp92.split("<break>", -1), AMNNR_CreateNewRecordPopUp93.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp94.split("<break>", -1) };
-		String firmRecord1 = AMNNR_CreateNewRecordPopUp88.split("<break>", -1)[1];
-		String firmRecord2 = AMNNR_CreateNewRecordPopUp92.split("<break>", -1)[1];
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp153.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp154.split("<break>", -1), AMNNR_CreateNewRecordPopUp155.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp156.split("<break>", -1), AMNNR_CreateNewRecordPopUp157.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp158.split("<break>", -1), AMNNR_CreateNewRecordPopUp159.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp160.split("<break>", -1), AMNNR_CreateNewRecordPopUp161.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp162.split("<break>", -1), AMNNR_CreateNewRecordPopUp163.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp164.split("<break>", -1), AMNNR_CreateNewRecordPopUp165.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp166.split("<break>", -1) };
+		String firmRecord1 = AMNNR_CreateNewRecordPopUp160.split("<break>", -1)[1];
+		String firmRecord2 = AMNNR_CreateNewRecordPopUp164.split("<break>", -1)[1];
 
 		boolean flag = false;
 
 		String[][] relatedAssociationNotContains = { { AMNNR_CallLabel3, updatedRelatedToNotContainsVerify } };
-
-//		
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "Max";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("0"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Lineup announcement";
-//		String task1Notes = "Had a good talk with Litz regarding @THECARLYLEGROUP , @WARBUG ,  @PINCUS , @BAINCAPITAL , @TPGGROWTH CAPITAL , @CVCCAPITALPARTNERS , @THEBLACKSTONEGROUP , @KKR&COMPANY , @EVERSTONECAPITAL , @BARINGPRIVATEEQUITY , @CLSACAPITALPARTNERS , @KOTAKPRIVATEEQUITY , @CHRYSCAPITAL , @TRUENORTH’SINDIAVALUEFUND , @CHRYSCAPITALNEW";
-//		String relatedTo = "Martha<break>Vertica<break>Sumo Logic";
-//		String priority = "Normal";
-//		String status = "In Progress";
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + "Litz";
-//		String updatedRelatedToNotContainsVerify = "THECARLYLEGROUP<break>WARBUG<break>PINCUS<break>BAINCAPITAL<break>TPGGROWTH<break>CVCCAPITALPARTNERS<break>THEBLACKSTONEGROUP<break>KKR&COMPANY<break>EVERSTONECAPITAL<break>BARINGPRIVATEEQUITY<break>CLSACAPITALPARTNERS<break>CHRYSCAPITAL<break>TRUENORTH’SINDIAVALUEFUND<break>CHRYSCAPITALNEW";
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//		String[] SuggestedTags = "Litz".split("<break>", -1);
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = {
-//				"checked<break>THECARLYLEGROUP<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>WARBUG<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>PINCUS<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>BAINCAPITAL<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>TPGGROWTH<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>CVCCAPITALPARTNERS<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>THEBLACKSTONEGROUP<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>KKR&COMPANY<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>EVERSTONECAPITAL<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>BARINGPRIVATEEQUITY<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>CLSACAPITALPARTNERS<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>CHRYSCAPITAL<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>TRUENORTH’SINDIAVALUEFUND<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1),
-//				"checked<break>CHRYSCAPITALNEW<break><AsItIs><break>Firm<break><Default>Institution<break>Create"
-//						.split("<break>", -1) };
-//		String firmRecord1 = "KKR&COMPANY";
-//		String firmRecord2 = "CHRYSCAPITAL";
-//
-//		boolean flag = false;
-//
-//		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify } };
 
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (home.clickOnSetUpLink()) {
@@ -22364,7 +20863,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								YesNo.No);
 
 						ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-								task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+								task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 								PageName.TaskPage);
 
 						if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -22383,9 +20882,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 						}
 
-//						driver.close();
-//						driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-						CommonLib.ThreadSleep(4000);
 					} else {
 
 						log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -22480,6 +20976,46 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 			}
 
+			lp.CRMlogout();
+			ThreadSleep(5000);
+			lp.CRMLogin(superAdminUserName, adminPassword);
+			if (home.clickOnSetUpLink()) {
+
+				String parentID = switchOnWindow(driver);
+				if (parentID != null) {
+
+					if (sp.searchStandardOrCustomObject(projectName, mode, object.Profiles)) {
+						log(LogStatus.INFO, "Profile has been open", YesNo.Yes);
+
+						if (sp.defaultRecordTypeSelect("PE Standard User", "Account", "Company")) {
+							log(LogStatus.INFO,
+									"-----The record type of Account has been selected to: " + "Company" + "-----",
+									YesNo.No);
+
+						} else {
+							log(LogStatus.ERROR,
+									"-----The record type of Account has not been selected to: " + "Company" + "-----",
+									YesNo.No);
+							sa.assertTrue(false,
+									"-----The record type of Account has not been selected to: " + "Company" + "-----");
+						}
+					} else {
+						log(LogStatus.ERROR, "Not Able to Search the " + object.Profiles + " object", YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Search the Object" + object.Profiles + " object");
+					}
+
+					driver.close();
+					driver.switchTo().window(parentID);
+					switchToDefaultContent(driver);
+				} else {
+					log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+					sa.assertTrue(false, "could not find new window to switch");
+				}
+			} else {
+				log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
+				sa.assertTrue(false, "could not click on setup link");
+			}
+
 		} else {
 			log(LogStatus.ERROR, "-----Not able to Select Default record Type, So not able to proceed further-----",
 					YesNo.No);
@@ -22507,15 +21043,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject95 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes95;
+		String task1Notes = AMNNR_Notes167;
 		String relatedTo = AMNNR_RelatedTo95;
-		String priority = AMNNR_AdvancePriority95;
-		String status = AMNNR_AdvanceStatus95;
+
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_SuggestedTag95;
 		String updatedRelatedToNotContainsVerify = "";
 		for (int i = 1; i <= 51; i++) {
-			updatedRelatedToNotContainsVerify = updatedRelatedToNotContainsVerify + AMNNR_RelatedTo96 + i + "<break>";
+			updatedRelatedToNotContainsVerify = updatedRelatedToNotContainsVerify + AMNNR_RelatedTo167 + i + "<break>";
 			if (i == 51)
 				updatedRelatedToNotContainsVerify = updatedRelatedToNotContainsVerify.substring(0,
 						(updatedRelatedToNotContainsVerify.length() - 7));
@@ -22536,7 +21071,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		for (int i = 1; i <= 51; i++) {
 
-			String temp = AMNNR_CreateNewRecordPopUp95 + i + AMNNR_CreateNewRecordPopUp96;
+			String temp = AMNNR_CreateNewRecordPopUp167 + i + AMNNR_CreateNewRecordPopUp96;
 			createRecordPopupRecordsList.add(temp.split("<break>", -1));
 
 		}
@@ -22549,68 +21084,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		}
 
 		System.out.println(createNewRecordPopUp.length);
-		String contactRecord1 = AMNNR_RelatedTo96 + (new Random().nextInt(51) + 1);
-		String contactRecord2 = AMNNR_RelatedTo96 + (new Random().nextInt(51) + 1);
+		String contactRecord1 = AMNNR_RelatedTo167 + (new Random().nextInt(51) + 1);
+		String contactRecord2 = AMNNR_RelatedTo167 + (new Random().nextInt(51) + 1);
 
 		System.out.println(contactRecord1);
 		System.out.println(contactRecord2);
 
 		String[][] relatedAssociationNotContains = { { AMNNR_CallLabel3, updatedRelatedToNotContainsVerify } };
-
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = AMNNR_Contact3;
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("0"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Lineup announcement 2";
-//		String task1Notes = "Had a good talk with Litz regarding @smith1 @smith2 @smith3 @smith4 @smith5 @smith6 @smith7 @smith8  @smith9 @smith10 @smith11 @smith12 @smith13 @smith14 @smith15 @smith16 @smith17 @smith18 @smith19 @smith20 @smith21 @smith22 @smith23 @smith24 @smith25 @smith26 @smith27 @smith28 @smith29 @smith30 @smith31 @smith32 @smith33 @smith34 @smith35 @smith36 @smith37 @smith38 @smith39 @smith40 @smith41 @smith42 @smith43 @smith44 @smith45 @smith46 @smith47 @smith48 @smith49 @smith50 @smith51";
-//		String relatedTo = "Martha<break>Vertica<break>Sumo Logic";
-//		String priority = "Normal";
-//		String status = "In Progress";
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + "Litz";
-//		String updatedRelatedToNotContainsVerify = "";
-//		for (int i = 1; i <= 51; i++) {
-//			updatedRelatedToNotContainsVerify = updatedRelatedToNotContainsVerify + "smith" + i + "<break>";
-//			if (i == 51)
-//				updatedRelatedToNotContainsVerify = updatedRelatedToNotContainsVerify.substring(0,
-//						(updatedRelatedToNotContainsVerify.length() - 7));
-//		}
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//		String[] SuggestedTags = "Litz".split("<break>", -1);
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		ArrayList<String[]> createRecordPopupRecordsList = new ArrayList<String[]>();
-//
-//		for (int i = 1; i <= 51; i++) {
-//
-//			String temp = "checked<break>smith" + i
-//					+ "<break><AsItIs><break>Contact<break>Maxjonic<existing><break>Create";
-//			createRecordPopupRecordsList.add(temp.split("<break>", -1));
-//
-//		}
-//
-//		Integer createRecordPopupRecordsListSize = createRecordPopupRecordsList.size();
-//		String[][] createNewRecordPopUp = new String[createRecordPopupRecordsListSize][];
-//		for (int i = 0; i < createRecordPopupRecordsListSize; i++) {
-//			createNewRecordPopUp[i] = createRecordPopupRecordsList.get(i);
-//
-//		}
-//
-//		System.out.println(createNewRecordPopUp.length);
-//		String contactRecord1 = "smith2";
-//		String contactRecord2 = "smith51";
-//
-//		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -22628,7 +21108,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.TaskPage);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -22647,9 +21127,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -22769,10 +21246,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject97 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes97;
+		String task1Notes = AMNNR_Notes168;
 		String relatedTo = AMNNR_RelatedTo97;
-		String priority = AMNNR_AdvancePriority97;
-		String status = AMNNR_AdvanceStatus97;
+
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 		String updatedRelatedToNotContainsVerify = BP.matcherOfAtTheRate(task1Notes);
@@ -22789,13 +21265,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp97.split("<break>", -1) };
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp168.split("<break>", -1) };
 
-		String updatedNotesOfTask = AMNNR_Notes98;
+		String updatedNotesOfTask = AMNNR_Notes169;
 		String[][] task1UpdateBasicSection = { { AMNNR_CallLabel2, updatedNotesOfTask } };
 
-		String[][] updateCreateNewRecordPopUp = { AMNNR_CreateNewRecordPopUp98.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp99.split("<break>", -1), AMNNR_CreateNewRecordPopUp100.split("<break>", -1) };
+		String[][] updateCreateNewRecordPopUp = { AMNNR_CreateNewRecordPopUp169.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp170.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp171.split("<break>", -1) };
 
 		String updatedRelatedToAfterUpdate = BP.matcherOfAtTheRate(updatedNotesOfTask);
 		String updatedRelatedToVerifyAfterUpdate = updatedRelatedToVerify + "<break>" + updatedRelatedToAfterUpdate;
@@ -22805,54 +21282,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_CallLabel3, updatedRelatedToVerifyAfterUpdate } };
 
 		String[][] relatedAssociationNotContains = { { AMNNR_CallLabel3, updatedRelatedToNotContainsVerify } };
-
-//		
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "Acc 1";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("0"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 1";
-//		String task1Notes = "Had been assigned in task with @jenkins who belongs to @MAVEN firm Acc .";
-//		String relatedTo = "Martha<break>Vertica";
-//		String priority = "Normal";
-//		String status = "In Progress";
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName);
-//		String updatedRelatedToNotContainsVerify = BP.matcherOfAtTheRate(task1Notes);
-//
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//		String[] SuggestedTags = "Cancel".split("<break>", -1);
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = {
-//				"checked<break>jenkins<break><AsItIs><break>Firm<break><break>Ignore".split("<break>", -1) };
-//
-//		String updatedNotesOfTask = "Had been assigned in the task with @jenkins @williams who belongs to @MAVEN firm";
-//		String[][] task1UpdateBasicSection = { { AMNNR_TaskLabel2, updatedNotesOfTask } };
-//
-//		String[][] updateCreateNewRecordPopUp = {
-//				"checked<break>jenkins<break><AsItIs><break>Contact<break><break>Create".split("<break>", -1),
-//				"checked<break>williams<break><AsItIs><break>Contact<break><break>Create".split("<break>", -1),
-//				"checked<break>MAVEN<break><AsItIs><break>Contact<break><break>Create".split("<break>", -1) };
-//
-//		String updatedRelatedToAfterUpdate = BP.matcherOfAtTheRate(updatedNotesOfTask);
-//		String updatedRelatedToVerifyAfterUpdate = updatedRelatedToVerify + "<break>" + updatedRelatedToAfterUpdate;
-//
-//		String[][] task1BasicSectionVerificationAfterUpdate = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, updatedNotesOfTask.replace("@", "") },
-//				{ AMNNR_TaskLabel3, updatedRelatedToVerifyAfterUpdate } };
-//
-//		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -22870,7 +21299,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.TaskPage);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -22984,7 +21413,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 							ArrayList<String> subjectLinkPopUpNegativeResult2 = BP.verifySubjectLinkPopUpOnIntraction(
 									driver, task1SubjectName, task1BasicSectionVerificationAfterUpdate,
-									task1AdvancedSection, IconType.Task, PageName.TaskPage);
+									task1AdvancedSection, IconType.Call, PageName.TaskPage);
 
 							if (subjectLinkPopUpNegativeResult2.isEmpty()) {
 								log(LogStatus.PASS,
@@ -23027,9 +21456,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -23072,15 +21498,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject101 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes101;
-		String relatedTo = AMNNR_RelatedTo101;
-		String priority = AMNNR_AdvancePriority101;
-		String status = AMNNR_AdvanceStatus101;
+		String task1Notes = AMNNR_Notes172;
+		String relatedTo = AMNNR_RelatedTo172;
+
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_RelatedTo102;
+				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_RelatedTo173;
 
 		String task1NotesVerify = task1Notes.split("<Section>", -1)[1].replace("@", "");
-		String[] SuggestedTags = AMNNR_SuggestedTag101.split("<break>", -1);
+		String[] SuggestedTags = AMNNR_SuggestedTag172.split("<break>", -1);
 
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp101.split("<break>") };
 
@@ -23092,34 +21517,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
-
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "Nexus";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 2";
-//		String task1Notes = "@Mack cronto<break>@Cheex<Section>Had been assigned in task with @Mack cronto who belongs to , @Cheex firm also need to check on Maven";
-//		String relatedTo = "Martha<break>Vertica<break>jenkins<break>williams";
-//		String priority = "High";
-//		String status = "Not Started";
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + "MAVEN<break>Mack cronto<break>Cheex";
-//
-//		String task1NotesVerify = task1Notes.split("<Section>", -1)[1].replace("@", "");
-//		String[] SuggestedTags = "MAVEN".split("<break>", -1);
-//
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "C" } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -23137,7 +21534,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.TaskPage);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -23194,9 +21591,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.ERROR, "not able to click on " + task1SubjectName, YesNo.No);
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
-
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 
 				} else {
 
@@ -23235,16 +21629,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String task1ButtonName = AMNNR_ActivityType142;
-		String recordName = AMNNR_FirmLegalName13;
+		String recordName = AMNNR_FirmLegalName15;
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
 
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject103 + " " + AMNNR_ActivityType54;
 		String task1Notes = AMNNR_Notes103;
-		String relatedTo = AMNNR_RelatedTo103;
-		String priority = AMNNR_AdvancePriority103;
-		String status = AMNNR_AdvanceStatus103;
+		String relatedTo = AMNNR_RelatedTo174;
+
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 
@@ -23262,34 +21655,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp103.split("<break>") };
 
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "THECARLYLEGROUP";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 4";
-//		String task1Notes = "Contact having email id : Dealroom1.3+mst@gmail.com, Phone : 9889767655 , Fax :8767653 enagaged  with firm Maven and having stage of the LOI";
-//		String relatedTo = "Martha<break>Vertica<break>jenkins<break>williams";
-//		String priority = "High";
-//		String status = "Not Started";
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName);
-//
-//		String task1NotesVerify = task1Notes;
-//		String[] SuggestedTags = "Cancel".split("<break>", -1);
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
@@ -23306,7 +21671,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.TaskPage);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -23364,9 +21729,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -23404,16 +21766,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String task1ButtonName = AMNNR_ActivityType142;
-		String recordName = AMNNR_FirmLegalName13;
+		String recordName = AMNNR_FirmLegalName15;
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
 
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject104 + " " + AMNNR_ActivityType54;
 		String task1Notes = AMNNR_Notes104;
-		String relatedTo = AMNNR_RelatedTo104;
-		String priority = AMNNR_AdvancePriority104;
-		String status = AMNNR_AdvanceStatus104;
+		String relatedTo = AMNNR_RelatedTo175;
+
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 
@@ -23442,48 +21803,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][][] detailSectionVerifcation = { { { AMNNR_CallLabel1, task1SubjectName } },
 				task1BasicSectionVerification, task1AdvancedSection };
 
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "THECARLYLEGROUP";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 5";
-//		String task1Notes = AMNNR_Notes33;
-//		String relatedTo = "Martha<break>Vertica<break>jenkins<break>williams";
-//		String priority = "High";
-//		String status = "Not Started";
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName);
-//
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//		String[] SuggestedTags = "Con 1<break>con 2<break>con 3<break>con 4<break>con 5<break>con 6<break>con 7<break>con 8<break>con 9<break>con 10<break>con 11<break>con 12<break>con 13<break>con 14<break>con 15<break>con 16<break>con 17<break>con 18<break>con 19<break>con 20<break>con 21<break>con 22<break>con 23<break>con 24<break>con 25<break>con 26<break>con 27<break>con 28<break>con 29<break>con 30<break>con 31<break>con 32<break>con 33<break>con 34<break>con 35<break>con 36<break>con 37<break>con 38<break>con 39<break>con 40<break>con 41<break>con 42<break>con 43<break>con 44<break>con 45<break>con 46<break>con 47<break>con 48<break>con 49<break>con 50<break>Acc 1<break>Acc 2<break>Acc 3<break>Acc 4<break>Acc 5<break>Acc 6<break>Acc 7<break>Acc 8<break>Acc 9<break>Acc 10<break>Acc 11<break>Acc 12<break>Acc 13"
-//				.split("<break>", -1);
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String updatedRelatedToNotContainsVerify = "Con 1<break>con 2<break>con 3<break>con 4<break>con 5<break>con 6<break>con 7<break>con 8<break>con 9<break>con 10<break>con 11<break>con 12<break>con 13<break>con 14<break>con 15<break>con 16<break>con 17<break>con 18<break>con 19<break>con 20<break>con 21<break>con 22<break>con 23<break>con 24<break>con 25<break>con 26<break>con 27<break>con 28<break>con 29<break>con 30<break>con 31<break>con 32<break>con 33<break>con 34<break>con 35<break>con 36<break>con 37<break>con 38<break>con 39<break>con 40<break>con 41<break>con 42<break>con 43<break>con 44<break>con 45<break>con 46<break>con 47<break>con 48<break>con 49<break>con 50<break>Acc 1<break>Acc 2<break>Acc 3<break>Acc 4<break>Acc 5<break>Acc 6<break>Acc 7<break>Acc 8<break>Acc 9<break>Acc 10<break>Acc 11<break>Acc 12<break>Acc 13";
-//		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify } };
-//		String[] updatedSuggestedTags = "Con 1<break>con 2<break>con 3<break>con 4<break>con 5<break>con 6<break>con 7<break>con 8<break>con 9<break>con 10<break>con 11<break>con 12<break>con 13<break>con 14<break>con 15<break>con 16<break>con 17<break>con 18<break>con 19<break>con 20<break>con 21<break>con 22<break>con 23<break>con 24<break>con 25<break>con 26<break>con 27<break>con 28<break>con 29<break>con 30<break>con 31<break>con 32<break>con 33<break>con 34<break>con 35<break>con 36<break>con 37<break>con 38<break>con 39<break>con 40<break>con 41<break>con 42<break>con 43<break>con 44<break>con 45<break>con 46<break>Acc 1<break>Acc 2<break>Acc 3<break>Acc 4<break>Acc 5<break>Acc 6<break>Acc 7<break>Acc 8<break>Acc 9<break>Acc 10<break>Acc 11"
-//				.split("<break>", -1);
-//
-//		String updatedRelatedToVerifyAfterUpdate = updatedRelatedToVerify + "<break>"
-//				+ "Con 1<break>con 2<break>con 3<break>con 4<break>con 5<break>con 6<break>con 7<break>con 8<break>con 9<break>con 10<break>con 11<break>con 12<break>con 13<break>con 14<break>con 15<break>con 16<break>con 17<break>con 18<break>con 19<break>con 20<break>con 21<break>con 22<break>con 23<break>con 24<break>con 25<break>con 26<break>con 27<break>con 28<break>con 29<break>con 30<break>con 31<break>con 32<break>con 33<break>con 34<break>con 35<break>con 36<break>con 37<break>con 38<break>con 39<break>con 40<break>con 41<break>con 42<break>con 43<break>con 44<break>con 45<break>con 46<break>Acc 1<break>Acc 2<break>Acc 3<break>Acc 4<break>Acc 5<break>Acc 6<break>Acc 7<break>Acc 8<break>Acc 9<break>Acc 10<break>Acc 11";
-//
-//		String[][] task1BasicSectionVerificationAfterUpdate = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyAfterUpdate } };
-//
-//		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
-//				task1BasicSectionVerification, task1AdvancedSection };
-
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
@@ -23501,7 +21820,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.TaskPage);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -23615,7 +21934,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 							ArrayList<String> subjectLinkPopUpNegativeResult2 = BP.verifySubjectLinkPopUpOnIntraction(
 									driver, task1SubjectName, task1BasicSectionVerificationAfterUpdate,
-									task1AdvancedSection, IconType.Task, PageName.TaskPage);
+									task1AdvancedSection, IconType.Call, PageName.TaskPage);
 
 							if (subjectLinkPopUpNegativeResult2.isEmpty()) {
 								log(LogStatus.PASS,
@@ -23646,9 +21965,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -23685,21 +22001,20 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String task1ButtonName = AMNNR_ActivityType142;
-		String recordName = AMNNR_FirmLegalName13;
+		String recordName = AMNNR_FirmLegalName15;
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
 
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject106 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes106;
-		String relatedTo = AMNNR_RelatedTo106;
-		String priority = AMNNR_AdvancePriority106;
-		String status = AMNNR_AdvanceStatus106;
+		String task1Notes = AMNNR_Notes176;
+		String relatedTo = AMNNR_RelatedTo176;
+
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 
 		String task1NotesVerify = task1Notes.replace("@", "");
-		String[] SuggestedTags = AMNNR_SuggestedTag106.split("<break>", -1);
+		String[] SuggestedTags = AMNNR_SuggestedTag176.split("<break>", -1);
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
 				{ AMNNR_CallLabel3, relatedTo } };
@@ -23712,73 +22027,24 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] createNewRecordPopUp = null;
 
-		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp106.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp107.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp108.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp109.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp110.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp111.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp112.split("<break>", -1) };
+		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp176.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp177.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp178.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp179.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp180.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp181.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp182.split("<break>", -1) };
 
-		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup106.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup107.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup108.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup109.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup110.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup111.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup112.split("<break>", -1) };
+		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup176.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup177.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup178.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup179.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup180.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup181.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup182.split("<break>", -1) };
 
 		String[][][] detailSectionVerifcation = { { { AMNNR_CallLabel1, task1SubjectName } },
 				task1BasicSectionVerification, task1AdvancedSection };
-
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = "THECARLYLEGROUP";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("1"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 6";
-//		String task1Notes = "Had a good talk with smith1 smith2 smith3 smith4 smith5 about vitara deal and FCR 1";
-//		String relatedTo = "Martha<break>Vertica<break>jenkins";
-//		String priority = "High";
-//		String status = "Not Started";
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName);
-//
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//		String[] SuggestedTags = "smith1<break>smith2<break>smith3<break>smith4<break>smith5<break>Vitara Deal<break>FCR 1"
-//				.split("<break>", -1);
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "B" } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = null;
-//
-//		String[][] addContactsToDealTeamPopUp = { "checked<break>smith1<break>Partner<break>Add".split("<break>", -1),
-//				"checked<break>smith2<break>Vice President<break>Add".split("<break>", -1),
-//				"checked<break>smith3<break>Analyst<break>Add".split("<break>", -1),
-//				"checked<break>smith4<break>Accountant<break>Add".split("<break>", -1),
-//				"checked<break>smith5<break>Attorney<break>Add".split("<break>", -1),
-//				"checked<break>Martha<break>Banker<break>Add".split("<break>", -1),
-//				"checked<break>jenkins<break>Consultant<break>Add".split("<break>", -1) };
-//
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"checked<break>smith1<break>Advisor<break>Add".split("<break>", -1),
-//				"checked<break>smith2<break>Business User<break>Add".split("<break>", -1),
-//				"checked<break>smith3<break>Decision Maker<break>Add".split("<break>", -1),
-//				"checked<break>smith4<break>Evaluator<break>Add".split("<break>", -1),
-//				"checked<break>smith5<break>Executive Sponsor<break>Add".split("<break>", -1),
-//				"checked<break>Martha<break>Gatekeeper<break>Add".split("<break>", -1),
-//				"checked<break>jenkins<break>Other<break>Add".split("<break>", -1) };
-//
-//		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
-//				task1BasicSectionVerification, task1AdvancedSection };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -23807,7 +22073,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.TaskPage);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -23883,37 +22149,28 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					List<String> fundraisingContactDifference = CommonLib
 							.getDifference(afterCreateFundraisingContactList, beforeCreateFundraisingContactList);
 
-					if (dealTeamDifference.size() == 7) {
+					if (dealTeamDifference.size() == 6) {
 
 						log(LogStatus.INFO, "Same no. of Deal Team Created and i.e. " + dealTeamDifference.size(),
 								YesNo.No);
 					} else {
-						log(LogStatus.ERROR, "No. of Deal Team Created not matched, Expected size: "
-								+ addContactsToDealTeamPopUp.length + " but Actual: " + dealTeamDifference.size(),
-								YesNo.Yes);
-						BaseLib.sa.assertTrue(false, "No. of Deal Team Created not matched, Expected size: "
-								+ addContactsToDealTeamPopUp.length + " but Actual: " + dealTeamDifference.size());
+						log(LogStatus.ERROR, "No. of Deal Team Created not matched, Expected size: " + 6
+								+ " but Actual: " + dealTeamDifference.size(), YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "No. of Deal Team Created not matched, Expected size: " + 6
+								+ " but Actual: " + dealTeamDifference.size());
 					}
 
-					if (fundraisingContactDifference.size() == 7) {
+					if (fundraisingContactDifference.size() == 6) {
 
 						log(LogStatus.INFO, "Same no. of Fundraising Contacts Created and i.e. "
 								+ fundraisingContactDifference.size(), YesNo.No);
 					} else {
-						log(LogStatus.ERROR,
-								"No. of Fundraising Contacts Created not matched, Expected size: "
-										+ addContactsToFundraisingObjectPopup.length + " but Actual: "
-										+ fundraisingContactDifference.size(),
-								YesNo.Yes);
-						BaseLib.sa.assertTrue(false,
-								"No. of Fundraising Contacts Created not matched, Expected size: "
-										+ addContactsToFundraisingObjectPopup.length + " but Actual: "
-										+ fundraisingContactDifference.size());
+						log(LogStatus.ERROR, "No. of Fundraising Contacts Created not matched, Expected size: " + 6
+								+ " but Actual: " + fundraisingContactDifference.size(), YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "No. of Fundraising Contacts Created not matched, Expected size: "
+								+ 6 + " but Actual: " + fundraisingContactDifference.size());
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-//					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -23941,7 +22198,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
 	@Test
 	public void AcuityMNNRTc101_VerifyWhenCallIsCreatedWith3Deal4FundraisingAnd10ContactsAreTagged(String projectName) {
 
@@ -23950,16 +22206,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String task1ButtonName = AMNNR_ActivityType142;
-		String recordName = AMNNR_FirmLegalName13;
+		String recordName = AMNNR_FirmLegalName15;
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("0"));
 
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject113 + " " + AMNNR_ActivityType54;
 		String task1Notes = AMNNR_Notes113;
-		String relatedTo = AMNNR_RelatedTo113;
-		String priority = AMNNR_AdvancePriority113;
-		String status = AMNNR_AdvanceStatus113;
+		String relatedTo = AMNNR_RelatedTo183;
+
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 
@@ -23977,82 +22232,29 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp113.split("<break>") };
 
-		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp113.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp114.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp115.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp116.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp117.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp118.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp119.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp120.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp121.split("<break>", -1),
-				AMNNR_AddContactsToDealTeamPopUp122.split("<break>", -1) };
+		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp183.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp184.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp185.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp186.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp187.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp188.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp189.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp190.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp191.split("<break>", -1),
+				AMNNR_AddContactsToDealTeamPopUp192.split("<break>", -1) };
 
-		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup113.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup114.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup115.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup116.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup117.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup118.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup119.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup120.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup121.split("<break>", -1),
-				AMNNR_AddContactsToFundraisingPopup122.split("<break>", -1) };
+		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup183.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup184.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup185.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup186.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup187.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup188.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup189.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup190.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup191.split("<break>", -1),
+				AMNNR_AddContactsToFundraisingPopup192.split("<break>", -1) };
 
 		String[][][] detailSectionVerifcation = null;
-
-//		String task1ButtonName = AMNNR_ActivityType59;
-//		String recordName = AMNNR_FirmLegalName13;
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("0"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 7";
-//		String task1Notes = "";
-//		String relatedTo = "Martha<break>Vertica<break>jenkins<break>smith1<break>smith2<break>smith3<break>smith4<break>smith5<break>smith8<break>smith9<break>smith10<break>Vitara Deal<break>Breeza Deal<break>Conved Deal<break>FCR 1<break>FCR 2<break>FCR 3<break>FCR 4";
-//		String priority = "High";
-//		String status = "Completed";
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName);
-//
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//		String[] SuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
-//
-//		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-//				{ AMNNR_TaskLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "A" } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-//				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-//
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//
-//		String[][] addContactsToDealTeamPopUp = { "checked<break>smith1<break>Analyst<break>Add".split("<break>", -1),
-//				"checked<break>smith2<break>Analyst<break>Add".split("<break>", -1),
-//				"checked<break>smith3<break>Analyst<break>Add".split("<break>", -1),
-//				"checked<break>smith4<break>Analyst<break>Add".split("<break>", -1),
-//				"checked<break>smith5<break>Analyst<break>Add".split("<break>", -1),
-//				"checked<break>smith8<break>Analyst<break>Add".split("<break>", -1),
-//				"checked<break>smith9<break>Analyst<break>Add".split("<break>", -1),
-//				"checked<break>smith10<break>Analyst<break>Add".split("<break>", -1),
-//				"checked<break>Martha<break>Analyst<break>Add".split("<break>", -1),
-//				"checked<break>jenkins<break>Analyst<break>Add".split("<break>", -1) };
-//
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"checked<break>smith1<break>Advisor<break>Add".split("<break>", -1),
-//				"checked<break>smith2<break>Advisor<break>Add".split("<break>", -1),
-//				"checked<break>smith3<break>Advisor<break>Add".split("<break>", -1),
-//				"checked<break>smith4<break>Advisor<break>Add".split("<break>", -1),
-//				"checked<break>smith5<break>Advisor<break>Add".split("<break>", -1),
-//				"checked<break>smith8<break>Advisor<break>Add".split("<break>", -1),
-//				"checked<break>smith9<break>Advisor<break>Add".split("<break>", -1),
-//				"checked<break>smith10<break>Advisor<break>Add".split("<break>", -1),
-//				"checked<break>Martha<break>Advisor<break>Add".split("<break>", -1),
-//				"checked<break>jenkins<break>Advisor<break>Add".split("<break>", -1) };
-//
-//		String[][][] detailSectionVerifcation = null;
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -24081,7 +22283,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.TaskPage);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -24157,31 +22359,28 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					List<String> fundraisingContactDifference = CommonLib
 							.getDifference(afterCreateFundraisingContactList, beforeCreateFundraisingContactList);
 
-					if (dealTeamDifference.size() == 30) {
+					if (dealTeamDifference.size() == 21) {
 
 						log(LogStatus.INFO, "Same no. of Deal Team Created and i.e. " + dealTeamDifference.size(),
 								YesNo.No);
 					} else {
-						log(LogStatus.ERROR, "No. of Deal Team Created not matched, Expected size: " + 30
+						log(LogStatus.ERROR, "No. of Deal Team Created not matched, Expected size: " + 21
 								+ " but Actual: " + dealTeamDifference.size(), YesNo.Yes);
-						BaseLib.sa.assertTrue(false, "No. of Deal Team Created not matched, Expected size: " + 30
+						BaseLib.sa.assertTrue(false, "No. of Deal Team Created not matched, Expected size: " + 21
 								+ " but Actual: " + dealTeamDifference.size());
 					}
 
-					if (fundraisingContactDifference.size() == 40) {
+					if (fundraisingContactDifference.size() == 30) {
 
 						log(LogStatus.INFO, "Same no. of Fundraising Contacts Created and i.e. "
 								+ fundraisingContactDifference.size(), YesNo.No);
 					} else {
-						log(LogStatus.ERROR, "No. of Fundraising Contacts Created not matched, Expected size: " + 40
+						log(LogStatus.ERROR, "No. of Fundraising Contacts Created not matched, Expected size: " + 30
 								+ " but Actual: " + fundraisingContactDifference.size(), YesNo.Yes);
 						BaseLib.sa.assertTrue(false, "No. of Fundraising Contacts Created not matched, Expected size: "
-								+ 40 + " but Actual: " + fundraisingContactDifference.size());
+								+ 30 + " but Actual: " + fundraisingContactDifference.size());
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-//					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -24231,20 +22430,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][][] detailSectionVerifcation = null;
 
-//		String task1SubjectName = "Task 7";
-//
-//		String[] SuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = { "addContactsToDealTeamPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"addContactsToFundraisingPopUpShouldNotThere".split("<break>") };
-//
-//		String[][] task1BasicSection = null;
-//
-//		String[][] task1AdvancedSection = null;
-//
-//		String[][][] detailSectionVerifcation = null;
-
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		CommonLib.refresh(driver);
@@ -24280,9 +22465,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 			}
 
-//			driver.close();
-//			driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
 		} else {
 
 			log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----", YesNo.Yes);
@@ -24314,8 +22496,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1SubjectName = AMNNR_Subject124 + " " + AMNNR_ActivityType54;
 		String task1Notes = AMNNR_Notes124;
 		String relatedTo = AMNNR_RelatedTo124;
-		String priority = AMNNR_AdvancePriority124;
-		String status = AMNNR_AdvanceStatus124;
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
 				{ AMNNR_CallLabel3, relatedTo } };
@@ -24323,7 +22503,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate },
 				{ AMNNR_CallLabel8, AMNNR_Classification124 } };
 
-		String updatedRelatedTo = AMNNR_RelatedTo125;
+		String updatedRelatedTo = AMNNR_RelatedTo193;
 
 		String[] SuggestedTags = AMNNR_SuggestedTag124.split("<break>", -1);
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp124.split("<break>") };
@@ -24335,39 +22515,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] updateTask1AdvancedSection = null;
 
 		String[][][] detailSectionVerifcation = null;
-
-//		String task1ButtonName = AMNNR_ActivityType142;
-//		String recordName = "Vitara Deal";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("0"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 8";
-//		String task1Notes = "";
-//		String relatedTo = "Vertica<break>Ispro Deal<break>FCR 5";
-//		String priority = "High";
-//		String status = "Completed";
-//
-//		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
-//				{ AMNNR_CallLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate }, { AMNNR_CallLabel5, status },
-//				{ AMNNR_CallLabel6, priority }, { AMNNR_CallLabel8, "A" } };
-//
-//		String updatedRelatedTo = "smith11<break>smith12";
-//
-//		String[] SuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = { "addContactsToDealTeamPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"addContactsToFundraisingPopUpShouldNotThere".split("<break>") };
-//
-//		String[][] updateTask1BasicSection = { { AMNNR_CallLabel3, updatedRelatedTo } };
-//
-//		String[][] updateTask1AdvancedSection = null;
-//
-//		String[][][] detailSectionVerifcation = null;
-//		
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -24412,9 +22559,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -24457,9 +22601,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String task1SubjectName = AMNNR_Subject126 + " " + AMNNR_ActivityType54;
 		String task1Notes = AMNNR_Notes126;
-		String relatedTo = AMNNR_RelatedTo126;
-		String priority = AMNNR_AdvancePriority126;
-		String status = AMNNR_AdvanceStatus126;
+		String relatedTo = AMNNR_RelatedTo194;
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
 				{ AMNNR_CallLabel3, relatedTo } };
@@ -24469,40 +22611,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[] SuggestedTags = AMNNR_SuggestedTag126.split("<break>", -1);
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp126.split("<break>") };
-		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp126.split("<break>", -1) };
+		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp194.split("<break>", -1) };
 
 		String[][] addContactsToFundraisingObjectPopup = {
-				AMNNR_AddContactsToFundraisingPopup126.split("<break>", -1) };
+				AMNNR_AddContactsToFundraisingPopup194.split("<break>", -1) };
 
 		String[][][] detailSectionVerifcation = null;
-
-//		String task1ButtonName = AMNNR_ActivityType142;
-//		String recordName = "Vitara Deal";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("4"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 9";
-//		String task1Notes = "";
-//		String relatedTo = "Vertica<break>Ispro Deal<break>FCR 4<break>smith15";
-//		String priority = "Normal";
-//		String status = "Not Started";
-//
-//		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
-//				{ AMNNR_CallLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate }, { AMNNR_CallLabel5, status },
-//				{ AMNNR_CallLabel6, priority }, { AMNNR_CallLabel8, "A" } };
-//
-//		String[] SuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = {
-//				"checked<break>smith15<break>Partner<break>Cancel".split("<break>", -1) };
-//
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"checked<break>smith15<break>Advisor<break>Cancel".split("<break>", -1) };
-//
-//		String[][][] detailSectionVerifcation = null;
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -24597,14 +22711,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[] SuggestedTags = AMNNR_SuggestedTag127.split("<break>", -1);
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp127.split("<break>") };
-		String[][] addContactsToDealTeamPopUp1 = { AMNNR_AddContactsToDealTeamPopUp127.split("<break>", -1) };
+		String[][] addContactsToDealTeamPopUp1 = { AMNNR_AddContactsToDealTeamPopUp195.split("<break>", -1) };
 
 		String[][] addContactsToFundraisingObjectPopup1 = null;
 
 		String[][] addContactsToDealTeamPopUp2 = null;
 
 		String[][] addContactsToFundraisingObjectPopup2 = {
-				AMNNR_AddContactsToFundraisingPopup127.split("<break>", -1) };
+				AMNNR_AddContactsToFundraisingPopup195.split("<break>", -1) };
 
 		String[][][] detailSectionVerifcation = null;
 
@@ -24615,30 +22729,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] updateTask1BasicSection2 = { { AMNNR_CallLabel3, updatedRelatedTo2 } };
 
 		String[][] updateTask1AdvancedSection = null;
-
-//		String task1SubjectName = "Task 9";
-//
-//		String[] SuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp1 = {
-//				"checked<break>smith15<break>Analyst<break>Add".split("<break>", -1) };
-//
-//		String[][] addContactsToFundraisingObjectPopup1 = null;
-//
-//		String[][] addContactsToDealTeamPopUp2 = null;
-//
-//		String[][] addContactsToFundraisingObjectPopup2 = {
-//				"checked<break>smith15<break>Advisor<break>Add".split("<break>", -1) };
-//
-//		String[][][] detailSectionVerifcation = null;
-//
-//		String updatedRelatedTo1 = "Breeza Deal";
-//		String[][] updateTask1BasicSection1 = { { AMNNR_CallLabel3, updatedRelatedTo1 } };
-//
-//		String updatedRelatedTo2 = "FCR 1";
-//		String[][] updateTask1BasicSection2 = { { AMNNR_CallLabel3, updatedRelatedTo2 } };
-//
-//		String[][] updateTask1AdvancedSection = null;
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -24702,9 +22792,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 			}
 
-//			driver.close();
-//			driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
 		} else {
 
 			log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----", YesNo.Yes);
@@ -24767,9 +22854,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 			}
 
-//			driver.close();
-//			driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
 		} else {
 
 			log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----", YesNo.Yes);
@@ -24802,28 +22886,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][][] detailSectionVerifcation = null;
 
-		String updatedRelatedTo1 = AMNNR_RelatedTo129;
+		String updatedRelatedTo1 = AMNNR_RelatedTo196;
 		String[][] updateTask1BasicSection1 = { { AMNNR_CallLabel3, updatedRelatedTo1 } };
 
 		String[][] updateTask1AdvancedSection = null;
 		String[] updatedRemoveRelatedAssociation = AMNNR_RelatedTo130.split("<break>", -1);
-
-//		String task1SubjectName = "Task 9";
-//
-//		String[] SuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp1 = null;
-//
-//		String[][] addContactsToFundraisingObjectPopup1 = null;
-//
-//		String[][][] detailSectionVerifcation = null;
-//
-//		String updatedRelatedTo1 = "smith16";
-//		String[][] updateTask1BasicSection1 = { { AMNNR_CallLabel3, updatedRelatedTo1 } };
-//
-//		String[][] updateTask1AdvancedSection = null;
-//		String[] updatedRemoveRelatedAssociation = "Breeza Deal<break>FCR 1".split("<break>", -1);
-//		
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -24909,9 +22976,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 			}
 
-//			driver.close();
-//			driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
 		} else {
 
 			log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----", YesNo.Yes);
@@ -24940,10 +23004,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject131 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes131;
-		String relatedTo = AMNNR_RelatedTo131;
-		String priority = AMNNR_AdvancePriority131;
-		String status = AMNNR_AdvanceStatus131;
+		String task1Notes = AMNNR_Notes197;
+		String relatedTo = AMNNR_RelatedTo197;
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
 				{ AMNNR_CallLabel3, relatedTo } };
@@ -24959,34 +23021,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				AMNNR_AddContactsToFundraisingPopup131.split("<break>", -1) };
 
 		String[][][] detailSectionVerifcation = null;
-
-//		String task1ButtonName = AMNNR_ActivityType142;
-//		String recordName = "FCR 1";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("0"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 11";
-//		String task1Notes = "Had a good talk with smith1 smith2 vitara deal and FCR 1";
-//		String relatedTo = "Martha<break>Vertica<break>jenkins";
-//		String priority = "High";
-//		String status = "Not Started";
-//
-//		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
-//				{ AMNNR_CallLabel3, relatedTo } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate }, { AMNNR_CallLabel5, status },
-//				{ AMNNR_CallLabel6, priority }, { AMNNR_CallLabel8, "B" } };
-//
-//		String[] SuggestedTags = "Vitara Deal<break>FCR 2".split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = {
-//				"<break>Martha<break><break>Add<Select atleast a record>".split("<break>", -1) };
-//
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"<break>Martha<break><break>Add<Select atleast a record>".split("<break>", -1) };
-//
-//		String[][][] detailSectionVerifcation = null;
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -25034,10 +23068,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject132 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes132;
-		String relatedTo = AMNNR_RelatedTo132;
-		String priority = AMNNR_AdvancePriority132;
-		String status = AMNNR_AdvanceStatus132;
+		String task1Notes = AMNNR_Notes198;
+		String relatedTo = AMNNR_RelatedTo198;
+
 		String task1NotesVerify = task1Notes.replace("@", "");
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_RelatedTo133;
@@ -25058,41 +23091,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][][] detailSectionVerifcation = null;
 
-//		String task1ButtonName = AMNNR_ActivityType142;
-//		String recordName = "Mutual Fund";
-//		String dealRecordName = "Vitara Deal";
-//		String fundraisingRecordName = "FCR 1";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("10"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 10";
-//		String task1Notes = "Jenkins and Martha ";
-//		String relatedTo = "Martha<break>Vertica<break>jenkins";
-//		String priority = "High";
-//		String status = "Not Started";
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>"
-//				+ "Vitara Deal<break>Breeza Deal<break>Conved Deal<break>FCR 1<break>FCR 2<break>FCR 3<break>FCR 4";
-//
-//		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
-//				{ AMNNR_CallLabel3, relatedTo } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
-//				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate }, { AMNNR_CallLabel5, status },
-//				{ AMNNR_CallLabel6, priority }, { AMNNR_CallLabel8, "C" } };
-//
-//		String[] SuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = { "addContactsToDealTeamPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"addContactsToFundraisingPopUpShouldNotThere".split("<break>") };
-//
-//		String[][][] detailSectionVerifcation = null;
-
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, "Funds", recordName, null)) {
@@ -25111,7 +23109,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.TaskPage);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -25207,7 +23205,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.INFO, "Able to Open the Record: " + dealRecordName, YesNo.No);
 
 						ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(getAdvanceDueDate,
-								IconType.Task, task1SubjectName, task1NotesVerify, true, false, null, null);
+								IconType.Call, task1SubjectName, task1NotesVerify, true, false, null, null);
 						if (updatedresult.isEmpty()) {
 							log(LogStatus.PASS, "------" + task1SubjectName
 									+ " record has been verified on intraction of Record: " + dealRecordName + "------",
@@ -25233,7 +23231,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.INFO, "Able to Open the Record: " + fundraisingRecordName, YesNo.No);
 
 						ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(getAdvanceDueDate,
-								IconType.Task, task1SubjectName, task1NotesVerify, true, false, null, null);
+								IconType.Call, task1SubjectName, task1NotesVerify, true, false, null, null);
 						if (updatedresult.isEmpty()) {
 							log(LogStatus.PASS,
 									"------" + task1SubjectName + " record has been verified on intraction of Record: "
@@ -25256,9 +23254,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "Not able to Open the Record: " + fundraisingRecordName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-//					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -25307,10 +23302,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject134 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes134;
-		String relatedTo = AMNNR_RelatedTo134;
-		String priority = AMNNR_AdvancePriority134;
-		String status = AMNNR_AdvanceStatus134;
+		String task1Notes = AMNNR_Notes199;
+		String relatedTo = AMNNR_RelatedTo199;
+
 		String task1NotesVerify = task1Notes.replace("@", "");
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_RelatedTo135;
@@ -25333,42 +23327,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][][] detailSectionVerifcation = null;
 
-//		String task1ButtonName = AMNNR_ActivityType142;
-//		String recordName = "Mutual Fund";
-//		String dealRecordName = "Ispro Deal";
-//		String fundraisingRecordName = "FCR 5";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("10"));
-//
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 12";
-//		String task1Notes = "smith11 smith12 smith15";
-//		String relatedTo = "smith11<break>smith12<break>smith15";
-//		String priority = "High";
-//		String status = "Not Started";
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + "Breeza Deal<break>FCR 1";
-//
-//		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
-//				{ AMNNR_CallLabel3, relatedTo } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
-//				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate }, { AMNNR_CallLabel5, status },
-//				{ AMNNR_CallLabel6, priority }, { AMNNR_CallLabel8, "A" } };
-//
-//		String[] SuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = { "addContactsToDealTeamPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"addContactsToFundraisingPopUpShouldNotThere".split("<break>") };
-//		String updatedRelatedToNotContainsVerify = "Ispro Deal<break>FCR 5";
-//		String[][] relatedAssociationNotContains = { { AMNNR_CallLabel3, updatedRelatedToNotContainsVerify } };
-//
-//		String[][][] detailSectionVerifcation = null;
-
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, "Funds", recordName, null)) {
@@ -25387,7 +23345,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.TaskPage);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -25563,9 +23521,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "Not able to Open the Record: " + fundraisingRecordName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-//					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -25612,9 +23567,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1SubjectName = AMNNR_Subject137 + " " + AMNNR_ActivityType54;
 		String task1Notes = AMNNR_Notes137 + "@" + (crmUser2FirstName + " " + crmUser2LastName);
 
-		String priority = AMNNR_AdvancePriority137;
-		String status = AMNNR_AdvanceStatus137;
-
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes } };
 
 		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate },
@@ -25626,29 +23578,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] addContactsToFundraisingObjectPopup = null;
 
 		String[][][] detailSectionVerifcation = null;
-
-//		String task1ButtonName = AMNNR_ActivityType142;
-//		String recordName = "Con 1";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("2"));
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 13";
-//		String task1Notes = "<suggestionShouldNotThere><Section>" + "@" + (crmUser2FirstName + " " + crmUser2LastName);
-//
-//		String priority = "High";
-//		String status = "Not Started";
-//
-//		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate }, { AMNNR_CallLabel5, status },
-//				{ AMNNR_CallLabel6, priority }, { AMNNR_CallLabel8, "B" } };
-//
-//		String[] SuggestedTags = null;
-//		String[][] createNewRecordPopUp = { "Ignore".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = null;
-//		String[][] addContactsToFundraisingObjectPopup = null;
-//
-//		String[][][] detailSectionVerifcation = null;
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -25696,9 +23625,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String task1SubjectName = AMNNR_Subject138 + " " + AMNNR_ActivityType54;
 		String task1Notes = AMNNR_Notes138;
-		String relatedTo = AMNNR_RelatedTo138;
-		String priority = AMNNR_AdvancePriority138;
-		String status = AMNNR_AdvanceStatus138;
+		String relatedTo = AMNNR_RelatedTo200;
+
 		String task1NotesVerify = task1Notes.replace("@", "");
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_RelatedTo139;
@@ -25714,42 +23642,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[] SuggestedTags = AMNNR_SuggestedTag138.split("<break>", -1);
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp138.split("<break>") };
-		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp138.split("<break>") };
-		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup138.split("<break>") };
+		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp200.split("<break>") };
+		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup200.split("<break>") };
 
 		String[][][] detailSectionVerifcation = null;
-
-//		String task1ButtonName = AMNNR_ActivityType142;
-//		String recordName = "Vertix Fund";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("2"));
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 13A";
-//		String task1Notes = "Mutual Fund , Ispro Deal , Litz , Maxtra , FCR 3 , Theme A , Theme B , Theme C";
-//		String relatedTo = "smith11<break>smith12<break>smith15";
-//		String priority = "High";
-//		String status = "Not Started";
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>"
-//				+ "Mutual Fund<break>Ispro Deal<break>Litz<break>Maxtra<break>FCR 3<break>Theme A<break>Theme B<break>Theme C";
-//
-//		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
-//				{ AMNNR_CallLabel3, relatedTo } };
-//
-//		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
-//				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate }, { AMNNR_CallLabel5, status },
-//				{ AMNNR_CallLabel6, priority }, { AMNNR_CallLabel8, "B" } };
-//
-//		String[] SuggestedTags = "Mutual Fund<break>Ispro Deal<break>Litz<break>Maxtra<break>FCR 3<break>Theme A<break>Theme B<break>Theme C"
-//				.split("<break>", -1);
-//		String[][] createNewRecordPopUp = { "createRecordPopUpShouldNotThere".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = { "<break>smith11<break><break>Cancel".split("<break>") };
-//		String[][] addContactsToFundraisingObjectPopup = { "<break>smith11<break><break>Cancel".split("<break>") };
-//
-//		String[][][] detailSectionVerifcation = null;
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -25769,7 +23665,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.TaskPage);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -25829,9 +23725,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-//					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -25877,8 +23770,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject140 + " " + AMNNR_ActivityType54;
-		String task1Notes = AMNNR_Notes140;
-		String relatedTo = AMNNR_RelatedTo140;
+		String task1Notes = AMNNR_Notes201;
+		String relatedTo = AMNNR_RelatedTo201;
 		String priority = AMNNR_AdvancePriority140;
 		String status = AMNNR_AdvanceStatus140;
 		String task1NotesVerify = task1Notes.replace("@", "");
@@ -25903,76 +23796,23 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate },
 				{ AMNNR_CallLabel8, AMNNR_Classification140 } };
 
-		String[][] followUptask1 = { { AMNNR_CallLabel1, followUptask1SubjectName },
-				{ AMNNR_TaskLabel5, followUpStatus }, { AMNNR_CallLabel4, followUpgetAdvanceDueDate } };
+		String[][] followUptask1 = { { AMNNR_TaskLabel1, followUptask1SubjectName },
+				{ AMNNR_TaskLabel5, followUpStatus }, { AMNNR_TaskLabel4, followUpgetAdvanceDueDate } };
 
-		String[][] followUptask1BasicSectionVerification = { { AMNNR_CallLabel1, followUptask1SubjectName },
-				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
+		String[][] followUptask1BasicSectionVerification = { { AMNNR_TaskLabel1, followUptask1SubjectName },
+				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
-		String[][] followUptask1AdvancedSectionVerification = { { AMNNR_CallLabel4, followUpgetAdvanceDueDate },
+		String[][] followUptask1AdvancedSectionVerification = { { AMNNR_TaskLabel4, followUpgetAdvanceDueDate },
 				{ AMNNR_TaskLabel5, followUpStatus }, { AMNNR_TaskLabel6, priority },
-				{ AMNNR_CallLabel8, AMNNR_Classification140 } };
+				{ AMNNR_TaskLabel8, AMNNR_Classification140 } };
 
 		String[] SuggestedTags = AMNNR_SuggestedTag140.split("<break>", -1);
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp140.split("<break>") };
-		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp140.split("<break>") };
-		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup140.split("<break>") };
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp201.split("<break>") };
+		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp201.split("<break>") };
+		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup201.split("<break>") };
 
 		String[][][] detailSectionVerifcation = { { { AMNNR_CallLabel1, task1SubjectName } },
 				task1BasicSectionVerificationForDetailsSection, task1AdvancedSection };
-
-//		String task1ButtonName = AMNNR_ActivityType142;
-//		String recordName = "Vertix Fund";
-//		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("2"));
-//		String getAdvanceDueDate = AdvanceDueDate;
-//
-//		String task1SubjectName = "Task 14";
-//		String task1Notes = "Mutual Fund , Ispro Deal , Litz , Maxtra , FCR 3 ,  Theme A , Theme B , Theme C , Golden Ret , Smuklin , @jhonson";
-//		String relatedTo = "smith11<break>smith12<break>smith15";
-//		String priority = "High";
-//		String status = "Not Started";
-//		String task1NotesVerify = task1Notes.replace("@", "");
-//		String updatedRelatedToVerifyForDetails = relatedTo + "<break>" + recordName + "<break>"
-//				+ (crmUser1FirstName + " " + crmUser1LastName);
-//		String updatedRelatedToVerify = updatedRelatedToVerifyForDetails + "<break>"
-//				+ "Mutual Fund<break>Ispro Deal<break>Litz<break>Maxtra<break>FCR 3<break>Theme A<break>Theme B<break>Theme C<break>Golden Ret<break>Smuklin";
-//
-//		String followUptask1SubjectName = "Task 14.1";
-//		String followUpAdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy",
-//				Integer.parseInt("0"));
-//		String followUpgetAdvanceDueDate = followUpAdvanceDueDate;
-//		String followUpStatus = "In Progress";
-//
-//		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
-//				{ AMNNR_CallLabel3, relatedTo } };
-//
-//		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_CallLabel1, task1SubjectName },
-//				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerifyForDetails } };
-//		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
-//				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
-//
-//		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate }, { AMNNR_CallLabel5, status },
-//				{ AMNNR_CallLabel6, priority }, { AMNNR_CallLabel8, "A" } };
-//
-//		String[][] followUptask1 = { { AMNNR_CallLabel1, followUptask1SubjectName },
-//				{ AMNNR_CallLabel5, followUpStatus }, { AMNNR_CallLabel4, followUpgetAdvanceDueDate } };
-//
-//		String[][] followUptask1BasicSectionVerification = { { AMNNR_CallLabel1, followUptask1SubjectName },
-//				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
-//
-//		String[][] followUptask1AdvancedSectionVerification = { { AMNNR_CallLabel4, followUpgetAdvanceDueDate },
-//				{ AMNNR_CallLabel5, followUpStatus }, { AMNNR_CallLabel6, priority }, { AMNNR_CallLabel8, "A" } };
-//
-//		String[] SuggestedTags = "Mutual Fund<break>Ispro Deal<break>Litz<break>Maxtra<break>FCR 3<break>Theme A<break>Theme B<break>Theme C<break>Golden Ret<break>Smuklin"
-//				.split("<break>", -1);
-//		String[][] createNewRecordPopUp = {
-//				"checked<break>jhonson<break><AsItIs><break>Contact<break><break>Create".split("<break>") };
-//		String[][] addContactsToDealTeamPopUp = { "allRecords<break>smith11<break><break>Add".split("<break>") };
-//		String[][] addContactsToFundraisingObjectPopup = {
-//				"allRecords<break>smith11<break><break>Add".split("<break>") };
-//
-//		String[][][] detailSectionVerifcation = { { { AMNNR_CallLabel1, task1SubjectName } },
-//				task1BasicSectionVerificationForDetailsSection, task1AdvancedSection };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -25992,7 +23832,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.No);
 
 					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
 							PageName.TaskPage);
 
 					if (subjectLinkPopUpNegativeResult.isEmpty()) {
@@ -26052,9 +23892,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-//					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -26134,9 +23971,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "not able to click on " + followUptask1SubjectName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-//					CommonLib.ThreadSleep(4000);
 				} else {
 
 					log(LogStatus.ERROR,
