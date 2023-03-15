@@ -646,7 +646,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			}
 
 		}
-		ThreadSleep(5000);
+
 		lp.CRMlogout();
 		sa.assertAll();
 
@@ -715,7 +715,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -917,8 +916,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 									+ task1SubjectName);
 						}
 
-						driver.close();
-						driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 					} else {
 
 						log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -943,7 +940,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -1245,7 +1241,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -1668,9 +1663,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 										+ task1SubjectName);
 							}
 
-							driver.close();
-							driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
 						} else {
 
 							log(LogStatus.ERROR,
@@ -1701,7 +1693,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj2);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -1941,9 +1932,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 										+ task1SubjectName);
 							}
 
-							driver.close();
-							driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
 						} else {
 
 							log(LogStatus.ERROR,
@@ -1973,7 +1961,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1, YesNo.No);
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
-		ThreadSleep(5000);
+
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -2201,7 +2189,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -2372,8 +2359,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 									+ task1SubjectName);
 						}
 
-						driver.close();
-						driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 					} else {
 
 						log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -2462,7 +2447,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -2899,7 +2883,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -3151,9 +3134,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 										+ task1SubjectName);
 							}
 
-							driver.close();
-							driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
 						} else {
 
 							log(LogStatus.ERROR,
@@ -3185,7 +3165,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -3418,7 +3397,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -3644,7 +3622,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -3882,7 +3859,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -4144,7 +4120,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -4426,7 +4401,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj2);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -4665,7 +4639,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -4909,7 +4882,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -5129,7 +5101,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -5346,7 +5317,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -5584,7 +5554,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -5849,7 +5818,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -6182,7 +6150,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -6305,7 +6272,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -6507,7 +6473,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -7157,9 +7122,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 														+ task1SubjectName);
 									}
 
-									driver.close();
-									driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
 								} else {
 
 									log(LogStatus.ERROR,
@@ -7454,7 +7416,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -7678,7 +7639,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -7971,7 +7931,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -8175,7 +8134,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj2);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -8195,8 +8153,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1SubjectName = AMNNR_Subject8 + " " + AMNNR_ActivityType54;
 		String task1Notes = AMNNR_Notes8;
 		String relatedTo = AMNNR_RelatedTo8;
-//		String priority = AMNNR_AdvancePriority8;
-//		String status = AMNNR_AdvanceStatus8;
+
 		String task1ButtonName = AMNNR_ActivityType54;
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
@@ -8709,7 +8666,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1, YesNo.No);
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
-		ThreadSleep(5000);
+
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -8947,7 +8904,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -9200,7 +9156,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -9661,7 +9616,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -9951,7 +9905,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -10192,7 +10145,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -10425,7 +10377,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -10672,7 +10623,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -10944,7 +10894,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -11236,7 +11185,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj2);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -11484,11 +11432,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
 
+	@Deprecated
 	@Parameters({ "projectName" })
 
 	@Test
@@ -11713,7 +11661,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -11944,7 +11891,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -12170,7 +12116,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -12417,7 +12362,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -12692,7 +12636,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -13026,7 +12969,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -13148,7 +13090,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -13350,7 +13291,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -13487,7 +13427,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -13499,6 +13438,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String recordName = AMNNR_FirmLegalName1;
 		String task1SubjectName = AMNNR_Subject59;
@@ -13568,21 +13508,39 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							action.SCROLLANDBOOLEAN);
 				}
 				CommonLib.refresh(driver);
-				if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
-						"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
-					if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection1,
-							task1UpdateAdvancedSection1, null, updatedSuggestedTags1, null, false, null, null, null,
-							null, null, null)) {
-						log(LogStatus.PASS, "Activity timeline record has been Created", YesNo.No);
 
+				lp.clickOnTab(projectName, TabName.HomeTab);
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+
+					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
+							YesNo.No);
+
+					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
+						if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection1,
+								task1UpdateAdvancedSection1, null, updatedSuggestedTags1, null, false, null, null, null,
+								null, null, null)) {
+							log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
+
+						} else {
+							log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
+							sa.assertTrue(false, "Activity timeline record has not Updated");
+						}
 					} else {
-						log(LogStatus.FAIL, "Activity timeline record has not Created", YesNo.No);
-						sa.assertTrue(false, "Activity timeline record has not Created");
+						log(LogStatus.ERROR,
+								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName,
+								YesNo.No);
+						sa.assertTrue(false,
+								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
 					}
+
 				} else {
-					log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Edit Note button");
+
+					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
+							YesNo.Yes);
+					BaseLib.sa.assertTrue(false,
+							"-----Task named: " + task1SubjectName + " not found in Tasks Object-----");
 				}
 
 				CommonLib.refresh(driver);
@@ -13592,21 +13550,38 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							action.SCROLLANDBOOLEAN);
 				}
 				CommonLib.refresh(driver);
-				if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
-						"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
-					if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection2,
-							task1UpdateAdvancedSection2, null, updatedSuggestedTags2, null, false, null, null, null,
-							null, null, null)) {
-						log(LogStatus.PASS, "Activity timeline record has been Created", YesNo.No);
+				lp.clickOnTab(projectName, TabName.HomeTab);
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
 
+					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
+							YesNo.No);
+
+					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
+						if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection2,
+								task1UpdateAdvancedSection2, null, updatedSuggestedTags2, null, false, null, null, null,
+								null, null, null)) {
+							log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
+
+						} else {
+							log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
+							sa.assertTrue(false, "Activity timeline record has not Updated");
+						}
 					} else {
-						log(LogStatus.FAIL, "Activity timeline record has not Created", YesNo.No);
-						sa.assertTrue(false, "Activity timeline record has not Created");
+						log(LogStatus.ERROR,
+								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName,
+								YesNo.No);
+						sa.assertTrue(false,
+								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
 					}
+
 				} else {
-					log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Edit Note button");
+
+					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
+							YesNo.Yes);
+					BaseLib.sa.assertTrue(false,
+							"-----Task named: " + task1SubjectName + " not found in Tasks Object-----");
 				}
 
 				CommonLib.refresh(driver);
@@ -13615,21 +13590,38 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							action.SCROLLANDBOOLEAN);
 				}
 				CommonLib.refresh(driver);
-				if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
-						"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
-					if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection3,
-							task1UpdateAdvancedSection3, null, updatedSuggestedTags3, null, false, null, null, null,
-							null, null, null)) {
-						log(LogStatus.PASS, "Activity timeline record has been Created", YesNo.No);
+				lp.clickOnTab(projectName, TabName.HomeTab);
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
 
+					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
+							YesNo.No);
+
+					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
+						if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection3,
+								task1UpdateAdvancedSection3, null, updatedSuggestedTags3, null, false, null, null, null,
+								null, null, null)) {
+							log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
+
+						} else {
+							log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
+							sa.assertTrue(false, "Activity timeline record has not Updated");
+						}
 					} else {
-						log(LogStatus.FAIL, "Activity timeline record has not Created", YesNo.No);
-						sa.assertTrue(false, "Activity timeline record has not Created");
+						log(LogStatus.ERROR,
+								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName,
+								YesNo.No);
+						sa.assertTrue(false,
+								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
 					}
+
 				} else {
-					log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Edit Note button");
+
+					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
+							YesNo.Yes);
+					BaseLib.sa.assertTrue(false,
+							"-----Task named: " + task1SubjectName + " not found in Tasks Object-----");
 				}
 
 				CommonLib.refresh(driver);
@@ -13638,23 +13630,39 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							action.SCROLLANDBOOLEAN);
 				}
 				CommonLib.refresh(driver);
-				if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
-						"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
-					if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection4,
-							task1UpdateAdvancedSection4, null, updatedSuggestedTags4, null, false, null, null, null,
-							null, null, null)) {
-						log(LogStatus.PASS, "Activity timeline record has been Created", YesNo.No);
+				lp.clickOnTab(projectName, TabName.HomeTab);
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
 
+					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
+							YesNo.No);
+
+					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
+						if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection4,
+								task1UpdateAdvancedSection4, null, updatedSuggestedTags4, null, false, null, null, null,
+								null, null, null)) {
+							log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
+
+						} else {
+							log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
+							sa.assertTrue(false, "Activity timeline record has not Updated");
+						}
 					} else {
-						log(LogStatus.FAIL, "Activity timeline record has not Created", YesNo.No);
-						sa.assertTrue(false, "Activity timeline record has not Created");
+						log(LogStatus.ERROR,
+								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName,
+								YesNo.No);
+						sa.assertTrue(false,
+								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
 					}
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Edit Note button");
-				}
 
+				} else {
+
+					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
+							YesNo.Yes);
+					BaseLib.sa.assertTrue(false,
+							"-----Task named: " + task1SubjectName + " not found in Tasks Object-----");
+				}
 			} else {
 				log(LogStatus.ERROR,
 						"Not able to Click on Button: " + recordPageButtonName + " of Record Page: " + recordName,
@@ -13668,7 +13676,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -13713,7 +13720,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -13780,7 +13786,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -13907,7 +13912,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -14051,7 +14055,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -14202,7 +14205,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -14495,7 +14497,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -14739,7 +14740,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -15090,7 +15090,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -15315,7 +15314,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -15490,16 +15488,19 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						}
 
 					} else {
-						log(LogStatus.FAIL, "-----Activity timeline record is not created-----", YesNo.No);
-						sa.assertTrue(false, "-----Activity timeline record is not created-----");
+						log(LogStatus.ERROR,
+								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName,
+								YesNo.No);
+						sa.assertTrue(false,
+								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
 					}
 
 				} else {
-					log(LogStatus.ERROR,
-							"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName,
-							YesNo.No);
-					sa.assertTrue(false,
-							"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
+
+					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
+							YesNo.Yes);
+					BaseLib.sa.assertTrue(false,
+							"-----Task named: " + task1SubjectName + " not found in Tasks Object-----");
 				}
 
 			} else {
@@ -15514,7 +15515,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -15988,7 +15988,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -16241,7 +16240,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -16379,7 +16377,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -16517,7 +16514,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -16754,7 +16750,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -16967,7 +16962,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -17179,7 +17173,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -17249,7 +17242,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -17358,7 +17350,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -17473,7 +17464,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -17642,7 +17632,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -17764,7 +17753,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -17827,7 +17815,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -17846,7 +17833,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String recordName = AMNNR_FundNames2;
 		String dealRecordName = AMNNR_DealName2;
 		String fundraisingRecordName = AMNNR_FundraisingNames2;
-		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("10"));
+		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("18"));
 
 		String getAdvanceDueDate = AdvanceDueDate;
 
@@ -18062,7 +18049,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -18330,7 +18316,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -18392,7 +18377,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -18538,7 +18522,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -18785,7 +18768,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -18953,7 +18935,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -19016,7 +18997,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -19143,7 +19123,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -19286,7 +19265,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -19436,7 +19414,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -19728,7 +19705,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -19970,7 +19946,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -20320,7 +20295,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -20544,7 +20518,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -20730,9 +20703,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
 				}
 
-//				driver.close();
-//				driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
 			} else {
 				log(LogStatus.FAIL, "-----Activity timeline record is not created-----", YesNo.No);
 				sa.assertTrue(false, "-----Activity timeline record is not created-----");
@@ -20745,7 +20715,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -20770,8 +20739,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1SubjectName = AMNNR_Subject81 + " " + AMNNR_ActivityType54;
 		String task1Notes = AMNNR_Notes153;
 		String relatedTo = AMNNR_RelatedTo81;
-		String priority = AMNNR_AdvancePriority81;
-		String status = AMNNR_AdvanceStatus81;
+
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_SuggestedTag81;
 		String updatedRelatedToNotContainsVerify = AMNNR_RelatedTo153;
@@ -20961,9 +20929,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
 					}
 
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
 				} else {
 					log(LogStatus.FAIL, "-----Activity timeline record is not created-----", YesNo.No);
 					sa.assertTrue(false, "-----Activity timeline record is not created-----");
@@ -21022,7 +20987,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "-----Not able to Select Default record Type, So not able to proceed further-----");
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -21209,9 +21173,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
 				}
 
-//				driver.close();
-//				driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
 			} else {
 				log(LogStatus.FAIL, "-----Activity timeline record is not created-----", YesNo.No);
 				sa.assertTrue(false, "-----Activity timeline record is not created-----");
@@ -21224,7 +21185,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -21477,7 +21437,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -21613,7 +21572,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -21750,7 +21708,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -21986,7 +21943,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -22192,7 +22148,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -22402,7 +22357,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -22472,7 +22426,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -22579,7 +22532,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -22692,7 +22644,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -22861,7 +22812,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -22983,7 +22933,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -23044,7 +22993,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -23063,7 +23011,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String recordName = AMNNR_FundNames2;
 		String dealRecordName = AMNNR_DealName2;
 		String fundraisingRecordName = AMNNR_FundraisingNames2;
-		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("10"));
+		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("18"));
 
 		String getAdvanceDueDate = AdvanceDueDate;
 
@@ -23278,7 +23226,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -23545,7 +23492,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -23604,7 +23550,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -23749,7 +23694,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -23773,7 +23717,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1Notes = AMNNR_Notes201;
 		String relatedTo = AMNNR_RelatedTo201;
 		String priority = AMNNR_AdvancePriority140;
-		String status = AMNNR_AdvanceStatus140;
+
 		String task1NotesVerify = task1Notes.replace("@", "");
 		String updatedRelatedToVerifyForDetails = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
@@ -23996,7 +23940,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 			sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 		}
 
-		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
