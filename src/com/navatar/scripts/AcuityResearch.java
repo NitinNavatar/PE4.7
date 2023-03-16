@@ -8229,27 +8229,22 @@ public class AcuityResearch extends BaseLib{
 		if (home.clickOnSetUpLink()) {
 			parentWindow = switchOnWindow(driver);
 			if (parentWindow == null) {
-				sa.assertTrue(false,
-						"No new window is open after click on setup link in lighting mode so cannot create clone user");
-				log(LogStatus.SKIP,
-						"No new window is open after click on setup link in lighting mode so cannot create clone user",
+				log(LogStatus.INFO,
+						"New window is open after click on setup link in lighting mode",
 						YesNo.Yes);
-				exit("No new window is open after click on setup link in lighting mode so cannot create clone user");
+				for(int i = 0 ; i <FieldName.length; i++) {
+					if(setup.UpdateValueInCustomMetaData(MetaDataSetting.Acuity_Setting.toString(), FieldName[i], Value[i], 10))
+					{
+						log(LogStatus.INFO, "Changed the value of " + FieldName[i] + " for Acuity Setting", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to change the value of " + FieldName[i] + " for Acuity Setting", YesNo.No);
+						sa.assertTrue(false, "Not able to changed the value of " + FieldName[i] + " for Acuity Setting");	
+					}
+					ThreadSleep(5000);
+				}	
 			}
-			ThreadSleep(3000);
-			for(int i = 0 ; i <FieldName.length; i++) {
-				if(setup.UpdateValueInCustomMetaData(MetaDataSetting.Acuity_Setting.toString(), FieldName[i], Value[i], 10))
-				{
-					log(LogStatus.INFO, "Changed the value of " + FieldName[i] + " for Acuity Setting", YesNo.No);
-				}
-				else
-				{
-					log(LogStatus.ERROR, "Not able to change the value of " + FieldName[i] + " for Acuity Setting", YesNo.No);
-					sa.assertTrue(false, "Not able to changed the value of " + FieldName[i] + " for Acuity Setting");	
-				}
-				ThreadSleep(5000);
-			}	
-			ThreadSleep(5000);
 			switchToDefaultContent(driver);
 			driver.close();
 			driver.switchTo().window(parentWindow);

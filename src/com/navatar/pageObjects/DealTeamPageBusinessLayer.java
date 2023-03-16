@@ -64,9 +64,9 @@ public class DealTeamPageBusinessLayer extends DealTeamPage{
 						log(LogStatus.SKIP,"Not Able to send "+value+" to label : "+label,YesNo.Yes);
 						return false;
 					}
-				}else if(PageLabel.Team_Member_Role.toString().equals(reuestData[0]) || PageLabel.Deal_Contact_Type.toString().equals(reuestData[0])) {
+				}else if(PageLabel.Team_Member_Role.toString().equals(reuestData[0]) || PageLabel.Role.toString().equals(reuestData[0]) || PageLabel.Deal_Contact_Type.toString().equals(reuestData[0])) {
 
-					if (click(driver, getListTextbox(projectName, label, 10), label, action)) {
+					if (click(driver, getteamMemberRoleDropDownList(projectName, 10), label, action)) {
 						ThreadSleep(2000);
 						log(LogStatus.INFO,"Able to Click on "+label,YesNo.No);
 
