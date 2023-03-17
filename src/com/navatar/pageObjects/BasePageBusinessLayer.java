@@ -13512,7 +13512,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 
 					else if (labelName.contains(excelLabel.Status.toString())
-							|| labelName.contains(excelLabel.Priority.toString())) {
+							|| labelName.contains(excelLabel.Priority.toString())
+							|| labelName.contains("Classification")) {
 						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
 								+ labelName + "']/..//button";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
@@ -13601,8 +13602,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 
 					else {
-						log(LogStatus.ERROR, "label name is not correct", YesNo.No);
-						sa.assertTrue(false, "label name is not correct");
+						log(LogStatus.ERROR, "label name is not correct: " + labelName, YesNo.No);
+						sa.assertTrue(false, "label name is not correct: " + labelName);
 						return false;
 					}
 				}
@@ -19326,8 +19327,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						flag = true;
 
 					}
-					
-					
+
 				} else {
 					log(LogStatus.ERROR, "Not able to click on Save button", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Save button");
@@ -20839,7 +20839,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
-	
 	public ArrayList<String> verifyDefaultSortingOfReferencedTypeOnTaggedSectionFormFirmAndPeopleTab() {
 		String xPath;
 		List<WebElement> elements;
@@ -20878,12 +20877,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
 			result.add("Not able to click on People tab name");
 		}
-		
 
 		return result;
 	}
 
-	
 	public ArrayList<String> verifyActivityTimeLineRecordShouldNotVisibleOnViewAllInteractionPopup(
 			String[] subjectName) {
 		String xPath;
@@ -21723,7 +21720,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
-	
 	public List<String> verifyNotificationOptionsNotContainsInRecordDetailPage(String... eventName) {
 
 		List<WebElement> notificationOptionsList = getNotificationOptions();
