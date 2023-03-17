@@ -10003,4 +10003,30 @@ public abstract class BasePage extends BaseLib {
 		String path = "//a[text()=\"" + accountName + "\"]/ancestor::tr//td//button[@title=\"Log Note\"]";
 		return FindElement(driver, path, "addToThemeLogNoteButton", action.BOOLEAN, timeOut);
 	}
+	
+	
+
+	public WebElement getMeetingAndCallCountOfDealteam(String dealName, int timeOut) {
+
+		String path = "//a[text()='"+dealName+"']/ancestor::td[@data-label='Name']/../td[@data-label='Meetings and Calls']//button";
+		return FindElement(driver, path, "Meeting and call count", action.BOOLEAN, timeOut);
+	}
+	
+	
+
+	public WebElement getCOnnectionIconOfDealteam(String dealName, int timeOut) {
+
+		String path = "//a[text()='"+dealName+"']/ancestor::td[@data-label='Name']/../th//button";
+		return FindElement(driver, path, "Meeting and call count", action.BOOLEAN, timeOut);
+	}
+	
+	public WebElement getMeetingAndCallCountOnConnectionIconOfDealteam(String userName, int timeOut) {
+
+		String path = "//lightning-base-formatted-text[text()='"+userName+"']/ancestor::th[@data-label='Name']/../td[@data-label='Meetings and Calls']//button";
+		return FindElement(driver, path, "Meeting and call count", action.BOOLEAN, timeOut);
+	}
+	
+	
+	
+	
 }

@@ -45,6 +45,7 @@ import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
 import com.navatar.pageObjects.DealPageBusinessLayer;
 import com.navatar.pageObjects.DealTeamPageBusinessLayer;
+import com.navatar.pageObjects.FundRaisingPageBusinessLayer;
 import com.navatar.pageObjects.FundraisingsPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageBusinessLayer;
 import com.navatar.pageObjects.GlobalActionPageBusinessLayer;
@@ -22278,7 +22279,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc121_EditAndInactiveUser(String projectName) {
+	public void ATCETc121_EditAndInactiveUser(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -24293,7 +24294,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc135_UpdateTheNameOfAccountsContactDealsAndFund(String projectName) {
+	public void ATCETc135_UpdateTheNameOfAccountsContactDealsAndFund(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -24535,7 +24536,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		
 		
 		String[][] basicSection = {{"Subject",taskSubject},{ "Related_To", taskRelatedTo } , { "Notes", taskNotes }};
-		String[][] advanceSection = { { "Due Date", taskDueDate }};
+		String[][] advanceSection = { { "Date", taskDueDate }};
 		
 		
         String task1SubjectNameNavigation1 = ATCE_ATSubject31;
@@ -24661,10 +24662,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
 		
 		String dealTagName=ATCE_TaggedDealName12;
-		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;
-		
-		
-		
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;		
 		
 		String contactSectionName1=ATCE_ConName22;
 		String contactSectionTitle1=ATCE_ConTitle22;
@@ -31700,7 +31698,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc184_CreateANewEvent(String projectName) {
+	public void ATCETc184_CreateANewEvent(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -33773,19 +33771,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
 							}
-							/*				
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
-							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
-							if(clickUsingJavaScript(driver, ele, "close button"))
-							{
-								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
-							}
-							else
-							{
-								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
-								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
-							}
-							 */
+							
 						}
 						else
 						{
@@ -33817,18 +33803,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
 							}	
 
-							/*					xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
-							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
-							if(clickUsingJavaScript(driver, ele, "close button"))
-							{
-								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
-							}
-							else
-							{
-								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
-								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
-							}
-							 */
+						
 						}
 						else
 						{
@@ -33855,19 +33830,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
 							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
 						}	
-						/*
-						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
-						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
-						if(clickUsingJavaScript(driver, ele, "close button"))
-						{
-							log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
-						}
-						 */
+
 					}
 					else
 					{
@@ -33889,18 +33852,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4, YesNo.No);
 							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4);
 						}
-						/*					xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
-						ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
-						if(clickUsingJavaScript(driver, ele, "close button"))
-						{
-							log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
-						}
-						 */
+					
 					}
 					else
 					{
@@ -33927,18 +33879,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
 							}
-							/*		xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
-							ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
-							if(clickUsingJavaScript(driver, ele, "close button"))
-							{
-								log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
-							}
-							else
-							{
-								log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
-								sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
-							}
-							 */
+							
 
 							driver.close();
 							driver.switchTo().window(parentId);
@@ -37210,11 +37151,11 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		
 		
 		String userName1=crmUser6FirstName+" "+crmUser6LastName;
-		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		String userName2=crmUser8FirstName+" "+crmUser8LastName;
 		
 		
-		String [][][] dealTeamInfo= {{{"Deal",ATCE_DTDealName1},{PageLabel.Deal_Contact.toString(),ATCE_DTContact1},{PageLabel.Team_Member.toString(),userName1},{PageLabel.Team_Member_Role.toString(),ATCE_DTRole1}},
-				{{"Deal",ATCE_DTDealName2},{PageLabel.Deal_Contact.toString(),ATCE_DTContact2},{PageLabel.Team_Member.toString(),userName2},{PageLabel.Team_Member_Role.toString(),ATCE_DTRole2}}};		
+		String [][][] dealTeamInfo= {{{"Deal",ATCE_DTDealName1},{PageLabel.Deal_Contact.toString(),ATCE_DTContact1},{PageLabel.Team_Member.toString(),userName1},{PageLabel.Role.toString(),ATCE_DTRole1}},
+				{{"Deal",ATCE_DTDealName2},{PageLabel.Deal_Contact.toString(),ATCE_DTContact2},{PageLabel.Team_Member.toString(),userName2},{PageLabel.Role.toString(),ATCE_DTRole2}}};		
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 		
 			for(String[][] details:dealTeamInfo)
@@ -37247,9 +37188,701 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	}
 	
 	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc211_CreateATask(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		
+		String activityType=ATCE_ATActivityType37;
+		String taskSubject=ATCE_ATSubject37;
+		String taskRelatedTo=ATCE_ATRelatedTo37;
+		String taskNotes=ATCE_ATNote37;
+		String taskStatus=ATCE_AdvanceStatus19;
+		String taskPriority=ATCE_AdvancePriority19;	
+		String dueDateDay=ATCE_ATDay37;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_037", excelLabel.Advance_Due_Date);
+			
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority}};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+		}	 
+		
+		
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc212_VerifyTaskOnDealTeamSection(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Deal6;
+	    
+		String[] contectName= {ATCE_ConName31};
+		String[] meetingAndCallCount= {ATCE_ConMeetingAndCall31};
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					
+					ArrayList<String>result=bp.verifyMeetingAndCallOnExternalTabOfDealTeam(contectName, meetingAndCallCount);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Meeting and call count have been verified on Deal Team Section", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Meeting and call count are not verified on Deal Team Section", YesNo.No);
+						sa.assertTrue(false, "The Meeting and call count are not verified on Deal Team Section");
+					}
+
+
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc213_CreateACall(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		
+		String activityType=ATCE_ATActivityType38;
+		String taskSubject=ATCE_ATSubject38;
+		String taskRelatedTo=ATCE_ATRelatedTo38;
+		String taskNotes=ATCE_ATNote38;
+		
+		String dueDateDay=ATCE_ATDay38;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_038", excelLabel.Advance_Due_Date);
+			
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Date", taskDueDate }};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+		}	 
+		
+		
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc214_VerifyCallOnDealTeamConnectionPageAndMeetingAndCallPage(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Deal6;
+	    
+		String[] contectName= {ATCE_ConName32};
+		String[] meetingAndCallCount= {ATCE_ConMeetingAndCall32};
+		
+		String contact=ATCE_ConName31;
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall9;
+		
+
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					
+					ArrayList<String>result=bp.verifyMeetingAndCallOnExternalTabOfDealTeam(contectName, meetingAndCallCount);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Meeting and call count have been verified on Deal Team Section", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Meeting and call count are not verified on Deal Team Section", YesNo.No);
+						sa.assertTrue(false, "The Meeting and call count are not verified on Deal Team Section");
+					}	
+					
+					ArrayList<String> result1=bp.verifyMeetingAndCallOnConnectionPageOfDealTeam(contact, connectionUserName, connectionMeetingaAndCall);
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The Meeting and call count have been verified on connection page", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Meeting and call countare not verified on connection page", YesNo.No);
+						sa.assertTrue(false, "The Meeting and call count are not verified on Deal Team Section");
+					}
+					
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc215_CreateAccountContactAndFundraising(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		FundRaisingPageBusinessLayer fp=new FundRaisingPageBusinessLayer(driver);
+		String[] accountName = ATCERecord17.split("<break>");
+		String[] recordType = ATCERecordType2.split("<break>");
+
+		String[] contactFirstName = {ATCE_ContactFirstName11,ATCE_ContactFirstName12};
+		String[] contactLastName = {ATCE_ContactLastName11,ATCE_ContactLastName12};
+		String[] contactLegalName = {ATCE_ContactLegalName10,ATCE_ContactLegalName11};
+		String[] contactEmail = {ATCE_ContactEmail10,ATCE_ContactEmail11};
+		String[] contactTitle = {ATCE_ContactTitle11,ATCE_ContactTitle12};
+
+
+		String fundraisingName=ATCE_Fundraising3;
+		String flegalName=ATCE_FLegalName1;
+		String fFundName=ATCE_FFundName1;
+		String fStage=ATCE_FStageName1;
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+		if (accountName.length == recordType.length) {
+			for (int i = 0; i < accountName.length; i++) {
+				if (lp.clickOnTab(projectName, tabObj1)) {
+
+					log(LogStatus.INFO, "Click on Tab : " + tabObj1, YesNo.No);
+					ThreadSleep(3000);
+					if (ip.createEntityOrAccount(environment, mode, accountName[i], recordType[i], null, null, 30)) {
+						log(LogStatus.INFO,
+								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i],
+								YesNo.No);
+						sa.assertTrue(true,
+								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i]);
+
+
+					} else {
+						sa.assertTrue(false,
+								"Not Able to Create Firm : " + accountName[i] + " of record type : " + recordType[i]);
+						log(LogStatus.SKIP,
+								"Not Able to Create Firm : " + accountName[i] + " of record type :" + recordType[i],
+								YesNo.Yes);
+					}
+
+				} else {
+					log(LogStatus.FAIL, "Not able to click on " + tabObj1 + " Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on " + tabObj1 + " Tab");
+				}
+
+			}
+		} else {
+			log(LogStatus.FAIL,
+					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper",
+					YesNo.No);
+			sa.assertTrue(false,
+					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper");
+		}
+
+		for (int i = 0; i < contactLastName.length; i++) {
+			if (lp.clickOnTab(projectName, tabObj2)) {
+
+				log(LogStatus.INFO, "Click on Tab : " + tabObj2, YesNo.No);
+				ThreadSleep(3000);
+
+				if (cp.createContact(projectName, contactFirstName[i], contactLastName[i], contactLegalName[i],
+						contactEmail[i], "", null, null, CreationPage.ContactPage, contactTitle[i], null)) {
+					log(LogStatus.INFO,
+							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i],
+							YesNo.No);
+					sa.assertTrue(true,
+							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i]);
+
+
+				} else {
+					log(LogStatus.FAIL,
+							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i],
+							YesNo.No);
+					sa.assertTrue(false,
+							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i]);
+				}
+
+			} else {
+				log(LogStatus.FAIL, "Not able to click on " + tabObj2 + " Tab", YesNo.No);
+				sa.assertTrue(false, "Not able to click on " + tabObj2 + " Tab");
+			}
+		}
+		
+
+		
+		if (lp.clickOnTab(environment, mode, TabName.FundraisingsTab)) {
+			
+			if(fp.createFundRaising(environment, mode, fundraisingName, fFundName,flegalName, null, fStage, null, null,null, null, null))
+			{
+				log(LogStatus.INFO,"Fundraising has been created",YesNo.No);
+				
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Fundraising is not created",YesNo.No);
+				sa.assertTrue(false, "Fundraising is not created");
+			}
+		
+		}
+		else
+		{
+			log(LogStatus.FAIL, "Not able to click on fundraising tab Tab", YesNo.No);
+			sa.assertTrue(false, "Not able to click on fundraising Tab");
+		}
+
+			
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc216_FundraisingraisingContact(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		FundRaisingPageBusinessLayer fp=new FundRaisingPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATCE_FName1;
+
+		ArrayList<String> labelName=new ArrayList<String>();
+		ArrayList<String> value=new ArrayList<String>();
+		ArrayList<String> inputType=new ArrayList<String>();
+		ArrayList<String> labelName1=new ArrayList<String>();
+		ArrayList<String> value1=new ArrayList<String>();
+		ArrayList<String> inputType1=new ArrayList<String>();
+
+		labelName.add("Fundraising");
+		labelName.add("Contact");
+		labelName.add("Role");
+
+		value.add(ATCE_FName1);
+		value.add(ATCE_FContact1);
+		value.add(ATCE_FRole1);
+
+		inputType.add("SearchDropDown");
+		inputType.add("SearchDropDown");
+		inputType.add("DropDown");
+
+		labelName1.add("Fundraising");
+		labelName1.add("Contact");
+		labelName1.add("Role");
+
+		value1.add(ATCE_FName1);
+		value1.add(ATCE_FContact1);
+		value1.add(ATCE_FRole1);
+
+		inputType1.add("SearchDropDown");
+		inputType1.add("SearchDropDown");
+		inputType1.add("DropDown");
+
+
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(environment, mode, TabName.FundraisingsTab)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if(fp.CreateNewFundraisingContactFromTab(projectName, labelName, value, inputType))
+					{
+						log(LogStatus.INFO, "Fundraising contact has been Created", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Fundraising contact is not Created", YesNo.No);
+						sa.assertTrue(false,  "Fundraising contact is not Created");
+					}
+
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+		}
+
+
+		if (lp.clickOnTab(environment, mode, TabName.FundraisingsTab)) {
+
+
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if(fp.CreateNewFundraisingContactFromTab(projectName, labelName1, value1, inputType1))
+					{
+						log(LogStatus.INFO, "Fundraising contact has been Created", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Fundraising contact is not Created", YesNo.No);
+						sa.assertTrue(false,  "Fundraising contact is not Created");
+					}
+
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+		}
+
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
 	
 	
 	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc217_CreateATask(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		
+		String activityType=ATCE_ATActivityType39;
+		String taskSubject=ATCE_ATSubject39;
+		String taskRelatedTo=ATCE_ATRelatedTo39;
+		String taskNotes=ATCE_ATNote39;
+		String taskStatus=ATCE_AdvanceStatus20;
+		String taskPriority=ATCE_AdvancePriority20;	
+		String dueDateDay=ATCE_ATDay39;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_039", excelLabel.Advance_Due_Date);
+			
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority}};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+		}	 
+		
+		
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc218_VerifyTaskOnFundraisingSection(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Deal6;
+	    
+		String[] contectName= {ATCE_ConName31};
+		String[] meetingAndCallCount= {ATCE_ConMeetingAndCall31};
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					
+					ArrayList<String>result=bp.verifyMeetingAndCallOnExternalTabOfDealTeam(contectName, meetingAndCallCount);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Meeting and call count have been verified on Deal Team Section", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Meeting and call count are not verified on Deal Team Section", YesNo.No);
+						sa.assertTrue(false, "The Meeting and call count are not verified on Deal Team Section");
+					}
+
+
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc219_CreateACall(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		
+		String activityType=ATCE_ATActivityType40;
+		String taskSubject=ATCE_ATSubject40;
+		String taskRelatedTo=ATCE_ATRelatedTo40;
+		String taskNotes=ATCE_ATNote40;
+		
+		String dueDateDay=ATCE_ATDay40;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_040", excelLabel.Advance_Due_Date);
+			
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Date", taskDueDate }};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+		}	 
+		
+		
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc214_VerifyCallOnFundraisingConnectionPageAndMeetingAndCallPage(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Deal6;
+	    
+		String[] contectName= {ATCE_ConName32};
+		String[] meetingAndCallCount= {ATCE_ConMeetingAndCall32};
+		
+		String contact=ATCE_ConName31;
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall9;
+	
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					
+					ArrayList<String>result=bp.verifyMeetingAndCallOnExternalTabOfDealTeam(contectName, meetingAndCallCount);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Meeting and call count have been verified on Deal Team Section", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Meeting and call count are not verified on Deal Team Section", YesNo.No);
+						sa.assertTrue(false, "The Meeting and call count are not verified on Deal Team Section");
+					}	
+					
+					ArrayList<String> result1=bp.verifyMeetingAndCallOnConnectionPageOfDealTeam(contact, connectionUserName, connectionMeetingaAndCall);
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The Meeting and call count have been verified on connection page", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Meeting and call countare not verified on connection page", YesNo.No);
+						sa.assertTrue(false, "The Meeting and call count are not verified on Deal Team Section");
+					}
+					
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+
 
 }
 
