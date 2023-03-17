@@ -13938,13 +13938,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String priority = AMNNR_AdvancePriority66;
 		String status = AMNNR_AdvanceStatus66;
 		String classification = AMNNR_Classification66;
-		String task1NotesVerify = task1Notes.split("<Section>", -1)[1].replace("@", "");
 
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp66.split("<break>") };
+
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes.split("<Section>", -1)[1]);
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_RelatedTo67;
 
 		String[] SuggestedTags = AMNNR_SuggestedTag66.split("<break>", -1);
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp66.split("<break>") };
+
 		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp66.split("<break>") };
 		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup66.split("<break>") };
 
@@ -14081,7 +14083,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String priority = AMNNR_AdvancePriority68;
 		String status = AMNNR_AdvanceStatus68;
 		String classification = AMNNR_Classification68;
-		String task1NotesVerify = task1Notes.replace("@", "");
+
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp68.split("<break>") };
+
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 
 		String updatedRelatedToVerifyBeforeTagging = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
@@ -14089,7 +14094,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedRelatedToVerify = updatedRelatedToVerifyBeforeTagging + "<break>" + AMNNR_RelatedTo69;
 
 		String[] SuggestedTags = AMNNR_SuggestedTag68.split("<break>", -1);
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp68.split("<break>") };
+
 		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp68.split("<break>") };
 		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup68.split("<break>") };
 
@@ -14231,7 +14236,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String priority = AMNNR_AdvancePriority70;
 		String status = AMNNR_AdvanceStatus70;
 		String updatedRelatedToVerify = relatedTo + AMNNR_RelatedTo71 + recordName;
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp70.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp71.split("<break>", -1), AMNNR_CreateNewRecordPopUp72.split("<break>", -1) };
+
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
 				{ AMNNR_TaskLabel3, relatedTo } };
@@ -14242,8 +14250,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp70.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp71.split("<break>", -1), AMNNR_CreateNewRecordPopUp72.split("<break>", -1) };
 		String firmRecord1 = AMNNR_FirmLegalName8;
 		String firmRecord2 = AMNNR_FirmLegalName9;
 		String firmRecord3ShouldNotThere = AMNNR_FirmLegalName10;
@@ -14523,7 +14529,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String priority = AMNNR_AdvancePriority73;
 		String status = AMNNR_AdvanceStatus73;
 		String updatedRelatedToVerify = relatedTo + AMNNR_RelatedTo74 + recordName;
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp73.split("<break>", -1) };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
 				{ AMNNR_TaskLabel3, relatedTo } };
@@ -14534,7 +14541,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp73.split("<break>", -1) };
 		String firmRecord1 = AMNNR_CreateNewRecordPopUp73.split("<break>", -1)[4];
 		String contactRecord = AMNNR_CreateNewRecordPopUp73.split("<break>", -1)[1];
 
@@ -14781,7 +14787,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String priority = AMNNR_AdvancePriority75;
 		String status = AMNNR_AdvanceStatus75;
 		String updatedRelatedToVerify = relatedTo + AMNNR_RelatedTo76 + recordName;
-		String task1NotesVerify = task1Notes.replace("@", "");
+
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp75.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp76.split("<break>", -1) };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
 				{ AMNNR_TaskLabel3, relatedTo } };
@@ -14792,8 +14801,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp75.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp76.split("<break>", -1) };
 		String firmRecord1 = AMNNR_CreateNewRecordPopUp76.split("<break>", -1)[1];
 		String contactRecord = AMNNR_CreateNewRecordPopUp75.split("<break>", -1)[2];
 
@@ -15117,7 +15124,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String status = AMNNR_AdvanceStatus77;
 		String updatedRelatedToVerify = relatedTo + AMNNR_RelatedTo78 + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp77.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp78.split("<break>", -1) };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
 				{ AMNNR_TaskLabel3, relatedTo } };
@@ -15128,8 +15137,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp77.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp78.split("<break>", -1) };
 		String firmRecord1 = AMNNR_CreateNewRecordPopUp78.split("<break>", -1)[2];
 		String contactRecord = AMNNR_CreateNewRecordPopUp77.split("<break>", -1)[2];
 
@@ -15342,7 +15349,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 		String updatedRelatedToNotContainsVerify = AMNNR_RelatedTo80;
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp79.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp80.split("<break>", -1) };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
 				{ AMNNR_TaskLabel3, relatedTo } };
@@ -15353,8 +15362,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp79.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp80.split("<break>", -1) };
 		String record1 = AMNNR_CreateNewRecordPopUp79.split("<break>", -1)[1];
 		String record2 = AMNNR_CreateNewRecordPopUp80.split("<break>", -1)[1];
 
@@ -15544,7 +15551,16 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_SuggestedTag81;
 		String updatedRelatedToNotContainsVerify = AMNNR_RelatedTo82;
-		String task1NotesVerify = task1Notes.replace("@", "");
+
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp81.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp82.split("<break>", -1), AMNNR_CreateNewRecordPopUp83.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp84.split("<break>", -1), AMNNR_CreateNewRecordPopUp85.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp86.split("<break>", -1), AMNNR_CreateNewRecordPopUp87.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp88.split("<break>", -1), AMNNR_CreateNewRecordPopUp89.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp90.split("<break>", -1), AMNNR_CreateNewRecordPopUp91.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp92.split("<break>", -1), AMNNR_CreateNewRecordPopUp93.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp94.split("<break>", -1) };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 		String[] SuggestedTags = AMNNR_SuggestedTag81.split("<break>", -1);
 
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
@@ -15556,14 +15572,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp81.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp82.split("<break>", -1), AMNNR_CreateNewRecordPopUp83.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp84.split("<break>", -1), AMNNR_CreateNewRecordPopUp85.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp86.split("<break>", -1), AMNNR_CreateNewRecordPopUp87.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp88.split("<break>", -1), AMNNR_CreateNewRecordPopUp89.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp90.split("<break>", -1), AMNNR_CreateNewRecordPopUp91.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp92.split("<break>", -1), AMNNR_CreateNewRecordPopUp93.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp94.split("<break>", -1) };
 		String firmRecord1 = AMNNR_CreateNewRecordPopUp88.split("<break>", -1)[1];
 		String firmRecord2 = AMNNR_CreateNewRecordPopUp92.split("<break>", -1)[1];
 
@@ -15822,7 +15830,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				updatedRelatedToNotContainsVerify = updatedRelatedToNotContainsVerify.substring(0,
 						(updatedRelatedToNotContainsVerify.length() - 7));
 		}
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String task1NotesVerify = task1Notes;
 		String[] SuggestedTags = AMNNR_SuggestedTag95.split("<break>", -1);
 
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
@@ -16016,8 +16024,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 		String updatedRelatedToNotContainsVerify = BP.matcherOfAtTheRate(task1Notes);
-
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp97.split("<break>", -1) };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 		String[] SuggestedTags = AMNNR_SuggestedTag97.split("<break>", -1);
 
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
@@ -16028,8 +16036,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp97.split("<break>", -1) };
 
 		String updatedNotesOfTask = AMNNR_Notes98;
 		String[][] task1UpdateBasicSection = { { AMNNR_TaskLabel2, updatedNotesOfTask } };
@@ -16268,10 +16274,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_RelatedTo102;
 
-		String task1NotesVerify = task1Notes.split("<Section>", -1)[1].replace("@", "");
-		String[] SuggestedTags = AMNNR_SuggestedTag101.split("<break>", -1);
-
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp101.split("<break>") };
+
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes.split("<Section>", -1)[1]);
+		String[] SuggestedTags = AMNNR_SuggestedTag101.split("<break>", -1);
 
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
 				{ AMNNR_TaskLabel3, relatedTo } };
@@ -16542,7 +16548,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp104.split("<break>") };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 		String[] SuggestedTags = AMNNR_SuggestedTag104.split("<break>", -1);
 
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
@@ -16554,7 +16561,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp104.split("<break>") };
 		String updatedRelatedToNotContainsVerify = AMNNR_SuggestedTag104;
 		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify } };
 		String[] updatedSuggestedTags = AMNNR_SuggestedTag105.split("<break>", -1);
@@ -16777,7 +16783,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String task1NotesVerify = task1Notes;
 		String[] SuggestedTags = AMNNR_SuggestedTag106.split("<break>", -1);
 
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
@@ -16989,7 +16995,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp113.split("<break>") };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 		String[] SuggestedTags = AMNNR_SuggestedTag113.split("<break>", -1);
 
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
@@ -17000,8 +17007,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp113.split("<break>") };
 
 		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp113.split("<break>", -1),
 				AMNNR_AddContactsToDealTeamPopUp114.split("<break>", -1),
@@ -17842,7 +17847,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String relatedTo = AMNNR_RelatedTo132;
 		String priority = AMNNR_AdvancePriority132;
 		String status = AMNNR_AdvanceStatus132;
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp132.split("<break>") };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_RelatedTo133;
 
@@ -17856,7 +17862,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, AMNNR_Classification132 } };
 
 		String[] SuggestedTags = AMNNR_SuggestedTag132.split("<break>", -1);
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp132.split("<break>") };
+
 		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp132.split("<break>") };
 		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup132.split("<break>") };
 
@@ -18076,7 +18082,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String relatedTo = AMNNR_RelatedTo134;
 		String priority = AMNNR_AdvancePriority134;
 		String status = AMNNR_AdvanceStatus134;
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp134.split("<break>") };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_RelatedTo135;
 
@@ -18090,7 +18097,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, AMNNR_Classification134 } };
 
 		String[] SuggestedTags = AMNNR_SuggestedTag134.split("<break>", -1);
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp134.split("<break>") };
+
 		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp134.split("<break>") };
 		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup134.split("<break>") };
 		String updatedRelatedToNotContainsVerify = AMNNR_RelatedTo136;
@@ -18400,7 +18407,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String relatedTo = AMNNR_RelatedTo138;
 		String priority = AMNNR_AdvancePriority138;
 		String status = AMNNR_AdvanceStatus138;
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp138.split("<break>") };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_RelatedTo139;
 
@@ -18414,7 +18422,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, AMNNR_Classification138 } };
 
 		String[] SuggestedTags = AMNNR_SuggestedTag138.split("<break>", -1);
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp138.split("<break>") };
+
 		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp138.split("<break>") };
 		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup138.split("<break>") };
 
@@ -18546,7 +18554,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String relatedTo = AMNNR_RelatedTo140;
 		String priority = AMNNR_AdvancePriority140;
 		String status = AMNNR_AdvanceStatus140;
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp140.split("<break>") };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 		String updatedRelatedToVerifyForDetails = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 		String updatedRelatedToVerify = updatedRelatedToVerifyForDetails + "<break>" + AMNNR_RelatedTo141;
@@ -18579,7 +18588,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel8, AMNNR_Classification140 } };
 
 		String[] SuggestedTags = AMNNR_SuggestedTag140.split("<break>", -1);
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp140.split("<break>") };
+
 		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp140.split("<break>") };
 		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup140.split("<break>") };
 
@@ -19148,13 +19157,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String relatedTo = AMNNR_RelatedTo66;
 
 		String classification = AMNNR_Classification66;
-		String task1NotesVerify = task1Notes.split("<Section>", -1)[1].replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp66.split("<break>") };
+
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes.split("<Section>", -1)[1]);
 
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_RelatedTo67;
 
 		String[] SuggestedTags = AMNNR_SuggestedTag66.split("<break>", -1);
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp66.split("<break>") };
+
 		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp66.split("<break>") };
 		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup66.split("<break>") };
 
@@ -19290,7 +19301,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String relatedTo = AMNNR_RelatedTo68;
 
 		String classification = AMNNR_Classification68;
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp68.split("<break>") };
+
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 
 		String updatedRelatedToVerifyBeforeTagging = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
@@ -19298,7 +19311,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedRelatedToVerify = updatedRelatedToVerifyBeforeTagging + "<break>" + AMNNR_RelatedTo69;
 
 		String[] SuggestedTags = AMNNR_SuggestedTag68.split("<break>", -1);
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp68.split("<break>") };
+
 		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp68.split("<break>") };
 		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup68.split("<break>") };
 
@@ -19439,7 +19452,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String relatedTo = AMNNR_RelatedTo70;
 
 		String updatedRelatedToVerify = relatedTo + AMNNR_RelatedTo143 + recordName;
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp143.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp144.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp145.split("<break>", -1) };
+
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
 				{ AMNNR_CallLabel3, relatedTo } };
@@ -19449,9 +19466,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp143.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp144.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp145.split("<break>", -1) };
 		String firmRecord1 = AMNNR_CreateNewRecordPopUp143.split("<break>", -1)[1];
 		String firmRecord2 = AMNNR_CreateNewRecordPopUp145.split("<break>", -1)[1];
 		String firmRecord3ShouldNotThere = AMNNR_FirmLegalName16;
@@ -19730,7 +19744,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String relatedTo = AMNNR_RelatedTo73;
 
 		String updatedRelatedToVerify = relatedTo + AMNNR_RelatedTo146 + recordName;
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp146.split("<break>", -1) };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
 				{ AMNNR_CallLabel3, relatedTo } };
@@ -19740,7 +19755,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp146.split("<break>", -1) };
 		String firmRecord1 = AMNNR_CreateNewRecordPopUp146.split("<break>", -1)[4];
 		String contactRecord = AMNNR_CreateNewRecordPopUp146.split("<break>", -1)[1];
 
@@ -19987,7 +20001,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String relatedTo = AMNNR_RelatedTo75;
 
 		String updatedRelatedToVerify = relatedTo + AMNNR_RelatedTo147 + recordName;
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp147.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp148.split("<break>", -1) };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
 				{ AMNNR_CallLabel3, relatedTo } };
@@ -19997,8 +20013,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp147.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp148.split("<break>", -1) };
 		String firmRecord1 = AMNNR_CreateNewRecordPopUp148.split("<break>", -1)[1];
 		String contactRecord = AMNNR_CreateNewRecordPopUp147.split("<break>", -1)[2];
 
@@ -20321,7 +20335,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String updatedRelatedToVerify = relatedTo + AMNNR_RelatedTo149 + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp149.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp150.split("<break>", -1) };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
 				{ AMNNR_CallLabel3, relatedTo } };
@@ -20332,8 +20348,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp149.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp150.split("<break>", -1) };
 		String firmRecord1 = AMNNR_CreateNewRecordPopUp150.split("<break>", -1)[2];
 		String contactRecord = AMNNR_CreateNewRecordPopUp149.split("<break>", -1)[2];
 
@@ -20545,7 +20559,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 		String updatedRelatedToNotContainsVerify = AMNNR_RelatedTo151;
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp151.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp152.split("<break>", -1) };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
 				{ AMNNR_CallLabel3, relatedTo } };
@@ -20556,8 +20572,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp151.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp152.split("<break>", -1) };
 		String record1 = AMNNR_CreateNewRecordPopUp151.split("<break>", -1)[1];
 		String record2 = AMNNR_CreateNewRecordPopUp152.split("<break>", -1)[1];
 
@@ -20743,7 +20757,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_SuggestedTag81;
 		String updatedRelatedToNotContainsVerify = AMNNR_RelatedTo153;
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp153.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp154.split("<break>", -1), AMNNR_CreateNewRecordPopUp155.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp156.split("<break>", -1), AMNNR_CreateNewRecordPopUp157.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp158.split("<break>", -1), AMNNR_CreateNewRecordPopUp159.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp160.split("<break>", -1), AMNNR_CreateNewRecordPopUp161.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp162.split("<break>", -1), AMNNR_CreateNewRecordPopUp163.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp164.split("<break>", -1), AMNNR_CreateNewRecordPopUp165.split("<break>", -1),
+				AMNNR_CreateNewRecordPopUp166.split("<break>", -1) };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 		String[] SuggestedTags = AMNNR_SuggestedTag81.split("<break>", -1);
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
@@ -20755,14 +20777,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp153.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp154.split("<break>", -1), AMNNR_CreateNewRecordPopUp155.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp156.split("<break>", -1), AMNNR_CreateNewRecordPopUp157.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp158.split("<break>", -1), AMNNR_CreateNewRecordPopUp159.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp160.split("<break>", -1), AMNNR_CreateNewRecordPopUp161.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp162.split("<break>", -1), AMNNR_CreateNewRecordPopUp163.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp164.split("<break>", -1), AMNNR_CreateNewRecordPopUp165.split("<break>", -1),
-				AMNNR_CreateNewRecordPopUp166.split("<break>", -1) };
 		String firmRecord1 = AMNNR_CreateNewRecordPopUp160.split("<break>", -1)[1];
 		String firmRecord2 = AMNNR_CreateNewRecordPopUp164.split("<break>", -1)[1];
 
@@ -21019,7 +21033,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				updatedRelatedToNotContainsVerify = updatedRelatedToNotContainsVerify.substring(0,
 						(updatedRelatedToNotContainsVerify.length() - 7));
 		}
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String task1NotesVerify = task1Notes;
 		String[] SuggestedTags = AMNNR_SuggestedTag95.split("<break>", -1);
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
@@ -21213,7 +21227,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 		String updatedRelatedToNotContainsVerify = BP.matcherOfAtTheRate(task1Notes);
 
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp168.split("<break>", -1) };
+
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 		String[] SuggestedTags = AMNNR_SuggestedTag97.split("<break>", -1);
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
@@ -21224,8 +21240,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
-
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp168.split("<break>", -1) };
 
 		String updatedNotesOfTask = AMNNR_Notes169;
 		String[][] task1UpdateBasicSection = { { AMNNR_CallLabel2, updatedNotesOfTask } };
@@ -21463,10 +21477,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_RelatedTo173;
 
-		String task1NotesVerify = task1Notes.split("<Section>", -1)[1].replace("@", "");
-		String[] SuggestedTags = AMNNR_SuggestedTag172.split("<break>", -1);
-
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp101.split("<break>") };
+
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes.split("<Section>", -1)[1]);
+		String[] SuggestedTags = AMNNR_SuggestedTag172.split("<break>", -1);
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
 				{ AMNNR_CallLabel3, relatedTo } };
@@ -21735,7 +21749,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp104.split("<break>") };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 		String[] SuggestedTags = AMNNR_SuggestedTag104.split("<break>", -1);
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
@@ -21747,7 +21762,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp104.split("<break>") };
 		String updatedRelatedToNotContainsVerify = AMNNR_SuggestedTag104;
 		String[][] relatedAssociationNotContains = { { AMNNR_CallLabel3, updatedRelatedToNotContainsVerify } };
 		String[] updatedSuggestedTags = AMNNR_SuggestedTag105.split("<break>", -1);
@@ -21969,7 +21983,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String task1NotesVerify = task1Notes;
 		String[] SuggestedTags = AMNNR_SuggestedTag176.split("<break>", -1);
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
@@ -22173,7 +22187,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp113.split("<break>") };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 		String[] SuggestedTags = AMNNR_SuggestedTag113.split("<break>", -1);
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
@@ -22184,8 +22199,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
-
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp113.split("<break>") };
 
 		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp183.split("<break>", -1),
 				AMNNR_AddContactsToDealTeamPopUp184.split("<break>", -1),
@@ -23019,7 +23032,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1Notes = AMNNR_Notes198;
 		String relatedTo = AMNNR_RelatedTo198;
 
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp132.split("<break>") };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_RelatedTo133;
 
@@ -23033,7 +23047,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_CallLabel8, AMNNR_Classification132 } };
 
 		String[] SuggestedTags = AMNNR_SuggestedTag132.split("<break>", -1);
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp132.split("<break>") };
+
 		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp132.split("<break>") };
 		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup132.split("<break>") };
 
@@ -23252,7 +23266,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1Notes = AMNNR_Notes199;
 		String relatedTo = AMNNR_RelatedTo199;
 
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp134.split("<break>") };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_RelatedTo135;
 
@@ -23266,7 +23281,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_CallLabel8, AMNNR_Classification134 } };
 
 		String[] SuggestedTags = AMNNR_SuggestedTag134.split("<break>", -1);
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp134.split("<break>") };
+
 		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp134.split("<break>") };
 		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup134.split("<break>") };
 		String updatedRelatedToNotContainsVerify = AMNNR_RelatedTo136;
@@ -23572,7 +23587,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1Notes = AMNNR_Notes138;
 		String relatedTo = AMNNR_RelatedTo200;
 
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp138.split("<break>") };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_RelatedTo139;
 
@@ -23586,7 +23602,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_CallLabel8, AMNNR_Classification138 } };
 
 		String[] SuggestedTags = AMNNR_SuggestedTag138.split("<break>", -1);
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp138.split("<break>") };
+
 		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp200.split("<break>") };
 		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup200.split("<break>") };
 
@@ -23718,7 +23734,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String relatedTo = AMNNR_RelatedTo201;
 		String priority = AMNNR_AdvancePriority140;
 
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp201.split("<break>") };
+		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 		String updatedRelatedToVerifyForDetails = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 		String updatedRelatedToVerify = updatedRelatedToVerifyForDetails + "<break>" + AMNNR_RelatedTo141;
@@ -23751,7 +23768,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel8, AMNNR_Classification140 } };
 
 		String[] SuggestedTags = AMNNR_SuggestedTag140.split("<break>", -1);
-		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp201.split("<break>") };
+
 		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp201.split("<break>") };
 		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup201.split("<break>") };
 
