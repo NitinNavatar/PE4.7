@@ -10027,6 +10027,12 @@ public abstract class BasePage extends BaseLib {
 		return FindElement(driver, path, "Meeting and call count", action.BOOLEAN, timeOut);
 	}
 	
+	public WebElement getConnectionIconOfFundraisingContactRecord(String contactName, int timeOut) {
+
+		String path = "//a[text()="+contactName+"]/ancestor::td[@data-label='Name']/../td//button[@title='Connections']";
+		return FindElement(driver, path, "Meeting and call count", action.BOOLEAN, timeOut);
+	}
+	
 
 	
 }

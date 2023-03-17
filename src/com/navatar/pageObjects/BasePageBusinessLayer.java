@@ -24829,36 +24829,27 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	}
 	
 	
-	/*
-	public ArrayList<String> verifyMeetingAndCallOnExternalTabOfDealTeam(String[] name,String[] meetingAndCall)
+	
+	public ArrayList<String> verifyMeetingAndCallOnFundraisingContactTeam(String[] name,String[] meetingAndCall)
 	{
 		String xPath;
 		ArrayList<String> result=new ArrayList<String>();
 		if(name.length==meetingAndCall.length)
-		{
-			if(clickUsingJavaScript(driver, ExternalTab(20,action.SCROLLANDBOOLEAN), "External Tab"))
+		{		
+			for(int i=0; i<name.length; i++)
 			{
-				log(LogStatus.INFO, "Clicked on external tab button on deal team section", YesNo.No);
-				for(int i=0; i<name.length; i++)
+				ThreadSleep(3000);
+				String actualMeetingAndCallCount=getText(driver, getMeetingAndCallCountOfDealteam(name[i],20), "Meeting and call count", action.BOOLEAN);
+				if(actualMeetingAndCallCount.equals(meetingAndCall[i]))
 				{
-					ThreadSleep(3000);
-					String actualMeetingAndCallCount=getText(driver, getMeetingAndCallCountOfDealteam(name[i],20), "Meeting and call count", action.BOOLEAN);
-					if(actualMeetingAndCallCount.equals(meetingAndCall[i]))
-					{
-						log(LogStatus.INFO, "Actual meeting and call "+actualMeetingAndCallCount+" has been matched with expected meeting and call "+meetingAndCall[i]+" count of deal contatct "+name[i], YesNo.No);
-					}
-					else
-					{
-						log(LogStatus.ERROR, "Actual meeting and call "+actualMeetingAndCallCount+" is not matched with expected meeting and call "+meetingAndCall[i]+" count of deal contatct "+name[i], YesNo.No);
-						result.add("Actual meeting and call "+actualMeetingAndCallCount+" is not matched with expected meeting and call "+meetingAndCall[i]+" count of deal contatct "+name[i]);
-					}
-					
+					log(LogStatus.INFO, "Actual meeting and call "+actualMeetingAndCallCount+" has been matched with expected meeting and call "+meetingAndCall[i]+" count of fundraising Contact section "+name[i], YesNo.No);
 				}
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Not able to click on external tab button on deal team section", YesNo.No);
-				result.add( "Not able to click on external tab button on deal team section");
+				else
+				{
+					log(LogStatus.ERROR, "Actual meeting and call "+actualMeetingAndCallCount+" is not matched with expected meeting and call "+meetingAndCall[i]+" count of fundraising Contact section "+name[i], YesNo.No);
+					result.add("Actual meeting and call "+actualMeetingAndCallCount+" is not matched with expected meeting and call "+meetingAndCall[i]+" count of fundraising Contact section "+name[i]);
+				}
+
 			}
 		}
 		else
@@ -24869,7 +24860,41 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 
 	}
-	*/
+
 	
+
+	public ArrayList<String> verifyMeetingAndCallOnConnectionPageOfFundraisingContact(String contactName,String userName,String meetingAndCallcount)
+	{
+		String xPath;
+		ArrayList<String> result=new ArrayList<String>();
+
+			
+				if(clickUsingJavaScript(driver, getConnectionIconOfFundraisingContactRecord(contactName,20), "Connection icon"))
+				{
+				
+					log(LogStatus.INFO, "Clicked on connection icon of "+contactName, YesNo.No);
+					String parentID=switchToWindowOpenNextToParentWindow(driver);
+					
+					String actualMeetingAndCallCount=getText(driver, getMeetingAndCallCountOnConnectionIconOfDealteam(userName,20), "Meeting and call count", action.BOOLEAN);
+					if(actualMeetingAndCallCount.equals(meetingAndCallcount))
+					{
+						log(LogStatus.INFO, "Actual meeting and call "+actualMeetingAndCallCount+" has been matched with expected meeting and call "+meetingAndCallcount+" count of fundraising contect's connection page "+contactName, YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Actual meeting and call "+actualMeetingAndCallCount+" is not matched with expected meeting and call "+meetingAndCallcount+" count of fundraising contect's connection "+contactName, YesNo.No);
+						result.add("Actual meeting and call "+actualMeetingAndCallCount+" is not matched with expected meeting and call "+meetingAndCallcount+" count of fundraising contect's connection "+contactName);
+					}  
+					driver.close();
+					driver.switchTo().window(parentID);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Connection icon of fundraising contact", YesNo.No);
+					result.add( "Not able to click on Connection icon of fundraising contact");
+				}
+					
+		return result;
+	}
 
 }

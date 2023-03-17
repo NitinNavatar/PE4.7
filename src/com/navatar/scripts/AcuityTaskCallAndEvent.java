@@ -37562,15 +37562,13 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		labelName1.add("Contact");
 		labelName1.add("Role");
 
-		value1.add(ATCE_FName1);
-		value1.add(ATCE_FContact1);
-		value1.add(ATCE_FRole1);
+		value1.add(ATCE_FName2);
+		value1.add(ATCE_FContact2);
+		value1.add(ATCE_FRole2);
 
 		inputType1.add("SearchDropDown");
 		inputType1.add("SearchDropDown");
 		inputType1.add("DropDown");
-
-
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -37703,64 +37701,62 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc218_VerifyTaskOnFundraisingSection(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName=ATCE_Deal6;
-	    
-		String[] contectName= {ATCE_ConName31};
-		String[] meetingAndCallCount= {ATCE_ConMeetingAndCall31};
-		
-		
+		String recordName=ATCE_Fundraising3;
+
+		String[] contectName= {ATCE_ConName33};
+		String[] meetingAndCallCount= {ATCE_ConMeetingAndCall33};
+
+
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
-	
-		if (lp.clickOnTab(projectName, tabObj4)) {
 
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+		if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
 					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-					
-					ArrayList<String>result=bp.verifyMeetingAndCallOnExternalTabOfDealTeam(contectName, meetingAndCallCount);
+
+					ArrayList<String>result=bp.verifyMeetingAndCallOnFundraisingContactTeam(contectName, meetingAndCallCount);
 					if(result.isEmpty())
 					{
-						log(LogStatus.INFO, "The Meeting and call count have been verified on Deal Team Section", YesNo.No);
+						log(LogStatus.INFO, "The Meeting and call count have been verified on fundraising contact Section", YesNo.No);
 					}
 					else
 					{
-						log(LogStatus.ERROR, "The Meeting and call count are not verified on Deal Team Section", YesNo.No);
-						sa.assertTrue(false, "The Meeting and call count are not verified on Deal Team Section");
-					}
+						log(LogStatus.ERROR, "The Meeting and call count are not verified on fundraising contact Section", YesNo.No);
+						sa.assertTrue(false, "The Meeting and call count are not verified on fundraising contact Section");
 
-
-					
-					}
-					else
-					{
-						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Acuity tab");
 					}
 				}
 				else
 				{
-					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
-					sa.assertTrue(false,  "Not able to open record "+recordName);
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
 				}
 			}
 			else
 			{
-				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
-				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
 			}
-			
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+		}
+
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}	
@@ -37811,12 +37807,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName=ATCE_Deal6;
+		String recordName=ATCE_Fundraising3;
 	    
-		String[] contectName= {ATCE_ConName32};
-		String[] meetingAndCallCount= {ATCE_ConMeetingAndCall32};
+		String[] contectName= {ATCE_ConName34};
+		String[] meetingAndCallCount= {ATCE_ConMeetingAndCall34};
 		
-		String contact=ATCE_ConName31;
+		String contact=ATCE_ConName34;
 		
 		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
 		
@@ -37824,18 +37820,18 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 	
-		if (lp.clickOnTab(projectName, tabObj4)) {
+		if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
 
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
 
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
 					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-					
-					ArrayList<String>result=bp.verifyMeetingAndCallOnExternalTabOfDealTeam(contectName, meetingAndCallCount);
+				
+					ArrayList<String>result=bp.verifyMeetingAndCallOnFundraisingContactTeam(contectName, meetingAndCallCount);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The Meeting and call count have been verified on Deal Team Section", YesNo.No);
@@ -37846,7 +37842,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						sa.assertTrue(false, "The Meeting and call count are not verified on Deal Team Section");
 					}	
 					
-					ArrayList<String> result1=bp.verifyMeetingAndCallOnConnectionPageOfDealTeam(contact, connectionUserName, connectionMeetingaAndCall);
+					ArrayList<String> result1=bp.verifyMeetingAndCallOnConnectionPageOfFundraisingContact(contact, connectionUserName, connectionMeetingaAndCall);
 					if(result1.isEmpty())
 					{
 						log(LogStatus.INFO, "The Meeting and call count have been verified on connection page", YesNo.No);
@@ -37858,24 +37854,24 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					}
 					
 					
-					}
-					else
-					{
-						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Acuity tab");
-					}
 				}
 				else
 				{
-					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
-					sa.assertTrue(false,  "Not able to open record "+recordName);
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
 				}
 			}
 			else
 			{
-				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
-				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
 			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+		}
 			
 		lp.CRMlogout();	
 		sa.assertAll();	
