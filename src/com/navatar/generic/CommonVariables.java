@@ -1699,6 +1699,7 @@ public class CommonVariables {
 	    public static String ATE_Contact1,ATE_Contact2,ATE_Contact3,ATE_Contact4,ATE_Contact5,ATE_Contact6;
 	    
 	    public static String ACDealName1,ACDealContact1,ACDealTeamMember1,ACDealTeamRole1,ACDealTeamID1,ACDealTeamTitle1;
+	    public static String ACDealName2,ACDealContact2,ACDealTeamMember2,ACDealTeamRole2,ACDealTeamID2,ACDealTeamTitle2;
   		
 	    public static String ATE_ContactNameTitle1;
 	    
@@ -1831,45 +1832,49 @@ public class CommonVariables {
 	 		/*******************RG Acuity Task and Event*********************************/
 	 		
 	 		//Firm
-	 		public static String RGATE_FirmLegalName1,RGATE_FirmLegalName2,RGATE_FirmLegalName3,RGATE_FirmLegalName4;
-	 		public static String RGATE_FirmRecordType1,RGATE_FirmRecordType2,RGATE_FirmRecordType3;
+	 		public static String RGATE_FirmLegalName1,RGATE_FirmLegalName2,RGATE_FirmLegalName3,RGATE_FirmLegalName4,RGATE_FirmLegalName5;
+	 		public static String RGATE_FirmRecordType1,RGATE_FirmRecordType2,RGATE_FirmRecordType3,RGATE_FirmRecordType4;
 	 		
 	 		
 	 		//Contact
-	 		public static String RGATE_ContactFirstName1,RGATE_ContactFirstName2,RGATE_ContactFirstName3;
-	 		public static String RGATE_ContactLastName1,RGATE_ContactLastName2,RGATE_ContactLastName3;
-	 		public static String RGATE_ContactLegalName1,RGATE_ContactLegalName2,RGATE_ContactLegalName3;
-	 		public static String RGATE_ContactEmail1,RGATE_ContactEmail2,RGATE_ContactEmail3;
-	 		public static String RGATE_ContactFullName1,RGATE_ContactFullName2,RGATE_ContactFullName3;
-	 		public static String RGATE_Title3;
+	 		public static String RGATE_ContactFirstName1,RGATE_ContactFirstName2,RGATE_ContactFirstName3,RGATE_ContactFirstName4;
+	 		public static String RGATE_ContactLastName1,RGATE_ContactLastName2,RGATE_ContactLastName3,RGATE_ContactLastName4;
+	 		public static String RGATE_ContactLegalName1,RGATE_ContactLegalName2,RGATE_ContactLegalName3,RGATE_ContactLegalName4;
+	 		public static String RGATE_ContactEmail1,RGATE_ContactEmail2,RGATE_ContactEmail3,RGATE_ContactEmail4;
+	 		public static String RGATE_ContactFullName1,RGATE_ContactFullName2,RGATE_ContactFullName3,RGATE_ContactFullName4;
+	 		public static String RGATE_Title3,RGATE_Title4;
 	 		
 	 		//Deal  
-	 		public static String RGATE_DealName1,RGATE_DealName2,RGATE_DealName3;
-	 		public static String RGATE_DealCompany1,RGATE_DealCompany2,RGATE_DealCompany3;
-	 		public static String RGATE_DealStage1,RGATE_DealStage2,RGATE_DealStage3;
-	 		public static String RGATE_DealHSR3;
-	 		
+	 		public static String RGATE_DealName1,RGATE_DealName2,RGATE_DealName3,RGATE_DealName4;
+	 		public static String RGATE_DealCompany1,RGATE_DealCompany2,RGATE_DealCompany3,RGATE_DealCompany4;
+	 		public static String RGATE_DealStage1,RGATE_DealStage2,RGATE_DealStage3,RGATE_DealStage4;
+	 		public static String RGATE_DealHSR3,RGATE_DealHSR4;
+	 		public static String RGATE_FundName4;
 	 		//Fund
-	 		public static String RGATE_FundName1,RGATE_FundName2;
-	 		public static String RGATE_FundType1,RGATE_FundType2;
-	 		public static String RGATE_FundInvestmentCategory1,RGATE_FundInvestmentCategory2;
+	 		public static String RGATE_FundName1,RGATE_FundName2,RGATE_FundName3;
+	 		public static String RGATE_FundType1,RGATE_FundType2,RGATE_FundType3;
+	 		public static String RGATE_FundInvestmentCategory1,RGATE_FundInvestmentCategory2,RGATE_FundInvestmentCategory3;
 	 
 	 		
 	 		
 
 	 		//Outlook
-	 		public static String RGATE_ActivityType1,RGATE_ActivityType2,RGATE_ActivityType3,RGATE_ActivityType4,RGATE_ActivityType5,RGATE_ActivityType6,RGATE_ActivityType7,RGATE_ActivityType8;
-	 		public static String RGATE_Subject1,RGATE_Subject2,RGATE_Subject3,RGATE_Subject4,RGATE_Subject5,RGATE_Subject6,RGATE_Subject7,RGATE_Subject8;
-	 		public static String RGATE_Notes1,RGATE_Notes2,RGATE_Notes3,RGATE_Notes4,RGATE_Notes5,RGATE_Notes6,RGATE_Notes7,RGATE_Notes8;
-	 		public static String RGATE_RelatedTo1,RGATE_RelatedTo2,RGATE_RelatedTo3,RGATE_RelatedTo4,RGATE_RelatedTo5,RGATE_RelatedTo6,RGATE_RelatedTo7,RGATE_RelatedTo8;	
-	 		public static String RGATE_StartDay1,RGATE_StartDay2,RGATE_StartDay3,RGATE_StartDay4,RGATE_StartDay5,RGATE_StartDay6,RGATE_StartDay7,RGATE_StartDay8;
-	 		public static String RGATE_EndDay1,RGATE_EndDay2,RGATE_EndDay3,RGATE_EndDay4,RGATE_EndDay5,RGATE_EndDay6,RGATE_EndDay7,RGATE_EndDay8;		
-	 		public static String RGATE_AdvanceStartDate1,RGATE_AdvanceStartDate2,RGATE_AdvanceStartDate3,RGATE_AdvanceStartDate4,RGATE_AdvanceStartDate5,RGATE_AdvanceStartDate6,RGATE_AdvanceStartDate7,RGATE_AdvanceStartDate8;
-	 		public static String RGATE_AdvanceEndDate1,RGATE_AdvanceEndDate2,RGATE_AdvanceEndDate3,RGATE_AdvanceEndDate4,RGATE_AdvanceEndDate5,RGATE_AdvanceEndDate6,RGATE_AdvanceEndDate7,RGATE_AdvanceEndDate8;
-	 		public static String RGATE_Repeat1;
+	 		public static String RGATE_ActivityType1,RGATE_ActivityType2,RGATE_ActivityType3,RGATE_ActivityType4,RGATE_ActivityType5,RGATE_ActivityType6,RGATE_ActivityType7,RGATE_ActivityType8,RGATE_ActivityType9;
+	 		public static String RGATE_Subject1,RGATE_Subject2,RGATE_Subject3,RGATE_Subject4,RGATE_Subject5,RGATE_Subject6,RGATE_Subject7,RGATE_Subject8,RGATE_Subject9,RGATE_Subject10;
+	 		public static String RGATE_Notes1,RGATE_Notes2,RGATE_Notes3,RGATE_Notes4,RGATE_Notes5,RGATE_Notes6,RGATE_Notes7,RGATE_Notes8,RGATE_Notes9,RGATE_Notes10;
+	 		public static String RGATE_RelatedTo1,RGATE_RelatedTo2,RGATE_RelatedTo3,RGATE_RelatedTo4,RGATE_RelatedTo5,RGATE_RelatedTo6,RGATE_RelatedTo7,RGATE_RelatedTo8,RGATE_RelatedTo9,RGATE_RelatedTo10;	
+	 		public static String RGATE_StartDay1,RGATE_StartDay2,RGATE_StartDay3,RGATE_StartDay4,RGATE_StartDay5,RGATE_StartDay6,RGATE_StartDay7,RGATE_StartDay8,RGATE_StartDay9,RGATE_StartDay10;
+	 		public static String RGATE_EndDay1,RGATE_EndDay2,RGATE_EndDay3,RGATE_EndDay4,RGATE_EndDay5,RGATE_EndDay6,RGATE_EndDay7,RGATE_EndDay8,RGATE_EndDay9,RGATE_EndDay10;		
+	 		public static String RGATE_AdvanceStartDate1,RGATE_AdvanceStartDate2,RGATE_AdvanceStartDate3,RGATE_AdvanceStartDate4,RGATE_AdvanceStartDate5,RGATE_AdvanceStartDate6,RGATE_AdvanceStartDate7,RGATE_AdvanceStartDate8,RGATE_AdvanceStartDate9,RGATE_AdvanceStartDate10;
+	 		public static String RGATE_AdvanceEndDate1,RGATE_AdvanceEndDate2,RGATE_AdvanceEndDate3,RGATE_AdvanceEndDate4,RGATE_AdvanceEndDate5,RGATE_AdvanceEndDate6,RGATE_AdvanceEndDate7,RGATE_AdvanceEndDate8,RGATE_AdvanceEndDate9,RGATE_AdvanceEndDate10;
+	 		public static String RGATE_Repeat1,RGATE_Repeat2;
 	 		public static String RGATE_TaggedPeopleName8,RGATE_TaggedPeopleCount8,RGATE_TaggedFirmName8,RGATE_TaggedFirmCount8;
+	 		public static String RGATE_TaggedPeopleName9,RGATE_TaggedPeopleCount9,RGATE_TaggedFirmName9,RGATE_TaggedFirmCount9;
+	 		public static String RGATE_TaggedPeopleName10,RGATE_TaggedPeopleCount10,RGATE_TaggedFirmName10,RGATE_TaggedFirmCount10;
+	 		public static String RGATE_TaggedPeopleName11,RGATE_TaggedPeopleCount11,RGATE_TaggedFirmName11,RGATE_TaggedFirmCount11;
+	 		public static String RGATE_TaggedPeopleName12,RGATE_TaggedPeopleCount12,RGATE_TaggedFirmName12,RGATE_TaggedFirmCount12;
 	 		public static String RGATEConnectionTitle9,RGATEConnectionRole9,RGATEConnectionsDeal9,RGATEConnectionsMeetCount9,RGATEConnectionsEmailCount9,RGATEConnectionsCallCount9;
-
+	 		public static String RGATEConnectionTitle10,RGATEConnectionRole10,RGATEConnectionsDeal10,RGATEConnectionsMeetCount10,RGATEConnectionsEmailCount10,RGATEConnectionsCallCount10;
 	 		// Email Task
 	 		public static String RGATE_EIcon1,RGATE_EIcon2,RGATE_EIcon3;
 	 		public static String RGATE_ESubject1,RGATE_ESubject2,RGATE_ESubject3;
@@ -8725,58 +8730,75 @@ public class CommonVariables {
 		 		 RGATE_FirmLegalName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGATERecord002", excelLabel.Legal_Name);
 		 		 RGATE_FirmLegalName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGATERecord003", excelLabel.Legal_Name);
 		 		 RGATE_FirmLegalName4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGATERecord004", excelLabel.Legal_Name);
-		 		
+		 		 RGATE_FirmLegalName5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGATERecord005", excelLabel.Legal_Name);
+		 		 
 			 	 RGATE_FirmRecordType1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGATERecord001", excelLabel.Record_Type);
 			   	 RGATE_FirmRecordType2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGATERecord003", excelLabel.Record_Type);
 			   	 RGATE_FirmRecordType3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGATERecord004", excelLabel.Record_Type);
+			   	 RGATE_FirmRecordType4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGATERecord005", excelLabel.Record_Type);
+			   	 
 		 		//Contact
 			 	RGATE_ContactFirstName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con1", excelLabel.Contact_FirstName);
 			 	RGATE_ContactFirstName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con2", excelLabel.Contact_FirstName);
 			 	RGATE_ContactFirstName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con3", excelLabel.Contact_FirstName);
+			 	RGATE_ContactFirstName4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con4", excelLabel.Contact_FirstName);
 			 	
 		 		RGATE_ContactLastName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con1", excelLabel.Contact_LastName);
 		 		RGATE_ContactLastName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con2", excelLabel.Contact_LastName);
 		 		RGATE_ContactLastName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con3", excelLabel.Contact_LastName);
+		 		RGATE_ContactLastName4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con4", excelLabel.Contact_LastName);
 		 		
 		 		RGATE_ContactLegalName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con1", excelLabel.Legal_Name);
 		 		RGATE_ContactLegalName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con2", excelLabel.Legal_Name);
 		 		RGATE_ContactLegalName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con3", excelLabel.Legal_Name);		 		
+		 		RGATE_ContactLegalName4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con4", excelLabel.Legal_Name);
 		 		
 		 		RGATE_ContactEmail1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con1", excelLabel.Contact_EmailId);
 		 		RGATE_ContactEmail2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con2", excelLabel.Contact_EmailId);
 		 		RGATE_ContactEmail3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con3", excelLabel.Contact_EmailId);
+		 		RGATE_ContactEmail4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con4", excelLabel.Contact_EmailId);
 		 		
 		 		RGATE_ContactFullName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con1", excelLabel.ContactName);
 		 		RGATE_ContactFullName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con2", excelLabel.ContactName);
 		 		RGATE_ContactFullName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con3", excelLabel.ContactName);
+		 		RGATE_ContactFullName4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con4", excelLabel.ContactName);
 		 		
 		 		RGATE_Title3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con3", excelLabel.Title);
+		 		RGATE_Title4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con4", excelLabel.Title);
 		 		
 		 		//Deal 
 		 		RGATE_DealName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal1", excelLabel.Deal_Name);
 		 		RGATE_DealName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal2", excelLabel.Deal_Name);
 		 		RGATE_DealName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal3", excelLabel.Deal_Name);
+		 		RGATE_DealName4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal4", excelLabel.Deal_Name);
 		 		
 		 		RGATE_DealCompany1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal1", excelLabel.Company);
 		 		RGATE_DealCompany2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal2", excelLabel.Company);
 		 		RGATE_DealCompany3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal3", excelLabel.Company);
+		 		RGATE_DealCompany4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal4", excelLabel.Company);
+		 		
+		 		RGATE_FundName4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal4", excelLabel.Other_LabelValues);
 		 		
 		 		RGATE_DealStage1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal1", excelLabel.Stage);
 		 		RGATE_DealStage2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal2", excelLabel.Stage);
 		 		RGATE_DealStage3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal3", excelLabel.Stage);
+		 		RGATE_DealStage4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal4", excelLabel.Stage);
 		 		
 		 		RGATE_DealHSR3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal3", excelLabel.Highest_Stage_Reached);
+		 		RGATE_DealHSR4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal4", excelLabel.Highest_Stage_Reached);
 		 		
 		 		//Fund
 		 		RGATE_FundName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "RGATE_Fund01", excelLabel.Fund_Name);
 		 		RGATE_FundName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "RGATE_Fund02", excelLabel.Fund_Name);
+		 		RGATE_FundName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "RGATE_Fund03", excelLabel.Fund_Name);
 		 		
 		 		RGATE_FundType1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "RGATE_Fund01", excelLabel.Fund_Type);
 		 		RGATE_FundType2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "RGATE_Fund02", excelLabel.Fund_Type);
+		 		RGATE_FundType3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "RGATE_Fund03", excelLabel.Fund_Type);
 		 		
 		 		RGATE_FundInvestmentCategory1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "RGATE_Fund01", excelLabel.Fund_Investment_Category);
 		 		RGATE_FundInvestmentCategory2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "RGATE_Fund02", excelLabel.Fund_Investment_Category);
-		 		
+		 		RGATE_FundInvestmentCategory3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "RGATE_Fund03", excelLabel.Fund_Investment_Category);
 		 		
 		 		RGATE_ActivityType1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_001", excelLabel.Action_Type);
 		 		RGATE_ActivityType2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_002", excelLabel.Action_Type);
@@ -8786,6 +8808,7 @@ public class CommonVariables {
 		 		RGATE_ActivityType6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_006", excelLabel.Action_Type);
 		 		RGATE_ActivityType7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_007", excelLabel.Action_Type);
 		 		RGATE_ActivityType8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_008", excelLabel.Action_Type);
+		 		RGATE_ActivityType9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_009", excelLabel.Action_Type);
 		 		
 		 		RGATE_Subject1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_001", excelLabel.Subject);
 		 		RGATE_Subject2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_002", excelLabel.Subject);
@@ -8795,6 +8818,8 @@ public class CommonVariables {
 		 		RGATE_Subject6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_006", excelLabel.Subject);
 		 		RGATE_Subject7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_007", excelLabel.Subject);
 		 		RGATE_Subject8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_008", excelLabel.Subject);
+		 		RGATE_Subject9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_009", excelLabel.Subject);
+		 		RGATE_Subject10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_010", excelLabel.Subject);
 		 		
 		 		RGATE_Notes1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_001", excelLabel.Notes);
 		 		RGATE_Notes2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_002", excelLabel.Notes);
@@ -8804,6 +8829,8 @@ public class CommonVariables {
 		 		RGATE_Notes6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_006", excelLabel.Notes);
 		 		RGATE_Notes7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_007", excelLabel.Notes);
 		 		RGATE_Notes8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_008", excelLabel.Notes);
+		 		RGATE_Notes9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_009", excelLabel.Notes);
+		 		RGATE_Notes10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_010", excelLabel.Notes);
 		 		
 		 		RGATE_RelatedTo1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_001", excelLabel.Related_To);
 		 		RGATE_RelatedTo2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_002", excelLabel.Related_To);
@@ -8813,6 +8840,8 @@ public class CommonVariables {
 		 		RGATE_RelatedTo6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_006", excelLabel.Related_To);
 		 		RGATE_RelatedTo7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_007", excelLabel.Related_To);
 		 		RGATE_RelatedTo8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_008", excelLabel.Related_To);
+		 		RGATE_RelatedTo9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_009", excelLabel.Related_To);
+		 		RGATE_RelatedTo10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_010", excelLabel.Related_To);
 		 		
 		 		RGATE_StartDay1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_001", excelLabel.Day);
 		 		RGATE_StartDay2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_002", excelLabel.Day);
@@ -8822,6 +8851,8 @@ public class CommonVariables {
 		 		RGATE_StartDay6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_006", excelLabel.Day);
 		 		RGATE_StartDay7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_007", excelLabel.Day);
 		 		RGATE_StartDay8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_008", excelLabel.Day);
+		 		RGATE_StartDay9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_009", excelLabel.Day);
+		 		RGATE_StartDay10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_010", excelLabel.Day);
 		 		
 		 		RGATE_EndDay1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_001", excelLabel.End_Day);
 		 		RGATE_EndDay2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_002", excelLabel.End_Day);
@@ -8831,6 +8862,8 @@ public class CommonVariables {
 		 		RGATE_EndDay6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_006", excelLabel.End_Day);
 		 		RGATE_EndDay7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_007", excelLabel.End_Day);
 		 		RGATE_EndDay8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_008", excelLabel.End_Day);
+		 		RGATE_EndDay9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_009", excelLabel.End_Day);
+		 		RGATE_EndDay10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_010", excelLabel.End_Day);
 		 		
 		 		RGATE_AdvanceStartDate1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_001", excelLabel.Advance_Start_Date);
 		 		RGATE_AdvanceStartDate2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_002", excelLabel.Advance_Start_Date);
@@ -8840,6 +8873,8 @@ public class CommonVariables {
 		 		RGATE_AdvanceStartDate6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_006", excelLabel.Advance_Start_Date);
 		 		RGATE_AdvanceStartDate7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_007", excelLabel.Advance_Start_Date);
 		 		RGATE_AdvanceStartDate8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_008", excelLabel.Advance_Start_Date);
+		 		RGATE_AdvanceStartDate9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_009", excelLabel.Advance_Start_Date);
+		 		RGATE_AdvanceStartDate10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_010", excelLabel.Advance_Start_Date);
 		 		
 		 		RGATE_AdvanceEndDate1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_001", excelLabel.Advance_End_Date);
 		 		RGATE_AdvanceEndDate2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_002", excelLabel.Advance_End_Date);
@@ -8849,17 +8884,24 @@ public class CommonVariables {
 		 		RGATE_AdvanceEndDate6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_006", excelLabel.Advance_End_Date);
 		 		RGATE_AdvanceEndDate7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_007", excelLabel.Advance_End_Date);
 		 		RGATE_AdvanceEndDate8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_008", excelLabel.Advance_End_Date);
-		 		
-		 		
+		 		RGATE_AdvanceEndDate9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_009", excelLabel.Advance_End_Date);
+		 		RGATE_AdvanceEndDate10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_010", excelLabel.Advance_End_Date);
 		 		
 		 		RGATE_Repeat1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_004", excelLabel.Repeat);
-
+		 		RGATE_Repeat2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_005", excelLabel.Repeat);
+		 		
 		 		ACDealName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "AC_DT01", excelLabel.Deal_Name);
 				ACDealContact1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "AC_DT01", excelLabel.Contact);
 				ACDealTeamMember1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "AC_DT01", excelLabel.Member);
 				ACDealTeamRole1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "AC_DT01", excelLabel.Role);
 				ACDealTeamTitle1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "AC_DT01", excelLabel.Title);
 		 		
+				ACDealName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "AC_DT02", excelLabel.Deal_Name);
+				ACDealContact2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "AC_DT02", excelLabel.Contact);
+				ACDealTeamMember2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "AC_DT02", excelLabel.Member);
+				ACDealTeamRole2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "AC_DT02", excelLabel.Role);
+				ACDealTeamTitle2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "AC_DT02", excelLabel.Title);
+				
 		 		RGATE_EIcon1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_E001", excelLabel.Action_Type);
 		 		RGATE_EIcon2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_E002", excelLabel.Action_Type);
 		 		RGATE_EIcon3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_E003", excelLabel.Action_Type);
@@ -8881,6 +8923,28 @@ public class CommonVariables {
 		 		RGATEConnectionsMeetCount9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE009", excelLabel.Contact_Meetings_And_Calls);
 		 		RGATEConnectionsCallCount9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE009", excelLabel.Connection_MeetingsAndCall);
 		 		RGATEConnectionsEmailCount9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE009", excelLabel.Contact_Email);
+		 		RGATE_TaggedFirmName9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE009", excelLabel.Company);
+		 		RGATE_TaggedFirmCount9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE009", excelLabel.Companies_Count);
+		 		RGATE_TaggedPeopleName9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE009", excelLabel.People);
+		 		RGATE_TaggedPeopleCount9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE009", excelLabel.People_Count);
+		 		RGATEConnectionTitle10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE010", excelLabel.Connection_Title);
+		 		RGATEConnectionRole10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE010", excelLabel.Connection_Deal);
+		 		RGATEConnectionsDeal10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE010", excelLabel.Contact_Deals);
+		 		RGATEConnectionsMeetCount10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE010", excelLabel.Contact_Meetings_And_Calls);
+		 		RGATEConnectionsCallCount10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE010", excelLabel.Connection_MeetingsAndCall);
+		 		RGATEConnectionsEmailCount10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE010", excelLabel.Contact_Email);
+		 		RGATE_TaggedFirmName10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE010", excelLabel.Company);
+		 		RGATE_TaggedFirmCount10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE010", excelLabel.Companies_Count);
+		 		RGATE_TaggedPeopleName10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE010", excelLabel.People);
+		 		RGATE_TaggedPeopleCount10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE010", excelLabel.People_Count);
+		 		RGATE_TaggedFirmName11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE011", excelLabel.Company);
+		 		RGATE_TaggedFirmCount11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE011", excelLabel.Companies_Count);
+		 		RGATE_TaggedPeopleName11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE011", excelLabel.People);
+		 		RGATE_TaggedPeopleCount11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE011", excelLabel.People_Count);
+		 		RGATE_TaggedFirmName12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE012", excelLabel.Company);
+		 		RGATE_TaggedFirmCount12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE012", excelLabel.Companies_Count);
+		 		RGATE_TaggedPeopleName12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE012", excelLabel.People);
+		 		RGATE_TaggedPeopleCount12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE012", excelLabel.People_Count);
 		 		
 		 		//Update Event
 		 		RGATE_UNotes1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_U001", excelLabel.Notes);
