@@ -3757,6 +3757,25 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, peopleTabOnTagged, "Visibility", timeOut, "People Tab On Tagged");
 	}
 	
+	@FindBy(xpath = "//button[@name='timesRef']")
+	private WebElement countLink;
+
+	/**
+	 * @return the Count Link
+	 */
+	public WebElement getCountLinkOnTagged(int timeOut) {
+		return isDisplayed(driver, countLink, "Visibility", timeOut, "Count Link");
+	}
+	
+	public WebElement returnXpathOfSubjectInInteractionPage(String name, int timeOut) {
+		String xpath = "//td[@data-label='Subject']//button[@title='" + name + "']"; 
+		try {
+			return FindElement(driver, xpath, "Subject Of Interaction Page",action.BOOLEAN,timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Subject Of Interaction Page",action.BOOLEAN,timeOut);
+		}
+	}
+	
 	@FindBy(xpath = "//input[contains(@id,'txtDueDate')]/following-sibling::span")
 	private WebElement todaysDueDate;
 
