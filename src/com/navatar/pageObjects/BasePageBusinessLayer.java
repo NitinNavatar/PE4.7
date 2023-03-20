@@ -13512,7 +13512,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 
 					else if (labelName.contains(excelLabel.Status.toString())
-							|| labelName.contains(excelLabel.Priority.toString())) {
+							|| labelName.contains(excelLabel.Priority.toString())
+							|| labelName.contains("Classification")) {
 						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
 								+ labelName + "']/..//button";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
@@ -13601,8 +13602,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 
 					else {
-						log(LogStatus.ERROR, "label name is not correct", YesNo.No);
-						sa.assertTrue(false, "label name is not correct");
+						log(LogStatus.ERROR, "label name is not correct: " + labelName, YesNo.No);
+						sa.assertTrue(false, "label name is not correct: " + labelName);
 						return false;
 					}
 				}
@@ -19326,8 +19327,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						flag = true;
 
 					}
-					
-					
+
 				} else {
 					log(LogStatus.ERROR, "Not able to click on Save button", YesNo.No);
 					sa.assertTrue(false, "Not able to click on Save button");
@@ -20839,7 +20839,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
-	
 	public ArrayList<String> verifyDefaultSortingOfReferencedTypeOnTaggedSectionFormFirmAndPeopleTab() {
 		String xPath;
 		List<WebElement> elements;
@@ -20878,12 +20877,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
 			result.add("Not able to click on People tab name");
 		}
-		
 
 		return result;
 	}
 
-	
 	public ArrayList<String> verifyActivityTimeLineRecordShouldNotVisibleOnViewAllInteractionPopup(
 			String[] subjectName) {
 		String xPath;
@@ -21723,7 +21720,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
-	
 	public List<String> verifyNotificationOptionsNotContainsInRecordDetailPage(String... eventName) {
 
 		List<WebElement> notificationOptionsList = getNotificationOptions();
@@ -24742,6 +24738,190 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		}
 
+	}
+
+	public ArrayList<String> verifyMeetingAndCallOnExternalTabOfDealTeam(String[] name, String[] meetingAndCall) {
+		String xPath;
+		ArrayList<String> result = new ArrayList<String>();
+		if (name.length == meetingAndCall.length) {
+			if (clickUsingJavaScript(driver, ExternalTab(20, action.SCROLLANDBOOLEAN), "External Tab")) {
+				log(LogStatus.INFO, "Clicked on external tab button on deal team section", YesNo.No);
+				for (int i = 0; i < name.length; i++) {
+					ThreadSleep(3000);
+					String actualMeetingAndCallCount = getText(driver, getMeetingAndCallCountOfDealteam(name[i], 20),
+							"Meeting and call count", action.BOOLEAN);
+					if (actualMeetingAndCallCount.equals(meetingAndCall[i])) {
+						log(LogStatus.INFO,
+								"Actual meeting and call " + actualMeetingAndCallCount
+										+ " has been matched with expected meeting and call " + meetingAndCall[i]
+										+ " count of deal contatct " + name[i],
+								YesNo.No);
+					} else {
+						log(LogStatus.ERROR,
+								"Actual meeting and call " + actualMeetingAndCallCount
+										+ " is not matched with expected meeting and call " + meetingAndCall[i]
+										+ " count of deal contatct " + name[i],
+								YesNo.No);
+						result.add("Actual meeting and call " + actualMeetingAndCallCount
+								+ " is not matched with expected meeting and call " + meetingAndCall[i]
+								+ " count of deal contatct " + name[i]);
+					}
+
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on external tab button on deal team section", YesNo.No);
+				result.add("Not able to click on external tab button on deal team section");
+			}
+		} else {
+			log(LogStatus.ERROR, "the length of name and meeting and call are not equal", YesNo.No);
+			result.add("the length of name and meeting and call are not equal");
+		}
+		return result;
+
+	}
+
+	public ArrayList<String> verifyMeetingAndCallOnConnectionPageOfDealTeam(String contactName, String userName,
+			String meetingAndCallcount) {
+		String xPath;
+		ArrayList<String> result = new ArrayList<String>();
+
+		if (clickUsingJavaScript(driver, ExternalTab(20, action.SCROLLANDBOOLEAN), "External Tab")) {
+			log(LogStatus.INFO, "Clicked on external tab button on deal team section", YesNo.No);
+
+			if (clickUsingJavaScript(driver, getCOnnectionIconOfDealteam(contactName, 20), "Connection icon")) {
+
+				log(LogStatus.INFO, "Clicked on connection icon of " + contactName, YesNo.No);
+				String parentID = switchToWindowOpenNextToParentWindow(driver);
+
+				String actualMeetingAndCallCount = getText(driver,
+						getMeetingAndCallCountOnConnectionIconOfDealteam(userName, 20), "Meeting and call count",
+						action.BOOLEAN);
+				if (actualMeetingAndCallCount.equals(meetingAndCallcount)) {
+					log(LogStatus.INFO,
+							"Actual meeting and call " + actualMeetingAndCallCount
+									+ " has been matched with expected meeting and call " + meetingAndCallcount
+									+ " count of deal contatct " + contactName,
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Actual meeting and call " + actualMeetingAndCallCount
+									+ " is not matched with expected meeting and call " + meetingAndCallcount
+									+ " count of deal contatct " + contactName,
+							YesNo.No);
+					result.add("Actual meeting and call " + actualMeetingAndCallCount
+							+ " is not matched with expected meeting and call " + meetingAndCallcount
+							+ " count of deal contatct " + contactName);
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+			} else {
+				log(LogStatus.ERROR, "Not able to click onCo on deal team section", YesNo.No);
+				result.add("Not able to click on external tab button on deal team section");
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not able to click on external tab button on deal team section", YesNo.No);
+			result.add("Not able to click on external tab button on deal team section");
+		}
+
+		return result;
+	}
+
+	
+	
+	
+	public ArrayList<String> verifyMeetingAndCallOnFundraisingContactTeam(String[] name,String[] meetingAndCall)
+	{
+		String xPath;
+		ArrayList<String> result=new ArrayList<String>();
+		if(name.length==meetingAndCall.length)
+		{		
+			for(int i=0; i<name.length; i++)
+			{
+				ThreadSleep(3000);
+				String actualMeetingAndCallCount=getText(driver, getMeetingAndCallCountOfDealteam(name[i],20), "Meeting and call count", action.BOOLEAN);
+				if(actualMeetingAndCallCount.equals(meetingAndCall[i]))
+				{
+					log(LogStatus.INFO, "Actual meeting and call "+actualMeetingAndCallCount+" has been matched with expected meeting and call "+meetingAndCall[i]+" count of fundraising Contact section "+name[i], YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Actual meeting and call "+actualMeetingAndCallCount+" is not matched with expected meeting and call "+meetingAndCall[i]+" count of fundraising Contact section "+name[i], YesNo.No);
+					result.add("Actual meeting and call "+actualMeetingAndCallCount+" is not matched with expected meeting and call "+meetingAndCall[i]+" count of fundraising Contact section "+name[i]);
+				}
+
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "the length of name and meeting and call are not equal", YesNo.No);
+			result.add( "the length of name and meeting and call are not equal");
+		}
+		return result;
+
+	}
+
+
+	public String convertRequiredNotes(String[][] createNewRecordPopUp, String notes) {
+
+		try {
+
+			for (String[] createNewRecordPopUpRow : createNewRecordPopUp) {
+				if (createNewRecordPopUpRow.length == 6) {
+					if (createNewRecordPopUpRow[5].contains("Create")) {
+
+						if (createNewRecordPopUpRow[2].contains("<AsItIs>")) {
+							notes = notes.replace("@" + createNewRecordPopUpRow[1], createNewRecordPopUpRow[1]);
+						}
+
+					}
+				}
+			}
+
+		} catch (Exception e) {
+			log(LogStatus.ERROR, "Exception Occured: " + e.getMessage(), YesNo.Yes);
+			sa.assertTrue(false, "Exception Occured: " + e.getMessage());
+
+
+		}
+
+		return notes;
+
+	}
+
+
+	public ArrayList<String> verifyMeetingAndCallOnConnectionPageOfFundraisingContact(String contactName,String userName,String meetingAndCallcount)
+	{
+		String xPath;
+		ArrayList<String> result=new ArrayList<String>();
+
+			
+				if(clickUsingJavaScript(driver, getConnectionIconOfFundraisingContactRecord(contactName,20), "Connection icon"))
+				{
+				
+					log(LogStatus.INFO, "Clicked on connection icon of "+contactName, YesNo.No);
+					String parentID=switchToWindowOpenNextToParentWindow(driver);
+					
+					String actualMeetingAndCallCount=getText(driver, getMeetingAndCallCountOnConnectionIconOfDealteam(userName,20), "Meeting and call count", action.BOOLEAN);
+					if(actualMeetingAndCallCount.equals(meetingAndCallcount))
+					{
+						log(LogStatus.INFO, "Actual meeting and call "+actualMeetingAndCallCount+" has been matched with expected meeting and call "+meetingAndCallcount+" count of fundraising contect's connection page "+contactName, YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Actual meeting and call "+actualMeetingAndCallCount+" is not matched with expected meeting and call "+meetingAndCallcount+" count of fundraising contect's connection "+contactName, YesNo.No);
+						result.add("Actual meeting and call "+actualMeetingAndCallCount+" is not matched with expected meeting and call "+meetingAndCallcount+" count of fundraising contect's connection "+contactName);
+					}  
+					driver.close();
+					driver.switchTo().window(parentID);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Connection icon of fundraising contact", YesNo.No);
+					result.add( "Not able to click on Connection icon of fundraising contact");
+				}
+					
+		return result;
 	}
 
 }

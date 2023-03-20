@@ -128,7 +128,8 @@ public class ThemePageBusinessLayer extends ThemePage {
 		ThreadSleep(2000);
 		if (clickOnShowMoreActionDownArrow(projectName, PageName.ThemesPage, ShowMoreActionDropDownList.Edit, 10)) {
 			ThreadSleep(2000);
-			ele = getLabelTextBox(projectName, PageName.ThemesPage.toString(), PageLabel.Theme_Name.toString(), timeOut);
+			ele = getLabelTextBox(projectName, PageName.ThemesPage.toString(), PageLabel.Theme_Name.toString(),
+					timeOut);
 			if (sendKeys(driver, ele, themeName, "Theme Name", action.BOOLEAN)) {
 				appLog.info("Successfully Entered value on Theme Name TextBox : " + themeName);
 			} else {
@@ -157,24 +158,126 @@ public class ThemePageBusinessLayer extends ThemePage {
 		refresh(driver);
 		ThreadSleep(5000);
 
-				if (sendKeys(driver, getSearchIcon(10), alreadyCreated + "\n", "Search Icon Text",
-						action.SCROLLANDBOOLEAN)) {
-					ThreadSleep(5000);
+		if (sendKeys(driver, getSearchIcon(10), alreadyCreated + "\n", "Search Icon Text", action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(5000);
 
-					xpath = "//table[contains(@class,'slds-table')]//tbody//tr//span//*[text()='"
-							+ alreadyCreated + "']";
-					ele = FindElement(driver, xpath, alreadyCreated, action.BOOLEAN, 10);
-					ThreadSleep(2000);
+			xpath = "//table[contains(@class,'slds-table')]//tbody//tr//span//*[text()='" + alreadyCreated + "']";
+			ele = FindElement(driver, xpath, alreadyCreated, action.BOOLEAN, 10);
+			ThreadSleep(2000);
 
-					if (clickUsingJavaScript(driver, ele, alreadyCreated, action.BOOLEAN)) {
-						flag = true;
-					} else {
-						appLog.error("Not able to Click on Already Created : " + alreadyCreated);
-					}
-				} else {
-					appLog.error("Not able to enter value on Search Box");
-				}
+			if (clickUsingJavaScript(driver, ele, alreadyCreated, action.BOOLEAN)) {
+				flag = true;
+			} else {
+				appLog.error("Not able to Click on Already Created : " + alreadyCreated);
+			}
+		} else {
+			appLog.error("Not able to enter value on Search Box");
+		}
 		return flag;
 	}
-	
+
+	public boolean createAddToTheme(String projectName, String tabName, String themeName, String accountSectionName,
+			String recordName) {
+		boolean flag = false;
+		String parentId = null;
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+
+		if (lp.clickOnTab(projectName, tabName)) {
+			log(LogStatus.INFO, "Click on Tab : " + tabName, YesNo.No);
+
+			if (CommonLib.sendKeysAndPressEnter(driver, themeSearchBox(20), themeName, "Theme Search Box ",
+					action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, themeName + " value has been passed in Theme Search Box", YesNo.No);
+
+				if (recordInTableOfTheme(themeName, 5) != null) {
+					log(LogStatus.INFO, "Verified Theme " + themeName + " Has Been Created", YesNo.No);
+
+					if (CommonLib.clickUsingJavaScript(driver, recordInTableOfTheme(themeName, 5), "Theme Name: " + themeName,
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on the Theme: " + themeName, YesNo.No);
+						parentId = CommonLib.switchOnWindow(driver);
+						if (parentId != null) {
+							log(LogStatus.INFO, "Switched to New Window", YesNo.No);
+
+							if (CommonLib.click(driver, plusIconButtonInThemeOfAccount(accountSectionName, 10),
+									"Theme Name: " + themeName, action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Plus Icon Button for Account: " + accountSectionName,
+										YesNo.No);
+
+								if (sendKeys(driver, addToThemePopUpSearchBox(20), recordName, "Theme Search Box",
+										action.BOOLEAN)) {
+									log(LogStatus.INFO, "Able to Pass the Value:  " + recordName, YesNo.No);
+
+									if (CommonLib.click(driver, addToThemePopUpSearchBoxDropDownValue(recordName, 10),
+											"Dropdown Value: " + recordName, action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO, "Clicked on Dropdown Value: " + recordName, YesNo.No);
+
+										if (CommonLib.clickUsingJavaScript(driver,
+												addToThemePopUpSaveButton(10),
+												"Dropdown Value: " + recordName, action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "Clicked on Save Button", YesNo.No);
+
+											if (successMsg(10) != null) {
+												log(LogStatus.INFO,
+														"Success Msg is showing, So Add to Theme Created for record: "
+																+ recordName,
+														YesNo.No);
+												flag = true;
+											} else {
+												log(LogStatus.ERROR,
+														"Success Msg is not showing, So Add to Theme is not Created for record: "
+																+ recordName,
+														YesNo.No);
+											}
+
+										} else {
+											log(LogStatus.ERROR, "Not Able to Click on Save Button", YesNo.No);
+
+										}
+
+									} else {
+										log(LogStatus.ERROR, "Not Able to Click on Dropdown Value: " + recordName,
+												YesNo.No);
+
+									}
+
+								} else {
+									log(LogStatus.ERROR, "Not Able to Pass the Value: " + recordName, YesNo.No);
+								}
+
+							} else {
+								log(LogStatus.ERROR,
+										"Not Able to Click on Plus Icon Button for Account: " + accountSectionName,
+										YesNo.No);
+
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not Able to Switch to New Window", YesNo.No);
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not able to Click on the Theme: " + themeName, YesNo.No);
+
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Theme " + themeName + " is present there", YesNo.No);
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, themeName + " value is not passed in Theme Search Box", YesNo.No);
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + tabName + " Tab", YesNo.No);
+
+		}
+
+		return flag;
+	}
+
 }

@@ -625,7 +625,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 					return false;
 				}
 			}
-			if (!companyName.isEmpty() || !companyName.equals("") || companyName != null) {
+			if (companyName != null) {
 
 				if (sendKeys(driver, getCompanyName(60), companyName, "Company Name", action.SCROLLANDBOOLEAN)) {
 					ThreadSleep(3000);

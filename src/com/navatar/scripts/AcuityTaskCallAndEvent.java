@@ -24,12 +24,11 @@ import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import org.testng.asserts.Assertion;
 
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
-import com.navatar.generic.ExcelUtils;
+import com.navatar.generic.EnumConstants.CreationPage;
 import com.navatar.generic.EnumConstants.Environment;
 import com.navatar.generic.EnumConstants.GlobalActionItem;
 import com.navatar.generic.EnumConstants.IconType;
@@ -41,9 +40,12 @@ import com.navatar.generic.EnumConstants.TaggedName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
+import com.navatar.generic.ExcelUtils;
 import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
 import com.navatar.pageObjects.DealPageBusinessLayer;
+import com.navatar.pageObjects.DealTeamPageBusinessLayer;
+import com.navatar.pageObjects.FundRaisingPageBusinessLayer;
 import com.navatar.pageObjects.FundraisingsPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageBusinessLayer;
 import com.navatar.pageObjects.GlobalActionPageBusinessLayer;
@@ -15586,7 +15588,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc077_VerifyHighligtedFirmOnDeclineDealStageOnPrivateEquityRecordType(String projectName) {
+	public void ATCETc078_VerifyHighligtedFirmOnDeclineDealStageOnPrivateEquityRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15643,7 +15645,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc078_VerifyHighligtedFirmOnDeclineDealStageOnContactRecordType(String projectName) {
+	public void ATCETc079_VerifyHighligtedFirmOnDeclineDealStageOnContactRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15700,7 +15702,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc079_VerifyHighligtedFirmOnDeclineDealStageOnDealRecordType(String projectName) {
+	public void ATCETc080_VerifyHighligtedFirmOnDeclineDealStageOnDealRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15757,7 +15759,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc080_VerifyHighligtedFirmOnDeclineDealStageOnFundraisingRecordType(String projectName) {
+	public void ATCETc081_VerifyHighligtedFirmOnDeclineDealStageOnFundraisingRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15814,7 +15816,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc081_VerifyHighligtedFirmOnDeclineDealStageOnFundRecordType(String projectName) {
+	public void ATCETc082_VerifyHighligtedFirmOnDeclineDealStageOnFundRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15871,7 +15873,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc082_ChangeDealStageToDealRecieved(String projectName) {
+	public void ATCETc083_ChangeDealStageToDealRecieved(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15923,7 +15925,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc083_VerifyHighligtedFirmOnDealRecievedDealStageOnCompanyRecordType(String projectName) {
+	public void ATCETc084_VerifyHighligtedFirmOnDealRecievedDealStageOnCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15981,7 +15983,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc084_VerifyHighligtedFirmOnDealRecievedDealStageOnAdvisorRecordType(String projectName) {
+	public void ATCETc085_VerifyHighligtedFirmOnDealRecievedDealStageOnAdvisorRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16038,7 +16040,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc085_VerifyHighligtedFirmOnDealRecievedDealStageOnLendorRecordType(String projectName) {
+	public void ATCETc086_VerifyHighligtedFirmOnDealRecievedDealStageOnLendorRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16095,7 +16097,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc086_VerifyHighligtedFirmOnDealRecievedDealStageOnIntermediaryRecordType(String projectName) {
+	public void ATCETc087_VerifyHighligtedFirmOnDealRecievedDealStageOnIntermediaryRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16152,7 +16154,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc087_VerifyHighligtedFirmOnDealRecievedDealStageOnInstitutionRecordType(String projectName) {
+	public void ATCETc088_VerifyHighligtedFirmOnDealRecievedDealStageOnInstitutionRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16209,7 +16211,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc088_VerifyHighligtedFirmOnDealRecievedDealStageOnPortfolioCompanyRecordType(String projectName) {
+	public void ATCETc089_VerifyHighligtedFirmOnDealRecievedDealStageOnPortfolioCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16266,7 +16268,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc089_VerifyHighligtedFirmOnDealRecievedDealStageOnPrivateEquityRecordType(String projectName) {
+	public void ATCETc090_VerifyHighligtedFirmOnDealRecievedDealStageOnPrivateEquityRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16323,7 +16325,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc090_VerifyHighligtedFirmOnDealRecievedDealStageOnContactRecordType(String projectName) {
+	public void ATCETc091_VerifyHighligtedFirmOnDealRecievedDealStageOnContactRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16380,7 +16382,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc091_VerifyHighligtedFirmOnDealRecievedDealStageOnDealRecordType(String projectName) {
+	public void ATCETc092_VerifyHighligtedFirmOnDealRecievedDealStageOnDealRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16437,7 +16439,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc092_VerifyHighligtedFirmOnDealRecievedDealStageOnFundraisingRecordType(String projectName) {
+	public void ATCETc093_VerifyHighligtedFirmOnDealRecievedDealStageOnFundraisingRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16494,7 +16496,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc093_VerifyHighligtedFirmOnDealRecievedDealStageOnFundRecordType(String projectName) {
+	public void ATCETc094_VerifyHighligtedFirmOnDealRecievedDealStageOnFundRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16552,7 +16554,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc094_VerifyHyperlinkFunctionalityForCompanyRecordType(String projectName) {
+	public void ATCETc095_VerifyHyperlinkFunctionalityForCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16885,7 +16887,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc095_VerifyHyperlinkFunctionalityForAdvisorRecordType(String projectName) {
+	public void ATCETc096_VerifyHyperlinkFunctionalityForAdvisorRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -17217,7 +17219,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc096_VerifyHyperlinkFunctionalityForLendorRecordType(String projectName) {
+	public void ATCETc097_VerifyHyperlinkFunctionalityForLendorRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -17549,7 +17551,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc097_VerifyHyperlinkFunctionalityForIntermediaryRecordType(String projectName) {
+	public void ATCETc098_VerifyHyperlinkFunctionalityForIntermediaryRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -17881,7 +17883,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc098_VerifyHyperlinkFunctionalityForInstitutionRecordType(String projectName) {
+	public void ATCETc099_VerifyHyperlinkFunctionalityForInstitutionRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -18213,7 +18215,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc099_VerifyHyperlinkFunctionalityForPortfolioCompanyRecordType(String projectName) {
+	public void ATCETc100_VerifyHyperlinkFunctionalityForPortfolioCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -18544,7 +18546,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc100_VerifyHyperlinkFunctionalityForPrivateEquityRecordType(String projectName) {
+	public void ATCETc101_VerifyHyperlinkFunctionalityForPrivateEquityRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -18875,7 +18877,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc101_VerifyHyperlinkFunctionalityForContactType(String projectName) {
+	public void ATCETc102_VerifyHyperlinkFunctionalityForContactType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -19181,7 +19183,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc102_VerifyHyperlinkFunctionalityForDealType(String projectName) {
+	public void ATCETc103_VerifyHyperlinkFunctionalityForDealType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -19454,7 +19456,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc103_VerifyHyperlinkFunctionalityForFundraisingType(String projectName) {
+	public void ATCETc104_VerifyHyperlinkFunctionalityForFundraisingType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -19729,7 +19731,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc104_VerifyHyperlinkFunctionalityForFundType(String projectName) {
+	public void ATCETc105_VerifyHyperlinkFunctionalityForFundType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -20035,7 +20037,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc105_VerifyHyperlinkFunctionalityForThemeType(String projectName) {
+	public void ATCETc106_VerifyHyperlinkFunctionalityForThemeType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -20206,7 +20208,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc106_CreateFollowUpTask(String projectName) {
+	public void ATCETc107_CreateFollowUpTask(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -20278,7 +20280,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc107_CreateATaskAndLogACallAndAssignToUser2(String projectName) {
+	public void ATCETc108_CreateATaskAndLogACallAndAssignToUser2(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -20365,7 +20367,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc108_VerifyFollowupTaskTaskCallFunctionalityOnCompanyRecordType(String projectName) {
+	public void ATCETc109_VerifyFollowupTaskTaskCallFunctionalityOnCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -20564,7 +20566,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc109_VerifyFollowupTaskTaskCallFunctionalityOnAdvisorRecordType(String projectName) {
+	public void ATCETc110_VerifyFollowupTaskTaskCallFunctionalityOnAdvisorRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -20764,7 +20766,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc110_VerifyFollowupTaskTaskCallFunctionalityOnLenderRecordType(String projectName) {
+	public void ATCETc111_VerifyFollowupTaskTaskCallFunctionalityOnLenderRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -20964,7 +20966,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc111_VerifyFollowupTaskTaskCallFunctionalityOnIntermediaryRecordType(String projectName) {
+	public void ATCETc112_VerifyFollowupTaskTaskCallFunctionalityOnIntermediaryRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -21160,7 +21162,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc112_VerifyFollowupTaskTaskCallFunctionalityOnInstitutionRecordType(String projectName) {
+	public void ATCETc113_VerifyFollowupTaskTaskCallFunctionalityOnInstitutionRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -21357,7 +21359,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc113_VerifyFollowupTaskTaskCallFunctionalityOnPortfolioCompanyRecordType(String projectName) {
+	public void ATCETc114_VerifyFollowupTaskTaskCallFunctionalityOnPortfolioCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -21556,7 +21558,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc114_VerifyFollowupTaskTaskCallFunctionalityOnPrivateEquityRecordType(String projectName) {
+	public void ATCETc115_VerifyFollowupTaskTaskCallFunctionalityOnPrivateEquityRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -21753,7 +21755,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc115_VerifyTaskCallFunctionalityOnContactRecordType(String projectName) {
+	public void ATCETc116_VerifyTaskCallFunctionalityOnContactRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -21902,7 +21904,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc116_VerifyFollowupTaskTaskCallFunctionalityOnDealRecordType(String projectName) {
+	public void ATCETc117_VerifyFollowupTaskTaskCallFunctionalityOnDealRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -22001,7 +22003,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc117_VerifyFollowupTaskTaskCallFunctionalityOnFundraisingRecordType(String projectName) {
+	public void ATCETc118_VerifyFollowupTaskTaskCallFunctionalityOnFundraisingRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -22096,7 +22098,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc118_VerifyFollowupTaskTaskCallFunctionalityOnFundRecordType(String projectName) {
+	public void ATCETc119_VerifyFollowupTaskTaskCallFunctionalityOnFundRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -22194,7 +22196,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc119_VerifyFollowupTaskTaskCallFunctionalityOnThemeRecordType(String projectName) {
+	public void ATCETc120_VerifyFollowupTaskTaskCallFunctionalityOnThemeRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -22277,7 +22279,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc115_EditAndInactiveUser(String projectName) {
+	public void ATCETc121_EditAndInactiveUser(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -22326,7 +22328,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc116_VerifyInactiveUserFunctionalityOnCompanyRecordType(String projectName) {
+	public void ATCETc122_VerifyInactiveUserFunctionalityOnCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -22525,7 +22527,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc117_VerifyInactiveUserFunctionalityOnAdvisorRecordType(String projectName) {
+	public void ATCETc123_VerifyInactiveUserFunctionalityOnAdvisorRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -22725,7 +22727,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc118_VerifyInactiveUserFunctionalityOnLenderRecordType(String projectName) {
+	public void ATCETc124_VerifyInactiveUserFunctionalityOnLenderRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -22925,7 +22927,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc119_VerifyInactiveUserFunctionalityOnIntermediaryRecordType(String projectName) {
+	public void ATCETc125_VerifyInactiveUserFunctionalityOnIntermediaryRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -23121,7 +23123,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc120_VerifyInactiveUserFunctionalityOnInstitutionRecordType(String projectName) {
+	public void ATCETc126_VerifyInactiveUserFunctionalityOnInstitutionRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -23318,7 +23320,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc121_VerifyInactiveUserFunctionalityOnPortfolioCompanyRecordType(String projectName) {
+	public void ATCETc127_VerifyInactiveUserFunctionalityOnPortfolioCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -23517,7 +23519,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc122_VerifyInactiveUserFunctionalityOnPrivateEquityRecordType(String projectName) {
+	public void ATCETc128_VerifyInactiveUserFunctionalityOnPrivateEquityRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -23713,7 +23715,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc123_VerifyInactiveUserOnContactRecordType(String projectName) {
+	public void ATCETc129_VerifyInactiveUserOnContactRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -23861,7 +23863,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc124_VerifyInactiveUserFunctionalityOnDealRecordType(String projectName) {
+	public void ATCETc130_VerifyInactiveUserFunctionalityOnDealRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -23959,7 +23961,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc125_VerifyInactiveUserFunctionalityOnFundraisingRecordType(String projectName) {
+	public void ATCETc131_VerifyInactiveUserFunctionalityOnFundraisingRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -24052,7 +24054,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc126_VerifyInactiveUserFunctionalityOnFundRecordType(String projectName) {
+	public void ATCETc132_VerifyInactiveUserFunctionalityOnFundRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -24149,7 +24151,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc127_VerifyInactiveUserFunctionalityOnThemeRecordType(String projectName) {
+	public void ATCETc133_VerifyInactiveUserFunctionalityOnThemeRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -24230,7 +24232,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc128_CreateATaskAndLogACall(String projectName) {
+	public void ATCETc134_CreateATaskAndLogACall(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -24292,7 +24294,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc129_UpdateTheNameOfAccountsContactDealsAndFund(String projectName) {
+	public void ATCETc135_UpdateTheNameOfAccountsContactDealsAndFund(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -24513,7 +24515,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc130_EditTaskAndCall(String projectName) {
+	public void ATCETc136_EditTaskAndCall(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -24534,7 +24536,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		
 		
 		String[][] basicSection = {{"Subject",taskSubject},{ "Related_To", taskRelatedTo } , { "Notes", taskNotes }};
-		String[][] advanceSection = { { "Due Date", taskDueDate }};
+		String[][] advanceSection = { { "Date", taskDueDate }};
 		
 		
         String task1SubjectNameNavigation1 = ATCE_ATSubject31;
@@ -24641,7 +24643,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc131_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnCompanyRecordType(String projectName) {
+	public void ATCETc137_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -24660,10 +24662,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
 		
 		String dealTagName=ATCE_TaggedDealName12;
-		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;
-		
-		
-		
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;		
 		
 		String contactSectionName1=ATCE_ConName22;
 		String contactSectionTitle1=ATCE_ConTitle22;
@@ -25007,7 +25006,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc132_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnAdvisorRecordType(String projectName) {
+	public void ATCETc138_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnAdvisorRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -25217,7 +25216,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc133_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnLenderRecordType(String projectName) {
+	public void ATCETc139_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnLenderRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -25426,7 +25425,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc134_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnIntermediaryRecordType(String projectName) {
+	public void ATCETc140_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnIntermediaryRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -25635,7 +25634,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc135_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnInstitutionRecordType(String projectName) {
+	public void ATCETc141_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnInstitutionRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -25812,7 +25811,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc136_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnPortfolioCompanyRecordType(String projectName) {
+	public void ATCETc142_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnPortfolioCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -26021,7 +26020,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc137_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnPrivateEquityRecordType(String projectName) {
+	public void ATCETc143_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnPrivateEquityRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -26230,7 +26229,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc138_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnContactRecordType(String projectName) {
+	public void ATCETc144_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnContactRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -26439,7 +26438,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc139_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnDealRecordType(String projectName) {
+	public void ATCETc145_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnDealRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -26649,7 +26648,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc140_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnFundraisingRecordType(String projectName) {
+	public void ATCETc146_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnFundraisingRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -26826,7 +26825,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc141_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnFundRecordType(String projectName) {
+	public void ATCETc147_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnFundRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -27035,7 +27034,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc142_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnThemeRecordType(String projectName) {
+	public void ATCETc148_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnThemeRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -27116,7 +27115,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc143_DeleteTheAccountContactDealFundAndFundraisingFromTheOrg(String projectName) {
+	public void ATCETc149_DeleteTheAccountContactDealFundAndFundraisingFromTheOrg(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -27402,7 +27401,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc144_VerifyDeletedAccountContactAndDealFunctionalityOnCompanyRecordType(String projectName) {
+	public void ATCETc150_VerifyDeletedAccountContactAndDealFunctionalityOnCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -27468,7 +27467,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc145_VerifyDeletedAccountContactAndDealFunctionalityOnAdvisorRecordType(String projectName) {
+	public void ATCETc151_VerifyDeletedAccountContactAndDealFunctionalityOnAdvisorRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -27536,7 +27535,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc146_VerifyDeletedAccountContactAndDealFunctionalityOnLenderRecordType(String projectName) {
+	public void ATCETc152_VerifyDeletedAccountContactAndDealFunctionalityOnLenderRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -27600,7 +27599,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc147_VerifyDeletedAccountContactAndDealFunctionalityOnIntermediaryRecordType(String projectName) {
+	public void ATCETc153_VerifyDeletedAccountContactAndDealFunctionalityOnIntermediaryRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -27662,7 +27661,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc148_VerifyDeletedAccountContactAndDealFunctionalityOnInstitutionRecordType(String projectName) {
+	public void ATCETc154_VerifyDeletedAccountContactAndDealFunctionalityOnInstitutionRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -27725,7 +27724,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc149_VerifyDeletedAccountContactAndDealFunctionalityOnPortfolioCompanyRecordType(String projectName) {
+	public void ATCETc155_VerifyDeletedAccountContactAndDealFunctionalityOnPortfolioCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -27788,7 +27787,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc150_VerifyDeletedAccountContactAndDealFunctionalityOnPrivateEquityRecordType(String projectName) {
+	public void ATCETc156_VerifyDeletedAccountContactAndDealFunctionalityOnPrivateEquityRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -27850,7 +27849,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc151_VerifyDeletedAccountContactAndDealFunctionalityOnContactRecordType(String projectName) {
+	public void ATCETc157_VerifyDeletedAccountContactAndDealFunctionalityOnContactRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -27912,7 +27911,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc152_VerifyDeletedAccountContactAndDealFunctionalityiOnDealRecordType(String projectName) {
+	public void ATCETc158_VerifyDeletedAccountContactAndDealFunctionalityiOnDealRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -27976,7 +27975,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc153_VerifyDeletedAccountContactAndDealFunctionalityOnFundraisingRecordType(String projectName) {
+	public void ATCETc159_VerifyDeletedAccountContactAndDealFunctionalityOnFundraisingRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -28037,7 +28036,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc154_VerifyDeletedAccountContactAndDealFunctionalityOnFundRecordType(String projectName) {
+	public void ATCETc160_VerifyDeletedAccountContactAndDealFunctionalityOnFundRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -28097,11 +28096,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		sa.assertAll();	
 	}	
 	
-	
-
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc155_RestoreTheDeletedRecordsFromRecycleBinAndVerify(String projectName) {
+	public void ATCETc161_RestoreTheDeletedRecordsFromRecycleBinAndVerify(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -28297,7 +28294,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc156_VerifyRestoredAccountContactAndDeallFunctionalityAndOnCompanyRecordType(String projectName) {
+	public void ATCETc162_VerifyRestoredAccountContactAndDeallFunctionalityAndOnCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -28663,7 +28660,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc157_VerifyRestoredAccountContactAndDeallFunctionalityAndOnAdvisorRecordType(String projectName) {
+	public void ATCETc163_VerifyRestoredAccountContactAndDeallFunctionalityAndOnAdvisorRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -28873,7 +28870,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc158_VerifyRestoredAccountContactAndDeallFunctionalityAndOnLenderRecordType(String projectName) {
+	public void ATCETc164_VerifyRestoredAccountContactAndDeallFunctionalityAndOnLenderRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -29082,7 +29079,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc159_VerifyRestoredAccountContactAndDeallFunctionalityAndOnIntermediaryRecordType(String projectName) {
+	public void ATCETc165_VerifyRestoredAccountContactAndDeallFunctionalityAndOnIntermediaryRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -29291,7 +29288,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc160_VerifyRestoredAccountContactAndDeallFunctionalityAndOnInstitutionRecordType(String projectName) {
+	public void ATCETc166_VerifyRestoredAccountContactAndDeallFunctionalityAndOnInstitutionRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -29468,7 +29465,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc161_VerifyRestoredAccountContactAndDeallFunctionalityAndOnPortfolioCompanyRecordType(String projectName) {
+	public void ATCETc167_VerifyRestoredAccountContactAndDeallFunctionalityAndOnPortfolioCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -29677,7 +29674,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc162_VerifyRestoredAccountContactAndDeallFunctionalityAndOnPrivateEquityRecordType(String projectName) {
+	public void ATCETc168_VerifyRestoredAccountContactAndDeallFunctionalityAndOnPrivateEquityRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -29886,7 +29883,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc163_VerifyRestoredAccountContactAndDeallFunctionalityAndOnContactRecordType(String projectName) {
+	public void ATCETc169_VerifyRestoredAccountContactAndDeallFunctionalityAndOnContactRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -30095,7 +30092,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc164_VerifyRestoredAccountContactAndDeallFunctionalityAndOnDealRecordType(String projectName) {
+	public void ATCETc170_VerifyRestoredAccountContactAndDeallFunctionalityAndOnDealRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -30305,7 +30302,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc165_VerifyRestoredAccountContactAndDeallFunctionalityAndOnFundraisingRecordType(String projectName) {
+	public void ATCETc171_VerifyRestoredAccountContactAndDeallFunctionalityAndOnFundraisingRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -30482,7 +30479,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc166_VerifyRestoredAccountContactAndDeallFunctionalityAndOnFundRecordType(String projectName) {
+	public void ATCETc172_VerifyRestoredAccountContactAndDeallFunctionalityAndOnFundRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -30691,7 +30688,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc167_VerifyRestoredAccountContactAndDeallFunctionalityAndOnThemeRecordType(String projectName) {
+	public void ATCETc173_VerifyRestoredAccountContactAndDeallFunctionalityAndOnThemeRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -30773,7 +30770,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc168_CreateATaskAndLogACallWhenOnlyDealisConnectedWithFirm(String projectName) {
+	public void ATCETc174_CreateATaskAndLogACallWhenOnlyDealisConnectedWithFirm(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -30836,7 +30833,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc169_VerifyTaskAndCallWithFirmDealAndFundMappingOnCompanyRecordType(String projectName) {
+	public void ATCETc175_VerifyTaskAndCallWithFirmDealAndFundMappingOnCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -30934,7 +30931,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc170_VerifyTaskAndCallWithFirmDealAndFundMappingOnAdvisorRecordType(String projectName) {
+	public void ATCETc176_VerifyTaskAndCallWithFirmDealAndFundMappingOnAdvisorRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -31033,7 +31030,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc171_VerifyTaskAndCallWithFirmDealAndFundMappingOnLenderRecordType(String projectName) {
+	public void ATCETc177_VerifyTaskAndCallWithFirmDealAndFundMappingOnLenderRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -31128,7 +31125,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc172_VerifyTaskAndCallWithFirmDealAndFundMappingOnIntermediaryRecordType(String projectName) {
+	public void ATCETc178_VerifyTaskAndCallWithFirmDealAndFundMappingOnIntermediaryRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -31223,7 +31220,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc173_VerifyTaskAndCallWithFirmDealAndFundMappingOnInstitutionRecordType(String projectName) {
+	public void ATCETc179_VerifyTaskAndCallWithFirmDealAndFundMappingOnInstitutionRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -31318,7 +31315,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc174_VerifyTaskAndCallWithFirmDealAndFundMappingOnPortfolioCompanyRecordType(String projectName) {
+	public void ATCETc180_VerifyTaskAndCallWithFirmDealAndFundMappingOnPortfolioCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -31412,7 +31409,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc175_VerifyTaskAndCallWithFirmDealAndFundMappingOnPrivateEquityRecordType(String projectName) {
+	public void ATCETc181_VerifyTaskAndCallWithFirmDealAndFundMappingOnPrivateEquityRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -31507,7 +31504,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc176_VerifyTaskAndCallWithFirmDealAndFundMappingOnDealRecordType(String projectName) {
+	public void ATCETc182_VerifyTaskAndCallWithFirmDealAndFundMappingOnDealRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -31604,7 +31601,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc177_VerifyTaskAndCallWithFirmDealAndFundMappingOnOnFundRecordType(String projectName) {
+	public void ATCETc183_VerifyTaskAndCallWithFirmDealAndFundMappingOnOnFundRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -31701,7 +31698,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc178_CreateANewEvent(String projectName) {
+	public void ATCETc184_CreateANewEvent(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -31806,7 +31803,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc179_VerifyEventOnCompanyRecordType(String projectName) {
+	public void ATCETc185_VerifyEventOnCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -32001,7 +31998,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc180_VerifyEventOnAdvisorRecordType(String projectName) {
+	public void ATCETc186_VerifyEventOnAdvisorRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -32197,7 +32194,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc181_VerifyEventOnLenderRecordType(String projectName) {
+	public void ATCETc187_VerifyEventOnLenderRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -32389,7 +32386,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc182_VerifyEventOnIntermediaryRecordType(String projectName) {
+	public void ATCETc188_VerifyEventOnIntermediaryRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -32581,7 +32578,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc183_VerifyEventOnInstitutionRecordType(String projectName) {
+	public void ATCETc189_VerifyEventOnInstitutionRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -32774,7 +32771,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc184_VerifyEventOnPortfolioCompanyRecordType(String projectName) {
+	public void ATCETc190_VerifyEventOnPortfolioCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -32965,7 +32962,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc185_VerifyEventOnPrivateEquityRecordType(String projectName) {
+	public void ATCETc191_VerifyEventOnPrivateEquityRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -33155,6 +33152,4731 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}	
+
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc192_VerifyEventOnContactRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Con1;
+		
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName105,ATCE_TaggedFirmsName106,ATCE_TaggedFirmsName107,ATCE_TaggedFirmsName108,ATCE_TaggedFirmsName109,ATCE_TaggedFirmsName110};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount105,ATCE_TaggedFirmsCount106,ATCE_TaggedFirmsCount107,ATCE_TaggedFirmsCount108,ATCE_TaggedFirmsCount109,ATCE_TaggedFirmsCount110};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName52,ATCE_TaggedPeopleName53,ATCE_TaggedPeopleName54,ATCE_TaggedPeopleName56,ATCE_TaggedPeopleName57,ATCE_TaggedPeopleName58};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount52,ATCE_TaggedPeopleCount53,ATCE_TaggedPeopleCount54,ATCE_TaggedPeopleCount56,ATCE_TaggedPeopleCount57,ATCE_TaggedPeopleCount58};
+				
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName16};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount16};
+	
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle6;
+		String connectionDeal=ATCE_ConnectionDeal6;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall6;
+		String connectionEmail=ATCE_ConnectionEmail6;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String iconType= ATCE_ATActivityType36;
+		String date= ATCE_ATDueDate36;
+		String subject= ATCE_ATSubject36;
+		String notes= ATCE_ATNote36;
+		String[] participant= bp.getParticipantData(ATCE_ATParticipants36);
+		String[] tag= ATCE_ATTags36.split("<break>");
+		
+		String[] iconType1= {ATCE_ATActivityType36};
+		String[] date1= {ATCE_ATDueDate36};
+		String[] subject1= {ATCE_ATSubject36};
+		String[] notes1= {ATCE_ATNote36};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants36)};
+		String[][] tag1= {ATCE_ATTags36.split("<break>")};
+			
+			
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj2)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+						ArrayList<String> result6=bp.verifyRecordOnConnectionsSectionInAcuity(recordName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+
+						if(result6.isEmpty())
+						{
+							log(LogStatus.INFO, "The records have been verified on Connection section in Acuity user : "+connectionUserName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records are not verified on Connection section in Acuity. user : "+connectionUserName+" "+result6, YesNo.No);
+							sa.assertTrue(false,  "The records are not verified on Connection section in Acuity.  user : "+connectionUserName+" "+result6);
+						}
+						
+					
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(userName1, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+userName1+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result7=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result7.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+userName1, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+userName1+". "+result7, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+userName1+". "+result7);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+userName1+" record on contact section");
+						}
+						
+						
+						
+								
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName, iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj2, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc193_VerifyEventOnDealRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Deal1;
+		
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName111,ATCE_TaggedFirmsName112,ATCE_TaggedFirmsName113,ATCE_TaggedFirmsName114,ATCE_TaggedFirmsName115,ATCE_TaggedFirmsName116};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount111,ATCE_TaggedFirmsCount112,ATCE_TaggedFirmsCount113,ATCE_TaggedFirmsCount114,ATCE_TaggedFirmsCount115,ATCE_TaggedFirmsCount116};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName49,ATCE_TaggedPeopleName50,ATCE_TaggedPeopleName51,ATCE_TaggedPeopleName59,ATCE_TaggedPeopleName60,ATCE_TaggedPeopleName61,ATCE_TaggedPeopleName62};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount49,ATCE_TaggedPeopleCount50,ATCE_TaggedPeopleCount51,ATCE_TaggedPeopleCount59,ATCE_TaggedPeopleCount60,ATCE_TaggedPeopleCount61,ATCE_TaggedPeopleCount62};
+				
+		String[] dealTaggedName= null;
+		String[] dealTaggedTimeReference= null;
+		
+		String[] iconType1= {ATCE_ATActivityType36};
+		String[] date1= {ATCE_ATDueDate36};
+		String[] subject1= {ATCE_ATSubject36};
+		String[] notes1= {ATCE_ATNote36};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants36)};
+		String[][] tag1= {ATCE_ATTags36.split("<break>")};
+			
+			
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj4)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}	
+								
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName, iconType1, date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc194_VerifyEventFundraisingRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fundraising1;
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName117,ATCE_TaggedFirmsName118,ATCE_TaggedFirmsName119,ATCE_TaggedFirmsName120,ATCE_TaggedFirmsName121,ATCE_TaggedFirmsName122,ATCE_TaggedFirmsName123};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount117,ATCE_TaggedFirmsCount118,ATCE_TaggedFirmsCount119,ATCE_TaggedFirmsCount120,ATCE_TaggedFirmsCount121,ATCE_TaggedFirmsCount122,ATCE_TaggedFirmsCount123};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName59,ATCE_TaggedPeopleName60,ATCE_TaggedPeopleName61,ATCE_TaggedPeopleName62,ATCE_TaggedPeopleName63,ATCE_TaggedPeopleName64,ATCE_TaggedPeopleName65};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount59,ATCE_TaggedPeopleCount60,ATCE_TaggedPeopleCount61,ATCE_TaggedPeopleCount62,ATCE_TaggedPeopleCount63,ATCE_TaggedPeopleCount64,ATCE_TaggedPeopleCount65};
+				
+		String[] dealTaggedName= null;
+		String[] dealTaggedTimeReference= null;
+		
+		String[] iconType1= {ATCE_ATActivityType36};
+		String[] date1= {ATCE_ATDueDate36};
+		String[] subject1= {ATCE_ATSubject36};
+		String[] notes1= {ATCE_ATNote36};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants36)};
+		String[][] tag1= {ATCE_ATTags36.split("<break>")};
+			
+			
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					
+					ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+					if(result5.isEmpty())
+					{
+						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+						sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+					}	
+							
+					
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName, iconType1, date1, subject1, notes1, subject1, participant1, tag1);
+						if(result2.isEmpty())
+						{
+							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+					
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc195_VerifyEventOnFundRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fund1;
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName111,ATCE_TaggedFirmsName112,ATCE_TaggedFirmsName113,ATCE_TaggedFirmsName114,ATCE_TaggedFirmsName115,ATCE_TaggedFirmsName116};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount111,ATCE_TaggedFirmsCount112,ATCE_TaggedFirmsCount113,ATCE_TaggedFirmsCount114,ATCE_TaggedFirmsCount115,ATCE_TaggedFirmsCount116};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName59,ATCE_TaggedPeopleName60,ATCE_TaggedPeopleName61,ATCE_TaggedPeopleName62,ATCE_TaggedPeopleName63,ATCE_TaggedPeopleName64,ATCE_TaggedPeopleName65};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount59,ATCE_TaggedPeopleCount60,ATCE_TaggedPeopleCount61,ATCE_TaggedPeopleCount62,ATCE_TaggedPeopleCount63,ATCE_TaggedPeopleCount64,ATCE_TaggedPeopleCount65};
+				
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName15};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount15};
+	
+		String[] iconType1= {ATCE_ATActivityType36};
+		String[] date1= {ATCE_ATDueDate36};
+		String[] subject1= {ATCE_ATSubject36};
+		String[] notes1= {ATCE_ATNote36};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants36)};
+		String[][] tag1= {ATCE_ATTags36.split("<break>")};
+			
+			
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+		if (lp.clickOnTab(projectName, tabObj3)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj3, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+					if(result5.isEmpty())
+					{
+						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+						sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+					}	
+							
+					
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName, iconType1, date1, subject1, notes1, subject1, participant1, tag1);
+						if(result2.isEmpty())
+						{
+							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+					
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj3, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj3);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc196_VerifyEventOnThemeRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Theme1;
+		String[] iconType1= {ATCE_ATActivityType36};
+		String[] date1= {ATCE_ATDueDate36};
+		String[] subject1= {ATCE_ATSubject36};
+		String[] notes1= {ATCE_ATNote36};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants36)};
+		String[][] tag1= {ATCE_ATTags36.split("<break>")};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, TabName.Themes.toString())) {
+
+				log(LogStatus.INFO, "Clicked on Tab : "+TabName.Themes.toString(), YesNo.No);
+
+				String parentWindowID=bp.clickOnThemeRecord(recordName);
+
+				if (parentWindowID!=null) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+						
+				
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName, iconType1, date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+				driver.close();
+				driver.switchTo().window(parentWindowID);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab : "+TabName.Themes.toString(), YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab : "+TabName.Themes.toString());
+			}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc197_VerifyUIOfFilterSectionOnCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATERecord3;
+		String contactName=ATE_ContactName22;
+
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+		String[] filterType1= {"All Types","Meetings","Calls"};
+		String[] recordIconType1= {"event","call"};
+
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+
+		String companyTagName=ATE_TaggedCompanyName35;
+		String companyTagTimeReferenceCount=ATE_TaggedCompanyTimeReference35;
+
+		String peopleTagName=ATE_TaggedPeopleName21;
+		String peopleTagTimeReferenceCount=ATE_TaggedPeopleTimeReference21;
+
+		String dealTagName=ATE_TaggedDealName18;
+		String dealTagTimeReferenceCount=ATE_TaggedDealTimeReference18;
+
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result);
+							}				
+							/*					xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+companyTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+companyTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if(isInstitutionRecord==false)
+					{
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+					}
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
+
+						ArrayList<String> result4=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+contactName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4);
+						}
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
+					}
+
+					if(clickUsingJavaScript(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName))
+					{
+						log(LogStatus.INFO, "Clicked on the connection icon of "+contactName, YesNo.No);
+						String parentId=switchOnWindow(driver);
+
+						if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+							ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+							if(result5.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+							}
+							
+
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+							sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+						}	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the connection icon of "+contactName);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc198_VerifyUIOfFilterSectionOnAdvisorRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATERecord3;
+		String contactName=ATE_ContactName22;
+
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+		String[] filterType1= {"All Types","Meetings","Calls"};
+		String[] recordIconType1= {"event","call"};
+
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+
+		String companyTagName=ATE_TaggedCompanyName35;
+		String companyTagTimeReferenceCount=ATE_TaggedCompanyTimeReference35;
+
+		String peopleTagName=ATE_TaggedPeopleName21;
+		String peopleTagTimeReferenceCount=ATE_TaggedPeopleTimeReference21;
+
+		String dealTagName=ATE_TaggedDealName18;
+		String dealTagTimeReferenceCount=ATE_TaggedDealTimeReference18;
+
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result);
+							}				
+							/*					xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+companyTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+companyTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							/*				
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if(isInstitutionRecord==false)
+					{
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+
+							/*					xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+					}
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+						/*
+						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+						if(clickUsingJavaScript(driver, ele, "close button"))
+						{
+							log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+						}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
+
+						ArrayList<String> result4=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+contactName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4);
+						}
+						/*					xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+						ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
+						if(clickUsingJavaScript(driver, ele, "close button"))
+						{
+							log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
+						}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
+					}
+
+					if(clickUsingJavaScript(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName))
+					{
+						log(LogStatus.INFO, "Clicked on the connection icon of "+contactName, YesNo.No);
+						String parentId=switchOnWindow(driver);
+
+						if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+							ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+							if(result5.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+							}
+							/*		xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
+							}
+							 */
+
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+							sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+						}	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the connection icon of "+contactName);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc199_VerifyUIOfFilterSectionOnLendorRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATERecord3;
+		String contactName=ATE_ContactName22;
+
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+		String[] filterType1= {"All Types","Meetings","Calls"};
+		String[] recordIconType1= {"event","call"};
+
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+
+		String companyTagName=ATE_TaggedCompanyName35;
+		String companyTagTimeReferenceCount=ATE_TaggedCompanyTimeReference35;
+
+		String peopleTagName=ATE_TaggedPeopleName21;
+		String peopleTagTimeReferenceCount=ATE_TaggedPeopleTimeReference21;
+
+		String dealTagName=ATE_TaggedDealName18;
+		String dealTagTimeReferenceCount=ATE_TaggedDealTimeReference18;
+
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result);
+							}				
+							/*					xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+companyTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+companyTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							/*				
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if(isInstitutionRecord==false)
+					{
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+
+							/*					xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+					}
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+						/*
+						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+						if(clickUsingJavaScript(driver, ele, "close button"))
+						{
+							log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+						}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
+
+						ArrayList<String> result4=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+contactName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4);
+						}
+						/*					xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+						ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
+						if(clickUsingJavaScript(driver, ele, "close button"))
+						{
+							log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
+						}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
+					}
+
+					if(clickUsingJavaScript(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName))
+					{
+						log(LogStatus.INFO, "Clicked on the connection icon of "+contactName, YesNo.No);
+						String parentId=switchOnWindow(driver);
+
+						if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+							ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+							if(result5.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+							}
+							/*		xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
+							}
+							 */
+
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+							sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+						}	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the connection icon of "+contactName);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc200_VerifyUIOfFilterSectionOnIntermediaryRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATERecord3;
+		String contactName=ATE_ContactName22;
+
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+		String[] filterType1= {"All Types","Meetings","Calls"};
+		String[] recordIconType1= {"event","call"};
+
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+
+		String companyTagName=ATE_TaggedCompanyName35;
+		String companyTagTimeReferenceCount=ATE_TaggedCompanyTimeReference35;
+
+		String peopleTagName=ATE_TaggedPeopleName21;
+		String peopleTagTimeReferenceCount=ATE_TaggedPeopleTimeReference21;
+
+		String dealTagName=ATE_TaggedDealName18;
+		String dealTagTimeReferenceCount=ATE_TaggedDealTimeReference18;
+
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result);
+							}				
+							/*					xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+companyTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+companyTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							/*				
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if(isInstitutionRecord==false)
+					{
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+
+							/*					xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+					}
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+						/*
+						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+						if(clickUsingJavaScript(driver, ele, "close button"))
+						{
+							log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+						}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
+
+						ArrayList<String> result4=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+contactName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4);
+						}
+						/*					xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+						ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
+						if(clickUsingJavaScript(driver, ele, "close button"))
+						{
+							log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
+						}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
+					}
+
+					if(clickUsingJavaScript(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName))
+					{
+						log(LogStatus.INFO, "Clicked on the connection icon of "+contactName, YesNo.No);
+						String parentId=switchOnWindow(driver);
+
+						if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+							ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+							if(result5.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+							}
+							/*		xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
+							}
+							 */
+
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+							sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+						}	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the connection icon of "+contactName);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc201_VerifyUIOfFilterSectionOnInstitutionRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATERecord3;
+		String contactName=ATE_ContactName22;
+
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+		String[] filterType1= {"All Types","Meetings","Calls"};
+		String[] recordIconType1= {"event","call"};
+
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+
+		String companyTagName=ATE_TaggedCompanyName35;
+		String companyTagTimeReferenceCount=ATE_TaggedCompanyTimeReference35;
+
+		String peopleTagName=ATE_TaggedPeopleName21;
+		String peopleTagTimeReferenceCount=ATE_TaggedPeopleTimeReference21;
+
+		String dealTagName=ATE_TaggedDealName18;
+		String dealTagTimeReferenceCount=ATE_TaggedDealTimeReference18;
+
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result);
+							}				
+							/*					xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+companyTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+companyTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							/*				
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if(isInstitutionRecord==false)
+					{
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+
+							/*					xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+					}
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+						/*
+						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+						if(clickUsingJavaScript(driver, ele, "close button"))
+						{
+							log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+						}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
+
+						ArrayList<String> result4=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+contactName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4);
+						}
+						/*					xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+						ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
+						if(clickUsingJavaScript(driver, ele, "close button"))
+						{
+							log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
+						}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
+					}
+
+					if(clickUsingJavaScript(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName))
+					{
+						log(LogStatus.INFO, "Clicked on the connection icon of "+contactName, YesNo.No);
+						String parentId=switchOnWindow(driver);
+
+						if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+							ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+							if(result5.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+							}
+							/*		xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
+							}
+							 */
+
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+							sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+						}	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the connection icon of "+contactName);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc202_VerifyUIOfFilterSectionOnPortfolioCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATERecord3;
+		String contactName=ATE_ContactName22;
+
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+		String[] filterType1= {"All Types","Meetings","Calls"};
+		String[] recordIconType1= {"event","call"};
+
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+
+		String companyTagName=ATE_TaggedCompanyName35;
+		String companyTagTimeReferenceCount=ATE_TaggedCompanyTimeReference35;
+
+		String peopleTagName=ATE_TaggedPeopleName21;
+		String peopleTagTimeReferenceCount=ATE_TaggedPeopleTimeReference21;
+
+		String dealTagName=ATE_TaggedDealName18;
+		String dealTagTimeReferenceCount=ATE_TaggedDealTimeReference18;
+
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result);
+							}				
+							/*					xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+companyTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+companyTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							/*				
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if(isInstitutionRecord==false)
+					{
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+
+							/*					xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+					}
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+						/*
+						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+						if(clickUsingJavaScript(driver, ele, "close button"))
+						{
+							log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+						}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
+
+						ArrayList<String> result4=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+contactName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4);
+						}
+						/*					xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+						ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
+						if(clickUsingJavaScript(driver, ele, "close button"))
+						{
+							log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
+						}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
+					}
+
+					if(clickUsingJavaScript(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName))
+					{
+						log(LogStatus.INFO, "Clicked on the connection icon of "+contactName, YesNo.No);
+						String parentId=switchOnWindow(driver);
+
+						if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+							ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+							if(result5.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+							}
+							/*		xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
+							}
+							 */
+
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+							sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+						}	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the connection icon of "+contactName);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc203_VerifyUIOfFilterSectionOnPrivateEquityRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATERecord3;
+		String contactName=ATE_ContactName22;
+
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+		String[] filterType1= {"All Types","Meetings","Calls"};
+		String[] recordIconType1= {"event","call"};
+
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+
+		String companyTagName=ATE_TaggedCompanyName35;
+		String companyTagTimeReferenceCount=ATE_TaggedCompanyTimeReference35;
+
+		String peopleTagName=ATE_TaggedPeopleName21;
+		String peopleTagTimeReferenceCount=ATE_TaggedPeopleTimeReference21;
+
+		String dealTagName=ATE_TaggedDealName18;
+		String dealTagTimeReferenceCount=ATE_TaggedDealTimeReference18;
+
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result);
+							}				
+							/*					xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+companyTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+companyTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							/*				
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if(isInstitutionRecord==false)
+					{
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+
+							/*					xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+					}
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+						/*
+						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+						if(clickUsingJavaScript(driver, ele, "close button"))
+						{
+							log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+						}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
+
+						ArrayList<String> result4=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+contactName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4);
+						}
+						/*					xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+						ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
+						if(clickUsingJavaScript(driver, ele, "close button"))
+						{
+							log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
+						}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
+					}
+
+					if(clickUsingJavaScript(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName))
+					{
+						log(LogStatus.INFO, "Clicked on the connection icon of "+contactName, YesNo.No);
+						String parentId=switchOnWindow(driver);
+
+						if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+							ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+							if(result5.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+							}
+							/*		xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
+							}
+							 */
+
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+							sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+						}	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the connection icon of "+contactName);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc204_VerifyUIOfFilterSectionOnContactRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATE_Contact1;
+
+		String xPath;
+		WebElement ele;
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+		String[] filterType1= {"All Types","Meetings","Calls"};
+		String[] recordIconType1= {"event","call"};
+
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+
+		String companyTagName=ATE_TaggedCompanyName30;
+		String companyTagTimeReferenceCount=ATE_TaggedCompanyTimeReference30;
+
+		String peopleTagName=ATE_TaggedPeopleName17;
+		String peopleTagTimeReferenceCount=ATE_TaggedPeopleTimeReference17;
+
+		String dealTagName=ATE_TaggedDealName19;
+		String dealTagTimeReferenceCount=ATE_TaggedDealTimeReference19;
+
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj2)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result);
+							}				
+							/*		xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+companyTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+companyTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							/*				
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if(isInstitutionRecord==false)
+					{
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+							/*			
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+					}
+
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+						/*
+						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+						if(clickUsingJavaScript(driver, ele, "close button"))
+						{
+							log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+						}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+					if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+						ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+						}
+						/*			xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
+							}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+					}					
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc205_VerifyUIOfFilterSectionOnDealRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATE_Contact1;
+
+		String xPath;
+		WebElement ele;
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+		String[] filterType1= {"All Types","Meetings","Calls"};
+		String[] recordIconType1= {"event","call"};
+
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+
+		String companyTagName=ATE_TaggedCompanyName30;
+		String companyTagTimeReferenceCount=ATE_TaggedCompanyTimeReference30;
+
+		String peopleTagName=ATE_TaggedPeopleName17;
+		String peopleTagTimeReferenceCount=ATE_TaggedPeopleTimeReference17;
+
+		String dealTagName=ATE_TaggedDealName19;
+		String dealTagTimeReferenceCount=ATE_TaggedDealTimeReference19;
+
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj2)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result);
+							}				
+							/*		xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+companyTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+companyTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							/*				
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if(isInstitutionRecord==false)
+					{
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+							/*			
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+					}
+
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+						/*
+						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+						if(clickUsingJavaScript(driver, ele, "close button"))
+						{
+							log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+						}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+					if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+						ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+						}
+						/*			xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
+							}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+					}					
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc206_VerifyUIOfFilterSectionOnFundraisingRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATE_Contact1;
+
+		String xPath;
+		WebElement ele;
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+		String[] filterType1= {"All Types","Meetings","Calls"};
+		String[] recordIconType1= {"event","call"};
+
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+
+		String companyTagName=ATE_TaggedCompanyName30;
+		String companyTagTimeReferenceCount=ATE_TaggedCompanyTimeReference30;
+
+		String peopleTagName=ATE_TaggedPeopleName17;
+		String peopleTagTimeReferenceCount=ATE_TaggedPeopleTimeReference17;
+
+		String dealTagName=ATE_TaggedDealName19;
+		String dealTagTimeReferenceCount=ATE_TaggedDealTimeReference19;
+
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj2)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result);
+							}				
+							/*		xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+companyTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+companyTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							/*				
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if(isInstitutionRecord==false)
+					{
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+							/*			
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+					}
+
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+						/*
+						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+						if(clickUsingJavaScript(driver, ele, "close button"))
+						{
+							log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+						}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+					if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+						ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+						}
+						/*			xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
+							}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+					}					
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc207_VerifyUIOfFilterSectionOnFundRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATE_Contact1;
+
+		String xPath;
+		WebElement ele;
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+		String[] filterType1= {"All Types","Meetings","Calls"};
+		String[] recordIconType1= {"event","call"};
+
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+
+		String companyTagName=ATE_TaggedCompanyName30;
+		String companyTagTimeReferenceCount=ATE_TaggedCompanyTimeReference30;
+
+		String peopleTagName=ATE_TaggedPeopleName17;
+		String peopleTagTimeReferenceCount=ATE_TaggedPeopleTimeReference17;
+
+		String dealTagName=ATE_TaggedDealName19;
+		String dealTagTimeReferenceCount=ATE_TaggedDealTimeReference19;
+
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj2)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result);
+							}				
+							/*		xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+companyTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+companyTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							/*				
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if(isInstitutionRecord==false)
+					{
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+							/*			
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+					}
+
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+						/*
+						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+						if(clickUsingJavaScript(driver, ele, "close button"))
+						{
+							log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+						}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+					if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+						ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+						}
+						/*			xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
+							}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+					}					
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc208_VerifyUIOfFilterSectionOnPrivateEquityRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATE_Contact1;
+
+		String xPath;
+		WebElement ele;
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+		String[] filterType1= {"All Types","Meetings","Calls"};
+		String[] recordIconType1= {"event","call"};
+
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+
+		String companyTagName=ATE_TaggedCompanyName30;
+		String companyTagTimeReferenceCount=ATE_TaggedCompanyTimeReference30;
+
+		String peopleTagName=ATE_TaggedPeopleName17;
+		String peopleTagTimeReferenceCount=ATE_TaggedPeopleTimeReference17;
+
+		String dealTagName=ATE_TaggedDealName19;
+		String dealTagTimeReferenceCount=ATE_TaggedDealTimeReference19;
+
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj2)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result);
+							}				
+							/*		xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+companyTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+companyTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							/*				
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if(isInstitutionRecord==false)
+					{
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+							/*			
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+							 */
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+					}
+
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+						/*
+						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+						if(clickUsingJavaScript(driver, ele, "close button"))
+						{
+							log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+						}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+					if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+						ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+						}
+						/*			xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
+							}
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+					}					
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc209_CreateAccountAndContact(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		FundsPageBusinessLayer fd = new FundsPageBusinessLayer(driver);
+
+		String[] accountName = ATCERecord16.split("<break>");
+		String[] recordType = ATCERecordType1.split("<break>");
+
+		String[] contactFirstName = {ATCE_ContactFirstName9,ATCE_ContactFirstName10};
+		String[] contactLastName = {ATCE_ContactLastName9,ATCE_ContactLastName10};
+		String[] contactLegalName = {ATCE_ContactLegalName8,ATCE_ContactLegalName9};
+		String[] contactEmail = {ATCE_ContactEmail8,ATCE_ContactEmail9};
+		String[] contactTitle = {ATCE_ContactTitle9,ATCE_ContactTitle10};
+
+		String dealName=ATCE_Deal6;
+		String dealStage=ATCE_DealStage3;
+		
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+		if (accountName.length == recordType.length) {
+			for (int i = 0; i < accountName.length; i++) {
+				if (lp.clickOnTab(projectName, tabObj1)) {
+
+					log(LogStatus.INFO, "Click on Tab : " + tabObj1, YesNo.No);
+					ThreadSleep(3000);
+					if (ip.createEntityOrAccount(environment, mode, accountName[i], recordType[i], null, null, 30)) {
+						log(LogStatus.INFO,
+								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i],
+								YesNo.No);
+						sa.assertTrue(true,
+								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i]);
+
+
+					} else {
+						sa.assertTrue(false,
+								"Not Able to Create Firm : " + accountName[i] + " of record type : " + recordType[i]);
+						log(LogStatus.SKIP,
+								"Not Able to Create Firm : " + accountName[i] + " of record type :" + recordType[i],
+								YesNo.Yes);
+					}
+
+				} else {
+					log(LogStatus.FAIL, "Not able to click on " + tabObj1 + " Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on " + tabObj1 + " Tab");
+				}
+
+			}
+		} else {
+			log(LogStatus.FAIL,
+					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper",
+					YesNo.No);
+			sa.assertTrue(false,
+					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper");
+		}
+
+		for (int i = 0; i < contactLastName.length; i++) {
+			if (lp.clickOnTab(projectName, tabObj2)) {
+
+				log(LogStatus.INFO, "Click on Tab : " + tabObj2, YesNo.No);
+				ThreadSleep(3000);
+
+				if (cp.createContact(projectName, contactFirstName[i], contactLastName[i], contactLegalName[i],
+						contactEmail[i], "", null, null, CreationPage.ContactPage, contactTitle[i], null)) {
+					log(LogStatus.INFO,
+							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i],
+							YesNo.No);
+					sa.assertTrue(true,
+							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i]);
+
+
+				} else {
+					log(LogStatus.FAIL,
+							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i],
+							YesNo.No);
+					sa.assertTrue(false,
+							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i]);
+				}
+
+			} else {
+				log(LogStatus.FAIL, "Not able to click on " + tabObj2 + " Tab", YesNo.No);
+				sa.assertTrue(false, "Not able to click on " + tabObj2 + " Tab");
+			}
+		}
+		
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
+			ThreadSleep(3000);
+
+			if (dp.createDeal(projectName, dealName, null, dealStage)) {
+				log(LogStatus.INFO, dealName + " deal has been created", YesNo.No);
+				sa.assertTrue(true, dealName + " deal has been created");
+
+			} else {
+				log(LogStatus.ERROR, dealName + " deal is not created", YesNo.No);
+				sa.assertTrue(false, dealName + " deal is not created");
+			}
+		}
+		else {
+			log(LogStatus.ERROR, "Not able to click on " + tabObj4 + " Tab", YesNo.No);
+			sa.assertTrue(false, "Not able to click on " + tabObj4 + " Tab");
+		}
+
+
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc210_CreateDealTeam(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		DealTeamPageBusinessLayer dt=new DealTeamPageBusinessLayer(driver);
+		FundsPageBusinessLayer fd = new FundsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+			
+		String[] dealTeamName = {ATCE_DTDealName1,ATCE_DTDealName2};
+		String[] dealTeamContact = {ATCE_DTContact1,ATCE_DTContact2};
+		String[] dealTeamMember = {ATCE_DTMember1,ATCE_DTMember2};
+		String[] dealTeamRole = {ATCE_DTRole1,ATCE_DTRole2};
+		
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		String userName2=crmUser8FirstName+" "+crmUser8LastName;
+		
+		
+		String [][][] dealTeamInfo= {{{"Deal",ATCE_DTDealName1},{PageLabel.Deal_Contact.toString(),ATCE_DTContact1},{PageLabel.Team_Member.toString(),userName1},{PageLabel.Role.toString(),ATCE_DTRole1}},
+				{{"Deal",ATCE_DTDealName2},{PageLabel.Deal_Contact.toString(),ATCE_DTContact2},{PageLabel.Team_Member.toString(),userName2},{PageLabel.Role.toString(),ATCE_DTRole2}}};		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+		
+			for(String[][] details:dealTeamInfo)
+			{
+				if(bp.openAppFromAppLauchner(20, "Deal Team"))
+				{
+					log(LogStatus.INFO, "Deal Team has been open", YesNo.No);
+					
+					if(dt.createDealTeam(projectName, ATCE_DTDealName1,details, null,action.SCROLLANDBOOLEAN, 20))
+					{
+						log(LogStatus.INFO, "Deal Team has been Created", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Deal Team is not Created", YesNo.No);
+						sa.assertTrue(false, "Deal Team is not Created");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not Able to open Deal Team", YesNo.No);
+					sa.assertTrue(false,  "Not Able to open Deal Team");
+				}
+			}
+		
+	
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc211_CreateATask(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		
+		String activityType=ATCE_ATActivityType37;
+		String taskSubject=ATCE_ATSubject37;
+		String taskRelatedTo=ATCE_ATRelatedTo37;
+		String taskNotes=ATCE_ATNote37;
+		String taskStatus=ATCE_AdvanceStatus19;
+		String taskPriority=ATCE_AdvancePriority19;	
+		String dueDateDay=ATCE_ATDay37;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_037", excelLabel.Advance_Due_Date);
+			
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority}};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+		}	 
+		
+		
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc212_VerifyTaskOnDealTeamSection(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Deal6;
+	    
+		String[] contectName= {ATCE_ConName31};
+		String[] meetingAndCallCount= {ATCE_ConMeetingAndCall31};
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					
+					ArrayList<String>result=bp.verifyMeetingAndCallOnExternalTabOfDealTeam(contectName, meetingAndCallCount);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Meeting and call count have been verified on Deal Team Section", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Meeting and call count are not verified on Deal Team Section", YesNo.No);
+						sa.assertTrue(false, "The Meeting and call count are not verified on Deal Team Section");
+					}
+
+
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc213_CreateACall(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		
+		String activityType=ATCE_ATActivityType38;
+		String taskSubject=ATCE_ATSubject38;
+		String taskRelatedTo=ATCE_ATRelatedTo38;
+		String taskNotes=ATCE_ATNote38;
+		
+		String dueDateDay=ATCE_ATDay38;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_038", excelLabel.Advance_Due_Date);
+			
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Date", taskDueDate }};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+		}	 
+		
+		
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc214_VerifyCallOnDealTeamConnectionPageAndMeetingAndCallPage(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Deal6;
+	    
+		String[] contectName= {ATCE_ConName32};
+		String[] meetingAndCallCount= {ATCE_ConMeetingAndCall32};
+		
+		String contact=ATCE_ConName31;
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall9;
+		
+
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					
+					ArrayList<String>result=bp.verifyMeetingAndCallOnExternalTabOfDealTeam(contectName, meetingAndCallCount);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Meeting and call count have been verified on Deal Team Section", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Meeting and call count are not verified on Deal Team Section", YesNo.No);
+						sa.assertTrue(false, "The Meeting and call count are not verified on Deal Team Section");
+					}	
+					
+					ArrayList<String> result1=bp.verifyMeetingAndCallOnConnectionPageOfDealTeam(contact, connectionUserName, connectionMeetingaAndCall);
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The Meeting and call count have been verified on connection page", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Meeting and call countare not verified on connection page", YesNo.No);
+						sa.assertTrue(false, "The Meeting and call count are not verified on Deal Team Section");
+					}
+					
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc215_CreateAccountContactAndFundraising(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		FundRaisingPageBusinessLayer fp=new FundRaisingPageBusinessLayer(driver);
+		String[] accountName = ATCERecord17.split("<break>");
+		String[] recordType = ATCERecordType2.split("<break>");
+
+		String[] contactFirstName = {ATCE_ContactFirstName11,ATCE_ContactFirstName12};
+		String[] contactLastName = {ATCE_ContactLastName11,ATCE_ContactLastName12};
+		String[] contactLegalName = {ATCE_ContactLegalName10,ATCE_ContactLegalName11};
+		String[] contactEmail = {ATCE_ContactEmail10,ATCE_ContactEmail11};
+		String[] contactTitle = {ATCE_ContactTitle11,ATCE_ContactTitle12};
+
+
+		String fundraisingName=ATCE_Fundraising3;
+		String flegalName=ATCE_FLegalName1;
+		String fFundName=ATCE_FFundName1;
+		String fStage=ATCE_FStageName1;
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+		if (accountName.length == recordType.length) {
+			for (int i = 0; i < accountName.length; i++) {
+				if (lp.clickOnTab(projectName, tabObj1)) {
+
+					log(LogStatus.INFO, "Click on Tab : " + tabObj1, YesNo.No);
+					ThreadSleep(3000);
+					if (ip.createEntityOrAccount(environment, mode, accountName[i], recordType[i], null, null, 30)) {
+						log(LogStatus.INFO,
+								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i],
+								YesNo.No);
+						sa.assertTrue(true,
+								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i]);
+
+
+					} else {
+						sa.assertTrue(false,
+								"Not Able to Create Firm : " + accountName[i] + " of record type : " + recordType[i]);
+						log(LogStatus.SKIP,
+								"Not Able to Create Firm : " + accountName[i] + " of record type :" + recordType[i],
+								YesNo.Yes);
+					}
+
+				} else {
+					log(LogStatus.FAIL, "Not able to click on " + tabObj1 + " Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on " + tabObj1 + " Tab");
+				}
+
+			}
+		} else {
+			log(LogStatus.FAIL,
+					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper",
+					YesNo.No);
+			sa.assertTrue(false,
+					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper");
+		}
+
+		for (int i = 0; i < contactLastName.length; i++) {
+			if (lp.clickOnTab(projectName, tabObj2)) {
+
+				log(LogStatus.INFO, "Click on Tab : " + tabObj2, YesNo.No);
+				ThreadSleep(3000);
+
+				if (cp.createContact(projectName, contactFirstName[i], contactLastName[i], contactLegalName[i],
+						contactEmail[i], "", null, null, CreationPage.ContactPage, contactTitle[i], null)) {
+					log(LogStatus.INFO,
+							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i],
+							YesNo.No);
+					sa.assertTrue(true,
+							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i]);
+
+
+				} else {
+					log(LogStatus.FAIL,
+							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i],
+							YesNo.No);
+					sa.assertTrue(false,
+							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i]);
+				}
+
+			} else {
+				log(LogStatus.FAIL, "Not able to click on " + tabObj2 + " Tab", YesNo.No);
+				sa.assertTrue(false, "Not able to click on " + tabObj2 + " Tab");
+			}
+		}
+		
+
+		
+		if (lp.clickOnTab(environment, mode, TabName.FundraisingsTab)) {
+			
+			if(fp.createFundRaising(environment, mode, fundraisingName, fFundName,flegalName, null, fStage, null, null,null, null, null))
+			{
+				log(LogStatus.INFO,"Fundraising has been created",YesNo.No);
+				
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Fundraising is not created",YesNo.No);
+				sa.assertTrue(false, "Fundraising is not created");
+			}
+		
+		}
+		else
+		{
+			log(LogStatus.FAIL, "Not able to click on fundraising tab Tab", YesNo.No);
+			sa.assertTrue(false, "Not able to click on fundraising Tab");
+		}
+
+			
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc216_FundraisingraisingContact(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		FundRaisingPageBusinessLayer fp=new FundRaisingPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATCE_FName1;
+
+		ArrayList<String> labelName=new ArrayList<String>();
+		ArrayList<String> value=new ArrayList<String>();
+		ArrayList<String> inputType=new ArrayList<String>();
+		ArrayList<String> labelName1=new ArrayList<String>();
+		ArrayList<String> value1=new ArrayList<String>();
+		ArrayList<String> inputType1=new ArrayList<String>();
+
+		labelName.add("Fundraising");
+		labelName.add("Contact");
+		labelName.add("Role");
+
+		value.add(ATCE_FName1);
+		value.add(ATCE_FContact1);
+		value.add(ATCE_FRole1);
+
+		inputType.add("SearchDropDown");
+		inputType.add("SearchDropDown");
+		inputType.add("DropDown");
+
+		labelName1.add("Fundraising");
+		labelName1.add("Contact");
+		labelName1.add("Role");
+
+		value1.add(ATCE_FName2);
+		value1.add(ATCE_FContact2);
+		value1.add(ATCE_FRole2);
+
+		inputType1.add("SearchDropDown");
+		inputType1.add("SearchDropDown");
+		inputType1.add("DropDown");
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(environment, mode, TabName.FundraisingsTab)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if(fp.CreateNewFundraisingContactFromTab(projectName, labelName, value, inputType))
+					{
+						log(LogStatus.INFO, "Fundraising contact has been Created", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Fundraising contact is not Created", YesNo.No);
+						sa.assertTrue(false,  "Fundraising contact is not Created");
+					}
+
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+		}
+
+
+		if (lp.clickOnTab(environment, mode, TabName.FundraisingsTab)) {
+
+
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if(fp.CreateNewFundraisingContactFromTab(projectName, labelName1, value1, inputType1))
+					{
+						log(LogStatus.INFO, "Fundraising contact has been Created", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Fundraising contact is not Created", YesNo.No);
+						sa.assertTrue(false,  "Fundraising contact is not Created");
+					}
+
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+		}
+
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc217_CreateATask(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		
+		String activityType=ATCE_ATActivityType39;
+		String taskSubject=ATCE_ATSubject39;
+		String taskRelatedTo=ATCE_ATRelatedTo39;
+		String taskNotes=ATCE_ATNote39;
+		String taskStatus=ATCE_AdvanceStatus20;
+		String taskPriority=ATCE_AdvancePriority20;	
+		String dueDateDay=ATCE_ATDay39;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_039", excelLabel.Advance_Due_Date);
+			
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority}};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+		}	 
+		
+		
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc218_VerifyTaskOnFundraisingSection(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fundraising3;
+
+		String[] contectName= {ATCE_ConName33};
+		String[] meetingAndCallCount= {ATCE_ConMeetingAndCall33};
+
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					ArrayList<String>result=bp.verifyMeetingAndCallOnFundraisingContactTeam(contectName, meetingAndCallCount);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Meeting and call count have been verified on fundraising contact Section", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Meeting and call count are not verified on fundraising contact Section", YesNo.No);
+						sa.assertTrue(false, "The Meeting and call count are not verified on fundraising contact Section");
+
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc219_CreateACall(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		
+		String activityType=ATCE_ATActivityType40;
+		String taskSubject=ATCE_ATSubject40;
+		String taskRelatedTo=ATCE_ATRelatedTo40;
+		String taskNotes=ATCE_ATNote40;
+		
+		String dueDateDay=ATCE_ATDay40;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_040", excelLabel.Advance_Due_Date);
+			
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Date", taskDueDate }};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+		}	 
+		
+		
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc220_VerifyCallOnFundraisingConnectionPageAndMeetingAndCallPage(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fundraising3;
+	    
+		String[] contectName= {ATCE_ConName34};
+		String[] meetingAndCallCount= {ATCE_ConMeetingAndCall34};
+		
+		String contact=ATCE_ConName34;
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall9;
+	
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+		if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+				
+					ArrayList<String>result=bp.verifyMeetingAndCallOnFundraisingContactTeam(contectName, meetingAndCallCount);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Meeting and call count have been verified on Deal Team Section", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Meeting and call count are not verified on Deal Team Section", YesNo.No);
+						sa.assertTrue(false, "The Meeting and call count are not verified on Deal Team Section");
+					}	
+					
+					ArrayList<String> result1=bp.verifyMeetingAndCallOnConnectionPageOfFundraisingContact(contact, connectionUserName, connectionMeetingaAndCall);
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The Meeting and call count have been verified on connection page", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Meeting and call countare not verified on connection page", YesNo.No);
+						sa.assertTrue(false, "The Meeting and call count are not verified on Deal Team Section");
+					}
+					
+					
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+		}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+
 
 }
 
