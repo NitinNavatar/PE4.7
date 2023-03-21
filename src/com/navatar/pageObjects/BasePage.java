@@ -3757,6 +3757,25 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, peopleTabOnTagged, "Visibility", timeOut, "People Tab On Tagged");
 	}
 	
+	@FindBy(xpath = "//button[@name='timesRef']")
+	private WebElement countLink;
+
+	/**
+	 * @return the Count Link
+	 */
+	public WebElement getCountLinkOnTagged(int timeOut) {
+		return isDisplayed(driver, countLink, "Visibility", timeOut, "Count Link");
+	}
+	
+	public WebElement returnXpathOfSubjectInInteractionPage(String name, int timeOut) {
+		String xpath = "//td[@data-label='Subject']//button[@title='" + name + "']"; 
+		try {
+			return FindElement(driver, xpath, "Subject Of Interaction Page",action.BOOLEAN,timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Subject Of Interaction Page",action.BOOLEAN,timeOut);
+		}
+	}
+	
 	@FindBy(xpath = "//input[contains(@id,'txtDueDate')]/following-sibling::span")
 	private WebElement todaysDueDate;
 
@@ -6400,7 +6419,6 @@ public abstract class BasePage extends BaseLib {
 		return FindElement(driver, "//label[text()='" + label
 				+ "']/ancestor::div[@class='slds-form-element__row'  or contains(@class,'label-stacked')]//div/input",
 				"DropDown: " + label, action.SCROLLANDBOOLEAN, timeOut);
-
 	}
 
 	public WebElement searchDropDownBoxThroughSDG(String label, int timeOut) {
@@ -9971,6 +9989,7 @@ public abstract class BasePage extends BaseLib {
 		return FindElement(driver, path, "Edit button", action.BOOLEAN, timeOut);
 	}
 
+
 	public WebElement plusIconButtonInThemeOfAccount(String accountName, int timeOut) {
 
 		String path = "//span[contains(text(), \"" + accountName
@@ -10003,4 +10022,35 @@ public abstract class BasePage extends BaseLib {
 		String path = "//a[text()=\"" + accountName + "\"]/ancestor::tr//td//button[@title=\"Log Note\"]";
 		return FindElement(driver, path, "addToThemeLogNoteButton", action.BOOLEAN, timeOut);
 	}
+	
+	
+
+	public WebElement getMeetingAndCallCountOfDealteam(String dealName, int timeOut) {
+
+		String path = "//a[text()='"+dealName+"']/ancestor::td[@data-label='Name']/../td[@data-label='Meetings and Calls']//button";
+		return FindElement(driver, path, "Meeting and call count", action.BOOLEAN, timeOut);
+	}
+	
+	
+
+	public WebElement getCOnnectionIconOfDealteam(String dealName, int timeOut) {
+
+		String path = "//a[text()='"+dealName+"']/ancestor::td[@data-label='Name']/../th//button";
+		return FindElement(driver, path, "Meeting and call count", action.BOOLEAN, timeOut);
+	}
+	
+	public WebElement getMeetingAndCallCountOnConnectionIconOfDealteam(String userName, int timeOut) {
+
+		String path = "//lightning-base-formatted-text[text()='"+userName+"']/ancestor::th[@data-label='Name']/../td[@data-label='Meetings and Calls']//button";
+		return FindElement(driver, path, "Meeting and call count", action.BOOLEAN, timeOut);
+	}
+	
+	public WebElement getConnectionIconOfFundraisingContactRecord(String contactName, int timeOut) {
+
+		String path = "//a[text()='"+contactName+"']/ancestor::td[@data-label='Name']/../td//button[@title='Connections']";
+		return FindElement(driver, path, "Meeting and call count", action.BOOLEAN, timeOut);
+	}
+	
+
+	
 }

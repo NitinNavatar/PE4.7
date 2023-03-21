@@ -72,7 +72,7 @@ public class ThemePage extends BasePageBusinessLayer {
 		return isDisplayed(driver, type, "Visibility", timeOut, recordName);
 
 	}
-	
+
 	@FindBy(xpath = "//input[contains(@name,'Search')]")
 	private WebElement searchIcon;
 
@@ -81,6 +81,52 @@ public class ThemePage extends BasePageBusinessLayer {
 	 */
 	public WebElement getSearchIcon(int timeOut) {
 		return isDisplayed(driver, searchIcon, "Visibility", timeOut, "Search Icon");
+	}
+
+	public WebElement plusIconButtonInThemeOfAccount(String accountName, int timeOut) {
+
+		String path = "//span[contains(text(), \"" + accountName
+				+ "\")]/ancestor::div[contains(@class,\"slds-size_1-of-1\")]/div//lightning-icon[@data-id=\"Account\"][1]";
+		return FindElement(driver, path, "plusIconButtonInThemeOfAccount", action.BOOLEAN, timeOut);
+	}
+
+	public WebElement addToThemePopUpSearchBox(int timeOut) {
+		return isDisplayed(driver, addToThemePopUpSearchBox, "Visibility", timeOut, "addToThemePopUpSearchBox");
+	}
+
+	@FindBy(xpath = "//input[@placeholder=\"Search...\"]")
+	private WebElement addToThemePopUpSearchBox;
+
+	public WebElement addToThemePopUpSearchBoxDropDownValue(String accountName, int timeOut) {
+
+		String path = "//span[text()=\"" + accountName + "\"]/parent::span/parent::div";
+		return FindElement(driver, path, "addToThemePopUpSearchBoxDropDownValue", action.BOOLEAN, timeOut);
+	}
+
+	public WebElement addToThemePopUpSaveButton(int timeOut) {
+		return isDisplayed(driver, addToThemePopUpSaveButton, "Visibility", timeOut, "addToThemePopUpSaveButton");
+	}
+
+	@FindBy(xpath = "//footer//button[text()=\"Save\"]")
+	private WebElement addToThemePopUpSaveButton;
+
+	public WebElement addToThemeLogNoteButton(String accountName, int timeOut) {
+
+		String path = "//a[text()=\"" + accountName + "\"]/ancestor::tr//td//button[@title=\"Log Note\"]";
+		return FindElement(driver, path, "addToThemeLogNoteButton", action.BOOLEAN, timeOut);
+	}
+
+	public WebElement successMsg(int timeOut) {
+		return isDisplayed(driver, successMsg, "Visibility", timeOut, "successMsg");
+	}
+
+	@FindBy(xpath = "//div/span[contains(text(), \"was created\")]")
+	private WebElement successMsg;
+
+	public WebElement addToThemeAccountTableRecord(String accountName, String columnName, int timeOut) {
+
+		String path = "//a[text()=\"" + accountName + "\"]/ancestor::tr//td[@data-label=\"" + columnName + "\"]";
+		return FindElement(driver, path, "addToThemeLastInteractionDate", action.BOOLEAN, timeOut);
 	}
 
 }
