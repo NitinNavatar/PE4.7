@@ -73,4 +73,17 @@ public class GlobalActionPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, saveButtonForEvent, "Visibility", timeOut, " Save Button lightning");
 	}
 	
+	
+	@FindBy(xpath = "//h2[text()='New Event']/ancestor::div[@data-aura-class='oneRecordActionWrapper']//button[@title='Save']")
+	 private WebElement saveBtnOFEventPopup;
+	
+	/**
+	 * @return the globalActionIcon
+	 */
+	public WebElement getSaveBtnOfEventPopup(int timeOut) {
+		return isDisplayed(driver, saveBtnOFEventPopup, "Visibility", timeOut, "save button");
+	}
+	
+	
+	
 }

@@ -3,11 +3,13 @@ package com.navatar.scripts;
 import static com.navatar.generic.CommonLib.FindElement;
 import static com.navatar.generic.CommonLib.ThreadSleep;
 import static com.navatar.generic.CommonLib.click;
+import static com.navatar.generic.CommonLib.clickUsingJavaScript;
 import static com.navatar.generic.CommonLib.exit;
 import static com.navatar.generic.CommonLib.getURL;
 import static com.navatar.generic.CommonLib.log;
 import static com.navatar.generic.CommonLib.refresh;
 import static com.navatar.generic.CommonLib.removeNumbersFromString;
+import static com.navatar.generic.CommonLib.sendKeys;
 import static com.navatar.generic.CommonLib.switchOnWindow;
 import static com.navatar.generic.CommonLib.switchToDefaultContent;
 import static com.navatar.generic.CommonLib.switchToWindowOpenNextToParentWindow;
@@ -26,19 +28,29 @@ import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
-import com.navatar.generic.ExcelUtils;
+import com.navatar.generic.EnumConstants.CreationPage;
 import com.navatar.generic.EnumConstants.Environment;
+import com.navatar.generic.EnumConstants.GlobalActionItem;
 import com.navatar.generic.EnumConstants.IconType;
+import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.PageName;
+import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.TaggedName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
+import com.navatar.generic.ExcelUtils;
 import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
+import com.navatar.pageObjects.DealPageBusinessLayer;
+import com.navatar.pageObjects.DealTeamPageBusinessLayer;
+import com.navatar.pageObjects.FundRaisingPageBusinessLayer;
+import com.navatar.pageObjects.FundraisingsPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageBusinessLayer;
+import com.navatar.pageObjects.GlobalActionPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
+import com.navatar.pageObjects.InstitutionsPageBusinessLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.navatar.pageObjects.TaskPageBusinessLayer;
@@ -173,7 +185,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 		String sectionHeader=ATCE_Section1;
 		String tabsOnTagged=ATCE_Tabs1;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged=TaggedName.Firms.toString();
 		String message=bp.acuityDefaultMessage;
 
 		String contactHeader=ATCE_ContactHeader1;
@@ -321,7 +333,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 		String sectionHeader=ATCE_Section2;
 		String tabsOnTagged=ATCE_Tabs2;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged=TaggedName.Firms.toString();
 		String message=bp.acuityDefaultMessage;
 
 		String contactHeader=ATCE_ContactHeader1;
@@ -471,7 +483,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 		String sectionHeader=ATCE_Section1;
 		String tabsOnTagged=ATCE_Tabs1;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged=TaggedName.Firms.toString();
 		String message=bp.acuityDefaultMessage;
 
 		String contactHeader=ATCE_ContactHeader1;
@@ -620,7 +632,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 		String sectionHeader=ATCE_Section1;
 		String tabsOnTagged=ATCE_Tabs1;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged=TaggedName.Firms.toString();
 		String message=bp.acuityDefaultMessage;
 
 		String contactHeader=ATCE_ContactHeader1;
@@ -769,7 +781,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 		String sectionHeader=ATCE_Section1;
 		String tabsOnTagged=ATCE_Tabs1;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged=TaggedName.Firms.toString();
 		String message=bp.acuityDefaultMessage;
 
 		String contactHeader=ATCE_ContactHeader1;
@@ -917,7 +929,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 		String sectionHeader=ATCE_Section1;
 		String tabsOnTagged=ATCE_Tabs1;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged=TaggedName.Firms.toString();
 		String message=bp.acuityDefaultMessage;
 
 		String contactHeader=ATCE_ContactHeader1;
@@ -1067,7 +1079,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 		String sectionHeader=ATCE_Section1;
 		String tabsOnTagged=ATCE_Tabs1;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged=TaggedName.Firms.toString();
 		String message=bp.acuityDefaultMessage;
 
 		String contactHeader=ATCE_ContactHeader1;
@@ -1216,7 +1228,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		String recordName=ATCE_Con2;
 		String sectionHeader=ATCE_Section3;
 		String tabsOnTagged=ATCE_Tabs1;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged=TaggedName.Firms.toString();
 		String message=bp.acuityDefaultMessage;
 
 		String internalconnectionHeader=ATCE_ConnectionHeader1;
@@ -1372,7 +1384,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 		String sectionHeader=ATCE_Section4;
 		String tabsOnTagged=ATCE_Tabs1;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged=TaggedName.Firms.toString();
 		String message=bp.acuityDefaultMessage;
 
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
@@ -1506,7 +1518,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 		String sectionHeader=ATCE_Section4;
 		String tabsOnTagged=ATCE_Tabs1;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged=TaggedName.Firms.toString();
 		String message=bp.acuityDefaultMessage;
 
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
@@ -1639,7 +1651,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 		String sectionHeader=ATCE_Section4;
 		String tabsOnTagged=ATCE_Tabs3;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged=TaggedName.Firms.toString();
 		String message=bp.acuityDefaultMessage;
 
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
@@ -1883,6 +1895,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		
 		String[] legalName= {ATCE_ContactLegalName1,ATCE_ContactLegalName2,ATCE_ContactLegalName3,ATCE_ContactLegalName4,ATCE_ContactLegalName5,ATCE_ContactLegalName6,ATCE_ContactLegalName7};
 		
+		
 		String[][][] contactDetails= {{{"First Name",ATCE_ContactFirstName1},{"Last Name",ATCE_ContactLastName1},{"Email",ATCE_ContactEmail1},{"Title",ATCE_ContactTitle1}},
 			{{"First Name",ATCE_ContactFirstName2},{"Last Name",ATCE_ContactLastName2},{"Email",ATCE_ContactEmail2},{"Title",ATCE_ContactTitle2}},
 			{{"First Name",ATCE_ContactFirstName3},{"Last Name",ATCE_ContactLastName3},{"Email",ATCE_ContactEmail3},{"Title",ATCE_ContactTitle3}},
@@ -1890,8 +1903,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			{{"First Name",ATCE_ContactFirstName5},{"Last Name",ATCE_ContactLastName5},{"Email",ATCE_ContactEmail5},{"Title",ATCE_ContactTitle5}},
 			{{"First Name",ATCE_ContactFirstName6},{"Last Name",ATCE_ContactLastName6},{"Email",ATCE_ContactEmail6},{"Title",ATCE_ContactTitle6}},
 			{{"First Name",ATCE_ContactFirstName7},{"Last Name",ATCE_ContactLastName7},{"Email",ATCE_ContactEmail7},{"Title",ATCE_ContactTitle7}}};
-		
-		
+				
 		
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 		for(int i=0; i<legalName.length; i++)
@@ -2746,7 +2758,6 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc022_CreateATaskAndLogACall(String projectName) {
@@ -2807,7 +2818,6 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
 	
 	@Parameters({ "projectName" })
 	@Test
@@ -2883,13 +2893,11 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			}
 		}
 
-
 		String[] tagsArr=ATCE_ATTags1.split("<break>");
 		
 		
-		//lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
-		lp.CRMLogin("navatariptesting+96281@gmail.com", adminPassword, appName);
-
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+		
 		if (lp.clickOnTab(projectName, tabObj1)) {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
@@ -15576,7 +15584,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc077_VerifyHighligtedFirmOnDeclineDealStageOnPrivateEquityRecordType(String projectName) {
+	public void ATCETc078_VerifyHighligtedFirmOnDeclineDealStageOnPrivateEquityRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15633,7 +15641,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc078_VerifyHighligtedFirmOnDeclineDealStageOnContactRecordType(String projectName) {
+	public void ATCETc079_VerifyHighligtedFirmOnDeclineDealStageOnContactRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15690,7 +15698,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc079_VerifyHighligtedFirmOnDeclineDealStageOnDealRecordType(String projectName) {
+	public void ATCETc080_VerifyHighligtedFirmOnDeclineDealStageOnDealRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15747,7 +15755,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc080_VerifyHighligtedFirmOnDeclineDealStageOnFundraisingRecordType(String projectName) {
+	public void ATCETc081_VerifyHighligtedFirmOnDeclineDealStageOnFundraisingRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15804,7 +15812,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc081_VerifyHighligtedFirmOnDeclineDealStageOnFundRecordType(String projectName) {
+	public void ATCETc082_VerifyHighligtedFirmOnDeclineDealStageOnFundRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15861,7 +15869,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc082_ChangeDealStageToDealRecieved(String projectName) {
+	public void ATCETc083_ChangeDealStageToDealRecieved(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15913,7 +15921,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc083_VerifyHighligtedFirmOnDealRecievedDealStageOnCompanyRecordType(String projectName) {
+	public void ATCETc084_VerifyHighligtedFirmOnDealRecievedDealStageOnCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15971,7 +15979,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc084_VerifyHighligtedFirmOnDealRecievedDealStageOnAdvisorRecordType(String projectName) {
+	public void ATCETc085_VerifyHighligtedFirmOnDealRecievedDealStageOnAdvisorRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16028,7 +16036,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc085_VerifyHighligtedFirmOnDealRecievedDealStageOnLendorRecordType(String projectName) {
+	public void ATCETc086_VerifyHighligtedFirmOnDealRecievedDealStageOnLendorRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16085,7 +16093,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc086_VerifyHighligtedFirmOnDealRecievedDealStageOnIntermediaryRecordType(String projectName) {
+	public void ATCETc087_VerifyHighligtedFirmOnDealRecievedDealStageOnIntermediaryRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16142,7 +16150,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc087_VerifyHighligtedFirmOnDealRecievedDealStageOnInstitutionRecordType(String projectName) {
+	public void ATCETc088_VerifyHighligtedFirmOnDealRecievedDealStageOnInstitutionRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16199,7 +16207,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc088_VerifyHighligtedFirmOnDealRecievedDealStageOnPortfolioCompanyRecordType(String projectName) {
+	public void ATCETc089_VerifyHighligtedFirmOnDealRecievedDealStageOnPortfolioCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16256,7 +16264,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc089_VerifyHighligtedFirmOnDealRecievedDealStageOnPrivateEquityRecordType(String projectName) {
+	public void ATCETc090_VerifyHighligtedFirmOnDealRecievedDealStageOnPrivateEquityRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16313,7 +16321,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc090_VerifyHighligtedFirmOnDealRecievedDealStageOnContactRecordType(String projectName) {
+	public void ATCETc091_VerifyHighligtedFirmOnDealRecievedDealStageOnContactRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16370,7 +16378,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc091_VerifyHighligtedFirmOnDealRecievedDealStageOnDealRecordType(String projectName) {
+	public void ATCETc092_VerifyHighligtedFirmOnDealRecievedDealStageOnDealRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16427,7 +16435,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc092_VerifyHighligtedFirmOnDealRecievedDealStageOnFundraisingRecordType(String projectName) {
+	public void ATCETc093_VerifyHighligtedFirmOnDealRecievedDealStageOnFundraisingRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16484,7 +16492,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc093_VerifyHighligtedFirmOnDealRecievedDealStageOnFundRecordType(String projectName) {
+	public void ATCETc094_VerifyHighligtedFirmOnDealRecievedDealStageOnFundRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16539,10 +16547,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc094_VerifyHyperlinkFunctionalityForCompanyRecordType(String projectName) {
+	public void ATCETc095_VerifyHyperlinkFunctionalityForCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16870,12 +16877,10 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
-	
-	
+		
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc095_VerifyHyperlinkFunctionalityForAdvisorRecordType(String projectName) {
+	public void ATCETc096_VerifyHyperlinkFunctionalityForAdvisorRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -17207,7 +17212,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc096_VerifyHyperlinkFunctionalityForLendorRecordType(String projectName) {
+	public void ATCETc097_VerifyHyperlinkFunctionalityForLendorRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -17539,7 +17544,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc097_VerifyHyperlinkFunctionalityForIntermediaryRecordType(String projectName) {
+	public void ATCETc098_VerifyHyperlinkFunctionalityForIntermediaryRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -17871,7 +17876,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc098_VerifyHyperlinkFunctionalityForInstitutionRecordType(String projectName) {
+	public void ATCETc099_VerifyHyperlinkFunctionalityForInstitutionRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -18203,7 +18208,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc099_VerifyHyperlinkFunctionalityForPortfolioCompanyRecordType(String projectName) {
+	public void ATCETc100_VerifyHyperlinkFunctionalityForPortfolioCompanyRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -18534,7 +18539,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc100_VerifyHyperlinkFunctionalityForPrivateEquityRecordType(String projectName) {
+	public void ATCETc101_VerifyHyperlinkFunctionalityForPrivateEquityRecordType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -18865,7 +18870,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc101_VerifyHyperlinkFunctionalityForContactType(String projectName) {
+	public void ATCETc102_VerifyHyperlinkFunctionalityForContactType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -19167,11 +19172,10 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc102_VerifyHyperlinkFunctionalityForDealType(String projectName) {
+	public void ATCETc103_VerifyHyperlinkFunctionalityForDealType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -19444,7 +19448,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc103_VerifyHyperlinkFunctionalityForFundraisingType(String projectName) {
+	public void ATCETc104_VerifyHyperlinkFunctionalityForFundraisingType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -19719,7 +19723,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc104_VerifyHyperlinkFunctionalityForFundType(String projectName) {
+	public void ATCETc105_VerifyHyperlinkFunctionalityForFundType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -20025,7 +20029,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc105_VerifyHyperlinkFunctionalityForThemeType(String projectName) {
+	public void ATCETc106_VerifyHyperlinkFunctionalityForThemeType(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -20196,10 +20200,10 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATCETc106_CreateFollowUpTask(String projectName) {
+	public void ATCETc107_CreateFollowUpTask(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
@@ -20208,55 +20212,57 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		String taskSubject=ATCE_ATSubject27;
 		String taskRelatedTo=ATCE_ATRelatedTo27;
 		String taskNotes=ATCE_ATNote27;
-		String taskStatus=ATCE_AdvanceStatus10;
-		String taskPriority=ATCE_AdvancePriority10;	
-		String dueDateDay=ATCE_ATDay19;
+		String taskStatus=ATCE_AdvanceStatus14;
+		String taskPriority=ATCE_AdvancePriority14;	
+		String dueDateDay=ATCE_ATDay27;
 		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
 		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
-				"ATCE_019", excelLabel.Advance_Due_Date);
+				"ATCE_027", excelLabel.Advance_Due_Date);
 
 		
-		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
-
-	
+		String[][] basicSection = {{ "Related_To", taskRelatedTo } };
+		String[][][] taskSection= {{{"Subject",taskSubject}, {"Status",taskStatus}, {"Due Date",taskDueDate}}};	
 		
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Tasks", false)) {
 
-			log(LogStatus.INFO,
-					"-----Verified call named: " + task1SubjectNameNavigation + " found in Tasks Object-----",
-					YesNo.No);
-			if (taskBP.clickOnRecordPageButtonOrInDownArrowButton("Create Follow-Up Task", 20)) {
-				log(LogStatus.INFO, "Clicked on Create Follow-Up Task Button", YesNo.No);
+			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectNameNavigation + " found in Tasks Object-----",YesNo.No);
+			String parentID=switchOnWindow(driver);
+			if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(task1SubjectNameNavigation, 20), "Edit button of popup of subject name "+task1SubjectNameNavigation))
+			{
+				log(LogStatus.INFO,"Clicked on edit button of subject "+task1SubjectNameNavigation,YesNo.No);
+				
 
-				CommonLib.ThreadSleep(5000);
-				if (BP.updateActivityTimelineRecord(projectName, basicsection, advanceSection, null, null,
-						null, false, null, null, null, null, null, null)) {
-					log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
-				}
-				else {
-					log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
-					sa.assertTrue(false, "Activity timeline record has not Updated");
+				if (bp.updateActivityTimelineRecordForMultipleFollowUpTasks(projectName, basicSection,null, taskSection, null, null,false,false)) {
+					log(LogStatus.PASS, "Followup record has been created, Subject name : "+taskSubject, YesNo.No);
+					sa.assertTrue(true, "Followup record has been created,  Subject name : "+taskSubject);
 
 				}
+				else
+				{
+					log(LogStatus.ERROR, "Followup record is not created, Subject name : "+taskSubject, YesNo.No);
+					sa.assertTrue(false, "Followup record is not created,  Subject name : "+taskSubject);
+				}	 
+				
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Not able to click on edit button of subject "+task1SubjectNameNavigation,YesNo.No);
+				BaseLib.sa.assertTrue(false,"Not able to click on edit button of subject "+task1SubjectNameNavigation);
+				
+			}
+			driver.close();
+			driver.switchTo().window(parentID);
+			
+		}
+		 else {
 
-			} else {
-				log(LogStatus.ERROR, "Not Able Click on Create Follow-Up Task button", YesNo.Yes);
-				sa.assertTrue(false, "Not Able Click on Create Follow-Up Task button");
+				log(LogStatus.ERROR, "-----Task named: " + task1SubjectNameNavigation + " not found in Tasks Object-----",YesNo.Yes);
+				BaseLib.sa.assertTrue(false,"-----Task named: " + task1SubjectNameNavigation + " not found in Tasks Object-----");
 
 			}
-
-		} else {
-
-			log(LogStatus.ERROR, "-----Task named: " + task1SubjectNameNavigation + " not found in Tasks Object-----",
-					YesNo.Yes);
-			BaseLib.sa.assertTrue(false,
-					"-----Task named: " + task1SubjectNameNavigation + " not found in Tasks Object-----");
-
-		}
 
 
 		lp.CRMlogout();	
@@ -20264,7 +20270,16639 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	}
 
 	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc108_CreateATaskAndLogACallAndAssignToUser2(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		
+		String activityType=ATCE_ATActivityType29;
+		String taskSubject=ATCE_ATSubject29;
+		String taskRelatedTo=ATCE_ATRelatedTo29;
+		String taskNotes=ATCE_ATNote29;
+		String taskStatus=ATCE_AdvanceStatus15;
+		String taskPriority=ATCE_AdvancePriority15;	
+		String dueDateDay=ATCE_ATDay29;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_029", excelLabel.Advance_Due_Date);
+		
+		String activityType1=ATCE_ATActivityType28;
+		String taskSubject1=ATCE_ATSubject28;
+		String taskRelatedTo1=ATCE_ATRelatedTo28;
+		String taskNotes1=ATCE_ATNote28;	
+		String dueDateDay1=ATCE_ATDay28;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_028", excelLabel.Advance_Due_Date);
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		String userName3=crmUser8FirstName+" "+crmUser8LastName;
+		String assigneduser=null,assigneduser1=null;
+
+		if(ATCE_AUser28.equals("PE User 2"))
+		{
+			assigneduser1=userName2;
+			
+		}
+		else if(ATCE_AUser28.equals("PE User 1"))
+		{
+			assigneduser1=userName1;
+			
+		}
+		if(ATCE_AUser29.equals("PE User 2"))
+		{
+			assigneduser=userName2;
+			
+		}
+		else if(ATCE_AUser29.equals("PE User 1"))
+		{
+			assigneduser=userName1;
+			
+		}
 	
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority}, {"User",assigneduser} };
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }, {"User",assigneduser1}};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+		}	 
+		
+		if (bp.createActivityTimeline(projectName, true, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null,null)) {
+			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+		}	 
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc109_VerifyFollowupTaskTaskCallFunctionalityOnCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord1;
+	
+		String contactSectionName=ATCE_ConName15;
+		String contactSectionTitle=ATCE_ConTitle15;
+		String contactSectionDeal=ATCE_ConDeal15;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall15;
+		String contactSectionEmail=ATCE_ConEmail15;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName34,ATCE_TaggedFirmsName35,ATCE_TaggedFirmsName36,ATCE_TaggedFirmsName37,ATCE_TaggedFirmsName38,ATCE_TaggedFirmsName39,ATCE_TaggedFirmsName40,ATCE_TaggedFirmsName41,ATCE_TaggedFirmsName42,ATCE_TaggedFirmsName43,ATCE_TaggedFirmsName44,ATCE_TaggedFirmsName45,ATCE_TaggedFirmsName46};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount34,ATCE_TaggedFirmsCount35,ATCE_TaggedFirmsCount36,ATCE_TaggedFirmsCount37,ATCE_TaggedFirmsCount38,ATCE_TaggedFirmsCount39,ATCE_TaggedFirmsCount40,ATCE_TaggedFirmsCount41,ATCE_TaggedFirmsCount42,ATCE_TaggedFirmsCount43,ATCE_TaggedFirmsCount44,ATCE_TaggedFirmsCount45,ATCE_TaggedFirmsCount46};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName25,ATCE_TaggedPeopleName26,ATCE_TaggedPeopleName27,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName28,ATCE_TaggedPeopleName29,ATCE_TaggedPeopleName30};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount25,ATCE_TaggedPeopleCount26,ATCE_TaggedPeopleCount27,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount28,ATCE_TaggedPeopleCount29,ATCE_TaggedPeopleCount30};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName4,ATCE_TaggedDealName5};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount4,ATCE_TaggedDealCount5};
+		
+		
+		String[] connectionUserName= {crmUser6FirstName+" "+crmUser6LastName,crmUser7FirstName+" "+crmUser7LastName};
+		String[] connectionTitle= {ATCE_ConnectionTitle2,ATCE_ConnectionTitle4};
+		String[] connectionDeal= {ATCE_ConnectionDeal2,ATCE_ConnectionDeal4};
+		String[] connectionMeetingaAndCall= {ATCE_ConnectionMeetingAndCall2,ATCE_ConnectionMeetingAndCall4};
+		String[] connectionEmail= {ATCE_ConnectionEmail2,ATCE_ConnectionEmail4};
+		
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		
+		String[] iconType= {ATCE_ATActivityType28};
+		String[] date= {ATCE_ATDueDate28};
+		String[] subject= {ATCE_ATSubject28};
+		String[] notes= {ATCE_ATNote28};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants28)};
+		String[][] tag= {ATCE_ATTags28.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType27,ATCE_ATActivityType28,ATCE_ATActivityType29};
+		String[] date1= {ATCE_ATDueDate27,ATCE_ATDueDate28,ATCE_ATDueDate29};
+		String[] subject1= {ATCE_ATSubject27,ATCE_ATSubject28,ATCE_ATSubject29};
+		String[] notes1= {ATCE_ATNote27,ATCE_ATNote28,ATCE_ATNote29};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27),bp.getParticipantData(ATCE_ATParticipants28),bp.getParticipantData(ATCE_ATParticipants29)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>"),ATCE_ATTags28.split("<break>"),ATCE_ATTags29.split("<break>")};
+		
+		
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName2, 20),"Count of "+userName2+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName2,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+								
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc110_VerifyFollowupTaskTaskCallFunctionalityOnAdvisorRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord5;
+	
+		String contactSectionName=ATCE_ConName16;
+		String contactSectionTitle=ATCE_ConTitle16;
+		String contactSectionDeal=ATCE_ConDeal16;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall16;
+		String contactSectionEmail=ATCE_ConEmail16;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName34,ATCE_TaggedFirmsName36,ATCE_TaggedFirmsName37,ATCE_TaggedFirmsName38,ATCE_TaggedFirmsName39,ATCE_TaggedFirmsName40,ATCE_TaggedFirmsName41,ATCE_TaggedFirmsName42,ATCE_TaggedFirmsName43,ATCE_TaggedFirmsName44,ATCE_TaggedFirmsName45,ATCE_TaggedFirmsName46,ATCE_TaggedFirmsName47};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount34,ATCE_TaggedFirmsCount36,ATCE_TaggedFirmsCount37,ATCE_TaggedFirmsCount38,ATCE_TaggedFirmsCount39,ATCE_TaggedFirmsCount40,ATCE_TaggedFirmsCount41,ATCE_TaggedFirmsCount42,ATCE_TaggedFirmsCount43,ATCE_TaggedFirmsCount44,ATCE_TaggedFirmsCount45,ATCE_TaggedFirmsCount46,ATCE_TaggedFirmsCount47};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName26,ATCE_TaggedPeopleName27,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName28,ATCE_TaggedPeopleName29,ATCE_TaggedPeopleName30,ATCE_TaggedPeopleName31};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount26,ATCE_TaggedPeopleCount27,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount28,ATCE_TaggedPeopleCount29,ATCE_TaggedPeopleCount30,ATCE_TaggedPeopleCount31};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName4,ATCE_TaggedDealName5};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount4,ATCE_TaggedDealCount5};
+		
+		
+		String[] connectionUserName= {crmUser6FirstName+" "+crmUser6LastName,crmUser7FirstName+" "+crmUser7LastName};
+		String[] connectionTitle= {ATCE_ConnectionTitle2,ATCE_ConnectionTitle4};
+		String[] connectionDeal= {ATCE_ConnectionDeal2,ATCE_ConnectionDeal4};
+		String[] connectionMeetingaAndCall= {ATCE_ConnectionMeetingAndCall2,ATCE_ConnectionMeetingAndCall4};
+		String[] connectionEmail= {ATCE_ConnectionEmail2,ATCE_ConnectionEmail4};
+		
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		
+		String[] iconType= {ATCE_ATActivityType28};
+		String[] date= {ATCE_ATDueDate28};
+		String[] subject= {ATCE_ATSubject28};
+		String[] notes= {ATCE_ATNote28};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants28)};
+		String[][] tag= {ATCE_ATTags28.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType27,ATCE_ATActivityType28,ATCE_ATActivityType29};
+		String[] date1= {ATCE_ATDueDate27,ATCE_ATDueDate28,ATCE_ATDueDate29};
+		String[] subject1= {ATCE_ATSubject27,ATCE_ATSubject28,ATCE_ATSubject29};
+		String[] notes1= {ATCE_ATNote27,ATCE_ATNote28,ATCE_ATNote29};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27),bp.getParticipantData(ATCE_ATParticipants28),bp.getParticipantData(ATCE_ATParticipants29)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>"),ATCE_ATTags28.split("<break>"),ATCE_ATTags29.split("<break>")};
+		
+		
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName2, 20),"Count of "+userName2+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName2,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+								
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc111_VerifyFollowupTaskTaskCallFunctionalityOnLenderRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord8;
+	
+		String contactSectionName=ATCE_ConName17;
+		String contactSectionTitle=ATCE_ConTitle17;
+		String contactSectionDeal=ATCE_ConDeal17;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall17;
+		String contactSectionEmail=ATCE_ConEmail17;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName48,ATCE_TaggedFirmsName49,ATCE_TaggedFirmsName50,ATCE_TaggedFirmsName51,ATCE_TaggedFirmsName52,ATCE_TaggedFirmsName53,ATCE_TaggedFirmsName54,ATCE_TaggedFirmsName55,ATCE_TaggedFirmsName56,ATCE_TaggedFirmsName57};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount48,ATCE_TaggedFirmsCount49,ATCE_TaggedFirmsCount50,ATCE_TaggedFirmsCount51,ATCE_TaggedFirmsCount52,ATCE_TaggedFirmsCount53,ATCE_TaggedFirmsCount54,ATCE_TaggedFirmsCount55,ATCE_TaggedFirmsCount56,ATCE_TaggedFirmsCount57};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName32,ATCE_TaggedPeopleName33,ATCE_TaggedPeopleName34,ATCE_TaggedPeopleName35,ATCE_TaggedPeopleName36,ATCE_TaggedPeopleName37};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount32,ATCE_TaggedPeopleCount33,ATCE_TaggedPeopleCount34,ATCE_TaggedPeopleCount35,ATCE_TaggedPeopleCount36,ATCE_TaggedPeopleCount37};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName6,ATCE_TaggedDealName7};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount6,ATCE_TaggedDealCount7};
+		
+		
+		String[] connectionUserName= {crmUser6FirstName+" "+crmUser6LastName,crmUser7FirstName+" "+crmUser7LastName};
+		String[] connectionTitle= {ATCE_ConnectionTitle1,ATCE_ConnectionTitle4};
+		String[] connectionDeal= {ATCE_ConnectionDeal1,ATCE_ConnectionDeal4};
+		String[] connectionMeetingaAndCall= {ATCE_ConnectionMeetingAndCall1,ATCE_ConnectionMeetingAndCall4};
+		String[] connectionEmail= {ATCE_ConnectionEmail1,ATCE_ConnectionEmail4};
+		
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		
+		String[] iconType= {ATCE_ATActivityType28};
+		String[] date= {ATCE_ATDueDate28};
+		String[] subject= {ATCE_ATSubject28};
+		String[] notes= {ATCE_ATNote28};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants28)};
+		String[][] tag= {ATCE_ATTags28.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType27,ATCE_ATActivityType28,ATCE_ATActivityType29};
+		String[] date1= {ATCE_ATDueDate27,ATCE_ATDueDate28,ATCE_ATDueDate29};
+		String[] subject1= {ATCE_ATSubject27,ATCE_ATSubject28,ATCE_ATSubject29};
+		String[] notes1= {ATCE_ATNote27,ATCE_ATNote28,ATCE_ATNote29};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27),bp.getParticipantData(ATCE_ATParticipants28),bp.getParticipantData(ATCE_ATParticipants29)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>"),ATCE_ATTags28.split("<break>"),ATCE_ATTags29.split("<break>")};
+		
+		
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName2, 20),"Count of "+userName2+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName2,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+								
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc112_VerifyFollowupTaskTaskCallFunctionalityOnIntermediaryRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord10;
+	
+		String contactSectionName=ATCE_ConName18;
+		String contactSectionTitle=ATCE_ConTitle18;
+		String contactSectionDeal=ATCE_ConDeal18;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall18;
+		String contactSectionEmail=ATCE_ConEmail18;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName48,ATCE_TaggedFirmsName49,ATCE_TaggedFirmsName50,ATCE_TaggedFirmsName51,ATCE_TaggedFirmsName52,ATCE_TaggedFirmsName53,ATCE_TaggedFirmsName55,ATCE_TaggedFirmsName56,ATCE_TaggedFirmsName57,ATCE_TaggedFirmsName58};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount48,ATCE_TaggedFirmsCount49,ATCE_TaggedFirmsCount50,ATCE_TaggedFirmsCount51,ATCE_TaggedFirmsCount52,ATCE_TaggedFirmsCount53,ATCE_TaggedFirmsCount55,ATCE_TaggedFirmsCount56,ATCE_TaggedFirmsCount57,ATCE_TaggedFirmsCount58};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName32,ATCE_TaggedPeopleName34,ATCE_TaggedPeopleName35,ATCE_TaggedPeopleName36,ATCE_TaggedPeopleName37,ATCE_TaggedPeopleName38};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount32,ATCE_TaggedPeopleCount34,ATCE_TaggedPeopleCount35,ATCE_TaggedPeopleCount36,ATCE_TaggedPeopleCount37,ATCE_TaggedPeopleCount38};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName6,ATCE_TaggedDealName7};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount6,ATCE_TaggedDealCount7};
+		
+		
+		String[] connectionUserName= {crmUser6FirstName+" "+crmUser6LastName,crmUser7FirstName+" "+crmUser7LastName};
+		String[] connectionTitle= {ATCE_ConnectionTitle1,ATCE_ConnectionTitle4};
+		String[] connectionDeal= {ATCE_ConnectionDeal1,ATCE_ConnectionDeal4};
+		String[] connectionMeetingaAndCall= {ATCE_ConnectionMeetingAndCall1,ATCE_ConnectionMeetingAndCall4};
+		String[] connectionEmail= {ATCE_ConnectionEmail1,ATCE_ConnectionEmail4};
+		
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		
+		String[] iconType= {ATCE_ATActivityType28};
+		String[] date= {ATCE_ATDueDate28};
+		String[] subject= {ATCE_ATSubject28};
+		String[] notes= {ATCE_ATNote28};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants28)};
+		String[][] tag= {ATCE_ATTags28.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType27,ATCE_ATActivityType28,ATCE_ATActivityType29};
+		String[] date1= {ATCE_ATDueDate27,ATCE_ATDueDate28,ATCE_ATDueDate29};
+		String[] subject1= {ATCE_ATSubject27,ATCE_ATSubject28,ATCE_ATSubject29};
+		String[] notes1= {ATCE_ATNote27,ATCE_ATNote28,ATCE_ATNote29};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27),bp.getParticipantData(ATCE_ATParticipants28),bp.getParticipantData(ATCE_ATParticipants29)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>"),ATCE_ATTags28.split("<break>"),ATCE_ATTags29.split("<break>")};
+		
+				
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName2, 20),"Count of "+userName2+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName2,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+								
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc113_VerifyFollowupTaskTaskCallFunctionalityOnInstitutionRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord4;
+	
+		String contactSectionName=ATCE_ConName19;
+		String contactSectionTitle=ATCE_ConTitle19;
+		String contactSectionDeal=ATCE_ConDeal19;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall19;
+		String contactSectionEmail=ATCE_ConEmail19;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName48,ATCE_TaggedFirmsName49,ATCE_TaggedFirmsName51,ATCE_TaggedFirmsName52,ATCE_TaggedFirmsName53,ATCE_TaggedFirmsName54,ATCE_TaggedFirmsName55,ATCE_TaggedFirmsName56,ATCE_TaggedFirmsName57,ATCE_TaggedFirmsName58};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount48,ATCE_TaggedFirmsCount49,ATCE_TaggedFirmsCount51,ATCE_TaggedFirmsCount52,ATCE_TaggedFirmsCount53,ATCE_TaggedFirmsCount54,ATCE_TaggedFirmsCount55,ATCE_TaggedFirmsCount56,ATCE_TaggedFirmsCount57,ATCE_TaggedFirmsCount58};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName33,ATCE_TaggedPeopleName34,ATCE_TaggedPeopleName35,ATCE_TaggedPeopleName36,ATCE_TaggedPeopleName37,ATCE_TaggedPeopleName38};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount33,ATCE_TaggedPeopleCount34,ATCE_TaggedPeopleCount35,ATCE_TaggedPeopleCount36,ATCE_TaggedPeopleCount37,ATCE_TaggedPeopleCount38};
+				
+		String[] fundTaggedName= {ATCE_TaggedFundName3,ATCE_TaggedFundName4};
+		String[] fundTaggedTimeReference= {ATCE_TaggedFundCount3,ATCE_TaggedFundCount4};
+		
+		
+		String[] connectionUserName= {crmUser6FirstName+" "+crmUser6LastName,crmUser7FirstName+" "+crmUser7LastName};
+		String[] connectionTitle= {ATCE_ConnectionTitle1,ATCE_ConnectionTitle4};
+		String[] connectionDeal= {ATCE_ConnectionDeal1,ATCE_ConnectionDeal4};
+		String[] connectionMeetingaAndCall= {ATCE_ConnectionMeetingAndCall1,ATCE_ConnectionMeetingAndCall4};
+		String[] connectionEmail= {ATCE_ConnectionEmail1,ATCE_ConnectionEmail4};
+		
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		
+		String[] iconType= {ATCE_ATActivityType28};
+		String[] date= {ATCE_ATDueDate28};
+		String[] subject= {ATCE_ATSubject28};
+		String[] notes= {ATCE_ATNote28};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants28)};
+		String[][] tag= {ATCE_ATTags28.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType27,ATCE_ATActivityType28,ATCE_ATActivityType29};
+		String[] date1= {ATCE_ATDueDate27,ATCE_ATDueDate28,ATCE_ATDueDate29};
+		String[] subject1= {ATCE_ATSubject27,ATCE_ATSubject28,ATCE_ATSubject29};
+		String[] notes1= {ATCE_ATNote27,ATCE_ATNote28,ATCE_ATNote29};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27),bp.getParticipantData(ATCE_ATParticipants28),bp.getParticipantData(ATCE_ATParticipants29)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>"),ATCE_ATTags28.split("<break>"),ATCE_ATTags29.split("<break>")};
+		
+				
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null, null,true, fundTaggedName, fundTaggedTimeReference);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName2, 20),"Count of "+userName2+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName2,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+								
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc114_VerifyFollowupTaskTaskCallFunctionalityOnPortfolioCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord11;
+	
+		String contactSectionName=ATCE_ConName20;
+		String contactSectionTitle=ATCE_ConTitle20;
+		String contactSectionDeal=ATCE_ConDeal20;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall20;
+		String contactSectionEmail=ATCE_ConEmail20;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName34,ATCE_TaggedFirmsName35,ATCE_TaggedFirmsName36,ATCE_TaggedFirmsName37,ATCE_TaggedFirmsName39,ATCE_TaggedFirmsName40,ATCE_TaggedFirmsName41,ATCE_TaggedFirmsName42,ATCE_TaggedFirmsName43,ATCE_TaggedFirmsName44,ATCE_TaggedFirmsName45,ATCE_TaggedFirmsName46,ATCE_TaggedFirmsName47};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount34,ATCE_TaggedFirmsCount35,ATCE_TaggedFirmsCount36,ATCE_TaggedFirmsCount37,ATCE_TaggedFirmsCount39,ATCE_TaggedFirmsCount40,ATCE_TaggedFirmsCount41,ATCE_TaggedFirmsCount42,ATCE_TaggedFirmsCount43,ATCE_TaggedFirmsCount44,ATCE_TaggedFirmsCount45,ATCE_TaggedFirmsCount46,ATCE_TaggedFirmsCount47};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName25,ATCE_TaggedPeopleName27,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName28,ATCE_TaggedPeopleName29,ATCE_TaggedPeopleName30,ATCE_TaggedPeopleName31};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount25,ATCE_TaggedPeopleCount27,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount28,ATCE_TaggedPeopleCount29,ATCE_TaggedPeopleCount30,ATCE_TaggedPeopleCount31};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName4,ATCE_TaggedDealName5};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount4,ATCE_TaggedDealCount5};
+		
+		
+		String[] connectionUserName= {crmUser6FirstName+" "+crmUser6LastName,crmUser7FirstName+" "+crmUser7LastName};
+		String[] connectionTitle= {ATCE_ConnectionTitle2,ATCE_ConnectionTitle4};
+		String[] connectionDeal= {ATCE_ConnectionDeal2,ATCE_ConnectionDeal4};
+		String[] connectionMeetingaAndCall= {ATCE_ConnectionMeetingAndCall2,ATCE_ConnectionMeetingAndCall4};
+		String[] connectionEmail= {ATCE_ConnectionEmail2,ATCE_ConnectionEmail4};
+		
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		
+		String[] iconType= {ATCE_ATActivityType28};
+		String[] date= {ATCE_ATDueDate28};
+		String[] subject= {ATCE_ATSubject28};
+		String[] notes= {ATCE_ATNote28};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants28)};
+		String[][] tag= {ATCE_ATTags28.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType27,ATCE_ATActivityType28,ATCE_ATActivityType29};
+		String[] date1= {ATCE_ATDueDate27,ATCE_ATDueDate28,ATCE_ATDueDate29};
+		String[] subject1= {ATCE_ATSubject27,ATCE_ATSubject28,ATCE_ATSubject29};
+		String[] notes1= {ATCE_ATNote27,ATCE_ATNote28,ATCE_ATNote29};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27),bp.getParticipantData(ATCE_ATParticipants28),bp.getParticipantData(ATCE_ATParticipants29)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>"),ATCE_ATTags28.split("<break>"),ATCE_ATTags29.split("<break>")};
+		
+		
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName2, 20),"Count of "+userName2+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName2,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+								
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc115_VerifyFollowupTaskTaskCallFunctionalityOnPrivateEquityRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord13;
+
+		String contactSectionName=ATCE_ConName21;
+		String contactSectionTitle=ATCE_ConTitle21;
+		String contactSectionDeal=ATCE_ConDeal21;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall21;
+		String contactSectionEmail=ATCE_ConEmail21;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName34,ATCE_TaggedFirmsName35,ATCE_TaggedFirmsName36,ATCE_TaggedFirmsName37,ATCE_TaggedFirmsName38,ATCE_TaggedFirmsName40,ATCE_TaggedFirmsName41,ATCE_TaggedFirmsName42,ATCE_TaggedFirmsName43,ATCE_TaggedFirmsName44,ATCE_TaggedFirmsName45,ATCE_TaggedFirmsName46,ATCE_TaggedFirmsName47};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount34,ATCE_TaggedFirmsCount35,ATCE_TaggedFirmsCount36,ATCE_TaggedFirmsCount37,ATCE_TaggedFirmsCount38,ATCE_TaggedFirmsCount40,ATCE_TaggedFirmsCount41,ATCE_TaggedFirmsCount42,ATCE_TaggedFirmsCount43,ATCE_TaggedFirmsCount44,ATCE_TaggedFirmsCount45,ATCE_TaggedFirmsCount46,ATCE_TaggedFirmsCount47};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName25,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName28,ATCE_TaggedPeopleName29,ATCE_TaggedPeopleName30,ATCE_TaggedPeopleName31};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount25,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount28,ATCE_TaggedPeopleCount29,ATCE_TaggedPeopleCount30,ATCE_TaggedPeopleCount31};
+
+		String[] dealTaggedName= {ATCE_TaggedDealName4,ATCE_TaggedDealName5};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount4,ATCE_TaggedDealCount5};
+
+
+		String[] connectionUserName= {crmUser6FirstName+" "+crmUser6LastName,crmUser7FirstName+" "+crmUser7LastName};
+		String[] connectionTitle= {ATCE_ConnectionTitle2,ATCE_ConnectionTitle4};
+		String[] connectionDeal= {ATCE_ConnectionDeal2,ATCE_ConnectionDeal4};
+		String[] connectionMeetingaAndCall= {ATCE_ConnectionMeetingAndCall2,ATCE_ConnectionMeetingAndCall4};
+		String[] connectionEmail= {ATCE_ConnectionEmail2,ATCE_ConnectionEmail4};
+
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+
+		String[] iconType= {ATCE_ATActivityType28};
+		String[] date= {ATCE_ATDueDate28};
+		String[] subject= {ATCE_ATSubject28};
+		String[] notes= {ATCE_ATNote28};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants28)};
+		String[][] tag= {ATCE_ATTags28.split("<break>")};
+
+
+		String[] iconType1= {ATCE_ATActivityType27,ATCE_ATActivityType28,ATCE_ATActivityType29};
+		String[] date1= {ATCE_ATDueDate27,ATCE_ATDueDate28,ATCE_ATDueDate29};
+		String[] subject1= {ATCE_ATSubject27,ATCE_ATSubject28,ATCE_ATSubject29};
+		String[] notes1= {ATCE_ATNote27,ATCE_ATNote28,ATCE_ATNote29};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27),bp.getParticipantData(ATCE_ATParticipants28),bp.getParticipantData(ATCE_ATParticipants29)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>"),ATCE_ATTags28.split("<break>"),ATCE_ATTags29.split("<break>")};		
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+
+					ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+					if(result4.isEmpty())
+					{
+						log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+						sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+					}
+
+					ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+					if(result5.isEmpty())
+					{
+						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+						sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+					}
+
+
+					if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+
+						ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+						if(result6.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+							sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+						}
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+						sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+					}
+
+
+					ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+					if(result7.isEmpty())
+					{
+						log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+						sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+					}
+
+					if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+						String parentID=switchOnWindow(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName2, 20),"Count of "+userName2+" on contact section" , action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on count of "+userName2,YesNo.No);
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+						}		
+						driver.close();
+						driver.switchTo().window(parentID);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+					}
+
+
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+						if(result2.isEmpty())
+						{
+							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+						}
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc116_VerifyTaskCallFunctionalityOnContactRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Con1;
+		
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName59,ATCE_TaggedFirmsName60,ATCE_TaggedFirmsName61,ATCE_TaggedFirmsName62,ATCE_TaggedFirmsName63,ATCE_TaggedFirmsName64,ATCE_TaggedFirmsName44,ATCE_TaggedFirmsName45,ATCE_TaggedFirmsName46,ATCE_TaggedFirmsName57};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount59,ATCE_TaggedFirmsCount60,ATCE_TaggedFirmsCount61,ATCE_TaggedFirmsCount62,ATCE_TaggedFirmsCount63,ATCE_TaggedFirmsCount64,ATCE_TaggedFirmsCount44,ATCE_TaggedFirmsCount45,ATCE_TaggedFirmsCount46,ATCE_TaggedFirmsCount57};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName25,ATCE_TaggedPeopleName26,ATCE_TaggedPeopleName27,ATCE_TaggedPeopleName22,ATCE_TaggedPeopleName23,ATCE_TaggedPeopleName24,ATCE_TaggedPeopleName32,ATCE_TaggedPeopleName33,ATCE_TaggedPeopleName38};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount25,ATCE_TaggedPeopleCount26,ATCE_TaggedPeopleCount27,ATCE_TaggedPeopleCount22,ATCE_TaggedPeopleCount23,ATCE_TaggedPeopleCount24,ATCE_TaggedPeopleCount32,ATCE_TaggedPeopleCount33,ATCE_TaggedPeopleCount38};
+
+		String[] dealTaggedName= {ATCE_TaggedDealName8,ATCE_TaggedDealName9};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount8,ATCE_TaggedDealCount9};
+
+	
+		String connectionUserName=crmUser7FirstName+" "+crmUser7LastName;
+		String connectionTitle=ATCE_ConnectionTitle4;
+		String connectionDeal=ATCE_ConnectionDeal4;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall4;
+		String connectionEmail=ATCE_ConnectionEmail4;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		
+		String[] iconType= {ATCE_ATActivityType28};
+		String[] date= {ATCE_ATDueDate28};
+		String[] subject= {ATCE_ATSubject28};
+		String[] notes= {ATCE_ATNote28};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants28)};
+		String[][] tag= {ATCE_ATTags28.split("<break>")};
+
+		String[] iconType1= {ATCE_ATActivityType27,ATCE_ATActivityType28,ATCE_ATActivityType29};
+		String[] date1= {ATCE_ATDueDate27,ATCE_ATDueDate28,ATCE_ATDueDate29};
+		String[] subject1= {ATCE_ATSubject27,ATCE_ATSubject28,ATCE_ATSubject29};
+		String[] notes1= {ATCE_ATNote27,ATCE_ATNote28,ATCE_ATNote29};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27),bp.getParticipantData(ATCE_ATParticipants28),bp.getParticipantData(ATCE_ATParticipants29)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>"),ATCE_ATTags28.split("<break>"),ATCE_ATTags29.split("<break>")};		
+
+					
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj2)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+						ArrayList<String> result6=bp.verifyRecordOnConnectionsSectionInAcuity(recordName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						
+						if(result6.isEmpty())
+						{
+							log(LogStatus.INFO, "The records have been verified on Connection section in Acuity user : "+connectionUserName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records are not verified on Connection section in Acuity. user : "+connectionUserName+" "+result6, YesNo.No);
+							sa.assertTrue(false,  "The records are not verified on Connection section in Acuity.  user : "+connectionUserName+" "+result6);
+						}
+						
+					
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(userName2, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+userName2+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result7=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result7.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+userName2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+userName2+". "+result7, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+userName2+". "+result7);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName2+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+userName2+" record on contact section");
+						}
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName, iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj2, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc117_VerifyFollowupTaskTaskCallFunctionalityOnDealRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Deal1;
+	
+	    String[] firmsTaggedName= {ATCE_TaggedFirmsName65,ATCE_TaggedFirmsName66,ATCE_TaggedFirmsName67,ATCE_TaggedFirmsName68,ATCE_TaggedFirmsName69,ATCE_TaggedFirmsName70,ATCE_TaggedFirmsName71,ATCE_TaggedFirmsName41,ATCE_TaggedFirmsName42,ATCE_TaggedFirmsName43,ATCE_TaggedFirmsName72,ATCE_TaggedFirmsName73,ATCE_TaggedFirmsName74};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount65,ATCE_TaggedFirmsCount66,ATCE_TaggedFirmsCount67,ATCE_TaggedFirmsCount68,ATCE_TaggedFirmsCount69,ATCE_TaggedFirmsCount70,ATCE_TaggedFirmsCount71,ATCE_TaggedFirmsCount41,ATCE_TaggedFirmsCount42,ATCE_TaggedFirmsCount43,ATCE_TaggedFirmsCount72,ATCE_TaggedFirmsCount73,ATCE_TaggedFirmsCount74};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName39,ATCE_TaggedPeopleName40,ATCE_TaggedPeopleName41,ATCE_TaggedPeopleName42,ATCE_TaggedPeopleName43,ATCE_TaggedPeopleName44,ATCE_TaggedPeopleName45,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount39,ATCE_TaggedPeopleCount40,ATCE_TaggedPeopleCount41,ATCE_TaggedPeopleCount42,ATCE_TaggedPeopleCount43,ATCE_TaggedPeopleCount44,ATCE_TaggedPeopleCount45,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName10};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount10};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType27};
+		String[] date1= {ATCE_ATDueDate27};
+		String[] subject1= {ATCE_ATSubject27};
+		String[] notes1= {ATCE_ATNote27};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>")};
+		
+		
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, tabObj4)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+					
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+								
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc118_VerifyFollowupTaskTaskCallFunctionalityOnFundraisingRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fundraising1;
+	
+	    String[] firmsTaggedName= {ATCE_TaggedFirmsName65,ATCE_TaggedFirmsName66,ATCE_TaggedFirmsName67,ATCE_TaggedFirmsName68,ATCE_TaggedFirmsName69,ATCE_TaggedFirmsName70,ATCE_TaggedFirmsName71,ATCE_TaggedFirmsName41,ATCE_TaggedFirmsName42,ATCE_TaggedFirmsName43,ATCE_TaggedFirmsName72,ATCE_TaggedFirmsName73,ATCE_TaggedFirmsName74};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount65,ATCE_TaggedFirmsCount66,ATCE_TaggedFirmsCount67,ATCE_TaggedFirmsCount68,ATCE_TaggedFirmsCount69,ATCE_TaggedFirmsCount70,ATCE_TaggedFirmsCount71,ATCE_TaggedFirmsCount41,ATCE_TaggedFirmsCount42,ATCE_TaggedFirmsCount43,ATCE_TaggedFirmsCount72,ATCE_TaggedFirmsCount73,ATCE_TaggedFirmsCount74};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName39,ATCE_TaggedPeopleName40,ATCE_TaggedPeopleName41,ATCE_TaggedPeopleName42,ATCE_TaggedPeopleName43,ATCE_TaggedPeopleName44,ATCE_TaggedPeopleName45,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount39,ATCE_TaggedPeopleCount40,ATCE_TaggedPeopleCount41,ATCE_TaggedPeopleCount42,ATCE_TaggedPeopleCount43,ATCE_TaggedPeopleCount44,ATCE_TaggedPeopleCount45,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17};
+				
+	    String[] iconType1= {ATCE_ATActivityType27};
+		String[] date1= {ATCE_ATDueDate27};
+		String[] subject1= {ATCE_ATSubject27};
+		String[] notes1= {ATCE_ATNote27};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>")};
+		
+		
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+		if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+		
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null, null,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+					
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+								
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+ TabName.Fundraising.toString(), YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+ TabName.Fundraising.toString());
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc119_VerifyFollowupTaskTaskCallFunctionalityOnFundRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fund1;
+	
+	    String[] firmsTaggedName= {ATCE_TaggedFirmsName65,ATCE_TaggedFirmsName66,ATCE_TaggedFirmsName67,ATCE_TaggedFirmsName68,ATCE_TaggedFirmsName69,ATCE_TaggedFirmsName70,ATCE_TaggedFirmsName71,ATCE_TaggedFirmsName41,ATCE_TaggedFirmsName42,ATCE_TaggedFirmsName43,ATCE_TaggedFirmsName72,ATCE_TaggedFirmsName73,ATCE_TaggedFirmsName74};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount65,ATCE_TaggedFirmsCount66,ATCE_TaggedFirmsCount67,ATCE_TaggedFirmsCount68,ATCE_TaggedFirmsCount69,ATCE_TaggedFirmsCount70,ATCE_TaggedFirmsCount71,ATCE_TaggedFirmsCount41,ATCE_TaggedFirmsCount42,ATCE_TaggedFirmsCount43,ATCE_TaggedFirmsCount72,ATCE_TaggedFirmsCount73,ATCE_TaggedFirmsCount74};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName39,ATCE_TaggedPeopleName40,ATCE_TaggedPeopleName41,ATCE_TaggedPeopleName42,ATCE_TaggedPeopleName43,ATCE_TaggedPeopleName44,ATCE_TaggedPeopleName45,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount39,ATCE_TaggedPeopleCount40,ATCE_TaggedPeopleCount41,ATCE_TaggedPeopleCount42,ATCE_TaggedPeopleCount43,ATCE_TaggedPeopleCount44,ATCE_TaggedPeopleCount45,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName10};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount10};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType27};
+		String[] date1= {ATCE_ATDueDate27};
+		String[] subject1= {ATCE_ATSubject27};
+		String[] notes1= {ATCE_ATNote27};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>")};
+		
+		
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+		if (lp.clickOnTab(projectName, tabObj3)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " +tabObj3, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+					
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+								
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+ tabObj3, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+ tabObj3);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc120_VerifyFollowupTaskTaskCallFunctionalityOnThemeRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Theme1;
+	
+	 
+		String[] iconType1= {ATCE_ATActivityType27};
+		String[] date1= {ATCE_ATDueDate27};
+		String[] subject1= {ATCE_ATSubject27};
+		String[] notes1= {ATCE_ATNote27};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>")};
+		
+		
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+		if (lp.clickOnTab(projectName, TabName.Themes.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : "+TabName.Themes.toString(), YesNo.No);
+
+			String parentWindowID=bp.clickOnThemeRecord(recordName);
+
+			if (parentWindowID!=null) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					
+			
+						
+					
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+								
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+TabName.Themes.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+TabName.Themes.toString());
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+		
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc121_EditAndInactiveUser(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	
+		String parentWindow = null;
+		String userfirstName = ATCE_userFirstName1;
+		String UserLastName = ATCE_userLastName1;
+
+		String emailId = crmUser7EmailID;
+		boolean flag=true;
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		
+		if (home.clickOnSetUpLink()) {
+			flag = true;
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create CRM User1",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+			}
+			if (setup.editPEUser( userfirstName, UserLastName, emailId)) {
+				log(LogStatus.INFO, "CRM User has been updated Successfully and inactive: " + userfirstName + " " + UserLastName, YesNo.No);
+				ExcelUtils.writeData(testCasesFilePath, userfirstName, "Users", excelLabel.Variable_Name, "User7",
+						excelLabel.User_First_Name);
+				ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User7",
+						excelLabel.User_Last_Name);
+				flag = true;
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "CRM User is not updated and inactive" + userfirstName + " " + UserLastName, YesNo.No);
+				sa.assertTrue(false,   "CRM User is not updated and inactive " + userfirstName + " " + UserLastName);
+			}
+			driver.close();
+			driver.switchTo().window(parentWindow);
+			lp.CRMlogout();	
+		}
+	}
+	
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc122_VerifyInactiveUserFunctionalityOnCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord1;
+	
+		String contactSectionName=ATCE_ConName15;
+		String contactSectionTitle=ATCE_ConTitle15;
+		String contactSectionDeal=ATCE_ConDeal15;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall15;
+		String contactSectionEmail=ATCE_ConEmail15;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName34,ATCE_TaggedFirmsName35,ATCE_TaggedFirmsName36,ATCE_TaggedFirmsName37,ATCE_TaggedFirmsName38,ATCE_TaggedFirmsName39,ATCE_TaggedFirmsName40,ATCE_TaggedFirmsName41,ATCE_TaggedFirmsName42,ATCE_TaggedFirmsName43,ATCE_TaggedFirmsName44,ATCE_TaggedFirmsName45,ATCE_TaggedFirmsName46};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount34,ATCE_TaggedFirmsCount35,ATCE_TaggedFirmsCount36,ATCE_TaggedFirmsCount37,ATCE_TaggedFirmsCount38,ATCE_TaggedFirmsCount39,ATCE_TaggedFirmsCount40,ATCE_TaggedFirmsCount41,ATCE_TaggedFirmsCount42,ATCE_TaggedFirmsCount43,ATCE_TaggedFirmsCount44,ATCE_TaggedFirmsCount45,ATCE_TaggedFirmsCount46};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName25,ATCE_TaggedPeopleName26,ATCE_TaggedPeopleName27,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName28,ATCE_TaggedPeopleName29,ATCE_TaggedPeopleName30};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount25,ATCE_TaggedPeopleCount26,ATCE_TaggedPeopleCount27,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount28,ATCE_TaggedPeopleCount29,ATCE_TaggedPeopleCount30};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName4,ATCE_TaggedDealName5};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount4,ATCE_TaggedDealCount5};
+		
+		
+		String[] connectionUserName= {crmUser6FirstName+" "+crmUser6LastName,crmUser7FirstName+" "+crmUser7LastName};
+		String[] connectionTitle= {ATCE_ConnectionTitle2,ATCE_ConnectionTitle4};
+		String[] connectionDeal= {ATCE_ConnectionDeal2,ATCE_ConnectionDeal4};
+		String[] connectionMeetingaAndCall= {ATCE_ConnectionMeetingAndCall2,ATCE_ConnectionMeetingAndCall4};
+		String[] connectionEmail= {ATCE_ConnectionEmail2,ATCE_ConnectionEmail4};
+		
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		
+		String[] iconType= {ATCE_ATActivityType28};
+		String[] date= {ATCE_ATDueDate28};
+		String[] subject= {ATCE_ATSubject28};
+		String[] notes= {ATCE_ATNote28};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants28)};
+		String[][] tag= {ATCE_ATTags28.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType27,ATCE_ATActivityType28,ATCE_ATActivityType29};
+		String[] date1= {ATCE_ATDueDate27,ATCE_ATDueDate28,ATCE_ATDueDate29};
+		String[] subject1= {ATCE_ATSubject27,ATCE_ATSubject28,ATCE_ATSubject29};
+		String[] notes1= {ATCE_ATNote27,ATCE_ATNote28,ATCE_ATNote29};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27),bp.getParticipantData(ATCE_ATParticipants28),bp.getParticipantData(ATCE_ATParticipants29)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>"),ATCE_ATTags28.split("<break>"),ATCE_ATTags29.split("<break>")};
+		
+		
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName2, 20),"Count of "+userName2+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName2,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+								
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc123_VerifyInactiveUserFunctionalityOnAdvisorRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord5;
+	
+		String contactSectionName=ATCE_ConName16;
+		String contactSectionTitle=ATCE_ConTitle16;
+		String contactSectionDeal=ATCE_ConDeal16;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall16;
+		String contactSectionEmail=ATCE_ConEmail16;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName34,ATCE_TaggedFirmsName36,ATCE_TaggedFirmsName37,ATCE_TaggedFirmsName38,ATCE_TaggedFirmsName39,ATCE_TaggedFirmsName40,ATCE_TaggedFirmsName41,ATCE_TaggedFirmsName42,ATCE_TaggedFirmsName43,ATCE_TaggedFirmsName44,ATCE_TaggedFirmsName45,ATCE_TaggedFirmsName46,ATCE_TaggedFirmsName47};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount34,ATCE_TaggedFirmsCount36,ATCE_TaggedFirmsCount37,ATCE_TaggedFirmsCount38,ATCE_TaggedFirmsCount39,ATCE_TaggedFirmsCount40,ATCE_TaggedFirmsCount41,ATCE_TaggedFirmsCount42,ATCE_TaggedFirmsCount43,ATCE_TaggedFirmsCount44,ATCE_TaggedFirmsCount45,ATCE_TaggedFirmsCount46,ATCE_TaggedFirmsCount47};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName26,ATCE_TaggedPeopleName27,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName28,ATCE_TaggedPeopleName29,ATCE_TaggedPeopleName30,ATCE_TaggedPeopleName31};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount26,ATCE_TaggedPeopleCount27,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount28,ATCE_TaggedPeopleCount29,ATCE_TaggedPeopleCount30,ATCE_TaggedPeopleCount31};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName4,ATCE_TaggedDealName5};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount4,ATCE_TaggedDealCount5};
+		
+		
+		String[] connectionUserName= {crmUser6FirstName+" "+crmUser6LastName,crmUser7FirstName+" "+crmUser7LastName};
+		String[] connectionTitle= {ATCE_ConnectionTitle2,ATCE_ConnectionTitle4};
+		String[] connectionDeal= {ATCE_ConnectionDeal2,ATCE_ConnectionDeal4};
+		String[] connectionMeetingaAndCall= {ATCE_ConnectionMeetingAndCall2,ATCE_ConnectionMeetingAndCall4};
+		String[] connectionEmail= {ATCE_ConnectionEmail2,ATCE_ConnectionEmail4};
+		
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		
+		String[] iconType= {ATCE_ATActivityType28};
+		String[] date= {ATCE_ATDueDate28};
+		String[] subject= {ATCE_ATSubject28};
+		String[] notes= {ATCE_ATNote28};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants28)};
+		String[][] tag= {ATCE_ATTags28.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType27,ATCE_ATActivityType28,ATCE_ATActivityType29};
+		String[] date1= {ATCE_ATDueDate27,ATCE_ATDueDate28,ATCE_ATDueDate29};
+		String[] subject1= {ATCE_ATSubject27,ATCE_ATSubject28,ATCE_ATSubject29};
+		String[] notes1= {ATCE_ATNote27,ATCE_ATNote28,ATCE_ATNote29};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27),bp.getParticipantData(ATCE_ATParticipants28),bp.getParticipantData(ATCE_ATParticipants29)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>"),ATCE_ATTags28.split("<break>"),ATCE_ATTags29.split("<break>")};
+		
+		
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName2, 20),"Count of "+userName2+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName2,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+								
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc124_VerifyInactiveUserFunctionalityOnLenderRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord8;
+	
+		String contactSectionName=ATCE_ConName17;
+		String contactSectionTitle=ATCE_ConTitle17;
+		String contactSectionDeal=ATCE_ConDeal17;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall17;
+		String contactSectionEmail=ATCE_ConEmail17;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName48,ATCE_TaggedFirmsName49,ATCE_TaggedFirmsName50,ATCE_TaggedFirmsName51,ATCE_TaggedFirmsName52,ATCE_TaggedFirmsName53,ATCE_TaggedFirmsName54,ATCE_TaggedFirmsName55,ATCE_TaggedFirmsName56,ATCE_TaggedFirmsName57};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount48,ATCE_TaggedFirmsCount49,ATCE_TaggedFirmsCount50,ATCE_TaggedFirmsCount51,ATCE_TaggedFirmsCount52,ATCE_TaggedFirmsCount53,ATCE_TaggedFirmsCount54,ATCE_TaggedFirmsCount55,ATCE_TaggedFirmsCount56,ATCE_TaggedFirmsCount57};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName32,ATCE_TaggedPeopleName33,ATCE_TaggedPeopleName34,ATCE_TaggedPeopleName35,ATCE_TaggedPeopleName36,ATCE_TaggedPeopleName37};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount32,ATCE_TaggedPeopleCount33,ATCE_TaggedPeopleCount34,ATCE_TaggedPeopleCount35,ATCE_TaggedPeopleCount36,ATCE_TaggedPeopleCount37};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName6,ATCE_TaggedDealName7};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount6,ATCE_TaggedDealCount7};
+		
+		
+		String[] connectionUserName= {crmUser6FirstName+" "+crmUser6LastName,crmUser7FirstName+" "+crmUser7LastName};
+		String[] connectionTitle= {ATCE_ConnectionTitle1,ATCE_ConnectionTitle4};
+		String[] connectionDeal= {ATCE_ConnectionDeal1,ATCE_ConnectionDeal4};
+		String[] connectionMeetingaAndCall= {ATCE_ConnectionMeetingAndCall1,ATCE_ConnectionMeetingAndCall4};
+		String[] connectionEmail= {ATCE_ConnectionEmail1,ATCE_ConnectionEmail4};
+		
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		
+		String[] iconType= {ATCE_ATActivityType28};
+		String[] date= {ATCE_ATDueDate28};
+		String[] subject= {ATCE_ATSubject28};
+		String[] notes= {ATCE_ATNote28};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants28)};
+		String[][] tag= {ATCE_ATTags28.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType27,ATCE_ATActivityType28,ATCE_ATActivityType29};
+		String[] date1= {ATCE_ATDueDate27,ATCE_ATDueDate28,ATCE_ATDueDate29};
+		String[] subject1= {ATCE_ATSubject27,ATCE_ATSubject28,ATCE_ATSubject29};
+		String[] notes1= {ATCE_ATNote27,ATCE_ATNote28,ATCE_ATNote29};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27),bp.getParticipantData(ATCE_ATParticipants28),bp.getParticipantData(ATCE_ATParticipants29)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>"),ATCE_ATTags28.split("<break>"),ATCE_ATTags29.split("<break>")};
+		
+		
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName2, 20),"Count of "+userName2+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName2,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+								
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc125_VerifyInactiveUserFunctionalityOnIntermediaryRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord10;
+	
+		String contactSectionName=ATCE_ConName18;
+		String contactSectionTitle=ATCE_ConTitle18;
+		String contactSectionDeal=ATCE_ConDeal18;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall18;
+		String contactSectionEmail=ATCE_ConEmail18;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName48,ATCE_TaggedFirmsName49,ATCE_TaggedFirmsName50,ATCE_TaggedFirmsName51,ATCE_TaggedFirmsName52,ATCE_TaggedFirmsName53,ATCE_TaggedFirmsName55,ATCE_TaggedFirmsName56,ATCE_TaggedFirmsName57,ATCE_TaggedFirmsName58};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount48,ATCE_TaggedFirmsCount49,ATCE_TaggedFirmsCount50,ATCE_TaggedFirmsCount51,ATCE_TaggedFirmsCount52,ATCE_TaggedFirmsCount53,ATCE_TaggedFirmsCount55,ATCE_TaggedFirmsCount56,ATCE_TaggedFirmsCount57,ATCE_TaggedFirmsCount58};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName32,ATCE_TaggedPeopleName34,ATCE_TaggedPeopleName35,ATCE_TaggedPeopleName36,ATCE_TaggedPeopleName37,ATCE_TaggedPeopleName38};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount32,ATCE_TaggedPeopleCount34,ATCE_TaggedPeopleCount35,ATCE_TaggedPeopleCount36,ATCE_TaggedPeopleCount37,ATCE_TaggedPeopleCount38};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName6,ATCE_TaggedDealName7};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount6,ATCE_TaggedDealCount7};
+		
+		
+		String[] connectionUserName= {crmUser6FirstName+" "+crmUser6LastName,crmUser7FirstName+" "+crmUser7LastName};
+		String[] connectionTitle= {ATCE_ConnectionTitle1,ATCE_ConnectionTitle4};
+		String[] connectionDeal= {ATCE_ConnectionDeal1,ATCE_ConnectionDeal4};
+		String[] connectionMeetingaAndCall= {ATCE_ConnectionMeetingAndCall1,ATCE_ConnectionMeetingAndCall4};
+		String[] connectionEmail= {ATCE_ConnectionEmail1,ATCE_ConnectionEmail4};
+		
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		
+		String[] iconType= {ATCE_ATActivityType28};
+		String[] date= {ATCE_ATDueDate28};
+		String[] subject= {ATCE_ATSubject28};
+		String[] notes= {ATCE_ATNote28};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants28)};
+		String[][] tag= {ATCE_ATTags28.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType27,ATCE_ATActivityType28,ATCE_ATActivityType29};
+		String[] date1= {ATCE_ATDueDate27,ATCE_ATDueDate28,ATCE_ATDueDate29};
+		String[] subject1= {ATCE_ATSubject27,ATCE_ATSubject28,ATCE_ATSubject29};
+		String[] notes1= {ATCE_ATNote27,ATCE_ATNote28,ATCE_ATNote29};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27),bp.getParticipantData(ATCE_ATParticipants28),bp.getParticipantData(ATCE_ATParticipants29)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>"),ATCE_ATTags28.split("<break>"),ATCE_ATTags29.split("<break>")};
+		
+				
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName2, 20),"Count of "+userName2+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName2,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+								
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc126_VerifyInactiveUserFunctionalityOnInstitutionRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord4;
+	
+		String contactSectionName=ATCE_ConName19;
+		String contactSectionTitle=ATCE_ConTitle19;
+		String contactSectionDeal=ATCE_ConDeal19;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall19;
+		String contactSectionEmail=ATCE_ConEmail19;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName48,ATCE_TaggedFirmsName49,ATCE_TaggedFirmsName51,ATCE_TaggedFirmsName52,ATCE_TaggedFirmsName53,ATCE_TaggedFirmsName54,ATCE_TaggedFirmsName55,ATCE_TaggedFirmsName56,ATCE_TaggedFirmsName57,ATCE_TaggedFirmsName58};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount48,ATCE_TaggedFirmsCount49,ATCE_TaggedFirmsCount51,ATCE_TaggedFirmsCount52,ATCE_TaggedFirmsCount53,ATCE_TaggedFirmsCount54,ATCE_TaggedFirmsCount55,ATCE_TaggedFirmsCount56,ATCE_TaggedFirmsCount57,ATCE_TaggedFirmsCount58};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName33,ATCE_TaggedPeopleName34,ATCE_TaggedPeopleName35,ATCE_TaggedPeopleName36,ATCE_TaggedPeopleName37,ATCE_TaggedPeopleName38};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount33,ATCE_TaggedPeopleCount34,ATCE_TaggedPeopleCount35,ATCE_TaggedPeopleCount36,ATCE_TaggedPeopleCount37,ATCE_TaggedPeopleCount38};
+				
+		String[] fundTaggedName= {ATCE_TaggedFundName3,ATCE_TaggedFundName4};
+		String[] fundTaggedTimeReference= {ATCE_TaggedFundCount3,ATCE_TaggedFundCount4};
+		
+		
+		String[] connectionUserName= {crmUser6FirstName+" "+crmUser6LastName,crmUser7FirstName+" "+crmUser7LastName};
+		String[] connectionTitle= {ATCE_ConnectionTitle1,ATCE_ConnectionTitle4};
+		String[] connectionDeal= {ATCE_ConnectionDeal1,ATCE_ConnectionDeal4};
+		String[] connectionMeetingaAndCall= {ATCE_ConnectionMeetingAndCall1,ATCE_ConnectionMeetingAndCall4};
+		String[] connectionEmail= {ATCE_ConnectionEmail1,ATCE_ConnectionEmail4};
+		
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		
+		String[] iconType= {ATCE_ATActivityType28};
+		String[] date= {ATCE_ATDueDate28};
+		String[] subject= {ATCE_ATSubject28};
+		String[] notes= {ATCE_ATNote28};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants28)};
+		String[][] tag= {ATCE_ATTags28.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType27,ATCE_ATActivityType28,ATCE_ATActivityType29};
+		String[] date1= {ATCE_ATDueDate27,ATCE_ATDueDate28,ATCE_ATDueDate29};
+		String[] subject1= {ATCE_ATSubject27,ATCE_ATSubject28,ATCE_ATSubject29};
+		String[] notes1= {ATCE_ATNote27,ATCE_ATNote28,ATCE_ATNote29};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27),bp.getParticipantData(ATCE_ATParticipants28),bp.getParticipantData(ATCE_ATParticipants29)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>"),ATCE_ATTags28.split("<break>"),ATCE_ATTags29.split("<break>")};
+		
+				
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null, null,true, fundTaggedName, fundTaggedTimeReference);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName2, 20),"Count of "+userName2+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName2,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+								
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc127_VerifyInactiveUserFunctionalityOnPortfolioCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord11;
+	
+		String contactSectionName=ATCE_ConName20;
+		String contactSectionTitle=ATCE_ConTitle20;
+		String contactSectionDeal=ATCE_ConDeal20;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall20;
+		String contactSectionEmail=ATCE_ConEmail20;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName34,ATCE_TaggedFirmsName35,ATCE_TaggedFirmsName36,ATCE_TaggedFirmsName37,ATCE_TaggedFirmsName39,ATCE_TaggedFirmsName40,ATCE_TaggedFirmsName41,ATCE_TaggedFirmsName42,ATCE_TaggedFirmsName43,ATCE_TaggedFirmsName44,ATCE_TaggedFirmsName45,ATCE_TaggedFirmsName46,ATCE_TaggedFirmsName47};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount34,ATCE_TaggedFirmsCount35,ATCE_TaggedFirmsCount36,ATCE_TaggedFirmsCount37,ATCE_TaggedFirmsCount39,ATCE_TaggedFirmsCount40,ATCE_TaggedFirmsCount41,ATCE_TaggedFirmsCount42,ATCE_TaggedFirmsCount43,ATCE_TaggedFirmsCount44,ATCE_TaggedFirmsCount45,ATCE_TaggedFirmsCount46,ATCE_TaggedFirmsCount47};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName25,ATCE_TaggedPeopleName27,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17,ATCE_TaggedPeopleName28,ATCE_TaggedPeopleName29,ATCE_TaggedPeopleName30,ATCE_TaggedPeopleName31};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount25,ATCE_TaggedPeopleCount27,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17,ATCE_TaggedPeopleCount28,ATCE_TaggedPeopleCount29,ATCE_TaggedPeopleCount30,ATCE_TaggedPeopleCount31};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName4,ATCE_TaggedDealName5};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount4,ATCE_TaggedDealCount5};
+		
+		
+		String[] connectionUserName= {crmUser6FirstName+" "+crmUser6LastName,crmUser7FirstName+" "+crmUser7LastName};
+		String[] connectionTitle= {ATCE_ConnectionTitle2,ATCE_ConnectionTitle4};
+		String[] connectionDeal= {ATCE_ConnectionDeal2,ATCE_ConnectionDeal4};
+		String[] connectionMeetingaAndCall= {ATCE_ConnectionMeetingAndCall2,ATCE_ConnectionMeetingAndCall4};
+		String[] connectionEmail= {ATCE_ConnectionEmail2,ATCE_ConnectionEmail4};
+		
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		
+		String[] iconType= {ATCE_ATActivityType28};
+		String[] date= {ATCE_ATDueDate28};
+		String[] subject= {ATCE_ATSubject28};
+		String[] notes= {ATCE_ATNote28};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants28)};
+		String[][] tag= {ATCE_ATTags28.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType27,ATCE_ATActivityType28,ATCE_ATActivityType29};
+		String[] date1= {ATCE_ATDueDate27,ATCE_ATDueDate28,ATCE_ATDueDate29};
+		String[] subject1= {ATCE_ATSubject27,ATCE_ATSubject28,ATCE_ATSubject29};
+		String[] notes1= {ATCE_ATNote27,ATCE_ATNote28,ATCE_ATNote29};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27),bp.getParticipantData(ATCE_ATParticipants28),bp.getParticipantData(ATCE_ATParticipants29)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>"),ATCE_ATTags28.split("<break>"),ATCE_ATTags29.split("<break>")};
+		
+		
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName2, 20),"Count of "+userName2+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName2,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+								
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc128_VerifyInactiveUserFunctionalityOnPrivateEquityRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord13;
+
+		String contactSectionName=ATCE_ConName21;
+		String contactSectionTitle=ATCE_ConTitle21;
+		String contactSectionDeal=ATCE_ConDeal21;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall21;
+		String contactSectionEmail=ATCE_ConEmail21;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName34,ATCE_TaggedFirmsName35,ATCE_TaggedFirmsName36,ATCE_TaggedFirmsName37,ATCE_TaggedFirmsName38,ATCE_TaggedFirmsName40,ATCE_TaggedFirmsName41,ATCE_TaggedFirmsName42,ATCE_TaggedFirmsName43,ATCE_TaggedFirmsName44,ATCE_TaggedFirmsName45,ATCE_TaggedFirmsName46,ATCE_TaggedFirmsName47};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount34,ATCE_TaggedFirmsCount35,ATCE_TaggedFirmsCount36,ATCE_TaggedFirmsCount37,ATCE_TaggedFirmsCount38,ATCE_TaggedFirmsCount40,ATCE_TaggedFirmsCount41,ATCE_TaggedFirmsCount42,ATCE_TaggedFirmsCount43,ATCE_TaggedFirmsCount44,ATCE_TaggedFirmsCount45,ATCE_TaggedFirmsCount46,ATCE_TaggedFirmsCount47};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName25,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName28,ATCE_TaggedPeopleName29,ATCE_TaggedPeopleName30,ATCE_TaggedPeopleName31};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount25,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount28,ATCE_TaggedPeopleCount29,ATCE_TaggedPeopleCount30,ATCE_TaggedPeopleCount31};
+
+		String[] dealTaggedName= {ATCE_TaggedDealName4,ATCE_TaggedDealName5};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount4,ATCE_TaggedDealCount5};
+
+
+		String[] connectionUserName= {crmUser6FirstName+" "+crmUser6LastName,crmUser7FirstName+" "+crmUser7LastName};
+		String[] connectionTitle= {ATCE_ConnectionTitle2,ATCE_ConnectionTitle4};
+		String[] connectionDeal= {ATCE_ConnectionDeal2,ATCE_ConnectionDeal4};
+		String[] connectionMeetingaAndCall= {ATCE_ConnectionMeetingAndCall2,ATCE_ConnectionMeetingAndCall4};
+		String[] connectionEmail= {ATCE_ConnectionEmail2,ATCE_ConnectionEmail4};
+
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+
+		String[] iconType= {ATCE_ATActivityType28};
+		String[] date= {ATCE_ATDueDate28};
+		String[] subject= {ATCE_ATSubject28};
+		String[] notes= {ATCE_ATNote28};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants28)};
+		String[][] tag= {ATCE_ATTags28.split("<break>")};
+
+
+		String[] iconType1= {ATCE_ATActivityType27,ATCE_ATActivityType28,ATCE_ATActivityType29};
+		String[] date1= {ATCE_ATDueDate27,ATCE_ATDueDate28,ATCE_ATDueDate29};
+		String[] subject1= {ATCE_ATSubject27,ATCE_ATSubject28,ATCE_ATSubject29};
+		String[] notes1= {ATCE_ATNote27,ATCE_ATNote28,ATCE_ATNote29};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27),bp.getParticipantData(ATCE_ATParticipants28),bp.getParticipantData(ATCE_ATParticipants29)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>"),ATCE_ATTags28.split("<break>"),ATCE_ATTags29.split("<break>")};		
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+
+					ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+					if(result4.isEmpty())
+					{
+						log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+						sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+					}
+
+					ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+					if(result5.isEmpty())
+					{
+						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+						sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+					}
+
+
+					if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+
+						ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+						if(result6.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+							sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+						}
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+						sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+					}
+
+
+					ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+					if(result7.isEmpty())
+					{
+						log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+						sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+					}
+
+					if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+						String parentID=switchOnWindow(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName2, 20),"Count of "+userName2+" on contact section" , action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on count of "+userName2,YesNo.No);
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+						}		
+						driver.close();
+						driver.switchTo().window(parentID);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+					}
+
+
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+						if(result2.isEmpty())
+						{
+							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+						}
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc129_VerifyInactiveUserOnContactRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Con1;
+		
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName59,ATCE_TaggedFirmsName60,ATCE_TaggedFirmsName61,ATCE_TaggedFirmsName62,ATCE_TaggedFirmsName63,ATCE_TaggedFirmsName64,ATCE_TaggedFirmsName44,ATCE_TaggedFirmsName45,ATCE_TaggedFirmsName46,ATCE_TaggedFirmsName57};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount59,ATCE_TaggedFirmsCount60,ATCE_TaggedFirmsCount61,ATCE_TaggedFirmsCount62,ATCE_TaggedFirmsCount63,ATCE_TaggedFirmsCount64,ATCE_TaggedFirmsCount44,ATCE_TaggedFirmsCount45,ATCE_TaggedFirmsCount46,ATCE_TaggedFirmsCount57};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName25,ATCE_TaggedPeopleName26,ATCE_TaggedPeopleName27,ATCE_TaggedPeopleName22,ATCE_TaggedPeopleName23,ATCE_TaggedPeopleName24,ATCE_TaggedPeopleName32,ATCE_TaggedPeopleName33,ATCE_TaggedPeopleName38};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount25,ATCE_TaggedPeopleCount26,ATCE_TaggedPeopleCount27,ATCE_TaggedPeopleCount22,ATCE_TaggedPeopleCount23,ATCE_TaggedPeopleCount24,ATCE_TaggedPeopleCount32,ATCE_TaggedPeopleCount33,ATCE_TaggedPeopleCount38};
+
+		String[] dealTaggedName= {ATCE_TaggedDealName8,ATCE_TaggedDealName9};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount8,ATCE_TaggedDealCount9};
+
+	
+		String connectionUserName=crmUser7FirstName+" "+crmUser7LastName;
+		String connectionTitle=ATCE_ConnectionTitle4;
+		String connectionDeal=ATCE_ConnectionDeal4;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall4;
+		String connectionEmail=ATCE_ConnectionEmail4;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		
+		String[] iconType= {ATCE_ATActivityType28};
+		String[] date= {ATCE_ATDueDate28};
+		String[] subject= {ATCE_ATSubject28};
+		String[] notes= {ATCE_ATNote28};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants28)};
+		String[][] tag= {ATCE_ATTags28.split("<break>")};
+
+		String[] iconType1= {ATCE_ATActivityType27,ATCE_ATActivityType28,ATCE_ATActivityType29};
+		String[] date1= {ATCE_ATDueDate27,ATCE_ATDueDate28,ATCE_ATDueDate29};
+		String[] subject1= {ATCE_ATSubject27,ATCE_ATSubject28,ATCE_ATSubject29};
+		String[] notes1= {ATCE_ATNote27,ATCE_ATNote28,ATCE_ATNote29};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27),bp.getParticipantData(ATCE_ATParticipants28),bp.getParticipantData(ATCE_ATParticipants29)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>"),ATCE_ATTags28.split("<break>"),ATCE_ATTags29.split("<break>")};		
+
+					
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj2)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+						ArrayList<String> result6=bp.verifyRecordOnConnectionsSectionInAcuity(recordName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						
+						if(result6.isEmpty())
+						{
+							log(LogStatus.INFO, "The records have been verified on Connection section in Acuity user : "+connectionUserName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records are not verified on Connection section in Acuity. user : "+connectionUserName+" "+result6, YesNo.No);
+							sa.assertTrue(false,  "The records are not verified on Connection section in Acuity.  user : "+connectionUserName+" "+result6);
+						}
+						
+					
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(userName2, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+userName2+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result7=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result7.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+userName2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+userName2+". "+result7, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+userName2+". "+result7);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName2+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+userName2+" record on contact section");
+						}
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName, iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj2, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc130_VerifyInactiveUserFunctionalityOnDealRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Deal1;
+	
+	    String[] firmsTaggedName= {ATCE_TaggedFirmsName65,ATCE_TaggedFirmsName66,ATCE_TaggedFirmsName67,ATCE_TaggedFirmsName68,ATCE_TaggedFirmsName69,ATCE_TaggedFirmsName70,ATCE_TaggedFirmsName71,ATCE_TaggedFirmsName41,ATCE_TaggedFirmsName42,ATCE_TaggedFirmsName43,ATCE_TaggedFirmsName72,ATCE_TaggedFirmsName73,ATCE_TaggedFirmsName74};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount65,ATCE_TaggedFirmsCount66,ATCE_TaggedFirmsCount67,ATCE_TaggedFirmsCount68,ATCE_TaggedFirmsCount69,ATCE_TaggedFirmsCount70,ATCE_TaggedFirmsCount71,ATCE_TaggedFirmsCount41,ATCE_TaggedFirmsCount42,ATCE_TaggedFirmsCount43,ATCE_TaggedFirmsCount72,ATCE_TaggedFirmsCount73,ATCE_TaggedFirmsCount74};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName39,ATCE_TaggedPeopleName40,ATCE_TaggedPeopleName41,ATCE_TaggedPeopleName42,ATCE_TaggedPeopleName43,ATCE_TaggedPeopleName44,ATCE_TaggedPeopleName45,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount39,ATCE_TaggedPeopleCount40,ATCE_TaggedPeopleCount41,ATCE_TaggedPeopleCount42,ATCE_TaggedPeopleCount43,ATCE_TaggedPeopleCount44,ATCE_TaggedPeopleCount45,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName10};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount10};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType27};
+		String[] date1= {ATCE_ATDueDate27};
+		String[] subject1= {ATCE_ATSubject27};
+		String[] notes1= {ATCE_ATNote27};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>")};
+		
+		
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, tabObj4)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+					
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+								
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc131_VerifyInactiveUserFunctionalityOnFundraisingRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fundraising1;
+	
+	    String[] firmsTaggedName= {ATCE_TaggedFirmsName65,ATCE_TaggedFirmsName66,ATCE_TaggedFirmsName67,ATCE_TaggedFirmsName68,ATCE_TaggedFirmsName69,ATCE_TaggedFirmsName70,ATCE_TaggedFirmsName71,ATCE_TaggedFirmsName41,ATCE_TaggedFirmsName42,ATCE_TaggedFirmsName43,ATCE_TaggedFirmsName72,ATCE_TaggedFirmsName73,ATCE_TaggedFirmsName74};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount65,ATCE_TaggedFirmsCount66,ATCE_TaggedFirmsCount67,ATCE_TaggedFirmsCount68,ATCE_TaggedFirmsCount69,ATCE_TaggedFirmsCount70,ATCE_TaggedFirmsCount71,ATCE_TaggedFirmsCount41,ATCE_TaggedFirmsCount42,ATCE_TaggedFirmsCount43,ATCE_TaggedFirmsCount72,ATCE_TaggedFirmsCount73,ATCE_TaggedFirmsCount74};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName39,ATCE_TaggedPeopleName40,ATCE_TaggedPeopleName41,ATCE_TaggedPeopleName42,ATCE_TaggedPeopleName43,ATCE_TaggedPeopleName44,ATCE_TaggedPeopleName45,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount39,ATCE_TaggedPeopleCount40,ATCE_TaggedPeopleCount41,ATCE_TaggedPeopleCount42,ATCE_TaggedPeopleCount43,ATCE_TaggedPeopleCount44,ATCE_TaggedPeopleCount45,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17};
+				
+	    String[] iconType1= {ATCE_ATActivityType27};
+		String[] date1= {ATCE_ATDueDate27};
+		String[] subject1= {ATCE_ATSubject27};
+		String[] notes1= {ATCE_ATNote27};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>")};
+		
+		
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+		if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+		
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null, null,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+					
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+								
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+ TabName.Fundraising.toString(), YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+ TabName.Fundraising.toString());
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc132_VerifyInactiveUserFunctionalityOnFundRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fund1;
+	
+	    String[] firmsTaggedName= {ATCE_TaggedFirmsName65,ATCE_TaggedFirmsName66,ATCE_TaggedFirmsName67,ATCE_TaggedFirmsName68,ATCE_TaggedFirmsName69,ATCE_TaggedFirmsName70,ATCE_TaggedFirmsName71,ATCE_TaggedFirmsName41,ATCE_TaggedFirmsName42,ATCE_TaggedFirmsName43,ATCE_TaggedFirmsName72,ATCE_TaggedFirmsName73,ATCE_TaggedFirmsName74};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount65,ATCE_TaggedFirmsCount66,ATCE_TaggedFirmsCount67,ATCE_TaggedFirmsCount68,ATCE_TaggedFirmsCount69,ATCE_TaggedFirmsCount70,ATCE_TaggedFirmsCount71,ATCE_TaggedFirmsCount41,ATCE_TaggedFirmsCount42,ATCE_TaggedFirmsCount43,ATCE_TaggedFirmsCount72,ATCE_TaggedFirmsCount73,ATCE_TaggedFirmsCount74};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName8,ATCE_TaggedPeopleName9,ATCE_TaggedPeopleName10,ATCE_TaggedPeopleName39,ATCE_TaggedPeopleName40,ATCE_TaggedPeopleName41,ATCE_TaggedPeopleName42,ATCE_TaggedPeopleName43,ATCE_TaggedPeopleName44,ATCE_TaggedPeopleName45,ATCE_TaggedPeopleName14,ATCE_TaggedPeopleName15,ATCE_TaggedPeopleName16,ATCE_TaggedPeopleName17};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount8,ATCE_TaggedPeopleCount9,ATCE_TaggedPeopleCount10,ATCE_TaggedPeopleCount39,ATCE_TaggedPeopleCount40,ATCE_TaggedPeopleCount41,ATCE_TaggedPeopleCount42,ATCE_TaggedPeopleCount43,ATCE_TaggedPeopleCount44,ATCE_TaggedPeopleCount45,ATCE_TaggedPeopleCount14,ATCE_TaggedPeopleCount15,ATCE_TaggedPeopleCount16,ATCE_TaggedPeopleCount17};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName10};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount10};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType27};
+		String[] date1= {ATCE_ATDueDate27};
+		String[] subject1= {ATCE_ATSubject27};
+		String[] notes1= {ATCE_ATNote27};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>")};
+		
+		
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+		if (lp.clickOnTab(projectName, tabObj3)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " +tabObj3, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+					
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+								
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+ tabObj3, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+ tabObj3);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc133_VerifyInactiveUserFunctionalityOnThemeRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Theme1;
+	
+	 
+		String[] iconType1= {ATCE_ATActivityType27};
+		String[] date1= {ATCE_ATDueDate27};
+		String[] subject1= {ATCE_ATSubject27};
+		String[] notes1= {ATCE_ATNote27};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants27)};
+		String[][] tag1= {ATCE_ATTags27.split("<break>")};
+		
+		
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+		if (lp.clickOnTab(projectName, TabName.Themes.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : "+TabName.Themes.toString(), YesNo.No);
+
+			String parentWindowID=bp.clickOnThemeRecord(recordName);
+
+			if (parentWindowID!=null) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					
+			
+						
+					
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+								
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+TabName.Themes.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+TabName.Themes.toString());
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc134_CreateATaskAndLogACall(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		
+		String activityType=ATCE_ATActivityType31;
+		String taskSubject=ATCE_ATSubject31;
+		String taskRelatedTo=ATCE_ATRelatedTo31;
+		String taskNotes=ATCE_ATNote31;
+		String taskStatus=ATCE_AdvanceStatus16;
+		String taskPriority=ATCE_AdvancePriority16;	
+		String dueDateDay=ATCE_ATDay31;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_031", excelLabel.Advance_Due_Date);
+		
+		String activityType1=ATCE_ATActivityType30;
+		String taskSubject1=ATCE_ATSubject30;
+		String taskRelatedTo1=ATCE_ATRelatedTo30;
+		String taskNotes1=ATCE_ATNote30;	
+		String dueDateDay1=ATCE_ATDay31;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_030", excelLabel.Advance_Due_Date);
+	
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority}};
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+		}	 
+		
+		if (bp.createActivityTimeline(projectName, true, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null,null)) {
+			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+		}	 
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+			
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc135_UpdateTheNameOfAccountsContactDealsAndFund(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp=new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip=new InstitutionsPageBusinessLayer(driver);
+		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
+		
+		String recordName1=ATCERecord2;
+		String contactName=ATCE_ContactFullName2;
+
+		String updatedfirmRecordName=ATCERecord15;
+
+		String updatedContactLastName=ATCE_ContactLastName8;
+
+		String contactName2=ATCE_ContactFullName15;
+		String updatedContactTitle=ATCE_ContactTitle8;
+
+		String dealName=ATCE_Deal4;
+		String updatedDealName=ATCE_Deal5;
+		
+		String fundRecordName=ATCE_Fund2;
+		String updatedFundRecordName=ATCE_Fund3;
+
+		String xPath;
+		WebElement ele;
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName1, 30)) {
+				log(LogStatus.INFO, recordName1 + " record has been open", YesNo.No);
+
+				if(ip.UpdateLegalNameAccount(projectName, updatedfirmRecordName, 20))
+				{
+					log(LogStatus.INFO, updatedfirmRecordName + " legal name has been updated", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, updatedfirmRecordName + " legal name is not updated", YesNo.No);
+					sa.assertTrue(false, updatedfirmRecordName + " legal name is not updated");
+				}				    		 
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName1, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName1);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+
+		if (lp.clickOnTab(projectName, tabObj2)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+					contactName, 30)) {
+				log(LogStatus.INFO, contactName + " record has been open", YesNo.No);
+				if(cp.UpdateLastName(projectName, PageName.ContactPage, updatedContactLastName))
+				{
+					log(LogStatus.INFO, "Last name has been updated of contact "+contactName, YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Last name is not updated of contact "+contactName, YesNo.No);
+					sa.assertTrue(false, "Last name is not updated of contact "+contactName);
+				}					    		 
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+contactName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+contactName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj2, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
+		}
+		refresh(driver);
+
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+			if (BP.clickOnAlreadyCreatedItem(projectName, TabName.DealTab,
+					dealName, 30)) {
+				log(LogStatus.INFO, dealName + " record has been open", YesNo.No);
+
+				if(fp.UpdateDealName(projectName, updatedDealName, 20))
+				{
+					log(LogStatus.INFO,  "Deal name has been updated of "+dealName+" record", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR,  "Deal name is not updated of "+dealName+" record", YesNo.No);
+					sa.assertTrue(false,   "Deal name is not updated of "+dealName+" record");
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+dealName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+dealName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj4, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+		}
+
+
+		if (lp.clickOnTab(projectName, tabObj2)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+					contactName2, 30)) {
+				log(LogStatus.INFO, contactName2 + " record has been open", YesNo.No);
+
+				if (cp.clickOnShowMoreActionDownArrow(projectName, PageName.ContactPage, ShowMoreActionDropDownList.Edit, 30)) {
+					log(LogStatus.INFO, "clicked on edit button on contact page", YesNo.No);
+
+					xPath="//h2[contains(text(),'Edit')]/../..//label[text()='Title']/../..//input";
+					ele=FindElement(driver, xPath, "Title", action.SCROLLANDBOOLEAN, 30);
+					if(sendKeys(driver, ele, updatedContactTitle, "Title", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, updatedContactTitle+" value has been passed in title field", YesNo.No);
+						xPath="//h2[contains(text(),'Edit')]/../..//button[@name='SaveEdit']";
+						ele=FindElement(driver, xPath, "Save button", action.SCROLLANDBOOLEAN, 20);
+						if(click(driver, ele, "Save button", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on save button", YesNo.No);								
+							if(cp.ActivityTimeLineCreatedMsg(20)!=null)
+							{
+								log(LogStatus.INFO, "The title has been updated of contact "+contactName2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The title is not updated of contact "+contactName2, YesNo.No);
+								sa.assertTrue(false, "The title is not updated of contact "+contactName2);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
+							sa.assertTrue(false, "Not able to click on save button");
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, updatedContactTitle+" value has is not passed in title field", YesNo.No);
+						sa.assertTrue(false, updatedContactTitle+" value has is not passed in title field");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on edit button of contact page", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on edit button of contact page");
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+contactName2, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+contactName2);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj2, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
+		}
+		
+		if (lp.clickOnTab(projectName, tabObj3)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " +tabObj3, YesNo.No);
+
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab,
+					fundRecordName, 30)) {
+				log(LogStatus.INFO, fundRecordName + " reocrd has been open", YesNo.No);
+				if(fp.UpdateFundName(projectName, updatedFundRecordName, 30))
+				{
+					log(LogStatus.INFO, "Fund name have been updated to "+updatedFundRecordName, YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Fund name is not updated to "+updatedFundRecordName, YesNo.No);	
+					sa.assertTrue(false, "Fund name is not updated to "+updatedFundRecordName);
+				}
+				
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+fundRecordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+fundRecordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+ tabObj3, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+ tabObj3);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc136_EditTaskAndCall(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	
+
+		String task1SubjectNameNavigation = ATCE_ATSubject30;
+		
+		String taskSubject=ATCE_ATSubject32;
+		String taskRelatedTo=ATCE_ATRelatedTo32;
+		String taskNotes=ATCE_ATNote32;
+		
+		String dueDateDay=ATCE_ATDay32;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_032", excelLabel.Advance_Due_Date);
+		
+		
+		String[][] basicSection = {{"Subject",taskSubject},{ "Related_To", taskRelatedTo } , { "Notes", taskNotes }};
+		String[][] advanceSection = { { "Date", taskDueDate }};
+		
+		
+        String task1SubjectNameNavigation1 = ATCE_ATSubject31;
+		
+		String taskSubject1=ATCE_ATSubject33;
+		String taskRelatedTo1=ATCE_ATRelatedTo33;
+		String taskNotes1=ATCE_ATNote33;
+		
+		String dueDateDay1=ATCE_ATDay33;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_033", excelLabel.Advance_Due_Date);
+	
+		String[][] basicSection1 = {{"Subject",taskSubject1},{ "Related_To", taskRelatedTo1 } , { "Notes", taskNotes1 }};
+		String[][] advanceSection1 = { { "Due Date", taskDueDate1 }};
+	
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Tasks", false)) {
+
+			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectNameNavigation + " found in Tasks Object-----",YesNo.No);
+			String parentID=switchOnWindow(driver);
+			if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(task1SubjectNameNavigation, 20), "Edit button of popup of subject name "+task1SubjectNameNavigation))
+			{
+				log(LogStatus.INFO,"Clicked on edit button of subject "+task1SubjectNameNavigation,YesNo.No);
+				
+
+				if (bp.updateActivityTimelineRecordForMultipleFollowUpTasks(projectName, basicSection,advanceSection, null, null, null,false,false)) {
+					log(LogStatus.PASS, "Activity timeline record has been updated, Subject name : "+taskSubject, YesNo.No);
+					sa.assertTrue(true, "Activity timeline record has been updated,  Subject name : "+taskSubject);
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Activity timeline record is not updated, Subject name : "+taskSubject, YesNo.No);
+					sa.assertTrue(false, "Activity timeline record is not updated,  Subject name : "+taskSubject);
+				}	 
+				
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Not able to click on edit button of subject "+task1SubjectNameNavigation,YesNo.No);
+				BaseLib.sa.assertTrue(false,"Not able to click on edit button of subject "+task1SubjectNameNavigation);
+				
+			}
+			driver.close();
+			driver.switchTo().window(parentID);
+			
+		}
+		 else {
+
+				log(LogStatus.ERROR, "-----Task named: " + task1SubjectNameNavigation + " not found in Tasks Object-----",YesNo.Yes);
+				BaseLib.sa.assertTrue(false,"-----Task named: " + task1SubjectNameNavigation + " not found in Tasks Object-----");
+
+			}
+		
+		
+		refresh(driver);
+
+		if (home.globalSearchAndNavigate(task1SubjectNameNavigation1, "Tasks", false)) {
+
+			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectNameNavigation1 + " found in Tasks Object-----",YesNo.No);
+			String parentID=switchOnWindow(driver);
+			if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(task1SubjectNameNavigation1, 20), "Edit button of popup of subject name "+task1SubjectNameNavigation1))
+			{
+				log(LogStatus.INFO,"Clicked on edit button of subject "+task1SubjectNameNavigation1,YesNo.No);
+				
+
+				if (bp.updateActivityTimelineRecordForMultipleFollowUpTasks(projectName, basicSection1,advanceSection1, null, null, null,false,false)) {
+					log(LogStatus.PASS, "Activity timeline record has been updated, Subject name : "+taskSubject1, YesNo.No);
+					sa.assertTrue(true, "Activity timeline record has been updated,  Subject name : "+taskSubject1);
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Activity timeline record is not updated, Subject name : "+taskSubject, YesNo.No);
+					sa.assertTrue(false, "Activity timeline record is not updated,  Subject name : "+taskSubject);
+				}	 
+				
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Not able to click on edit button of subject "+task1SubjectNameNavigation1,YesNo.No);
+				BaseLib.sa.assertTrue(false,"Not able to click on edit button of subject "+task1SubjectNameNavigation1);
+				
+			}
+			driver.close();
+			driver.switchTo().window(parentID);
+			
+		}
+		 else {
+
+				log(LogStatus.ERROR, "-----Task named: " + task1SubjectNameNavigation1 + " not found in Tasks Object-----",YesNo.Yes);
+				BaseLib.sa.assertTrue(false,"-----Task named: " + task1SubjectNameNavigation1 + " not found in Tasks Object-----");
+
+			}
+		
+		
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc137_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord1;
+	
+		String contactSectionName=ATCE_ConName23;
+		String contactSectionTitle=ATCE_ConTitle23;
+		String contactSectionDeal=ATCE_ConDeal23;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall23;
+		String contactSectionEmail=ATCE_ConEmail23;
+		
+		String firmTagName=ATCE_TaggedFirmsName81;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount81;
+		
+		String peopleTagName=ATCE_TaggedPeopleName46;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
+		
+		String dealTagName=ATCE_TaggedDealName12;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;		
+		
+		String contactSectionName1=ATCE_ConName22;
+		String contactSectionTitle1=ATCE_ConTitle22;
+		String contactSectionDeal1=ATCE_ConDeal22;
+		String contactSectionMeetingAndCalls1=ATCE_ConMeetingAndCall22;
+		String contactSectionEmail1=ATCE_ConEmail22;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName75,ATCE_TaggedFirmsName76,ATCE_TaggedFirmsName77,ATCE_TaggedFirmsName78,ATCE_TaggedFirmsName79,ATCE_TaggedFirmsName80,ATCE_TaggedFirmsName81};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount75,ATCE_TaggedFirmsCount76,ATCE_TaggedFirmsCount77,ATCE_TaggedFirmsCount78,ATCE_TaggedFirmsCount79,ATCE_TaggedFirmsCount80,ATCE_TaggedFirmsCount81};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount46};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName11,ATCE_TaggedDealName12};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount11,ATCE_TaggedDealCount12};
+		
+		
+		String[] connectionUserName= {crmUser6FirstName+" "+crmUser6LastName};
+		String[] connectionTitle= {ATCE_ConnectionTitle5};
+		String[] connectionDeal= {ATCE_ConnectionDeal5};
+		String[] connectionMeetingaAndCall= {ATCE_ConnectionMeetingAndCall5};
+		String[] connectionEmail= {ATCE_ConnectionEmail5};
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String[] iconType= {ATCE_ATActivityType32};
+		String[] date= {ATCE_ATDueDate32};
+		String[] subject= {ATCE_ATSubject32};
+		String[] notes= {ATCE_ATNote32};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants32)};
+		String[][] tag= {ATCE_ATTags32.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection(false);
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+												
+						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result3.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+dealTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Deals tab name");
+						}
+						
+						
+						
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+			String recordName1=ATCERecord15;
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab,
+						recordName1, 30)) {
+					log(LogStatus.INFO, recordName1 + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+						
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName1, contactSectionTitle1, contactSectionDeal1, contactSectionMeetingAndCalls1, contactSectionEmail1);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName1+" record on Contact section has been verified for "+recordName1, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName1+" record on Contact section is not verified for "+recordName1+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName1+" record on Contact section is not verified for "+recordName1+". "+result4);
+						}
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName1, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName1+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName1+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName1+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName1, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName1, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName1+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName1+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName1, 30), "Contact Name: " + contactSectionName1,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName1, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+contactSectionName1, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+contactSectionName1+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+contactSectionName1+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName1,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName1);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName1, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName1);
+						}
+						
+						
+			
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+			
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc138_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnAdvisorRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord5;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName75,ATCE_TaggedFirmsName77,ATCE_TaggedFirmsName78,ATCE_TaggedFirmsName79,ATCE_TaggedFirmsName80,ATCE_TaggedFirmsName81,ATCE_TaggedFirmsName82};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount75,ATCE_TaggedFirmsCount77,ATCE_TaggedFirmsCount78,ATCE_TaggedFirmsCount79,ATCE_TaggedFirmsCount80,ATCE_TaggedFirmsCount81,ATCE_TaggedFirmsCount82};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount46};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName11,ATCE_TaggedDealName12};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount11,ATCE_TaggedDealCount12};
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		String firmTagName=ATCE_TaggedFirmsName81;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount81;
+		
+		String peopleTagName=ATCE_TaggedPeopleName46;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
+		
+		String dealTagName=ATCE_TaggedDealName12;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+												
+						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result3.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+dealTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Deals tab name");
+						}
+						
+						
+						
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection(false);
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc139_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnLenderRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord7;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName75,ATCE_TaggedFirmsName76,ATCE_TaggedFirmsName78,ATCE_TaggedFirmsName79,ATCE_TaggedFirmsName80,ATCE_TaggedFirmsName81,ATCE_TaggedFirmsName82};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount75,ATCE_TaggedFirmsCount76,ATCE_TaggedFirmsCount78,ATCE_TaggedFirmsCount79,ATCE_TaggedFirmsCount80,ATCE_TaggedFirmsCount81,ATCE_TaggedFirmsCount82};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount46};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName11,ATCE_TaggedDealName12};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount11,ATCE_TaggedDealCount12};
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		String firmTagName=ATCE_TaggedFirmsName81;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount81;
+		
+		String peopleTagName=ATCE_TaggedPeopleName46;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
+		
+		String dealTagName=ATCE_TaggedDealName12;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+												
+						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result3.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+dealTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Deals tab name");
+						}
+						
+						
+						
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection(false);
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc140_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnIntermediaryRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord9;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName75,ATCE_TaggedFirmsName76,ATCE_TaggedFirmsName77,ATCE_TaggedFirmsName79,ATCE_TaggedFirmsName80,ATCE_TaggedFirmsName81,ATCE_TaggedFirmsName82};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount75,ATCE_TaggedFirmsCount76,ATCE_TaggedFirmsCount77,ATCE_TaggedFirmsCount79,ATCE_TaggedFirmsCount80,ATCE_TaggedFirmsCount81,ATCE_TaggedFirmsCount82};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount46};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName11,ATCE_TaggedDealName12};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount11,ATCE_TaggedDealCount12};
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		String firmTagName=ATCE_TaggedFirmsName81;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount81;
+		
+		String peopleTagName=ATCE_TaggedPeopleName46;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
+		
+		String dealTagName=ATCE_TaggedDealName12;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+												
+						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result3.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+dealTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Deals tab name");
+						}
+						
+						
+						
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection(false);
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc141_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnInstitutionRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord3;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName76,ATCE_TaggedFirmsName77,ATCE_TaggedFirmsName78,ATCE_TaggedFirmsName79,ATCE_TaggedFirmsName80,ATCE_TaggedFirmsName81,ATCE_TaggedFirmsName82};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount76,ATCE_TaggedFirmsCount77,ATCE_TaggedFirmsCount78,ATCE_TaggedFirmsCount79,ATCE_TaggedFirmsCount80,ATCE_TaggedFirmsCount81,ATCE_TaggedFirmsCount82};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount46};
+				
+		String[] fundTaggedName= {ATCE_TaggedFundName5,ATCE_TaggedFundName6};
+		String[] fundTaggedTimeReference= {ATCE_TaggedFundCount5,ATCE_TaggedFundCount6};
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		String firmTagName=ATCE_TaggedFirmsName81;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount81;
+		
+		String peopleTagName=ATCE_TaggedPeopleName46;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
+		
+		String dealTagName=ATCE_TaggedDealName12;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null, null,true, fundTaggedName,fundTaggedTimeReference);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection(true);
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc142_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnPortfolioCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord11;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName75,ATCE_TaggedFirmsName76,ATCE_TaggedFirmsName77,ATCE_TaggedFirmsName78,ATCE_TaggedFirmsName80,ATCE_TaggedFirmsName81,ATCE_TaggedFirmsName82};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount75,ATCE_TaggedFirmsCount76,ATCE_TaggedFirmsCount77,ATCE_TaggedFirmsCount78,ATCE_TaggedFirmsCount80,ATCE_TaggedFirmsCount81,ATCE_TaggedFirmsCount82};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount46};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName11,ATCE_TaggedDealName12};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount11,ATCE_TaggedDealCount12};
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		String firmTagName=ATCE_TaggedFirmsName81;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount81;
+		
+		String peopleTagName=ATCE_TaggedPeopleName46;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
+		
+		String dealTagName=ATCE_TaggedDealName12;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+												
+						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result3.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+dealTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Deals tab name");
+						}
+						
+						
+						
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection(false);
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc143_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnPrivateEquityRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord13;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName75,ATCE_TaggedFirmsName76,ATCE_TaggedFirmsName77,ATCE_TaggedFirmsName78,ATCE_TaggedFirmsName79,ATCE_TaggedFirmsName81,ATCE_TaggedFirmsName82};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount75,ATCE_TaggedFirmsCount76,ATCE_TaggedFirmsCount77,ATCE_TaggedFirmsCount78,ATCE_TaggedFirmsCount79,ATCE_TaggedFirmsCount81,ATCE_TaggedFirmsCount82};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount46};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName11,ATCE_TaggedDealName12};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount11,ATCE_TaggedDealCount12};
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		String firmTagName=ATCE_TaggedFirmsName81;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount81;
+		
+		String peopleTagName=ATCE_TaggedPeopleName46;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
+		
+		String dealTagName=ATCE_TaggedDealName12;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+												
+						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result3.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+dealTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Deals tab name");
+						}
+						
+						
+						
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection(false);
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc144_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnContactRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Con1;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName84,ATCE_TaggedFirmsName85,ATCE_TaggedFirmsName86,ATCE_TaggedFirmsName87,ATCE_TaggedFirmsName88,ATCE_TaggedFirmsName89,ATCE_TaggedFirmsName83};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount84,ATCE_TaggedFirmsCount85,ATCE_TaggedFirmsCount86,ATCE_TaggedFirmsCount87,ATCE_TaggedFirmsCount88,ATCE_TaggedFirmsCount89,ATCE_TaggedFirmsCount83};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName47};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount47};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName12};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount12};
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		
+		String firmTagName=ATCE_TaggedFirmsName83;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount83;
+		
+		String peopleTagName=ATCE_TaggedPeopleName47;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount47;
+		
+		String dealTagName=ATCE_TaggedDealName12;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj2)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+												
+						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result3.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+dealTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Deals tab name");
+						}
+						
+						
+						
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection(false);
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj2, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc145_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnDealRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Deal1;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName90};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount90};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount46};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName13};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount11,ATCE_TaggedDealCount13};
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		String firmTagName=ATCE_TaggedFirmsName90;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount90;
+		
+		String peopleTagName=ATCE_TaggedPeopleName46;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
+		
+		String dealTagName=ATCE_TaggedDealName13;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount13;
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+		
+
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+												
+						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result3.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+dealTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Deals tab name");
+						}
+						
+						
+						
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection(false);
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc146_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnFundraisingRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fundraising1;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName90};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount90};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount46};
+				
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		String firmTagName=ATCE_TaggedFirmsName90;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount90;
+		
+		String peopleTagName=ATCE_TaggedPeopleName46;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
+		
+		String dealTagName=ATCE_TaggedDealName13;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+		if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+		
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null, null,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+											
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSectionFormFirmAndPeopleTab();
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc147_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnFundRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fund1;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName90};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount90};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount46};
+		
+		String[] dealTaggedName= {ATCE_TaggedDealName13};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount13};		
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		String firmTagName=ATCE_TaggedFirmsName90;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount90;
+		
+		String peopleTagName=ATCE_TaggedPeopleName46;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
+		
+		String dealTagName=ATCE_TaggedDealName13;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount13;
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+		if (lp.clickOnTab(projectName, tabObj3)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " +tabObj3, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+		
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,false, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+												
+						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result3.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+dealTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Deals tab name");
+						}
+						
+						
+						
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection(false);
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj3, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj3);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc148_VerifyUpdatedAccountContactAndDeallFunctionalityAndSortingOrderOnTaggedSectiOnThemeRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Theme1;
+	
+
+	
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+		if (lp.clickOnTab(projectName, TabName.Themes.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : "+TabName.Themes.toString(), YesNo.No);
+
+			String parentWindowID=bp.clickOnThemeRecord(recordName);
+
+			if (parentWindowID!=null) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			driver.close();
+			driver.switchTo().window(parentWindowID);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+TabName.Themes.toString(), YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+TabName.Themes.toString());
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc149_DeleteTheAccountContactDealFundAndFundraisingFromTheOrg(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
+		FundraisingsPageBusinessLayer fr=new FundraisingsPageBusinessLayer(driver);
+		String xPath;
+		WebElement ele;
+
+		String firmRecordName=ATCERecord15;
+		String dealName=ATCE_Deal5;
+		String fundName=ATCE_Fund3;
+		String fundraisingName=ATCE_Fundraising2;
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					firmRecordName, 30)) {
+				log(LogStatus.INFO, firmRecordName + " reocrd has been open", YesNo.No);
+				cp.clickOnShowMoreDropdownOnly(projectName, PageName.Object1Page, "");
+				log(LogStatus.INFO, "Able to Click on Show more Icon : " + TabName.Object1Tab + " For : " +firmRecordName ,
+						YesNo.No);
+				ThreadSleep(500);
+				ele = cp.actionDropdownElement(projectName, PageName.Object1Page,
+						ShowMoreActionDropDownList.Delete, 15);
+				if (ele == null) {
+					ele = cp.getDeleteButton(projectName, 30);
+				}
+
+				if (click(driver, ele, "Delete More Icon", action.BOOLEAN)) {
+					log(LogStatus.INFO,
+							"Able to Click on Delete more Icon : " + TabName.Object1Tab + " For : " + firmRecordName,
+							YesNo.No);
+					ThreadSleep(1000);
+					if (click(driver, cp.getDeleteButtonOnDeletePopUp(projectName, 30), "Delete Button",
+							action.BOOLEAN)) {
+						log(LogStatus.INFO, "Able to Click on Delete button on Delete PoPup : " + TabName.Object1Tab
+								+ " For : " + firmRecordName, YesNo.No);
+
+						ThreadSleep(10000);
+						if (cp.clickOnTab(projectName, TabName.Object1Tab)) {
+							log(LogStatus.INFO, "Clicked on Tab : " + TabName.Object1Tab + " For : " + firmRecordName,
+									YesNo.No);
+							ThreadSleep(1000);
+							if (!cp.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, firmRecordName, 10)) {
+								log(LogStatus.INFO, "Item has been Deleted after delete operation  : " + firmRecordName
+										+ " For : " + TabName.Object1Tab, YesNo.No);
+
+							} else {
+								sa.assertTrue(false, "Item has not been Deleted after delete operation  : " + firmRecordName
+										+ " For : " + TabName.Object1Tab);
+								log(LogStatus.SKIP, "Item has not been Deleted after delete operation  : " + firmRecordName
+										+ " For : " + TabName.Object1Tab, YesNo.Yes);
+							}
+
+						} else {
+							sa.assertTrue(false, "Not Able to Click on Tab after delete : " + TabName.Object1Tab
+									+ " For : " + firmRecordName);
+							log(LogStatus.SKIP, "Not Able to Click on Tab after delete : " + TabName.Object1Tab
+									+ " For : " + firmRecordName, YesNo.Yes);
+						}
+
+
+					} else {
+						log(LogStatus.ERROR, "not able to click on delete button, so not deleted : " + TabName.Object1Tab
+								+ " For : " + firmRecordName, YesNo.No);
+						sa.assertTrue(false, "not able to click on delete button, so not deleted : "
+								+ TabName.Object1Tab + " For : " + firmRecordName);
+					}
+				} else {
+					log(LogStatus.ERROR,
+							"not Able to Click on Delete more Icon : " + TabName.Object1Tab + " For : " + firmRecordName,
+							YesNo.No);
+					sa.assertTrue(false,
+							"not Able to Click on Delete more Icon : " + TabName.Object1Tab + " For : " + firmRecordName);
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+firmRecordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+firmRecordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+			if (bp.clickOnAlreadyCreatedItem(projectName, TabName.DealTab,
+					dealName, 30)) {
+				log(LogStatus.INFO, dealName + " record has been open", YesNo.No);
+
+
+				cp.clickOnShowMoreDropdownOnly(projectName, PageName.Object4Page, "");
+				log(LogStatus.INFO, "Able to Click on Show more Icon : " + TabName.Object4Tab + " For : " + dealName,
+						YesNo.No);
+				ThreadSleep(500);
+				ele = cp.actionDropdownElement(projectName, PageName.Object4Page,
+						ShowMoreActionDropDownList.Delete, 15);
+				if (ele == null) {
+					ele = cp.getDeleteButton(projectName, 30);
+				}
+
+				if (click(driver, ele, "Delete More Icon", action.BOOLEAN)) {
+					log(LogStatus.INFO,
+							"Able to Click on Delete more Icon : " + TabName.Object4Tab + " For : " + dealName,
+							YesNo.No);
+					ThreadSleep(1000);
+					if (click(driver, cp.getDeleteButtonOnDeletePopUp(projectName, 30), "Delete Button",
+							action.BOOLEAN)) {
+						log(LogStatus.INFO, "Able to Click on Delete button on Delete PoPup : " + TabName.Object4Tab
+								+ " For : " + dealName, YesNo.No);
+
+						ThreadSleep(10000);
+						if (lp.clickOnTab(projectName, tabObj4)) {
+
+							log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+							if (!bp.clickOnAlreadyCreatedItem(projectName, TabName.DealTab,
+									dealName, 30)) {
+								log(LogStatus.INFO, dealName + " record has been deleted", YesNo.No);
+
+							}
+							else
+							{
+								log(LogStatus.ERROR, dealName + " record is not  deleted", YesNo.No);
+								sa.assertTrue(false,  dealName + " record is not  deleted");
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on tab"+tabObj4, YesNo.No);
+							sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+						}
+
+					} else {
+						log(LogStatus.ERROR, "not able to click on delete button, so not deleted : " + TabName.Object4Tab
+								+ " For : " + dealName, YesNo.No);
+						sa.assertTrue(false, "not able to click on delete button, so not deleted : "
+								+ TabName.Object4Tab + " For : " + dealName);
+					}
+				} else {
+					log(LogStatus.ERROR,
+							"not Able to Click on Delete more Icon : " + TabName.Object4Tab + " For : " + dealName,
+							YesNo.No);
+					sa.assertTrue(false,
+							"not Able to Click on Delete more Icon : " + TabName.Object4Tab + " For : " + dealName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+dealName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+dealName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj4, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+		}
+
+		
+
+		if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					fundraisingName, 30)) {
+				log(LogStatus.INFO, fundraisingName + " reocrd has been open", YesNo.No);
+				
+				if(fr.deleteFundraising(projectName, 20))
+				{
+					log(LogStatus.INFO, "Clicked on Delete button of fundraising", YesNo.No);
+					if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
+
+						log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+						if (!bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+								fundraisingName, 30)) {
+							log(LogStatus.INFO, fundraisingName + " reocrd has been deleted", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to  Delete the fundraising", YesNo.No);
+							sa.assertTrue(false,  "Not able to Delete button the fundraising");
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to open record "+fundraisingName, YesNo.No);
+						sa.assertTrue(false,  "Not able to open record "+fundraisingName);
+				
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Delete button of fundraising", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Delete button of fundraising");
+				}
+				
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+fundraisingName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+fundraisingName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+		}
+		
+
+
+		if (lp.clickOnTab(projectName, tabObj3)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " +tabObj3, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab,
+					fundName, 30)) {
+				log(LogStatus.INFO, fundName + " reocrd has been open", YesNo.No);
+
+				if(fp.deleteFund(projectName, fundName, 20))
+				{
+					log(LogStatus.INFO, "Clicked on fund delete button ", YesNo.No);
+					if (lp.clickOnTab(projectName, tabObj3)) {
+
+						log(LogStatus.INFO, "Clicked on Tab : " +tabObj3, YesNo.No);
+
+						if (!bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab,
+								fundName, 30)) {
+							log(LogStatus.INFO, fundName + " has been deleted", YesNo.No);
+						}
+
+						else
+						{
+							log(LogStatus.INFO, fundName + " is not deleted", YesNo.No);
+							sa.assertTrue(false,  fundName + " is not deleted");
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on tab "+tabObj3, YesNo.No);
+						sa.assertTrue(false,  "Not able to click on tab "+tabObj3);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on fund delete button ", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on fund delete button ");
+				}
+
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+fundName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+fundName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj3, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj3);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc150_VerifyDeletedAccountContactAndDealFunctionalityOnCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord1;
+	
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName81};
+		
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+	
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName12};
+	
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+						ArrayList<String> result=bp.verifyRecordShouldNotVisibleOnTagged(firmsTaggedName, peopleTaggedName, dealTaggedName, false,null);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "Deleted records are not available on Tagged Section", YesNo.No);	
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Deleted records are available on Tagged Section. "+result, YesNo.No);	
+							sa.assertTrue(false, "Deleted records are available on Tagged Section. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+			
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc151_VerifyDeletedAccountContactAndDealFunctionalityOnAdvisorRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord5;
+	
+
+	    String[] firmsTaggedName= {ATCE_TaggedFirmsName81};
+		
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+	
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName12};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyRecordShouldNotVisibleOnTagged(firmsTaggedName, peopleTaggedName, dealTaggedName, false,null);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "Deleted records are not available on Tagged Section", YesNo.No);	
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Deleted records are available on Tagged Section. "+result, YesNo.No);	
+							sa.assertTrue(false, "Deleted records are available on Tagged Section. "+result);
+						}
+						
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc152_VerifyDeletedAccountContactAndDealFunctionalityOnLenderRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord7;
+	
+		    String[] firmsTaggedName= {ATCE_TaggedFirmsName81};
+			
+			String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+				
+			String[] dealTaggedName= {ATCE_TaggedDealName12};
+		
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyRecordShouldNotVisibleOnTagged(firmsTaggedName, peopleTaggedName, dealTaggedName, false,null);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "Deleted records are not available on Tagged Section", YesNo.No);	
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Deleted records are available on Tagged Section. "+result, YesNo.No);	
+							sa.assertTrue(false, "Deleted records are available on Tagged Section. "+result);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc153_VerifyDeletedAccountContactAndDealFunctionalityOnIntermediaryRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord9;
+	
+
+		 String[] firmsTaggedName= {ATCE_TaggedFirmsName81};
+			
+			String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+				
+			String[] dealTaggedName= {ATCE_TaggedDealName12};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyRecordShouldNotVisibleOnTagged(firmsTaggedName, peopleTaggedName, dealTaggedName, false,null);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "Deleted records are not available on Tagged Section", YesNo.No);	
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Deleted records are available on Tagged Section. "+result, YesNo.No);	
+							sa.assertTrue(false, "Deleted records are available on Tagged Section. "+result);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc154_VerifyDeletedAccountContactAndDealFunctionalityOnInstitutionRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord3;
+	
+
+		 String[] firmsTaggedName= {ATCE_TaggedFirmsName81};
+			
+			String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+				
+			String[] fundTaggedName= {ATCE_TaggedFundName6};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyRecordShouldNotVisibleOnTagged(firmsTaggedName, peopleTaggedName, null, false,fundTaggedName);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "Deleted records are not available on Tagged Section", YesNo.No);	
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Deleted records are available on Tagged Section. "+result, YesNo.No);	
+							sa.assertTrue(false, "Deleted records are available on Tagged Section. "+result);
+						}
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc155_VerifyDeletedAccountContactAndDealFunctionalityOnPortfolioCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord11;
+	
+
+		 String[] firmsTaggedName= {ATCE_TaggedFirmsName81};
+			
+			String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+				
+			String[] dealTaggedName= {ATCE_TaggedDealName12};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyRecordShouldNotVisibleOnTagged(firmsTaggedName, peopleTaggedName, dealTaggedName, false,null);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "Deleted records are not available on Tagged Section", YesNo.No);	
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Deleted records are available on Tagged Section. "+result, YesNo.No);	
+							sa.assertTrue(false, "Deleted records are available on Tagged Section. "+result);
+						}
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc156_VerifyDeletedAccountContactAndDealFunctionalityOnPrivateEquityRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord13;
+	
+
+		 String[] firmsTaggedName= {ATCE_TaggedFirmsName81};
+			
+			String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+				
+			String[] dealTaggedName= {ATCE_TaggedDealName12};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyRecordShouldNotVisibleOnTagged(firmsTaggedName, peopleTaggedName, dealTaggedName, false,null);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "Deleted records are not available on Tagged Section", YesNo.No);	
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Deleted records are available on Tagged Section. "+result, YesNo.No);	
+							sa.assertTrue(false, "Deleted records are available on Tagged Section. "+result);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc157_VerifyDeletedAccountContactAndDealFunctionalityOnContactRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Con1;
+	
+
+		 String[] firmsTaggedName= {ATCE_TaggedFirmsName81};
+			
+			String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+				
+			String[] dealTaggedName= {ATCE_TaggedDealName12};
+			
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj2)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result=bp.verifyRecordShouldNotVisibleOnTagged(firmsTaggedName, peopleTaggedName, dealTaggedName, false,null);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "Deleted records are not available on Tagged Section", YesNo.No);	
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Deleted records are available on Tagged Section. "+result, YesNo.No);	
+							sa.assertTrue(false, "Deleted records are available on Tagged Section. "+result);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj2, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc158_VerifyDeletedAccountContactAndDealFunctionalityiOnDealRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Deal1;
+	
+
+		 String[] firmsTaggedName= {ATCE_TaggedFirmsName81};
+			
+			String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+				
+			String[] dealTaggedName= {ATCE_TaggedDealName12};
+			
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+		
+
+
+					ArrayList<String> result=bp.verifyRecordShouldNotVisibleOnTagged(firmsTaggedName, peopleTaggedName, dealTaggedName, false,null);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "Deleted records are not available on Tagged Section", YesNo.No);	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Deleted records are available on Tagged Section. "+result, YesNo.No);	
+						sa.assertTrue(false, "Deleted records are available on Tagged Section. "+result);
+					}
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc159_VerifyDeletedAccountContactAndDealFunctionalityOnFundraisingRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fundraising1;
+	
+		 String[] firmsTaggedName= {ATCE_TaggedFirmsName81};
+			
+			String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+				
+			String[] dealTaggedName= {ATCE_TaggedDealName12};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+		if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+		
+					ArrayList<String> result=bp.verifyRecordShouldNotVisibleOnTagged(firmsTaggedName, peopleTaggedName);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "Deleted records are not available on Tagged Section", YesNo.No);	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Deleted records are available on Tagged Section. "+result, YesNo.No);	
+						sa.assertTrue(false, "Deleted records are available on Tagged Section. "+result);
+					}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc160_VerifyDeletedAccountContactAndDealFunctionalityOnFundRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fund1;
+	
+		 String[] firmsTaggedName= {ATCE_TaggedFirmsName81};
+			
+			String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+				
+			String[] dealTaggedName= {ATCE_TaggedDealName12};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+		if (lp.clickOnTab(projectName, tabObj3)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " +tabObj3, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+		
+
+					ArrayList<String> result=bp.verifyRecordShouldNotVisibleOnTagged(firmsTaggedName, peopleTaggedName, dealTaggedName, false,null);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "Deleted records are not available on Tagged Section", YesNo.No);	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Deleted records are available on Tagged Section. "+result, YesNo.No);	
+						sa.assertTrue(false, "Deleted records are available on Tagged Section. "+result);
+					}
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj3, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj3);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc161_RestoreTheDeletedRecordsFromRecycleBinAndVerify(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		WebElement ele;
+		String xPath;
+
+		String recordName=ATCERecord15;
+		String recordName1=ATCE_Deal5;
+		String recordName2=ATCE_Fund3;
+		String recordName3=ATCE_Fundraising2;
+
+
+		String[][] listViewSheetData = { {"User" , "Recycle Bin", "Restore Account", "Only I can see this list view",
+			"My recycle bin", "Record Name", "contains", recordName } };
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+		String recycleTab = lp.getTabName(projectName, TabName.RecycleBinTab);
+		if (lp.openAppFromAppLauchner(60, recycleTab)) {
+
+			for (String[] row : listViewSheetData) {
+
+				if (lp.addListView(projectName, row, 10)) {
+					log(LogStatus.INFO, "list view added on " + row[1], YesNo.No);
+					ele = lp.getCheckboxOfRestoreItemOnRecycleBin(projectName, recordName, 30);
+					if (clickUsingJavaScript(driver, ele, "Check box against : " + recordName, action.BOOLEAN)) {
+						log(LogStatus.INFO, "Click on checkbox for " + recordName, YesNo.No);
+
+						ele = lp.getRestoreButtonOnRecycleBin(projectName, 30);
+						if (clickUsingJavaScript(driver, ele, "Restore Button : " + recordName, action.BOOLEAN)) {
+							ThreadSleep(10000);
+							log(LogStatus.INFO, "Click on Restore Button for " + recordName, YesNo.No);
+							sa.assertTrue(true, "Contact has been restore from the Recycle bin");
+						} else {
+
+							log(LogStatus.ERROR, "Not Able to Click on Restore Button for " + recordName,
+									YesNo.Yes);
+							sa.assertTrue(false, "Contact is not restore from the Recycle bin");
+						}
+
+					} else {
+
+						log(LogStatus.ERROR, "Not Able to Click on checkbox for " + recordName, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Click on checkbox for " + recordName);
+					}
+				}
+
+				else {
+					log(LogStatus.FAIL, "list view could not added on " + row[1], YesNo.Yes);
+					sa.assertTrue(false, "list view could not added on " + row[1]);
+				}
+			}
+		} else {
+			log(LogStatus.ERROR, "Not Able to open the Recycle been tab", YesNo.Yes);
+			sa.assertTrue(false, "Not Able to open the Recycle been tab");
+
+		}		
+
+		String[][] listViewSheetData1 = { {"User" , "Recycle Bin", "Restore Deal", "Only I can see this list view",
+			"My recycle bin", "Record Name", "contains", recordName1 } };
+
+		String recycleTab1 = lp.getTabName(projectName, TabName.RecycleBinTab);
+		if (lp.openAppFromAppLauchner(60, recycleTab1)) {
+
+			for (String[] row : listViewSheetData1) {
+
+				if (lp.addListView(projectName, row, 10)) {
+					log(LogStatus.INFO, "list view added on " + row[1], YesNo.No);
+					ele = lp.getCheckboxOfRestoreItemOnRecycleBin(projectName, recordName1, 30);
+					if (clickUsingJavaScript(driver, ele, "Check box against : " + recordName1, action.BOOLEAN)) {
+						log(LogStatus.INFO, "Click on checkbox for " + recordName1, YesNo.No);
+
+						ele = lp.getRestoreButtonOnRecycleBin(projectName, 30);
+						if (clickUsingJavaScript(driver, ele, "Restore Button : " + recordName1, action.BOOLEAN)) {
+							ThreadSleep(10000);
+							log(LogStatus.INFO, "Click on Restore Button for " + recordName1, YesNo.No);
+							sa.assertTrue(true, "Contact has been restore from the Recycle bin");
+						} else {
+
+							log(LogStatus.ERROR, "Not Able to Click on Restore Button for " + recordName1,
+									YesNo.Yes);
+							sa.assertTrue(false, "Contact is not restore from the Recycle bin");
+						}
+
+					} else {
+
+						log(LogStatus.ERROR, "Not Able to Click on checkbox for " + recordName1, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Click on checkbox for " + recordName1);
+					}
+				}
+
+				else {
+					log(LogStatus.FAIL, "list view could not added on " + row[1], YesNo.Yes);
+					sa.assertTrue(false, "list view could not added on " + row[1]);
+				}
+			}
+		} else {
+			log(LogStatus.ERROR, "Not Able to open the Recycle been tab", YesNo.Yes);
+			sa.assertTrue(false, "Not Able to open the Recycle been tab");
+
+		}
+
+		
+		String[][] listViewSheetData2 = { {"User" , "Recycle Bin", "Restore Fund", "Only I can see this list view",
+			"My recycle bin", "Record Name", "contains", recordName2 } };
+
+		String recycleTab2 = lp.getTabName(projectName, TabName.RecycleBinTab);
+		if (lp.openAppFromAppLauchner(60, recycleTab2)) {
+
+			for (String[] row : listViewSheetData2) {
+
+				if (lp.addListView(projectName, row, 10)) {
+					log(LogStatus.INFO, "list view added on " + row[1], YesNo.No);
+					ele = lp.getCheckboxOfRestoreItemOnRecycleBin(projectName, recordName2, 30);
+					if (clickUsingJavaScript(driver, ele, "Check box against : " + recordName2, action.BOOLEAN)) {
+						log(LogStatus.INFO, "Click on checkbox for " + recordName2, YesNo.No);
+
+						ele = lp.getRestoreButtonOnRecycleBin(projectName, 30);
+						if (clickUsingJavaScript(driver, ele, "Restore Button : " + recordName2, action.BOOLEAN)) {
+							ThreadSleep(10000);
+							log(LogStatus.INFO, "Click on Restore Button for " + recordName2, YesNo.No);
+							sa.assertTrue(true, "Contact has been restore from the Recycle bin");
+						} else {
+
+							log(LogStatus.ERROR, "Not Able to Click on Restore Button for " + recordName2,
+									YesNo.Yes);
+							sa.assertTrue(false, "Contact is not restore from the Recycle bin");
+						}
+
+					} else {
+
+						log(LogStatus.ERROR, "Not Able to Click on checkbox for " + recordName2, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Click on checkbox for " + recordName2);
+					}
+				}
+
+				else {
+					log(LogStatus.FAIL, "list view could not added on " + row[1], YesNo.Yes);
+					sa.assertTrue(false, "list view could not added on " + row[1]);
+				}
+			}
+		} else {
+			log(LogStatus.ERROR, "Not Able to open the Recycle been tab", YesNo.Yes);
+			sa.assertTrue(false, "Not Able to open the Recycle been tab");
+
+		}
+		
+		String[][] listViewSheetData3 = { {"User" , "Recycle Bin", "Restore Fundraising", "Only I can see this list view",
+			"My recycle bin", "Record Name", "contains", recordName3 } };
+
+		String recycleTab3 = lp.getTabName(projectName, TabName.RecycleBinTab);
+		if (lp.openAppFromAppLauchner(60, recycleTab3)) {
+
+			for (String[] row : listViewSheetData3) {
+
+				if (lp.addListView(projectName, row, 10)) {
+					log(LogStatus.INFO, "list view added on " + row[1], YesNo.No);
+					ele = lp.getCheckboxOfRestoreItemOnRecycleBin(projectName, recordName3, 30);
+					if (clickUsingJavaScript(driver, ele, "Check box against : " + recordName3, action.BOOLEAN)) {
+						log(LogStatus.INFO, "Click on checkbox for " + recordName3, YesNo.No);
+
+						ele = lp.getRestoreButtonOnRecycleBin(projectName, 30);
+						if (clickUsingJavaScript(driver, ele, "Restore Button : " + recordName3, action.BOOLEAN)) {
+							ThreadSleep(10000);
+							log(LogStatus.INFO, "Click on Restore Button for " + recordName3, YesNo.No);
+							sa.assertTrue(true, "Contact has been restore from the Recycle bin");
+						} else {
+
+							log(LogStatus.ERROR, "Not Able to Click on Restore Button for " + recordName3,
+									YesNo.Yes);
+							sa.assertTrue(false, "Contact is not restore from the Recycle bin");
+						}
+
+					} else {
+
+						log(LogStatus.ERROR, "Not Able to Click on checkbox for " + recordName3, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Click on checkbox for " + recordName3);
+					}
+				}
+
+				else {
+					log(LogStatus.FAIL, "list view could not added on " + row[1], YesNo.Yes);
+					sa.assertTrue(false, "list view could not added on " + row[1]);
+				}
+			}
+		} else {
+			log(LogStatus.ERROR, "Not Able to open the Recycle been tab", YesNo.Yes);
+			sa.assertTrue(false, "Not Able to open the Recycle been tab");
+
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc162_VerifyRestoredAccountContactAndDeallFunctionalityAndOnCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord1;
+	
+		String contactSectionName=ATCE_ConName23;
+		String contactSectionTitle=ATCE_ConTitle23;
+		String contactSectionDeal=ATCE_ConDeal23;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall23;
+		String contactSectionEmail=ATCE_ConEmail23;
+		
+		String firmTagName=ATCE_TaggedFirmsName81;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount81;
+		
+		String peopleTagName=ATCE_TaggedPeopleName46;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
+		
+		String dealTagName=ATCE_TaggedDealName12;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;
+		
+		
+		
+		
+		String contactSectionName1=ATCE_ConName22;
+		String contactSectionTitle1=ATCE_ConTitle22;
+		String contactSectionDeal1=ATCE_ConDeal22;
+		String contactSectionMeetingAndCalls1=ATCE_ConMeetingAndCall22;
+		String contactSectionEmail1=ATCE_ConEmail22;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName75,ATCE_TaggedFirmsName76,ATCE_TaggedFirmsName77,ATCE_TaggedFirmsName78,ATCE_TaggedFirmsName79,ATCE_TaggedFirmsName80,ATCE_TaggedFirmsName81};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount75,ATCE_TaggedFirmsCount76,ATCE_TaggedFirmsCount77,ATCE_TaggedFirmsCount78,ATCE_TaggedFirmsCount79,ATCE_TaggedFirmsCount80,ATCE_TaggedFirmsCount81};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount46};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName11,ATCE_TaggedDealName12};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount11,ATCE_TaggedDealCount12};
+		
+		
+		String[] connectionUserName= {crmUser6FirstName+" "+crmUser6LastName};
+		String[] connectionTitle= {ATCE_ConnectionTitle5};
+		String[] connectionDeal= {ATCE_ConnectionDeal5};
+		String[] connectionMeetingaAndCall= {ATCE_ConnectionMeetingAndCall5};
+		String[] connectionEmail= {ATCE_ConnectionEmail5};
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String[] iconType= {ATCE_ATActivityType32};
+		String[] date= {ATCE_ATDueDate32};
+		String[] subject= {ATCE_ATSubject32};
+		String[] notes= {ATCE_ATNote32};
+		String[][] participant= {bp.getParticipantData(ATCE_ATParticipants32)};
+		String[][] tag= {ATCE_ATTags32.split("<break>")};
+		
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection(false);
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+												
+						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result3.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+dealTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Deals tab name");
+						}
+						
+						
+						
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+			String recordName1=ATCERecord15;
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab,
+						recordName1, 30)) {
+					log(LogStatus.INFO, recordName1 + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+						
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName1, contactSectionTitle1, contactSectionDeal1, contactSectionMeetingAndCalls1, contactSectionEmail1);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName1+" record on Contact section has been verified for "+recordName1, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName1+" record on Contact section is not verified for "+recordName1+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName1+" record on Contact section is not verified for "+recordName1+". "+result4);
+						}
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName1, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName1+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName1+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName1+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName1, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName1, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName1+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName1+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName1, 30), "Contact Name: " + contactSectionName1,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName1, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+contactSectionName1, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+contactSectionName1+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+contactSectionName1+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName1,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName1);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName1, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName1);
+						}
+						
+						
+			
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+			
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc163_VerifyRestoredAccountContactAndDeallFunctionalityAndOnAdvisorRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord5;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName75,ATCE_TaggedFirmsName77,ATCE_TaggedFirmsName78,ATCE_TaggedFirmsName79,ATCE_TaggedFirmsName80,ATCE_TaggedFirmsName81,ATCE_TaggedFirmsName82};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount75,ATCE_TaggedFirmsCount77,ATCE_TaggedFirmsCount78,ATCE_TaggedFirmsCount79,ATCE_TaggedFirmsCount80,ATCE_TaggedFirmsCount81,ATCE_TaggedFirmsCount82};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount46};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName11,ATCE_TaggedDealName12};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount11,ATCE_TaggedDealCount12};
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		String firmTagName=ATCE_TaggedFirmsName81;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount81;
+		
+		String peopleTagName=ATCE_TaggedPeopleName46;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
+		
+		String dealTagName=ATCE_TaggedDealName12;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+												
+						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result3.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+dealTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Deals tab name");
+						}
+						
+						
+						
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection(false);
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc164_VerifyRestoredAccountContactAndDeallFunctionalityAndOnLenderRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord7;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName75,ATCE_TaggedFirmsName76,ATCE_TaggedFirmsName78,ATCE_TaggedFirmsName79,ATCE_TaggedFirmsName80,ATCE_TaggedFirmsName81,ATCE_TaggedFirmsName82};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount75,ATCE_TaggedFirmsCount76,ATCE_TaggedFirmsCount78,ATCE_TaggedFirmsCount79,ATCE_TaggedFirmsCount80,ATCE_TaggedFirmsCount81,ATCE_TaggedFirmsCount82};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount46};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName11,ATCE_TaggedDealName12};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount11,ATCE_TaggedDealCount12};
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		String firmTagName=ATCE_TaggedFirmsName81;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount81;
+		
+		String peopleTagName=ATCE_TaggedPeopleName46;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
+		
+		String dealTagName=ATCE_TaggedDealName12;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+												
+						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result3.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+dealTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Deals tab name");
+						}
+						
+						
+						
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection(false);
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc165_VerifyRestoredAccountContactAndDeallFunctionalityAndOnIntermediaryRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord9;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName75,ATCE_TaggedFirmsName76,ATCE_TaggedFirmsName77,ATCE_TaggedFirmsName79,ATCE_TaggedFirmsName80,ATCE_TaggedFirmsName81,ATCE_TaggedFirmsName82};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount75,ATCE_TaggedFirmsCount76,ATCE_TaggedFirmsCount77,ATCE_TaggedFirmsCount79,ATCE_TaggedFirmsCount80,ATCE_TaggedFirmsCount81,ATCE_TaggedFirmsCount82};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount46};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName11,ATCE_TaggedDealName12};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount11,ATCE_TaggedDealCount12};
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		String firmTagName=ATCE_TaggedFirmsName81;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount81;
+		
+		String peopleTagName=ATCE_TaggedPeopleName46;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
+		
+		String dealTagName=ATCE_TaggedDealName12;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+												
+						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result3.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+dealTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Deals tab name");
+						}
+						
+						
+						
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection(false);
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc166_VerifyRestoredAccountContactAndDeallFunctionalityAndOnInstitutionRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord3;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName76,ATCE_TaggedFirmsName77,ATCE_TaggedFirmsName78,ATCE_TaggedFirmsName79,ATCE_TaggedFirmsName80,ATCE_TaggedFirmsName81,ATCE_TaggedFirmsName82};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount76,ATCE_TaggedFirmsCount77,ATCE_TaggedFirmsCount78,ATCE_TaggedFirmsCount79,ATCE_TaggedFirmsCount80,ATCE_TaggedFirmsCount81,ATCE_TaggedFirmsCount82};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount46};
+				
+		String[] fundTaggedName= {ATCE_TaggedFundName5,ATCE_TaggedFundName6};
+		String[] fundTaggedTimeReference= {ATCE_TaggedFundCount5,ATCE_TaggedFundCount6};
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		String firmTagName=ATCE_TaggedFirmsName81;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount81;
+		
+		String peopleTagName=ATCE_TaggedPeopleName46;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
+		
+		String dealTagName=ATCE_TaggedDealName12;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null, null,true, fundTaggedName,fundTaggedTimeReference);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection(true);
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc167_VerifyRestoredAccountContactAndDeallFunctionalityAndOnPortfolioCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord11;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName75,ATCE_TaggedFirmsName76,ATCE_TaggedFirmsName77,ATCE_TaggedFirmsName78,ATCE_TaggedFirmsName80,ATCE_TaggedFirmsName81,ATCE_TaggedFirmsName82};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount75,ATCE_TaggedFirmsCount76,ATCE_TaggedFirmsCount77,ATCE_TaggedFirmsCount78,ATCE_TaggedFirmsCount80,ATCE_TaggedFirmsCount81,ATCE_TaggedFirmsCount82};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount46};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName11,ATCE_TaggedDealName12};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount11,ATCE_TaggedDealCount12};
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		String firmTagName=ATCE_TaggedFirmsName81;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount81;
+		
+		String peopleTagName=ATCE_TaggedPeopleName46;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
+		
+		String dealTagName=ATCE_TaggedDealName12;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+												
+						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result3.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+dealTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Deals tab name");
+						}
+						
+						
+						
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection(false);
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc168_VerifyRestoredAccountContactAndDeallFunctionalityAndOnPrivateEquityRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord13;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName75,ATCE_TaggedFirmsName76,ATCE_TaggedFirmsName77,ATCE_TaggedFirmsName78,ATCE_TaggedFirmsName79,ATCE_TaggedFirmsName81,ATCE_TaggedFirmsName82};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount75,ATCE_TaggedFirmsCount76,ATCE_TaggedFirmsCount77,ATCE_TaggedFirmsCount78,ATCE_TaggedFirmsCount79,ATCE_TaggedFirmsCount81,ATCE_TaggedFirmsCount82};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount46};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName11,ATCE_TaggedDealName12};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount11,ATCE_TaggedDealCount12};
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		String firmTagName=ATCE_TaggedFirmsName81;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount81;
+		
+		String peopleTagName=ATCE_TaggedPeopleName46;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
+		
+		String dealTagName=ATCE_TaggedDealName12;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+												
+						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result3.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+dealTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Deals tab name");
+						}
+						
+						
+						
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection(false);
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc169_VerifyRestoredAccountContactAndDeallFunctionalityAndOnContactRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Con1;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName84,ATCE_TaggedFirmsName85,ATCE_TaggedFirmsName86,ATCE_TaggedFirmsName87,ATCE_TaggedFirmsName88,ATCE_TaggedFirmsName89,ATCE_TaggedFirmsName83};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount84,ATCE_TaggedFirmsCount85,ATCE_TaggedFirmsCount86,ATCE_TaggedFirmsCount87,ATCE_TaggedFirmsCount88,ATCE_TaggedFirmsCount89,ATCE_TaggedFirmsCount83};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName47};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount47};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName12};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount12};
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		
+		String firmTagName=ATCE_TaggedFirmsName83;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount83;
+		
+		String peopleTagName=ATCE_TaggedPeopleName47;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount47;
+		
+		String dealTagName=ATCE_TaggedDealName12;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj2)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+												
+						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result3.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+dealTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Deals tab name");
+						}
+						
+						
+						
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection(false);
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj2, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc170_VerifyRestoredAccountContactAndDeallFunctionalityAndOnDealRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Deal1;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName90};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount90};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount46};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName13};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount11,ATCE_TaggedDealCount13};
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		String firmTagName=ATCE_TaggedFirmsName90;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount90;
+		
+		String peopleTagName=ATCE_TaggedPeopleName46;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
+		
+		String dealTagName=ATCE_TaggedDealName13;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount13;
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+		
+
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+												
+						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result3.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+dealTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Deals tab name");
+						}
+						
+						
+						
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection(false);
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc171_VerifyRestoredAccountContactAndDeallFunctionalityAndOnFundraisingRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fundraising1;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName90};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount90};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount46};
+				
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		String firmTagName=ATCE_TaggedFirmsName90;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount90;
+		
+		String peopleTagName=ATCE_TaggedPeopleName46;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
+		
+		String dealTagName=ATCE_TaggedDealName13;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount12;
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+		if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+		
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null, null,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+											
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSectionFormFirmAndPeopleTab();
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc172_VerifyRestoredAccountContactAndDeallFunctionalityAndOnFundRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fund1;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName90};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount90};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName46};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount46};
+		
+		String[] dealTaggedName= {ATCE_TaggedDealName13};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount13};		
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		String firmTagName=ATCE_TaggedFirmsName90;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount90;
+		
+		String peopleTagName=ATCE_TaggedPeopleName46;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount46;
+		
+		String dealTagName=ATCE_TaggedDealName13;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount13;
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+		if (lp.clickOnTab(projectName, tabObj3)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " +tabObj3, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+		
+
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,false, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+firmTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Firms tab name");
+						}
+			
+						
+						
+						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result1.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+peopleTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on People tab name");
+						}
+						
+												
+						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
+								if(result3.isEmpty())
+								{
+									log(LogStatus.INFO, "All records on Interaction card have been verified for "+dealTagName+" record", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
+									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
+								}
+							
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Deals tab name");
+						}
+						
+						
+						
+						ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection(false);
+						if(result10.isEmpty())
+						{
+							log(LogStatus.INFO, "Default decending order of times referenced count have been verified on tagged section", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
+							sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
+						}
+						
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj3, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj3);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc173_VerifyRestoredAccountContactAndDeallFunctionalityAndOnThemeRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Theme1;
+	
+
+	
+		
+		String[] iconType1= {ATCE_ATActivityType32,ATCE_ATActivityType33};
+		String[] date1= {ATCE_ATDueDate32,ATCE_ATDueDate33};
+		String[] subject1= {ATCE_ATSubject32,ATCE_ATSubject33};
+		String[] notes1= {ATCE_ATNote32,ATCE_ATNote33};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants32),bp.getParticipantData(ATCE_ATParticipants33)};
+		String[][] tag1= {ATCE_ATTags32.split("<break>"),ATCE_ATTags33.split("<break>")};
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+		if (lp.clickOnTab(projectName, TabName.Themes.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : "+TabName.Themes.toString(), YesNo.No);
+
+			String parentWindowID=bp.clickOnThemeRecord(recordName);
+
+			if (parentWindowID!=null) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			driver.close();
+			driver.switchTo().window(parentWindowID);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+TabName.Themes.toString(), YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+TabName.Themes.toString());
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc174_CreateATaskAndLogACallWhenOnlyDealisConnectedWithFirm(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		
+		String activityType=ATCE_ATActivityType34;
+		String taskSubject=ATCE_ATSubject34;
+		String taskRelatedTo=ATCE_ATRelatedTo34;
+		String taskNotes=ATCE_ATNote34;
+		String taskStatus=ATCE_AdvanceStatus18;
+		String taskPriority=ATCE_AdvancePriority18;	
+		String dueDateDay=ATCE_ATDay34;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_034", excelLabel.Advance_Due_Date);
+		
+		String activityType1=ATCE_ATActivityType35;
+		String taskSubject1=ATCE_ATSubject35;
+		String taskRelatedTo1=ATCE_ATRelatedTo35;
+		String taskNotes1=ATCE_ATNote35;	
+		String dueDateDay1=ATCE_ATDay35;
+		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_035", excelLabel.Advance_Due_Date);
+	
+		
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority}};
+		
+		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+		}	 
+		
+		if (bp.createActivityTimeline(projectName, true, activityType1, basicsection1, advanceSection1, null, null, false, null, null,null, null,null,null)) {
+			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+		}	 
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc175_VerifyTaskAndCallWithFirmDealAndFundMappingOnCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord1;	
+	
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName91,ATCE_TaggedFirmsName92,ATCE_TaggedFirmsName93,ATCE_TaggedFirmsName94,ATCE_TaggedFirmsName95,ATCE_TaggedFirmsName96};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount91,ATCE_TaggedFirmsCount92,ATCE_TaggedFirmsCount93,ATCE_TaggedFirmsCount94,ATCE_TaggedFirmsCount95,ATCE_TaggedFirmsCount96};
+
+		String[] peopleTaggedName= null;
+		String[] peopleTaggedTimeReference=null;
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName14};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount14};
+		
+		String[] iconType1= {ATCE_ATActivityType34,ATCE_ATActivityType35};
+		String[] date1= {ATCE_ATDueDate34,ATCE_ATDueDate35};
+		String[] subject1= {ATCE_ATSubject34,ATCE_ATSubject35};
+		String[] notes1= {ATCE_ATNote34,ATCE_ATNote35};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants34),bp.getParticipantData(ATCE_ATParticipants35)};
+		String[][] tag1= {ATCE_ATTags34.split("<break>"),ATCE_ATTags35.split("<break>")};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+			
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc176_VerifyTaskAndCallWithFirmDealAndFundMappingOnAdvisorRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord5;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName91,ATCE_TaggedFirmsName93,ATCE_TaggedFirmsName94,ATCE_TaggedFirmsName95,ATCE_TaggedFirmsName96,ATCE_TaggedFirmsName97};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount91,ATCE_TaggedFirmsCount93,ATCE_TaggedFirmsCount94,ATCE_TaggedFirmsCount95,ATCE_TaggedFirmsCount96,ATCE_TaggedFirmsCount97};
+
+		String[] peopleTaggedName= null;
+		String[] peopleTaggedTimeReference=null;
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName14};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount14};
+		
+		String[] iconType1= {ATCE_ATActivityType34,ATCE_ATActivityType35};
+		String[] date1= {ATCE_ATDueDate34,ATCE_ATDueDate35};
+		String[] subject1= {ATCE_ATSubject34,ATCE_ATSubject35};
+		String[] notes1= {ATCE_ATNote34,ATCE_ATNote35};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants34),bp.getParticipantData(ATCE_ATParticipants35)};
+		String[][] tag1= {ATCE_ATTags34.split("<break>"),ATCE_ATTags35.split("<break>")};
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc177_VerifyTaskAndCallWithFirmDealAndFundMappingOnLenderRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord7;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName91,ATCE_TaggedFirmsName92,ATCE_TaggedFirmsName94,ATCE_TaggedFirmsName95,ATCE_TaggedFirmsName96,ATCE_TaggedFirmsName97};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount91,ATCE_TaggedFirmsCount92,ATCE_TaggedFirmsCount94,ATCE_TaggedFirmsCount95,ATCE_TaggedFirmsCount96,ATCE_TaggedFirmsCount97};
+
+		String[] peopleTaggedName= null;
+		String[] peopleTaggedTimeReference=null;
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName14};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount14};
+		
+		String[] iconType1= {ATCE_ATActivityType34,ATCE_ATActivityType35};
+		String[] date1= {ATCE_ATDueDate34,ATCE_ATDueDate35};
+		String[] subject1= {ATCE_ATSubject34,ATCE_ATSubject35};
+		String[] notes1= {ATCE_ATNote34,ATCE_ATNote35};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants34),bp.getParticipantData(ATCE_ATParticipants35)};
+		String[][] tag1= {ATCE_ATTags34.split("<break>"),ATCE_ATTags35.split("<break>")};
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc178_VerifyTaskAndCallWithFirmDealAndFundMappingOnIntermediaryRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord9;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName91,ATCE_TaggedFirmsName92,ATCE_TaggedFirmsName93,ATCE_TaggedFirmsName95,ATCE_TaggedFirmsName96,ATCE_TaggedFirmsName97};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount91,ATCE_TaggedFirmsCount92,ATCE_TaggedFirmsCount93,ATCE_TaggedFirmsCount95,ATCE_TaggedFirmsCount96,ATCE_TaggedFirmsCount97};
+
+		String[] peopleTaggedName= null;
+		String[] peopleTaggedTimeReference=null;
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName14};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount14};
+		
+		String[] iconType1= {ATCE_ATActivityType34,ATCE_ATActivityType35};
+		String[] date1= {ATCE_ATDueDate34,ATCE_ATDueDate35};
+		String[] subject1= {ATCE_ATSubject34,ATCE_ATSubject35};
+		String[] notes1= {ATCE_ATNote34,ATCE_ATNote35};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants34),bp.getParticipantData(ATCE_ATParticipants35)};
+		String[][] tag1= {ATCE_ATTags34.split("<break>"),ATCE_ATTags35.split("<break>")};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc179_VerifyTaskAndCallWithFirmDealAndFundMappingOnInstitutionRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord3;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName92,ATCE_TaggedFirmsName93,ATCE_TaggedFirmsName94,ATCE_TaggedFirmsName95,ATCE_TaggedFirmsName96,ATCE_TaggedFirmsName97};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount92,ATCE_TaggedFirmsCount93,ATCE_TaggedFirmsCount94,ATCE_TaggedFirmsCount95,ATCE_TaggedFirmsCount96,ATCE_TaggedFirmsCount97};
+
+		String[] peopleTaggedName= null;
+		String[] peopleTaggedTimeReference=null;
+				
+		String[] fundTaggedName= {ATCE_TaggedFundName7};
+		String[] fundTaggedTimeReference= {ATCE_TaggedFundCount7};
+		
+		String[] iconType1= {ATCE_ATActivityType34,ATCE_ATActivityType35};
+		String[] date1= {ATCE_ATDueDate34,ATCE_ATDueDate35};
+		String[] subject1= {ATCE_ATSubject34,ATCE_ATSubject35};
+		String[] notes1= {ATCE_ATNote34,ATCE_ATNote35};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants34),bp.getParticipantData(ATCE_ATParticipants35)};
+		String[][] tag1= {ATCE_ATTags34.split("<break>"),ATCE_ATTags35.split("<break>")};
+			
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, null, null ,true, fundTaggedName, fundTaggedTimeReference);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc180_VerifyTaskAndCallWithFirmDealAndFundMappingOnPortfolioCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord11;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName91,ATCE_TaggedFirmsName92,ATCE_TaggedFirmsName93,ATCE_TaggedFirmsName94,ATCE_TaggedFirmsName96,ATCE_TaggedFirmsName97};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount91,ATCE_TaggedFirmsCount92,ATCE_TaggedFirmsCount93,ATCE_TaggedFirmsCount94,ATCE_TaggedFirmsCount96,ATCE_TaggedFirmsCount97};
+
+		String[] peopleTaggedName= null;
+		String[] peopleTaggedTimeReference=null;
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName14};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount14};
+		
+		String[] iconType1= {ATCE_ATActivityType34,ATCE_ATActivityType35};
+		String[] date1= {ATCE_ATDueDate34,ATCE_ATDueDate35};
+		String[] subject1= {ATCE_ATSubject34,ATCE_ATSubject35};
+		String[] notes1= {ATCE_ATNote34,ATCE_ATNote35};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants34),bp.getParticipantData(ATCE_ATParticipants35)};
+		String[][] tag1= {ATCE_ATTags34.split("<break>"),ATCE_ATTags35.split("<break>")};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc181_VerifyTaskAndCallWithFirmDealAndFundMappingOnPrivateEquityRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord13;
+	
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName91,ATCE_TaggedFirmsName92,ATCE_TaggedFirmsName93,ATCE_TaggedFirmsName94,ATCE_TaggedFirmsName95,ATCE_TaggedFirmsName97};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount91,ATCE_TaggedFirmsCount92,ATCE_TaggedFirmsCount93,ATCE_TaggedFirmsCount94,ATCE_TaggedFirmsCount95,ATCE_TaggedFirmsCount97};
+
+		String[] peopleTaggedName= null;
+		String[] peopleTaggedTimeReference=null;
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName14};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount14};
+		
+		String[] iconType1= {ATCE_ATActivityType34,ATCE_ATActivityType35};
+		String[] date1= {ATCE_ATDueDate34,ATCE_ATDueDate35};
+		String[] subject1= {ATCE_ATSubject34,ATCE_ATSubject35};
+		String[] notes1= {ATCE_ATNote34,ATCE_ATNote35};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants34),bp.getParticipantData(ATCE_ATParticipants35)};
+		String[][] tag1= {ATCE_ATTags34.split("<break>"),ATCE_ATTags35.split("<break>")};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc182_VerifyTaskAndCallWithFirmDealAndFundMappingOnDealRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Deal1;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName75,ATCE_TaggedFirmsName76,ATCE_TaggedFirmsName77,ATCE_TaggedFirmsName78,ATCE_TaggedFirmsName79,ATCE_TaggedFirmsName80};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount75,ATCE_TaggedFirmsCount76,ATCE_TaggedFirmsCount77,ATCE_TaggedFirmsCount78,ATCE_TaggedFirmsCount79,ATCE_TaggedFirmsCount80};
+
+		String[] peopleTaggedName= null;
+		String[] peopleTaggedTimeReference=null;
+				
+		String[] dealTaggedName= null;
+		String[] dealTaggedTimeReference= null;
+		
+		String[] iconType1= {ATCE_ATActivityType34,ATCE_ATActivityType35};
+		String[] date1= {ATCE_ATDueDate34,ATCE_ATDueDate35};
+		String[] subject1= {ATCE_ATSubject34,ATCE_ATSubject35};
+		String[] notes1= {ATCE_ATNote34,ATCE_ATNote35};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants34),bp.getParticipantData(ATCE_ATParticipants35)};
+		String[][] tag1= {ATCE_ATTags34.split("<break>"),ATCE_ATTags35.split("<break>")};
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+		
+
+					
+					ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+					if(result5.isEmpty())
+					{
+						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+						sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+					}
+					
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+						if(result2.isEmpty())
+						{
+							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+					
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc183_VerifyTaskAndCallWithFirmDealAndFundMappingOnOnFundRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fund1;
+	
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName75,ATCE_TaggedFirmsName76,ATCE_TaggedFirmsName77,ATCE_TaggedFirmsName78,ATCE_TaggedFirmsName79,ATCE_TaggedFirmsName80,ATCE_TaggedFirmsName82};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount75,ATCE_TaggedFirmsCount76,ATCE_TaggedFirmsCount77,ATCE_TaggedFirmsCount78,ATCE_TaggedFirmsCount79,ATCE_TaggedFirmsCount80,ATCE_TaggedFirmsCount82};
+
+		String[] peopleTaggedName= null;
+		String[] peopleTaggedTimeReference=null;
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName14};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount14};
+		
+		String[] iconType1= {ATCE_ATActivityType34,ATCE_ATActivityType35};
+		String[] date1= {ATCE_ATDueDate34,ATCE_ATDueDate35};
+		String[] subject1= {ATCE_ATSubject34,ATCE_ATSubject35};
+		String[] notes1= {ATCE_ATNote34,ATCE_ATNote35};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants34),bp.getParticipantData(ATCE_ATParticipants35)};
+		String[][] tag1= {ATCE_ATTags34.split("<break>"),ATCE_ATTags35.split("<break>")};
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+		if (lp.clickOnTab(projectName, tabObj3)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " +tabObj3, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+		
+					
+					ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+					if(result5.isEmpty())
+					{
+						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+						sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+					}
+					
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+						if(result2.isEmpty())
+						{
+							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+					
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj3, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj3);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc184_CreateANewEvent(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		GlobalActionPageBusinessLayer gp = new GlobalActionPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		
+		
+		String eventSubject=ATCE_ATSubject36;
+		String eventContact=ATCE_ATRelatedTo36.split("<break>")[0];
+		String eventRelatedTo=ATCE_ATRelatedTo36;
+		String eventNotes=ATCE_ATNote36;
+		
+		String eventStartDay=ATCE_ATDay36;
+		String eventStartDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(eventStartDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, eventStartDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_036", excelLabel.Advance_Start_Date);
+		
+		String eventEndDay=ATCE_EndDay1;
+		String eventEndDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(eventEndDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, eventEndDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_036", excelLabel.Advance_End_Date);
+		
+		
+		String[][] Event2 = {{PageLabel.Name.toString(),eventContact},
+				{PageLabel.Start_Date.toString(),eventStartDate},
+				{PageLabel.End_Date.toString(),eventEndDate},
+				{PageLabel.Subject.toString(),eventSubject}};
+		
+		String[][] basicsection = { { "Notes", eventNotes }, { "Related_To", eventRelatedTo }};
+		String task1SubjectNameNavigation=ATCE_ATSubject36;
+	
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+			
+		if (lp.clickAnyCellonCalender(projectName)) {
+			log(LogStatus.INFO,"Able to click on Calendar/Event Link",YesNo.No);
+			if(gp.enterValueForNewEvent(projectName, GlobalActionItem.New_Event, Event2, 10))
+			{
+				log(LogStatus.INFO,"The values are entered in Event popup",YesNo.No);
+				if(clickUsingJavaScript(driver, gp.getSaveBtnOfEventPopup( totalDealsshown), "save button"))
+				{
+					log(LogStatus.INFO,"Clicked on save button of Event popu",YesNo.No);
+					ThreadSleep(8000);
+					refresh(driver);
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Not able to clicked on save button of Event popu",YesNo.No);
+					sa.assertTrue(false, "Not able to clicked on save button of Event popu");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR,"The values are not entered in Event popup",YesNo.No);
+				sa.assertTrue(false, "The values are not entered in Event popup");
+			}
+			
+			
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Able to click on Calendar/Event Link",YesNo.No);
+			sa.assertTrue(false, "Not Able to click on Calendar/Event Link");
+		}
+		
+		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Events", false)) {
+
+			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectNameNavigation + " found in Tasks Object-----",YesNo.No);
+			
+			if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnEventDetailsPage( 20), "Edit button of "+task1SubjectNameNavigation))
+			{
+				log(LogStatus.INFO,"Clicked on edit button of subject "+task1SubjectNameNavigation,YesNo.No);
+				
+
+				if (bp.updateActivityTimelineRecordForMultipleFollowUpTasks(projectName, basicsection,null, null, null, null,false,false)) {
+					log(LogStatus.PASS, "Event has been created, Subject name : "+eventSubject, YesNo.No);
+					sa.assertTrue(true, "Event has been created,  Subject name : "+eventSubject);
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Event is not created, Subject name : "+eventSubject, YesNo.No);
+					sa.assertTrue(false, "Event is not created,  Subject name : "+eventSubject);
+				}	 				
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Not able to click on edit button of subject "+task1SubjectNameNavigation,YesNo.No);
+				BaseLib.sa.assertTrue(false,"Not able to click on edit button of subject "+task1SubjectNameNavigation);
+				
+			}			
+		}
+		 else {
+
+				log(LogStatus.ERROR, "-----Task named: " + task1SubjectNameNavigation + " not found in Tasks Object-----",YesNo.Yes);
+				BaseLib.sa.assertTrue(false,"-----Task named: " + task1SubjectNameNavigation + " not found in Tasks Object-----");
+
+			}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc185_VerifyEventOnCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord1;
+	
+		String contactSectionName=ATCE_ConName24;
+		String contactSectionTitle=ATCE_ConTitle24;
+		String contactSectionDeal=ATCE_ConDeal24;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall24;
+		String contactSectionEmail=ATCE_ConEmail24;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName98,ATCE_TaggedFirmsName99,ATCE_TaggedFirmsName100,ATCE_TaggedFirmsName101,ATCE_TaggedFirmsName102};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount98,ATCE_TaggedFirmsCount99,ATCE_TaggedFirmsCount100,ATCE_TaggedFirmsCount101,ATCE_TaggedFirmsCount102};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName49,ATCE_TaggedPeopleName50,ATCE_TaggedPeopleName51,ATCE_TaggedPeopleName52,ATCE_TaggedPeopleName53,ATCE_TaggedPeopleName54};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount49,ATCE_TaggedPeopleCount50,ATCE_TaggedPeopleCount51,ATCE_TaggedPeopleCount52,ATCE_TaggedPeopleCount53,ATCE_TaggedPeopleCount54};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName15};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount15};
+	
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle6;
+		String connectionDeal=ATCE_ConnectionDeal6;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall6;
+		String connectionEmail=ATCE_ConnectionEmail2;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String iconType= ATCE_ATActivityType36;
+		String date= ATCE_ATDueDate36;
+		String subject= ATCE_ATSubject36;
+		String notes= ATCE_ATNote36;
+		String[] participant= bp.getParticipantData(ATCE_ATParticipants36);
+		String[] tag= ATCE_ATTags36.split("<break>");
+		
+		String[] iconType1= {ATCE_ATActivityType36};
+		String[] date1= {ATCE_ATDueDate36};
+		String[] subject1= {ATCE_ATSubject36};
+		String[] notes1= {ATCE_ATNote36};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants36)};
+		String[][] tag1= {ATCE_ATTags36.split("<break>")};
+		
+		
+	
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc186_VerifyEventOnAdvisorRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord5;
+	
+
+		String contactSectionName=ATCE_ConName25;
+		String contactSectionTitle=ATCE_ConTitle25;
+		String contactSectionDeal=ATCE_ConDeal25;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall25;
+		String contactSectionEmail=ATCE_ConEmail25;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName98,ATCE_TaggedFirmsName100,ATCE_TaggedFirmsName101,ATCE_TaggedFirmsName102,ATCE_TaggedFirmsName103,ATCE_TaggedFirmsName104};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount98,ATCE_TaggedFirmsCount100,ATCE_TaggedFirmsCount101,ATCE_TaggedFirmsCount102,ATCE_TaggedFirmsCount103,ATCE_TaggedFirmsCount104};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName49,ATCE_TaggedPeopleName50,ATCE_TaggedPeopleName51,ATCE_TaggedPeopleName53,ATCE_TaggedPeopleName54,ATCE_TaggedPeopleName55};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount49,ATCE_TaggedPeopleCount50,ATCE_TaggedPeopleCount51,ATCE_TaggedPeopleCount53,ATCE_TaggedPeopleCount54,ATCE_TaggedPeopleCount55,ATCE_TaggedPeopleCount56};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName15};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount15};
+	
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle7;
+		String connectionDeal=ATCE_ConnectionDeal7;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall7;
+		String connectionEmail=ATCE_ConnectionEmail7;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String iconType= ATCE_ATActivityType36;
+		String date= ATCE_ATDueDate36;
+		String subject= ATCE_ATSubject36;
+		String notes= ATCE_ATNote36;
+		String[] participant= bp.getParticipantData(ATCE_ATParticipants36);
+		String[] tag= ATCE_ATTags36.split("<break>");
+		
+		String[] iconType1= {ATCE_ATActivityType36};
+		String[] date1= {ATCE_ATDueDate36};
+		String[] subject1= {ATCE_ATSubject36};
+		String[] notes1= {ATCE_ATNote36};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants36)};
+		String[][] tag1= {ATCE_ATTags36.split("<break>")};
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc187_VerifyEventOnLenderRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord7;
+	
+		String contactSectionName=ATCE_ConName26;
+		String contactSectionTitle=ATCE_ConTitle26;
+		String contactSectionDeal=ATCE_ConDeal26;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall26;
+		String contactSectionEmail=ATCE_ConEmail26;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName98,ATCE_TaggedFirmsName99,ATCE_TaggedFirmsName101,ATCE_TaggedFirmsName102,ATCE_TaggedFirmsName103,ATCE_TaggedFirmsName104};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount98,ATCE_TaggedFirmsCount99,ATCE_TaggedFirmsCount101,ATCE_TaggedFirmsCount102,ATCE_TaggedFirmsCount103,ATCE_TaggedFirmsCount104};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName49,ATCE_TaggedPeopleName51,ATCE_TaggedPeopleName52,ATCE_TaggedPeopleName53,ATCE_TaggedPeopleName54,ATCE_TaggedPeopleName55};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount49,ATCE_TaggedPeopleCount51,ATCE_TaggedPeopleCount52,ATCE_TaggedPeopleCount53,ATCE_TaggedPeopleCount54,ATCE_TaggedPeopleCount55};
+					
+		String[] dealTaggedName= {ATCE_TaggedDealName15};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount15};
+	
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle8;
+		String connectionDeal=ATCE_ConnectionDeal8;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall8;
+		String connectionEmail=ATCE_ConnectionEmail8;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String iconType= ATCE_ATActivityType36;
+		String date= ATCE_ATDueDate36;
+		String subject= ATCE_ATSubject36;
+		String notes= ATCE_ATNote36;
+		String[] participant= bp.getParticipantData(ATCE_ATParticipants36);
+		String[] tag= ATCE_ATTags36.split("<break>");
+		
+		String[] iconType1= {ATCE_ATActivityType36};
+		String[] date1= {ATCE_ATDueDate36};
+		String[] subject1= {ATCE_ATSubject36};
+		String[] notes1= {ATCE_ATNote36};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants36)};
+		String[][] tag1= {ATCE_ATTags36.split("<break>")};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc188_VerifyEventOnIntermediaryRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord9;
+	
+		String contactSectionName=ATCE_ConName27;
+		String contactSectionTitle=ATCE_ConTitle27;
+		String contactSectionDeal=ATCE_ConDeal27;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall27;
+		String contactSectionEmail=ATCE_ConEmail27;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName98,ATCE_TaggedFirmsName99,ATCE_TaggedFirmsName100,ATCE_TaggedFirmsName102,ATCE_TaggedFirmsName103,ATCE_TaggedFirmsName104};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount98,ATCE_TaggedFirmsCount99,ATCE_TaggedFirmsCount100,ATCE_TaggedFirmsCount102,ATCE_TaggedFirmsCount103,ATCE_TaggedFirmsCount104};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName49,ATCE_TaggedPeopleName50,ATCE_TaggedPeopleName52,ATCE_TaggedPeopleName53,ATCE_TaggedPeopleName54};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount49,ATCE_TaggedPeopleCount50,ATCE_TaggedPeopleCount52,ATCE_TaggedPeopleCount53,ATCE_TaggedPeopleCount54};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName15};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount15};
+	
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle8;
+		String connectionDeal=ATCE_ConnectionDeal8;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall8;
+		String connectionEmail=ATCE_ConnectionEmail8;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String iconType= ATCE_ATActivityType36;
+		String date= ATCE_ATDueDate36;
+		String subject= ATCE_ATSubject36;
+		String notes= ATCE_ATNote36;
+		String[] participant= bp.getParticipantData(ATCE_ATParticipants36);
+		String[] tag= ATCE_ATTags36.split("<break>");
+		
+		String[] iconType1= {ATCE_ATActivityType36};
+		String[] date1= {ATCE_ATDueDate36};
+		String[] subject1= {ATCE_ATSubject36};
+		String[] notes1= {ATCE_ATNote36};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants36)};
+		String[][] tag1= {ATCE_ATTags36.split("<break>")};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc189_VerifyEventOnInstitutionRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord3;
+	
+		String contactSectionName=ATCE_ConName28;
+		String contactSectionTitle=ATCE_ConTitle28;
+		String contactSectionDeal=ATCE_ConDeal28;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall28;
+		String contactSectionEmail=ATCE_ConEmail28;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName99,ATCE_TaggedFirmsName100,ATCE_TaggedFirmsName101,ATCE_TaggedFirmsName102,ATCE_TaggedFirmsName103,ATCE_TaggedFirmsName104};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount99,ATCE_TaggedFirmsCount100,ATCE_TaggedFirmsCount101,ATCE_TaggedFirmsCount102,ATCE_TaggedFirmsCount103,ATCE_TaggedFirmsCount104};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName50,ATCE_TaggedPeopleName51,ATCE_TaggedPeopleName52,ATCE_TaggedPeopleName53,ATCE_TaggedPeopleName54,ATCE_TaggedPeopleName55};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount50,ATCE_TaggedPeopleCount51,ATCE_TaggedPeopleCount52,ATCE_TaggedPeopleCount53,ATCE_TaggedPeopleCount54,ATCE_TaggedPeopleCount55};
+				
+		String[] fundTaggedName= {ATCE_TaggedFundName8};
+		String[] fundTaggedTimeReference= {ATCE_TaggedFundCount8};
+	
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle8;
+		String connectionDeal=ATCE_ConnectionDeal8;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall8;
+		String connectionEmail=ATCE_ConnectionEmail8;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String iconType= ATCE_ATActivityType36;
+		String date= ATCE_ATDueDate36;
+		String subject= ATCE_ATSubject36;
+		String notes= ATCE_ATNote36;
+		String[] participant= bp.getParticipantData(ATCE_ATParticipants36);
+		String[] tag= ATCE_ATTags36.split("<break>");
+		
+		String[] iconType1= {ATCE_ATActivityType36};
+		String[] date1= {ATCE_ATDueDate36};
+		String[] subject1= {ATCE_ATSubject36};
+		String[] notes1= {ATCE_ATNote36};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants36)};
+		String[][] tag1= {ATCE_ATTags36.split("<break>")};
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+						
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference,null,null,true,fundTaggedName, fundTaggedTimeReference);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc190_VerifyEventOnPortfolioCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord11;
+	
+		String contactSectionName=ATCE_ConName29;
+		String contactSectionTitle=ATCE_ConTitle29;
+		String contactSectionDeal=ATCE_ConDeal29;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall29;
+		String contactSectionEmail=ATCE_ConEmail29;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName98,ATCE_TaggedFirmsName99,ATCE_TaggedFirmsName100,ATCE_TaggedFirmsName101,ATCE_TaggedFirmsName103,ATCE_TaggedFirmsName104};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount99,ATCE_TaggedFirmsCount99,ATCE_TaggedFirmsCount100,ATCE_TaggedFirmsCount101,ATCE_TaggedFirmsCount103,ATCE_TaggedFirmsCount104};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName49,ATCE_TaggedPeopleName50,ATCE_TaggedPeopleName51,ATCE_TaggedPeopleName52,ATCE_TaggedPeopleName54,ATCE_TaggedPeopleName55};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount49,ATCE_TaggedPeopleCount50,ATCE_TaggedPeopleCount51,ATCE_TaggedPeopleCount52,ATCE_TaggedPeopleCount54,ATCE_TaggedPeopleCount55};
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName15};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount15};
+	
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle7;
+		String connectionDeal=ATCE_ConnectionDeal7;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall7;
+		String connectionEmail=ATCE_ConnectionEmail7;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String iconType= ATCE_ATActivityType36;
+		String date= ATCE_ATDueDate36;
+		String subject= ATCE_ATSubject36;
+		String notes= ATCE_ATNote36;
+		String[] participant= bp.getParticipantData(ATCE_ATParticipants36);
+		String[] tag= ATCE_ATTags36.split("<break>");
+		
+		String[] iconType1= {ATCE_ATActivityType36};
+		String[] date1= {ATCE_ATDueDate36};
+		String[] subject1= {ATCE_ATSubject36};
+		String[] notes1= {ATCE_ATNote36};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants36)};
+		String[][] tag1= {ATCE_ATTags36.split("<break>")};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc191_VerifyEventOnPrivateEquityRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCERecord13;
+		String contactSectionName=ATCE_ConName30;
+		String contactSectionTitle=ATCE_ConTitle30;
+		String contactSectionDeal=ATCE_ConDeal30;
+		String contactSectionMeetingAndCalls=ATCE_ConMeetingAndCall30;
+		String contactSectionEmail=ATCE_ConEmail30;
+
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName98,ATCE_TaggedFirmsName99,ATCE_TaggedFirmsName100,ATCE_TaggedFirmsName101,ATCE_TaggedFirmsName102,ATCE_TaggedFirmsName104};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount99,ATCE_TaggedFirmsCount99,ATCE_TaggedFirmsCount100,ATCE_TaggedFirmsCount101,ATCE_TaggedFirmsCount102,ATCE_TaggedFirmsCount104};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName49,ATCE_TaggedPeopleName50,ATCE_TaggedPeopleName51,ATCE_TaggedPeopleName52,ATCE_TaggedPeopleName53,ATCE_TaggedPeopleName55};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount49,ATCE_TaggedPeopleCount50,ATCE_TaggedPeopleCount51,ATCE_TaggedPeopleCount52,ATCE_TaggedPeopleCount53,ATCE_TaggedPeopleCount55};
+				
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName15};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount15};
+	
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle7;
+		String connectionDeal=ATCE_ConnectionDeal7;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall7;
+		String connectionEmail=ATCE_ConnectionEmail7;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String iconType= ATCE_ATActivityType36;
+		String date= ATCE_ATDueDate36;
+		String subject= ATCE_ATSubject36;
+		String notes= ATCE_ATNote36;
+		String[] participant= bp.getParticipantData(ATCE_ATParticipants36);
+		String[] tag= ATCE_ATTags36.split("<break>");
+		
+		String[] iconType1= {ATCE_ATActivityType36};
+		String[] date1= {ATCE_ATDueDate36};
+		String[] subject1= {ATCE_ATSubject36};
+		String[] notes1= {ATCE_ATNote36};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants36)};
+		String[][] tag1= {ATCE_ATTags36.split("<break>")};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+						ArrayList<String> result4=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result4);
+						}
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result6.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName+" record on contact section");
+						}
+						
+						
+						ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+						if(result7.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactSectionName+". "+result7 , YesNo.No);
+							sa.assertTrue(false, "The records on Connection popup are not verified for "+contactSectionName+". "+result7);
+						}
+						
+						if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactSectionName, 30), "Contact Name: " + contactSectionName,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactSectionName, YesNo.No);
+							String parentID=switchOnWindow(driver);
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType, date, subject, notes, participant, tag);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+contactSectionName,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+contactSectionName);
+							}		
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactSectionName, YesNo.No);
+							sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactSectionName);
+						}
+												
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc192_VerifyEventOnContactRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Con1;
+		
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName105,ATCE_TaggedFirmsName106,ATCE_TaggedFirmsName107,ATCE_TaggedFirmsName108,ATCE_TaggedFirmsName109,ATCE_TaggedFirmsName110};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount105,ATCE_TaggedFirmsCount106,ATCE_TaggedFirmsCount107,ATCE_TaggedFirmsCount108,ATCE_TaggedFirmsCount109,ATCE_TaggedFirmsCount110};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName52,ATCE_TaggedPeopleName53,ATCE_TaggedPeopleName54,ATCE_TaggedPeopleName56,ATCE_TaggedPeopleName57,ATCE_TaggedPeopleName58};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount52,ATCE_TaggedPeopleCount53,ATCE_TaggedPeopleCount54,ATCE_TaggedPeopleCount56,ATCE_TaggedPeopleCount57,ATCE_TaggedPeopleCount58};
+				
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName16};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount16};
+	
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		String connectionTitle=ATCE_ConnectionTitle6;
+		String connectionDeal=ATCE_ConnectionDeal6;
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall6;
+		String connectionEmail=ATCE_ConnectionEmail6;
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String iconType= ATCE_ATActivityType36;
+		String date= ATCE_ATDueDate36;
+		String subject= ATCE_ATSubject36;
+		String notes= ATCE_ATNote36;
+		String[] participant= bp.getParticipantData(ATCE_ATParticipants36);
+		String[] tag= ATCE_ATTags36.split("<break>");
+		
+		String[] iconType1= {ATCE_ATActivityType36};
+		String[] date1= {ATCE_ATDueDate36};
+		String[] subject1= {ATCE_ATSubject36};
+		String[] notes1= {ATCE_ATNote36};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants36)};
+		String[][] tag1= {ATCE_ATTags36.split("<break>")};
+			
+			
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj2)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+			
+						ArrayList<String> result6=bp.verifyRecordOnConnectionsSectionInAcuity(recordName, connectionUserName, connectionTitle, connectionDeal, connectionMeetingaAndCall, connectionEmail);
+
+						if(result6.isEmpty())
+						{
+							log(LogStatus.INFO, "The records have been verified on Connection section in Acuity user : "+connectionUserName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records are not verified on Connection section in Acuity. user : "+connectionUserName+" "+result6, YesNo.No);
+							sa.assertTrue(false,  "The records are not verified on Connection section in Acuity.  user : "+connectionUserName+" "+result6);
+						}
+						
+					
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}
+						
+						
+						if(click(driver, bp.getMeetingAndCallCount(userName1, 20), "Meeting and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+userName1+" record on contact section",YesNo.No);
+							
+							ArrayList<String> result7=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(iconType,date , subject, notes, participant, tag);
+							if(result7.isEmpty())
+							{
+								log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+userName1, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+userName1+". "+result7, YesNo.No);
+								sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+userName1+". "+result7);
+							}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1+" record on contact section",	YesNo.No);		
+							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+userName1+" record on contact section");
+						}
+						
+						
+						
+								
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName, iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj2, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc193_VerifyEventOnDealRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Deal1;
+		
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName111,ATCE_TaggedFirmsName112,ATCE_TaggedFirmsName113,ATCE_TaggedFirmsName114,ATCE_TaggedFirmsName115,ATCE_TaggedFirmsName116};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount111,ATCE_TaggedFirmsCount112,ATCE_TaggedFirmsCount113,ATCE_TaggedFirmsCount114,ATCE_TaggedFirmsCount115,ATCE_TaggedFirmsCount116};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName49,ATCE_TaggedPeopleName50,ATCE_TaggedPeopleName51,ATCE_TaggedPeopleName59,ATCE_TaggedPeopleName60,ATCE_TaggedPeopleName61,ATCE_TaggedPeopleName62};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount49,ATCE_TaggedPeopleCount50,ATCE_TaggedPeopleCount51,ATCE_TaggedPeopleCount59,ATCE_TaggedPeopleCount60,ATCE_TaggedPeopleCount61,ATCE_TaggedPeopleCount62};
+				
+		String[] dealTaggedName= null;
+		String[] dealTaggedTimeReference= null;
+		
+		String[] iconType1= {ATCE_ATActivityType36};
+		String[] date1= {ATCE_ATDueDate36};
+		String[] subject1= {ATCE_ATSubject36};
+		String[] notes1= {ATCE_ATNote36};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants36)};
+		String[][] tag1= {ATCE_ATTags36.split("<break>")};
+			
+			
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+			if (lp.clickOnTab(projectName, tabObj4)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+						
+						ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+						}	
+								
+						
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName, iconType1, date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+					
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc194_VerifyEventFundraisingRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fundraising1;
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName117,ATCE_TaggedFirmsName118,ATCE_TaggedFirmsName119,ATCE_TaggedFirmsName120,ATCE_TaggedFirmsName121,ATCE_TaggedFirmsName122,ATCE_TaggedFirmsName123};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount117,ATCE_TaggedFirmsCount118,ATCE_TaggedFirmsCount119,ATCE_TaggedFirmsCount120,ATCE_TaggedFirmsCount121,ATCE_TaggedFirmsCount122,ATCE_TaggedFirmsCount123};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName59,ATCE_TaggedPeopleName60,ATCE_TaggedPeopleName61,ATCE_TaggedPeopleName62,ATCE_TaggedPeopleName63,ATCE_TaggedPeopleName64,ATCE_TaggedPeopleName65};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount59,ATCE_TaggedPeopleCount60,ATCE_TaggedPeopleCount61,ATCE_TaggedPeopleCount62,ATCE_TaggedPeopleCount63,ATCE_TaggedPeopleCount64,ATCE_TaggedPeopleCount65};
+				
+		String[] dealTaggedName= null;
+		String[] dealTaggedTimeReference= null;
+		
+		String[] iconType1= {ATCE_ATActivityType36};
+		String[] date1= {ATCE_ATDueDate36};
+		String[] subject1= {ATCE_ATSubject36};
+		String[] notes1= {ATCE_ATNote36};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants36)};
+		String[][] tag1= {ATCE_ATTags36.split("<break>")};
+			
+			
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					
+					ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+					if(result5.isEmpty())
+					{
+						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+						sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+					}	
+							
+					
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName, iconType1, date1, subject1, notes1, subject1, participant1, tag1);
+						if(result2.isEmpty())
+						{
+							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+					
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc195_VerifyEventOnFundRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fund1;
+		String[] firmsTaggedName= {ATCE_TaggedFirmsName111,ATCE_TaggedFirmsName112,ATCE_TaggedFirmsName113,ATCE_TaggedFirmsName114,ATCE_TaggedFirmsName115,ATCE_TaggedFirmsName116};
+		String[] firmsTaggedTimeReference= {ATCE_TaggedFirmsCount111,ATCE_TaggedFirmsCount112,ATCE_TaggedFirmsCount113,ATCE_TaggedFirmsCount114,ATCE_TaggedFirmsCount115,ATCE_TaggedFirmsCount116};
+
+		String[] peopleTaggedName= {ATCE_TaggedPeopleName59,ATCE_TaggedPeopleName60,ATCE_TaggedPeopleName61,ATCE_TaggedPeopleName62,ATCE_TaggedPeopleName63,ATCE_TaggedPeopleName64,ATCE_TaggedPeopleName65};
+		String[] peopleTaggedTimeReference= {ATCE_TaggedPeopleCount59,ATCE_TaggedPeopleCount60,ATCE_TaggedPeopleCount61,ATCE_TaggedPeopleCount62,ATCE_TaggedPeopleCount63,ATCE_TaggedPeopleCount64,ATCE_TaggedPeopleCount65};
+				
+				
+		String[] dealTaggedName= {ATCE_TaggedDealName15};
+		String[] dealTaggedTimeReference= {ATCE_TaggedDealCount15};
+	
+		String[] iconType1= {ATCE_ATActivityType36};
+		String[] date1= {ATCE_ATDueDate36};
+		String[] subject1= {ATCE_ATSubject36};
+		String[] notes1= {ATCE_ATNote36};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants36)};
+		String[][] tag1= {ATCE_ATTags36.split("<break>")};
+			
+			
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+		if (lp.clickOnTab(projectName, tabObj3)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj3, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					ArrayList<String> result5=bp.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedTimeReference, peopleTaggedName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference,isInstitutionRecord, null,null);
+					if(result5.isEmpty())
+					{
+						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result5, YesNo.No);
+						sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
+					}	
+							
+					
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName, iconType1, date1, subject1, notes1, subject1, participant1, tag1);
+						if(result2.isEmpty())
+						{
+							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+					
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj3, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj3);
+			}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc196_VerifyEventOnThemeRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Theme1;
+		String[] iconType1= {ATCE_ATActivityType36};
+		String[] date1= {ATCE_ATDueDate36};
+		String[] subject1= {ATCE_ATSubject36};
+		String[] notes1= {ATCE_ATNote36};
+		String[][] participant1= {bp.getParticipantData(ATCE_ATParticipants36)};
+		String[][] tag1= {ATCE_ATTags36.split("<break>")};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+
+			if (lp.clickOnTab(projectName, TabName.Themes.toString())) {
+
+				log(LogStatus.INFO, "Clicked on Tab : "+TabName.Themes.toString(), YesNo.No);
+
+				String parentWindowID=bp.clickOnThemeRecord(recordName);
+
+				if (parentWindowID!=null) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+						
+				
+						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+						{
+							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName, iconType1, date1, subject1, notes1, subject1, participant1, tag1);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+						}	
+						
+						
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+				driver.close();
+				driver.switchTo().window(parentWindowID);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab : "+TabName.Themes.toString(), YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab : "+TabName.Themes.toString());
+			}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc197_VerifyUIOfFilterSectionOnCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATCERecord1;
+		String contactName=ATCE_ContactFullName1;
+
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+		String[] filterType1= {"All Types","Meetings","Calls"};
+		String[] recordIconType1= {"event","call"};
+		
+		
+
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+
+		String firmTagName=ATCE_TaggedFirmsName98;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount98;
+
+		String peopleTagName=ATCE_TaggedPeopleName49;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount49;
+
+		String dealTagName=ATCE_TaggedDealName15;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount15;
+	
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
+							}				
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if(isInstitutionRecord==false)
+					{
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+					}
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
+
+						ArrayList<String> result4=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+contactName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4);
+						}
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
+					}
+
+					if(clickUsingJavaScript(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName))
+					{
+						log(LogStatus.INFO, "Clicked on the connection icon of "+contactName, YesNo.No);
+						String parentId=switchOnWindow(driver);
+
+						if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+							ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+							if(result5.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+							}
+							
+
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+							sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+						}	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the connection icon of "+contactName);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc198_VerifyUIOfFilterSectionOnAdvisorRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATCERecord5;
+		String contactName=ATCE_ContactFullName9;
+
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+		String[] filterType1= {"All Types","Meetings","Calls"};
+		String[] recordIconType1= {"event","call"};
+		
+		
+
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+
+		String firmTagName=ATCE_TaggedFirmsName98;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount98;
+
+		String peopleTagName=ATCE_TaggedPeopleName49;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount49;
+
+		String dealTagName=ATCE_TaggedDealName15;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount15;
+	
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
+							}				
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if(isInstitutionRecord==false)
+					{
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+					}
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
+
+						ArrayList<String> result4=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+contactName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4);
+						}
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
+					}
+
+					if(clickUsingJavaScript(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName))
+					{
+						log(LogStatus.INFO, "Clicked on the connection icon of "+contactName, YesNo.No);
+						String parentId=switchOnWindow(driver);
+
+						if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+							ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+							if(result5.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+							}
+							
+
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+							sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+						}	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the connection icon of "+contactName);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc199_VerifyUIOfFilterSectionOnLendorRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATCERecord7;
+		String contactName=ATCE_ContactFullName7;
+
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+		String[] filterType1= {"All Types","Meetings","Calls"};
+		String[] recordIconType1= {"event","call"};
+		
+		
+
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+
+		String firmTagName=ATCE_TaggedFirmsName98;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount98;
+
+		String peopleTagName=ATCE_TaggedPeopleName49;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount49;
+
+		String dealTagName=ATCE_TaggedDealName15;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount15;
+	
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
+							}				
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if(isInstitutionRecord==false)
+					{
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+					}
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
+
+						ArrayList<String> result4=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+contactName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4);
+						}
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
+					}
+
+					if(clickUsingJavaScript(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName))
+					{
+						log(LogStatus.INFO, "Clicked on the connection icon of "+contactName, YesNo.No);
+						String parentId=switchOnWindow(driver);
+
+						if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+							ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+							if(result5.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+							}
+							
+
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+							sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+						}	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the connection icon of "+contactName);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+		
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc200_VerifyUIOfFilterSectionOnIntermediaryRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+
+		String recordName=ATCERecord9;
+		String contactName=ATCE_ContactFullName5;
+
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+		String[] filterType1= {"All Types","Meetings","Calls"};
+		String[] recordIconType1= {"event","call"};
+		
+		
+
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+
+		String firmTagName=ATCE_TaggedFirmsName98;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount98;
+
+		String peopleTagName=ATCE_TaggedPeopleName49;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount49;
+
+		String dealTagName=ATCE_TaggedDealName15;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount15;
+	
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
+							}				
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if(isInstitutionRecord==false)
+					{
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+					}
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
+
+						ArrayList<String> result4=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+contactName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4);
+						}
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
+					}
+
+					if(clickUsingJavaScript(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName))
+					{
+						log(LogStatus.INFO, "Clicked on the connection icon of "+contactName, YesNo.No);
+						String parentId=switchOnWindow(driver);
+
+						if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+							ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+							if(result5.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+							}
+							
+
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+							sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+						}	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the connection icon of "+contactName);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+		
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc201_VerifyUIOfFilterSectionOnInstitutionRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATCERecord3;
+		String contactName=ATCE_ContactFullName3;
+
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+		String[] filterType1= {"All Types","Meetings","Calls"};
+		String[] recordIconType1= {"event","call"};
+		
+		
+
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+
+		String firmTagName=ATCE_TaggedFirmsName104;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount104;
+
+		String peopleTagName=ATCE_TaggedPeopleName64;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount64;
+
+		String fundTagName=ATCE_TaggedFundName8;
+		String fundTagTimeReferenceCount=ATCE_TaggedFundCount8;
+	
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
+							}				
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					
+					if (click(driver, bp.getTaggedRecordName("Funds", 30), "Funds tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Funds", fundTagName, fundTagTimeReferenceCount,30), fundTagName+" on Funds Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+fundTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+fundTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+fundTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+fundTagName+" from people tag. "+result2);
+							}	
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+fundTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+fundTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Funds tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Funds tab name");
+					}				
+					
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
+
+						ArrayList<String> result4=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+contactName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4);
+						}
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
+					}
+
+					if(clickUsingJavaScript(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName))
+					{
+						log(LogStatus.INFO, "Clicked on the connection icon of "+contactName, YesNo.No);
+						String parentId=switchOnWindow(driver);
+
+						if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+							ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+							if(result5.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+							}
+							
+
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+							sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+						}	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the connection icon of "+contactName);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc202_VerifyUIOfFilterSectionOnPortfolioCompanyRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATCERecord11;
+		String contactName=ATCE_ContactFullName11;
+
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+		String[] filterType1= {"All Types","Meetings","Calls"};
+		String[] recordIconType1= {"event","call"};
+		
+		
+
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+
+		String firmTagName=ATCE_TaggedFirmsName98;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount98;
+
+		String peopleTagName=ATCE_TaggedPeopleName49;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount49;
+
+		String dealTagName=ATCE_TaggedDealName15;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount15;
+	
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
+							}				
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if(isInstitutionRecord==false)
+					{
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+					}
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
+
+						ArrayList<String> result4=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+contactName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4);
+						}
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
+					}
+
+					if(clickUsingJavaScript(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName))
+					{
+						log(LogStatus.INFO, "Clicked on the connection icon of "+contactName, YesNo.No);
+						String parentId=switchOnWindow(driver);
+
+						if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+							ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+							if(result5.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+							}
+							
+
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+							sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+						}	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the connection icon of "+contactName);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc203_VerifyUIOfFilterSectionOnPrivateEquityRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATCERecord13;
+		String contactName=ATCE_ContactFullName13;
+
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+		String[] filterType1= {"All Types","Meetings","Calls"};
+		String[] recordIconType1= {"event","call"};
+		
+		
+
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+
+		String firmTagName=ATCE_TaggedFirmsName98;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount98;
+
+		String peopleTagName=ATCE_TaggedPeopleName49;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount49;
+
+		String dealTagName=ATCE_TaggedDealName15;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount15;
+	
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
+							}				
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if(isInstitutionRecord==false)
+					{
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+					}
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
+
+						ArrayList<String> result4=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+contactName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4);
+						}
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
+					}
+
+					if(clickUsingJavaScript(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName))
+					{
+						log(LogStatus.INFO, "Clicked on the connection icon of "+contactName, YesNo.No);
+						String parentId=switchOnWindow(driver);
+
+						if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+							ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+							if(result5.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+							}
+							
+
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+							sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+						}	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the connection icon of "+contactName);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+		
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc204_VerifyUIOfFilterSectionOnContactRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATCE_ContactFullName1;
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+		String[] filterType1= {"All Types","Meetings","Calls"};
+		String[] recordIconType1= {"event","call"};
+
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+
+		String firmTagName=ATCE_TaggedFirmsName105;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount105;
+
+		String peopleTagName=ATCE_TaggedPeopleName52;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount52;
+
+		String dealTagName=ATCE_TaggedDealName16;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount16;
+	
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj2)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on Firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
+							}				
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+					
+
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+					if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+						ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+					}					
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc205_VerifyUIOfFilterSectionOnDealRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATCE_Deal1;
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+
+		String firmTagName=ATCE_TaggedFirmsName111;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount111;
+
+		String peopleTagName=ATCE_TaggedPeopleName63;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount63;
+
+		String dealTagName=ATCE_TaggedDealName13;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount13;
+	
+
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on Firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
+							}				
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+					
+
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+									
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj4, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc206_VerifyUIOfFilterSectionOnFundraisingRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATCE_Fundraising1;
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+
+		String firmTagName=ATCE_TaggedFirmsName117;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount117;
+
+		String peopleTagName=ATCE_TaggedPeopleName63;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount63;
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+		
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on Firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
+							}				
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}				
+					
+
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+									
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+ TabName.Fundraising.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+ TabName.Fundraising.toString());
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc207_VerifyUIOfFilterSectionOnFundRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATCE_Fund1;
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+
+		String firmTagName=ATCE_TaggedFirmsName111;
+		String firmTagTimeReferenceCount=ATCE_TaggedFirmsCount111;
+
+		String peopleTagName=ATCE_TaggedPeopleName49;
+		String peopleTagTimeReferenceCount=ATCE_TaggedPeopleCount49;
+
+		String dealTagName=ATCE_TaggedDealName15;
+		String dealTagTimeReferenceCount=ATCE_TaggedDealCount15;
+	
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj3)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj3, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+		
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on Firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
+
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
+							}				
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+firmTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+firmTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
+					}
+
+
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+					
+
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+									
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj3, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj3);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc208_VerifyUIOfFilterSectionOnThemeRecordType(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATCE_ContactFullName13;
+
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, TabName.Themes.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : "+TabName.Themes.toString(), YesNo.No);
+
+			String parentWindowID=bp.clickOnThemeRecord(recordName);
+
+			if (parentWindowID!=null) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					
+		
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+
+									
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+TabName.Acuity.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+TabName.Acuity.toString());
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc209_CreateAccountAndContact(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		FundsPageBusinessLayer fd = new FundsPageBusinessLayer(driver);
+
+		String[] accountName = ATCERecord16.split("<break>");
+		String[] recordType = ATCERecordType1.split("<break>");
+
+		String[] contactFirstName = {ATCE_ContactFirstName9,ATCE_ContactFirstName10};
+		String[] contactLastName = {ATCE_ContactLastName9,ATCE_ContactLastName10};
+		String[] contactLegalName = {ATCE_ContactLegalName8,ATCE_ContactLegalName9};
+		String[] contactEmail = {ATCE_ContactEmail8,ATCE_ContactEmail9};
+		String[] contactTitle = {ATCE_ContactTitle9,ATCE_ContactTitle10};
+
+		String dealName=ATCE_Deal6;
+		String dealStage=ATCE_DealStage3;
+		
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+		if (accountName.length == recordType.length) {
+			for (int i = 0; i < accountName.length; i++) {
+				if (lp.clickOnTab(projectName, tabObj1)) {
+
+					log(LogStatus.INFO, "Click on Tab : " + tabObj1, YesNo.No);
+					ThreadSleep(3000);
+					if (ip.createEntityOrAccount(environment, mode, accountName[i], recordType[i], null, null, 30)) {
+						log(LogStatus.INFO,
+								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i],
+								YesNo.No);
+						sa.assertTrue(true,
+								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i]);
+
+
+					} else {
+						sa.assertTrue(false,
+								"Not Able to Create Firm : " + accountName[i] + " of record type : " + recordType[i]);
+						log(LogStatus.SKIP,
+								"Not Able to Create Firm : " + accountName[i] + " of record type :" + recordType[i],
+								YesNo.Yes);
+					}
+
+				} else {
+					log(LogStatus.FAIL, "Not able to click on " + tabObj1 + " Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on " + tabObj1 + " Tab");
+				}
+
+			}
+		} else {
+			log(LogStatus.FAIL,
+					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper",
+					YesNo.No);
+			sa.assertTrue(false,
+					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper");
+		}
+
+		for (int i = 0; i < contactLastName.length; i++) {
+			if (lp.clickOnTab(projectName, tabObj2)) {
+
+				log(LogStatus.INFO, "Click on Tab : " + tabObj2, YesNo.No);
+				ThreadSleep(3000);
+
+				if (cp.createContact(projectName, contactFirstName[i], contactLastName[i], contactLegalName[i],
+						contactEmail[i], "", null, null, CreationPage.ContactPage, contactTitle[i], null)) {
+					log(LogStatus.INFO,
+							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i],
+							YesNo.No);
+					sa.assertTrue(true,
+							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i]);
+
+
+				} else {
+					log(LogStatus.FAIL,
+							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i],
+							YesNo.No);
+					sa.assertTrue(false,
+							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i]);
+				}
+
+			} else {
+				log(LogStatus.FAIL, "Not able to click on " + tabObj2 + " Tab", YesNo.No);
+				sa.assertTrue(false, "Not able to click on " + tabObj2 + " Tab");
+			}
+		}
+		
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
+			ThreadSleep(3000);
+
+			if (dp.createDeal(projectName, dealName, null, dealStage)) {
+				log(LogStatus.INFO, dealName + " deal has been created", YesNo.No);
+				sa.assertTrue(true, dealName + " deal has been created");
+
+			} else {
+				log(LogStatus.ERROR, dealName + " deal is not created", YesNo.No);
+				sa.assertTrue(false, dealName + " deal is not created");
+			}
+		}
+		else {
+			log(LogStatus.ERROR, "Not able to click on " + tabObj4 + " Tab", YesNo.No);
+			sa.assertTrue(false, "Not able to click on " + tabObj4 + " Tab");
+		}
+
+
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc210_CreateDealTeam(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		DealTeamPageBusinessLayer dt=new DealTeamPageBusinessLayer(driver);
+		FundsPageBusinessLayer fd = new FundsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+			
+		String[] dealTeamName = {ATCE_DTDealName1,ATCE_DTDealName2};
+		String[] dealTeamContact = {ATCE_DTContact1,ATCE_DTContact2};
+		String[] dealTeamMember = {ATCE_DTMember1,ATCE_DTMember2};
+		String[] dealTeamRole = {ATCE_DTRole1,ATCE_DTRole2};
+		
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		String userName2=crmUser8FirstName+" "+crmUser8LastName;
+		
+		
+		String [][][] dealTeamInfo= {{{"Deal",ATCE_DTDealName1},{PageLabel.Deal_Contact.toString(),ATCE_DTContact1},{PageLabel.Team_Member.toString(),userName1}},
+				{{"Deal",ATCE_DTDealName2},{PageLabel.Deal_Contact.toString(),ATCE_DTContact2},{PageLabel.Team_Member.toString(),userName2}}};		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+		
+			for(String[][] details:dealTeamInfo)
+			{
+				if(bp.openAppFromAppLauchner(20, "Deal Team"))
+				{
+					log(LogStatus.INFO, "Deal Team has been open", YesNo.No);
+					
+					if(dt.createDealTeam(projectName, ATCE_DTDealName1,details, null,action.SCROLLANDBOOLEAN, 20))
+					{
+						log(LogStatus.INFO, "Deal Team has been Created", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Deal Team is not Created", YesNo.No);
+						sa.assertTrue(false, "Deal Team is not Created");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not Able to open Deal Team", YesNo.No);
+					sa.assertTrue(false,  "Not Able to open Deal Team");
+				}
+			}
+		
+	
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc211_CreateATask(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		
+		String activityType=ATCE_ATActivityType37;
+		String taskSubject=ATCE_ATSubject37;
+		String taskRelatedTo=ATCE_ATRelatedTo37;
+		String taskNotes=ATCE_ATNote37;
+		String taskStatus=ATCE_AdvanceStatus19;
+		String taskPriority=ATCE_AdvancePriority19;	
+		String dueDateDay=ATCE_ATDay37;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_037", excelLabel.Advance_Due_Date);
+			
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority}};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+		}	 
+		
+		
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc212_VerifyTaskOnDealTeamSection(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Deal6;
+	    
+		String[] contectName= {ATCE_ConName31};
+		String[] meetingAndCallCount= {ATCE_ConMeetingAndCall31};
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					
+					ArrayList<String>result=bp.verifyMeetingAndCallOnExternalTabOfDealTeam(contectName, meetingAndCallCount);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Meeting and call count have been verified on Deal Team Section", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Meeting and call count are not verified on Deal Team Section", YesNo.No);
+						sa.assertTrue(false, "The Meeting and call count are not verified on Deal Team Section");
+					}
+
+
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc213_CreateACall(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		
+		String activityType=ATCE_ATActivityType38;
+		String taskSubject=ATCE_ATSubject38;
+		String taskRelatedTo=ATCE_ATRelatedTo38;
+		String taskNotes=ATCE_ATNote38;
+		
+		String dueDateDay=ATCE_ATDay38;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_038", excelLabel.Advance_Due_Date);
+			
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Date", taskDueDate }};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+		}	 
+		
+		
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc214_VerifyCallOnDealTeamConnectionPageAndMeetingAndCallPage(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Deal6;
+	    
+		String[] contectName= {ATCE_ConName32};
+		String[] meetingAndCallCount= {ATCE_ConMeetingAndCall32};
+		
+		String contact=ATCE_ConName31;
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall9;
+		
+
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj4, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					
+					ArrayList<String>result=bp.verifyMeetingAndCallOnExternalTabOfDealTeam(contectName, meetingAndCallCount);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Meeting and call count have been verified on Deal Team Section", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Meeting and call count are not verified on Deal Team Section", YesNo.No);
+						sa.assertTrue(false, "The Meeting and call count are not verified on Deal Team Section");
+					}	
+					
+					ArrayList<String> result1=bp.verifyMeetingAndCallOnConnectionPageOfDealTeam(contact, connectionUserName, connectionMeetingaAndCall);
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The Meeting and call count have been verified on connection page", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Meeting and call countare not verified on connection page", YesNo.No);
+						sa.assertTrue(false, "The Meeting and call count are not verified on Deal Team Section");
+					}
+					
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj4, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj4);
+			}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc215_CreateAccountContactAndFundraising(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		FundRaisingPageBusinessLayer fp=new FundRaisingPageBusinessLayer(driver);
+		String[] accountName = ATCERecord17.split("<break>");
+		String[] recordType = ATCERecordType2.split("<break>");
+
+		String[] contactFirstName = {ATCE_ContactFirstName11,ATCE_ContactFirstName12};
+		String[] contactLastName = {ATCE_ContactLastName11,ATCE_ContactLastName12};
+		String[] contactLegalName = {ATCE_ContactLegalName10,ATCE_ContactLegalName11};
+		String[] contactEmail = {ATCE_ContactEmail10,ATCE_ContactEmail11};
+		String[] contactTitle = {ATCE_ContactTitle11,ATCE_ContactTitle12};
+
+
+		String fundraisingName=ATCE_Fundraising3;
+		String flegalName=ATCE_FLegalName1;
+		String fFundName=ATCE_FFundName1;
+		String fStage=ATCE_FStageName1;
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+		if (accountName.length == recordType.length) {
+			for (int i = 0; i < accountName.length; i++) {
+				if (lp.clickOnTab(projectName, tabObj1)) {
+
+					log(LogStatus.INFO, "Click on Tab : " + tabObj1, YesNo.No);
+					ThreadSleep(3000);
+					if (ip.createEntityOrAccount(environment, mode, accountName[i], recordType[i], null, null, 30)) {
+						log(LogStatus.INFO,
+								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i],
+								YesNo.No);
+						sa.assertTrue(true,
+								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i]);
+
+
+					} else {
+						sa.assertTrue(false,
+								"Not Able to Create Firm : " + accountName[i] + " of record type : " + recordType[i]);
+						log(LogStatus.SKIP,
+								"Not Able to Create Firm : " + accountName[i] + " of record type :" + recordType[i],
+								YesNo.Yes);
+					}
+
+				} else {
+					log(LogStatus.FAIL, "Not able to click on " + tabObj1 + " Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on " + tabObj1 + " Tab");
+				}
+
+			}
+		} else {
+			log(LogStatus.FAIL,
+					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper",
+					YesNo.No);
+			sa.assertTrue(false,
+					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper");
+		}
+
+		for (int i = 0; i < contactLastName.length; i++) {
+			if (lp.clickOnTab(projectName, tabObj2)) {
+
+				log(LogStatus.INFO, "Click on Tab : " + tabObj2, YesNo.No);
+				ThreadSleep(3000);
+
+				if (cp.createContact(projectName, contactFirstName[i], contactLastName[i], contactLegalName[i],
+						contactEmail[i], "", null, null, CreationPage.ContactPage, contactTitle[i], null)) {
+					log(LogStatus.INFO,
+							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i],
+							YesNo.No);
+					sa.assertTrue(true,
+							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i]);
+
+
+				} else {
+					log(LogStatus.FAIL,
+							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i],
+							YesNo.No);
+					sa.assertTrue(false,
+							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i]);
+				}
+
+			} else {
+				log(LogStatus.FAIL, "Not able to click on " + tabObj2 + " Tab", YesNo.No);
+				sa.assertTrue(false, "Not able to click on " + tabObj2 + " Tab");
+			}
+		}
+		
+
+		
+		if (lp.clickOnTab(environment, mode, TabName.FundraisingsTab)) {
+			
+			if(fp.createFundRaising(environment, mode, fundraisingName, fFundName,flegalName, null, fStage, null, null,null, null, null))
+			{
+				log(LogStatus.INFO,"Fundraising has been created",YesNo.No);
+				
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Fundraising is not created",YesNo.No);
+				sa.assertTrue(false, "Fundraising is not created");
+			}
+		
+		}
+		else
+		{
+			log(LogStatus.FAIL, "Not able to click on fundraising tab Tab", YesNo.No);
+			sa.assertTrue(false, "Not able to click on fundraising Tab");
+		}
+
+			
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc216_FundraisingraisingContact(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		FundRaisingPageBusinessLayer fp=new FundRaisingPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATCE_FName1;
+
+		ArrayList<String> labelName=new ArrayList<String>();
+		ArrayList<String> value=new ArrayList<String>();
+		ArrayList<String> inputType=new ArrayList<String>();
+		ArrayList<String> labelName1=new ArrayList<String>();
+		ArrayList<String> value1=new ArrayList<String>();
+		ArrayList<String> inputType1=new ArrayList<String>();
+
+		labelName.add("Fundraising");
+		labelName.add("Contact");
+	
+
+		value.add(ATCE_FName1);
+		value.add(ATCE_FContact1);
+
+		inputType.add("TextBox");
+		inputType.add("SearchDropDown");
+	
+
+		labelName1.add("Fundraising");
+		labelName1.add("Contact");
+	
+		value1.add(ATCE_FName2);
+		value1.add(ATCE_FContact2);
+
+		inputType1.add("TextBox");
+		inputType1.add("SearchDropDown");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(environment, mode, TabName.FundraisingsTab)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if(fp.CreateNewFundraisingContactFromTab(projectName, labelName, value, inputType))
+					{
+						log(LogStatus.INFO, "Fundraising contact has been Created", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Fundraising contact is not Created", YesNo.No);
+						sa.assertTrue(false,  "Fundraising contact is not Created");
+					}
+
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+		}
+
+
+		if (lp.clickOnTab(environment, mode, TabName.FundraisingsTab)) {
+
+
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					if(fp.CreateNewFundraisingContactFromTab(projectName, labelName1, value1, inputType1))
+					{
+						log(LogStatus.INFO, "Fundraising contact has been Created", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Fundraising contact is not Created", YesNo.No);
+						sa.assertTrue(false,  "Fundraising contact is not Created");
+					}
+
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+		}
+
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc217_CreateATask(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		
+		String activityType=ATCE_ATActivityType39;
+		String taskSubject=ATCE_ATSubject39;
+		String taskRelatedTo=ATCE_ATRelatedTo39;
+		String taskNotes=ATCE_ATNote39;
+		String taskStatus=ATCE_AdvanceStatus20;
+		String taskPriority=ATCE_AdvancePriority20;	
+		String dueDateDay=ATCE_ATDay39;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_039", excelLabel.Advance_Due_Date);
+			
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority}};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+		}	 
+		
+		
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc218_VerifyTaskOnFundraisingSection(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fundraising3;
+
+		String[] contectName= {ATCE_ConName33};
+		String[] meetingAndCallCount= {ATCE_ConMeetingAndCall33};
+
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+					ArrayList<String>result=bp.verifyMeetingAndCallOnFundraisingContactTeam(contectName, meetingAndCallCount);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Meeting and call count have been verified on fundraising contact Section", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Meeting and call count are not verified on fundraising contact Section", YesNo.No);
+						sa.assertTrue(false, "The Meeting and call count are not verified on fundraising contact Section");
+
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc219_CreateACall(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		
+		String activityType=ATCE_ATActivityType40;
+		String taskSubject=ATCE_ATSubject40;
+		String taskRelatedTo=ATCE_ATRelatedTo40;
+		String taskNotes=ATCE_ATNote40;
+		
+		String dueDateDay=ATCE_ATDay40;
+		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDateDay));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATCE_040", excelLabel.Advance_Due_Date);
+			
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Date", taskDueDate }};
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null, false, null, null,null, null,null,null)) {
+			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+		}	 
+		
+		
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc220_VerifyCallOnFundraisingConnectionPageAndMeetingAndCallPage(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_Fundraising3;
+	    
+		String[] contectName= {ATCE_ConName34};
+		String[] meetingAndCallCount= {ATCE_ConMeetingAndCall34};
+		
+		String contact=ATCE_ConName34;
+		
+		String connectionUserName=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String connectionMeetingaAndCall=ATCE_ConnectionMeetingAndCall9;
+	
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+	
+		if (lp.clickOnTab(projectName, TabName.Fundraising.toString())) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.Fundraising.toString(), YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+				
+					ArrayList<String>result=bp.verifyMeetingAndCallOnFundraisingContactTeam(contectName, meetingAndCallCount);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The Meeting and call count have been verified on fundraising contact Section", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Meeting and call count are not verified on fundraising contact Section", YesNo.No);
+						sa.assertTrue(false, "The Meeting and call count are not verified on fundraising contact Section");
+					}	
+					
+					ArrayList<String> result1=bp.verifyMeetingAndCallOnConnectionPageOfFundraisingContact(contact, connectionUserName, connectionMeetingaAndCall);
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The Meeting and call count have been verified on connection page", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The Meeting and call countare not verified on connection page", YesNo.No);
+						sa.assertTrue(false, "The Meeting and call count are not verified on Deal Team Section");
+					}
+					
+					
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+TabName.Fundraising.toString(), YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+TabName.Fundraising.toString());
+		}
+			
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}	
+
+
 }
 
 
