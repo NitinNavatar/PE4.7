@@ -21171,7 +21171,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String xPath;
 		WebElement ele;
 		List<WebElement> elements;
-		String parentId = switchOnWindow(driver);
+		String parentId = switchToWindowOpenNextToParentWindow(driver);
 
 		ArrayList<String> result = new ArrayList<String>();
 		if (getFilterIconOnInteractionPopup(20) != null) {
