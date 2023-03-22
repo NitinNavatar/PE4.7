@@ -88,9 +88,9 @@ public class AcuityResearch extends BaseLib{
 					if (setup.createPEUser( glUser1FirstName, UserLastName, emailId, glUserLience,
 							glUserProfile, null)) {
 						log(LogStatus.INFO, "GL User is created Successfully: " + glUser1FirstName + " " + UserLastName, YesNo.No);
-						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "Usergl",
+						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User1",
 								excelLabel.User_Email);
-						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "Usergl",
+						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",
 								excelLabel.User_Last_Name);
 						flag = true;
 						break;
@@ -1297,7 +1297,7 @@ public class AcuityResearch extends BaseLib{
 	
 	for(String searchValue : searchValues) {
 		
-		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
+		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"SearchData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
@@ -3435,7 +3435,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, RecordType[i], isMakeAvailable,
-										profileForSelection, isMakeDefault, null, 10);
+										profileForSelection, isMakeDefault, PageLayout.Institution.toString(), 10);
 							}
 						} else {
 							isMakeDefault = false;
