@@ -7918,6 +7918,8 @@ public abstract class BasePage extends BaseLib {
 			return isDisplayed(driver, ele, "Visibility", timeOut, "] Header Found: " + subjectName);
 		}
 	}
+	
+	
 
 	public WebElement suggestedTagHeading(int timeOut) {
 		String xpath = "//header//h2[text()='Suggested Tags']";

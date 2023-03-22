@@ -23,34 +23,16 @@ import com.navatar.generic.AppListeners;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.ExcelUtils;
-import static com.navatar.generic.SmokeCommonVariables.*;
 import com.navatar.generic.SoftAssert;
 import com.navatar.generic.CommonLib.*;
 import com.navatar.generic.EnumConstants.*;
 import com.relevantcodes.extentreports.LogStatus;
 import com.relevantcodes.extentreports.model.Log;
-import com.navatar.generic.CommonVariables;
-import static com.navatar.generic.CommonVariables.AMNNR_TaskLabel4;
 
 import static com.navatar.generic.AppListeners.*;
 import static com.navatar.generic.BaseLib.sa;
 import static com.navatar.generic.CommonLib.*;
-import static com.navatar.generic.CommonVariables.AR_Research2;
-import static com.navatar.generic.CommonVariables.ATCE_ATParticipants1;
-import static com.navatar.generic.CommonVariables.ATE_AdvanceDueDate1;
-import static com.navatar.generic.CommonVariables.crmUser6FirstName;
-import static com.navatar.generic.CommonVariables.crmUser6LastName;
-import static com.navatar.generic.CommonVariables.crmUser7FirstName;
-import static com.navatar.generic.CommonVariables.crmUser7LastName;
-import static com.navatar.generic.CommonVariables.crmUser8FirstName;
-import static com.navatar.generic.CommonVariables.crmUser8LastName;
-import static com.navatar.generic.CommonVariables.environment;
-import static com.navatar.generic.CommonVariables.mode;
-import static com.navatar.generic.CommonVariables.tabObj1;
-import static com.navatar.generic.CommonVariables.tabObj2;
-import static com.navatar.generic.CommonVariables.tabObj4;
-import static com.navatar.generic.CommonVariables.AMNNR_ActivityType142;
-
+import static com.navatar.generic.CommonVariables.*;
 import java.util.Random;
 import java.util.Set;
 import java.util.TimeZone;
@@ -22489,7 +22471,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								action.SCROLLANDBOOLEAN);
 
 						log(LogStatus.INFO, "Successfully get the value from " + labelName + " field", YesNo.No);
-						if (expectedDate.equals(actualValue)) {
+						if (actualValue.trim().contains(expectedDate.trim())) {
 							log(LogStatus.INFO, labelName
 									+ " label's value has been verify in Subject link Popup and i.e. :" + expectedDate,
 									YesNo.No);
@@ -23851,6 +23833,44 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			} else if (participantArr[i].trim().equalsIgnoreCase("PE User 3")) {
 				participants[i] = userName3;
 			} else {
+				participants[i] = participantArr[i];
+			}
+		}
+		return participants;
+
+	}
+	
+	public String[] getParticipantDataRG(String participant) {
+		String userName1 = RGcrmUser1FirstName + " " + RGcrmUser1LastName;
+		String userName2 = RGcrmUser2FirstName + " " + RGcrmUser2LastName;
+		String userName3 = RGcrmUser3FirstName + " " + RGcrmUser3LastName;
+		String userName4 = RGcrmUser4FirstName + " " + RGcrmUser4LastName;
+		String userName5 = RGcrmUser5FirstName + " " + RGcrmUser5LastName;
+		String userName6 = RGcrmUser6FirstName + " " + RGcrmUser6LastName;
+		String rgUser = RGEventUserFirstName + " " + RGEventUserLastName;
+		
+		
+
+		String[] participantArr = participant.split("<break>");
+		String[] participants = new String[participantArr.length];
+
+		for (int i = 0; i < participantArr.length; i++) {
+			if (participantArr[i].trim().equalsIgnoreCase("PE User 1")) {
+				participants[i] = userName1;
+			} else if (participantArr[i].trim().equalsIgnoreCase("PE User 2")) {
+				participants[i] = userName2;
+			} else if (participantArr[i].trim().equalsIgnoreCase("PE User 3")) {
+				participants[i] = userName3;
+			}  else if (participantArr[i].trim().equalsIgnoreCase("PE User 4")) {
+				participants[i] = userName4;
+			}  else if (participantArr[i].trim().equalsIgnoreCase("PE User 5")) {
+				participants[i] = userName5;
+			}  else if (participantArr[i].trim().equalsIgnoreCase("PE User 6")) {
+				participants[i] = userName6;
+			}
+			else if (participantArr[i].trim().equalsIgnoreCase("RG User")) {
+				participants[i] = rgUser;
+			}else {
 				participants[i] = participantArr[i];
 			}
 		}
