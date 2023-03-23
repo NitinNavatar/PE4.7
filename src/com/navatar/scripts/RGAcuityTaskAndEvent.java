@@ -2178,7 +2178,16 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		String[][] basicsection = { { "Subject", RGATE_Subject1 },{"Notes",updateEventNotes}, { "Related_To", relatedTo } };
 		String[][] advanceSection = { { "Date", eventDueDate }};
 		
-
+		String userName1 = RGcrmUser4FirstName + " " + RGcrmUser4LastName;
+		String userName2 = RGcrmUser5FirstName + " " + RGcrmUser5LastName;
+		
+		
+		String connectionUserName=userName1;
+		String connectionMeetingaAndCall=RGATE_ConnectionSectionNameMeetingAndCall1;
+		
+		String connectionUserName1=userName2;
+		String connectionMeetingaAndCall1=RGATE_ConnectionSectionNameMeetingAndCall2;
+			
 		lp.CRMLogin(RGcrmUser1EmailID, adminPassword);
 		if (lp.clickOnTab(projectName, tabObj2)) {
 
@@ -2237,6 +2246,27 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					}
 					refresh(driver);
 					
+					ArrayList<String> result6=bp.verifyRecordOnConnectionsSectionInAcuity(recordName, connectionUserName, null, null, connectionMeetingaAndCall, null);
+					if(result6.isEmpty())
+					{
+						log(LogStatus.INFO, "The records have been verified on Connection section in Acuity user : "+connectionUserName, YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The records are not verified on Connection section in Acuity. user : "+connectionUserName+" "+result6, YesNo.No);
+						sa.assertTrue(false,  "The records are not verified on Connection section in Acuity.  user : "+connectionUserName+" "+result6);
+					}
+					
+					ArrayList<String> result7=bp.verifyRecordOnConnectionsSectionInAcuity(recordName, connectionUserName1, null, null, connectionMeetingaAndCall1, null);
+					if(result7.isEmpty())
+					{
+						log(LogStatus.INFO, "The records have been verified on Connection section in Acuity user : "+connectionUserName1, YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The records are not verified on Connection section in Acuity. user : "+connectionUserName1+" "+result7, YesNo.No);
+						sa.assertTrue(false,  "The records are not verified on Connection section in Acuity.  user : "+connectionUserName1+" "+result7);
+					}
 					
 					
 				}
@@ -2263,61 +2293,44 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void RGATETc010_GoToAccountAcuityTabAndVerifyRevenueEventOnInteractionsSection(String projectName) {
+	public void RGATETc012_VerifyUpdatedEventOnFirmRecordPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 
 		String recordName=RGATE_FirmLegalName1.split("<break>")[0];
-		String[] eventRelatedTo=RGATE_InteractionRelatedT02.split("<break>");	
-
-		String[] relatedAssocVal=RGATE_InteractionRelatedAssoc02.split("<break>");
-		String[] eventRelatedAssociation=new String[relatedAssocVal.length];
-
-		String userName1=RGcrmUser1FirstName+" "+RGcrmUser1LastName;
-		String userName2=RGcrmUser2FirstName+" "+RGcrmUser2LastName;
-		String userName3=RGcrmUser3FirstName+" "+RGcrmUser3LastName;
-		String userName4=RGcrmUser4FirstName+" "+RGcrmUser4LastName;
-		String userName5=RGcrmUser5FirstName+" "+RGcrmUser5LastName;
-
-
-		for(int i=0; i<eventRelatedAssociation.length; i++)
+		String contactName=RGATE_ContactSectionName1;
+		String eventNotes=RGATE_UNotes1;
+		
+		String eventSubject=RGATE_Subject1;
+		String[] participant=bp.getParticipantDataRG(RGATE_Participant1);
+		String relatedTo=null;
+		for(int i=0; i<participant.length; i++)
 		{
-			if(relatedAssocVal[i].equalsIgnoreCase("RG User"))
+			if(i<participant.length-1)
 			{
-				eventRelatedAssociation[i]=RGEventUserLastName;		
-			}
-			else if(relatedAssocVal[i].equalsIgnoreCase("user 1"))
-			{
-				eventRelatedAssociation[i]=userName1;		
-			}
-			else if(relatedAssocVal[i].equalsIgnoreCase("user 2"))
-			{
-				eventRelatedAssociation[i]=userName2;		
-			}
-			else if(relatedAssocVal[i].equalsIgnoreCase("user 3"))
-			{
-				eventRelatedAssociation[i]=userName3;		
-			}
-			else if(relatedAssocVal[i].equalsIgnoreCase("user 4"))
-			{
-				eventRelatedAssociation[i]=userName4;		
-			}
-			else if(relatedAssocVal[i].equalsIgnoreCase("user 5"))
-			{
-				eventRelatedAssociation[i]=userName5;		
+			relatedTo=participant[i]+"<break>";
 			}
 			else
 			{
-				Assertion hardAssert = new Assertion();
-				log(LogStatus.ERROR, "user data is not correct on ecxel", YesNo.No);
-				hardAssert.assertTrue(true == false);
+				relatedTo=participant[i];
 			}
 		}
 
-		String eventNotes=RGATE_UNotes1;
-		String eventDueDate=RGATE_UStartDate1;
-		String eventSubject=RGATE_Subject1;
+		String eventDueDate=RGATE_AdvanceStartDate1;
+		String eventSubjectName=RGATE_Subject1;
+		String updateEventNotes=RGATE_UNotes1;
+		String[][] basicsection = { { "Subject", RGATE_Subject1 },{"Notes",updateEventNotes}, { "Related_To", relatedTo } };
+		String[][] advanceSection = { { "Date", eventDueDate }};
+		
+		String userName1 = RGcrmUser4FirstName + " " + RGcrmUser4LastName;
+		String userName2 = RGcrmUser5FirstName + " " + RGcrmUser5LastName;
+		
+		
+		String[] connectionUserName= {userName1,userName2};
+		String[] connectionMeetingaAndCall= {RGATE_ConnectionSectionNameMeetingAndCall1,RGATE_ConnectionSectionNameMeetingAndCall2};
+		
+		
 		lp.CRMLogin(RGcrmUser1EmailID, adminPassword);
 		if (lp.clickOnTab(projectName, tabObj1)) {
 
@@ -2329,7 +2342,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					ArrayList<String> result1=bp.verifyRecordOnInteractionCard(eventDueDate, IconType.Meeting, eventSubject, eventNotes, true,false, eventRelatedTo, eventRelatedAssociation);
+					ArrayList<String> result1=bp.verifyRecordOnInteractionCard(eventDueDate, IconType.Meeting, eventSubject, eventNotes, false,true, null, null);
 
 					if(result1.isEmpty())
 					{
@@ -2340,6 +2353,54 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, eventSubject+" Event is not verified on interaction section. "+result1, YesNo.No);	
 						sa.assertTrue(false, eventSubject+" Event is not verified on interaction section. "+result1);
 					}
+					
+					ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, eventSubjectName, basicsection, advanceSection, IconType.Event, PageName.AcuityDetails);
+
+					if(result2.isEmpty())
+					{
+						log(LogStatus.PASS,"The details on popup of subject "+eventSubjectName+" has been verified",YesNo.No);
+						sa.assertTrue(true,"The details on popup of subject "+eventSubjectName+" has been verified");							
+					}
+					else
+					{
+						log(LogStatus.FAIL,"The details on popup of subject "+eventSubjectName+" are not verified. "+result2,YesNo.No);
+						sa.assertTrue(false,"The details on popup of subject "+eventSubjectName+" are not verified. "+result2);
+
+					}
+					
+					String currentUrl = getURL(driver, 10);
+					refresh(driver);
+
+					if(CommonLib.clickUsingJavaScript(driver, bp.addButtonOnInteractionCard(eventSubjectName,20), "Edit button of "+eventSubjectName))
+					{
+						log(LogStatus.INFO,"Clicked on Edit button on interaction section of subject name "+eventSubjectName,YesNo.No);
+						ArrayList<String> NotesPopUpPrefilledNegativeResult = bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(currentUrl, basicsection,advanceSection, null);
+						if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+							log(LogStatus.INFO,"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",YesNo.No);
+						} else {
+							log(LogStatus.ERROR,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult,YesNo.No);
+							sa.assertTrue(false,"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "+ NotesPopUpPrefilledNegativeResult);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Edit button on interaction section of subject name "+eventSubjectName,YesNo.No);
+						sa.assertTrue(false, "Not able to click on Edit button on interaction section of subject name "+eventSubjectName);
+					}
+					refresh(driver);
+					
+					
+					ArrayList<String> result7=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactName, connectionUserName, null, null, connectionMeetingaAndCall,null);
+					if(result7.isEmpty())
+					{
+						log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactName, YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The records on Connection popup are not verified for "+contactName+". "+result7 , YesNo.No);
+						sa.assertTrue(false, "The records on Connection popup are not verified for "+contactName+". "+result7);
+					}
+					
 
 				}
 				else
@@ -2363,54 +2424,68 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();
 	}
 
+		
 	@Parameters({ "projectName" })
 	@Test
-	public void RGATETc011_GoToContactAcuityTabAndVerifyRevenueEventOnInteractionsSection(String projectName) {
+	
+    public void RGATETc013_UpdateTheDateInRevenueEventsFromOutlook(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String recordName=RGATE_ContactFullName1.split("<break>")[0];
+
+		
+		String eventTitle = RGATE_Subject1;		
+	
+		String startDate =RGATE_AdvanceStartDate1;		
+		String endDate = CommonLib.convertDateFromOneFormatToAnother(
+				RGATE_AdvanceEndDate1, "M/d/yyyy", "MMMM yyyy");
+		
+		
+		String updatedEventStartDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt(RGATE_UStartDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, updatedEventStartDate, "Activity Timeline", excelLabel.Variable_Name,
+				"RGATE_U001", excelLabel.Advance_Start_Date);
+
+		String updatedEventEndDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt(RGATE_UEndDay1));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, updatedEventEndDate, "Activity Timeline", excelLabel.Variable_Name,
+				"RGATE_U001", excelLabel.Advance_End_Date);
 
 
-		String[] connectionSectionName= {RGATE_ConnectionSectionName1,RGATE_ConnectionSectionName2};
-		String[] connectionSectionTitle= {RGATE_ConnectionSectionTitle1,RGATE_ConnectionSectionTitle2};
-		String[] connectionSectionDeal= {RGATE_ConnectionSectionNameDeals1,RGATE_ConnectionSectionNameDeals2};
-		String[] connectionSectioMeeting= {RGATE_ConnectionSectionNameMeetingAndCall1,RGATE_ConnectionSectionNameMeetingAndCall2};
-		String[] connectionSectionEmail= {RGATE_ConnectionSectionEmail1,RGATE_ConnectionSectionEmail2};
+		lp.CRMLogin(RGcrmUser1EmailID, adminPassword);
+		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle + " through Outlook---------",
+				YesNo.No);
 
-		String[] teamMember=new String[connectionSectionName.length];
-		for(int i=0; i<connectionSectionName.length; i++)
-		{
-
-			if(connectionSectionName[i].equals("user 1"))
-			{
-				teamMember[i]=RGcrmUser1FirstName+" "+RGcrmUser1LastName;
-			}
-			else if(connectionSectionName[i].equals("user 2"))
-			{
-				teamMember[i]=RGcrmUser2FirstName+" "+RGcrmUser2LastName;
-			}
-			else if(connectionSectionName[i].equals("user 3"))
-			{
-				teamMember[i]=RGcrmUser3FirstName+" "+RGcrmUser3LastName;
-			}
-			else if(connectionSectionName[i].equals("user 4"))
-			{
-				teamMember[i]=RGcrmUser4FirstName+" "+RGcrmUser4LastName;
-			}
-			else if(connectionSectionName[i].equals("user 5"))
-			{
-				teamMember[i]=RGcrmUser5FirstName+" "+RGcrmUser5LastName;
-			}
-			else 
-			{
-				Assertion hardAssert = new Assertion();
-				log(LogStatus.ERROR, "user data is not correct on ecxel", YesNo.No);
-				hardAssert.assertTrue(true == false);
-			}	
-
+		if (op.loginNavigateAndUpdateTheEvent(rgOutLookUser1Email, rgOutLookUser1Password, startDate,endDate, eventTitle,false,null, null,updatedEventStartDate, updatedEventEndDate, null, null, null,false, null)) {
+			log(LogStatus.INFO,
+					"-----Event updated Msg is showing, So Event of Title: " + eventTitle + " has been updated-----",
+					YesNo.No);
 		}
+
+		else {
+			log(LogStatus.ERROR, "-----Event updated Msg is not showing, So Event of Title: " + eventTitle
+					+ " has not been updated-----", YesNo.Yes);
+			BaseLib.sa.assertTrue(false, "-----Event Created Msg is not showing, So Event of Title: " + eventTitle
+					+ " has not been updated-----");
+		}
+
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+
+	public void RGATETc014_VerifyUpdatedDateEventOnContactObject(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=RGATE_ContactFullName1.split("<break>")[0];
+	
+		String eventNotes=RGATE_UNotes1;
+		String eventSubject=RGATE_Subject1;
+		String eventDueDate=RGATE_UStartDate1;
+
 		lp.CRMLogin(RGcrmUser1EmailID, adminPassword);
 		if (lp.clickOnTab(projectName, tabObj2)) {
 
@@ -2422,19 +2497,18 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					for(int i=0; i<teamMember.length; i++)
+					ArrayList<String> result1=bp.verifyRecordOnInteractionCard(eventDueDate, IconType.Meeting, eventSubject, eventNotes, true,false, null, null);
+
+					if(result1.isEmpty())
 					{
-						ArrayList<String> result=bp.verifyRecordOnConnectionsSectionInAcuity(recordName, teamMember[i], connectionSectionTitle[i], connectionSectionDeal[i], connectionSectioMeeting[i], connectionSectionEmail[i]);
-						if(result.isEmpty())
-						{
-							log(LogStatus.INFO, "The Records on connection section have been verified. user "+teamMember[i], YesNo.No);	
-						}
-						else
-						{
-							log(LogStatus.ERROR, "The Records on connection section are not verified. user "+teamMember[i]+". "+result, YesNo.No);	
-							sa.assertTrue(false, "The Records on connection section are not verified. user "+teamMember[i]+". "+result);
-						}
+						log(LogStatus.INFO, eventSubject+" Event has been verified on interaction section", YesNo.No);	
 					}
+					else
+					{
+						log(LogStatus.ERROR, eventSubject+" Event is not verified on interaction section. "+result1, YesNo.No);	
+						sa.assertTrue(false, eventSubject+" Event is not verified on interaction section. "+result1);
+					}
+					
 				}
 				else
 				{
@@ -2457,31 +2531,21 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();
 	}
 
+	
 	@Parameters({ "projectName" })
 	@Test
-	public void RGATETc012_VerifyViewAllLinkOnInteractionSectionOfIntermediaryAccountPage(String projectName) {
+	public void RGATETc015_VerifyUpdatedDateEventOnFirmRecordPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 
-		String xPath;
-		WebElement ele;
-
 		String recordName=RGATE_FirmLegalName1.split("<break>")[0];
 
-		String[] iconType= {RGATE_ActivityType1};
-
-		String[] subjectName= {RGATE_Subject1};
-
-		String[] details= {RGATE_UNotes1};
-
-		String[] date= {RGATE_UStartDate1};
-
-		String[] userData= {RGEventUserLastName};
-
-
-		lp.CRMLogin(RGcrmUser1EmailID, adminPassword, appName);
-
+		String eventNotes=RGATE_UNotes1;
+		String eventSubject=RGATE_Subject1;
+		String eventDueDate=RGATE_UStartDate1;
+		
+		lp.CRMLogin(RGcrmUser1EmailID, adminPassword);
 		if (lp.clickOnTab(projectName, tabObj1)) {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
@@ -2492,48 +2556,17 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-					{
-						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType,date, subjectName, details, subjectName, null, null);
-						if(result2.isEmpty())
-						{
-							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
-							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
-						}
-						/*
-						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
-						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
-						if(clickUsingJavaScript(driver, ele, "close button"))
-						{
-							log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
-						}
-						 */
-					}
-					else
-					{
-						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-					}	
+					ArrayList<String> result1=bp.verifyRecordOnInteractionCard(eventDueDate, IconType.Meeting, eventSubject, eventNotes, true,false, null, null);
 
-					if(bp.verifySubjectLinkPopUpOnIntraction(driver, RGATE_Subject1))
+					if(result1.isEmpty())
 					{
-						log(LogStatus.INFO,RGATE_Subject1+ " event is opeing in the new tab", YesNo.No);
+						log(LogStatus.INFO, eventSubject+" Event has been verified on interaction section", YesNo.No);	
 					}
 					else
 					{
-						log(LogStatus.ERROR,RGATE_Subject1+ " event is not opening in the new tab", YesNo.No);
-						sa.assertTrue(false,RGATE_Subject1+ " event is not opening in the new tab" );
-					}
+						log(LogStatus.ERROR, eventSubject+" Event is not verified on interaction section. "+result1, YesNo.No);	
+						sa.assertTrue(false, eventSubject+" Event is not verified on interaction section. "+result1);
+					}				
 				}
 				else
 				{
@@ -2552,20 +2585,17 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
 			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
 		}
-
-		lp.CRMlogout();	
-		sa.assertAll();	
+		lp.CRMlogout();
+		sa.assertAll();
 	}
-
+	
+	
 	@Parameters({ "projectName" })
 	@Test
-	public void RGATETc013_VerifyViewAllLinkOnInteractionSectionOfIntermediaryAccountContactPage(String projectName) {
+	public void RGATETc016_VerifyViewAllLinkOnInteractionSectionOfContactPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-
-		String xPath;
-		WebElement ele;
 
 		String recordName=RGATE_ContactFullName1.split("<break>")[0];
 
@@ -2576,9 +2606,31 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		String[] details= {RGATE_UNotes1};
 
 		String[] date= {RGATE_UStartDate1};
+		
+		String[][] participant= {bp.getParticipantDataRG(RGATE_UParticipant1)};
 
-		String[] userData= {RGEventUserLastName};
+		
+		String[] participants=bp.getParticipantDataRG(RGATE_UParticipant1);
+		String relatedTo=null;
+		for(int i=0; i<participants.length; i++)
+		{
+			if(i<participants.length-1)
+			{
+			relatedTo=participants[i]+"<break>";
+			}
+			else
+			{
+				relatedTo=participants[i];
+			}
+		}
 
+		String eventDueDate=RGATE_UStartDate1;
+		String eventSubjectName=RGATE_Subject1;
+		String eventNotes=RGATE_UNotes1;
+		
+		String[][] basicsection = { { "Subject", eventSubjectName }, {"Notes",eventNotes},{ "Related_To", relatedTo } };
+		String[][] advanceSection = { { "Date", eventDueDate }};
+	
 		lp.CRMLogin(RGcrmUser1EmailID, adminPassword, appName);
 
 		if (lp.clickOnTab(projectName, tabObj2)) {
@@ -2594,29 +2646,31 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType,date, subjectName, details, subjectName, null, null);
-						if(result2.isEmpty())
+						ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType,date, subjectName, details, subjectName, participant, null);
+						if(result.isEmpty())
 						{
 							log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
 						}
 						else
 						{
-							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
-							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
-						}
-						/*
-						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
-						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
-						if(clickUsingJavaScript(driver, ele, "close button"))
+							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result, YesNo.No);
+							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result);
+						}		
+						
+						ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, eventSubjectName, basicsection, advanceSection, IconType.Event, PageName.Interaction);
+
+						if(result2.isEmpty())
 						{
-							log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							log(LogStatus.PASS,"The details on popup of subject "+eventSubjectName+" has been verified",YesNo.No);
+							sa.assertTrue(true,"The details on popup of subject "+eventSubjectName+" has been verified");							
 						}
 						else
 						{
-							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							log(LogStatus.FAIL,"The details on popup of subject "+eventSubjectName+" are not verified. "+result2,YesNo.No);
+							sa.assertTrue(false,"The details on popup of subject "+eventSubjectName+" are not verified. "+result2);
+
 						}
-						 */
+						
 					}
 					else
 					{
@@ -2659,7 +2713,119 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void RGATETc014_CreateAccountDealsAndFunds(String projectName) {
+	public void RGATETc017_VerifyUpdatedDateEventOnFirmRecordPage(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=RGATE_FirmLegalName1.split("<break>")[0];
+
+		String[] iconType= {RGATE_ActivityType1};
+
+		String[] subjectName= {RGATE_Subject1};
+
+		String[] details= {RGATE_UNotes1};
+
+		String[] date= {RGATE_UStartDate1};
+		
+		String[][] participant= {bp.getParticipantDataRG(RGATE_UParticipant1)};
+
+		
+		String[] participants=bp.getParticipantDataRG(RGATE_UParticipant1);
+		String relatedTo=null;
+		for(int i=0; i<participants.length; i++)
+		{
+			if(i<participants.length-1)
+			{
+			relatedTo=participants[i]+"<break>";
+			}
+			else
+			{
+				relatedTo=participants[i];
+			}
+		}
+
+		String eventDueDate=RGATE_UStartDate1;
+		String eventSubjectName=RGATE_Subject1;
+		String eventNotes=RGATE_UNotes1;
+		
+		String[][] basicsection = { { "Subject", eventSubjectName }, {"Notes",eventNotes},{ "Related_To", relatedTo } };
+		String[][] advanceSection = { { "Date", eventDueDate }};
+	
+		
+		lp.CRMLogin(RGcrmUser1EmailID, adminPassword);
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+				{
+					log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+					ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType,date, subjectName, details, subjectName, participant, null);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result, YesNo.No);
+						sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result);
+					}		
+					
+					ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, eventSubjectName, basicsection, advanceSection, IconType.Event, PageName.Interaction);
+
+					if(result2.isEmpty())
+					{
+						log(LogStatus.PASS,"The details on popup of subject "+eventSubjectName+" has been verified",YesNo.No);
+						sa.assertTrue(true,"The details on popup of subject "+eventSubjectName+" has been verified");							
+					}
+					else
+					{
+						log(LogStatus.FAIL,"The details on popup of subject "+eventSubjectName+" are not verified. "+result2,YesNo.No);
+						sa.assertTrue(false,"The details on popup of subject "+eventSubjectName+" are not verified. "+result2);
+
+					}
+					
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+				}	
+
+
+				if(bp.verifySubjectLinkPopUpOnIntraction(driver, RGATE_Subject1))
+				{
+					log(LogStatus.INFO,RGATE_Subject1+ " event is opeing in the new tab", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR,RGATE_Subject1+ " event is not opening in the new tab", YesNo.No);
+					sa.assertTrue(false,RGATE_Subject1+ " event is not opening in the new tab" );
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void RGATETc018_CreateAccountDealsAndFunds(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -2794,7 +2960,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void RGATETc015_CreateEmailTaskFromRGUser(String projectName) {
+	public void RGATETc019_CreateEmailTaskFromRGUser(String projectName) {
 		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);	
 
 
@@ -2880,7 +3046,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void RGATETc016_VerifyEmailTaskInTheFirmAccountPage(String projectName) {
+	public void RGATETc020_VerifyEmailTaskInTheFirmAccountPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2988,7 +3154,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void RGATETc017_VerifyEmailTaskInTheFirmAccountContactPage(String projectName) {
+	public void RGATETc021_VerifyEmailTaskInTheFirmAccountContactPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3096,7 +3262,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void RGATETc018_CreateAccountDeals(String projectName) {
+	public void RGATETc022_CreateAccountDeals(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -3198,7 +3364,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void RGATETc019_CreateDealTeamAndVerifyOnInternalAndExternalTabOfDeal(String projectName) {	
+	public void RGATETc023_CreateDealTeamAndVerifyOnInternalAndExternalTabOfDeal(String projectName) {	
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		DealTeamPageBusinessLayer DTP = new DealTeamPageBusinessLayer(driver);
@@ -3356,7 +3522,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void RGATETc020_CreateSomeRevenueInboxEvents(String projectName) {
+	public void RGATETc024_CreateSomeRevenueInboxEvents(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
@@ -3648,7 +3814,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();
 	}
 
-	public void RGATETc021_CreateAccountDeals(String projectName) {
+	public void RGATETc025_CreateAccountDeals(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -3751,7 +3917,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void RGATETc022_CreateDealTeamAndVerifyOnInternalAndExternalTabOfDeal(String projectName) {	
+	public void RGATETc026_CreateDealTeamAndVerifyOnInternalAndExternalTabOfDeal(String projectName) {	
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		FundRaisingPageBusinessLayer fr = new FundRaisingPageBusinessLayer(driver);
@@ -3859,7 +4025,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void RGATETc023_CreateSomeRevenueInboxEvents(String projectName) {
+	public void RGATETc027_CreateSomeRevenueInboxEvents(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
@@ -4113,7 +4279,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void RGATETc024_CreateSomeRevenueInboxEvents(String projectName) {
+	public void RGATETc028_CreateSomeRevenueInboxEvents(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
@@ -4285,7 +4451,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void RGATETc025_VeriyDataForLenderFirm(String projectName) {
+	public void RGATETc029_VeriyDataForLenderFirm(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
@@ -4433,7 +4599,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void RGATETc026_VeriyDataForPrivateEquityFirm(String projectName) {
+	public void RGATETc030_VeriyDataForPrivateEquityFirm(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
@@ -4554,7 +4720,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void RGATETc027_UpdateEventDetailsAndVerify(String projectName) {
+	public void RGATETc031_UpdateEventDetailsAndVerify(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);

@@ -1919,7 +1919,7 @@ public class CommonVariables {
 	 		public static String RGATE_UEndDay1;
 	 		public static String RGATE_UStartDate1;
 	 		public static String RGATE_UEndDate1;
-	 		
+	 		public static String RGATE_UParticipant1;
 	 		
 	 		
             //Tagged section
@@ -8995,7 +8995,9 @@ public class CommonVariables {
                 RGATE_UEndDay1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_U001", excelLabel.End_Day);	 
                 RGATE_UStartDate1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_U001", excelLabel.Advance_Start_Date);	 
     	 		RGATE_UEndDate1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_U001", excelLabel.Advance_End_Date);	 
-		 			 		
+		 		
+    	 		RGATE_UParticipant1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGATE_U001", excelLabel.Participants);	 
+		 		
 		 		
 		 		RGATE_TaggedCompany1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE001", excelLabel.Company);		
 		 		RGATE_TaggedCompany2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGATE002", excelLabel.Company);		

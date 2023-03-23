@@ -1884,7 +1884,6 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 	
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc014_CreateContactFromAddContactIconOnContactSection(String projectName) {
