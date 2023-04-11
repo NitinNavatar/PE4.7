@@ -48,6 +48,7 @@ import com.navatar.pageObjects.DealPageBusinessLayer;
 import com.navatar.pageObjects.FundRaisingPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
+import com.navatar.pageObjects.InstitutionsPageBusinessLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
 import com.navatar.pageObjects.NavigationPageBusineesLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
@@ -673,11 +674,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String taskSectionStatus = "Not Started";
 		String taskSectionDueDateOnly = "";
 
-		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-				{ AMNNR_TaskLabel7, crmUser1FirstName + " " + crmUser1LastName } };
+		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "-None-" } };
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "-None-" },
+				{ AMNNR_TaskLabel7, crmUser1FirstName + " " + crmUser1LastName } };
 
 		String[][] task1TaskSection = { { AMNNR_TaskLabel1, taskSectionSubject },
 				{ AMNNR_TaskLabel7, crmUser1FirstName + " " + crmUser1LastName },
@@ -783,7 +784,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -823,7 +824,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 									log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-									if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+									if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1),
 											recordType, recordName, 30)) {
 										log(LogStatus.INFO,
 												recordName + " record of record type " + recordType + " has been open",
@@ -910,9 +911,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							}
 
 						} else {
-							log(LogStatus.ERROR, "Not able to click on Edit button on Subjec Link Popup of Task: "
+							log(LogStatus.ERROR, "Not able to click on Edit button on Subject Link Popup of Task: "
 									+ task1SubjectName, YesNo.No);
-							sa.assertTrue(false, "Not able to click on Edit button on Subjec Link Popup of Task: "
+							sa.assertTrue(false, "Not able to click on Edit button on Subject Link Popup of Task: "
 									+ task1SubjectName);
 						}
 
@@ -1045,7 +1046,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -1577,11 +1578,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 											} else {
 												log(LogStatus.ERROR,
-														"Not able to click on Edit button on Subjec Link Popup of Task: "
+														"Not able to click on Edit button on Subject Link Popup of Task: "
 																+ task1SubjectName,
 														YesNo.No);
 												sa.assertTrue(false,
-														"Not able to click on Edit button on Subjec Link Popup of Task: "
+														"Not able to click on Edit button on Subject Link Popup of Task: "
 																+ task1SubjectName);
 											}
 
@@ -1638,11 +1639,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 									} else {
 										log(LogStatus.ERROR,
-												"Not able to click on Edit button on Subjec Link Popup of Task: "
+												"Not able to click on Edit button on Subject Link Popup of Task: "
 														+ task1SubjectName,
 												YesNo.No);
 										sa.assertTrue(false,
-												"Not able to click on Edit button on Subjec Link Popup of Task: "
+												"Not able to click on Edit button on Subject Link Popup of Task: "
 														+ task1SubjectName);
 									}
 
@@ -1657,9 +1658,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								}
 
 							} else {
-								log(LogStatus.ERROR, "Not able to click on Edit button on Subjec Link Popup of Task: "
+								log(LogStatus.ERROR, "Not able to click on Edit button on Subject Link Popup of Task: "
 										+ task1SubjectName, YesNo.No);
-								sa.assertTrue(false, "Not able to click on Edit button on Subjec Link Popup of Task: "
+								sa.assertTrue(false, "Not able to click on Edit button on Subject Link Popup of Task: "
 										+ task1SubjectName);
 							}
 
@@ -1846,11 +1847,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 											} else {
 												log(LogStatus.ERROR,
-														"Not able to click on Edit button on Subjec Link Popup of Task: "
+														"Not able to click on Edit button on Subject Link Popup of Task: "
 																+ task1SubjectName,
 														YesNo.No);
 												sa.assertTrue(false,
-														"Not able to click on Edit button on Subjec Link Popup of Task: "
+														"Not able to click on Edit button on Subject Link Popup of Task: "
 																+ task1SubjectName);
 											}
 
@@ -1907,11 +1908,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 									} else {
 										log(LogStatus.ERROR,
-												"Not able to click on Edit button on Subjec Link Popup of Task: "
+												"Not able to click on Edit button on Subject Link Popup of Task: "
 														+ task1SubjectName,
 												YesNo.No);
 										sa.assertTrue(false,
-												"Not able to click on Edit button on Subjec Link Popup of Task: "
+												"Not able to click on Edit button on Subject Link Popup of Task: "
 														+ task1SubjectName);
 									}
 
@@ -1926,9 +1927,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								}
 
 							} else {
-								log(LogStatus.ERROR, "Not able to click on Edit button on Subjec Link Popup of Task: "
+								log(LogStatus.ERROR, "Not able to click on Edit button on Subject Link Popup of Task: "
 										+ task1SubjectName, YesNo.No);
-								sa.assertTrue(false, "Not able to click on Edit button on Subjec Link Popup of Task: "
+								sa.assertTrue(false, "Not able to click on Edit button on Subject Link Popup of Task: "
 										+ task1SubjectName);
 							}
 
@@ -2274,7 +2275,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -2346,16 +2347,16 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								}
 
 							} else {
-								log(LogStatus.ERROR, "Not able to click on Edit button on Subjec Link Popup of Task: "
+								log(LogStatus.ERROR, "Not able to click on Edit button on Subject Link Popup of Task: "
 										+ task1SubjectName, YesNo.No);
-								sa.assertTrue(false, "Not able to click on Edit button on Subjec Link Popup of Task: "
+								sa.assertTrue(false, "Not able to click on Edit button on Subject Link Popup of Task: "
 										+ task1SubjectName);
 							}
 
 						} else {
-							log(LogStatus.ERROR, "Not able to click on Edit button on Subjec Link Popup of Task: "
+							log(LogStatus.ERROR, "Not able to click on Edit button on Subject Link Popup of Task: "
 									+ task1SubjectName, YesNo.No);
-							sa.assertTrue(false, "Not able to click on Edit button on Subjec Link Popup of Task: "
+							sa.assertTrue(false, "Not able to click on Edit button on Subject Link Popup of Task: "
 									+ task1SubjectName);
 						}
 
@@ -2372,7 +2373,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 						log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-						if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType,
+						if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType,
 								recordName, 30)) {
 							log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open",
 									YesNo.No);
@@ -2461,7 +2462,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 
-		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("22"));
+		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("2"));
 
 		ExcelUtils.writeData(AcuityDataSheetFilePath, AdvanceDueDate, "Activity Timeline", excelLabel.Variable_Name,
 				"AMNNR_Activity017", excelLabel.Advance_Due_Date);
@@ -2563,7 +2564,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -2949,7 +2950,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -3014,11 +3015,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								} else {
 									log(LogStatus.ERROR,
-											"Not able to click on Edit button on Subjec Link Popup of Task: "
+											"Not able to click on Edit button on Subject Link Popup of Task: "
 													+ task1SubjectName,
 											YesNo.No);
 									sa.assertTrue(false,
-											"Not able to click on Edit button on Subjec Link Popup of Task: "
+											"Not able to click on Edit button on Subject Link Popup of Task: "
 													+ task1SubjectName);
 								}
 								refresh(driver);
@@ -3061,11 +3062,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										} else {
 											log(LogStatus.ERROR,
-													"Not able to click on Edit button on Subjec Link Popup of Task: "
+													"Not able to click on Edit button on Subject Link Popup of Task: "
 															+ task1SubjectName,
 													YesNo.No);
 											sa.assertTrue(false,
-													"Not able to click on Edit button on Subjec Link Popup of Task: "
+													"Not able to click on Edit button on Subject Link Popup of Task: "
 															+ task1SubjectName);
 										}
 										if (lp.clickOnTab(projectName, tabObj1)) {
@@ -3073,7 +3074,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 											log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
 											if (BP.clickOnAlreadyCreated_Lighting(environment, mode,
-													TabName.InstituitonsTab, recordType, recordName, 30)) {
+													BP.returnTabName(tabObj1), recordType, recordName, 30)) {
 												log(LogStatus.INFO, recordName + " record of record type " + recordType
 														+ " has been open", YesNo.No);
 												ThreadSleep(4000);
@@ -3119,18 +3120,18 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								} else {
 									log(LogStatus.ERROR,
-											"Not able to click on Edit button on Subjec Link Popup of Task: "
+											"Not able to click on Edit button on Subject Link Popup of Task: "
 													+ task1SubjectName,
 											YesNo.No);
 									sa.assertTrue(false,
-											"Not able to click on Edit button on Subjec Link Popup of Task: "
+											"Not able to click on Edit button on Subject Link Popup of Task: "
 													+ task1SubjectName);
 								}
 
 							} else {
-								log(LogStatus.ERROR, "Not able to click on Edit button on Subjec Link Popup of Task: "
+								log(LogStatus.ERROR, "Not able to click on Edit button on Subject Link Popup of Task: "
 										+ task1SubjectName, YesNo.No);
-								sa.assertTrue(false, "Not able to click on Edit button on Subjec Link Popup of Task: "
+								sa.assertTrue(false, "Not able to click on Edit button on Subject Link Popup of Task: "
 										+ task1SubjectName);
 							}
 
@@ -3254,7 +3255,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -3474,7 +3475,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -3714,7 +3715,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -3872,7 +3873,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 
-		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("13"));
+		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("3"));
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = AMNNR_Subject32;
@@ -3950,7 +3951,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -4493,7 +4494,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -4736,7 +4737,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -4955,7 +4956,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -5171,7 +5172,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -5389,7 +5390,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -5652,7 +5653,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -5911,7 +5912,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -6201,7 +6202,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-								if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+								if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1),
 										recordType, recordName, 30)) {
 									log(LogStatus.INFO,
 											recordName + " record of record type " + recordType + " has been open",
@@ -6346,7 +6347,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-								if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+								if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1),
 										recordType, recordName, 30)) {
 									log(LogStatus.INFO,
 											recordName + " record of record type " + recordType + " has been open",
@@ -6539,7 +6540,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 	 * log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 	 * 
 	 * if (BP.clickOnAlreadyCreated_Lighting(environment, mode,
-	 * TabName.InstituitonsTab, recordType, recordName, 30)) { log(LogStatus.INFO,
+	 * BP.returnTabName(tabObj1), recordType, recordName, 30)) { log(LogStatus.INFO,
 	 * recordName + " record of record type " + recordType + " has been open",
 	 * YesNo.No); ThreadSleep(4000); if (BP.clicktabOnPage("Acuity")) {
 	 * log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
@@ -6761,7 +6762,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-				if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordTypeExisting,
+				if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordTypeExisting,
 						recordNameExisting, 30)) {
 					log(LogStatus.INFO,
 							recordNameExisting + " record of record type " + recordTypeExisting + " has been open",
@@ -6857,7 +6858,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 						CommonLib.ThreadSleep(3000);
 						CommonLib.refresh(driver);
-						if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType,
+						if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType,
 								recordName, 30)) {
 							log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open",
 									YesNo.No);
@@ -7114,11 +7115,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 									} else {
 										log(LogStatus.ERROR,
-												"Not able to click on Edit button on Subjec Link Popup of Task: "
+												"Not able to click on Edit button on Subject Link Popup of Task: "
 														+ task1SubjectName,
 												YesNo.No);
 										sa.assertTrue(false,
-												"Not able to click on Edit button on Subjec Link Popup of Task: "
+												"Not able to click on Edit button on Subject Link Popup of Task: "
 														+ task1SubjectName);
 									}
 
@@ -7482,7 +7483,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -7522,7 +7523,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 									log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-									if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+									if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1),
 											recordType, recordName, 30)) {
 										log(LogStatus.INFO,
 												recordName + " record of record type " + recordType + " has been open",
@@ -7609,9 +7610,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							}
 
 						} else {
-							log(LogStatus.ERROR, "Not able to click on Edit button on Subjec Link Popup of Task: "
+							log(LogStatus.ERROR, "Not able to click on Edit button on Subject Link Popup of Task: "
 									+ task1SubjectName, YesNo.No);
-							sa.assertTrue(false, "Not able to click on Edit button on Subjec Link Popup of Task: "
+							sa.assertTrue(false, "Not able to click on Edit button on Subject Link Popup of Task: "
 									+ task1SubjectName);
 						}
 
@@ -7741,7 +7742,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -8279,11 +8280,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 											} else {
 												log(LogStatus.ERROR,
-														"Not able to click on Edit button on Subjec Link Popup of Task: "
+														"Not able to click on Edit button on Subject Link Popup of Task: "
 																+ task1SubjectName,
 														YesNo.No);
 												sa.assertTrue(false,
-														"Not able to click on Edit button on Subjec Link Popup of Task: "
+														"Not able to click on Edit button on Subject Link Popup of Task: "
 																+ task1SubjectName);
 											}
 
@@ -8359,9 +8360,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								}
 
 							} else {
-								log(LogStatus.ERROR, "Not able to click on Edit button on Subjec Link Popup of Task: "
+								log(LogStatus.ERROR, "Not able to click on Edit button on Subject Link Popup of Task: "
 										+ task1SubjectName, YesNo.No);
-								sa.assertTrue(false, "Not able to click on Edit button on Subjec Link Popup of Task: "
+								sa.assertTrue(false, "Not able to click on Edit button on Subject Link Popup of Task: "
 										+ task1SubjectName);
 							}
 
@@ -8551,11 +8552,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 											} else {
 												log(LogStatus.ERROR,
-														"Not able to click on Edit button on Subjec Link Popup of Task: "
+														"Not able to click on Edit button on Subject Link Popup of Task: "
 																+ task1SubjectName,
 														YesNo.No);
 												sa.assertTrue(false,
-														"Not able to click on Edit button on Subjec Link Popup of Task: "
+														"Not able to click on Edit button on Subject Link Popup of Task: "
 																+ task1SubjectName);
 											}
 
@@ -8612,11 +8613,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 									} else {
 										log(LogStatus.ERROR,
-												"Not able to click on Edit button on Subjec Link Popup of Task: "
+												"Not able to click on Edit button on Subject Link Popup of Task: "
 														+ task1SubjectName,
 												YesNo.No);
 										sa.assertTrue(false,
-												"Not able to click on Edit button on Subjec Link Popup of Task: "
+												"Not able to click on Edit button on Subject Link Popup of Task: "
 														+ task1SubjectName);
 									}
 
@@ -8631,9 +8632,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								}
 
 							} else {
-								log(LogStatus.ERROR, "Not able to click on Edit button on Subjec Link Popup of Task: "
+								log(LogStatus.ERROR, "Not able to click on Edit button on Subject Link Popup of Task: "
 										+ task1SubjectName, YesNo.No);
-								sa.assertTrue(false, "Not able to click on Edit button on Subjec Link Popup of Task: "
+								sa.assertTrue(false, "Not able to click on Edit button on Subject Link Popup of Task: "
 										+ task1SubjectName);
 							}
 
@@ -8987,7 +8988,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -9058,9 +9059,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							 */
 
 						} else {
-							log(LogStatus.ERROR, "Not able to click on Edit button on Subjec Link Popup of Task: "
+							log(LogStatus.ERROR, "Not able to click on Edit button on Subject Link Popup of Task: "
 									+ task1SubjectName, YesNo.No);
-							sa.assertTrue(false, "Not able to click on Edit button on Subjec Link Popup of Task: "
+							sa.assertTrue(false, "Not able to click on Edit button on Subject Link Popup of Task: "
 									+ task1SubjectName);
 						}
 
@@ -9077,7 +9078,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 						log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-						if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType,
+						if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType,
 								recordName, 30)) {
 							log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open",
 									YesNo.No);
@@ -9271,7 +9272,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -9676,7 +9677,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -9745,11 +9746,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								} else {
 									log(LogStatus.ERROR,
-											"Not able to click on Edit button on Subjec Link Popup of Task: "
+											"Not able to click on Edit button on Subject Link Popup of Task: "
 													+ task1SubjectName,
 											YesNo.No);
 									sa.assertTrue(false,
-											"Not able to click on Edit button on Subjec Link Popup of Task: "
+											"Not able to click on Edit button on Subject Link Popup of Task: "
 													+ task1SubjectName);
 								}
 
@@ -9796,11 +9797,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										} else {
 											log(LogStatus.ERROR,
-													"Not able to click on Edit button on Subjec Link Popup of Task: "
+													"Not able to click on Edit button on Subject Link Popup of Task: "
 															+ task1SubjectName,
 													YesNo.No);
 											sa.assertTrue(false,
-													"Not able to click on Edit button on Subjec Link Popup of Task: "
+													"Not able to click on Edit button on Subject Link Popup of Task: "
 															+ task1SubjectName);
 										}
 
@@ -9812,7 +9813,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 											log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
 											if (BP.clickOnAlreadyCreated_Lighting(environment, mode,
-													TabName.InstituitonsTab, recordType, recordName, 30)) {
+													BP.returnTabName(tabObj1), recordType, recordName, 30)) {
 												log(LogStatus.INFO, recordName + " record of record type " + recordType
 														+ " has been open", YesNo.No);
 												ThreadSleep(4000);
@@ -9859,18 +9860,18 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								} else {
 									log(LogStatus.ERROR,
-											"Not able to click on Edit button on Subjec Link Popup of Task: "
+											"Not able to click on Edit button on Subject Link Popup of Task: "
 													+ task1SubjectName,
 											YesNo.No);
 									sa.assertTrue(false,
-											"Not able to click on Edit button on Subjec Link Popup of Task: "
+											"Not able to click on Edit button on Subject Link Popup of Task: "
 													+ task1SubjectName);
 								}
 
 							} else {
-								log(LogStatus.ERROR, "Not able to click on Edit button on Subjec Link Popup of Task: "
+								log(LogStatus.ERROR, "Not able to click on Edit button on Subject Link Popup of Task: "
 										+ task1SubjectName, YesNo.No);
-								sa.assertTrue(false, "Not able to click on Edit button on Subjec Link Popup of Task: "
+								sa.assertTrue(false, "Not able to click on Edit button on Subject Link Popup of Task: "
 										+ task1SubjectName);
 							}
 
@@ -9989,7 +9990,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -10220,7 +10221,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -10466,7 +10467,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -10711,7 +10712,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -11274,7 +11275,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -11524,7 +11525,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -11733,7 +11734,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -11959,7 +11960,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -12186,7 +12187,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -12458,7 +12459,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -12726,7 +12727,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1), recordType, recordName,
 					30)) {
 				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
 				ThreadSleep(4000);
@@ -13019,7 +13020,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-								if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+								if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1),
 										recordType, recordName, 30)) {
 									log(LogStatus.INFO,
 											recordName + " record of record type " + recordType + " has been open",
@@ -13164,7 +13165,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-								if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+								if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj1),
 										recordType, recordName, 30)) {
 									log(LogStatus.INFO,
 											recordName + " record of record type " + recordType + " has been open",
@@ -13529,10 +13530,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						}
 					} else {
 						log(LogStatus.ERROR,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName,
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName,
 								YesNo.No);
 						sa.assertTrue(false,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 					}
 
 				} else {
@@ -13570,10 +13571,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						}
 					} else {
 						log(LogStatus.ERROR,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName,
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName,
 								YesNo.No);
 						sa.assertTrue(false,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 					}
 
 				} else {
@@ -13610,10 +13611,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						}
 					} else {
 						log(LogStatus.ERROR,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName,
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName,
 								YesNo.No);
 						sa.assertTrue(false,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 					}
 
 				} else {
@@ -13650,10 +13651,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						}
 					} else {
 						log(LogStatus.ERROR,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName,
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName,
 								YesNo.No);
 						sa.assertTrue(false,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 					}
 
 				} else {
@@ -13941,7 +13942,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp66.split("<break>") };
 
-		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes.split("<Section>", -1)[1]);
+		String task1NotesVerify = task1Notes.split("<Section>", -1)[1].replace("@", "");
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_RelatedTo67;
 
@@ -14676,10 +14677,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 					} else {
 						log(LogStatus.ERROR,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName,
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName,
 								YesNo.No);
 						sa.assertTrue(false,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 					}
 
 				} else {
@@ -14719,10 +14720,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 					} else {
 						log(LogStatus.ERROR,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName,
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName,
 								YesNo.No);
 						sa.assertTrue(false,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 					}
 
 				} else {
@@ -15059,7 +15060,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		lp.CRMLogin(superAdminUserName, adminPassword);
 
-		for (int i = 0; i < contactRecordTypeArray.length; i++) {
+		
 			home.notificationPopUpClose();
 			if (home.clickOnSetUpLink()) {
 				flag = false;
@@ -15072,7 +15073,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						if (sp.removeRecordTypeOfObject("PE Standard User",
 								com.navatar.generic.EnumConstants.RecordType.Contact)) {
 							log(LogStatus.INFO, "The record type of Contact has been removed", YesNo.No);
-							break;
+							
 
 						} else {
 							log(LogStatus.ERROR, "The record type of Contact is not removed", YesNo.No);
@@ -15095,7 +15096,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				sa.assertTrue(false, "could not click on setup link");
 			}
 
-		}
+		
 
 		lp.CRMlogout();
 		sa.assertAll();
@@ -15496,10 +15497,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 					} else {
 						log(LogStatus.ERROR,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName,
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName,
 								YesNo.No);
 						sa.assertTrue(false,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 					}
 
 				} else {
@@ -15560,7 +15561,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				AMNNR_CreateNewRecordPopUp90.split("<break>", -1), AMNNR_CreateNewRecordPopUp91.split("<break>", -1),
 				AMNNR_CreateNewRecordPopUp92.split("<break>", -1), AMNNR_CreateNewRecordPopUp93.split("<break>", -1),
 				AMNNR_CreateNewRecordPopUp94.split("<break>", -1) };
-		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
+		String task1NotesVerify = task1Notes;
 		String[] SuggestedTags = AMNNR_SuggestedTag81.split("<break>", -1);
 
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
@@ -15732,10 +15733,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 					} else {
 						log(LogStatus.ERROR,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName,
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName,
 								YesNo.No);
 						sa.assertTrue(false,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 					}
 
 				} else {
@@ -15822,7 +15823,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String priority = AMNNR_AdvancePriority95;
 		String status = AMNNR_AdvanceStatus95;
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_SuggestedTag95;
+				+ (crmUser1FirstName + " " + crmUser1LastName) ;
 		String updatedRelatedToNotContainsVerify = "";
 		for (int i = 1; i <= 51; i++) {
 			updatedRelatedToNotContainsVerify = updatedRelatedToNotContainsVerify + AMNNR_RelatedTo96 + i + "<break>";
@@ -15865,7 +15866,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		System.out.println(contactRecord1);
 		System.out.println(contactRecord2);
 
-		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify } };
+		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify+ "<break>" + AMNNR_SuggestedTag95 } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -15978,10 +15979,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				} else {
 					log(LogStatus.ERROR,
-							"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName,
+							"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName,
 							YesNo.No);
 					sa.assertTrue(false,
-							"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
+							"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 				}
 
 			} else {
@@ -16276,7 +16277,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp101.split("<break>") };
 
-		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes.split("<Section>", -1)[1]);
+		String task1NotesVerify = task1Notes.split("<Section>")[1].replace("@", "");
 		String[] SuggestedTags = AMNNR_SuggestedTag101.split("<break>", -1);
 
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
@@ -18242,9 +18243,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							}
 
 						} else {
-							log(LogStatus.ERROR, "Not able to click on Edit button on Subjec Link Popup of Task: "
+							log(LogStatus.ERROR, "Not able to click on Edit button on Subject Link Popup of Task: "
 									+ task1SubjectName, YesNo.No);
-							sa.assertTrue(false, "Not able to click on Edit button on Subjec Link Popup of Task: "
+							sa.assertTrue(false, "Not able to click on Edit button on Subject Link Popup of Task: "
 									+ task1SubjectName);
 						}
 
@@ -18790,29 +18791,24 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 
 		String task1ButtonName = AMNNR_ActivityType59;
-		String recordName = "WARBUG";
+		String recordName = AMNNR_FirmLegalName3;
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("2"));
 		String getAdvanceDueDate = AdvanceDueDate;
 
 		String task1SubjectName = "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated  nsuser firm record 1608 updated";
-		String task1Notes = "Jasbinder singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdgg"
-				+ "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated"
-				+ "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated "
-				+ "nsuser firm record 1608 updated" + "@Jasbinder";
-		String relatedTo = "Vitara Deal<break>FCR 1";
+		String task1Notes = "Jasbinder singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdgg nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated  nsuser firm record 1608 updated @Jasbinder";
+		String relatedTo = "Vitara Deal<break>Houlihan Lokey-Vitara Deal";
 		String priority = "High";
 		String status = "Not Started";
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String task1NotesVerify = task1Notes;
 		String updatedRelatedToVerifyForDetails = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 		String updatedRelatedToVerify = updatedRelatedToVerifyForDetails + "<break>"
-				+ "jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdgg" + "break"
-				+ "<break>"
-				+ "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated"
-				+ "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated "
-				+ "nsuser firm record 1608 updated";
+				+ "jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdg" + "<break>"
+				+ "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated";
 
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
 				{ AMNNR_TaskLabel3, relatedTo } };
@@ -18829,22 +18825,47 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[] SuggestedTags = "All Records Select".split("<break>", -1);
 		String[][] createNewRecordPopUp = {
-				("checked<break>Jasbinder<break>jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdgg<break>Contact<break>nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated"
-						+ "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated "
-						+ "nsuser firm record 1608 updated<existing><break>Create").split("<break>") };
+				("checked<break>Jasbinder<break>jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdg<break>Contact<break>nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated<existing><break>Create")
+						.split("<break>") };
 		String[][] addContactsToDealTeamPopUp = {
-				"allRecords<break>Jasbinder singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdg<break><break>Add"
+				"allRecords<break>jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdg<break><break>Add"
 						.split("<break>") };
 		String[][] addContactsToFundraisingObjectPopup = {
-				"allRecords<break>Jasbinder singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdg<break><break>Add"
+				"allRecords<break>jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdg<break><break>Add"
 						.split("<break>") };
 
 		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
 				task1BasicSectionVerificationForDetailsSection, task1AdvancedSection };
 
+		String value = "";
+		String type = "";
+
+		String[][] EntityOrAccounts = { {
+				"nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated",
+				"Company", null, null } };
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
-		if (BP.navigateToRecordAndClickOnSubTab(projectName, "Firms", recordName, null)) {
+		for (String[] accounts : EntityOrAccounts) {
+			if (lp.clickOnTab(projectName, mode, BP.returnTabName(tabObj1))) {
+				log(LogStatus.INFO, "Click on Tab : " + BP.returnTabName(tabObj1), YesNo.No);
+				value = accounts[0];
+				type = accounts[1];
+				if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
+					log(LogStatus.INFO, "successfully Created Account/Entity : " + value + " of record type : " + type,
+							YesNo.No);
+				} else {
+					sa.assertTrue(false, "Not Able to Create Account/Entity : " + value + " of record type : " + type);
+					log(LogStatus.SKIP, "Not Able to Create Account/Entity : " + value + " of record type : " + type,
+							YesNo.Yes);
+				}
+
+			} else {
+				sa.assertTrue(false, "Not Able to Click on Tab : " + BP.returnTabName(tabObj1));
+				log(LogStatus.SKIP, "Not Able to Click on Tab : " + BP.returnTabName(tabObj1), YesNo.Yes);
+			}
+		}
+
+		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
 			log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
 
 			if (BP.createActivityTimeline(projectName, false, task1ButtonName, task1BasicSection, task1AdvancedSection,
@@ -18919,6 +18940,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.ERROR, "not able to click on " + task1SubjectName, YesNo.No);
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
+
+//					driver.close();
+//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 
 				} else {
 
@@ -19159,7 +19183,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String classification = AMNNR_Classification66;
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp66.split("<break>") };
 
-		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes.split("<Section>", -1)[1]);
+		String task1NotesVerify = task1Notes.split("<Section>", -1)[1].replace("@", "");
 
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_RelatedTo67;
@@ -19890,10 +19914,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 					} else {
 						log(LogStatus.ERROR,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName,
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName,
 								YesNo.No);
 						sa.assertTrue(false,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 					}
 
 				} else {
@@ -19933,10 +19957,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 					} else {
 						log(LogStatus.ERROR,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName,
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName,
 								YesNo.No);
 						sa.assertTrue(false,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 					}
 
 				} else {
@@ -20271,7 +20295,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		lp.CRMLogin(superAdminUserName, adminPassword);
 
-		for (int i = 0; i < contactRecordTypeArray.length; i++) {
+		
 			home.notificationPopUpClose();
 			if (home.clickOnSetUpLink()) {
 				flag = false;
@@ -20284,7 +20308,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						if (sp.removeRecordTypeOfObject("PE Standard User",
 								com.navatar.generic.EnumConstants.RecordType.Contact)) {
 							log(LogStatus.INFO, "The record type of Contact has been removed", YesNo.No);
-							break;
+							
 
 						} else {
 							log(LogStatus.ERROR, "The record type of Contact is not removed", YesNo.No);
@@ -20307,7 +20331,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				sa.assertTrue(false, "could not click on setup link");
 			}
 
-		}
+
 
 		lp.CRMlogout();
 		sa.assertAll();
@@ -20711,10 +20735,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				} else {
 					log(LogStatus.ERROR,
-							"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName,
+							"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName,
 							YesNo.No);
 					sa.assertTrue(false,
-							"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
+							"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 				}
 
 			} else {
@@ -20765,7 +20789,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				AMNNR_CreateNewRecordPopUp162.split("<break>", -1), AMNNR_CreateNewRecordPopUp163.split("<break>", -1),
 				AMNNR_CreateNewRecordPopUp164.split("<break>", -1), AMNNR_CreateNewRecordPopUp165.split("<break>", -1),
 				AMNNR_CreateNewRecordPopUp166.split("<break>", -1) };
-		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
+		String task1NotesVerify = task1Notes;
 		String[] SuggestedTags = AMNNR_SuggestedTag81.split("<break>", -1);
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
@@ -20937,10 +20961,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 					} else {
 						log(LogStatus.ERROR,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName,
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName,
 								YesNo.No);
 						sa.assertTrue(false,
-								"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 					}
 
 				} else {
@@ -21025,7 +21049,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String relatedTo = AMNNR_RelatedTo95;
 
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-				+ (crmUser1FirstName + " " + crmUser1LastName) + "<break>" + AMNNR_SuggestedTag95;
+				+ (crmUser1FirstName + " " + crmUser1LastName) ;
 		String updatedRelatedToNotContainsVerify = "";
 		for (int i = 1; i <= 51; i++) {
 			updatedRelatedToNotContainsVerify = updatedRelatedToNotContainsVerify + AMNNR_RelatedTo167 + i + "<break>";
@@ -21068,7 +21092,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		System.out.println(contactRecord1);
 		System.out.println(contactRecord2);
 
-		String[][] relatedAssociationNotContains = { { AMNNR_CallLabel3, updatedRelatedToNotContainsVerify } };
+		String[][] relatedAssociationNotContains = { { AMNNR_CallLabel3, updatedRelatedToNotContainsVerify + "<break>" + AMNNR_SuggestedTag95 } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -21181,10 +21205,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				} else {
 					log(LogStatus.ERROR,
-							"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName,
+							"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName,
 							YesNo.No);
 					sa.assertTrue(false,
-							"Not able to click on Edit button on Subjec Link Popup of Task: " + task1SubjectName);
+							"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
 				}
 
 			} else {
@@ -21479,7 +21503,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp101.split("<break>") };
 
-		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes.split("<Section>", -1)[1]);
+		String task1NotesVerify = task1Notes.split("<Section>")[1].replace("@", "");
 		String[] SuggestedTags = AMNNR_SuggestedTag172.split("<break>", -1);
 
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
@@ -23426,9 +23450,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							}
 
 						} else {
-							log(LogStatus.ERROR, "Not able to click on Edit button on Subjec Link Popup of Task: "
+							log(LogStatus.ERROR, "Not able to click on Edit button on Subject Link Popup of Task: "
 									+ task1SubjectName, YesNo.No);
-							sa.assertTrue(false, "Not able to click on Edit button on Subjec Link Popup of Task: "
+							sa.assertTrue(false, "Not able to click on Edit button on Subject Link Popup of Task: "
 									+ task1SubjectName);
 						}
 
@@ -23970,59 +23994,82 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 
-		String task1ButtonName = AMNNR_ActivityType59 + " " + AMNNR_ActivityType54;
-		String recordName = "WARBUG";
+		String task1ButtonName = AMNNR_ActivityType142;
+		String recordName = AMNNR_FirmLegalName3;
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("2"));
 		String getAdvanceDueDate = AdvanceDueDate;
 
-		String task1SubjectName = "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated  nsuser firm record 1608 updated";
-		String task1Notes = "Jasbinder singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdgg"
-				+ "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated"
-				+ "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated "
-				+ "nsuser firm record 1608 updated" + "@Jasbinder";
-		String relatedTo = "Vitara Deal<break>FCR 1";
-
-		String task1NotesVerify = task1Notes.replace("@", "");
+		String task1SubjectName = "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated  nsuser firm record 1608 updated"
+				+ " " + AMNNR_ActivityType54;
+		String task1Notes = "Jasbinder singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdgg nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated  nsuser firm record 1608 updated @Jasbinder";
+		String relatedTo = "Vitara Deal<break>Houlihan Lokey-Vitara Deal";
+		String priority = "High";
+		String status = "Not Started";
+		String task1NotesVerify = task1Notes;
 		String updatedRelatedToVerifyForDetails = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 		String updatedRelatedToVerify = updatedRelatedToVerifyForDetails + "<break>"
-				+ "jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdgg" + "break"
-				+ "<break>"
-				+ "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated"
-				+ "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated "
-				+ "nsuser firm record 1608 updated";
+				+ "jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djhCall" + "<break>"
+				+ "CallUs firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated";
 
-		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
-				{ AMNNR_CallLabel3, relatedTo } };
+		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
+				{ AMNNR_TaskLabel3, relatedTo } };
 
-		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_CallLabel1, task1SubjectName },
-				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerifyForDetails } };
-		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
-				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
+		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_TaskLabel1, task1SubjectName },
+				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyForDetails } };
+		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
+				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
-		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel8, "C" } };
+		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
+				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "C" } };
 
 		String[][] followUptask1 = null;
 
 		String[] SuggestedTags = "All Records Select".split("<break>", -1);
 		String[][] createNewRecordPopUp = {
-				("checked<break>Jasbinder<break>jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdgg<break>Contact<break>nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated"
-						+ "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated "
-						+ "nsuser firm record 1608 updated<existing><break>Create").split("<break>") };
+				("checked<break>Jasbinder<break>jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djhCall<break>Contact<break>CallUs firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated<existing><break>Create")
+						.split("<break>") };
 		String[][] addContactsToDealTeamPopUp = {
-				"allRecords<break>Jasbinder singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdg<break><break>Add"
+				"allRecords<break>jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djhCall<break><break>Add"
 						.split("<break>") };
 		String[][] addContactsToFundraisingObjectPopup = {
-				"allRecords<break>Jasbinder singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdg<break><break>Add"
+				"allRecords<break>jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djhCall<break><break>Add"
 						.split("<break>") };
 
 		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
 				task1BasicSectionVerificationForDetailsSection, task1AdvancedSection };
 
+		String value = "";
+		String type = "";
+
+		String[][] EntityOrAccounts = { {
+				"CallUs firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated",
+				"Company", null, null } };
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
-		if (BP.navigateToRecordAndClickOnSubTab(projectName, "Firms", recordName, null)) {
+		for (String[] accounts : EntityOrAccounts) {
+			if (lp.clickOnTab(projectName, mode, BP.returnTabName(tabObj1))) {
+				log(LogStatus.INFO, "Click on Tab : " + BP.returnTabName(tabObj1), YesNo.No);
+				value = accounts[0];
+				type = accounts[1];
+				if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
+					log(LogStatus.INFO, "successfully Created Account/Entity : " + value + " of record type : " + type,
+							YesNo.No);
+				} else {
+					sa.assertTrue(false, "Not Able to Create Account/Entity : " + value + " of record type : " + type);
+					log(LogStatus.SKIP, "Not Able to Create Account/Entity : " + value + " of record type : " + type,
+							YesNo.Yes);
+				}
+
+			} else {
+				sa.assertTrue(false, "Not Able to Click on Tab : " + BP.returnTabName(tabObj1));
+				log(LogStatus.SKIP, "Not Able to Click on Tab : " + BP.returnTabName(tabObj1), YesNo.Yes);
+			}
+		}
+
+		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
 			log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
 
 			if (BP.createActivityTimeline(projectName, false, task1ButtonName, task1BasicSection, task1AdvancedSection,
@@ -24098,6 +24145,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
 
+//					driver.close();
+//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+
 				} else {
 
 					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
@@ -24124,6 +24174,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		lp.CRMlogout();
 		sa.assertAll();
+
 	}
 
 	@Parameters({ "projectName" })
