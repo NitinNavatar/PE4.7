@@ -140,6 +140,19 @@ public class ResearchPage extends BasePageBusinessLayer {
 			return isDisplayed(driver, researchMinimize, "Visibility", timeOut, "Research Minimize");
 
 		}
+		
+		@FindBy(xpath = "//div[contains(@class,'slds-combobox_object-switcher')]//button[contains(@class,'slds-input_faux')]")
+		private WebElement progressDropdown;
+
+		public WebElement getProgressDropdown(int timeOut) {
+			return isDisplayed(driver, progressDropdown, "Visibility", timeOut, "Research Progress Dropdown");
+		}
+		
+		public WebElement getClickOnProgress(String progressName, int timeOut) {
+			String xpath = "//div[contains(@class,'slds-dropdown_fluid')]//span[text()='"+ progressName +"']";
+
+			return isDisplayed(driver, FindElement(driver, xpath, "Click on : " + progressName, action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "Click on Progress");
+		}
 
 		@FindBy(xpath = "(//div[contains(@class,'DOCKED')]//div//button)[2]")
 		private WebElement researchPopOut;

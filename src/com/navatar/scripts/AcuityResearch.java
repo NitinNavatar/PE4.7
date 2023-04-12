@@ -31,6 +31,7 @@ import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.PermissionType;
+import com.navatar.generic.EnumConstants.ProgressType;
 import com.navatar.generic.EnumConstants.RelatedTab;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
@@ -8711,4 +8712,46 @@ public class AcuityResearch extends BaseLib{
 		sa.assertAll();
 	}
 
+	@Parameters({ "projectName" })
+	@Test
+	public void ARTc050_VerifyResearchDataForCurrentRecord(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	FundRaisingPageBusinessLayer frp = new FundRaisingPageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	lp.CRMLogin(glUser1EmailID, adminPassword);
+	
+	String[] searchValues = readAllDataForAColumn(ResearchDataSheetFilePath, "CurrentRecord", 0, false).split("<break>");
+	
+	for(String searchValue : searchValues) {
+		String variable =ExcelUtils.readData(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, searchValue, excelLabel.ResearchFindings);
+		String tabName =ExcelUtils.readData(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, searchValue, excelLabel.Tab_Name);
+		String recordName =ExcelUtils.readData(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, searchValue, excelLabel.Record_Name);
+		   if (fp.clickOnTab(environment, mode, TabName.valueOf(tabName))) {
+		       log(LogStatus.INFO, "Click on Tab : " + TabName.valueOf(tabName), YesNo.No);
+		      if (fp.clickOnAlreadyCreatedItem(projectName, recordName.replace("  ", "").replace("\"", ""), 10)) {
+		    	  if(rp.openResearchForCurrentRecord(projectName,ProgressType.Current_Record.toString(),variable,10)) {
+			   		   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(searchValue, action.SCROLLANDBOOLEAN, 10);
+			   			if(list.isEmpty()) {
+			   				
+			   				log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			   			} else {
+			   				log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			   				sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Firm4 + "||" + "list : "+list);
+			   			}  	  
+		           }
+		       } else {
+		          sa.assertTrue(false, "Not Able to open created Record : " + recordName);
+		           log(LogStatus.SKIP, "Not Able to open created Record: " + recordName, YesNo.Yes);
+		      }
+		   } else {
+		       log(LogStatus.ERROR, "Not able to click on " + TabName.valueOf(tabName) + " tab", YesNo.Yes);
+		       sa.assertTrue(false, "Not able to click on " + TabName.valueOf(tabName) + " tab");
+		   }  
+	}   
+			lp.CRMlogout();
+			sa.assertAll();
+		}
+	
 }
