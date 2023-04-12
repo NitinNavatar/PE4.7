@@ -7273,7 +7273,7 @@ public abstract class BasePage extends BaseLib {
 	
 	public WebElement dealTeamAcuityDeals(String dealName, String dealCount, int timeOut) {
 
-		String xpath = "//a[text()='" + dealName + "']/ancestor::th[@data-label='Name']/following-sibling::td/ancestor::div//span[@title='Deals']/ancestor::div//lightning-base-formatted-text[text()='" + dealCount + " 'and @name='dealRef']";
+		String xpath = "//a[text()='" + dealName + "']/ancestor::th[@data-label='Name']/following-sibling::td/ancestor::div//*[@title='Deals']/ancestor::div//button[text()='" + dealCount + "' and @name='dealRef']";
 		try {
 			return FindElement(driver, xpath, "Header: " + dealCount, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7284,7 +7284,7 @@ public abstract class BasePage extends BaseLib {
 	
 	public WebElement dealTeamAcuityMeetingsAndCalls(String dealName, String meetingCount, int timeOut) {
 
-		String xpath = "//a[text()='" + dealName + "']/ancestor::th[@data-label='Name']/following-sibling::td/ancestor::div//span[@title='Meetings and Calls']/ancestor::div//lightning-base-formatted-text[text()='" + meetingCount +  " 'and @name=' meetCallRef']";
+		String xpath = "//a[text()='" + dealName + "']/ancestor::th[@data-label='Name']/following-sibling::td/ancestor::div//span[@title='Meetings and Calls']/ancestor::div//lightning-base-formatted-text[text()='" + meetingCount +  " ' and @name=' meetCallRef']";
 		try {
 			return FindElement(driver, xpath, "Header: " + meetingCount, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {

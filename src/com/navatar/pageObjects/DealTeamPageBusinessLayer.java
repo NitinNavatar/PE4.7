@@ -64,7 +64,7 @@ public class DealTeamPageBusinessLayer extends DealTeamPage{
 						log(LogStatus.SKIP,"Not Able to send "+value+" to label : "+label,YesNo.Yes);
 						return false;
 					}
-				}else if(PageLabel.Team_Member_Role.toString().equals(reuestData[0]) || PageLabel.Role.toString().equals(reuestData[0]) || PageLabel.Deal_Contact_Type.toString().equals(reuestData[0])) {
+				}else if(PageLabel.Team_Member_Role.toString().equals(reuestData[0]) || PageLabel.Deal_Contact_Type.toString().equals(reuestData[0])) {
 
 					if (click(driver, getteamMemberRoleDropDownList(projectName, 10), label, action)) {
 						ThreadSleep(2000);
@@ -88,17 +88,31 @@ public class DealTeamPageBusinessLayer extends DealTeamPage{
 					}
 
 				}
-				/*else if(AttendeeLabels.Notes.toString().equals(reuestData[0])) {
-					AttendeePage ap = new AttendeePage(driver);
-					if (sendKeys(driver, ap.labelTextBox(projectName,reuestData[0], 60), value, "notes",
-							action.BOOLEAN)) {
+				else if(PageLabel.Role.toString().equals(reuestData[0])) {
+					FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+									if (reuestData[0] != null) {
+						if (click(driver, fp.getRoleDropDownList(projectName, timeOut), "Deal Role : " + reuestData[1],
+								action.SCROLLANDBOOLEAN)) {
+							ThreadSleep(2000);
+							appLog.error("Clicked on Role");
 
-					} else {
-						sa.assertTrue(false,"not able to enter text to "+label);
-						log(LogStatus.SKIP,"not able to enter text to "+label,YesNo.Yes);
-						flag=false;
-					}
-				}*/
+							xpath = "//span[@title='" + reuestData[1] + "']";
+							WebElement dealStatusEle = FindElement(driver, xpath, reuestData[1], action.SCROLLANDBOOLEAN,
+									timeOut);
+							ThreadSleep(2000);
+							if (click(driver, dealStatusEle, reuestData[1], action.SCROLLANDBOOLEAN)) {
+								appLog.info("Selected Status : " + reuestData[1]);
+								ThreadSleep(2000);
+							} else {
+								appLog.error("Not able to Select on Status : " + reuestData[1]);
+								flag = false;
+							}
+						} else {
+							appLog.error("Not able to Click on Status : ");
+							flag = false;
+						}
+				}
+				}
 			}
 
 			

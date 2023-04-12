@@ -8,6 +8,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import com.navatar.generic.EnumConstants.action;
+
 import static com.navatar.generic.CommonLib.*;
 
 import java.util.List;
@@ -57,6 +60,19 @@ public class FundRaisingPage extends BasePage {
 		return isDisplayed(driver, legalName, "Visibility", timeOut, "Legal Name");
 	}
 
+	@FindBy(xpath = "//*[text()='Role']/..//div//button")
+	private WebElement roleDropDownList;
+
+	/**
+	 * @return the fundType
+	 */
+	public WebElement getRoleDropDownList(String projectName, int timeOut) {
+
+		return isDisplayed(driver, roleDropDownList, "Visibility", timeOut, "Role DropDown List ");
+
+	}
+	
+	
 	@FindBy(xpath = "//div[@id='Name_ileinner']")
 	private WebElement fundraisingNameInViewMode;
 
@@ -86,6 +102,12 @@ public class FundRaisingPage extends BasePage {
 		return isDisplayed(driver, targetCloseDateTextBox, "Visibility", timeOut, "Target Close Date Text Box");
 	}
 
+	public WebElement getListTextbox(String projectName,String contactOrFirm,int timeOut) {
+		String xpath = "//*[text()='"+contactOrFirm+"']/..//div//input";
+		WebElement ele=FindElement(driver, xpath, contactOrFirm, action.BOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "ContactOrFirmOrFundraising");
+	}
+	
 	@FindBy(xpath = "//span[@class='dateInput']/../..//input")
 	private WebElement testDateTimeTextBox;
 

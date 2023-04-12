@@ -214,6 +214,18 @@ public class FundsPage extends BasePageBusinessLayer {
 
 	}
 
+	@FindBy(xpath = "//*[text()='Role']/..//div//button")
+	private WebElement roleDropDownList;
+
+	/**
+	 * @return the fundType
+	 */
+	public WebElement getRoleDropDownList(String projectName, int timeOut) {
+
+		return isDisplayed(driver, roleDropDownList, "Visibility", timeOut, "Role DropDown List ");
+
+	}
+	
 	@FindBy(xpath = "//*[text()='Stage']/..//div//button")
 	private WebElement dealStageDropDownList;
 

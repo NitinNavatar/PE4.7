@@ -3543,13 +3543,16 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();
 	}
 
-	public void RGATETc021_CreateAccountDeals(String projectName) {
+	@Parameters({ "projectName" })
+	@Test
+	public void RGATETc021_CreateAccountFundraisings(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		FundRaisingPageBusinessLayer fr = new FundRaisingPageBusinessLayer(driver);
-
+		FundsPageBusinessLayer fd = new FundsPageBusinessLayer(driver);
+		
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		
 		String[] accountName = RGATE_FirmLegalName5.split("<break>");
@@ -3564,6 +3567,8 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		String dealCompany = RGATE_DealCompany4;
 		String dealStage = RGATE_DealStage4;
 		String fundName = RGATE_FundName4;
+		String fundType = AS_FundType;
+		String fundInvestmentCategory = AS_FundInvestmentCategory;
 
 			for (int i = 0; i < accountName.length; i++) {
 				if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
@@ -3621,12 +3626,30 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 			refresh(driver);
 		}
 		ThreadSleep(2000);
+		if (lp.clickOnTab(projectName, tabObj3)) {
+
+			log(LogStatus.INFO, "Click on Tab : " + tabObj3, YesNo.No);
+			ThreadSleep(3000);
+
+			if (fd.createFund(projectName, fundName, fundType, fundInvestmentCategory, null, null)) {
+				log(LogStatus.INFO, fundName + " Fund has been created", YesNo.No);
+				sa.assertTrue(true, fundName + " Fund has been created");
+			} else {
+				log(LogStatus.ERROR, fundName + " Fund is not created", YesNo.No);
+				sa.assertTrue(false, fundName + " Fund is not created");
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + tabObj3 + " Tab", YesNo.No);
+			sa.assertTrue(false, "Not able to click on " + tabObj3 + " Tab");
+		}
+		ThreadSleep(2000);
 		if (lp.clickOnTab(projectName, TabName.FundraisingsTab)) {
 
 			log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
 			ThreadSleep(3000);
 
-			if (fr.createFundRaising(environment,projectName, mode, dealName, fundName,dealCompany,null, dealStage,null,null)) {
+			if (fr.createFundRaising(environment, mode, dealName, fundName, dealCompany, null, dealStage,null,null)) {
 				log(LogStatus.INFO, dealName + " Fundraising has been created", YesNo.No);
 				sa.assertTrue(true, dealName + " Fundraising has been created");
 
@@ -3646,7 +3669,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void RGATETc022_CreateDealTeamAndVerifyOnInternalAndExternalTabOfDeal(String projectName) {	
+	public void RGATETc022_CreateFundraisingContactAndVerifyOnInternalAndExternalTabOfDeal(String projectName) {	
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		FundRaisingPageBusinessLayer fr = new FundRaisingPageBusinessLayer(driver);
@@ -3658,17 +3681,19 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		String dealName = ACDealName2;
 		String[] accountName = RGATE_FirmLegalName5.split("<break>");
 		String[] title = RGATEConnectionTitle10.split("<break>");
-		String[] role = RGATEConnectionRole10.split("<break>");
+		String[] role = ACDealTeamRole2.split("<break>");
 		String[] dealCount = RGATEConnectionsDeal10.split("<break>");
 		String[] meetCount = RGATEConnectionsCallCount10.split("<break>");
 		String[] emailCount = RGATEConnectionsEmailCount10.split("<break>");
 		
 		log(LogStatus.INFO, TeamMember.length + " is length", YesNo.No);
 		for (int i = 0; i < TeamMember.length; i++) {
+			String[][] data = { { PageLabel.Fundraising.toString(), dealName }, { PageLabel.Role.toString(), teamRole[i] },
+					{ PageLabel.Contact.toString(), contactName[i] }, { PageLabel.Firm.toString(), TeamMember[i] } };
 		if (BP.openAppFromAppLauchner(10, "Fundraising Contacts")) {
 			log(LogStatus.INFO, "Fundraising Contacts has been open from the app launcher", YesNo.No);
 
-			if (fr.createFundRaisingContactFromIcon(environment, mode, contactName[i], teamRole[i])) {
+			if (fr.createFundraisingContact(projectName, dealName, data, action.SCROLLANDBOOLEAN, 25)) {
 				log(LogStatus.INFO, "----Successfully Created the Fundraising Contacts for Firm: " + TeamMember + "----", YesNo.No);
 			}
 			else
@@ -3694,7 +3719,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		if(lp.clickOnAlreadyCreated(environment, mode,TabName.FundraisingsTab , dealName, 10)){
 			log(LogStatus.INFO, "Click on deal : " + dealName, YesNo.No);
 			
-			for(int i=0; i<accountName.length;i++) {
+			for(int i=0; i<accountName.length-1;i++) {
 					if (BP.dealTeamAcuityDealName(contactName[i], 30) != null) {
 						log(LogStatus.PASS, "Deal Name: " + contactName[i] + " is hyperlink and is present", YesNo.No);
 						if (BP.dealTeamAcuityTitleName(contactName[i], title[i], 30) != null) {
@@ -3744,8 +3769,8 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 				}
 					}
 				}else {
-					log(LogStatus.ERROR, "could not click on new task button", YesNo.Yes);
-					sa.assertTrue(false,"could not click on new task button" );
+					log(LogStatus.ERROR, "could not click on fundraising tab", YesNo.Yes);
+					sa.assertTrue(false,"could not click on fundraising tab" );
 				}
 		
 		lp.CRMlogout();
@@ -3887,11 +3912,6 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 				}
 				
-				if(BP.ExternalTab(10, action.SCROLLANDBOOLEAN) != null) {
-					log(LogStatus.PASS, "External Tab is present", YesNo.No);
-					clickUsingJavaScript(driver, BP.ExternalTab(10,action.SCROLLANDBOOLEAN), "External Tab");
-					log(LogStatus.PASS, "Clicked on External Tab", YesNo.No);
-					ThreadSleep(2000);
 					for(int i=0; i<accountName.length;i++) {
 					if (BP.dealTeamAcuityDealName(dealContact[i], 30) != null) {
 						log(LogStatus.PASS, "Deal Name: " + dealContact[i] + " is hyperlink and is present", YesNo.No);
@@ -3939,12 +3959,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Contact not present: " + dealContact[i], YesNo.Yes);
 							sa.assertTrue(false, "Contact not present: " + dealContact[i]);
 						}
-				}
-					} else {
-						log(LogStatus.ERROR, "External Tab not present.", YesNo.Yes);
-						sa.assertTrue(false, "External Tab not present.");
-					}	
-				
+				}	
 			} else {
 				log(LogStatus.ERROR, "Not able to Click on Acuity Tab", YesNo.Yes);
 				sa.assertTrue(false, "Not able to Click on Acuity Tab");
@@ -4027,6 +4042,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		String[] peopleTaggedName= RGATE_TaggedPeopleName10.split("<break>");
 		String[] peopleTaggedTimeReference= RGATE_TaggedPeopleCount10.split("<break>");
 		String eventTitle8= RGATE_Subject10;
+		String eventAttendees8=RGATE_RelatedTo10;
 		String advancedDate = RGATE_AdvanceStartDate10;
 		ArrayList<String> subjectNames = new ArrayList<String>();
 		for (String subjectName : subjectNames) {
@@ -4070,7 +4086,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle8 + " through Outlook---------",
 				YesNo.No);
 		if (op.loginAndCreateEventThroughOutLook(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle8,
-				eventTitle8, startDate8, endDate8, startTime8, endTime8, descriptionBox6, true)) {
+				eventAttendees8, startDate8, endDate8, startTime8, endTime8, descriptionBox6, true)) {
 			log(LogStatus.INFO,
 					"-----Event Created Msg is showing, So Event of Title: " + eventTitle8 + " has been created-----",
 					YesNo.No);
@@ -4453,8 +4469,11 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
-		
+		String updatedCommentOfTask = RGATE_Description10;
+		String[][] task1UpdateBasicSection = { { RGATE_Subject10, updatedCommentOfTask } };
+		String[] task1SubjectName = RGATE_FirmLegalName3.split("<break>");
 		String[] accountName = RGATE_FirmLegalName3.split("<break>");
 		String details = RGATE_Notes10;
 		String eventTitle8= RGATE_Subject10;
@@ -4472,6 +4491,46 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		ExcelUtils.writeData(AcuityDataSheetFilePath, endDate8, "Activity Timeline", excelLabel.Variable_Name,
 				"RGATE_010", excelLabel.Advance_End_Date);
 
+		if (home.globalSearchAndNavigate(task1SubjectName[2], "Events", false)) {
+
+		log(LogStatus.INFO,
+				"-----Verified Task named: " + task1SubjectName[2] + " found in Tasks Object-----",
+				YesNo.No);
+
+		if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+				"Edit Note Button of: " + task1SubjectName[2], action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
+
+			if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection, null, null, null,
+					null, false, null, null, null, null, null, null)) {
+				log(LogStatus.PASS,
+						"Activity timeline record has been Updated for Task: " + task1SubjectName[2],
+						YesNo.No);
+			} else {
+				log(LogStatus.FAIL,
+						"Activity timeline record has not Updated for task: " + task1SubjectName[2],
+						YesNo.No);
+				sa.assertTrue(false,
+						"Activity timeline record has not Updated for task: " + task1SubjectName[2]);
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Edit button on Subjec Link Popup of Task: "
+					+ task1SubjectName[2], YesNo.No);
+			sa.assertTrue(false, "Not able to click on Edit button on Subjec Link Popup of Task: "
+					+ task1SubjectName[2]);
+		}
+
+	} else {
+
+		log(LogStatus.ERROR, "-----Task named: " + task1SubjectName[2] + " not found in Tasks Object-----",
+				YesNo.Yes);
+		BaseLib.sa.assertTrue(false,
+				"-----Task named: " + task1SubjectName[2] + " not found in Tasks Object-----");
+
+	}
+
+		
 		if (lp.clickOnTab(projectName, TabName.InstituitonsTab)) {
 
 			log(LogStatus.INFO, "Click on Tab : " + TabName.InstituitonsTab, YesNo.No);

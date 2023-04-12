@@ -726,6 +726,92 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage {
 		return flag;
 	}
 
+	public boolean createFundraisingContact(String projectName,String fundraisingName,String[][] requestInfo,action action,int timeOut) {
+		boolean flag=true;
+		String label;
+		String value;
+		String xpath="";
+		WebElement ele;
+		
+		if(clickUsingJavaScript(driver, getNewButton(projectName, timeOut), "Fundraising Contacts")) {
+			log(LogStatus.INFO,"click on New deal team Button",YesNo.Yes);
+
+			for (String[] reuestData : requestInfo) {
+				label=reuestData[0].replace("_", " ");
+				value=reuestData[1];
+
+				if(PageLabel.Fundraising.toString().equals(reuestData[0]) || PageLabel.Contact.toString().equals(reuestData[0]) ||PageLabel.Firm.toString().equals(reuestData[0])){
+					if (sendKeys(driver, getListTextbox(projectName,label, timeOut), value, label+" : "+value,action)) {
+						ThreadSleep(3000);
+						log(LogStatus.INFO,"Able to send "+value+" to label : "+label,YesNo.Yes);
+						if (click(driver,FindElement(driver,"//span[contains(@class,'listbox')]//*[@title='"+value+"']","ATTENDEE Name List", action, 10),
+								value + "   :   Company Name", action)) {
+							log(LogStatus.INFO,"Able to select "+value+" to label : "+label,YesNo.No);
+						} else {
+							sa.assertTrue(false,"Not Able to select "+value+" to label : "+label);
+							log(LogStatus.SKIP,"Not Able to select "+value+" to label : "+label,YesNo.Yes);
+							flag=false;
+						}
+
+					} else {
+						sa.assertTrue(false,"Not Able to send "+value+" to label : "+label);
+						log(LogStatus.SKIP,"Not Able to send "+value+" to label : "+label,YesNo.Yes);
+						return false;
+					}
+				} else if(PageLabel.Role.toString().equals(reuestData[0])) {if (click(driver, getRoleDropDownList(projectName, 10), label, action)) {
+					ThreadSleep(2000);
+					log(LogStatus.INFO,"Able to Click on "+label,YesNo.No);
+
+					xpath="//span[@title='"+value+"']";
+					ele = FindElement(driver,xpath, value,action, timeOut);
+					ThreadSleep(4000);
+					if (click(driver, ele, value, action)) {
+						log(LogStatus.INFO,"Able to select "+value+" to label : "+label,YesNo.No);	
+					} else {
+						sa.assertTrue(false,"Not Able to select "+value+" to label : "+label);
+						log(LogStatus.SKIP,"Not Able to select "+value+" to label : "+label,YesNo.Yes);
+						flag=false;
+					}
+
+				} else {
+					sa.assertTrue(false,"Not Able to Click on "+label);
+					log(LogStatus.SKIP,"Not Able to Click on "+label,YesNo.Yes);
+					flag=false;
+				}
+				}
+			}
+
+			if (click(driver, getRecordPageSettingSave(timeOut), "save button", action)) {
+				appLog.info("clicked on save button");
+				
+				ThreadSleep(3000);
+				refresh(driver);
+				ThreadSleep(3000);
+				xpath="//*[text()='Fundraising Contact']/parent::h1//slot/lightning-formatted-text";
+				ele = FindElement(driver, xpath, "dt id", action, timeOut);
+				if (ele!=null) {
+					String id=getText(driver, ele, "deal team id",action.SCROLLANDBOOLEAN);
+					log(LogStatus.INFO,"successfully created and noted id of DT"+id+" and deal name "+fundraisingName,YesNo.No);	
+				} else {
+					sa.assertTrue(false,"could not create DT"+fundraisingName);
+					log(LogStatus.SKIP,"could not create DT"+fundraisingName,YesNo.Yes);
+					flag=false;
+				}
+			} else {
+				sa.assertTrue(false,"Not Able to Click on save button so cannot create deal team");
+				log(LogStatus.SKIP,"Not Able to Click on save button so cannot create deal team",YesNo.Yes);
+				flag=false;
+			}
+
+
+		}else {
+			sa.assertTrue(false,"Not able to click on deal team button");
+			log(LogStatus.SKIP,"Not able to click on deal team button",YesNo.Yes);
+			flag=false;
+
+		}
+		return flag;
+	}
 	
 	/**
 	 * @author Ankur Alam

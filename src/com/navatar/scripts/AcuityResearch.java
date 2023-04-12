@@ -1304,7 +1304,7 @@ public class AcuityResearch extends BaseLib{
 		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
-			ThreadSleep(8000);
+			ThreadSleep(4000);
 			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
 			ThreadSleep(2000);
 			ele = rp.getResearchFindingsValue(10).getText();
@@ -1407,7 +1407,7 @@ public class AcuityResearch extends BaseLib{
 		if(sendKeys(driver, rp.getTextAreaResearch(5),searchValues[i], "Input", action.BOOLEAN)){
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
-			ThreadSleep(8000);
+			ThreadSleep(4000);
 			clickUsingJavaScript(driver, rp.getResearchMinimize(5),"Research Minimize Button", action.BOOLEAN);
 			ThreadSleep(2000);
 	} else {
@@ -1487,7 +1487,7 @@ public class AcuityResearch extends BaseLib{
 		if(sendKeys(driver, rp.getTextAreaResearch(5),searchValues[i], "Input", action.BOOLEAN)){
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
-			ThreadSleep(8000);
+			ThreadSleep(4000);
 			clickUsingJavaScript(driver, rp.getResearchMinimize(5),"Research Minimize Button", action.BOOLEAN);
 			ThreadSleep(2000);
 	} else {
@@ -1567,7 +1567,7 @@ public class AcuityResearch extends BaseLib{
 		if(sendKeys(driver, rp.getTextAreaResearch(5),searchValues[i], "Input", action.BOOLEAN)){
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
-			ThreadSleep(8000);
+			ThreadSleep(4000);
 			clickUsingJavaScript(driver, rp.getResearchMinimize(5),"Research Minimize Button", action.BOOLEAN);
 			ThreadSleep(2000);
 	} else {
@@ -1638,7 +1638,7 @@ public class AcuityResearch extends BaseLib{
 	String[] searchValues = readAllDataForAColumn(ResearchDataSheetFilePath, "SearchData" , 2,false).split("<break>");
 	
 //	for(String searchValue : searchValues) {
-		for(int i =91; i <=130; i++) {
+		for(int i =91; i <=searchValues.length; i++) {
 		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"SearchData",excelLabel.ResearchFindings, searchValues[i], excelLabel.Variable_Name);
 		
 		log(LogStatus.PASS, "WOrking for " + searchValues[i], YesNo.Yes);
@@ -1647,7 +1647,7 @@ public class AcuityResearch extends BaseLib{
 		if(sendKeys(driver, rp.getTextAreaResearch(5),searchValues[i], "Input", action.BOOLEAN)){
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
-			ThreadSleep(8000);
+			ThreadSleep(4000);
 			clickUsingJavaScript(driver, rp.getResearchMinimize(5),"Research Minimize Button", action.BOOLEAN);
 			ThreadSleep(2000);
 	} else {
