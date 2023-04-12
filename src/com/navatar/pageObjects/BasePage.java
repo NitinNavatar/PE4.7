@@ -6419,7 +6419,6 @@ public abstract class BasePage extends BaseLib {
 		return FindElement(driver, "//label[text()='" + label
 				+ "']/ancestor::div[@class='slds-form-element__row'  or contains(@class,'label-stacked')]//div/input",
 				"DropDown: " + label, action.SCROLLANDBOOLEAN, timeOut);
-
 	}
 
 	public WebElement searchDropDownBoxThroughSDG(String label, int timeOut) {
@@ -7919,6 +7918,8 @@ public abstract class BasePage extends BaseLib {
 			return isDisplayed(driver, ele, "Visibility", timeOut, "] Header Found: " + subjectName);
 		}
 	}
+	
+	
 
 	public WebElement suggestedTagHeading(int timeOut) {
 		String xpath = "//header//h2[text()='Suggested Tags']";
@@ -10048,7 +10049,7 @@ public abstract class BasePage extends BaseLib {
 	
 	public WebElement getConnectionIconOfFundraisingContactRecord(String contactName, int timeOut) {
 
-		String path = "//a[text()="+contactName+"]/ancestor::td[@data-label='Name']/../td//button[@title='Connections']";
+		String path = "//a[text()='"+contactName+"']/ancestor::td[@data-label='Name']/../td//button[@title='Connections']";
 		return FindElement(driver, path, "Meeting and call count", action.BOOLEAN, timeOut);
 	}
 	

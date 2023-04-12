@@ -23,34 +23,16 @@ import com.navatar.generic.AppListeners;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.ExcelUtils;
-import static com.navatar.generic.SmokeCommonVariables.*;
 import com.navatar.generic.SoftAssert;
 import com.navatar.generic.CommonLib.*;
 import com.navatar.generic.EnumConstants.*;
 import com.relevantcodes.extentreports.LogStatus;
 import com.relevantcodes.extentreports.model.Log;
-import com.navatar.generic.CommonVariables;
-import static com.navatar.generic.CommonVariables.AMNNR_TaskLabel4;
 
 import static com.navatar.generic.AppListeners.*;
 import static com.navatar.generic.BaseLib.sa;
 import static com.navatar.generic.CommonLib.*;
-import static com.navatar.generic.CommonVariables.AR_Research2;
-import static com.navatar.generic.CommonVariables.ATCE_ATParticipants1;
-import static com.navatar.generic.CommonVariables.ATE_AdvanceDueDate1;
-import static com.navatar.generic.CommonVariables.crmUser6FirstName;
-import static com.navatar.generic.CommonVariables.crmUser6LastName;
-import static com.navatar.generic.CommonVariables.crmUser7FirstName;
-import static com.navatar.generic.CommonVariables.crmUser7LastName;
-import static com.navatar.generic.CommonVariables.crmUser8FirstName;
-import static com.navatar.generic.CommonVariables.crmUser8LastName;
-import static com.navatar.generic.CommonVariables.environment;
-import static com.navatar.generic.CommonVariables.mode;
-import static com.navatar.generic.CommonVariables.tabObj1;
-import static com.navatar.generic.CommonVariables.tabObj2;
-import static com.navatar.generic.CommonVariables.tabObj4;
-import static com.navatar.generic.CommonVariables.AMNNR_ActivityType142;
-
+import static com.navatar.generic.CommonVariables.*;
 import java.util.Random;
 import java.util.Set;
 import java.util.TimeZone;
@@ -21168,7 +21150,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String xPath;
 		WebElement ele;
 		List<WebElement> elements;
-		String parentId = switchOnWindow(driver);
+		String parentId = switchToWindowOpenNextToParentWindow(driver);
 
 		ArrayList<String> result = new ArrayList<String>();
 		if (getFilterIconOnInteractionPopup(20) != null) {
@@ -22489,7 +22471,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								action.SCROLLANDBOOLEAN);
 
 						log(LogStatus.INFO, "Successfully get the value from " + labelName + " field", YesNo.No);
-						if (expectedDate.equals(actualValue)) {
+						if (actualValue.trim().contains(expectedDate.trim())) {
 							log(LogStatus.INFO, labelName
 									+ " label's value has been verify in Subject link Popup and i.e. :" + expectedDate,
 									YesNo.No);
@@ -23242,7 +23224,20 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				log(LogStatus.INFO,
 						"Clicked on Footer Button: " + buttonNameOfCreateRecordPopup + " of Create New Record Popup",
 						YesNo.No);
-				flag = true;
+				if (buttonNameOfCreateRecordPopup.equalsIgnoreCase("Create")) {
+					if (createRecordsPopupSuccessMsg(10) != null) {
+						log(LogStatus.INFO, "Create Record Success Message Visible", YesNo.No);
+
+						flag = true;
+					} else {
+						log(LogStatus.ERROR, "Create Record Success Message not Visible", YesNo.No);
+						sa.assertTrue(false, "Create Record Success Message not Visible");
+
+						return false;
+					}
+				} else {
+					flag = true;
+				}
 
 			} else {
 				log(LogStatus.ERROR, "Not Able to Click on Footer Button: " + buttonNameOfCreateRecordPopup
@@ -23850,6 +23845,41 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				participants[i] = userName2;
 			} else if (participantArr[i].trim().equalsIgnoreCase("PE User 3")) {
 				participants[i] = userName3;
+			} else {
+				participants[i] = participantArr[i];
+			}
+		}
+		return participants;
+
+	}
+
+	public String[] getParticipantDataRG(String participant) {
+		String userName1 = RGcrmUser1FirstName + " " + RGcrmUser1LastName;
+		String userName2 = RGcrmUser2FirstName + " " + RGcrmUser2LastName;
+		String userName3 = RGcrmUser3FirstName + " " + RGcrmUser3LastName;
+		String userName4 = RGcrmUser4FirstName + " " + RGcrmUser4LastName;
+		String userName5 = RGcrmUser5FirstName + " " + RGcrmUser5LastName;
+		String userName6 = RGcrmUser6FirstName + " " + RGcrmUser6LastName;
+		String rgUser = RGEventUserFirstName + " " + RGEventUserLastName;
+
+		String[] participantArr = participant.split("<break>");
+		String[] participants = new String[participantArr.length];
+
+		for (int i = 0; i < participantArr.length; i++) {
+			if (participantArr[i].trim().equalsIgnoreCase("PE User 1")) {
+				participants[i] = userName1;
+			} else if (participantArr[i].trim().equalsIgnoreCase("PE User 2")) {
+				participants[i] = userName2;
+			} else if (participantArr[i].trim().equalsIgnoreCase("PE User 3")) {
+				participants[i] = userName3;
+			} else if (participantArr[i].trim().equalsIgnoreCase("PE User 4")) {
+				participants[i] = userName4;
+			} else if (participantArr[i].trim().equalsIgnoreCase("PE User 5")) {
+				participants[i] = userName5;
+			} else if (participantArr[i].trim().equalsIgnoreCase("PE User 6")) {
+				participants[i] = userName6;
+			} else if (participantArr[i].trim().equalsIgnoreCase("RG User")) {
+				participants[i] = rgUser;
 			} else {
 				participants[i] = participantArr[i];
 			}
@@ -24827,40 +24857,39 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
-	
-	
-	
-	public ArrayList<String> verifyMeetingAndCallOnFundraisingContactTeam(String[] name,String[] meetingAndCall)
-	{
+	public ArrayList<String> verifyMeetingAndCallOnFundraisingContactTeam(String[] name, String[] meetingAndCall) {
 		String xPath;
-		ArrayList<String> result=new ArrayList<String>();
-		if(name.length==meetingAndCall.length)
-		{		
-			for(int i=0; i<name.length; i++)
-			{
+		ArrayList<String> result = new ArrayList<String>();
+		if (name.length == meetingAndCall.length) {
+			for (int i = 0; i < name.length; i++) {
 				ThreadSleep(3000);
-				String actualMeetingAndCallCount=getText(driver, getMeetingAndCallCountOfDealteam(name[i],20), "Meeting and call count", action.BOOLEAN);
-				if(actualMeetingAndCallCount.equals(meetingAndCall[i]))
-				{
-					log(LogStatus.INFO, "Actual meeting and call "+actualMeetingAndCallCount+" has been matched with expected meeting and call "+meetingAndCall[i]+" count of fundraising Contact section "+name[i], YesNo.No);
-				}
-				else
-				{
-					log(LogStatus.ERROR, "Actual meeting and call "+actualMeetingAndCallCount+" is not matched with expected meeting and call "+meetingAndCall[i]+" count of fundraising Contact section "+name[i], YesNo.No);
-					result.add("Actual meeting and call "+actualMeetingAndCallCount+" is not matched with expected meeting and call "+meetingAndCall[i]+" count of fundraising Contact section "+name[i]);
+				String actualMeetingAndCallCount = getText(driver, getMeetingAndCallCountOfDealteam(name[i], 20),
+						"Meeting and call count", action.BOOLEAN);
+				if (actualMeetingAndCallCount.equals(meetingAndCall[i])) {
+					log(LogStatus.INFO,
+							"Actual meeting and call " + actualMeetingAndCallCount
+									+ " has been matched with expected meeting and call " + meetingAndCall[i]
+									+ " count of fundraising Contact section " + name[i],
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Actual meeting and call " + actualMeetingAndCallCount
+									+ " is not matched with expected meeting and call " + meetingAndCall[i]
+									+ " count of fundraising Contact section " + name[i],
+							YesNo.No);
+					result.add("Actual meeting and call " + actualMeetingAndCallCount
+							+ " is not matched with expected meeting and call " + meetingAndCall[i]
+							+ " count of fundraising Contact section " + name[i]);
 				}
 
 			}
-		}
-		else
-		{
+		} else {
 			log(LogStatus.ERROR, "the length of name and meeting and call are not equal", YesNo.No);
-			result.add( "the length of name and meeting and call are not equal");
+			result.add("the length of name and meeting and call are not equal");
 		}
 		return result;
 
 	}
-
 
 	public String convertRequiredNotes(String[][] createNewRecordPopUp, String notes) {
 
@@ -24882,45 +24911,49 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			log(LogStatus.ERROR, "Exception Occured: " + e.getMessage(), YesNo.Yes);
 			sa.assertTrue(false, "Exception Occured: " + e.getMessage());
 
-
 		}
 
 		return notes;
 
 	}
 
-
-	public ArrayList<String> verifyMeetingAndCallOnConnectionPageOfFundraisingContact(String contactName,String userName,String meetingAndCallcount)
-	{
+	public ArrayList<String> verifyMeetingAndCallOnConnectionPageOfFundraisingContact(String contactName,
+			String userName, String meetingAndCallcount) {
 		String xPath;
-		ArrayList<String> result=new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<String>();
 
-			
-				if(clickUsingJavaScript(driver, getConnectionIconOfFundraisingContactRecord(contactName,20), "Connection icon"))
-				{
-				
-					log(LogStatus.INFO, "Clicked on connection icon of "+contactName, YesNo.No);
-					String parentID=switchToWindowOpenNextToParentWindow(driver);
-					
-					String actualMeetingAndCallCount=getText(driver, getMeetingAndCallCountOnConnectionIconOfDealteam(userName,20), "Meeting and call count", action.BOOLEAN);
-					if(actualMeetingAndCallCount.equals(meetingAndCallcount))
-					{
-						log(LogStatus.INFO, "Actual meeting and call "+actualMeetingAndCallCount+" has been matched with expected meeting and call "+meetingAndCallcount+" count of fundraising contect's connection page "+contactName, YesNo.No);
-					}
-					else
-					{
-						log(LogStatus.ERROR, "Actual meeting and call "+actualMeetingAndCallCount+" is not matched with expected meeting and call "+meetingAndCallcount+" count of fundraising contect's connection "+contactName, YesNo.No);
-						result.add("Actual meeting and call "+actualMeetingAndCallCount+" is not matched with expected meeting and call "+meetingAndCallcount+" count of fundraising contect's connection "+contactName);
-					}  
-					driver.close();
-					driver.switchTo().window(parentID);
-				}
-				else
-				{
-					log(LogStatus.ERROR, "Not able to click on Connection icon of fundraising contact", YesNo.No);
-					result.add( "Not able to click on Connection icon of fundraising contact");
-				}
-					
+		if (clickUsingJavaScript(driver, getConnectionIconOfFundraisingContactRecord(contactName, 20),
+				"Connection icon")) {
+
+			log(LogStatus.INFO, "Clicked on connection icon of " + contactName, YesNo.No);
+			String parentID = switchToWindowOpenNextToParentWindow(driver);
+
+			String actualMeetingAndCallCount = getText(driver,
+					getMeetingAndCallCountOnConnectionIconOfDealteam(userName, 20), "Meeting and call count",
+					action.BOOLEAN);
+			if (actualMeetingAndCallCount.equals(meetingAndCallcount)) {
+				log(LogStatus.INFO,
+						"Actual meeting and call " + actualMeetingAndCallCount
+								+ " has been matched with expected meeting and call " + meetingAndCallcount
+								+ " count of fundraising contect's connection page " + contactName,
+						YesNo.No);
+			} else {
+				log(LogStatus.ERROR,
+						"Actual meeting and call " + actualMeetingAndCallCount
+								+ " is not matched with expected meeting and call " + meetingAndCallcount
+								+ " count of fundraising contect's connection " + contactName,
+						YesNo.No);
+				result.add("Actual meeting and call " + actualMeetingAndCallCount
+						+ " is not matched with expected meeting and call " + meetingAndCallcount
+						+ " count of fundraising contect's connection " + contactName);
+			}
+			driver.close();
+			driver.switchTo().window(parentID);
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Connection icon of fundraising contact", YesNo.No);
+			result.add("Not able to click on Connection icon of fundraising contact");
+		}
+
 		return result;
 	}
 
