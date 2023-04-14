@@ -1,10 +1,15 @@
 package com.navatar.pageObjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.ExcelUtils;
+import com.navatar.generic.EnumConstants.NavigationMenuItems;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
@@ -18,6 +23,8 @@ import java.util.stream.Collectors;
 
 public class ResearchPageBusinessLayer extends ResearchPage {
 
+	String navigationMenuName=NavigationMenuItems.Research.toString().replace("_", " ");
+	
 	public ResearchPageBusinessLayer(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
@@ -198,6 +205,9 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 		else if(variableName.contains("ARURT_")) {
 			headersAndValues = ExcelUtils.dataRead(ResearchDataSheetFilePath,"UpdatedRecordType",excelLabel.Variable_Name, variableName);
 		}
+		else if(variableName.contains("ARCR_")) {
+			headersAndValues = ExcelUtils.dataRead(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, variableName);
+		}
 		else {
 			headersAndValues = ExcelUtils.dataRead(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, variableName);
 		}
@@ -333,5 +343,60 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 		return verifyData;
 	}
 
+
+	public boolean openResearchForCurrentRecord(String projectName, String objectName, String recordName, int timeout) { 
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		String name = recordName.replace("_", " ");
+		String ObjectName = objectName.replace("_", " ");
+		Actions act = new Actions(driver);
+		WebElement wait;
+		boolean flag = false;
+		
+		  if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, timeout)) {
+				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+				ThreadSleep(2000);
+				act.moveToElement(getResearchButton(10)).perform();
+				ThreadSleep(2000);
+				try {
+					wait = new WebDriverWait(driver, 60).until(ExpectedConditions.presenceOfElementLocated(
+							By.xpath("//div[contains(@class,'slds-combobox_object-switcher')]//button[contains(@class,'slds-input_faux')]")));
+					log(LogStatus.INFO, "Progress Dropdown in Research Popup has been found", YesNo.No);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					log(LogStatus.ERROR, "Could not get the Progress Dropdown in Research Popup", YesNo.No);
+					return false;
+				}
+				ThreadSleep(3000);
+				try {
+					act.moveToElement(getProgressDropdown(10)).perform();
+					log(LogStatus.INFO, "Element has been moved to Progress Dropdown in Research Popup", YesNo.No);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					log(LogStatus.ERROR, "not able to move to Progress Dropdown in Research Popup", YesNo.No);
+				}
+				ThreadSleep(3000);
+				if(clickUsingJavaScript(driver, getProgressDropdown(timeout),"Research Progess Dropdown", action.BOOLEAN)) {
+					log(LogStatus.INFO, "Able to Click on " + navigationMenuName, YesNo.No);
+					if(clickUsingJavaScript(driver, getClickOnProgress(ObjectName,timeout),"", action.BOOLEAN)) {
+						log(LogStatus.INFO, "Able to Select " + navigationMenuName, YesNo.No);
+					if(sendKeys(driver, getTextAreaResearch(timeout),name, "Research Input Field", action.BOOLEAN)){
+						log(LogStatus.INFO, "Send value : " + name + " to research for search", YesNo.No);
+						ThreadSleep(2000);
+						clickUsingJavaScript(driver, getResearchButton(timeout),"Research Button", action.BOOLEAN);
+						ThreadSleep(5000);
+						clickUsingJavaScript(driver, getResearchMinimize(timeout),"Research Minimum Button", action.BOOLEAN);
+						flag = true;
+						ThreadSleep(2000);
+					} else {
+					    log(LogStatus.ERROR, "Not able to send " + name, YesNo.Yes);
+					} } else {
+						log(LogStatus.ERROR, "Not able to select " + ObjectName, YesNo.Yes);
+				  } } else {
+						log(LogStatus.ERROR, "Not able to click on Research Progress Dropdown", YesNo.Yes);
+				} } else {
+			    log(LogStatus.ERROR, "Not able to click on Research", YesNo.Yes);
+			}
+	return flag;
+	}
 	
 }

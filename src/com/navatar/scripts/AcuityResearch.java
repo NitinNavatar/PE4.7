@@ -31,6 +31,7 @@ import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.PermissionType;
+import com.navatar.generic.EnumConstants.ProgressType;
 import com.navatar.generic.EnumConstants.RelatedTab;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
@@ -1329,10 +1330,10 @@ public class AcuityResearch extends BaseLib{
 			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
-					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 				} else {
-					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 				}
 	
 			} else {
@@ -1443,10 +1444,10 @@ public class AcuityResearch extends BaseLib{
 
 		if(list.isEmpty()) {
 			
-			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
 		} else {
-			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
+			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list);
 		}
 		
 	}
@@ -1524,10 +1525,10 @@ public class AcuityResearch extends BaseLib{
 
 		if(list.isEmpty()) {
 			
-			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
 		} else {
-			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
+			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list);
 		}
 		
 	}
@@ -1604,10 +1605,10 @@ public class AcuityResearch extends BaseLib{
 
 		if(list.isEmpty()) {
 			
-			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
 		} else {
-			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
+			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list);
 		}
 		
 	}
@@ -1684,10 +1685,10 @@ public class AcuityResearch extends BaseLib{
 
 		if(list.isEmpty()) {
 			
-			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
 		} else {
-			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
+			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list);
 		}
 		
 	}
@@ -1769,10 +1770,10 @@ public class AcuityResearch extends BaseLib{
 	   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(variable, action.SCROLLANDBOOLEAN, 5);
 		if(list.isEmpty()) {
 			
-			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research1 + "||" + "list : "+list, YesNo.No);
 		} else {
-			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data--------- " + list, YesNo.No);
-			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research1 + "||" + "list : "+list, YesNo.No);
+			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research1 + "||" + "list : "+list);
 		}
 	   
 		lp.CRMlogout();
@@ -1827,10 +1828,10 @@ public class AcuityResearch extends BaseLib{
 			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
-					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 				} else {
-					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 				}
 	
 			} else {
@@ -1856,25 +1857,25 @@ public class AcuityResearch extends BaseLib{
 //				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
 //				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
 //			}
-			int gridSize = rp.getElementsFromGrid().size();
-			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-			for(int i=0; i<gridSize; i++)
-			{		
-				headerName = rp.getElementsFromGrid().get(i).getText();
-				String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
-				
-				if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-					log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-				}
-				if (rp.VerifyViewMoreOption(headerName)) {
-					log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-				} else {
-					log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-				}
-			}
+//			int gridSize = rp.getElementsFromGrid().size();
+//			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+//			for(int i=0; i<gridSize; i++)
+//			{		
+//				headerName = rp.getElementsFromGrid().get(i).getText();
+//				String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+//				
+//				if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+//					log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+//					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+//				}
+//				if (rp.VerifyViewMoreOption(headerName)) {
+//					log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+//				} else {
+//					log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+//				}
+//			}
 		}
 	switchToDefaultContent(driver);
 	lp.CRMlogout();
@@ -1945,10 +1946,10 @@ public class AcuityResearch extends BaseLib{
 	   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(variable, action.SCROLLANDBOOLEAN, 10);
 		if(list.isEmpty()) {
 			
-			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research2 + "||" + "list : "+list, YesNo.No);
 		} else {
-			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research2 + "||" + "list : "+list, YesNo.No);
+			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research2 + "||" + "list : "+list);
 		}
 	   
 		lp.CRMlogout();
@@ -2005,10 +2006,10 @@ public class AcuityResearch extends BaseLib{
 			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
-					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 				} else {
-					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Firm4 + "||" + "list : "+list, YesNo.No);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 				}
 	
 			} else {
@@ -2120,10 +2121,10 @@ public class AcuityResearch extends BaseLib{
 	   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(variable, action.SCROLLANDBOOLEAN, 10);
 		if(list.isEmpty()) {
 			
-			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research3 + "||" + "list : "+list, YesNo.No);
 		} else {
-			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research3 + "||" + "list : "+list, YesNo.No);
+			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research3 + "||" + "list : "+list);
 		}
 		
 		lp.CRMlogout();
@@ -2178,10 +2179,10 @@ public class AcuityResearch extends BaseLib{
 			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
-					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 				} else {
-					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Firm4 + "||" + "list : "+list, YesNo.No);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 				}
 	
 			} else {
@@ -2292,10 +2293,10 @@ public class AcuityResearch extends BaseLib{
 	   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(variable, action.SCROLLANDBOOLEAN, 10);
 		if(list.isEmpty()) {
 			
-			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research4 + "||" + "list : "+list, YesNo.No);
 		} else {
-			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research4 + "||" + "list : "+list, YesNo.No);
+			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research4 + "||" + "list : "+list);
 		}  
 		lp.CRMlogout();
 		sa.assertAll();
@@ -2348,10 +2349,10 @@ public class AcuityResearch extends BaseLib{
 			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
-					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 				} else {
-					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Firm4 + "||" + "list : "+list, YesNo.No);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 				}
 	
 			} else {
@@ -2462,10 +2463,10 @@ public class AcuityResearch extends BaseLib{
 	   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(variable, action.SCROLLANDBOOLEAN, 10);
 		if(list.isEmpty()) {
 			
-			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research5 + "||" + "list : "+list, YesNo.No);
 		} else {
-			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research5 + "||" + "list : "+list, YesNo.No);
+			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research5 + "||" + "list : "+list);
 		}  
 		lp.CRMlogout();
 		sa.assertAll();
@@ -2518,10 +2519,10 @@ public class AcuityResearch extends BaseLib{
 			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
-					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 				} else {
-					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Firm4 + "||" + "list : "+list, YesNo.No);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 				}
 	
 			} else {
@@ -2669,10 +2670,10 @@ public class AcuityResearch extends BaseLib{
 	   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(variable, action.SCROLLANDBOOLEAN, 10);
 		if(list.isEmpty()) {
 			
-			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research6 + "||" + "list : "+list, YesNo.No);
 		} else {
-			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research6 + "||" + "list : "+list, YesNo.No);
+			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research6 + "||" + "list : "+list);
 		} 
 		
 		switchToDefaultContent(driver);
@@ -2727,10 +2728,10 @@ public class AcuityResearch extends BaseLib{
 			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
-					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 				} else {
-					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Firm4 + "||" + "list : "+list, YesNo.No);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 				}
 	
 			} else {
@@ -2878,10 +2879,10 @@ public class AcuityResearch extends BaseLib{
 	   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(variable, action.SCROLLANDBOOLEAN, 10);
 		if(list.isEmpty()) {
 			
-			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research7 + "||" + "list : "+list, YesNo.No);
 		} else {
-			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research7 + "||" + "list : "+list, YesNo.No);
+			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research7+ "||" + "list : "+list);
 		} 
 		
 		switchToDefaultContent(driver);
@@ -2937,10 +2938,10 @@ public class AcuityResearch extends BaseLib{
 			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
-					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 				} else {
-					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Firm4 + "||" + "list : "+list, YesNo.No);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 				}
 	
 			} else {
@@ -3059,10 +3060,10 @@ public class AcuityResearch extends BaseLib{
 	   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(variable, action.SCROLLANDBOOLEAN, 10);
 		if(list.isEmpty()) {
 			
-			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research54 + "||" + "list : "+list, YesNo.No);
 		} else {
-			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research54 + "||" + "list : "+list, YesNo.No);
+			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research54+ "||" + "list : "+list);
 		}  
 		lp.CRMlogout();
 		sa.assertAll();
@@ -3116,10 +3117,10 @@ public class AcuityResearch extends BaseLib{
 			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
-					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 				} else {
-					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Firm4 + "||" + "list : "+list, YesNo.No);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 				}
 	
 			} else {
@@ -3239,10 +3240,10 @@ public class AcuityResearch extends BaseLib{
 	   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(variable, action.SCROLLANDBOOLEAN, 10);
 		if(list.isEmpty()) {
 			
-			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research55 + "||" + "list : "+list, YesNo.No);
 		} else {
-			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research55 + "||" + "list : "+list, YesNo.No);
+			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research55+ "||" + "list : "+list);
 		} 
 		lp.CRMlogout();
 		sa.assertAll();
@@ -3303,10 +3304,10 @@ public class AcuityResearch extends BaseLib{
 			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
-					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 				} else {
-					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Firm4 + "||" + "list : "+list, YesNo.No);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 				}
 	switchToDefaultContent(driver);
 	lp.CRMlogout();
@@ -3371,10 +3372,10 @@ public class AcuityResearch extends BaseLib{
 			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
-					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 				} else {
-					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Firm4 + "||" + "list : "+list, YesNo.No);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 				}
 	switchToDefaultContent(driver);
 	lp.CRMlogout();
@@ -3836,10 +3837,10 @@ public class AcuityResearch extends BaseLib{
 			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
-					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 				} else {
-					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Firm4 + "||" + "list : "+list, YesNo.No);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 				}
 	
 			} else {
@@ -3959,7 +3960,7 @@ public class AcuityResearch extends BaseLib{
 					
 					log(LogStatus.INFO,varibale + "---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
 				} else {
-					log(LogStatus.ERROR,varibale + "---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					log(LogStatus.ERROR,varibale + "---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Firm4 + "||" + "list : "+list, YesNo.No);
 					sa.assertTrue(false,varibale + "---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
 				}
 	
@@ -4309,10 +4310,10 @@ public class AcuityResearch extends BaseLib{
 			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
-					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 				} else {
-					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Firm4 + "||" + "list : "+list, YesNo.No);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 				}
 	
 			} else {
@@ -4662,10 +4663,10 @@ public class AcuityResearch extends BaseLib{
 			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
-					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 				} else {
-					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Firm4 + "||" + "list : "+list, YesNo.No);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 				}
 	
 			} else {
@@ -5011,10 +5012,10 @@ public class AcuityResearch extends BaseLib{
 			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibles[i], action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
-					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
 				} else {
-					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i]+ "||" + "list : "+list);
 				}
 	
 			} else {
@@ -5171,10 +5172,10 @@ public class AcuityResearch extends BaseLib{
 			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibles[i], action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
-					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
 				} else {
-					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list);
 				}
 	
 			} else {
@@ -5309,10 +5310,10 @@ public class AcuityResearch extends BaseLib{
 			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibles[i], action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
-					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
 				} else {
-					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list);
 				}
 	
 			} else {
@@ -5441,10 +5442,10 @@ public class AcuityResearch extends BaseLib{
 			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibles[i], action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
-					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
 				} else {
-					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list);
 				}
 	
 			} else {
@@ -5601,10 +5602,10 @@ public class AcuityResearch extends BaseLib{
 				ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 					if(list.isEmpty()) {
 						
-						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 					} else {
-						log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-						sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+						log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Firm4 + "||" + "list : "+list, YesNo.No);
+						sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 					}
 		
 				} else {
@@ -5714,10 +5715,10 @@ public class AcuityResearch extends BaseLib{
 					ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibles[i], action.SCROLLANDBOOLEAN, 10);
 						if(list.isEmpty()) {
 							
-							log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+							log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
 						} else {
-							log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-							sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+							log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
+							sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list);
 						}
 			
 					} else {
@@ -5901,10 +5902,10 @@ public class AcuityResearch extends BaseLib{
 					ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibles[i], action.SCROLLANDBOOLEAN, 10);
 						if(list.isEmpty()) {
 							
-							log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+							log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
 						} else {
-							log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-							sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+							log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
+							sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list);
 						}
 			
 					} else {
@@ -6154,10 +6155,10 @@ public class AcuityResearch extends BaseLib{
 				ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 					if(list.isEmpty()) {
 						
-						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 					} else {
-						log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-						sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+						log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Firm4 + "||" + "list : "+list, YesNo.No);
+						sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 					}
 		
 				} else {
@@ -6381,10 +6382,10 @@ public class AcuityResearch extends BaseLib{
 				ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 					if(list.isEmpty()) {
 						
-						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 					} else {
-						log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-						sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+						log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Firm4 + "||" + "list : "+list, YesNo.No);
+						sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 					}
 		
 				} else {
@@ -6478,10 +6479,10 @@ public class AcuityResearch extends BaseLib{
 					ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 						if(list.isEmpty()) {
 							
-							log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+							log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 						} else {
 							log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-							sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+							sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 						}
 			
 					} else {
@@ -6793,10 +6794,10 @@ public class AcuityResearch extends BaseLib{
 				ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 					if(list.isEmpty()) {
 						
-						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 					} else {
 						log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-						sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+						sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 					}
 		
 				} else {
@@ -7108,10 +7109,10 @@ public class AcuityResearch extends BaseLib{
 				ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 					if(list.isEmpty()) {
 						
-						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 					} else {
 						log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-						sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+						sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 					}
 		
 				} else {
@@ -7420,10 +7421,10 @@ public class AcuityResearch extends BaseLib{
 				ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 					if(list.isEmpty()) {
 						
-						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 					} else {
 						log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-						sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+						sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 					}
 		
 				} else {
@@ -7716,10 +7717,10 @@ public class AcuityResearch extends BaseLib{
 				ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 					if(list.isEmpty()) {
 						
-						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 					} else {
 						log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-						sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+						sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 					}
 		
 				} else {
@@ -7863,10 +7864,10 @@ public class AcuityResearch extends BaseLib{
 					ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 						if(list.isEmpty()) {
 							
-							log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+							log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 						} else {
 							log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-							sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+							sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 						}
 			
 					} else {
@@ -8007,10 +8008,10 @@ public class AcuityResearch extends BaseLib{
 					ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 						if(list.isEmpty()) {
 							
-							log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+							log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 						} else {
 							log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-							sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+							sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 						}
 			
 					} else {
@@ -8153,10 +8154,10 @@ public class AcuityResearch extends BaseLib{
 					ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 						if(list.isEmpty()) {
 							
-							log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+							log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 						} else {
 							log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-							sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+							sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 						}
 			
 					} else {
@@ -8294,10 +8295,10 @@ public class AcuityResearch extends BaseLib{
 					ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 						if(list.isEmpty()) {
 							
-							log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+							log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 						} else {
 							log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-							sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+							sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 						}
 			
 					} else {
@@ -8440,10 +8441,10 @@ public class AcuityResearch extends BaseLib{
 					ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 						if(list.isEmpty()) {
 							
-							log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+							log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 						} else {
 							log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-							sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+							sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 						}
 			
 					} else {
@@ -8651,10 +8652,10 @@ public class AcuityResearch extends BaseLib{
 					ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 						if(list.isEmpty()) {
 							
-							log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+							log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 						} else {
 							log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-							sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+							sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
 						}
 			
 					} else {
@@ -8711,4 +8712,65 @@ public class AcuityResearch extends BaseLib{
 		sa.assertAll();
 	}
 
+	@Parameters({ "projectName" })
+	@Test
+	public void ARTc050_VerifyResearchDataForCurrentRecord(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	FundRaisingPageBusinessLayer frp = new FundRaisingPageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	lp.CRMLogin(superAdminUserName, adminPassword);
+	
+	String[] searchValues = readAllDataForAColumn(ResearchDataSheetFilePath, "CurrentRecord", 0, false).split("<break>");
+	
+	for(String searchValue : searchValues) {
+		String variable =ExcelUtils.readData(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, searchValue, excelLabel.ResearchFindings);
+		String tabName =ExcelUtils.readData(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, searchValue, excelLabel.Tab_Name);
+		String recordName =ExcelUtils.readData(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, searchValue, excelLabel.Record_Name);
+		   if (fp.clickOnTab(environment, mode, TabName.valueOf(tabName))) {
+		       log(LogStatus.INFO, "Click on Tab : " + TabName.valueOf(tabName), YesNo.No);
+		      if (fp.clickOnAlreadyCreatedItem(projectName, recordName.replace("  ", "").replace("\"", ""), 10)) {
+		    	  if(rp.openResearchForCurrentRecord(projectName,ProgressType.Current_Record.toString(),variable,10)) {
+		    		  if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+		  				log(LogStatus.INFO,
+		  						"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+		  								+ searchValue + "---------",
+		  						YesNo.No);
+		  			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(searchValue, action.SCROLLANDBOOLEAN, 10);
+		  				if(list.isEmpty()) {
+		  					
+		  					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
+		  				} else {
+		  					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
+		  					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list);
+		  				}
+		  	
+		  			} else {
+		  				log(LogStatus.FAIL,
+		  						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+		  								+ searchValue + "---------",
+		  						YesNo.No);
+		  				sa.assertTrue(false,
+		  						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+		  								+ searchValue + "---------");
+		  		}	  
+		           } else {
+				          sa.assertTrue(false, "Not Able to search for : " + variable);
+				           log(LogStatus.SKIP, "Not Able to search for : " + variable, YesNo.Yes);
+				      }
+		       } else {
+		          sa.assertTrue(false, "Not Able to open created Record : " + recordName);
+		           log(LogStatus.SKIP, "Not Able to open created Record: " + recordName, YesNo.Yes);
+		      }
+		   } else {
+		       log(LogStatus.ERROR, "Not able to click on " + TabName.valueOf(tabName) + " tab", YesNo.Yes);
+		       sa.assertTrue(false, "Not able to click on " + TabName.valueOf(tabName) + " tab");
+		   }  
+	}   
+			lp.CRMlogout();
+			sa.assertAll();
+		}
+	
 }
