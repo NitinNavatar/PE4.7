@@ -227,7 +227,7 @@ public class Module5New extends BaseLib {
 			else{
 				tab1=tabObj1;
 			}
-			addRemoveTabName=tab1+"s,"+tabObj2+"s,"+tabObj4+"s,"+tabObj4+"s";
+			addRemoveTabName=tab1+"s,"+tabObj2+"s,"+tabObj4+"s,"+tabObj5+"s";
 			if (lp.addTab_Lighting( addRemoveTabName, 5)) {
 				log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
 			} else {
