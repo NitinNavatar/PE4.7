@@ -1667,6 +1667,10 @@ public class CommonVariables {
 	    
 	    public static String ATCE_FRole1,ATCE_FRole2;
 	    
+	    /****************Record name and object name **********/
+	    public static String ATCE_RecordName1;
+	    public static String ATCE_ObjectName1;
+	    
 	    /***************************** Acuity (Task & Event) ******************************/
 	    
 	    //firm 
@@ -12586,7 +12590,9 @@ public class CommonVariables {
  					ATCE_FRole1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraising Contact",excelLabel.Variable_Name, "ATCE_FC001", excelLabel.Role);
  					ATCE_FRole2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraising Contact",excelLabel.Variable_Name, "ATCE_FC002", excelLabel.Role);
 					 
- 				  
+ 					ATCE_RecordName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.RecordName);
+					ATCE_ObjectName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.ObjectName);
+					
  					 
  			 		try {
  						dataFile.close();

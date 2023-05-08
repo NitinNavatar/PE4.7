@@ -163,6 +163,8 @@ public interface BasePageErrorMessage {
 	public static String interactionsInfoMessage="Each interaction represents notes from a meeting with this company or with another company where this company was discussed and tagged to the note. An interaction may also represent an email exchange that was tagged by a user. Click on an interaction to view details. Click View All to see additional interactions.";
 	public static String contactInfoMessage="View details of people at this firm, who at our firm they have interacted with, all interactions (emails or meetings) as well as deals they have been associated with. View contacts at this firm discovered in Outlook by Navatar who your users may have emailed but not added to Navatar, with the option of downloading them into Navatar. Click on a contact to view or edit details.";
 	public static String dealInfoMessage="View deals associated with this firm. Click on a deal to view or edit details. Click the plus icon to create new deals.";
+	public static String dealInfoMessage2="View deals where the contact is a member of the deal team. Click the deal to view or edit details. Click the plus icon to create new deals.";
+	
 	public static String dealInfoMessageAdvisor="View deals associated with this firm. Click on a deal to view or edit details.";
 	
 	public static String connectionInfoMessage="View the strength of this contact's connection to your team as well as other contacts based on the number of emails, meetings, and deals they have been a part of together. Click on a contact to view or edit details.";
