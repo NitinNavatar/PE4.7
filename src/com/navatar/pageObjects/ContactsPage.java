@@ -985,7 +985,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, phoneFieldOnContactPage, "Visibility", timeOut, "Phone Field On Contact Page");
 	}
 	
-	@FindBy(xpath = "//span[text()='Contacts']/ancestor::div//lightning-icon[@title='Add Contact']")
+	@FindBy(xpath = "//span[text()='Contacts']/ancestor::div//lightning-icon[@title='New Contact']")
 	private WebElement addContactIcon;
 
 	public WebElement getAddContactIcon(int timeOut) {
@@ -993,7 +993,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 	}
 	
 	public WebElement getTextboxWithLabelname(String labelName, int timeOut) {
-		String xpath = "//span[text()='"+labelName+"']/../..//input";
+		String xpath = "//h2[text()='New Contact']/../..//span[text()='"+labelName+"']/../..//input";
 
 		try {
 			return FindElement(driver, xpath, "textbox : " + labelName, action.SCROLLANDBOOLEAN, timeOut);

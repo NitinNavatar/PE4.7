@@ -24956,5 +24956,46 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return result;
 	}
+	
+	public ArrayList<String> verifyRedirectionOfActivityPopupFromIntractionPage(String[] recordName,
+			String[] objectName) {
+		ArrayList<String> result = new ArrayList<String>();
+
+		if (recordName != null && objectName != null) {
+			if (recordName.length == objectName.length) {
+				for (int i = 0; i < recordName.length; i++) {
+					if (clickUsingJavaScript(driver, recordNameOnActivityPopupofInteraction(recordName[i], 20),
+							"record name")) {
+						log(LogStatus.INFO, "Clicked on record name : " + recordName[i] + " on interaction section",
+								YesNo.No);
+						String parentID = switchToWindowOpenNextToParentWindow(driver);
+						if (getObjectPageName(objectName[i], 15) != null
+								&& getRecordNameOnPage(recordName[i], 15) != null) {
+							log(LogStatus.INFO, "The redirection of record : " + recordName[i] + ", Object: "
+									+ objectName[i] + " is working properly.", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "The redirection of record : " + recordName[i] + ", Object: "
+									+ objectName[i] + " is not working properly.", YesNo.No);
+							result.add("The redirection of record : " + recordName[i] + ", Object: " + objectName[i]
+									+ " is not working properly.");
+						}
+						driver.close();
+						driver.switchTo().window(parentID);
+					} else {
+						log(LogStatus.ERROR,
+								"Not able to clicked on record name : " + recordName[i] + " on interaction section",
+								YesNo.No);
+						result.add("Not able to clicked on record name : " + recordName[i] + " on interaction section");
+					}
+				}
+			} else {
+				log(LogStatus.ERROR, "The length of record name and object name are not equal", YesNo.No);
+				result.add("The length of record name and object name are not equal");
+			}
+		}
+		return result;
+
+	}
+
 
 }

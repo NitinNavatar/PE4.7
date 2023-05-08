@@ -3340,7 +3340,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, refrshActivity, "Visibility", timeOut, "refrshActivity");
 	}
 
-	@FindBy(xpath = "//button[@title='Select a List View']")
+	@FindBy(xpath = "//button[contains(@title,'Select a List View')]")
 	private WebElement selectListIcon_Lighting;
 
 	/**
@@ -9388,7 +9388,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, createLogaCallButton, "Visibility", timeOut, "Log a Call button");
 	}
 
-	@FindBy(xpath = "//lightning-icon[@title='Add Contact']")
+	@FindBy(xpath = "//lightning-icon[@title='New Contact']")
 	private WebElement addContactIcon;
 
 	public WebElement getAddContactIcon(int timeOut) {
@@ -10053,6 +10053,16 @@ public abstract class BasePage extends BaseLib {
 		return FindElement(driver, path, "Meeting and call count", action.BOOLEAN, timeOut);
 	}
 	
+	public WebElement recordNameOnActivityPopupofInteraction(String recordName, int timeOut) {
+
+		String xpath = "//span[@class=\"slds-pill__label\" and text()='" + recordName + "']";
+		try {
+			return FindElement(driver, xpath, "record name: " + recordName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "record name: " + recordName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
 
 	
 }
