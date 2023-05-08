@@ -362,7 +362,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle + " through Outlook---------",
 				YesNo.No);
 
-		if (op.loginAndCreateEventThroughOutLook(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle,
+		if (op.loginAndCreateEventThroughOutLookWithoutRG(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle,
 				eventAttendees, startDate, endDate, startTime, endTime, descriptionBox, false)) {
 			log(LogStatus.INFO,
 					"-----Event Created Msg is showing, So Event of Title: " + eventTitle + " has been created-----",
@@ -453,7 +453,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 
 		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle1 + " through Outlook---------",
 				YesNo.No);
-		if (op.loginAndCreateEventThroughOutLook(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle1,
+		if (op.loginAndCreateEventThroughOutLookWithoutRG(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle1,
 				eventAttendees1, startDate1, endDate1, startTime1, endTime1, descriptionBox1, false)) {
 			log(LogStatus.INFO,
 					"-----Event Created Msg is showing, So Event of Title: " + eventTitle1 + " has been created-----",
@@ -497,7 +497,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		lp.CRMLogin(RGcrmUser1EmailID, adminPassword);
 		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle2 + " through Outlook---------",
 				YesNo.No);
-		if (op.loginAndCreateEventThroughOutLook(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle2,
+		if (op.loginAndCreateEventThroughOutLookWithoutRG(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle2,
 				eventAttendees2, startDate2, endDate2, startTime2, endTime2, descriptionBox2, false)) {
 			log(LogStatus.INFO,
 					"-----Event Created Msg is showing, So Event of Title: " + eventTitle2 + " has been created-----",
@@ -643,7 +643,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 
 		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle4 + " through Outlook---------",
 				YesNo.No);
-		if (op.loginAndCreateEventThroughOutLook(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle4,
+		if (op.loginAndCreateEventThroughOutLookWithoutRG(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle4,
 				eventAttendees4, startDate4, endDate4, startTime4, endTime4, descriptionBox4, false)) {
 			log(LogStatus.INFO,
 					"-----Event Created Msg is showing, So Event of Title: " + eventTitle4 + " has been created-----",
@@ -693,7 +693,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 
 		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle5 + " through Outlook---------",
 				YesNo.No);
-		if (op.loginAndCreateEventThroughOutLook(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle5,
+		if (op.loginAndCreateEventThroughOutLookWithoutRG(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle5,
 				eventAttendees5, startDate5, endDate5, startTime5, endTime5, descriptionBox5, false)) {
 			log(LogStatus.INFO,
 					"-----Event Created Msg is showing, So Event of Title: " + eventTitle5 + " has been created-----",
