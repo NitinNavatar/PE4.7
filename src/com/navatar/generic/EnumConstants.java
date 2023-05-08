@@ -147,7 +147,7 @@ public class EnumConstants {
 		AllInvestor,ThisInvestorOnly;
 	}
 
-	public static enum TabName {
+	public static enum TabName { 
 		InstituitonsTab{
 			@Override
 			public String toString() {
@@ -318,7 +318,7 @@ Fundraising_ContactPage, Financial_Performance, Marketing_Initiative, FundDrawdo
 	
 	
 	
-	public static enum object{
+	public static enum object{ 
 		Account{
 			@Override
 			public String toString() {
@@ -1492,12 +1492,12 @@ public static enum PermissionType{
 			public String toString() {
 				return "Firms and Contacts";
 			}},Funds,Fundraisings,Partnerships, Navigation, 
-		Fund_Team{
+		Fund_Team{ 
 				@Override
 				public String toString() {
 					return "Fund Team";
 			}},
-		Event_WorkAround{
+		Event_WorkAround{ 
 			@Override
 			public String toString() {
 				return "Event WorkAround";
@@ -1522,8 +1522,8 @@ public static enum PermissionType{
 			public String toString() {
 				return "Fund Distributions";
 		}}};
-	public static enum ObjectType{
-		Standard,Custom;
+	public static enum ObjectType{ 
+		Standard,Custom,Clips;
 	}
 	
 	public static enum DataImportType{

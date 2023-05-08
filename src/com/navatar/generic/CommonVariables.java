@@ -2256,7 +2256,14 @@ public class CommonVariables {
 
 		 	public static String AMNNR_FirmLegalName15,AMNNR_FirmLegalName16;
 		 	
-	    
+	    /*****************Acuity Clips***********/
+		 	//Custom field
+		 	public static String AC_ObjectName1,AC_ObjectName2;
+		 	public static String AC_FieldType1,AC_FieldType2;
+		 	public static String AC_FieldLabelName1,AC_FieldLabelName2;
+		 	public static String AC_FieldLength1;
+		 	
+		 	
 	public CommonVariables(Object obj) {
 		//TODO Auto-generated constructor stub
 		AppListeners.appLog.info("Kindly hold on starting variable intialization........");
@@ -12597,8 +12604,60 @@ public class CommonVariables {
  					
  					
  					break;
+ 					
 
-					
+            	 case "AcuityClip" :
+ 					
+ 					try {
+ 						dataFile=new FileInputStream(new File(AcuityDataSheetFilePath));
+ 					} catch (FileNotFoundException e1) {
+ 						// TODO Auto-generated catch block
+ 						e1.printStackTrace();
+ 					}
+ 					
+ 					try {
+ 						dataWb=WorkbookFactory.create(dataFile);
+ 					} catch (EncryptedDocumentException e) {
+ 						// TODO Auto-generated catch block
+ 						e.printStackTrace();
+ 					} catch (InvalidFormatException e) {
+ 						// TODO Auto-generated catch block
+ 						e.printStackTrace();
+ 					} catch (IOException e) {
+ 						// TODO Auto-generated catch block
+ 						e.printStackTrace();
+ 					}	
+ 					
+ 					AC_ObjectName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Custom Fields",excelLabel.Variable_Name, "AC_Field1", excelLabel.Object_Name);	 
+ 					AC_ObjectName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Custom Fields",excelLabel.Variable_Name, "AC_Field2", excelLabel.Object_Name);
+ 				 	
+ 					AC_FieldType1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Custom Fields",excelLabel.Variable_Name, "AC_Field1", excelLabel.Field_Type);
+ 					AC_FieldType2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Custom Fields",excelLabel.Variable_Name, "AC_Field2", excelLabel.Field_Type);
+ 				 	
+ 					AC_FieldLabelName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Custom Fields",excelLabel.Variable_Name, "AC_Field1", excelLabel.Field_Label);
+ 					AC_FieldLabelName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Custom Fields",excelLabel.Variable_Name, "AC_Field2", excelLabel.Field_Label);
+ 				 	
+ 				 	
+ 				 	AC_FieldLength1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Custom Fields",excelLabel.Variable_Name, "AC_Field1", excelLabel.Length);
+ 				 	;
+
+ 				 	try {
+ 						dataFile.close();
+ 					} catch (IOException e) {
+ 						// TODO Auto-generated catch block
+ 						e.printStackTrace();
+ 					}
+ 					try {
+ 						dataWb.close();
+ 					} catch (IOException e) {
+ 						// TODO Auto-generated catch block
+ 						e.printStackTrace();
+
+ 					}
+ 					
+ 					
+ 					break;
+ 					
 				
 		default:
 			break;

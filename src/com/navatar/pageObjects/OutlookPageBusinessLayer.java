@@ -215,7 +215,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 									log(LogStatus.INFO, "Successfully navigate to event: " + eventTitle, YesNo.No);
 
-									if (openRGGridAndDoForceSync(action.SCROLLANDBOOLEAN, 25)) {
+									if (openRGGridAndDoForceSync(25,action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.INFO, "-----Force Sync Up successfully updated-----", YesNo.No);
 
 										flag = true;
@@ -595,6 +595,217 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		return flag;
 
 	}
+	
+	
+	public boolean openRGGridAndDoForceSync(int timeout, action action) {
+		boolean flag = false;
+		String beforeSyncTime = null;
+		String afterSyncTime = null;
+		WebElement ele = null;
+		int count = 0;
+
+		if (click(driver, getNavatarGrid(timeout), "Navatar grid button", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on Navatar grid button", YesNo.No);
+			ThreadSleep(1000);
+			if (click(driver, getOpenNavatarGridButton(timeout), "open Navatar grid button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on open Revenue grid button", YesNo.No);
+				ThreadSleep(10000);
+
+				if (CommonLib.switchToFrame(driver, 30, revenueGridFrame(25))) {
+
+					log(LogStatus.INFO, "Successfully switched to frame", YesNo.No);
+
+					if (click(driver, getRevenueGridMainMenuButton(timeout), "Revenue grid menu button",
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Revenue grid menu button", YesNo.No);
+						ThreadSleep(1000);
+
+						if (click(driver, getSyncSettingButton(timeout), "sync setting button",
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on sync setting button", YesNo.No);
+							ThreadSleep(1000);
+							String parentWindow = switchToWindowOpenNextToParentWindow(driver);
+							if (parentWindow != null) {
+
+								if (click(driver, getLastSessionDetails(timeout), "last session details",
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "Clicked on last session details", YesNo.No);
+									
+								beforeSyncTime = getsyncTime(timeout).getText();
+
+								log(LogStatus.INFO, "Before Force Sync Click time was: " + beforeSyncTime, YesNo.No);
+
+								if (click(driver, getForceSyncButton(timeout), "force sync button",
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "Clicked on force sync button", YesNo.No);
+									ThreadSleep(1000);
+									ele = forceSyncSuccessMessage(timeout);
+
+									if (ele != null) {
+										ThreadSleep(2000);
+										log(LogStatus.INFO, "sucess message present force sync is done", YesNo.No);
+										if (click(driver, getLastSessionDetails(timeout), "last session details",
+												action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "Clicked on last session details", YesNo.No);
+										afterSyncTime = getsyncTime(timeout).getText();
+										log(LogStatus.INFO, "After Force Sync Click time is: " + afterSyncTime,
+												YesNo.No);
+										while (beforeSyncTime.equals(afterSyncTime) && count < 30) {
+											if (click(driver, getRefreshBtn(timeout), "refreash button",
+													action.SCROLLANDBOOLEAN)) {
+												log(LogStatus.INFO, "Clicked on refreash button", YesNo.No);
+											ThreadSleep(20000);
+											afterSyncTime = getsyncTime(timeout).getText();
+											log(LogStatus.INFO, "After Force Sync Click time is: " + afterSyncTime,
+													YesNo.No);
+											count++;
+											if (!beforeSyncTime.equals(afterSyncTime)) {
+
+												log(LogStatus.INFO, "Force sync in successfully updated", YesNo.No);
+												flag = true;
+												break;
+											}
+											}
+											else
+											{
+												log(LogStatus.ERROR, "Not able to Click on refreash button", YesNo.No);
+												BaseLib.sa.assertTrue(false,  "Not able to Click on refreash button");
+												
+											}
+
+										}
+										if (!beforeSyncTime.equals(afterSyncTime)) {
+
+											log(LogStatus.INFO, "Force sync in successfully updated", YesNo.No);
+											flag = true;
+
+										}
+										
+										
+										driver.close();
+										driver.switchTo().window(parentWindow);
+										CommonLib.switchToDefaultContent(driver);
+										}
+										else
+										{
+											log(LogStatus.ERROR, "Not able to click on last session details", YesNo.No);
+											BaseLib.sa.assertTrue(false, "Not able to click on last session details");
+										}
+									} else {
+										boolean flag2 = false;
+										while (count < 17) {
+											CommonLib.ThreadSleep(20000);
+
+											if (click(driver, getForceSyncButton(timeout), "force sync button",
+													action.SCROLLANDBOOLEAN)) {
+												log(LogStatus.INFO, "Clicked on force sync button", YesNo.No);
+												ThreadSleep(1000);
+												WebElement ele1 = forceSyncSuccessMessage(timeout);
+
+												if (ele1 != null) {
+													log(LogStatus.INFO, "sucess message present force sync is done",
+															YesNo.No);
+													flag2 = true;
+													break;
+												}
+
+											} else {
+												log(LogStatus.ERROR, "Not able to click on force sync button",
+														YesNo.Yes);
+												BaseLib.sa.assertTrue(false, "Not able to click on force sync button");
+											}
+
+										}
+
+										if (flag2) {
+
+											log(LogStatus.INFO, "sucess message present force sync is done", YesNo.No);
+
+											afterSyncTime = getsyncTime(timeout).getText();
+											log(LogStatus.INFO, "After Force Sync Click time is: " + afterSyncTime,
+													YesNo.No);
+											while (beforeSyncTime.equals(afterSyncTime) && count < 30) {
+												refresh(driver);
+												ThreadSleep(20000);
+												afterSyncTime = getsyncTime(timeout).getText();
+												log(LogStatus.INFO, "After Force Sync Click time is: " + afterSyncTime,
+														YesNo.No);
+												count++;
+												if (!beforeSyncTime.equals(afterSyncTime)) {
+
+													log(LogStatus.INFO, "Force sync in successfully updated", YesNo.No);
+													flag = true;
+													break;
+												}
+
+											}
+											if (!beforeSyncTime.equals(afterSyncTime)) {
+
+												log(LogStatus.INFO, "Force sync in successfully updated", YesNo.No);
+												flag = true;
+
+											}
+											driver.close();
+											driver.switchTo().window(parentWindow);
+											CommonLib.switchToDefaultContent(driver);
+
+										} else {
+											log(LogStatus.ERROR,
+													"Force Sync Success Msg not showing after waiting for more than 5 mins, So Force Synce not Updated Successfully",
+													YesNo.Yes);
+											BaseLib.sa.assertTrue(false,
+													"Force Sync Success Msg not showing after waiting for more than 5 mins, So Force Synce not Updated Successfully");
+										}
+
+									}
+								} else {
+									log(LogStatus.ERROR, "Not able to click on force sync button", YesNo.Yes);
+									BaseLib.sa.assertTrue(false, "Not able to click on force sync button");
+								}
+									}
+									else
+									{
+										log(LogStatus.ERROR, "Not able to click on last session details button",
+												YesNo.Yes);
+										BaseLib.sa.assertTrue(false,
+												"Not able to click on last session details button");
+									}
+							} else {
+								log(LogStatus.ERROR, "No new window is open after click on sync setting button",
+										YesNo.Yes);
+								BaseLib.sa.assertTrue(false,
+										"No new window is open after click on sync setting button");
+							}
+						} else {
+							log(LogStatus.ERROR, "Not able to click on sync setting button", YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not able to click on sync setting button");
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not able to click on Revenue grid menu button", YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to click on Revenue grid menu button");
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Successfully switched to frame", YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not Successfully switched to frame");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to click on open navatar grid button", YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to click on open navatar grid button");
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not able to click on navatar grid button", YesNo.Yes);
+			BaseLib.sa.assertTrue(false, "Not able to click on navatar grid button");
+		}
+
+		return flag;
+
+	}
+	
+	
 
 	public boolean sendMailFromRGOutlook(String[] to, String[] cc, String bcc, String subject, String message,
 			action action, int timeout) {

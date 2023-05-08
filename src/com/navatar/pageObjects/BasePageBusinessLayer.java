@@ -24956,5 +24956,205 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return result;
 	}
+	
+	public ArrayList<String> verifyUIOfClipPopupFromNavigation()
+	{
+		ArrayList<String> result=new ArrayList<String>();		
+			if(getClipIconOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "clip icon has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "clip icon is not verified on icon popup", YesNo.No);	
+				result.add("clip icon is not verified on icon popup");
+			}
+			
+			if(getClipTextOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "clip text has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "clip text is not verified on icon popup", YesNo.No);	
+				result.add("clip text is not verified on icon popup");
+			}
+			
+			if(getMinimizeIconOnpopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Minimize icon has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Minimize icon is not verified on icon popup", YesNo.No);	
+				result.add("Minimize icon is not verified on icon popup");
+			}
+			if(getPopOutIconOnpopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Pop-out icon has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Pop-out icon is not verified on icon popup", YesNo.No);	
+				result.add("Pop-out icon is not verified on icon popup");
+			}
+			
+			if(getTextareaOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "textarea has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "textarea is not verified on icon popup", YesNo.No);	
+				result.add("textarea is not verified on icon popup");
+			}
+			
+			if(getHelpIconOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Help icon has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Help icon is not verified on icon popup", YesNo.No);	
+				result.add("Help icon is not verified on icon popup");
+			}
+			
+			if(getTagIconOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Tag icon has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Tag icon is not verified on icon popup", YesNo.No);	
+				result.add("Tag icon is not verified on icon popup");
+			}
+			
+			if(getSldspillOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Tagged record has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Tagged record is not verified on icon popup", YesNo.No);	
+				result.add("Tagged record is not verified on icon popup");
+			}
+			
+			if(getClearButtonOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Clear button has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Clear button is not verified on icon popup", YesNo.No);	
+				result.add("Clear button is not verified on icon popup");
+			}
+			
+			if(getSaveButtonOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Save button has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Save button is not verified on icon popup", YesNo.No);	
+				result.add("Save button is not verified on icon popup");
+			}	
+		return result;
+	}
+
+	
+	public ArrayList<String> verifyUIOfClipPopupAfterClickOfPopOut()
+	{
+		ArrayList<String> result=new ArrayList<String>();		
+			if(getClipIconOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "clip icon has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "clip icon is not verified on icon popup", YesNo.No);	
+				result.add("clip icon is not verified on icon popup");
+			}
+			
+			if(getClipTextOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "clip text has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "clip text is not verified on icon popup", YesNo.No);	
+				result.add("clip text is not verified on icon popup");
+			}
+					
+			if(getPopInIconOnpopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Pop-out icon has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Pop-out icon is not verified on icon popup", YesNo.No);	
+				result.add("Pop-out icon is not verified on icon popup");
+			}
+			
+			if(getTextareaOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "textarea has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "textarea is not verified on icon popup", YesNo.No);	
+				result.add("textarea is not verified on icon popup");
+			}
+			
+			if(getHelpIconOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Help icon has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Help icon is not verified on icon popup", YesNo.No);	
+				result.add("Help icon is not verified on icon popup");
+			}
+			
+			if(getTagIconOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Tag icon has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Tag icon is not verified on icon popup", YesNo.No);	
+				result.add("Tag icon is not verified on icon popup");
+			}
+			
+			if(getSldspillOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Tagged record has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Tagged record is not verified on icon popup", YesNo.No);	
+				result.add("Tagged record is not verified on icon popup");
+			}
+			
+			if(getClearButtonOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Clear button has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Clear button is not verified on icon popup", YesNo.No);	
+				result.add("Clear button is not verified on icon popup");
+			}
+			
+			if(getSaveButtonOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Save button has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Save button is not verified on icon popup", YesNo.No);	
+				result.add("Save button is not verified on icon popup");
+			}	
+		return result;
+	}
 
 }
