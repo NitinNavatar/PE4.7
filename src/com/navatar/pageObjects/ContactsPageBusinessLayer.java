@@ -1520,10 +1520,8 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 							action.SCROLLANDBOOLEAN)) {
 						ThreadSleep(1000);
 						if (click(driver,
-								FindElement(driver,
-										"//*[@title='" + legalName + "']//strong[text()='" + legalName.split(" ")[0]
-												+ "']",
-										"Legal Name List", action.THROWEXCEPTION, 30),
+								FindElement(driver, "//*[text()='" + legalName + "']/parent::div", "Legal Name List",
+										action.THROWEXCEPTION, 30),
 								legalName + "   :   Account Name", action.BOOLEAN)) {
 							appLog.info(legalName + "  is present in list.");
 						} else {
@@ -3324,68 +3322,51 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 
 		return false;
 	}
-	
-	
-	public boolean createContactFromContactSectionOfAcuity(String salutation, String[][] labelAndValue)
-	{
-		boolean flag=false;
-		
-			if(click(driver, getAddContactIcon(30), "Add contact icon", action.SCROLLANDTHROWEXCEPTION))
-			{
-				log(LogStatus.INFO, "clicked on add contact button", YesNo.Yes);
-				if(salutation!=null)
-				{
 
-				}
-				if(labelAndValue!=null)
-				{
-					for(String[] val : labelAndValue)
-					{
-						String labelName=val[0];
-						String value=val[1];
-						if(sendKeys(driver, getTextboxWithLabelname(labelName,20), value, labelName+" textbox", action.SCROLLANDBOOLEAN))
-						{
-							log(LogStatus.INFO, value+" have been passed in field "+labelName, YesNo.Yes);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to pass the value "+value+" in field "+labelName, YesNo.Yes);
-							return false;
-						}
-					}
+	public boolean createContactFromContactSectionOfAcuity(String salutation, String[][] labelAndValue) {
+		boolean flag = false;
 
-				}
-				
-				if(click(driver, getSaveButtonOnNewContactPopup(20), "save button", action.SCROLLANDBOOLEAN))
-				{
-					log(LogStatus.INFO, "Clicked on save button", YesNo.Yes);
-					if(ActivityTimeLineCreatedMsg(20)!=null)
-					{
-						log(LogStatus.INFO, "The Contact has been created", YesNo.Yes);
-						flag= true;
-					}
-					else
-					{
-						log(LogStatus.ERROR, "The Contact is not created", YesNo.Yes);
+		if (click(driver, getAddContactIcon(30), "Add contact icon", action.SCROLLANDTHROWEXCEPTION)) {
+			log(LogStatus.INFO, "clicked on add contact button", YesNo.Yes);
+			if (salutation != null) {
+
+			}
+			if (labelAndValue != null) {
+				for (String[] val : labelAndValue) {
+					String labelName = val[0];
+					String value = val[1];
+					if (sendKeys(driver, getTextboxWithLabelname(labelName, 20), value, labelName + " textbox",
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, value + " have been passed in field " + labelName, YesNo.Yes);
+					} else {
+						log(LogStatus.ERROR, "Not able to pass the value " + value + " in field " + labelName,
+								YesNo.Yes);
 						return false;
 					}
 				}
-				else
-				{
-					log(LogStatus.ERROR, "Not able to click on save button", YesNo.Yes);
+
+			}
+
+			if (click(driver, getSaveButtonOnNewContactPopup(20), "save button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on save button", YesNo.Yes);
+				if (ActivityTimeLineCreatedMsg(20) != null) {
+					log(LogStatus.INFO, "The Contact has been created", YesNo.Yes);
+					flag = true;
+				} else {
+					log(LogStatus.ERROR, "The Contact is not created", YesNo.Yes);
 					return false;
 				}
-				
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Not able clicked on add contact button", YesNo.Yes);
+			} else {
+				log(LogStatus.ERROR, "Not able to click on save button", YesNo.Yes);
 				return false;
 			}
-	
+
+		} else {
+			log(LogStatus.ERROR, "Not able clicked on add contact button", YesNo.Yes);
+			return false;
+		}
+
 		return flag;
 	}
-
-	
 
 }

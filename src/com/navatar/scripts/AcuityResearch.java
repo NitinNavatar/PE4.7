@@ -2586,7 +2586,7 @@ public class AcuityResearch extends BaseLib{
 	 String[][] task1BasicSection = { { excelLabel.Subject.toString(), AR_Research6.replace("\"", "")} };
 		 lp.CRMLogin(superAdminUserName, adminPassword, appName);
    
-		 if (home.globalSearchAndNavigate(AR_Firm6.replace("   ", "").replace("\"", ""), RelatedTab.Tasks.toString(), false)) {
+		 if (home.globalSearchAndNavigate(AR_Firm6.replace("   ", "").replace("\"", ""), RelatedTab.Tasks.toString(), false, projectName)) {
 
 				log(LogStatus.INFO,
 						"-----Verified Task named: " + AR_Firm6 + " found in Tasks Object-----",
@@ -2597,7 +2597,7 @@ public class AcuityResearch extends BaseLib{
 //					if (click(driver, taskBP.buttonInTheDownArrowList(ShowMoreAction.Edit.toString(), 20),
 //							"Edit Button in downArrowButton", action.SCROLLANDBOOLEAN)) {
 //						log(LogStatus.INFO, "Clicked on Edit Button in  Down Arrow Button", YesNo.No);
-				if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+				if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(AR_Research6,20),
 							"Edit Note Button of: " + task1BasicSection, action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 						ThreadSleep(5000);
@@ -2795,7 +2795,7 @@ public class AcuityResearch extends BaseLib{
 		 String[][] task1BasicSection = { { excelLabel.Subject.toString(), AR_Research7.replace("\"", "")} };
 			 lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	   
-			 if (home.globalSearchAndNavigate(AR_Firm7.replace("   ", "").replace("\"", ""), RelatedTab.Events.toString(), false)) {
+			 if (home.globalSearchAndNavigate(AR_Firm7.replace("   ", "").replace("\"", ""), RelatedTab.Events.toString(), false, projectName)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Task named: " + AR_Firm7 + " found in Tasks Object-----",
@@ -2806,7 +2806,7 @@ public class AcuityResearch extends BaseLib{
 //						if (click(driver, taskBP.buttonInTheDownArrowList(ShowMoreAction.Edit.toString(), 20),
 //								"Edit Button in downArrowButton", action.SCROLLANDBOOLEAN)) {
 //							log(LogStatus.INFO, "Clicked on Edit Button in  Down Arrow Button", YesNo.No);
-					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(AR_Research6,20),
 								"Edit Note Button of: " + task1BasicSection, action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 							ThreadSleep(5000);

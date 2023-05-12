@@ -20234,7 +20234,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Tasks", false)) {
+		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Tasks", false, projectName)) {
 
 			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectNameNavigation + " found in Tasks Object-----",YesNo.No);
 			String parentID=switchOnWindow(driver);
@@ -24556,7 +24556,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Tasks", false)) {
+		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Tasks", false, projectName)) {
 
 			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectNameNavigation + " found in Tasks Object-----",YesNo.No);
 			String parentID=switchOnWindow(driver);
@@ -24597,7 +24597,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		
 		refresh(driver);
 
-		if (home.globalSearchAndNavigate(task1SubjectNameNavigation1, "Tasks", false)) {
+		if (home.globalSearchAndNavigate(task1SubjectNameNavigation1, "Tasks", false, projectName)) {
 
 			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectNameNavigation1 + " found in Tasks Object-----",YesNo.No);
 			String parentID=switchOnWindow(driver);
@@ -31764,7 +31764,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			sa.assertTrue(false, "Not Able to click on Calendar/Event Link");
 		}
 		
-		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Events", false)) {
+		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Events", false, projectName)) {
 
 			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectNameNavigation + " found in Tasks Object-----",YesNo.No);
 			

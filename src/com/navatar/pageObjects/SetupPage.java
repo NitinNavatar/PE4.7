@@ -126,7 +126,7 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, setupPageIframe, "Visibility", timeOut, "active users iframe");
 	}
 
-	@FindBy(xpath = "//td[contains(@id,'ButtonRow')]//input[@name='save']")
+	@FindBy(xpath = "//td[@id='bottomButtonRow']//input[@value=' Save ']")
 	private WebElement createUserSaveBtn_Lighting;
 
 	/**

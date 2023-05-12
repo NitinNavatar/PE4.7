@@ -316,7 +316,8 @@ public class Module6 extends BaseLib {
 		}
 		WebElement ele = null;
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
-			if (ip.clickOnAlreadyCreatedItem(projectName, M6Ins2, 10)) {
+
+			if (ip.clickOnAlreadyCreatedItem(projectName, M6Ins2, TabName.InstituitonsTab, 10)) {
 
 				for (int i = 0; i < labelName1.length; i++) {
 					if (ip.fieldValueVerificationOnInstitutionPage(environment, mode, TabName.Object1Tab, labelName1[i],
@@ -474,7 +475,7 @@ public class Module6 extends BaseLib {
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
-			if (ip.clickOnAlreadyCreatedItem(projectName, M6Ins2, 10)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M6Ins2, TabName.InstituitonsTab, 10)) {
 				if (ip.clickOnShowMoreActionDownArrow(projectName, PageName.Object1Page,
 						ShowMoreActionDropDownList.Change_Record_Type, 10)) {
 					if (click(driver, ip.getRadioButtonforRecordType(RecordType.Company.toString(), 10),
@@ -816,7 +817,7 @@ public class Module6 extends BaseLib {
 
 		if (flag) {
 			if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
-				if (ip.clickOnAlreadyCreatedItem(projectName, M6Ins3, 10)) {
+				if (ip.clickOnAlreadyCreatedItem(projectName, M6Ins3, TabName.InstituitonsTab, 10)) {
 					if (ip.fieldValueVerificationOnInstitutionPage(environment, mode, TabName.Object1Tab, labelName2[i],
 							labelValues2[i])) {
 						log(LogStatus.SKIP, "successfully verified " + labelName2[i], YesNo.No);
@@ -2121,7 +2122,11 @@ public class Module6 extends BaseLib {
 								if (click(driver, setup.getEditButton(environment, Mode.Classic.toString(), 10), "edit",
 										action.BOOLEAN)) {
 									ThreadSleep(2000);
+
 									switchToDefaultContent(driver);
+									CommonLib.refresh(driver);
+									CommonLib.ThreadSleep(5000);
+
 									switchToFrame(driver, 10, setup.getFrame(PageName.RecordTypePortfolioCompany, 10));
 									ThreadSleep(2000);
 									// setup.getRecordTypeLabel(projectName,"Record Type
@@ -2242,21 +2247,28 @@ public class Module6 extends BaseLib {
 							if (setup.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
 								switchToDefaultContent(driver);
 								switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
-								ThreadSleep(8000);
+								ThreadSleep(15000);
 								WebElement ele = dp.findDeactivateLink(projectName, Stage.Closed.toString());
-								if (click(driver, ele, "deactivate  closed", action.SCROLLANDBOOLEAN)) {
+								if (clickUsingJavaScript(driver, ele, "deactivate  closed", action.BOOLEAN)) {
 									ThreadSleep(5000);
-									/*
-									 * if (!isAlertPresent(driver)) { clickUsingJavaScript(driver, ele,
-									 * "deactivate closed", action.SCROLLANDBOOLEAN); }
-									 */
+
+//									if (!isAlertPresent(driver)) {
+//										clickUsingJavaScript(driver, ele, "deactivate closed", action.SCROLLANDBOOLEAN);
+//									}
+
 									ThreadSleep(2000);
 									// driver.switchTo().alert().accept();
 									switchToDefaultContent(driver);
-									switchToDefaultContent(driver);
-									WebDriverWait wait = new WebDriverWait(driver, 20);
-									wait.until(ExpectedConditions.alertIsPresent());
-									driver.switchTo().alert().accept();
+
+									/*
+									 * WebDriverWait wait = new WebDriverWait(driver, 20);
+									 * 
+									 * if (wait.until(ExpectedConditions.alertIsPresent()) != null) {
+									 * driver.switchTo().alert().accept(); }
+									 */
+									if (isAlertPresent(driver)) {
+										driver.switchTo().alert().accept();
+									}
 									// switchToAlertAndAcceptOrDecline(driver, 18, action.ACCEPT);
 									switchToDefaultContent(driver);
 									CommonLib.refresh(driver);
@@ -2473,7 +2485,7 @@ public class Module6 extends BaseLib {
 								switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
 
 								CommonLib.ThreadSleep(7000);
-								WebElement ele = dp.findDeactivateLink(projectName, Stage.Closed.toString());
+								WebElement ele = dp.findActivateLink(projectName, Stage.Closed.toString());
 
 								if (click(driver, ele, "activate closed", action.SCROLLANDBOOLEAN)) {
 									ThreadSleep(3000);
@@ -3057,7 +3069,7 @@ public class Module6 extends BaseLib {
 			log(LogStatus.SKIP, "deal tab is not clickable", YesNo.Yes);
 		}
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
-			if (ip.clickOnAlreadyCreatedItem(projectName, M6Ins12, 10)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M6Ins12, TabName.InstituitonsTab, 10)) {
 				for (int i = 0; i < labelName1.length; i++) {
 					if (ip.fieldValueVerificationOnInstitutionPage(environment, mode, TabName.Object1Tab, labelName1[i],
 							labelValues1[i])) {
@@ -3199,7 +3211,7 @@ public class Module6 extends BaseLib {
 			log(LogStatus.SKIP, "deal tab is not clickable", YesNo.Yes);
 		}
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
-			if (ip.clickOnAlreadyCreatedItem(projectName, M6Ins13, 10)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M6Ins13, TabName.InstituitonsTab, 10)) {
 				for (int i = 0; i < labelName1.length; i++) {
 					if (ip.fieldValueVerificationOnInstitutionPage(environment, mode, TabName.Object1Tab, labelName1[i],
 							labelValues1[i])) {
@@ -3339,7 +3351,7 @@ public class Module6 extends BaseLib {
 			log(LogStatus.SKIP, "deal tab is not clickable", YesNo.Yes);
 		}
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
-			if (ip.clickOnAlreadyCreatedItem(projectName, M6Ins14, 10)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M6Ins14, TabName.InstituitonsTab, 10)) {
 				for (int i = 0; i < labelName1.length; i++) {
 					if (ip.fieldValueVerificationOnInstitutionPage(environment, mode, TabName.Object1Tab, labelName1[i],
 							labelValues1[i])) {
@@ -3481,7 +3493,7 @@ public class Module6 extends BaseLib {
 			log(LogStatus.SKIP, "deal tab is not clickable", YesNo.Yes);
 		}
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
-			if (ip.clickOnAlreadyCreatedItem(projectName, M6Ins15, 10)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M6Ins15, TabName.InstituitonsTab, 10)) {
 				for (int i = 0; i < labelName1.length; i++) {
 					if (ip.fieldValueVerificationOnInstitutionPage(environment, mode, TabName.Object1Tab, labelName1[i],
 							labelValues1[i])) {
@@ -3623,7 +3635,7 @@ public class Module6 extends BaseLib {
 			log(LogStatus.SKIP, "deal tab is not clickable", YesNo.Yes);
 		}
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
-			if (ip.clickOnAlreadyCreatedItem(projectName, M6Ins16, 10)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M6Ins16, TabName.InstituitonsTab, 10)) {
 				for (int i = 0; i < labelName1.length; i++) {
 					if (ip.fieldValueVerificationOnInstitutionPage(environment, mode, TabName.Object1Tab, labelName1[i],
 							labelValues1[i])) {
@@ -3765,7 +3777,7 @@ public class Module6 extends BaseLib {
 			log(LogStatus.SKIP, "deal tab is not clickable", YesNo.Yes);
 		}
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
-			if (ip.clickOnAlreadyCreatedItem(projectName, M6Ins17, 10)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M6Ins17, TabName.InstituitonsTab, 10)) {
 				for (int i = 0; i < labelName1.length; i++) {
 					if (ip.fieldValueVerificationOnInstitutionPage(environment, mode, TabName.Object1Tab, labelName1[i],
 							labelValues1[i])) {
@@ -3907,7 +3919,7 @@ public class Module6 extends BaseLib {
 			log(LogStatus.SKIP, "deal tab is not clickable", YesNo.Yes);
 		}
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
-			if (ip.clickOnAlreadyCreatedItem(projectName, M6Ins18, 10)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M6Ins18, TabName.InstituitonsTab, 10)) {
 				for (int i = 0; i < labelName1.length; i++) {
 					if (ip.fieldValueVerificationOnInstitutionPage(environment, mode, TabName.Object1Tab, labelName1[i],
 							labelValues1[i])) {
@@ -5313,6 +5325,8 @@ public class Module6 extends BaseLib {
 								if (click(driver, ele, "edit", action.SCROLLANDBOOLEAN)) {
 									switchToDefaultContent(driver);
 									ThreadSleep(3000);
+									CommonLib.refresh(driver);
+									ThreadSleep(4000);
 									switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
 
 									if (sendKeys(driver, sp.getRecordTypeLabel(projectName, "Label", 10), newstage,
