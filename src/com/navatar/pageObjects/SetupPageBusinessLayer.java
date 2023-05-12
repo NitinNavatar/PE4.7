@@ -7218,4 +7218,280 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return flag;
 	}
 
+	
+	public boolean verifyHieghtandWidthOfClip(String width, String height)
+	{
+		if(clickUsingJavaScript(driver, getPECouldShowMoreIcon(20), "Show more icon"))
+		{
+			log(LogStatus.INFO, "Clicked on show more icon", YesNo.No);	
+			if(clickUsingJavaScript(driver, getEditBtn(20), "Edit button icon"))
+			{
+				log(LogStatus.INFO, "Clicked on edit button", YesNo.No);	
+				if(clickUsingJavaScript(driver, getUtilityItems(20), "Utility items"))
+				{
+					log(LogStatus.INFO, "Clicked on utility items", YesNo.No);	
+					if(clickUsingJavaScript(driver, getClipUtility(20), "clip utility items"))
+					{
+						log(LogStatus.INFO, "Clicked on clip utility items", YesNo.No);	
+						ThreadSleep(4000);
+						String panelWidth=getAttribute(driver, getPanelWidthValue(20), "panel width", "value");
+						String panelHeight=getAttribute(driver, getpanelHeightValue(20), "panel width", "value");
+						
+						if(panelWidth.equals(width) && panelHeight.equals(height))
+						{
+							log(LogStatus.INFO, "Actual panel width and panel height has been matched with expected panel width and panel height", YesNo.No);
+							return true;
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Actual panel width and panel height is not matched with expected panel width and panel height", YesNo.No);	
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR,"Clicked on clip utility items", YesNo.No);	
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on utility items", YesNo.No);	
+				}
+					
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on edit button", YesNo.No);	
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on show more icon", YesNo.No);	
+		}
+		return false;
+	}
+	
+	public ArrayList<String> verifyAcceddPermissionOfObject(UserProfile userProfile,ObjectType object, boolean read, boolean create, boolean edit, boolean delete)
+	{
+		ThreadSleep(5000);
+		ArrayList<String> result=new ArrayList<String>();
+		String userProfileName=userProfile.toString().replace("_", " ");
+		if (CommonLib.switchToFrame(driver, 50, getuserProfileIframe(50))) {
+			ThreadSleep(5000);
+			log(LogStatus.INFO, "Successfully switched to User Profile Iframe", YesNo.No);
+			
+			if (CommonLib.clickUsingJavaScript(driver, getEditButtonOfProfileUser(userProfileName,20), userProfileName + " profile name", action.BOOLEAN)) {
+				log(LogStatus.INFO, "Successfully clicked on edit button of " + userProfileName + " profile name", YesNo.No);
+				ThreadSleep(8000);
+				CommonLib.switchToDefaultContent(driver);
+				
+				if (CommonLib.switchToFrame(driver, 50, getProfileEditPageIframe(40))) {
+					ThreadSleep(5000);
+					log(LogStatus.INFO, "Successfully switched to Edit Profile Iframe", YesNo.No);
+					int k=0;
+					scrollDownThroughWebelementInCenter(driver, getReadcheckbox(object.toString(),20), object.toString());
+					if(read)
+					{
+						if(!isSelected(driver, getReadcheckbox(object.toString(),20), "read checkbox"))
+						{
+							if(clickUsingJavaScript(driver, getReadcheckbox(object.toString(),20), "read checkbox"))
+							{
+								log(LogStatus.INFO, "read checkbox has been selected", YesNo.No);
+								k++;
+							}
+							else
+							{
+								log(LogStatus.ERROR, "read checkbox is not selected", YesNo.No);
+								result.add("read checkbox is not selected");
+							}
+						}
+						else
+						{
+							log(LogStatus.INFO, "read checkbox is already selected", YesNo.No);
+						}
+					}
+					else
+					{
+						if(isSelected(driver, getReadcheckbox(object.toString(),20), "read checkbox"))
+						{
+							if(clickUsingJavaScript(driver, getReadcheckbox(object.toString(),20), "read checkbox"))
+							{
+								log(LogStatus.INFO, "read checkbox has been unchecked", YesNo.No);
+								k++;
+							}
+							else
+							{
+								log(LogStatus.ERROR, "read checkbox is not unchecked", YesNo.No);
+								result.add("read checkbox is not unchecked");
+							}
+						}
+						else
+						{
+							log(LogStatus.INFO, "read checkbox is already unchecked", YesNo.No);
+						}
+					}
+					
+					if(create)
+					{
+						if(!isSelected(driver, getCreatecheckbox(object.toString(),20), "Create checkbox"))
+						{
+							if(clickUsingJavaScript(driver, getCreatecheckbox(object.toString(),20), "Create checkbox"))
+							{
+								log(LogStatus.INFO, "Create checkbox has been selected", YesNo.No);
+								k++;
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Create checkbox is not selected", YesNo.No);
+								result.add("Create checkbox is not selected");
+							}
+						}
+						else
+						{
+							log(LogStatus.INFO, "Create checkbox is already selected", YesNo.No);
+						}
+					}
+					else
+					{
+						if(isSelected(driver, getCreatecheckbox(object.toString(),20), "Create checkbox"))
+						{
+							if(clickUsingJavaScript(driver, getCreatecheckbox(object.toString(),20), "Create checkbox"))
+							{
+								log(LogStatus.INFO, "Create checkbox has been unchecked", YesNo.No);
+								k++;
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Create checkbox is not unchecked", YesNo.No);
+								result.add("Create checkbox is not unchecked");
+							}
+						}
+						else
+						{
+						log(LogStatus.INFO, "Create checkbox is already unchecked", YesNo.No);
+					    }
+					}
+					
+					if(edit)
+					{
+						if(!isSelected(driver, getEditcheckbox(object.toString(),20), "Edit checkbox"))
+						{
+							if(clickUsingJavaScript(driver, getEditcheckbox(object.toString(),20), "Edit checkbox"))
+							{
+								log(LogStatus.INFO, "Edit checkbox has been selected", YesNo.No);
+								k++;
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Edit checkbox is not selected", YesNo.No);
+								result.add("Edit checkbox is not selected");
+							}
+						}
+						else
+						{
+							log(LogStatus.INFO, "Edit checkbox is already selected", YesNo.No);
+						}
+					}
+					else
+					{
+						if(isSelected(driver, getEditcheckbox(object.toString(),20), "Edit checkbox"))
+						{
+							if(clickUsingJavaScript(driver, getEditcheckbox(object.toString(),20), "Edit checkbox"))
+							{
+								log(LogStatus.INFO, "Edit checkbox has been unchecked", YesNo.No);
+								k++;
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Edit checkbox is not unchecked", YesNo.No);
+								result.add("Edit checkbox is not unchecked");
+							}
+						}
+						else
+						{
+							log(LogStatus.INFO, "Edit checkbox is already unchecked", YesNo.No);
+						}
+					}
+					
+					if(delete)
+					{
+						if(!isSelected(driver, getDeleteCheckbox(object.toString(),20), "Delete checkbox"))
+						{
+							if(clickUsingJavaScript(driver, getDeleteCheckbox(object.toString(),20), "Delete checkbox"))
+							{
+								log(LogStatus.INFO, "Delete checkbox has been selected", YesNo.No);
+								k++;
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Delete checkbox is not selected", YesNo.No);
+								result.add("Delete checkbox is not selected");
+							}
+						}
+						else
+						{
+							log(LogStatus.INFO, "Delete checkbox is already selected", YesNo.No);
+						}
+					}
+					else
+					{
+						if(isSelected(driver, getDeleteCheckbox(object.toString(),20), "Delete checkbox"))
+						{
+							if(clickUsingJavaScript(driver, getDeleteCheckbox(object.toString(),20), "Delete checkbox"))
+							{
+								log(LogStatus.INFO, "Delete checkbox has been unchecked", YesNo.No);
+								k++;
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Delete checkbox is not unchecked", YesNo.No);
+								result.add("Delete checkbox is not unchecked");
+							}
+						}
+						else
+						{
+							log(LogStatus.INFO, "Delete checkbox is already unchecked", YesNo.No);
+						}
+					}	
+					if(k!=0)
+					{
+						if(clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(20), "Save button"))
+						{
+							log(LogStatus.INFO, "Clicked on Save button", YesNo.No);
+							ThreadSleep(7000);
+							switchToDefaultContent(driver);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Save button", YesNo.No);
+							result.add("Not able to click on Save button");
+						}
+						
+					}
+					
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to switched to Edit Profile Iframe", YesNo.No);
+					result.add("Not able to switched to Edit Profile Iframe");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on edit button of " + userProfileName + " profile name", YesNo.No);
+				result.add("Not able to click on edit button of " + userProfileName + " profile name");
+				
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to switched to User Profile Iframe", YesNo.No);
+			result.add("Not able to switched to User Profile Iframe");
+		}
+			
+			
+		return result;
+		
+	}
+	
 }
