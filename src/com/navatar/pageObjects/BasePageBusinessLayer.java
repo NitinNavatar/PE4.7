@@ -21843,7 +21843,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	}
 
-	public ArrayList<String> verifyRedirectionOnClickEntityTypeOnTaggedSection(boolean isInstitutionRecord) {
+	public ArrayList<String> verifyRedirectionOnClickEntityTypeOnTaggedSection() {
 
 		ArrayList<String> result = new ArrayList<String>();
 
@@ -21919,43 +21919,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			result.add("Not able to click on Companies tab name");
 		}
 
-		if (isInstitutionRecord == true) {
-			if (click(driver, getTaggedRecordName(TaggedName.Funds.toString(), 30),
-					TaggedName.Funds.toString() + " tab", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on Fund tab name", YesNo.No);
-				ThreadSleep(5000);
-				if (CommonLib.clickUsingJavaScript(driver, recordsNameOnTaggedSection(TaggedName.Funds.toString(), 30),
-						"Records on Fund Tagged", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on record on fund tab", YesNo.No);
-
-					String id = switchOnWindow(driver);
-					if (id != null) {
-						if (getTabName("Fund", 20) != null) {
-							log(LogStatus.INFO,
-									"The page is redirecting to fund tab after click on Entity type of fund", YesNo.No);
-						} else {
-							log(LogStatus.ERROR,
-									"The page is not redirecting to Fund tab after click on Entity type of fund",
-									YesNo.No);
-							result.add("The page is not redirecting to Fund tab after click on Entity type of fund");
-						}
-						driver.close();
-						driver.switchTo().window(id);
-					} else {
-						log(LogStatus.ERROR, "The new tab is not opening after clicking on entity type of Fund",
-								YesNo.No);
-						result.add("The new tab is not opening after clicking on entity type of Fund");
-					}
-
-				} else {
-					log(LogStatus.ERROR, "Not able to click on record of fund tab name", YesNo.No);
-					result.add("Not able to click on record of fund tab name");
-				}
-			} else {
-				log(LogStatus.ERROR, "Not able to click on Fund tab name", YesNo.No);
-				result.add("Not able to click on Fund tab name");
-			}
-		}
 		return result;
 	}
 

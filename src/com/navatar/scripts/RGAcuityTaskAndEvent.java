@@ -481,8 +481,8 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
 	
 		String eventTitle2 = RGATE_Subject3;
-	//	String eventAttendees2=RGATE_RelatedTo3;
-		String eventAttendees2="srrg@yopmail.com,srrg12@yopmail.com";
+		String eventAttendees2=RGATE_RelatedTo3;
+	
 		String startDate2 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt(RGATE_StartDay3));
 		ExcelUtils.writeData(AcuityDataSheetFilePath, startDate2, "Activity Timeline", excelLabel.Variable_Name,
 				"RGATE_003", excelLabel.Advance_Start_Date);
@@ -3269,7 +3269,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		
 		
 		String[] accountName = RGATE_FirmLegalName4.split("<break>");
 		String[] recordType = RGATE_FirmRecordType3.split("<break>");
@@ -3282,7 +3282,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		String dealName = RGATE_DealName3;
 		String dealCompany = RGATE_DealCompany3;
 		String dealStage = RGATE_DealStage3;
-
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 			for (int i = 0; i < accountName.length; i++) {
 				if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
 
@@ -3368,7 +3368,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		DealTeamPageBusinessLayer DTP = new DealTeamPageBusinessLayer(driver);
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		
 		
 		String[] TeamMember = ACDealTeamMember1.split("<break>");
 		String[] contactName = ACDealContact1.split("<break>");
@@ -3384,6 +3384,8 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		String[] user = ACDealTeamMember1.split("<break>");
 		String[] userTitle = ACDealTeamTitle1.split("<break>");
 		String[] userRole = ACDealTeamRole1.split("<break>");
+		
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		
 		log(LogStatus.INFO, TeamMember.length + " is length", YesNo.No);
 		for (int i = 0; i < TeamMember.length; i++) {
@@ -3533,7 +3535,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 //		String username3=RGcrmUser3EmailID;
 		String dealName = ACDealName1;
 		
-		lp.CRMLogin(superAdminUserName, adminPassword);
+		
 		
 		String[] accountName = RGATE_FirmLegalName4.split("<break>");
 		String[] firmsTaggedName= {RGATE_TaggedFirmName8};
@@ -3592,6 +3594,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		String startTime8 = null;
 		String endTime8 = null;
 		String descriptionBox6 = RGATE_Notes8;
+		lp.CRMLogin(RGcrmUser1EmailID, adminPassword);
 
 		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle8 + " through Outlook---------",
 				YesNo.No);
@@ -3824,7 +3827,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		FundRaisingPageBusinessLayer fr = new FundRaisingPageBusinessLayer(driver);
 		FundsPageBusinessLayer fd = new FundsPageBusinessLayer(driver);
 		
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		lp.CRMLogin(RGcrmUser1EmailID, adminPassword, appName);
 		
 		String[] accountName = RGATE_FirmLegalName5.split("<break>");
 		String[] recordType = RGATE_FirmRecordType4.split("<break>");
@@ -3944,7 +3947,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		FundRaisingPageBusinessLayer fr = new FundRaisingPageBusinessLayer(driver);
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		lp.CRMLogin(RGcrmUser1EmailID, adminPassword, appName);
 		
 		String[] TeamMember = ACDealTeamMember2.split("<break>");
 		String[] contactName = ACDealContact2.split("<break>");
@@ -4061,7 +4064,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 //		String username3=RGcrmUser3EmailID;
 		String dealName = ACDealName2;
 		
-		lp.CRMLogin(superAdminUserName, adminPassword);
+		lp.CRMLogin(RGcrmUser1EmailID, adminPassword);
 		
 		String[] accountName = RGATE_FirmLegalName5.split("<break>");
 		String[] firmsTaggedName= {RGATE_TaggedFirmName9};
@@ -4304,7 +4307,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 //		String username2=RGcrmUser2EmailID;
 //		String username3=RGcrmUser3EmailID;
 		
-		lp.CRMLogin(superAdminUserName, adminPassword);
+		lp.CRMLogin(RGcrmUser1EmailID, adminPassword);
 		
 		String[] accountName = RGATE_FirmLegalName3.split("<break>");
 		String details = RGATE_Notes10;
@@ -4476,7 +4479,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 //		String username2=RGcrmUser2EmailID;
 //		String username3=RGcrmUser3EmailID;
 		
-		lp.CRMLogin(superAdminUserName, adminPassword);
+		lp.CRMLogin(RGcrmUser1EmailID, adminPassword);
 		
 		String[] accountName = RGATE_FirmLegalName3.split("<break>");
 		String details = RGATE_Notes10;
@@ -4619,7 +4622,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		lp.CRMLogin(superAdminUserName, adminPassword);
+		lp.CRMLogin(RGcrmUser1EmailID, adminPassword);
 		
 		String[] accountName = RGATE_FirmLegalName3.split("<break>");
 		String details = RGATE_Notes10;
@@ -4741,7 +4744,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		lp.CRMLogin(superAdminUserName, adminPassword);
+		lp.CRMLogin(RGcrmUser1EmailID, adminPassword);
 		String updatedCommentOfTask = RGATE_Description10;
 		String[][] task1UpdateBasicSection = { { RGATE_Subject10, updatedCommentOfTask } };
 		String[] task1SubjectName = RGATE_FirmLegalName3.split("<break>");
