@@ -1110,9 +1110,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		tabName = getTabName(projectName, TabName);
 		System.err.println("Passed switch statement");
 		if (tabName != null) {
-			ele = FindElement(driver, "//a[contains(@href,'lightning') and contains(@title,'" + tabName + "')]/span/..",
-					tabName, action.SCROLLANDBOOLEAN, 30);
-			ele = isDisplayed(driver, ele, "visibility", 30, tabName);
+			CommonLib.refresh(driver);
+			ele = getTabNameLightning(tabName, 30);
+
 			if (ele != null) {
 				appLog.info("Tab Found");
 				ThreadSleep(5000);
@@ -1127,16 +1127,22 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			} else {
 				CommonLib.log(LogStatus.INFO, "Going to found tab after clicking on More Icon", YesNo.No);
 				if (click(driver, getMoreTabIcon(projectName, 10), "More Icon", action.SCROLLANDBOOLEAN)) {
-					ele = FindElement(driver,
-							"//a[contains(@href,'lightning')]/span[@class='slds-truncate']/span[contains(text(),'"
-									+ tabName + "')]",
-							tabName, action.SCROLLANDBOOLEAN, 10);
-					ele = isDisplayed(driver, ele, "visibility", 10, tabName);
+					ele = getTabNameLightningInMoreTab(tabName, 10);
+
 					if (ele != null) {
 						if (clickUsingJavaScript(driver, ele, tabName + " :Tab")) {
 							appLog.info("Clicked on Tab on More Icon: " + tabName);
 							CommonLib.log(LogStatus.INFO, "Tab found on More Icon", YesNo.No);
 							flag = true;
+						}
+
+						else {
+							if (click(driver, ele, tabName + " :Tab", action.BOOLEAN)) {
+								appLog.info("Clicked on Tab on More Icon: " + tabName);
+								CommonLib.log(LogStatus.INFO, "Tab found on More Icon", YesNo.No);
+								flag = true;
+							}
+
 						}
 					}
 
@@ -6900,6 +6906,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case SDGTab:
 			viewList = "All";
 			break;
+		case Deals:
+			viewList = "All";
+			break;
+
 		default:
 			return false;
 		}

@@ -13,6 +13,9 @@ import com.navatar.generic.EnumConstants.action;
 //import static com.navatar.generic.CommonLib.*;
 
 import static com.navatar.generic.CommonLib.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 /**
  * @author Parul Singh
  *
@@ -50,14 +53,30 @@ public class LoginPage extends BasePageBusinessLayer{
 		return isDisplayed(driver, passwordTextBox, "Visibility", timeOut, "Password Text Box.");
 	}
 
-	@FindBy(id="Login")
-	private WebElement loginButton;
-	
-	/**
-	 * @return the loginButton
-	 */
+	/*
+	 * @FindBy(id = "Login") private WebElement loginButton;
+	 * 
+	 *//**
+		 * @return the loginButton
+		 *//*
+			 * public WebElement getLoginButton(int timeOut) { return isDisplayed(driver,
+			 * loginButton, "Visibility", timeOut, "Login Button."); }
+			 */
+
 	public WebElement getLoginButton(int timeOut) {
-		return isDisplayed(driver, loginButton, "Visibility", timeOut, "Login Button.");
+
+		String xpath = "//input[@id=\"Login\"]";
+
+		List<WebElement> listOfElements = FindElements(driver, xpath, "getLoginButton").stream()
+				.filter(x -> x.isDisplayed()).collect(Collectors.toList());
+
+		if (listOfElements.size() > 0) {
+			return listOfElements.get(0);
+		} else {
+			return null;
+
+		}
+
 	}
 	/**********************************investor login************************************************/
 	

@@ -2235,12 +2235,15 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return ele;
 	}
 
-	public WebElement getRecordTypeLabelWithoutEditMode(String projectName, String recordTypeLabel, String checkedValue, int timeOut) {
-		String xpath = "//*[text()='" + recordTypeLabel + "']/..//following-sibling::td//img[@title='"+ checkedValue +"']";
+	public WebElement getRecordTypeLabelWithoutEditMode(String projectName, String recordTypeLabel, String checkedValue,
+			int timeOut) {
+		String xpath = "//*[text()='" + recordTypeLabel + "']/..//following-sibling::td//img[@title='" + checkedValue
+				+ "']";
 		WebElement ele = isDisplayed(driver, FindElement(driver, xpath, recordTypeLabel, action.BOOLEAN, 10),
 				"visibility", 10, recordTypeLabel);
 		return ele;
 	}
+
 	/**
 	 * @author Azhar Alam
 	 * @param projectName
@@ -4022,6 +4025,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 					if (ele != null) {
 						if (click(driver, ele, "field label text link", action.BOOLEAN)) {
 							log(LogStatus.INFO, "clicked on field label " + fieldLabel, YesNo.No);
+							ThreadSleep(7000);
+							CommonLib.refresh(driver);
 							switchToFrame(driver, 50, getFieldAndRelationShipFrame(50));
 							ThreadSleep(4000);
 							if (click(driver,
@@ -4194,18 +4199,12 @@ public class SetupPageBusinessLayer extends SetupPage {
 			}
 			if (click(driver, getUsersLink(30), "User Link", action.SCROLLANDBOOLEAN)) {
 				appLog.info("clicked on users link");
-				switchToFrame(driver, 20, getSetUpPageIframe(20));
-				CommonLib.ThreadSleep(3000);
-				try {
-					ele = new WebDriverWait(driver, 50)
-							.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[text()='" + email
-									+ "']/parent::td//preceding-sibling::td[@class='actionColumn']//a[text()='Edit']")));
-				} catch (Exception ex) {
-					ex.printStackTrace();
-					log(LogStatus.ERROR, "Could not found the Element of the edit button", YesNo.Yes);
-					flag = false;
-				}
-				if (click(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
+
+				CommonLib.ThreadSleep(7000);
+				switchToFrame(driver, 20, getSetUpPageIframe(25));
+				CommonLib.ThreadSleep(6000);
+
+				if (clickUsingJavaScript(driver, editButtonOfUser(email, 25), "Edit Button", action.BOOLEAN)) {
 					appLog.info("Clicked on the edit button against " + email);
 					switchToDefaultContent(driver);
 					switchToFrame(driver, 50, getuserEditPageIframe(50));
@@ -4365,9 +4364,11 @@ public class SetupPageBusinessLayer extends SetupPage {
 									"view field accessbility button xpath", action.BOOLEAN)) {
 								log(LogStatus.INFO, "clicked on view field accessbility of field label : " + fieldLabel,
 										YesNo.No);
-								ThreadSleep(2000);
+								ThreadSleep(7000);
+								CommonLib.refresh(driver);
+								ThreadSleep(7000);
 								switchToFrame(driver, 50, getFieldAndRelationShipFrame(50));
-								ThreadSleep(5000);
+								ThreadSleep(2000);
 								if (selectVisibleTextFromDropDown(driver, getFieldAccessbilityDropDown(50),
 										"field accessbility drop down", fieldLabel)) {
 									log(LogStatus.INFO, "select field label accessbility drop down " + fieldLabel,
@@ -4378,6 +4379,10 @@ public class SetupPageBusinessLayer extends SetupPage {
 											"profile link name", action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.INFO, "clicked on " + profileName + " link", YesNo.No);
 										CommonLib.switchToDefaultContent(driver);
+
+										CommonLib.ThreadSleep(5000);
+										CommonLib.refresh(driver);
+										CommonLib.ThreadSleep(5000);
 										switchToFrame(driver, 50, getFieldAndRelationShipFrame(50));
 										ThreadSleep(3000);
 										if (permissionType.toString().equals("givePermission")) {
@@ -4524,7 +4529,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 			if (CommonLib.click(driver, ele, fieldName + " field", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "clicked on Field" + fieldName, YesNo.No);
 				CommonLib.ThreadSleep(7000);
-
+				CommonLib.refresh(driver);
+				CommonLib.ThreadSleep(7000);
 				if (CommonLib.switchToFrame(driver, 50, getSetUpPageIframe(70))) {
 					ThreadSleep(2000);
 					log(LogStatus.INFO, "sucessfully swithed to the iframe", YesNo.No);

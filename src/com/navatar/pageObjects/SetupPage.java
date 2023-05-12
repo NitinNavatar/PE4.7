@@ -1330,13 +1330,18 @@ public class SetupPage extends BasePageBusinessLayer {
 
 	}
 
-	
 	@FindBy(id = "p5")
 	private WebElement defaultRecordTypeOption;
 
 	public WebElement defaultRecordTypeOption(int timeOut) {
 		return isDisplayed(driver, defaultRecordTypeOption, "Visibility", timeOut, "defaultRecordTypeOption");
 	}
-	
-	
+
+	public WebElement editButtonOfUser(String email, int timeOut) {
+		String xpath = "//a[text()='" + email
+				+ "']/parent::td//preceding-sibling::td[@class='actionColumn']//a[text()='Edit']";
+		return isDisplayed(driver, FindElement(driver, xpath, "Status", action.SCROLLANDBOOLEAN, timeOut), "Visibility",
+				timeOut, "editButtonOfUser: " + email);
+	}
+
 }

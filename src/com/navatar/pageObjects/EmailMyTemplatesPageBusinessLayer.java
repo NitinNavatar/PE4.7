@@ -52,7 +52,7 @@ public class EmailMyTemplatesPageBusinessLayer extends EmailMyTemplatesPage {
 							
 							if (click(driver, getSaveButtonforFolderTempalte(environment, mode, 60), "Save Button",
 									action.SCROLLANDBOOLEAN)) {
-								appLog.error("Clicked on Save Button");
+								appLog.info("Clicked on Save Button");
 								
 								WebElement ele = FindElement(driver,
 										"//h1[contains(text(),'" + emailTemplateFolderName + "')]", "Header",
@@ -149,7 +149,7 @@ public class EmailMyTemplatesPageBusinessLayer extends EmailMyTemplatesPage {
 												
 												if (click(driver, getSaveButtonforFolderTempalte(environment, mode, 60), "Save Button",
 														action.SCROLLANDBOOLEAN)) {
-													appLog.error("Clicked on Save Button");
+													appLog.info("Clicked on Save Button");
 													
 													ele = FindElement(driver,
 															"//h2[contains(text(),'" + emailTemplateName + "')]", "Header",

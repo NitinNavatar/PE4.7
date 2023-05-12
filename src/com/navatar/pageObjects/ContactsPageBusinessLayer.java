@@ -1744,33 +1744,36 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		if (click(driver, home.listButtonOnSDG(sdgName, actionButtonName, timeOut), "Action Button " + actionButtonName,
 				action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Button: " + actionButtonName + " on SDG: " + sdgName, YesNo.No);
-			if (click(driver, nextButtonOfNewFirm(30), "nextButtonOfNewFirm ", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on Button: Next", YesNo.No);
 
-				if (home.enterValueAndDropDownForSDGForm(projectName, sdgLabels, action.SCROLLANDBOOLEAN, timeOut)) {
-					log(LogStatus.INFO, "Successfully Enter values on " + actionButtonName + " of SDG: " + sdgName,
-							YesNo.Yes);
-
-					if (click(driver, getRecordPageSettingSave(60), "Save Button", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Click on Save Button  " + sdgName, YesNo.No);
-						flag = true;
-						ThreadSleep(5000);
-
-					} else {
-						sa.assertTrue(false,
-								"Not Able to Click on Save Button Value so cannot create Firm on SDG:  " + sdgName);
-						log(LogStatus.SKIP,
-								"Not Able to Click on Save Button Value so cannot create Firm on SDG:  " + sdgName,
-								YesNo.Yes);
-					}
+			if (nextButtonOfNewFirm(20) != null) {
+				if (click(driver, nextButtonOfNewFirm(30), "nextButtonOfNewFirm ", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Button: Next", YesNo.No);
 				} else {
-					log(LogStatus.ERROR, "Not Able to Enter values on " + actionButtonName + " of SDG: " + sdgName,
+					log(LogStatus.ERROR, "Not Able to Clicked on Button: Next", YesNo.Yes);
+
+				}
+			}
+			if (home.enterValueAndDropDownForSDGForm(projectName, sdgLabels, action.SCROLLANDBOOLEAN, timeOut)) {
+				log(LogStatus.INFO, "Successfully Enter values on " + actionButtonName + " of SDG: " + sdgName,
+						YesNo.Yes);
+
+				if (click(driver, getRecordPageSettingSave(60), "Save Button", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Click on Save Button  " + sdgName, YesNo.No);
+					flag = true;
+					ThreadSleep(5000);
+
+				} else {
+					sa.assertTrue(false,
+							"Not Able to Click on Save Button Value so cannot create Firm on SDG:  " + sdgName);
+					log(LogStatus.SKIP,
+							"Not Able to Click on Save Button Value so cannot create Firm on SDG:  " + sdgName,
 							YesNo.Yes);
 				}
 			} else {
-				log(LogStatus.ERROR, "Not Able to Clicked on Button: Next", YesNo.Yes);
-
+				log(LogStatus.ERROR, "Not Able to Enter values on " + actionButtonName + " of SDG: " + sdgName,
+						YesNo.Yes);
 			}
+
 		} else {
 			log(LogStatus.ERROR, "Not Able to Click on Button: " + actionButtonName + " on SDG: " + sdgName, YesNo.Yes);
 
@@ -3324,68 +3327,51 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 
 		return false;
 	}
-	
-	
-	public boolean createContactFromContactSectionOfAcuity(String salutation, String[][] labelAndValue)
-	{
-		boolean flag=false;
-		
-			if(click(driver, getAddContactIcon(30), "Add contact icon", action.SCROLLANDTHROWEXCEPTION))
-			{
-				log(LogStatus.INFO, "clicked on add contact button", YesNo.Yes);
-				if(salutation!=null)
-				{
 
-				}
-				if(labelAndValue!=null)
-				{
-					for(String[] val : labelAndValue)
-					{
-						String labelName=val[0];
-						String value=val[1];
-						if(sendKeys(driver, getTextboxWithLabelname(labelName,20), value, labelName+" textbox", action.SCROLLANDBOOLEAN))
-						{
-							log(LogStatus.INFO, value+" have been passed in field "+labelName, YesNo.Yes);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to pass the value "+value+" in field "+labelName, YesNo.Yes);
-							return false;
-						}
-					}
+	public boolean createContactFromContactSectionOfAcuity(String salutation, String[][] labelAndValue) {
+		boolean flag = false;
 
-				}
-				
-				if(click(driver, getSaveButtonOnNewContactPopup(20), "save button", action.SCROLLANDBOOLEAN))
-				{
-					log(LogStatus.INFO, "Clicked on save button", YesNo.Yes);
-					if(ActivityTimeLineCreatedMsg(20)!=null)
-					{
-						log(LogStatus.INFO, "The Contact has been created", YesNo.Yes);
-						flag= true;
-					}
-					else
-					{
-						log(LogStatus.ERROR, "The Contact is not created", YesNo.Yes);
+		if (click(driver, getAddContactIcon(30), "Add contact icon", action.SCROLLANDTHROWEXCEPTION)) {
+			log(LogStatus.INFO, "clicked on add contact button", YesNo.Yes);
+			if (salutation != null) {
+
+			}
+			if (labelAndValue != null) {
+				for (String[] val : labelAndValue) {
+					String labelName = val[0];
+					String value = val[1];
+					if (sendKeys(driver, getTextboxWithLabelname(labelName, 20), value, labelName + " textbox",
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, value + " have been passed in field " + labelName, YesNo.Yes);
+					} else {
+						log(LogStatus.ERROR, "Not able to pass the value " + value + " in field " + labelName,
+								YesNo.Yes);
 						return false;
 					}
 				}
-				else
-				{
-					log(LogStatus.ERROR, "Not able to click on save button", YesNo.Yes);
+
+			}
+
+			if (click(driver, getSaveButtonOnNewContactPopup(20), "save button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on save button", YesNo.Yes);
+				if (ActivityTimeLineCreatedMsg(20) != null) {
+					log(LogStatus.INFO, "The Contact has been created", YesNo.Yes);
+					flag = true;
+				} else {
+					log(LogStatus.ERROR, "The Contact is not created", YesNo.Yes);
 					return false;
 				}
-				
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Not able clicked on add contact button", YesNo.Yes);
+			} else {
+				log(LogStatus.ERROR, "Not able to click on save button", YesNo.Yes);
 				return false;
 			}
-	
+
+		} else {
+			log(LogStatus.ERROR, "Not able clicked on add contact button", YesNo.Yes);
+			return false;
+		}
+
 		return flag;
 	}
-
-	
 
 }
