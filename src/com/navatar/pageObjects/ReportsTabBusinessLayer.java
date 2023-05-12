@@ -444,7 +444,8 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 											} else {
 												appLog.error(
 														"Not Able to Select on Value of Show drop down : " + showValue);
-												sa.assertTrue(false, "Not Able to Select on Value of Show drop down : " + showValue);
+												sa.assertTrue(false,
+														"Not Able to Select on Value of Show drop down : " + showValue);
 												flag = false;
 											}
 
@@ -475,7 +476,7 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 										} else {
 											appLog.error("Not Able to Click on Show Value Icon");
 											sa.assertTrue(false, "Not Able to Click on Show Value Icon");
-											
+
 										}
 									}
 									if (reportField != null) {
@@ -510,15 +511,16 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 																flag = true;
 															} else {
 																appLog.error("Column not Successfully added: " + value);
-																sa.assertTrue(false, "Column not Successfully added: " + value);	
+																sa.assertTrue(false,
+																		"Column not Successfully added: " + value);
 															}
 														} else {
 															appLog.error("Column not Clickable: " + value);
-														sa.assertTrue(false, "Column not Clickable: " + value);	
+															sa.assertTrue(false, "Column not Clickable: " + value);
 														}
 													} else {
 														appLog.error("Column not there in drop down: " + value);
-														sa.assertTrue(false, "Column not there in drop down: " + value);	
+														sa.assertTrue(false, "Column not there in drop down: " + value);
 													}
 												}
 											}
@@ -635,59 +637,68 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 																					appLog.error(
 																							"Report Created but not Matched: "
 																									+ reportName);
-																					sa.assertTrue(false, "Report Created but not Matched: "
-																							+ reportName);
+																					sa.assertTrue(false,
+																							"Report Created but not Matched: "
+																									+ reportName);
 
 																				}
 
 																			} else {
 																				appLog.error(
 																						"Not Able to click on Save Button on Save Report ");
-																				sa.assertTrue(false, "Not Able to click on Save Button on Save Report ");
+																				sa.assertTrue(false,
+																						"Not Able to click on Save Button on Save Report ");
 																			}
 																		} else {
 																			appLog.error(
 																					"Not Able to Switch to IFrame ");
-																			sa.assertTrue(false, "Not Able to Switch to IFrame ");
+																			sa.assertTrue(false,
+																					"Not Able to Switch to IFrame ");
 
 																		}
 																	} else {
 																		appLog.error(
 																				"Not Able to Select on 'Select Folder' Button ");
-																		sa.assertTrue(false, "Not Able to Select on 'Select Folder' Button ");
+																		sa.assertTrue(false,
+																				"Not Able to Select on 'Select Folder' Button ");
 																	}
 
 																} else {
 																	appLog.error(
 																			"Not Able to Select on Report Folder Value of Show drop down : "
 																					+ folderName);
-																	sa.assertTrue(false, "Not Able to Select on Report Folder Value of Show drop down : "
-																			+ folderName);
+																	sa.assertTrue(false,
+																			"Not Able to Select on Report Folder Value of Show drop down : "
+																					+ folderName);
 																}
 
 															} else {
 																appLog.error(
 																		"Not Able to click on Report Folder Icon on Save Report ");
-																sa.assertTrue(false, "Not Able to click on Report Folder Icon on Save Report ");
+																sa.assertTrue(false,
+																		"Not Able to click on Report Folder Icon on Save Report ");
 															}
 														} else {
 															appLog.error(
 																	"Not Able to Enter value on Report Description Text Aread :  "
 																			+ reportDescription);
-															sa.assertTrue(false, "Not Able to Enter value on Report Description Text Aread :  "
-																	+ reportDescription);
+															sa.assertTrue(false,
+																	"Not Able to Enter value on Report Description Text Aread :  "
+																			+ reportDescription);
 														}
 													} else {
 														appLog.error(
 																"Not Able to CLear Report Unique Name Text Box   ");
-														sa.assertTrue(false, "Not Able to CLear Report Unique Name Text Box   ");
+														sa.assertTrue(false,
+																"Not Able to CLear Report Unique Name Text Box   ");
 													}
 
 												} else {
 													appLog.error("Not Able to Enter value on Report Name Text Box :  "
 															+ reportName);
-													sa.assertTrue(false, "Not Able to Enter value on Report Name Text Box :  "
-															+ reportName);
+													sa.assertTrue(false,
+															"Not Able to Enter value on Report Name Text Box :  "
+																	+ reportName);
 												}
 
 											} else {
@@ -702,12 +713,12 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 										}
 									} else {
 										appLog.error("Not Able to Add Columns to report ");
-									sa.assertTrue(false, "Not Able to Add Columns to report ");
+										sa.assertTrue(false, "Not Able to Add Columns to report ");
 									}
 
 								} else {
 									appLog.error("Not Able to Click on Start Report Button");
-									sa.assertTrue(false,"Not Able to Click on Start Report Button");
+									sa.assertTrue(false, "Not Able to Click on Start Report Button");
 								}
 
 							} else {
@@ -716,7 +727,8 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 							}
 						} else {
 							appLog.error("Not Able to enter value on search box so cannot create Report for Folder");
-							sa.assertTrue(false, "Not Able to enter value on search box so cannot create Report for Folder ");
+							sa.assertTrue(false,
+									"Not Able to enter value on search box so cannot create Report for Folder ");
 						}
 					} else {
 						appLog.error("Not Able to Click on All Link in Report Type");
@@ -783,8 +795,8 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 
 								} else {
 									appLog.error("Not able to Click on Apply Button");
-								sa.assertTrue(false, "Not able to Click on Apply Button");
-							}
+									sa.assertTrue(false, "Not able to Click on Apply Button");
+								}
 							} else {
 								appLog.error("Not able to Click on Show Me Filter Value: " + showDropDownValue);
 								sa.assertTrue(false, "Not able to Click on Show Me Filter Value: " + showDropDownValue);
@@ -792,7 +804,7 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 						} else {
 							appLog.error("Not able to Click on Show Me Filter Drop Down Button");
 							sa.assertTrue(false, "Not able to Click on Show Me Filter Drop Down Button");
-							
+
 						}
 					} else {
 						appLog.error("Not able to Click on Show Me Filter Button");
@@ -800,8 +812,7 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 					}
 				}
 
-				else
-				{
+				else {
 					appLog.error("Show Me Filter Value null, So Not Performing action on Show Me Filter");
 					sa.assertTrue(false, "Show Me Filter Value null, So Not Performing action on Show Me Filter");
 				}
@@ -820,8 +831,8 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 							appLog.info("Clicked on Date Filter Drop Down Button");
 
 							WebElement dateFilterValueEle = FindElement(driver,
-									"//div[@id='report-main']/following-sibling::span/following-sibling::span//span[@title='"
-											+ dateFieldDropDownValue + "']",
+									"//div[@id='report-main']/following-sibling::span//span[@title='"
+											+ dateFieldDropDownValue + "']/ancestor::li/span",
 									"Date Filter value : " + dateFieldDropDownValue, action.SCROLLANDBOOLEAN, 10);
 
 							if (click(driver, dateFilterValueEle, "Date Filter value : " + dateFieldDropDownValue,
@@ -840,24 +851,25 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 								}
 							} else {
 								appLog.error("Not able to Click on Date Filter Value: " + dateFieldDropDownValue);
-								sa.assertTrue(false, "Not able to Click on Date Filter Value: " + dateFieldDropDownValue);
-								
+								sa.assertTrue(false,
+										"Not able to Click on Date Filter Value: " + dateFieldDropDownValue);
+
 							}
 						} else {
 							appLog.error("Not able to Click on Date Filter Drop Down Button");
 							sa.assertTrue(false, "Not able to Click on Date Filter Drop Down Button");
-							
+
 						}
 					} else {
 						appLog.error("Not able to Click on Date Filter Button");
 						sa.assertTrue(false, "Not able to Click on Date Filter Button");
-						
+
 					}
 				}
 
 				else {
 					appLog.error("Date Filter Value null, So Not Performing action on Filter");
-					sa.assertTrue(false, "Date Filter Value null, So Not Performing action on Filter");	
+					sa.assertTrue(false, "Date Filter Value null, So Not Performing action on Filter");
 				}
 
 				if (rangeDropDownValue != null) {
@@ -889,29 +901,29 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 									flag = true;
 								} else {
 									appLog.error("Not able to Click on Apply Button");
-									sa.assertTrue(false, "Not able to Click on Apply Button");	
+									sa.assertTrue(false, "Not able to Click on Apply Button");
 								}
 							} else {
 								appLog.error("Not able to Click on Range Filter Value: " + rangeDropDownValue);
-								sa.assertTrue(false, "Not able to Click on Range Filter Value: " + rangeDropDownValue);	
-								
+								sa.assertTrue(false, "Not able to Click on Range Filter Value: " + rangeDropDownValue);
+
 							}
 						} else {
 							appLog.error("Not able to Click on Range Filter Drop Down Button");
-							sa.assertTrue(false, "Not able to Click on Range Filter Drop Down Button");	
-							
+							sa.assertTrue(false, "Not able to Click on Range Filter Drop Down Button");
+
 						}
 					} else {
 						appLog.error("Not able to Click on Range Filter Button");
-						sa.assertTrue(false, "Not able to Click on Range Filter Button");	
-						
+						sa.assertTrue(false, "Not able to Click on Range Filter Button");
+
 					}
 				}
 
 				else {
 					appLog.error("Range Filter Value null, So Not Performing action on Filter");
-					sa.assertTrue(false, "Range Filter Value null, So Not Performing action on Filter");	
-					
+					sa.assertTrue(false, "Range Filter Value null, So Not Performing action on Filter");
+
 				}
 
 				if (customFieldDrpDownValue != null) {
@@ -932,8 +944,9 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 							appLog.info("Clicked on Add Filter Search Box");
 
 							WebElement cusomFilterValueEle = FindElement(driver,
-									"//div[@id='report-main']/div/following::span//span[@title='" + customFieldDrpDwnVal
-											+ "']",
+
+									"//div[@id=\"report-main\"]/div//div[@id=\"wave-tooltip\"]/following-sibling::*//span[@title=\""
+											+ customFieldDrpDwnVal + "\"]/ancestor::li/span",
 									"Range Filter value : " + customFieldDrpDwnVal, action.SCROLLANDBOOLEAN, 15);
 							CommonLib.ThreadSleep(2000);
 							if (click(driver, cusomFilterValueEle, "Custom Field Filter Drop Down Value",
@@ -986,53 +999,54 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 												} else {
 													appLog.error("Not able to Click on Apply Button");
 													sa.assertTrue(false, "Not able to Click on Apply Button");
-													
+
 												}
 											} else {
 												appLog.error(
 														"Not able to Enter Custom Filter Value " + fieldFilterVal[j]);
-												sa.assertTrue(false, "Not able to Enter Custom Filter Value " + fieldFilterVal[j]);
-												
+												sa.assertTrue(false,
+														"Not able to Enter Custom Filter Value " + fieldFilterVal[j]);
+
 											}
 
 										}
-										
-										else if(textBoxTyp[j].equalsIgnoreCase("Relative Date")) {
+
+										else if (textBoxTyp[j].equalsIgnoreCase("Relative Date")) {
 
 											if (click(driver, useRelativeDateLink(30), "Use relative Date Link ",
 													action.SCROLLANDBOOLEAN)) {
 
 												appLog.info("Clicked on Use Relative Date Link");
-											
-											if (sendKeys(driver, relativeDateInputBox(30),
-													fieldFilterVal[j], "Field Filter Value Input Box",
-													action.SCROLLANDBOOLEAN)) {
 
-												appLog.info("Pass the Custom Filter value in text box : "
-														+ fieldFilterVal[j]);
-												if (click(driver, applyButtonLightning(30), "Apply Button ",
-														action.SCROLLANDBOOLEAN)) {
+												if (sendKeys(driver, relativeDateInputBox(30), fieldFilterVal[j],
+														"Field Filter Value Input Box", action.SCROLLANDBOOLEAN)) {
 
-													appLog.info("Clicked on Apply Button");
-													appLog.info("Custom Filter " + customFieldDrpDwnVal
-															+ " Applied SUccessfully to :" + fieldFilterVal[j]
-															+ " with Operator: " + operatorDrpDownVal[j]);
-													flag = true;
+													appLog.info("Pass the Custom Filter value in text box : "
+															+ fieldFilterVal[j]);
+													if (click(driver, applyButtonLightning(30), "Apply Button ",
+															action.SCROLLANDBOOLEAN)) {
+
+														appLog.info("Clicked on Apply Button");
+														appLog.info("Custom Filter " + customFieldDrpDwnVal
+																+ " Applied SUccessfully to :" + fieldFilterVal[j]
+																+ " with Operator: " + operatorDrpDownVal[j]);
+														flag = true;
+													} else {
+														appLog.error("Not able to Click on Apply Button");
+														sa.assertTrue(false, "Not able to Click on Apply Button");
+													}
 												} else {
-													appLog.error("Not able to Click on Apply Button");
-													sa.assertTrue(false, "Not able to Click on Apply Button");
+													appLog.error("Not able to Enter Custom Filter Value "
+															+ fieldFilterVal[j]);
+													sa.assertTrue(false, "Not able to Enter Custom Filter Value "
+															+ fieldFilterVal[j]);
 												}
-											} else {
-												appLog.error(
-														"Not able to Enter Custom Filter Value " + fieldFilterVal[j]);
-												sa.assertTrue(false, "Not able to Enter Custom Filter Value " + fieldFilterVal[j]);
-											}
 											} else {
 												appLog.error("Not able to Click on Use Relative Date Link");
 												sa.assertTrue(false, "Not able to Click on Use Relative Date Link");
-												
+
 											}
-											
+
 										}
 
 										else if (textBoxTyp[j].equalsIgnoreCase("TextBox")) {
@@ -1054,45 +1068,49 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 												} else {
 													appLog.error("Not able to Click on Apply Button");
 													sa.assertTrue(false, "Not able to Click on Apply Button");
-													
+
 												}
 											} else {
 												appLog.error(
 														"Not able to Enter Custom Filter Value " + fieldFilterVal[j]);
-												sa.assertTrue(false, "Not able to Enter Custom Filter Value " + fieldFilterVal[j]);
-												
+												sa.assertTrue(false,
+														"Not able to Enter Custom Filter Value " + fieldFilterVal[j]);
+
 											}
 
 										}
-										
-										else
-										{
-											log(LogStatus.ERROR, "TextBox Type not Mention Properly in Test data: "+textBoxTyp[j], YesNo.No);
-											sa.assertTrue(false, "TextBox Type not Mention Properly in Test data: "+textBoxTyp[j]);
+
+										else {
+											log(LogStatus.ERROR,
+													"TextBox Type not Mention Properly in Test data: " + textBoxTyp[j],
+													YesNo.No);
+											sa.assertTrue(false,
+													"TextBox Type not Mention Properly in Test data: " + textBoxTyp[j]);
 										}
 
 									} else {
 										appLog.error(
 												"Not Able to Select Operator Filter value : " + operatorDrpDownVal[j]);
-										sa.assertTrue(false, "Not Able to Select Operator Filter value : " + operatorDrpDownVal[j]);
-										
+										sa.assertTrue(false,
+												"Not Able to Select Operator Filter value : " + operatorDrpDownVal[j]);
+
 									}
 								} else {
 									appLog.error("Not Able to CLick on Operator Filter DropDown Button : ");
 									sa.assertTrue(false, "Not Able to CLick on Operator Filter DropDown Button : ");
-									
+
 								}
 							} else {
 								appLog.error("Not able to click on Custom Field Filter Drop Down Value: "
 										+ customFieldDrpDwnVal);
 								sa.assertTrue(false, "Not able to click on Custom Field Filter Drop Down Value: "
 										+ customFieldDrpDwnVal);
-								
+
 							}
 						} else {
 							appLog.error("Not able to Click on Add Filter Search Box");
 							sa.assertTrue(false, "Not able to Click on Add Filter Search Box");
-							
+
 						}
 						j++;
 					}
@@ -1101,21 +1119,21 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 				else {
 					appLog.error("Custom Field Filter Value null, So Not Performing action on Filter");
 					sa.assertTrue(false, "Custom Field Filter Value null, So Not Performing action on Filter");
-					
+
 				}
 			}
 
 			else {
 				appLog.error("Not able to Click on Filter Button");
 				sa.assertTrue(false, "Not able to Click on Filter Button");
-				
+
 			}
 		}
 
 		else {
 			appLog.error("Not able to Switch to Iframe");
-			sa.assertTrue(false,"Not able to Switch to Iframe");
-			
+			sa.assertTrue(false, "Not able to Switch to Iframe");
+
 		}
 
 		if (flag) {
@@ -1125,7 +1143,7 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 			else {
 				appLog.error("Not able to Click on Save Button");
 				sa.assertTrue(false, "Not able to Click on Save Button");
-				
+
 			}
 		}
 

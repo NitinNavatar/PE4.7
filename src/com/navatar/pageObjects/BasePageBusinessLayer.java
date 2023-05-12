@@ -1110,9 +1110,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		tabName = getTabName(projectName, TabName);
 		System.err.println("Passed switch statement");
 		if (tabName != null) {
-			ele = FindElement(driver, "//a[contains(@href,'lightning') and contains(@title,'" + tabName + "')]/span/..",
-					tabName, action.SCROLLANDBOOLEAN, 30);
-			ele = isDisplayed(driver, ele, "visibility", 30, tabName);
+			CommonLib.refresh(driver);
+			ele = getTabNameLightning(tabName, 30);
+
 			if (ele != null) {
 				appLog.info("Tab Found");
 				ThreadSleep(5000);
@@ -1127,16 +1127,22 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			} else {
 				CommonLib.log(LogStatus.INFO, "Going to found tab after clicking on More Icon", YesNo.No);
 				if (click(driver, getMoreTabIcon(projectName, 10), "More Icon", action.SCROLLANDBOOLEAN)) {
-					ele = FindElement(driver,
-							"//a[contains(@href,'lightning')]/span[@class='slds-truncate']/span[contains(text(),'"
-									+ tabName + "')]",
-							tabName, action.SCROLLANDBOOLEAN, 10);
-					ele = isDisplayed(driver, ele, "visibility", 10, tabName);
+					ele = getTabNameLightningInMoreTab(tabName, 10);
+
 					if (ele != null) {
 						if (clickUsingJavaScript(driver, ele, tabName + " :Tab")) {
 							appLog.info("Clicked on Tab on More Icon: " + tabName);
 							CommonLib.log(LogStatus.INFO, "Tab found on More Icon", YesNo.No);
 							flag = true;
+						}
+
+						else {
+							if (click(driver, ele, tabName + " :Tab", action.BOOLEAN)) {
+								appLog.info("Clicked on Tab on More Icon: " + tabName);
+								CommonLib.log(LogStatus.INFO, "Tab found on More Icon", YesNo.No);
+								flag = true;
+							}
+
 						}
 					}
 
@@ -6898,6 +6904,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case SDGTab:
 			viewList = "All";
 			break;
+		case Deals:
+			viewList = "All";
+			break;
+
 		default:
 			return false;
 		}
@@ -21843,7 +21853,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	}
 
-	public ArrayList<String> verifyRedirectionOnClickEntityTypeOnTaggedSection(boolean isInstitutionRecord) {
+	public ArrayList<String> verifyRedirectionOnClickEntityTypeOnTaggedSection() {
 
 		ArrayList<String> result = new ArrayList<String>();
 
@@ -21919,43 +21929,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			result.add("Not able to click on Companies tab name");
 		}
 
-		if (isInstitutionRecord == true) {
-			if (click(driver, getTaggedRecordName(TaggedName.Funds.toString(), 30),
-					TaggedName.Funds.toString() + " tab", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on Fund tab name", YesNo.No);
-				ThreadSleep(5000);
-				if (CommonLib.clickUsingJavaScript(driver, recordsNameOnTaggedSection(TaggedName.Funds.toString(), 30),
-						"Records on Fund Tagged", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on record on fund tab", YesNo.No);
-
-					String id = switchOnWindow(driver);
-					if (id != null) {
-						if (getTabName("Fund", 20) != null) {
-							log(LogStatus.INFO,
-									"The page is redirecting to fund tab after click on Entity type of fund", YesNo.No);
-						} else {
-							log(LogStatus.ERROR,
-									"The page is not redirecting to Fund tab after click on Entity type of fund",
-									YesNo.No);
-							result.add("The page is not redirecting to Fund tab after click on Entity type of fund");
-						}
-						driver.close();
-						driver.switchTo().window(id);
-					} else {
-						log(LogStatus.ERROR, "The new tab is not opening after clicking on entity type of Fund",
-								YesNo.No);
-						result.add("The new tab is not opening after clicking on entity type of Fund");
-					}
-
-				} else {
-					log(LogStatus.ERROR, "Not able to click on record of fund tab name", YesNo.No);
-					result.add("Not able to click on record of fund tab name");
-				}
-			} else {
-				log(LogStatus.ERROR, "Not able to click on Fund tab name", YesNo.No);
-				result.add("Not able to click on Fund tab name");
-			}
-		}
 		return result;
 	}
 
@@ -24960,5 +24933,248 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return result;
 	}
+	
+
+	public ArrayList<String> verifyUIOfClipPopupFromNavigation()
+	{
+		ArrayList<String> result=new ArrayList<String>();		
+			if(getClipIconOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "clip icon has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "clip icon is not verified on icon popup", YesNo.No);	
+				result.add("clip icon is not verified on icon popup");
+			}
+			
+			if(getClipTextOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "clip text has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "clip text is not verified on icon popup", YesNo.No);	
+				result.add("clip text is not verified on icon popup");
+			}
+			
+			if(getMinimizeIconOnpopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Minimize icon has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Minimize icon is not verified on icon popup", YesNo.No);	
+				result.add("Minimize icon is not verified on icon popup");
+			}
+			if(getPopOutIconOnpopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Pop-out icon has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Pop-out icon is not verified on icon popup", YesNo.No);	
+				result.add("Pop-out icon is not verified on icon popup");
+			}
+			
+			if(getTextareaOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "textarea has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "textarea is not verified on icon popup", YesNo.No);	
+				result.add("textarea is not verified on icon popup");
+			}
+			
+			if(getHelpIconOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Help icon has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Help icon is not verified on icon popup", YesNo.No);	
+				result.add("Help icon is not verified on icon popup");
+			}
+			
+			if(getTagIconOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Tag icon has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Tag icon is not verified on icon popup", YesNo.No);	
+				result.add("Tag icon is not verified on icon popup");
+			}
+			
+			if(getSldspillOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Tagged record has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Tagged record is not verified on icon popup", YesNo.No);	
+				result.add("Tagged record is not verified on icon popup");
+			}
+			
+			if(getClearButtonOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Clear button has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Clear button is not verified on icon popup", YesNo.No);	
+				result.add("Clear button is not verified on icon popup");
+			}
+			
+			if(getSaveButtonOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Save button has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Save button is not verified on icon popup", YesNo.No);	
+				result.add("Save button is not verified on icon popup");
+			}	
+		return result;
+	}
+
+	
+	public ArrayList<String> verifyUIOfClipPopupAfterClickOfPopOut()
+	{
+		ArrayList<String> result=new ArrayList<String>();		
+			if(getClipIconOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "clip icon has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "clip icon is not verified on icon popup", YesNo.No);	
+				result.add("clip icon is not verified on icon popup");
+			}
+			
+			if(getClipTextOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "clip text has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "clip text is not verified on icon popup", YesNo.No);	
+				result.add("clip text is not verified on icon popup");
+			}
+					
+			if(getPopInIconOnpopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Pop-out icon has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Pop-out icon is not verified on icon popup", YesNo.No);	
+				result.add("Pop-out icon is not verified on icon popup");
+			}
+			
+			if(getTextareaOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "textarea has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "textarea is not verified on icon popup", YesNo.No);	
+				result.add("textarea is not verified on icon popup");
+			}
+			
+			if(getHelpIconOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Help icon has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Help icon is not verified on icon popup", YesNo.No);	
+				result.add("Help icon is not verified on icon popup");
+			}
+			
+			if(getTagIconOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Tag icon has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Tag icon is not verified on icon popup", YesNo.No);	
+				result.add("Tag icon is not verified on icon popup");
+			}
+			
+			if(getSldspillOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Tagged record has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Tagged record is not verified on icon popup", YesNo.No);	
+				result.add("Tagged record is not verified on icon popup");
+			}
+			
+			if(getClearButtonOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Clear button has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Clear button is not verified on icon popup", YesNo.No);	
+				result.add("Clear button is not verified on icon popup");
+			}
+			
+			if(getSaveButtonOnPopup(10)!=null)
+			{
+				log(LogStatus.INFO, "Save button has been verified on icon popup", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Save button is not verified on icon popup", YesNo.No);	
+				result.add("Save button is not verified on icon popup");
+			}	
+		return result;
+	}
+
+	public ArrayList<String> verifyRedirectionOfActivityPopupFromIntractionPage(String[] recordName,
+			String[] objectName) {
+		ArrayList<String> result = new ArrayList<String>();
+
+		if (recordName != null && objectName != null) {
+			if (recordName.length == objectName.length) {
+				for (int i = 0; i < recordName.length; i++) {
+					if (clickUsingJavaScript(driver, recordNameOnActivityPopupofInteraction(recordName[i], 20),
+							"record name")) {
+						log(LogStatus.INFO, "Clicked on record name : " + recordName[i] + " on interaction section",
+								YesNo.No);
+						String parentID = switchToWindowOpenNextToParentWindow(driver);
+						if (getObjectPageName(objectName[i], 15) != null
+								&& getRecordNameOnPage(recordName[i], 15) != null) {
+							log(LogStatus.INFO, "The redirection of record : " + recordName[i] + ", Object: "
+									+ objectName[i] + " is working properly.", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "The redirection of record : " + recordName[i] + ", Object: "
+									+ objectName[i] + " is not working properly.", YesNo.No);
+							result.add("The redirection of record : " + recordName[i] + ", Object: " + objectName[i]
+									+ " is not working properly.");
+						}
+						driver.close();
+						driver.switchTo().window(parentID);
+					} else {
+						log(LogStatus.ERROR,
+								"Not able to clicked on record name : " + recordName[i] + " on interaction section",
+								YesNo.No);
+						result.add("Not able to clicked on record name : " + recordName[i] + " on interaction section");
+					}
+				}
+			} else {
+				log(LogStatus.ERROR, "The length of record name and object name are not equal", YesNo.No);
+				result.add("The length of record name and object name are not equal");
+			}
+		}
+		return result;
+
+	}
+
+
 
 }

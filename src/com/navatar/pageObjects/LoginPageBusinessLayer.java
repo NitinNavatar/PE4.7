@@ -70,15 +70,14 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 	 * @description this method is used to login to lightning
 	 */
 	public boolean CRMLogin(String username, String password) {
+
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		driver.get("https://" + URL);
-		sendKeys(driver, getUserNameTextBox(20), username, "Username Text Box", action.THROWEXCEPTION);
-		sendKeys(driver, getPasswordTextBox(20), password, "Password Text Box", action.THROWEXCEPTION);
+		sendKeys(driver, getUserNameTextBox(20), username, "Username Text Box", action.BOOLEAN);
+		sendKeys(driver, getPasswordTextBox(20), password, "Password Text Box", action.BOOLEAN);
+		click(driver, getLoginButton(20), "Login Button", action.BOOLEAN);
+		click(driver, getLightingCloseButton(10), "Lighting Pop-Up Close Button.", action.BOOLEAN);
 
-		click(driver, getLoginButton(20), "Login Button", action.SCROLLANDBOOLEAN);
-		if (getLightingCloseButton(10) != null) {
-			click(driver, getLightingCloseButton(10), "Lighting Pop-Up Close Button.", action.BOOLEAN);
-		}
 		ThreadSleep(1000);
 
 		String mode = ExcelUtils.readDataFromPropertyFile("Mode");
@@ -132,6 +131,7 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 	 * @description this method is used to login to crm and then select appname
 	 */
 	public boolean CRMLogin(String username, String password, String appName) {
+
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		driver.get("https://" + URL);
 		sendKeys(driver, getUserNameTextBox(20), username, "Username Text Box", action.BOOLEAN);
@@ -139,6 +139,7 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 		click(driver, getLoginButton(20), "Login Button", action.BOOLEAN);
 		click(driver, getLightingCloseButton(10), "Lighting Pop-Up Close Button.", action.BOOLEAN);
 		ThreadSleep(1000);
+
 
 		String mode = ExcelUtils.readDataFromPropertyFile("Mode");
 

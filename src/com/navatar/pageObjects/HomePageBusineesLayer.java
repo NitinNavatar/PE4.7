@@ -3268,18 +3268,18 @@ public class HomePageBusineesLayer extends HomePage {
 		if (fundNameElement(Title, FundName) != null) {
 			log(LogStatus.INFO, "Record Found " + FundName, YesNo.No);
 			if (click(driver, deleteRecordBtn(Title, FundName), "Delete Button: " + FundName,
-					action.SCROLLANDBOOLEAN)) {
+					action.BOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on Delete button of the record " + FundName, YesNo.No);
 
 				if (click(driver, deleteRecordConfirmBtn(Title), "Delete Confirm Button", action.BOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on Delete Confirm Button", YesNo.No);
 					flag = true;
-					String msg = getText(dDriver, deleteRecordMsg(10), "", action.BOOLEAN).trim();
+					String msg = getText(driver, deleteRecordMsg(10), "", action.BOOLEAN).trim();
 					if (msg != null && !msg.equalsIgnoreCase("") && !msg.isEmpty()) {
 
 						if (msg.contains("Successfully")) {
 							log(LogStatus.INFO, "Message Verified: " + msg, YesNo.No);
-							CommonLib.ThreadSleep(30000);
+							CommonLib.ThreadSleep(35000);
 							flag = true;
 						} else {
 							log(LogStatus.FAIL, "Not Able to Delete, Message : " + msg, YesNo.No);
@@ -3326,6 +3326,7 @@ public class HomePageBusineesLayer extends HomePage {
 				"//a[text()=\"" + Title
 						+ "\"]/ancestor::article//tbody/tr//span[not(text()=\"No data returned\")]/ancestor::tr",
 				"Records");
+		records = records.stream().filter(x -> x.isDisplayed()).collect(Collectors.toList());
 		System.out.println("No. of Records Present: " + records.size());
 		if (records.size() != 0) {
 			log(LogStatus.INFO, "No. of Records: " + records.size(), YesNo.No);

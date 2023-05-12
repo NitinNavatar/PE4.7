@@ -323,7 +323,10 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 //						log(LogStatus.ERROR, "Navigation Link found "+childs[i]+" hence it is not under parent : "+parent, YesNo.Yes);
 //						sa.assertTrue(false,"Navigation Link found "+childs[i]+" hence it is not under parent : "+parent);;
 //					}
+
 //				}
+
+//				}//div[@id="edgemenue"]//*[text()="Firm"]
 
 				ele = FindElement(driver, xpath, parent, action, timeOut);
 //				if (click(driver, ele, parent, action)) {
@@ -333,6 +336,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 					xpath = "//div[@id=\"edgemenue\"]//*[text()=\"" + parent + "\"]";
 					xpath = xpath + "/following-sibling::li//span[contains(@class,\"indent\")]/parent::li[text()=\""
 							+ childs[i] + "\"]";
+
 					ele = FindElement(driver, xpath, childs[i], action, timeOut);
 					ele = isDisplayed(driver, ele, "Visibility", timeOut, childs[i]);
 					if (ele != null) {
@@ -585,7 +589,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 				if (click(driver, getNavigationTypeLabel(projectName, timeOut), navigationField,
 						action.SCROLLANDBOOLEAN)) {
 					ThreadSleep(2000);
-					appLog.error("Clicked on Navigation Type");
+					appLog.info("Clicked on Navigation Type");
 
 					String xpath = "//*[text()='Navigation Type']/following-sibling::div//*[@title='" + navigationvalue
 							+ "']";
@@ -768,7 +772,9 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 				log(LogStatus.INFO, "Click on new button going to create ", YesNo.No);
 				enteringValueForNavigation(projectName, labelWithValue, action.BOOLEAN, timeOut);
 				if (click(driver, getNavigationTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.ERROR, "Click on save Button ", YesNo.No);
+
+					log(LogStatus.INFO, "Click on save Button ", YesNo.No);
+
 					ThreadSleep(5000);
 					flag = true;
 				} else {
@@ -906,12 +912,14 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		for (i = 0; i < nb.length; i++) {
 
 			if (nb.length > 1 && i == 0) {
+
 				xpath = "//div[@id=\"edgemenue\"]//*[text()=\"" + nb[i] + "\"]";
 			} else if (nb.length == 1 && i == 0) {
 				xpath = "//div[@id=\"edgemenue\"]//*[text()=\"" + nb[i] + "\"]";
 			} else {
 				xpath = xpath + "/following-sibling::li//span[contains(@class,\"indent\")]/parent::li[text()=\"" + nb[i]
 						+ "\"]";
+
 			}
 
 		}

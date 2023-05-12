@@ -795,7 +795,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 				if (click(driver, getDealStage(projectName, timeOut), "Deal Status : " + stage,
 						action.SCROLLANDBOOLEAN)) {
 					ThreadSleep(2000);
-					appLog.error("Clicked on Deal stage");
+					appLog.info("Clicked on Deal stage");
 
 					xpath = "//span[@title='" + stage + "']";
 					WebElement dealStageEle = FindElement(driver, xpath, stage, action.SCROLLANDBOOLEAN, timeOut);
@@ -865,7 +865,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 					}
 				}
 				if (click(driver, popUpSaveButton(30), "Save Button", action.SCROLLANDBOOLEAN)) {
-					appLog.error("Click on save Button");
+					appLog.info("Click on save Button");
 
 					ThreadSleep(3000);
 					String str = getText(driver, verifyCreatedItemOnPage(Header.Deal, dealName),

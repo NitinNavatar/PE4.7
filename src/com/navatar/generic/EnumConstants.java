@@ -133,7 +133,7 @@ public class EnumConstants {
 		Task_Subject, Task_Status, User_Name, OrgPassword, Password, Participants, Tags, MeetingAndCallsHeader,
 		ValidationRuleErrorMsg, ValidationRuleErrorMsgLocation, CreateNewRecordPopUp, AddContactsToDealTeamPopUp,
 		AddContactsToFundraisingPopup, Classification, ValidationRuleFormula, ParticipantRecord,
-		ParticipantRecordObject, TagsRecord, TagsObject, Tab_Name, Record_Name;
+		ParticipantRecordObject, TagsRecord, TagsObject, Tab_Name, Record_Name, RecordName, ObjectName;
 
 	};
 
@@ -187,7 +187,9 @@ public class EnumConstants {
 	}
 
 	public static enum TabName {
+
 		InstituitonsTab {
+
 			@Override
 			public String toString() {
 				return "Firms";
@@ -381,6 +383,7 @@ public class EnumConstants {
 
 	public static enum object {
 		Account {
+
 			@Override
 			public String toString() {
 				// if(ExcelUtils.readDataFromPropertyFile("Mode").equalsIgnoreCase(Mode.Lighting.toString()))
@@ -1467,7 +1470,7 @@ public class EnumConstants {
 		Start_Date, End_Date, End_Time, Start_Time, Type, Date {
 			@Override
 			public String toString() {
-				return "Date";
+				return "Start Date";
 			}
 		},
 		Navigation_Type {
@@ -1736,7 +1739,8 @@ public class EnumConstants {
 	};
 
 	public static enum ObjectType {
-		Standard, Custom;
+		Standard, Custom, Clips;
+
 	}
 
 	public static enum DataImportType {
@@ -1894,13 +1898,14 @@ public class EnumConstants {
 
 			}
 		},
-		Navatar_Research,Help {
+		Navatar_Research, Help {
 
 			@Override
 			public String toString() {
 				return "Help";
 			}
-		},Clips {
+		},
+		Clips {
 			@Override
 			public String toString() {
 				return "Clips";

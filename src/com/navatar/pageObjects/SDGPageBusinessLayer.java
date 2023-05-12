@@ -705,8 +705,7 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 					log(LogStatus.INFO, "Clicked on the View all button", YesNo.No);
 
 					// xpath="//tbody//lst-formatted-text[text()='"++"']/ancestor::td/following-sibling::td//button";
-					xpath = "//tbody//span[text()='" + apiNameOrOverrideLabelName
-							+ "']/ancestor::td//following-sibling::td//a[@role='button']";
+					xpath = "//div[contains(@class,\"forceRelatedListDesktop\")]//tbody//*[text()=\""+apiNameOrOverrideLabelName+"\"]/ancestor::td/following-sibling::td//button";
 					ele = CommonLib.FindElement(driver, xpath, "Ero Button", action.SCROLLANDBOOLEAN, 50);
 					if (click(driver, ele, "Ero button", action.BOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on the Ero button", YesNo.No);

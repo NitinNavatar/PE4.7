@@ -22,6 +22,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
+import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.EnumConstants.ActivityTimeLineItem;
@@ -280,6 +281,8 @@ public class Module3New extends BaseLib {
 			sa.assertTrue(false, "Tab not added : " + addRemoveTabName);
 		}
 
+		CommonLib.refresh(driver);
+
 		if (lp.clickOnTab(projectName, TabName.Object3Tab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.Object3Tab, YesNo.No);
 			String[] funds = { M3Fund1, M3Fund1Type, M3Fund1Category, M3Fund1RecordType };
@@ -302,6 +305,7 @@ public class Module3New extends BaseLib {
 		String[][] EntityOrAccounts = { { M3Ins1, M3Ins1RecordType, null }, { M3Ins10, M3Ins10RecordType, null } };
 
 		for (String[] accounts : EntityOrAccounts) {
+			CommonLib.refresh(driver);
 			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
 				log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 				value = accounts[0];
@@ -322,6 +326,7 @@ public class Module3New extends BaseLib {
 		}
 
 		// contact
+		CommonLib.refresh(driver);
 		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.Object2Tab, YesNo.No);
 
@@ -346,6 +351,8 @@ public class Module3New extends BaseLib {
 
 		// FR
 		FundRaisingPageBusinessLayer fr = new FundRaisingPageBusinessLayer(driver);
+
+		CommonLib.refresh(driver);
 		if (bp.clickOnTab(environment, mode, TabName.FundraisingsTab)) {
 			if (fr.createFundRaising(environment, mode, M3FRName1, M3Fund1, M3Ins1, null, null, null, null)) {
 				appLog.info("fundraising is created : " + M3FRName1);
@@ -359,6 +366,7 @@ public class Module3New extends BaseLib {
 		}
 
 		// Limited Partner
+		CommonLib.refresh(driver);
 		if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 
@@ -376,6 +384,7 @@ public class Module3New extends BaseLib {
 			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.Object1Tab);
 			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.Object1Tab, YesNo.Yes);
 		}
+		CommonLib.refresh(driver);
 		if (bp.clickOnTab(projectName, TabName.PartnershipsTab)) {
 			if (ins.createPartnership(environment, mode, M3PartnerShip1, M3Fund1)) {
 				appLog.info("partnership is created: " + M3PartnerShip1);
@@ -2078,6 +2087,7 @@ public class Module3New extends BaseLib {
 		boolean flag = false;
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		lp.switchToClassic();
+
 		if (dataload.dataImportWizard(ObjectName.Navigation, ObjectType.Custom,
 				"\\UploadFiles\\Module 3\\UploadCSV\\Navigation Menu Test Data - Parent.csv",
 				DataImportType.AddNewRecords, "8")) {
@@ -2088,6 +2098,7 @@ public class Module3New extends BaseLib {
 			sa.assertTrue(false,
 					"Parent Data is not imported in " + ObjectName.Navigation + " so child data cannot imported");
 		}
+
 		if (flag) {
 
 			if (dataload.dataImportWizard(ObjectName.Navigation, ObjectType.Custom,
@@ -4775,6 +4786,7 @@ public class Module3New extends BaseLib {
 
 											if (click(driver,
 													setup.getNavigationTabSaveBtnInAppManager(projectName, 30),
+
 													" Save Button", action.BOOLEAN)) {
 												log(LogStatus.INFO, "Click on Save Button", YesNo.No);
 												ThreadSleep(20000);
@@ -4842,7 +4854,9 @@ public class Module3New extends BaseLib {
 		ExpectedNavigationMenuitem.add(NavigationMenuItems.Help.toString());
 		ExpectedNavigationMenuitem.add(NavigationMenuItems.Research.toString());
 		ExpectedNavigationMenuitem.add(customNavigationMenu);
+
 		ExpectedNavigationMenuitem.add(NavigationMenuItems.Clips.toString());
+
 		List<String> ActualNavigationMenuitem = home.getNavigationMenuitem();
 		if (ExpectedNavigationMenuitem.equals(ActualNavigationMenuitem)) {
 			log(LogStatus.PASS, "Navigation Menu verified " + ExpectedNavigationMenuitem, YesNo.No);
@@ -5120,7 +5134,10 @@ public class Module3New extends BaseLib {
 							log(LogStatus.INFO, "able to click on " + AppSetting.Utility_Items, YesNo.No);
 							if (setup.ClickAndRemoveUtilityItem(environment, mode, customNavigationMenu)) {
 								log(LogStatus.INFO, "Able to click and remove" + customNavigationMenu, YesNo.No);
-								if (click(driver, setup.getNavigationTabSaveBtnInAppManager(projectName, 30), " Save Button",
+
+								if (click(driver, setup.getNavigationTabSaveBtnInAppManager(projectName, 30),
+										" Save Button",
+
 										action.BOOLEAN)) {
 									log(LogStatus.INFO, "Click on Save Button", YesNo.No);
 									ThreadSleep(20000);

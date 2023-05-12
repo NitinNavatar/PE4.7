@@ -12209,7 +12209,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
 
-					ArrayList<String> result=bp.verifyRedirectionOnClickEntityTypeOnTaggedSection(isInstitutionRecord);
+					ArrayList<String> result=bp.verifyRedirectionOnClickEntityTypeOnTaggedSection();
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The redirections are working properly after clickig on records of Company, People and deal tagged record", YesNo.No);
@@ -12359,7 +12359,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 					ThreadSleep(6000);
-					ArrayList<String> result=bp.verifyRedirectionOnClickEntityTypeOnTaggedSection(false);
+					ArrayList<String> result=bp.verifyRedirectionOnClickEntityTypeOnTaggedSection();
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The redirections are working properly after clickig on records of Company, People and deal tagged record", YesNo.No);

@@ -296,7 +296,7 @@ public class OutlookPage extends BasePageBusinessLayer {
 	}
 	
 	
-	@FindBy(xpath = "//iframe[@title=\"Office Add-in Revenue Grid for Salesforce CRM\"]")
+	@FindBy(xpath = "//iframe[@title='Office Add-in Navatar']")
 	private WebElement revenueGridFrame;
 
 	public WebElement revenueGridFrame(int timeOut) {
@@ -314,7 +314,7 @@ public class OutlookPage extends BasePageBusinessLayer {
 
 	}
 	
-	@FindBy(xpath = "//button[@title='Force Sync']")
+	@FindBy(xpath = "//span[text()='Force sync']")
 	private WebElement forceSyncButton;
 
 	public WebElement getForceSyncButton(int timeOut) {
@@ -322,7 +322,7 @@ public class OutlookPage extends BasePageBusinessLayer {
 
 	}
 	
-	@FindBy(xpath = "//div[@class=\"ajs-message ajs-success ajs-visible\"]")
+	@FindBy(xpath = "//div[contains(text(),'Synchronization was scheduled and will start as soon as possible')]")
 	private WebElement forceSyncSuccessMessage;
 
 	public WebElement forceSyncSuccessMessage(int timeOut) {
@@ -745,5 +745,49 @@ public class OutlookPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, moreOptionsLink, "Visibility", timeOut, "moreOptionsLink");
 
 	}
+	
+	@FindBy(xpath = "//button[@aria-label='Navatar']")
+	private WebElement navatarGrid;
+
+	public WebElement getNavatarGrid(int timeOut) {
+		return isDisplayed(driver, navatarGrid, "Visibility", timeOut, "Navatar Grid");
+
+	}
+	
+	@FindBy(xpath = "//button[@name='Open Navatar']")
+	private WebElement openNavatarGridButton;
+
+	public WebElement getOpenNavatarGridButton(int timeOut) {
+		return isDisplayed(driver, openNavatarGridButton, "Visibility", timeOut, "openNavatarGridButton");
+
+	}
+	
+	@FindBy(xpath = "//div[text()='Last session details']")
+	private WebElement lastSessionDetails;
+
+	public WebElement getLastSessionDetails(int timeOut) {
+		return isDisplayed(driver, lastSessionDetails, "Visibility", timeOut, "last session details");
+
+	}
+	
+	@FindBy(xpath = "//span[text()='Last session:']/following-sibling::div")
+	private WebElement syncTime;
+
+	public WebElement getsyncTime(int timeOut) {
+		return isDisplayed(driver, syncTime, "Visibility", timeOut, "sync time");
+
+	}
+	
+	@FindBy(xpath = "//button[text()='Refresh']")
+	private WebElement refreshBtn;
+
+	public WebElement getRefreshBtn(int timeOut) {
+		return isDisplayed(driver, refreshBtn, "Visibility", timeOut, "refreash button");
+
+	}
+	
+	
+	
+	
 	
 }
