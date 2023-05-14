@@ -2611,7 +2611,7 @@ public class AcuityResearch extends BaseLib{
 	 String[][] task1BasicSection = { { excelLabel.Subject.toString(), AR_Research6.replace("\"", "")} };
 		 lp.CRMLogin(superAdminUserName, adminPassword, appName);
    
-		 if (home.globalSearchAndNavigate(AR_Firm6.replace("   ", "").replace("\"", ""), RelatedTab.Tasks.toString(), false)) {
+		 if (home.globalSearchAndNavigate(AR_Firm6.replace("   ", "").replace("\"", ""), RelatedTab.Tasks.toString(), false, projectName)) {
 
 				log(LogStatus.INFO,
 						"-----Verified Task named: " + AR_Firm6 + " found in Tasks Object-----",
@@ -2820,7 +2820,7 @@ public class AcuityResearch extends BaseLib{
 		 String[][] task1BasicSection = { { excelLabel.Subject.toString(), AR_Research7.replace("\"", "")} };
 			 lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	   
-			 if (home.globalSearchAndNavigate(AR_Firm7.replace("   ", "").replace("\"", ""), RelatedTab.Events.toString(), false)) {
+			 if (home.globalSearchAndNavigate(AR_Firm7.replace("   ", "").replace("\"", ""), RelatedTab.Events.toString(), false, projectName)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Task named: " + AR_Firm7 + " found in Tasks Object-----",
