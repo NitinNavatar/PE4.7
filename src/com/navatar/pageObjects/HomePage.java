@@ -306,8 +306,18 @@ public class HomePage extends BasePageBusinessLayer {
 	 * @return the fundraisingContactPopUpApplyBtn
 	 */
 	public WebElement getFundraisingContactPopUpApplyBtn(int timeOut) {
-		return isDisplayed(driver, fundraisingContactPopUpApplyBtn, "Visibility", timeOut,
-				"Fundraising Contact PopUp Apply Btn");
+
+		List<WebElement> applybuttons = FindElements(driver,
+				"//div[contains(@class,'ContactAccess_fancybox')]//button[text()='Apply']",
+				"getFundraisingContactPopUpApplyBtn");
+
+		for (WebElement applyButton : applybuttons) {
+
+			if (isDisplayed(driver, applyButton, "Visibility", 3, "Fundraising Contact PopUp Apply Btn") != null) {
+				return applyButton;
+			}
+		}
+		return null;
 	}
 
 	@FindBy(xpath = "//a[@title='Create Fundraisings']")
@@ -595,7 +605,7 @@ public class HomePage extends BasePageBusinessLayer {
 		return isDisplayed(driver, placementFeeTextBox, "Visibility", timeOut, "placement fee text box");
 	}
 
-	@FindBy(xpath = "//div[contains(@class,'windowViewMode-normal')]//iframe[@title='accessibility title']")
+	@FindBy(xpath = "//div[contains(@class,'windowViewMode-normal')]//iframe[@title='Commitment Creation']")
 	private WebElement createCommitmentFrame_Lightning;
 
 	/**
@@ -1084,7 +1094,7 @@ public class HomePage extends BasePageBusinessLayer {
 				"create Fundraising Default Fundraising Values AddRows Link");
 	}
 
-	@FindBy(xpath = "//div[@class='flexipagePage']//span[text()='Minimize']")
+	@FindBy(xpath = "//div[contains(@class,'slds-is-open')]//span[text()='Minimize']")
 	private WebElement navatarQuickLinkMinimize_Lighting;
 
 	/**
@@ -2260,7 +2270,7 @@ public class HomePage extends BasePageBusinessLayer {
 		return isDisplayed(driver, FindElement(driver, xpath, "Export Wizard Button", action.SCROLLANDBOOLEAN, 30),
 				"Visibility", timeOut, "Clicked on Export Wizard");
 	}
-	
+
 	public WebElement getFundFirstSDG_ExportTextArea(int timeOut) {
 		String xpath = "//p[contains(text(),\"Copy this text\")]/..//textarea[@class=\"slds-textarea\"]";
 
@@ -2523,7 +2533,7 @@ public class HomePage extends BasePageBusinessLayer {
 					FindElement(driver, xpath, "Text Found: " + recordName, action.SCROLLANDBOOLEAN, timeOut),
 					"Visibility", timeOut, "textToSearch");
 		}
-		
+
 //		if (recordName.contains("Event")) {
 //			xpath = "//*/span/a[text()=\"" + recordName + "\"][not(contains(@data-aura-class,\"uiOutputURL\"))]";
 //		} else

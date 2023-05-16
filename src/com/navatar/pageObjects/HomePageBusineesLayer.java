@@ -2002,6 +2002,7 @@ public class HomePageBusineesLayer extends HomePage {
 		WebElement ele1 = null;
 		String xpath = "", xpath1 = "";
 		if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			driver.switchTo().defaultContent();
 			switchToFrame(driver, 30, getCreateCommitmentFrame_Lightning(20));
 
 		}

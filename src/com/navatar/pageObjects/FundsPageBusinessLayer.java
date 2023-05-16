@@ -179,16 +179,15 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	public List<String> returnAllValuesInRelatedList(String environment, String mode, String relatedList) {
 		List<WebElement> ele = null;
 		List<String> s = new ArrayList<String>();
-
+		CommonLib.refresh(driver);
 		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
 			ele = FindElements(driver,
 					"//h3[text()='" + relatedList + "']/../../../../../following-sibling::div//th//a",
 					"related list all elements");
 		} else
-			ele = FindElements(driver, "//table[@data-aura-class='uiVirtualDataTable']/tbody/tr//th[1]//a",
-					"list of all elements");
+			ele = FindElements(driver, "//table//*[@data-label]//a//span", "list of all elements");
 
-		if (ele != null) {
+		if (ele.size() > 0) {
 			for (int i = 0; i < ele.size(); i++) {
 				s.add(ele.get(i).getText().trim());
 			}
@@ -1462,7 +1461,6 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		}
 		return flag;
 	}
-	
 
 	/**
 	 * @author sahil bansal
@@ -1518,30 +1516,23 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		return flag;
 	}
 
-	
-	public boolean deleteFund(String projectName, String fundName,int timeOut)
-	{
-		boolean flag=false;
+	public boolean deleteFund(String projectName, String fundName, int timeOut) {
+		boolean flag = false;
 		if (clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Delete, 10)) {
 			ThreadSleep(2000);
-			if(clickUsingJavaScript(driver, getDeleteFundConfirmationMsg(20), "fund delete", action.SCROLLANDBOOLEAN))
-			{
+			if (clickUsingJavaScript(driver, getDeleteFundConfirmationMsg(20), "fund delete",
+					action.SCROLLANDBOOLEAN)) {
 				appLog.info("Fund has been deleted");
-				flag=true;
-			}
-			else
-			{
+				flag = true;
+			} else {
 				appLog.info("Fund is not deleted");
 			}
-		}
-		else
-		{
+		} else {
 			appLog.error("Not Able to Click on delete Button");
 		}
-		
+
 		return flag;
-		
-		
+
 	}
 
 }

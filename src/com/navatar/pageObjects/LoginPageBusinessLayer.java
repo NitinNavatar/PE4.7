@@ -70,9 +70,9 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 	public boolean CRMLogin(String username, String password) {
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		driver.get("https://"+URL);
-		sendKeys(driver, getUserNameTextBox(20), username, "Username Text Box", action.THROWEXCEPTION);
-		sendKeys(driver, getPasswordTextBox(20), password, "Password Text Box", action.THROWEXCEPTION);
-		click(driver, getLoginButton(20), "Login Button", action.THROWEXCEPTION);
+		sendKeys(driver, getUserNameTextBox(20), username, "Username Text Box", action.BOOLEAN);
+		sendKeys(driver, getPasswordTextBox(20), password, "Password Text Box", action.BOOLEAN);
+		click(driver, getLoginButton(20), "Login Button", action.BOOLEAN);
 		click(driver, getLightingCloseButton(10), "Lighting Pop-Up Close Button.", action.BOOLEAN);
 		ThreadSleep(1000);
 		
@@ -127,9 +127,9 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 	public boolean CRMLogin(String username, String password, String appName) {
         BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
         driver.get("https://"+URL);
-        sendKeys(driver, getUserNameTextBox(20), username, "Username Text Box", action.THROWEXCEPTION);
-        sendKeys(driver, getPasswordTextBox(20), password, "Password Text Box", action.THROWEXCEPTION);
-        click(driver, getLoginButton(20), "Login Button", action.THROWEXCEPTION);
+        sendKeys(driver, getUserNameTextBox(20), username, "Username Text Box", action.BOOLEAN);
+        sendKeys(driver, getPasswordTextBox(20), password, "Password Text Box", action.BOOLEAN);
+        click(driver, getLoginButton(20), "Login Button", action.BOOLEAN);
         click(driver, getLightingCloseButton(10), "Lighting Pop-Up Close Button.", action.BOOLEAN);
         ThreadSleep(1000);
         
