@@ -1980,13 +1980,13 @@ public class HomePage extends BasePageBusinessLayer {
 		return FindElement(driver,
 				"//a[text()='" + Title + "']/ancestor::article//tbody/tr/td//a[text()='" + FundName
 						+ "']/ancestor::td/following-sibling::td//button[text()='Delete']",
-				"Delete Button", action.SCROLLANDBOOLEAN, 30);
+				"Delete Button", action.BOOLEAN, 30);
 	}
 
 	public WebElement deleteRecordConfirmBtn(String Title) {
 
 		return FindElement(driver, "//a[text()='" + Title + "']/ancestor::article/../..//button[@title='Delete']",
-				"Delete Confirm Button", action.SCROLLANDBOOLEAN, 30);
+				"Delete Confirm Button", action.BOOLEAN, 30);
 	}
 
 	@FindBy(xpath = "//span[@data-aura-class='forceActionsText']")
@@ -2327,7 +2327,7 @@ public class HomePage extends BasePageBusinessLayer {
 
 	public WebElement getClonnedSDGViewAllClick(int timeOut) {
 		// String xpath ="//a//div//span[text()='Sortable Data Grid Fields']/..";
-		String xpath = "//a//div//span[text()=\"Sortable Data Grid Fields\"]//ancestor::a";
+		String xpath = "//a//span[text()='Sortable Data Grid Fields']/ancestor::lst-common-list-internal/following-sibling::*";
 
 		return isDisplayed(driver, FindElement(driver, xpath, "View All Click", action.SCROLL, 30), "Visibility",
 				timeOut, "Clonned SDG View All Click");
@@ -2335,7 +2335,7 @@ public class HomePage extends BasePageBusinessLayer {
 	}
 
 	public List<WebElement> getClonnedSDGColumns(int timeOut) {
-		String xpath = "//span[@title='Override Label']//ancestor::table//td[3]/span/span";
+		String xpath = "//span[@title='Override Label']//ancestor::table//tbody//td[4]//lst-formatted-text";
 		return FindElements(driver, xpath, "Clonned SDG Columns");
 	}
 

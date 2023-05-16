@@ -471,7 +471,7 @@ public class PECloudSmoke extends BaseLib{
 				//task
 				SMOKTask1DueDate=previousOrForwardDateAccordingToTimeZone(-92, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);
 				String task = SMOKTask1Subject;
-				String[][] taskData = {{"Due Date Only",SMOKTask1DueDate},{PageLabel.Status.toString(),SMOKTask1Status}};
+				String[][] taskData = {{"Due Date",SMOKTask1DueDate},{PageLabel.Status.toString(),SMOKTask1Status}};
 				
 				String [][] basicSection = {{PageLabel.Subject.toString(),task},{PageLabel.Related_To.toString(),SMOKTask1Name}};
 					
@@ -936,7 +936,7 @@ public class PECloudSmoke extends BaseLib{
 		 
 		//task
 		String task = SMOKTask2Subject;
-		String[][] taskData = {{"Due Date Only",SMOKTask2DueDate}};
+		String[][] taskData = {{"Due Date",SMOKTask2DueDate}};
 		
 		String [][] basicSection = {{PageLabel.Subject.toString(),task},{PageLabel.Related_To.toString(),SMOKTask2Name}};
 			
@@ -1840,6 +1840,7 @@ public class PECloudSmoke extends BaseLib{
 				log(LogStatus.INFO, "Click on Tab : "+navigationTab, YesNo.No);
 				if(npbl.clickOnAlreadyCreatedItem(projectName, TabName.Navigation,navigationLabel[0], 30)) {
 					log(LogStatus.INFO, "Click on "+navigationLabel[0]+" going to edit ", YesNo.No);
+					
 					npbl.enteringValueForNavigation(projectName, editedLabel, action.BOOLEAN, 30);
 					ThreadSleep(2000);
 					if (click(driver,  npbl.getNavigationTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
@@ -2186,7 +2187,7 @@ public class PECloudSmoke extends BaseLib{
 						
 						subject =SMOKTask3Subject;
 						String[][] basicCall= {{excelLabel.Subject.toString(),subject},{excelLabel.Related_To.toString(),contactNAme}};
-						String[][] advanceCall= {{"Due Date Only",dueDate}};
+						String[][] advanceCall= {{"Date",dueDate}};
 						
 						ExcelUtils.writeData(phase1DataSheetFilePath,dueDate, "Task1", excelLabel.Variable_Name, "SMOKTask3", excelLabel.Due_Date);
 						
@@ -2202,7 +2203,7 @@ public class PECloudSmoke extends BaseLib{
 						subject =SMOKTask5Subject;
 						ExcelUtils.writeData(phase1DataSheetFilePath,dueDate, "Task1", excelLabel.Variable_Name, "SMOKTask5", excelLabel.Due_Date);
 						String[][] basicTask= {{excelLabel.Subject.toString(),subject},{excelLabel.Related_To.toString(),contactNAme}};
-						String[][] advanceTask= {{"Due Date Only",dueDate}};
+						String[][] advanceTask= {{"Date",dueDate}};
 						
 
 						if(lp.createActivityTimeline("", true,NewInteractions_DefaultValues.Call.toString(), basicTask, advanceTask, null, null, false, null, null, null, null, null, null)) {
@@ -2573,7 +2574,7 @@ public class PECloudSmoke extends BaseLib{
 		String task = SmokeCTTask1Subject;
 		
 		String[][] basictask = {{ActivityRelatedLabel.Subject.toString(),task},{excelLabel.Related_To.toString(),contactName},{excelLabel.Related_To.toString(),SmokeCTContactInst}};
-		String[][] advancetask ={{"Due Date Only",SmokeCTTask1dueDate},{PageLabel.Priority.toString(),SmokeCTTask1Priority}};
+		String[][] advancetask ={{"Due Date",SmokeCTTask1dueDate},{PageLabel.Priority.toString(),SmokeCTTask1Priority}};
 
 		if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Task.toString(), basictask, advancetask, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.INFO,"Able to create task : "+task,YesNo.No);
@@ -2589,7 +2590,7 @@ public class PECloudSmoke extends BaseLib{
 		task = SmokeCTLogACall1Subject;
 		
 		String[][] basiccall = {{ActivityRelatedLabel.Subject.toString(),task},{excelLabel.Notes.toString(),SmokeCTLogACall1Comment},{excelLabel.Related_To.toString(),contactName},{excelLabel.Related_To.toString(),SmokeCTContactInst}};
-		String[][] advancecall ={{"Due Date Only",todaysDate},{PageLabel.Priority.toString(),SmokeCTTask1Priority}};
+		String[][] advancecall ={{"Date",todaysDate}/*,{PageLabel.Priority.toString(),SmokeCTTask1Priority}*/};
 
 		if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Call.toString(), basiccall, advancecall, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.INFO,"Able to create task : "+task,YesNo.No);
@@ -2988,7 +2989,7 @@ public class PECloudSmoke extends BaseLib{
 		
 		
 		String[][] basictask = {{ActivityRelatedLabel.Subject.toString(),task},{excelLabel.Related_To.toString(),contactName},{excelLabel.Related_To.toString(),SmokeCTContactInst}};
-		String[][] advancetask ={{"Due Date Only",SmokeCTTask2dueDate},{PageLabel.Priority.toString(),SmokeCTTask2Priority}};
+		String[][] advancetask ={{"Due Date",SmokeCTTask2dueDate},{PageLabel.Priority.toString(),SmokeCTTask2Priority}};
 
 		if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Task.toString(), basictask, advancetask, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.INFO,"Able to create task : "+task,YesNo.No);
@@ -3003,7 +3004,7 @@ public class PECloudSmoke extends BaseLib{
 		task = SmokeCTLogACall2Subject;
 		
 		String[][] basiccall = {{ActivityRelatedLabel.Subject.toString(),task},{excelLabel.Notes.toString(),SmokeCTLogACall2Comment},{excelLabel.Related_To.toString(),contactName},{excelLabel.Related_To.toString(),SmokeCTContact2Inst}};
-		String[][] advancecall ={{"Due Date Only",todaysDate}};
+		String[][] advancecall ={{"Date",todaysDate}};
 
 		if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Call.toString(), basiccall, advancecall, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.INFO,"Able to create task : "+task,YesNo.No);
@@ -4479,10 +4480,10 @@ public class PECloudSmoke extends BaseLib{
 				{PageLabel.Related_To.toString(),SmokeWlContact2FName+" "+SmokeWlContact2LName},
 				{PageLabel.Related_To.toString(),SmokeWlContact2Inst}}};
 		
-		String[][][] advancetask= {{{"Due Date Only",SmokeWLTask1dueDate},
+		String[][][] advancetask= {{{"Due Date",SmokeWLTask1dueDate},
 			{PageLabel.Priority.toString(),SmokeWLTask1Priority},
 			{PageLabel.Status.toString(),SmokeWLTask1Status}},
-			{{"Due Date Only",SmokeWLTask2dueDate},
+			{{"Due Date",SmokeWLTask2dueDate},
 			{PageLabel.Priority.toString(),SmokeWLTask2Priority},
 			{PageLabel.Status.toString(),SmokeWLTask2Status}}};
 		
@@ -4802,7 +4803,8 @@ public class PECloudSmoke extends BaseLib{
 		SmokeLTPLogACall1dueDate=todaysDate;
 		String[][] logACall = {{PageLabel.Subject.toString(),task},
 				{PageLabel.Related_To.toString(),contactName2},{PageLabel.Related_To.toString(),contactName}};
-		String[][] advanceCall={{PageLabel.Status.toString(),SmokeLTPLogACall1Status}};
+		//String[][] advanceCall={{PageLabel.Status.toString(),SmokeLTPLogACall1Status}};
+		String[][] advanceCall= null;
 				
 
 		if (lp.createActivityTimeline("",true, "Call", logACall, advanceCall, null, null, false, null, null, null, null, null, null)) {

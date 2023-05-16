@@ -32,6 +32,7 @@ import com.navatar.generic.EnumConstants.CreationPage;
 import com.navatar.generic.EnumConstants.Environment;
 import com.navatar.generic.EnumConstants.GlobalActionItem;
 import com.navatar.generic.EnumConstants.IconType;
+import com.navatar.generic.EnumConstants.MetaDataSetting;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
@@ -20736,7 +20737,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Tasks", false)) {
+		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Tasks", false, projectName)) {
 
 			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectNameNavigation + " found in Tasks Object-----",YesNo.No);
 			String parentID=switchOnWindow(driver);
@@ -25058,7 +25059,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 					lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Tasks", false)) {
+		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Tasks", false, projectName)) {
 
 			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectNameNavigation + " found in Tasks Object-----",YesNo.No);
 			String parentID=switchOnWindow(driver);
@@ -25099,7 +25100,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		
 		refresh(driver);
 
-		if (home.globalSearchAndNavigate(task1SubjectNameNavigation1, "Tasks", false)) {
+		if (home.globalSearchAndNavigate(task1SubjectNameNavigation1, "Tasks", false, projectName)) {
 
 			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectNameNavigation1 + " found in Tasks Object-----",YesNo.No);
 			String parentID=switchOnWindow(driver);
@@ -32266,7 +32267,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			sa.assertTrue(false, "Not Able to click on Calendar/Event Link");
 		}
 		
-		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Events", false)) {
+		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Events", false, projectName)) {
 
 			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectNameNavigation + " found in Tasks Object-----",YesNo.No);
 			
@@ -37413,6 +37414,235 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	}	
 
 
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc221_ReplaceFirstColumnsWithAnotherColuman(String projectName) {
+
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String parentWindow = null;
+	
+
+		String[] metaDataName= {ATCE_MetaDataName1,ATCE_MetaDataName2,ATCE_MetaDataName3,ATCE_MetaDataName4,ATCE_MetaDataName5,ATCE_MetaDataName6};
+		String[] metaDataValue= {ATCE_MetaDataValue1,ATCE_MetaDataValue2,ATCE_MetaDataValue3,ATCE_MetaDataValue4,ATCE_MetaDataValue5,ATCE_MetaDataValue6};
+
+	
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create clone user");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create clone user",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create clone user");
+			}
+			ThreadSleep(3000);
+			if(metaDataName.length==metaDataValue.length)
+			{
+				for(int i = 0 ; i <metaDataName.length; i++) {
+					if(setup.UpdateValueInCustomMetaData(MetaDataSetting.Acuity_Setting.toString(), metaDataName[i], metaDataValue[i], 10))
+					{
+						log(LogStatus.INFO, "Changed the value of " + metaDataName[i] + " for Acuity Setting", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to change the value of " + metaDataName[i] + " for Acuity Setting", YesNo.No);
+						sa.assertTrue(false, "Not able to changed the value of " + metaDataName[i] + " for Acuity Setting");	
+					}
+					ThreadSleep(5000);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The size of metadata name and metadata value are not equal", YesNo.No);
+				sa.assertTrue(false, "The size of metadata name and metadata value are not equal");
+			}
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		} else {
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot change value", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot change value");
+		}
+	
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATCETc222_VerifyMetaDataOnAccuntRecord(String projectName) {
+
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String parentWindow = null;
+		String xPath;
+		WebElement ele;
+		String recordName=ATCERecord1;
+
+	
+		ArrayList<String> blankList=new ArrayList<String>();
+
+		String contactHeader=ATCE_ContactHeader2;
+
+		String[] arrContactHeader=contactHeader.split("<break>");
+		List<String> contactHeaders = new ArrayList<String>(Arrays.asList(arrContactHeader));
+
+	
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+
+					ArrayList<String> result=bp.verifyRedirectionOnClickEntityTypeOnTaggedSection();
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The redirections are working properly after clickig on records of Company, People and deal tagged record", YesNo.No);
+						sa.assertTrue(true, "The redirections are working properly after clickig on records of Company, People and deal tagged record");
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The redirections are not working properly after clickig on records of Company, People and deal tagged record. "+result, YesNo.No);
+						sa.assertTrue(false, "The redirections are not working properly after clickig on records of Company, People and deal tagged record. "+result);
+					}
+
+					xPath="//span[contains(@class,'slds-page-header__title') and @title='Contacts']/ancestor::div//td[@data-label='Name']//a";
+					ele=FindElement(driver, xPath, "records on Contact section", action.SCROLLANDBOOLEAN, 20);
+					if(clickUsingJavaScript(driver, ele, "Records on contact section"))
+					{
+						log(LogStatus.INFO, "clicked on record of contact section", YesNo.No);	
+
+						String id = switchOnWindow(driver);
+						if(id!=null)
+						{	
+							if (bp.getTabName("Contact",20)!= null) {
+								log(LogStatus.INFO, "The page is redirecting to Contact tab after clicking on record name of contact section", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "The page is not redirecting to Contact tab after clicking on record name of contact section", YesNo.No);
+								result.add("The page is not redirecting to Contact tab after clicking on record name of contact section");
+							}
+							driver.close();
+							driver.switchTo().window(id);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The new tab is not opening after clicking on entity type of People", YesNo.No);
+							result.add("The new tab is not opening after clicking on entity type of people");
+						}
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on record of contact section", YesNo.No);	
+						sa.assertTrue(false, "Not able to click on record of contact section");
+					}
+
+					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null, contactHeaders, null, blankList, null,blankList,null,blankList,null);
+
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The header name and message have been verified on Contacts section", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The header name and message are not verified on Contacts. "+result1, YesNo.No);
+						sa.assertTrue(false, "The header name and message are not verified on Contacts "+result1);
+					}
+					
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void ATETc223_VerifyTheResultsOnContactsAcuityTab(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATCE_Con1;
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj2)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+					ThreadSleep(6000);
+					ArrayList<String> result=bp.verifyRedirectionOnClickEntityTypeOnTaggedSection();
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The redirections are working properly after clickig on records of Company, People and deal tagged record", YesNo.No);
+						sa.assertTrue(true, "The redirections are working properly after clickig on records of Company, People and deal tagged record");
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The redirections are not working properly after clickig on records of Company, People and deal tagged record. "+result, YesNo.No);
+						sa.assertTrue(false, "The redirections are not working properly after clickig on records of Company, People and deal tagged record. "+result);
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj2, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	
 }
 
 

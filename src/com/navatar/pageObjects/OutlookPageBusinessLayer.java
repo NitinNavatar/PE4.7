@@ -2070,13 +2070,13 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 				if (clickUsingJavaScript(driver, getMoreIcon(30), "More icon")) {
 					CommonLib.log(LogStatus.INFO, "clicked on more icon of subject name :" + subjectName, YesNo.No);
 					ThreadSleep(1000);
-					if (click(driver, getRevenueGridButton(30), "Revenue grid button", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Revenue grid button", YesNo.No);
+					if (click(driver, getNavatarGrid(30), "Navatar button", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Navatar button", YesNo.No);
 						ThreadSleep(1000);
-						if (click(driver, getOpenRevenueGridButton(30), "open Revenue grid button",
+						if (click(driver, getOpenNavatarGridButton(30), "open Navatar button",
 								action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on open Revenue grid button", YesNo.No);
-							ThreadSleep(2000);
+							log(LogStatus.INFO, "Clicked on open Navatar button", YesNo.No);
+							ThreadSleep(10000);
 
 							if (CommonLib.switchToFrame(driver, 30, revenueGridFrame(35))) {
 								log(LogStatus.INFO, "Successfully switched to frame", YesNo.No);

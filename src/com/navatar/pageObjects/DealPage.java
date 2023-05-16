@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import com.navatar.generic.CommonLib;
 import com.navatar.generic.EnumConstants.ContactPageFieldLabelText;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.ProjectName;
@@ -81,6 +82,7 @@ public class DealPage extends BasePageBusinessLayer {
 	private WebElement convertToPortfolio;
 
 	public WebElement getconvertToPortfolio(int timeOut) {
+		CommonLib.refresh(driver);
 		return isDisplayed(driver, convertToPortfolio, "Visibility", timeOut, "convertToPortfolio");
 
 	}
@@ -164,6 +166,7 @@ public class DealPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, dealNameInput, "Visibility", timeOut, " deal name input");
 
 	}
+
 	@FindBy(xpath = "//span[text()='Deal Name']/../..//input[@type='text']")
 	private WebElement PopupdealNameInput;
 
@@ -221,7 +224,7 @@ public class DealPage extends BasePageBusinessLayer {
 
 		return isDisplayed(driver, saveButton, "Visibility", timeOut, "save button ");
 	}
-	
+
 	@FindBy(xpath = "//footer//span[text()='Save']")
 	private WebElement popupsaveButton;
 
@@ -253,7 +256,7 @@ public class DealPage extends BasePageBusinessLayer {
 
 		return isDisplayed(driver, stageField, "Visibility", timeOut, "Stage field");
 	}
-	
+
 	@FindBy(xpath = "//a[@class='select']")
 	private WebElement popupstageField;
 
@@ -348,5 +351,5 @@ public class DealPage extends BasePageBusinessLayer {
 	public WebElement getreplacevaluewithNullforstage(String projectName, int timeOut) {
 		return isDisplayed(driver, replacevaluewithNullforstage, "Visibility", timeOut, "replacevaluewithNullforstage");
 	}
-	
+
 }
