@@ -316,6 +316,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 					String CommitAmount = convertNumberAccordingToFormatWithCurrencySymbol(commitmentRowData[1],
 							"0,000.00");
 
+					System.out.println("Expected Converted Amount: " + CommitAmount);
 					if (commitmentRowData[0].contains(fund) && CommitAmount.contains(amount)
 							&& commitmentRowData[2].contains(lp)) {
 						/* && createdDate.contains(commitmentRowData[5] */

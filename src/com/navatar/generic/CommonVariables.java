@@ -1545,7 +1545,7 @@ public class CommonVariables {
 	    public static String ATCE_Tabs1,ATCE_Tabs2,ATCE_Tabs3;
 	    
 	    //Acuity Contact Header
-	    public static String ATCE_ContactHeader1;
+	    public static String ATCE_ContactHeader1,ATCE_ContactHeader2;
 	    
 	    //Acuity Connection Header
 	    public static String ATCE_ConnectionHeader1,ATCE_ConnectionHeader2;
@@ -1666,6 +1666,16 @@ public class CommonVariables {
 	    public static String ATCE_FContact1,ATCE_FContact2;
 	    
 	    public static String ATCE_FRole1,ATCE_FRole2;
+	    
+	    /****************Record name and object name **********/
+	    public static String ATCE_RecordName1;
+	    public static String ATCE_ObjectName1;
+	    
+		/*************** MetaData ************/
+ 		public static String ATCE_MetaDataName1,ATCE_MetaDataName2,ATCE_MetaDataName3,ATCE_MetaDataName4,ATCE_MetaDataName5,ATCE_MetaDataName6;
+ 		public static String ATCE_MetaDataValue1,ATCE_MetaDataValue2,ATCE_MetaDataValue3,ATCE_MetaDataValue4,ATCE_MetaDataValue5,ATCE_MetaDataValue6;
+    
+	    
 	    
 	    /***************************** Acuity (Task & Event) ******************************/
 	    
@@ -2256,7 +2266,14 @@ public class CommonVariables {
 
 		 	public static String AMNNR_FirmLegalName15,AMNNR_FirmLegalName16;
 		 	
-	    
+	    /*****************Acuity Clips***********/
+		 	//Custom field
+		 	public static String AC_ObjectName1,AC_ObjectName2;
+		 	public static String AC_FieldType1,AC_FieldType2;
+		 	public static String AC_FieldLabelName1,AC_FieldLabelName2;
+		 	public static String AC_FieldLength1;
+		 	
+		 	
 	public CommonVariables(Object obj) {
 		//TODO Auto-generated constructor stub
 		AppListeners.appLog.info("Kindly hold on starting variable intialization........");
@@ -11337,6 +11354,7 @@ public class CommonVariables {
  					 /*****Contact Header*****/
  					 
  					 ATCE_ContactHeader1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.ContactHeader);
+ 					ATCE_ContactHeader2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE002", excelLabel.ContactHeader);
  					  
  					 /****** Connection Header *********/
  					 ATCE_ConnectionHeader1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.ConnectionHeader);
@@ -12579,8 +12597,23 @@ public class CommonVariables {
  					ATCE_FRole1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraising Contact",excelLabel.Variable_Name, "ATCE_FC001", excelLabel.Role);
  					ATCE_FRole2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraising Contact",excelLabel.Variable_Name, "ATCE_FC002", excelLabel.Role);
 					 
- 				  
- 					 
+ 					ATCE_RecordName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.RecordName);
+					ATCE_ObjectName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATCE001", excelLabel.ObjectName);
+					
+					ATCE_MetaDataName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ATECust_1", excelLabel.FieldName);
+			 		ATCE_MetaDataName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ATECust_2", excelLabel.FieldName);
+			 		ATCE_MetaDataName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ATECust_3", excelLabel.FieldName);
+			 		ATCE_MetaDataName4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ATECust_4", excelLabel.FieldName);
+			 		ATCE_MetaDataName5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ATECust_5", excelLabel.FieldName);
+			 		ATCE_MetaDataName6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ATECust_6", excelLabel.FieldName);
+			 		
+			 		ATCE_MetaDataValue1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ATECust_1", excelLabel.New_Value);
+			 		ATCE_MetaDataValue2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ATECust_2", excelLabel.New_Value);
+			 		ATCE_MetaDataValue3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ATECust_3", excelLabel.New_Value);
+			 		ATCE_MetaDataValue4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ATECust_4", excelLabel.New_Value);
+			 		ATCE_MetaDataValue5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ATECust_5", excelLabel.New_Value);
+			 		ATCE_MetaDataValue6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "ATECust_6", excelLabel.New_Value);
+			 	
  			 		try {
  						dataFile.close();
  					} catch (IOException e) {
@@ -12597,8 +12630,60 @@ public class CommonVariables {
  					
  					
  					break;
+ 					
 
-					
+            	 case "AcuityClip" :
+ 					
+ 					try {
+ 						dataFile=new FileInputStream(new File(AcuityDataSheetFilePath));
+ 					} catch (FileNotFoundException e1) {
+ 						// TODO Auto-generated catch block
+ 						e1.printStackTrace();
+ 					}
+ 					
+ 					try {
+ 						dataWb=WorkbookFactory.create(dataFile);
+ 					} catch (EncryptedDocumentException e) {
+ 						// TODO Auto-generated catch block
+ 						e.printStackTrace();
+ 					} catch (InvalidFormatException e) {
+ 						// TODO Auto-generated catch block
+ 						e.printStackTrace();
+ 					} catch (IOException e) {
+ 						// TODO Auto-generated catch block
+ 						e.printStackTrace();
+ 					}	
+ 					
+ 					AC_ObjectName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Custom Fields",excelLabel.Variable_Name, "AC_Field1", excelLabel.Object_Name);	 
+ 					AC_ObjectName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Custom Fields",excelLabel.Variable_Name, "AC_Field2", excelLabel.Object_Name);
+ 				 	
+ 					AC_FieldType1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Custom Fields",excelLabel.Variable_Name, "AC_Field1", excelLabel.Field_Type);
+ 					AC_FieldType2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Custom Fields",excelLabel.Variable_Name, "AC_Field2", excelLabel.Field_Type);
+ 				 	
+ 					AC_FieldLabelName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Custom Fields",excelLabel.Variable_Name, "AC_Field1", excelLabel.Field_Label);
+ 					AC_FieldLabelName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Custom Fields",excelLabel.Variable_Name, "AC_Field2", excelLabel.Field_Label);
+ 				 	
+ 				 	
+ 				 	AC_FieldLength1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Custom Fields",excelLabel.Variable_Name, "AC_Field1", excelLabel.Length);
+ 				 	;
+
+ 				 	try {
+ 						dataFile.close();
+ 					} catch (IOException e) {
+ 						// TODO Auto-generated catch block
+ 						e.printStackTrace();
+ 					}
+ 					try {
+ 						dataWb.close();
+ 					} catch (IOException e) {
+ 						// TODO Auto-generated catch block
+ 						e.printStackTrace();
+
+ 					}
+ 					
+ 					
+ 					break;
+ 					
 				
 		default:
 			break;

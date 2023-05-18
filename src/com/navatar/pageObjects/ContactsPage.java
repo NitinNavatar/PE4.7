@@ -164,7 +164,8 @@ public class ContactsPage extends BasePageBusinessLayer {
 				|| labelName.equalsIgnoreCase(ContactPageFieldLabelText.Mailing_Street.toString())
 				|| labelName.equalsIgnoreCase(ContactPageFieldLabelText.Other_Street.toString())) {
 			finalXpath = xpath + textAreaXpath;
-		} else if (labelName.equalsIgnoreCase(excelLabel.Phone.toString()) || labelName.equalsIgnoreCase(excelLabel.Fax.toString())) {
+		} else if (labelName.equalsIgnoreCase(excelLabel.Phone.toString())
+				|| labelName.equalsIgnoreCase(excelLabel.Fax.toString())) {
 			xpath = "//*[starts-with(text(),'" + finalLabelName + "')]/following-sibling::div//input";
 			finalXpath = xpath;
 		} else if (labelName.equalsIgnoreCase(excelLabel.Region.toString())
@@ -984,16 +985,18 @@ public class ContactsPage extends BasePageBusinessLayer {
 	public WebElement getPhoneFieldOnContactPage(int timeOut) {
 		return isDisplayed(driver, phoneFieldOnContactPage, "Visibility", timeOut, "Phone Field On Contact Page");
 	}
-	
-	@FindBy(xpath = "//span[text()='Contacts']/ancestor::div//lightning-icon[@title='Add Contact']")
+
+	@FindBy(xpath = "//span[text()='Contacts']/ancestor::div//lightning-icon[@title='New Contact']")
+
 	private WebElement addContactIcon;
 
 	public WebElement getAddContactIcon(int timeOut) {
 		return isDisplayed(driver, addContactIcon, "Visibility", timeOut, "add contact icon");
 	}
-	
+
 	public WebElement getTextboxWithLabelname(String labelName, int timeOut) {
-		String xpath = "//span[text()='"+labelName+"']/../..//input";
+
+		String xpath = "//h2[text()='New Contact']/../..//span[text()='" + labelName + "']/../..//input";
 
 		try {
 			return FindElement(driver, xpath, "textbox : " + labelName, action.SCROLLANDBOOLEAN, timeOut);
@@ -1002,15 +1005,12 @@ public class ContactsPage extends BasePageBusinessLayer {
 			return FindElement(driver, xpath, "textbox : " + labelName, action.SCROLLANDBOOLEAN, timeOut);
 		}
 	}
-	
-	
+
 	@FindBy(xpath = "//h2[text()='New Contact']/../..//footer//span[text()='Save']/..")
 	private WebElement saveButtonOnNewContactPopup;
 
 	public WebElement getSaveButtonOnNewContactPopup(int timeOut) {
 		return isDisplayed(driver, saveButtonOnNewContactPopup, "Visibility", timeOut, "save button");
 	}
-	
-	
 
 }

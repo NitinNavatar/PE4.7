@@ -51,6 +51,7 @@ import java.util.List;
 import java.util.Set;
 
 import static com.navatar.generic.AppListeners.*;
+import static com.navatar.generic.BaseLib.sa;
 
 public class SetupPageBusinessLayer extends SetupPage {
 	// Scanner scn = new Scanner(System.in);
@@ -2173,25 +2174,30 @@ public class SetupPageBusinessLayer extends SetupPage {
 		ele = isDisplayed(driver, ele, "visibility", timeOut, userName);
 		if (click(driver, ele, userName.toString(), action.BOOLEAN)) {
 			log(LogStatus.INFO, "able to click on " + userName, YesNo.No);
+			ThreadSleep(6000);
+			CommonLib.refresh(driver);
+			ThreadSleep(6000);
 			switchToFrame(driver, 60, getSetUpPageIframe(120));
-			xpath = "//select[@id='p5']";
-			ele = FindElement(driver, xpath, "Record dropdown", action.SCROLLANDBOOLEAN, timeOut);
-			scrollDownThroughWebelement(driver, ele, "Record dropdown");
-			ThreadSleep(1000);
-			if (selectVisibleTextFromDropDown(driver, ele, recordType, recordType)) {
-				log(LogStatus.INFO, "selected default record Type : " + recordType, YesNo.No);
-				ThreadSleep(2000);
-				if (clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
-						action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
-					ThreadSleep(10000);
-					flag = true;
-				}
-			}
-			xpath = "//*[text()='" + recordType + "']/..//a[text()='Edit']";
+
+			/*
+			 * xpath = "//select[@id='p5']"; ele = FindElement(driver, xpath,
+			 * "Record dropdown", action.SCROLLANDBOOLEAN, timeOut);
+			 * scrollDownThroughWebelement(driver, ele, "Record dropdown");
+			 * ThreadSleep(1000); if (selectVisibleTextFromDropDown(driver, ele, recordType,
+			 * recordType)) { log(LogStatus.INFO, "selected default record Type : " +
+			 * recordType, YesNo.No); ThreadSleep(2000); if (clickUsingJavaScript(driver,
+			 * getCreateUserSaveBtn_Lighting(30), "Save Button", action.SCROLLANDBOOLEAN)) {
+			 * log(LogStatus.INFO, "clicked on save button for record type settiing",
+			 * YesNo.No); ThreadSleep(10000); flag = true; } }
+			 */
+			xpath = "//*[contains(text(),'" + recordType + "')]/parent::tr//a";
 			ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, timeOut);
 			if (click(driver, ele, "Edit Button", action.BOOLEAN)) {
 				log(LogStatus.INFO, "able to click on edit button for record type settiing", YesNo.No);
+
+				ThreadSleep(6000);
+				CommonLib.refresh(driver);
+				ThreadSleep(6000);
 				switchToFrame(driver, 60, getSetUpPageIframe(120));
 				xpath = "//select[@id='p5']";
 				ele = FindElement(driver, xpath, "Record dropdown", action.SCROLLANDBOOLEAN, timeOut);
@@ -2235,12 +2241,15 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return ele;
 	}
 
-	public WebElement getRecordTypeLabelWithoutEditMode(String projectName, String recordTypeLabel, String checkedValue, int timeOut) {
-		String xpath = "//*[text()='" + recordTypeLabel + "']/..//following-sibling::td//img[@title='"+ checkedValue +"']";
+	public WebElement getRecordTypeLabelWithoutEditMode(String projectName, String recordTypeLabel, String checkedValue,
+			int timeOut) {
+		String xpath = "//*[text()='" + recordTypeLabel + "']/..//following-sibling::td//img[@title='" + checkedValue
+				+ "']";
 		WebElement ele = isDisplayed(driver, FindElement(driver, xpath, recordTypeLabel, action.BOOLEAN, 10),
 				"visibility", 10, recordTypeLabel);
 		return ele;
 	}
+
 	/**
 	 * @author Azhar Alam
 	 * @param projectName
@@ -2261,6 +2270,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 		switchToDefaultContent(driver);
 		if (click(driver, getRecordTypeNewButton(120), "Record Type New Button", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Click on Record Type New Button", YesNo.No);
+			ThreadSleep(5000);
+			CommonLib.refresh(driver);
 			ThreadSleep(5000);
 			switchToFrame(driver, 20, getSetUpPageIframe(60));
 			for (String[] lv : labelWithValue) {
@@ -2389,8 +2400,9 @@ public class SetupPageBusinessLayer extends SetupPage {
 		String value;
 		boolean flag = false;
 		switchToDefaultContent(driver);
-		;
-		ThreadSleep(2000);
+		ThreadSleep(5000);
+		CommonLib.refresh(driver);
+		ThreadSleep(5000);
 		switchToFrame(driver, 60, getSetUpPageIframe(120));
 		if (click(driver, getEditButton(environment, "Classic", 10), "edit", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Click on edit Button", YesNo.No);
@@ -2403,7 +2415,9 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 			} catch (Exception e1) {
 			}
-			ThreadSleep(2000);
+			ThreadSleep(5000);
+			CommonLib.refresh(driver);
+			ThreadSleep(5000);
 
 			switchToFrame(driver, 60, getSetUpPageIframe(120));
 			for (String[] lv : labelWithValue) {
@@ -2471,7 +2485,9 @@ public class SetupPageBusinessLayer extends SetupPage {
 		WebElement ele;
 		boolean flag = false;
 		switchToDefaultContent(driver);
-		ThreadSleep(2000);
+		ThreadSleep(5000);
+		CommonLib.refresh(driver);
+		ThreadSleep(5000);
 		switchToFrame(driver, 60, getSetUpPageIframe(120));
 		for (String[] labelValue : labelWithValue) {
 			// xpath = "//*[text()='" + labelValue[0] +
@@ -4022,6 +4038,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 					if (ele != null) {
 						if (click(driver, ele, "field label text link", action.BOOLEAN)) {
 							log(LogStatus.INFO, "clicked on field label " + fieldLabel, YesNo.No);
+							ThreadSleep(7000);
+							CommonLib.refresh(driver);
 							switchToFrame(driver, 50, getFieldAndRelationShipFrame(50));
 							ThreadSleep(4000);
 							if (click(driver,
@@ -4194,18 +4212,12 @@ public class SetupPageBusinessLayer extends SetupPage {
 			}
 			if (click(driver, getUsersLink(30), "User Link", action.SCROLLANDBOOLEAN)) {
 				appLog.info("clicked on users link");
-				switchToFrame(driver, 20, getSetUpPageIframe(20));
-				CommonLib.ThreadSleep(3000);
-				try {
-					ele = new WebDriverWait(driver, 50)
-							.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[text()='" + email
-									+ "']/parent::td//preceding-sibling::td[@class='actionColumn']//a[text()='Edit']")));
-				} catch (Exception ex) {
-					ex.printStackTrace();
-					log(LogStatus.ERROR, "Could not found the Element of the edit button", YesNo.Yes);
-					flag = false;
-				}
-				if (click(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
+
+				CommonLib.ThreadSleep(7000);
+				switchToFrame(driver, 20, getSetUpPageIframe(25));
+				CommonLib.ThreadSleep(6000);
+
+				if (clickUsingJavaScript(driver, editButtonOfUser(email, 25), "Edit Button", action.BOOLEAN)) {
 					appLog.info("Clicked on the edit button against " + email);
 					switchToDefaultContent(driver);
 					switchToFrame(driver, 50, getuserEditPageIframe(50));
@@ -4365,9 +4377,11 @@ public class SetupPageBusinessLayer extends SetupPage {
 									"view field accessbility button xpath", action.BOOLEAN)) {
 								log(LogStatus.INFO, "clicked on view field accessbility of field label : " + fieldLabel,
 										YesNo.No);
-								ThreadSleep(2000);
+								ThreadSleep(7000);
+								CommonLib.refresh(driver);
+								ThreadSleep(7000);
 								switchToFrame(driver, 50, getFieldAndRelationShipFrame(50));
-								ThreadSleep(5000);
+								ThreadSleep(2000);
 								if (selectVisibleTextFromDropDown(driver, getFieldAccessbilityDropDown(50),
 										"field accessbility drop down", fieldLabel)) {
 									log(LogStatus.INFO, "select field label accessbility drop down " + fieldLabel,
@@ -4378,6 +4392,10 @@ public class SetupPageBusinessLayer extends SetupPage {
 											"profile link name", action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.INFO, "clicked on " + profileName + " link", YesNo.No);
 										CommonLib.switchToDefaultContent(driver);
+
+										CommonLib.ThreadSleep(5000);
+										CommonLib.refresh(driver);
+										CommonLib.ThreadSleep(5000);
 										switchToFrame(driver, 50, getFieldAndRelationShipFrame(50));
 										ThreadSleep(3000);
 										if (permissionType.toString().equals("givePermission")) {
@@ -4524,7 +4542,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 			if (CommonLib.click(driver, ele, fieldName + " field", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "clicked on Field" + fieldName, YesNo.No);
 				CommonLib.ThreadSleep(7000);
-
+				CommonLib.refresh(driver);
+				CommonLib.ThreadSleep(7000);
 				if (CommonLib.switchToFrame(driver, 50, getSetUpPageIframe(70))) {
 					ThreadSleep(2000);
 					log(LogStatus.INFO, "sucessfully swithed to the iframe", YesNo.No);
@@ -6867,6 +6886,187 @@ public class SetupPageBusinessLayer extends SetupPage {
 	 * @param timeOut
 	 * @return true if able to change permission for particular object for
 	 *         particular type for particular user
+	 *//*
+		 * public boolean createValidationRule(object objectName, String fieldName,
+		 * String validationRuleName, String validationRuleFormula, String
+		 * validationRuleMessage, String validationRuleErrorMsgLocation) {
+		 * HomePageBusineesLayer home = new HomePageBusineesLayer(driver); boolean flag
+		 * = false;
+		 * 
+		 * if (home.clickOnSetUpLink()) { String parentWindow = switchOnWindow(driver);
+		 * if (parentWindow == null) { sa.assertTrue(false,
+		 * "No new window is open after click on setup link in lighting mode so cannot create Valiation Rules for field: "
+		 * + fieldName + " of Object: " + objectName); log(LogStatus.SKIP,
+		 * "No new window is open after click on setup link in lighting mode so cannot create Valiation Rules for field: "
+		 * + fieldName + " of Object: " + objectName, YesNo.Yes);
+		 * exit("No new window is open after click on setup link in lighting mode so cannot create Valiation Rules for field: "
+		 * + fieldName + " of Object: " + objectName); return false; }
+		 * 
+		 * if (searchStandardOrCustomObject(environment, mode, objectName)) {
+		 * log(LogStatus.INFO, "click on Object : " + objectName, YesNo.No);
+		 * ThreadSleep(2000); if (clickOnObjectFeature(environment, mode, objectName,
+		 * ObjectFeatureName.validationRules)) { log(LogStatus.INFO,
+		 * "Clicked on feature : " + ObjectFeatureName.validationRules, YesNo.No);
+		 * ThreadSleep(2000); if (validationRuleAlreadyExist(validationRuleName, 8) !=
+		 * null) { log(LogStatus.INFO, "Validation Rule named: " + validationRuleName +
+		 * " already exist, So not able to Create a New one", YesNo.No); driver.close();
+		 * driver.switchTo().window(parentWindow);
+		 * 
+		 * return true;
+		 * 
+		 * } else { log(LogStatus.INFO, "Validation Rule named: " + validationRuleName +
+		 * " not already exist, So going to Create a New one", YesNo.No);
+		 * 
+		 * if (click(driver, vaidationRuleNewButton(10), "New Button", action.BOOLEAN))
+		 * { log(LogStatus.INFO, "Clicked on New button", YesNo.No);
+		 * 
+		 * if (validationRuleIframe(30) != null) { log(LogStatus.INFO,
+		 * "Validation Rule Iframe Found, So going to switch into it", YesNo.No); if
+		 * (CommonLib.switchToFrame(driver, 15, validationRuleIframe(30))) {
+		 * log(LogStatus.INFO, "Switched into Validation Rule Iframe", YesNo.No);
+		 * 
+		 * if (sendKeys(driver, validationRuleName(30), validationRuleName,
+		 * "vaidationRuleName", action.SCROLLANDBOOLEAN)) { log(LogStatus.PASS,
+		 * "enter the value in Validation Rule Name : " + validationRuleName, YesNo.No);
+		 * if (sendKeys(driver, validationRuleFormula(30), validationRuleFormula,
+		 * "validationRuleFormula", action.SCROLLANDBOOLEAN)) { log(LogStatus.PASS,
+		 * "enter the value in Validation Rule Formula : " + validationRuleFormula,
+		 * YesNo.No);
+		 * 
+		 * if (sendKeys(driver, validationRuleMessage(30), validationRuleMessage,
+		 * "validationRuleMessage", action.SCROLLANDBOOLEAN)) { log(LogStatus.PASS,
+		 * "enter the value in Validation Rule Error Msg : " + validationRuleMessage,
+		 * YesNo.No);
+		 * 
+		 * if (validationRuleErrorMsgLocation.contains("Field<break>")) {
+		 * 
+		 * String[] labelAndvalue = validationRuleErrorMsgLocation .split("<break>",
+		 * -1);
+		 * 
+		 * if (click(driver, validationRuleErrorMsgLocation(labelAndvalue[0], 10),
+		 * "New Button", action.BOOLEAN)) { log(LogStatus.INFO,
+		 * "Clicked on Error Msg Location: " + validationRuleErrorMsgLocation,
+		 * YesNo.No);
+		 * 
+		 * if (CommonLib.selectVisibleTextFromDropDown(driver,
+		 * validationRuleFieldSelect(10), labelAndvalue[1], labelAndvalue[1]))
+		 * 
+		 * {
+		 * 
+		 * if (click(driver, validationRuleSaveButton(10), "validationRuleSaveButton",
+		 * action.BOOLEAN)) { log(LogStatus.INFO, "Clicked on Save Button", YesNo.No);
+		 * 
+		 * CommonLib.switchToDefaultContent(driver); CommonLib.refresh(driver);
+		 * CommonLib.switchToFrame(driver, 15, validationRuleIframe(30)); if
+		 * (validationRuleCreatedDetailName(validationRuleName, 10) != null) {
+		 * log(LogStatus.INFO, "Validation rule has been Created", YesNo.No);
+		 * CommonLib.switchToDefaultContent(driver); driver.close();
+		 * driver.switchTo().window(parentWindow); flag = true;
+		 * 
+		 * } else { log(LogStatus.PASS, "Validation rule has not been Created",
+		 * YesNo.No); sa.assertTrue(false, "Validation rule has not been Created"); }
+		 * 
+		 * } else { log(LogStatus.PASS, "Not able to Click on Save Button", YesNo.No);
+		 * sa.assertTrue(false, "Not able to Click on Save Button"); }
+		 * 
+		 * } else {
+		 * 
+		 * log(LogStatus.PASS, "Not able to select the field: " + labelAndvalue[1] +
+		 * " in which we want the error Msg", YesNo.No); sa.assertTrue(false,
+		 * "Not able to select the field: " + labelAndvalue[1] +
+		 * " in which we want the error Msg"); }
+		 * 
+		 * } else { log(LogStatus.PASS, "Not able to Click on Error Msg Location: " +
+		 * validationRuleErrorMsgLocation, YesNo.No); sa.assertTrue(false,
+		 * "Not able to Click on Error Msg Location: " +
+		 * validationRuleErrorMsgLocation); }
+		 * 
+		 * } else {
+		 * 
+		 * if (click(driver, validationRuleErrorMsgLocation(
+		 * validationRuleErrorMsgLocation, 10), "New Button", action.BOOLEAN)) {
+		 * log(LogStatus.INFO, "Clicked on Error Msg Location: " +
+		 * validationRuleErrorMsgLocation, YesNo.No);
+		 * 
+		 * if (click(driver, validationRuleSaveButton(10), "New Button",
+		 * action.BOOLEAN)) { log(LogStatus.INFO, "Clicked on Save Button", YesNo.No);
+		 * CommonLib.switchToDefaultContent(driver); CommonLib.refresh(driver);
+		 * CommonLib.switchToFrame(driver, 15, validationRuleIframe(30)); if
+		 * (validationRuleCreatedDetailName(validationRuleName, 10) != null) {
+		 * log(LogStatus.INFO, "Validation rule has been Created", YesNo.No);
+		 * CommonLib.switchToDefaultContent(driver); driver.close();
+		 * driver.switchTo().window(parentWindow); flag = true;
+		 * 
+		 * } else { log(LogStatus.PASS, "Validation rule has not been Created",
+		 * YesNo.No); sa.assertTrue(false, "Validation rule has not been Created"); } }
+		 * else { log(LogStatus.PASS, "Not able to Click on Save Button", YesNo.No);
+		 * sa.assertTrue(false, "Not able to Click on Save Button"); }
+		 * 
+		 * } else { log(LogStatus.PASS, "Not able to Click on Error Msg Location: " +
+		 * validationRuleErrorMsgLocation, YesNo.No); sa.assertTrue(false,
+		 * "Not able to Click on Error Msg Location: " +
+		 * validationRuleErrorMsgLocation); }
+		 * 
+		 * }
+		 * 
+		 * } else { log(LogStatus.PASS,
+		 * "not able to enter the value in Validation Rule Error Msg : " +
+		 * validationRuleMessage, YesNo.No); sa.assertTrue(false,
+		 * "not able to enter the value in Validation Rule Error Msg : " +
+		 * validationRuleMessage); }
+		 * 
+		 * } else { log(LogStatus.PASS,
+		 * "not able to enter the value in Validation Rule Formula : " +
+		 * validationRuleFormula, YesNo.No); sa.assertTrue(false,
+		 * "not able to enter the value in Validation Rule Formula : " +
+		 * validationRuleFormula); }
+		 * 
+		 * } else { log(LogStatus.PASS,
+		 * "not able to enter the value in Validation Rule Name : " +
+		 * validationRuleName, YesNo.No); sa.assertTrue(false,
+		 * "not able to enter the value in Validation Rule Name : " +
+		 * validationRuleName); }
+		 * 
+		 * } else { log(LogStatus.PASS,
+		 * "Not able to Switched into Validation Rule Iframe", YesNo.No);
+		 * sa.assertTrue(false, "Not able to Switched into Validation Rule Iframe"); }
+		 * 
+		 * } else { log(LogStatus.PASS,
+		 * "Validation Rule Iframe not Found, So not going to switch into it",
+		 * YesNo.No); sa.assertTrue(false,
+		 * "Validation Rule Iframe not Found, So not going to switch into it"); } } else
+		 * { log(LogStatus.PASS, "Not able to click on New button", YesNo.No);
+		 * sa.assertTrue(false, "Not able to click on New button"); }
+		 * 
+		 * }
+		 * 
+		 * } else
+		 * 
+		 * { log(LogStatus.FAIL, "Not able to search object " + objectName.toString(),
+		 * YesNo.Yes); sa.assertTrue(false, "Not able to search object " +
+		 * objectName.toString());
+		 * 
+		 * }
+		 * 
+		 * }
+		 * 
+		 * } else { log(LogStatus.ERROR,
+		 * "Not able to click on setup link so cannot create Fields Objects for custom object Marketing Event"
+		 * , YesNo.Yes); sa.assertTrue(false,
+		 * "Not able to click on setup link so cannot create Fields Objects for custom object Marketing Event"
+		 * ); }
+		 * 
+		 * return flag; }
+		 */
+
+	/**
+	 * @author Ankur Huria
+	 * @param driver
+	 * @param userName
+	 * @param LabelswithCheck
+	 * @param timeOut
+	 * @return true if able to change permission for particular object for
+	 *         particular type for particular user
 	 */
 	public boolean createValidationRule(object objectName, String fieldName, String validationRuleName,
 			String validationRuleFormula, String validationRuleMessage, String validationRuleErrorMsgLocation) {
@@ -6953,25 +7153,67 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 																CommonLib.switchToDefaultContent(driver);
 																CommonLib.refresh(driver);
-																CommonLib.switchToFrame(driver, 15,
-																		validationRuleIframe(30));
-																if (validationRuleCreatedDetailName(validationRuleName,
-																		10) != null) {
+
+																if (validationRuleIframe(30) != null) {
 																	log(LogStatus.INFO,
-																			"Validation rule has been Created",
+																			"Validation Rule Iframe Found, So going to switch into it",
 																			YesNo.No);
-																	CommonLib.switchToDefaultContent(driver);
-																	driver.close();
-																	driver.switchTo().window(parentWindow);
-																	flag = true;
+																	if (CommonLib.switchToFrame(driver, 15,
+																			validationRuleIframe(30))) {
+																		log(LogStatus.INFO,
+																				"Switched into Validation Rule Iframe",
+																				YesNo.No);
+
+																		if (validationRuleName(30).getAttribute("value")
+																				.equals("")) {
+																			log(LogStatus.INFO,
+																					"Validation rule has been Created",
+																					YesNo.No);
+																			CommonLib.switchToDefaultContent(driver);
+																			driver.close();
+																			driver.switchTo().window(parentWindow);
+																			flag = true;
+
+																		} else {
+																			log(LogStatus.PASS,
+																					"Validation rule has not been Created",
+																					YesNo.No);
+																			sa.assertTrue(false,
+																					"Validation rule has not been Created");
+																		}
+
+																	} else {
+																		log(LogStatus.PASS,
+																				"Not able to Switched into Validation Rule Iframe",
+																				YesNo.No);
+																		sa.assertTrue(false,
+																				"Not able to Switched into Validation Rule Iframe");
+																	}
 
 																} else {
 																	log(LogStatus.PASS,
-																			"Validation rule has not been Created",
+																			"Validation Rule Iframe not Found, So not going to switch into it",
 																			YesNo.No);
 																	sa.assertTrue(false,
-																			"Validation rule has not been Created");
+																			"Validation Rule Iframe not Found, So not going to switch into it");
 																}
+
+																/*
+																 * CommonLib.refresh(driver);
+																 * CommonLib.switchToFrame(driver, 15,
+																 * validationRuleIframe(30)); if
+																 * (validationRuleCreatedDetailName(validationRuleName,
+																 * 10) != null) { log(LogStatus.INFO,
+																 * "Validation rule has been Created", YesNo.No);
+																 * CommonLib.switchToDefaultContent(driver);
+																 * driver.close();
+																 * driver.switchTo().window(parentWindow); flag = true;
+																 * 
+																 * } else { log(LogStatus.PASS,
+																 * "Validation rule has not been Created", YesNo.No);
+																 * sa.assertTrue(false,
+																 * "Validation rule has not been Created"); }
+																 */
 
 															} else {
 																log(LogStatus.PASS, "Not able to Click on Save Button",
@@ -7010,26 +7252,70 @@ public class SetupPageBusinessLayer extends SetupPage {
 														if (click(driver, validationRuleSaveButton(10), "New Button",
 																action.BOOLEAN)) {
 															log(LogStatus.INFO, "Clicked on Save Button", YesNo.No);
+
 															CommonLib.switchToDefaultContent(driver);
 															CommonLib.refresh(driver);
-															CommonLib.switchToFrame(driver, 15,
-																	validationRuleIframe(30));
-															if (validationRuleCreatedDetailName(validationRuleName,
-																	10) != null) {
-																log(LogStatus.INFO, "Validation rule has been Created",
+
+															if (validationRuleIframe(30) != null) {
+																log(LogStatus.INFO,
+																		"Validation Rule Iframe Found, So going to switch into it",
 																		YesNo.No);
-																CommonLib.switchToDefaultContent(driver);
-																driver.close();
-																driver.switchTo().window(parentWindow);
-																flag = true;
+																if (CommonLib.switchToFrame(driver, 15,
+																		validationRuleIframe(30))) {
+																	log(LogStatus.INFO,
+																			"Switched into Validation Rule Iframe",
+																			YesNo.No);
+
+																	if (validationRuleName(30).getAttribute("value")
+																			.equals("")) {
+																		log(LogStatus.INFO,
+																				"Validation rule has been Created",
+																				YesNo.No);
+																		CommonLib.switchToDefaultContent(driver);
+																		driver.close();
+																		driver.switchTo().window(parentWindow);
+																		flag = true;
+
+																	} else {
+																		log(LogStatus.PASS,
+																				"Validation rule has not been Created",
+																				YesNo.No);
+																		sa.assertTrue(false,
+																				"Validation rule has not been Created");
+																	}
+
+																} else {
+																	log(LogStatus.PASS,
+																			"Not able to Switched into Validation Rule Iframe",
+																			YesNo.No);
+																	sa.assertTrue(false,
+																			"Not able to Switched into Validation Rule Iframe");
+																}
 
 															} else {
 																log(LogStatus.PASS,
-																		"Validation rule has not been Created",
+																		"Validation Rule Iframe not Found, So not going to switch into it",
 																		YesNo.No);
 																sa.assertTrue(false,
-																		"Validation rule has not been Created");
+																		"Validation Rule Iframe not Found, So not going to switch into it");
 															}
+
+															/*
+															 * CommonLib.refresh(driver);
+															 * CommonLib.switchToFrame(driver, 15,
+															 * validationRuleIframe(30)); if
+															 * (validationRuleCreatedDetailName(validationRuleName, 10)
+															 * != null) { log(LogStatus.INFO,
+															 * "Validation rule has been Created", YesNo.No);
+															 * CommonLib.switchToDefaultContent(driver); driver.close();
+															 * driver.switchTo().window(parentWindow); flag = true;
+															 * 
+															 * } else { log(LogStatus.PASS,
+															 * "Validation rule has not been Created", YesNo.No);
+															 * sa.assertTrue(false,
+															 * "Validation rule has not been Created"); }
+															 */
+
 														} else {
 															log(LogStatus.PASS, "Not able to Click on Save Button",
 																	YesNo.No);
@@ -7212,4 +7498,280 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return flag;
 	}
 
+	
+	public boolean verifyHieghtandWidthOfClip(String width, String height)
+	{
+		if(clickUsingJavaScript(driver, getPECouldShowMoreIcon(20), "Show more icon"))
+		{
+			log(LogStatus.INFO, "Clicked on show more icon", YesNo.No);	
+			if(clickUsingJavaScript(driver, getEditBtn(20), "Edit button icon"))
+			{
+				log(LogStatus.INFO, "Clicked on edit button", YesNo.No);	
+				if(clickUsingJavaScript(driver, getUtilityItems(20), "Utility items"))
+				{
+					log(LogStatus.INFO, "Clicked on utility items", YesNo.No);	
+					if(clickUsingJavaScript(driver, getClipUtility(20), "clip utility items"))
+					{
+						log(LogStatus.INFO, "Clicked on clip utility items", YesNo.No);	
+						ThreadSleep(4000);
+						String panelWidth=getAttribute(driver, getPanelWidthValue(20), "panel width", "value");
+						String panelHeight=getAttribute(driver, getpanelHeightValue(20), "panel width", "value");
+						
+						if(panelWidth.equals(width) && panelHeight.equals(height))
+						{
+							log(LogStatus.INFO, "Actual panel width and panel height has been matched with expected panel width and panel height", YesNo.No);
+							return true;
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Actual panel width and panel height is not matched with expected panel width and panel height", YesNo.No);	
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR,"Clicked on clip utility items", YesNo.No);	
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on utility items", YesNo.No);	
+				}
+					
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on edit button", YesNo.No);	
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on show more icon", YesNo.No);	
+		}
+		return false;
+	}
+	
+	public ArrayList<String> verifyAcceddPermissionOfObject(UserProfile userProfile,ObjectType object, boolean read, boolean create, boolean edit, boolean delete)
+	{
+		ThreadSleep(5000);
+		ArrayList<String> result=new ArrayList<String>();
+		String userProfileName=userProfile.toString().replace("_", " ");
+		if (CommonLib.switchToFrame(driver, 50, getuserProfileIframe(50))) {
+			ThreadSleep(5000);
+			log(LogStatus.INFO, "Successfully switched to User Profile Iframe", YesNo.No);
+			
+			if (CommonLib.clickUsingJavaScript(driver, getEditButtonOfProfileUser(userProfileName,20), userProfileName + " profile name", action.BOOLEAN)) {
+				log(LogStatus.INFO, "Successfully clicked on edit button of " + userProfileName + " profile name", YesNo.No);
+				ThreadSleep(8000);
+				CommonLib.switchToDefaultContent(driver);
+				
+				if (CommonLib.switchToFrame(driver, 50, getProfileEditPageIframe(40))) {
+					ThreadSleep(5000);
+					log(LogStatus.INFO, "Successfully switched to Edit Profile Iframe", YesNo.No);
+					int k=0;
+					scrollDownThroughWebelementInCenter(driver, getReadcheckbox(object.toString(),20), object.toString());
+					if(read)
+					{
+						if(!isSelected(driver, getReadcheckbox(object.toString(),20), "read checkbox"))
+						{
+							if(clickUsingJavaScript(driver, getReadcheckbox(object.toString(),20), "read checkbox"))
+							{
+								log(LogStatus.INFO, "read checkbox has been selected", YesNo.No);
+								k++;
+							}
+							else
+							{
+								log(LogStatus.ERROR, "read checkbox is not selected", YesNo.No);
+								result.add("read checkbox is not selected");
+							}
+						}
+						else
+						{
+							log(LogStatus.INFO, "read checkbox is already selected", YesNo.No);
+						}
+					}
+					else
+					{
+						if(isSelected(driver, getReadcheckbox(object.toString(),20), "read checkbox"))
+						{
+							if(clickUsingJavaScript(driver, getReadcheckbox(object.toString(),20), "read checkbox"))
+							{
+								log(LogStatus.INFO, "read checkbox has been unchecked", YesNo.No);
+								k++;
+							}
+							else
+							{
+								log(LogStatus.ERROR, "read checkbox is not unchecked", YesNo.No);
+								result.add("read checkbox is not unchecked");
+							}
+						}
+						else
+						{
+							log(LogStatus.INFO, "read checkbox is already unchecked", YesNo.No);
+						}
+					}
+					
+					if(create)
+					{
+						if(!isSelected(driver, getCreatecheckbox(object.toString(),20), "Create checkbox"))
+						{
+							if(clickUsingJavaScript(driver, getCreatecheckbox(object.toString(),20), "Create checkbox"))
+							{
+								log(LogStatus.INFO, "Create checkbox has been selected", YesNo.No);
+								k++;
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Create checkbox is not selected", YesNo.No);
+								result.add("Create checkbox is not selected");
+							}
+						}
+						else
+						{
+							log(LogStatus.INFO, "Create checkbox is already selected", YesNo.No);
+						}
+					}
+					else
+					{
+						if(isSelected(driver, getCreatecheckbox(object.toString(),20), "Create checkbox"))
+						{
+							if(clickUsingJavaScript(driver, getCreatecheckbox(object.toString(),20), "Create checkbox"))
+							{
+								log(LogStatus.INFO, "Create checkbox has been unchecked", YesNo.No);
+								k++;
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Create checkbox is not unchecked", YesNo.No);
+								result.add("Create checkbox is not unchecked");
+							}
+						}
+						else
+						{
+						log(LogStatus.INFO, "Create checkbox is already unchecked", YesNo.No);
+					    }
+					}
+					
+					if(edit)
+					{
+						if(!isSelected(driver, getEditcheckbox(object.toString(),20), "Edit checkbox"))
+						{
+							if(clickUsingJavaScript(driver, getEditcheckbox(object.toString(),20), "Edit checkbox"))
+							{
+								log(LogStatus.INFO, "Edit checkbox has been selected", YesNo.No);
+								k++;
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Edit checkbox is not selected", YesNo.No);
+								result.add("Edit checkbox is not selected");
+							}
+						}
+						else
+						{
+							log(LogStatus.INFO, "Edit checkbox is already selected", YesNo.No);
+						}
+					}
+					else
+					{
+						if(isSelected(driver, getEditcheckbox(object.toString(),20), "Edit checkbox"))
+						{
+							if(clickUsingJavaScript(driver, getEditcheckbox(object.toString(),20), "Edit checkbox"))
+							{
+								log(LogStatus.INFO, "Edit checkbox has been unchecked", YesNo.No);
+								k++;
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Edit checkbox is not unchecked", YesNo.No);
+								result.add("Edit checkbox is not unchecked");
+							}
+						}
+						else
+						{
+							log(LogStatus.INFO, "Edit checkbox is already unchecked", YesNo.No);
+						}
+					}
+					
+					if(delete)
+					{
+						if(!isSelected(driver, getDeleteCheckbox(object.toString(),20), "Delete checkbox"))
+						{
+							if(clickUsingJavaScript(driver, getDeleteCheckbox(object.toString(),20), "Delete checkbox"))
+							{
+								log(LogStatus.INFO, "Delete checkbox has been selected", YesNo.No);
+								k++;
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Delete checkbox is not selected", YesNo.No);
+								result.add("Delete checkbox is not selected");
+							}
+						}
+						else
+						{
+							log(LogStatus.INFO, "Delete checkbox is already selected", YesNo.No);
+						}
+					}
+					else
+					{
+						if(isSelected(driver, getDeleteCheckbox(object.toString(),20), "Delete checkbox"))
+						{
+							if(clickUsingJavaScript(driver, getDeleteCheckbox(object.toString(),20), "Delete checkbox"))
+							{
+								log(LogStatus.INFO, "Delete checkbox has been unchecked", YesNo.No);
+								k++;
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Delete checkbox is not unchecked", YesNo.No);
+								result.add("Delete checkbox is not unchecked");
+							}
+						}
+						else
+						{
+							log(LogStatus.INFO, "Delete checkbox is already unchecked", YesNo.No);
+						}
+					}	
+					if(k!=0)
+					{
+						if(clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(20), "Save button"))
+						{
+							log(LogStatus.INFO, "Clicked on Save button", YesNo.No);
+							ThreadSleep(7000);
+							switchToDefaultContent(driver);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Save button", YesNo.No);
+							result.add("Not able to click on Save button");
+						}
+						
+					}
+					
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to switched to Edit Profile Iframe", YesNo.No);
+					result.add("Not able to switched to Edit Profile Iframe");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on edit button of " + userProfileName + " profile name", YesNo.No);
+				result.add("Not able to click on edit button of " + userProfileName + " profile name");
+				
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to switched to User Profile Iframe", YesNo.No);
+			result.add("Not able to switched to User Profile Iframe");
+		}
+			
+			
+		return result;
+		
+	}
+	
 }
