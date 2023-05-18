@@ -3340,7 +3340,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, refrshActivity, "Visibility", timeOut, "refrshActivity");
 	}
 
-	@FindBy(xpath = "//button[@title='Select a List View']")
+	@FindBy(xpath = "//button[contains(@title,'Select a List View')]")
 	private WebElement selectListIcon_Lighting;
 
 	/**

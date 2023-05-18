@@ -2713,10 +2713,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		} else if (projectName.contains(ProjectName.PEEdge.toString()) && PageLabel.Account_Name.equals(pageLabel)) {
 			label = "Firm";
 		}
+		
 
 		WebElement ele1 = getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 		click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
-		ThreadSleep(2000);
+		ThreadSleep(5000);
 		xpath = "//span[text()='" + label + "']/../following-sibling::div//*[text()='" + labelValue + "']";
 
 		ele = FindElement(driver, xpath, label + " with Value " + labelValue, action.SCROLLANDBOOLEAN, 5);
@@ -4840,9 +4841,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 */
 	public boolean restoreValueFromRecycleBin(String projectName, String restoreItem) {
 		boolean flag = false;
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TabName tabName = TabName.RecycleBinTab;
+		String recycleTab = lp.getTabName(projectName, TabName.RecycleBinTab);
 		WebElement ele;
-		if (clickOnTab(projectName, tabName)) {
+		if (lp.openAppFromAppLauchner(60, recycleTab)) {
 			log(LogStatus.INFO, "Clicked on Tab : " + tabName + " For : " + restoreItem, YesNo.No);
 			ThreadSleep(1000);
 			clickOnAlreadyCreatedItem(projectName, tabName, restoreItem, 20);
@@ -11885,7 +11888,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							} else {
 								log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
 								sa.assertTrue(false, "Not able to close the Note popup");
-								log(LogStatus.ERROR, "Activity timeline record is not created", YesNo.No);
+								log(LogStatus.ERROR, "								d", YesNo.No);
 								return false;
 							}
 						} else {
