@@ -1472,12 +1472,9 @@ public static enum ShowMoreActionDropDownList {
 				return "Assigned To ID";
 			}
 		},
-		Start_Date, End_Date, End_Time, Start_Time, Type, Date {
-			@Override
-			public String toString() {
-				return "Start Date";
-			}
-		},
+		Start_Date, End_Date, End_Time, Start_Time, Type, Date,
+			
+		
 		Navigation_Type {
 			@Override
 			public String toString() {

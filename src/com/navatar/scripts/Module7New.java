@@ -44,6 +44,8 @@ public class Module7New extends BaseLib {
 	String statusInProgess = "In Progress";
 	String statusInStarted = "Not Started";
 	
+	
+	
 	@Parameters({ "projectName"})
 	@Test
 	public void M7NTc002_CreateEntityAndContact(String projectName) {
@@ -317,6 +319,8 @@ public void M7NTc004_CreateMultiTaggedTaskforContactJamesRoseAndVerifyLastTouchP
 	lp.CRMlogout();
 	sa.assertAll();
 }
+
+
 @Parameters({ "projectName"})
 @Test
 public void M7NTc05_CreatefourNewContactToCheckTheLastTouchPointInCall(String projectName) {
@@ -324,7 +328,7 @@ public void M7NTc05_CreatefourNewContactToCheckTheLastTouchPointInCall(String pr
 	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 	
 	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-	
+	System.err.println("Module 7 new");
 	// contact
 	if (lp.clickOnTab(projectName, tabObj2)) {
 		log(LogStatus.INFO,"Click on Tab : "+tabObj2,YesNo.No);	
@@ -389,6 +393,8 @@ public void M7NTc05_CreatefourNewContactToCheckTheLastTouchPointInCall(String pr
 	lp.CRMlogout();
 	sa.assertAll();
 }
+
+
 @Parameters({ "projectName"})
 @Test
 public void M7NTc06_CreatLogACallForContactJhonAleaxVerifyLastTouchpointOnContactDetailPage(String projectName) {
@@ -432,8 +438,10 @@ public void M7NTc06_CreatLogACallForContactJhonAleaxVerifyLastTouchpointOnContac
 				if (ele!=null) {
 					String expectedValue = M7NTask3dueDate; 
 					String actualValue = ele.getText().trim();
-					 if (cp.verifyDate(expectedValue,null, actualValue)) { 
-					
+				
+					// if (cp.verifyDate(expectedValue,null, actualValue)) { 
+						 if (cp.verifyDate(expectedValue, actualValue)) { 
+								
 						log(LogStatus.INFO,expectedValue+" successfully verified last touch point date For : "+contactName, YesNo.No);
 					}
 					else {
@@ -462,7 +470,9 @@ public void M7NTc06_CreatLogACallForContactJhonAleaxVerifyLastTouchpointOnContac
 	lp.CRMlogout();
 	sa.assertAll();
 }
-@Parameters({ "projectName"})
+
+
+@Parameters({ "projectName"}) 
 @Test
 public void M7NTc07_CreateMultiTaggedCallforContactSamanthaRaoAndVerifyLastTouchPoint(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -553,7 +563,7 @@ public void M7NTc07_CreateMultiTaggedCallforContactSamanthaRaoAndVerifyLastTouch
 				if (ele!=null) {
 					String expectedValue = M7NTask4dueDate; 
 					String actualValue = ele.getText().trim();
-					 if (cp.verifyDate(expectedValue,null, actualValue)) { 
+					 if (cp.verifyDate(expectedValue, actualValue)) { 
 	
 						log(LogStatus.INFO,expectedValue+" successfully verified last touch point date For : "+primaryContact, YesNo.No);
 					}
@@ -590,7 +600,7 @@ public void M7NTc07_CreateMultiTaggedCallforContactSamanthaRaoAndVerifyLastTouch
 				if (ele!=null) {
 					String expectedValue = M7NTask4dueDate; 
 					String actualValue = ele.getText().trim();
-					 if (cp.verifyDate(expectedValue,null, actualValue)) { 
+					 if (cp.verifyDate(expectedValue, actualValue)) { 
 					
 						log(LogStatus.INFO,expectedValue+" successfully verified last touch point date For : "+secondaryContact, YesNo.No);
 					}
@@ -617,6 +627,8 @@ public void M7NTc07_CreateMultiTaggedCallforContactSamanthaRaoAndVerifyLastTouch
 	lp.CRMlogout();
 	sa.assertAll();
 }
+
+
 @Parameters({ "projectName"})
 @Test
 public void M7NTc08_CreateMultiTaggedCallforContactJohnAlexaAndVerifyLastTouchPoint(String projectName) {
@@ -658,7 +670,7 @@ public void M7NTc08_CreateMultiTaggedCallforContactJohnAlexaAndVerifyLastTouchPo
 				if (ele!=null) {
 					String expectedValue = M7NTask5dueDate; 
 					String actualValue = ele.getText().trim();
-					if (cp.verifyDate(expectedValue,null, actualValue)) {
+					if (cp.verifyDate(expectedValue, actualValue)) {
 						log(LogStatus.INFO,expectedValue+" successfully verified last touch point date For : "+primaryContact, YesNo.No);
 					}
 					else {
@@ -694,7 +706,7 @@ public void M7NTc08_CreateMultiTaggedCallforContactJohnAlexaAndVerifyLastTouchPo
 				if (ele!=null) {
 					String expectedValue = M7NTask5dueDate; 
 					String actualValue = ele.getText().trim();
-					if (cp.verifyDate(expectedValue,null, actualValue)) {
+					if (cp.verifyDate(expectedValue, actualValue)) {
 						log(LogStatus.INFO,expectedValue+" successfully verified last touch point date For : "+secondaryContact, YesNo.No);
 					}
 					else {
@@ -720,6 +732,8 @@ public void M7NTc08_CreateMultiTaggedCallforContactJohnAlexaAndVerifyLastTouchPo
 	lp.CRMlogout();
 	sa.assertAll();
 }
+
+
 @Parameters({ "projectName"})
 @Test
 public void M7NTc09_DeleteMATouchpointCall_1AndVerifyImpactOnLastTouchPointInContactPage(String projectName) {
@@ -745,7 +759,7 @@ public void M7NTc09_DeleteMATouchpointCall_1AndVerifyImpactOnLastTouchPointInCon
 	}
 
 	String actualValue=null;
-	String expectedValue = todaysDate;
+	String expectedValue = M7NTask5dueDate;
 	String contactName=primaryContact;
 	if (flag) {
 			contactName=primaryContact;
@@ -763,7 +777,7 @@ public void M7NTc09_DeleteMATouchpointCall_1AndVerifyImpactOnLastTouchPointInCon
 					ele=cp.getlastTouchPointValue(projectName, 10);
 					if (ele!=null) {
 						actualValue=ele.getText().trim();
-						if (cp.verifyDate(expectedValue,null, actualValue)) {
+						if (cp.verifyDate(expectedValue, actualValue)) {
 							log(LogStatus.INFO,"Last Touch Point is Blank for "+contactName, YesNo.No);
 						}
 						else {
@@ -805,16 +819,12 @@ public void M7NTc10_DeleteMATouchpointCall_3AndVerifyImpactOnLastTouchPointInCon
 	String primaryContact=M7NContact4FName+" "+M7NContact4LName;
 	String secondaryContact=M7NContact6FName+" "+M7NContact6LName;
 	String task = M7NTask5Subject;
-	
-	
 
 		if (home.globalSearchAndDeleteTaskorCall(task, "Tasks", false)) {
 			flag=true;
 	
 			log(LogStatus.INFO, "-----Verified Task named: " + task + " found and delete in Tasks Object-----",
 				YesNo.No);
-
-			
 
 	} else {
 
@@ -906,6 +916,7 @@ public void M7NTc10_DeleteMATouchpointCall_3AndVerifyImpactOnLastTouchPointInCon
 		sa.assertTrue(false,"Task is not been deleted so cannot check Last Touch Point for "+contactName);
 		log(LogStatus.SKIP,"Task is not been deleted so cannot check Last Touch Point for "+contactName,YesNo.Yes);
 	}
+	
 	if (cp.clickOnTab(projectName, tabObj2)) {
 		log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+secondaryContact,YesNo.No);
 		ThreadSleep(1000);
@@ -914,15 +925,17 @@ public void M7NTc10_DeleteMATouchpointCall_3AndVerifyImpactOnLastTouchPointInCon
 		/*if (cp.clickOnAlreadyCreatedItem(projectName, secondaryContact, 30))*/ {
 			log(LogStatus.INFO,"Clicked on  : "+secondaryContact+" For : "+tabObj2,YesNo.No);
 			ThreadSleep(2000);
+			refresh(driver);
+			ThreadSleep(2000);
 			WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 			click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
 			ThreadSleep(3000);
 			ele=cp.getlastTouchPointValue(projectName, 10);
 			if (ele!=null) {
-				String expectedValue1 =todaysDate; 
+				String expectedValue1 =M7NTask5dueDate; 
 				String actualValue1 = ele.getText().trim();
-				if (cp.verifyDate(actualValue,null,expectedValue )) {
-					log(LogStatus.INFO,expectedValue+" successfully verified last touch point date For : "+secondaryContact, YesNo.No);
+				if (cp.verifyDate(expectedValue1,actualValue1 )) {
+					log(LogStatus.INFO,expectedValue1+" successfully verified last touch point date For : "+secondaryContact, YesNo.No);
 				}
 				else {
 					log(LogStatus.ERROR, "Last touch point value is not matched For : "+secondaryContact+" Actual : "+actualValue1+" /t Expected : "+expectedValue1, YesNo.Yes);
@@ -947,6 +960,7 @@ switchToDefaultContent(driver);
 lp.CRMlogout();
 sa.assertAll();
 }
+
 @Parameters({ "projectName"})
 @Test
 public void M7NTc011_RestoreTheDeletedTaskMATouchpointCall_1AndVerifyTheImpactOnLastTouchPointInContactPage(String projectName) {
