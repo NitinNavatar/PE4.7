@@ -1455,7 +1455,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		} else {
 			if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
 				ThreadSleep(3000);
-				xpath = "//div[@class='listContent']//li/a/span[text()='" + viewList + "']";
+				xpath = "//div[@class='listContent']//li/a/..//following-sibling::span[text()='"+ viewList +"']";
 				selectListView = FindElement(driver, xpath, "Select List View : " + viewList, action.SCROLLANDBOOLEAN,
 						30);
 				if (click(driver, selectListView, "select List View : " + viewList, action.SCROLLANDBOOLEAN)) {

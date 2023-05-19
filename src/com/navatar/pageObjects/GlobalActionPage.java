@@ -51,7 +51,7 @@ public class GlobalActionPage extends BasePageBusinessLayer {
 	}
 	
 	
-	@FindBy(xpath = "//div[@class='slds-grid bottomBar']//button/span[text()='Save']")
+	@FindBy(xpath = "//button[contains(@class, 'forceActionButton')]//span[text()='Save']")
 	 private WebElement saveButtonForEvent;
 	
 	/**

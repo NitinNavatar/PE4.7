@@ -382,7 +382,7 @@ public class PECloudSmoke extends BaseLib{
 				ThreadSleep(2000);
 				
 				SMOKDeal1LogInDate= todaysDate;
-				ExcelUtils.writeData(phase1DataSheetFilePath, SMOKDeal1LogInDate, "Deal", excelLabel.Variable_Name, "SMOKDeal1",excelLabel.Log_In_Date);
+				ExcelUtils.writeData(phase1DataSheetFilePath, SMOKDeal1LogInDate, "Deal", excelLabel.Variable_Name, "SMOKSDGDeal1",excelLabel.Log_In_Date);
 
 			//deal	
 				String[][] otherlabel={{excelLabel.Source_Firm.toString(),SMOKDeal1SourceFirm},{excelLabel.Investment_Size.toString(),SMOKDeal1InvestmentSize},
@@ -407,7 +407,7 @@ public class PECloudSmoke extends BaseLib{
 				}
 				
 				SMOKDeal2LogInDate= previousOrForwardDateAccordingToTimeZone(-5, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);
-				ExcelUtils.writeData(phase1DataSheetFilePath, SMOKDeal2LogInDate, "Deal", excelLabel.Variable_Name, "SMOKDeal2",excelLabel.Log_In_Date);
+				ExcelUtils.writeData(phase1DataSheetFilePath, SMOKDeal2LogInDate, "Deal", excelLabel.Variable_Name, "SMOKSDGDeal2",excelLabel.Log_In_Date);
 
 				String[][] otherlabel2={{excelLabel.Source_Firm.toString(),SMOKDeal2SourceFirm},{excelLabel.Investment_Size.toString(),SMOKDeal2InvestmentSize},
 						{excelLabel.Source_Contact.toString(),SMOKDeal2SourceContact},{excelLabel.Log_In_Date.toString(),SMOKDeal2LogInDate}};
