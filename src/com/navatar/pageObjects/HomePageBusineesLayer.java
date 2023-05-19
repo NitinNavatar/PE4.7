@@ -64,6 +64,7 @@ import static com.navatar.generic.CommonVariables.SmokeReportFolderName;
 import static com.navatar.generic.CommonVariables.SmokeReportName;
 import static com.navatar.generic.CommonVariables.environment;
 import static com.navatar.generic.CommonVariables.mode;
+import static com.navatar.generic.CommonVariables.tabObj1;
 import static com.navatar.generic.AppListeners.*;
 
 public class HomePageBusineesLayer extends HomePage {
@@ -1191,8 +1192,8 @@ public class HomePageBusineesLayer extends HomePage {
 	public boolean clickOnTemplateForReportOnBulkEmail(String environment, String mode, String reportName,
 			String templateName) {
 		WebElement ele;
-		String xpath = "//span[text()='" + templateName + "']/ancestor::ul//span[contains(@id,'extd')][text()='"
-				+ reportName + "']";
+		String xpath = "//span[text()='" + reportName + "']/ancestor::ul//span[contains(@id,'extd')][text()='"
+				+ templateName + "']";
 		ele = FindElement(driver, xpath, reportName + " : " + templateName, action.SCROLLANDBOOLEAN, 10);
 		ThreadSleep(2000);
 		if (clickUsingJavaScript(driver, ele, reportName + " : " + templateName, action.SCROLLANDBOOLEAN)) {
@@ -2002,6 +2003,7 @@ public class HomePageBusineesLayer extends HomePage {
 		WebElement ele1 = null;
 		String xpath = "", xpath1 = "";
 		if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			driver.switchTo().defaultContent();
 			switchToFrame(driver, 30, getCreateCommitmentFrame_Lightning(20));
 
 		}
@@ -3267,18 +3269,18 @@ public class HomePageBusineesLayer extends HomePage {
 		if (fundNameElement(Title, FundName) != null) {
 			log(LogStatus.INFO, "Record Found " + FundName, YesNo.No);
 			if (click(driver, deleteRecordBtn(Title, FundName), "Delete Button: " + FundName,
-					action.SCROLLANDBOOLEAN)) {
+					action.BOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on Delete button of the record " + FundName, YesNo.No);
 
 				if (click(driver, deleteRecordConfirmBtn(Title), "Delete Confirm Button", action.BOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on Delete Confirm Button", YesNo.No);
 					flag = true;
-					String msg = getText(dDriver, deleteRecordMsg(10), "", action.BOOLEAN).trim();
+					String msg = getText(driver, deleteRecordMsg(10), "", action.BOOLEAN).trim();
 					if (msg != null && !msg.equalsIgnoreCase("") && !msg.isEmpty()) {
 
 						if (msg.contains("Successfully")) {
 							log(LogStatus.INFO, "Message Verified: " + msg, YesNo.No);
-							CommonLib.ThreadSleep(30000);
+							CommonLib.ThreadSleep(35000);
 							flag = true;
 						} else {
 							log(LogStatus.FAIL, "Not Able to Delete, Message : " + msg, YesNo.No);
@@ -3325,6 +3327,7 @@ public class HomePageBusineesLayer extends HomePage {
 				"//a[text()=\"" + Title
 						+ "\"]/ancestor::article//tbody/tr//span[not(text()=\"No data returned\")]/ancestor::tr",
 				"Records");
+		records = records.stream().filter(x -> x.isDisplayed()).collect(Collectors.toList());
 		System.out.println("No. of Records Present: " + records.size());
 		if (records.size() != 0) {
 			log(LogStatus.INFO, "No. of Records: " + records.size(), YesNo.No);
@@ -5740,8 +5743,12 @@ public class HomePageBusineesLayer extends HomePage {
 
 	}
 
-	public boolean globalSearchAndNavigate(String recordName, String sideNavOption, boolean noResultMsg) {
+	public boolean globalSearchAndNavigate(String recordName, String sideNavOption, boolean noResultMsg,
+			String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		boolean flag = false;
+
 		CommonLib.ThreadSleep(1500);
 		if (click(driver, globalSearchButton(20), "globalSearchButton", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on globalSearchButton", YesNo.No);
@@ -5773,6 +5780,40 @@ public class HomePageBusineesLayer extends HomePage {
 									action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Record: " + recordName, YesNo.No);
 
+								if (sideNavOption.equalsIgnoreCase("Tasks")) {
+									if (editButtonOfSubjectLinkPopUpInInteractionSection(5) != null) {
+										flag = true;
+									} else {
+
+										
+										if (lp.clickOnTab(projectName, "Interactions")) {
+
+											log(LogStatus.INFO, "Clicked on Tab : " + "Interactions", YesNo.No);
+											CommonLib.refresh(driver);
+											if (CommonLib.clickUsingJavaScript(driver,
+													BP.subjectOfInteractionPage(recordName, 15),
+													"Subject Name on Intraction", action.BOOLEAN)) {
+												log(LogStatus.INFO, "clicked on " + recordName, YesNo.No);
+
+												flag = true;
+
+											} else {
+												log(LogStatus.ERROR, "not able to click on " + recordName, YesNo.No);
+												sa.assertTrue(false, "not able to click on " + recordName);
+											}
+
+										} else {
+											log(LogStatus.ERROR, "Not able to click on Tab : " + "Interactions",
+													YesNo.No);
+											sa.assertTrue(false, "Not able to click on Tab : " + "Interactions");
+										}
+
+									}
+								}
+								else {
+									flag = true;
+								}
+
 								/*
 								 * if (sideNavOption.equalsIgnoreCase("Tasks")) { CommonLib.ThreadSleep(4000);
 								 * String parentID = CommonLib.switchOnWindow(driver);
@@ -5788,8 +5829,6 @@ public class HomePageBusineesLayer extends HomePage {
 								 * else { log(LogStatus.ERROR, "No New Window Open after click on Record: " +
 								 * recordName, YesNo.Yes); } } else { flag = true; }
 								 */
-
-								flag = true;
 
 							} else {
 								log(LogStatus.ERROR, "Not able to Click on Record: " + recordName, YesNo.Yes);
@@ -5838,6 +5877,45 @@ public class HomePageBusineesLayer extends HomePage {
 										if (click(driver, globalSearchRecord(recordName, 7),
 												"globalSearchRecord: " + recordName, action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "Clicked on Record: " + recordName, YesNo.No);
+
+											if (sideNavOption.equalsIgnoreCase("Tasks")) {
+												if (editButtonOfSubjectLinkPopUpInInteractionSection(5) != null) {
+													flag = true;
+												} else {
+													
+													if (lp.clickOnTab(projectName, "Interactions")) {
+
+														log(LogStatus.INFO, "Clicked on Tab : " + "Interactions",
+																YesNo.No);
+
+														CommonLib.refresh(driver);
+														if (CommonLib.clickUsingJavaScript(driver,
+																BP.subjectOfInteractionPage(recordName, 15),
+																"Subject Name on Intraction", action.BOOLEAN)) {
+															log(LogStatus.INFO, "clicked on " + recordName, YesNo.No);
+
+															flag = true;
+
+														} else {
+															log(LogStatus.ERROR, "not able to click on " + recordName,
+																	YesNo.No);
+															sa.assertTrue(false, "not able to click on " + recordName);
+														}
+
+													} else {
+														log(LogStatus.ERROR,
+																"Not able to click on Tab : " + "Interactions",
+																YesNo.No);
+														sa.assertTrue(false,
+																"Not able to click on Tab : " + "Interactions");
+													}
+
+												}
+											}
+											else {
+												flag = true;
+											}
+
 											/*
 											 * if (sideNavOption.equalsIgnoreCase("Tasks")) {
 											 * CommonLib.ThreadSleep(4000); String parentID =
@@ -5855,7 +5933,6 @@ public class HomePageBusineesLayer extends HomePage {
 											 * + recordName, YesNo.Yes); } } else { flag = true; }
 											 */
 
-											flag = true;
 										} else {
 											log(LogStatus.ERROR, "Not able to Click on Record: " + recordName,
 													YesNo.Yes);
@@ -5903,7 +5980,6 @@ public class HomePageBusineesLayer extends HomePage {
 		return flag;
 	}
 
-	
 	public boolean globalSearchAndDeleteTaskorCall(String recordName, String sideNavOption, boolean noResultMsg) {
 		boolean flag = false;
 		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
@@ -6072,7 +6148,7 @@ public class HomePageBusineesLayer extends HomePage {
 			sa.assertTrue(false, "Not able to click on globalSearchButton");
 
 		}
-		
+
 		ThreadSleep(2000);
 		if (click(driver, downArrowButton(20), "downArrowButton", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
@@ -6088,7 +6164,7 @@ public class HomePageBusineesLayer extends HomePage {
 					if (taskBP.taskDeletedMsg(15) != null) {
 						log(LogStatus.ERROR, "Task Delete Msg display, So Task gets deleted", YesNo.Yes);
 
-						flag=true;
+						flag = true;
 					} else {
 						log(LogStatus.ERROR, "Task Delete Msg not display, So Task not gets deleted", YesNo.Yes);
 						sa.assertTrue(false, "Task Delete Msg not display, So Task not gets deleted");
@@ -6114,7 +6190,7 @@ public class HomePageBusineesLayer extends HomePage {
 		}
 		return flag;
 	}
-	
+
 	public boolean globalSearchAndEditTaskorCall(String recordName, String sideNavOption, boolean noResultMsg) {
 		boolean flag = false;
 		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
@@ -6283,7 +6359,7 @@ public class HomePageBusineesLayer extends HomePage {
 			sa.assertTrue(false, "Not able to click on globalSearchButton");
 
 		}
-		
+
 		ThreadSleep(2000);
 		if (click(driver, downArrowButton(20), "downArrowButton", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);

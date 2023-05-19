@@ -354,9 +354,8 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 		
 		  if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, timeout)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-				ThreadSleep(2000);
-				act.moveToElement(getResearchButton(10)).perform();
-				ThreadSleep(2000);
+				act.moveToElement(getResearchButton(timeout)).perform();
+//				ThreadSleep(2000);
 				try {
 					wait = new WebDriverWait(driver, 60).until(ExpectedConditions.presenceOfElementLocated(
 							By.xpath("//div[contains(@class,'slds-combobox_object-switcher')]//button[contains(@class,'slds-input_faux')]")));
@@ -366,27 +365,26 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 					log(LogStatus.ERROR, "Could not get the Progress Dropdown in Research Popup", YesNo.No);
 					return false;
 				}
-				ThreadSleep(3000);
+//				ThreadSleep(3000);
 				try {
-					act.moveToElement(getProgressDropdown(10)).perform();
+					act.moveToElement(getProgressDropdown(timeout)).perform();
 					log(LogStatus.INFO, "Element has been moved to Progress Dropdown in Research Popup", YesNo.No);
 				} catch (Exception ex) {
 					ex.printStackTrace();
 					log(LogStatus.ERROR, "not able to move to Progress Dropdown in Research Popup", YesNo.No);
 				}
-				ThreadSleep(3000);
+//				ThreadSleep(3000);
 				if(clickUsingJavaScript(driver, getProgressDropdown(timeout),"Research Progess Dropdown", action.BOOLEAN)) {
 					log(LogStatus.INFO, "Able to Click on " + navigationMenuName, YesNo.No);
 					if(clickUsingJavaScript(driver, getClickOnProgress(ObjectName,timeout),"", action.BOOLEAN)) {
 						log(LogStatus.INFO, "Able to Select " + navigationMenuName, YesNo.No);
 					if(sendKeys(driver, getTextAreaResearch(timeout),name, "Research Input Field", action.BOOLEAN)){
 						log(LogStatus.INFO, "Send value : " + name + " to research for search", YesNo.No);
-						ThreadSleep(2000);
 						clickUsingJavaScript(driver, getResearchButton(timeout),"Research Button", action.BOOLEAN);
-						ThreadSleep(5000);
+//						ThreadSleep(5000);
 						clickUsingJavaScript(driver, getResearchMinimize(timeout),"Research Minimum Button", action.BOOLEAN);
 						flag = true;
-						ThreadSleep(2000);
+//						ThreadSleep(2000);
 					} else {
 					    log(LogStatus.ERROR, "Not able to send " + name, YesNo.Yes);
 					} } else {

@@ -724,13 +724,15 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 								if (CommonLib.click(driver, getSaveButton(50), " Save Button",
 										action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, " save button has been clicked", YesNo.No);
-									try {
-										Thread.sleep(3000);
-									} catch (InterruptedException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
+
+									if (changesSavedMsg(50) != null) {
+										log(LogStatus.INFO, "Changes Saved Msg Displayed", YesNo.No);
+										status++;
+
+									} else {
+										log(LogStatus.ERROR, "Changes Saved Msg Not Displayed", YesNo.Yes);
+
 									}
-									status++;
 
 								}
 
@@ -1554,8 +1556,9 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 										if (CommonLib.switchToFrame(driver, 50, getAppBuilderIframe(50))) {
 											log(LogStatus.INFO, "Successfully Switched to the Frame", YesNo.No);
-											if (CommonLib.clickUsingJavaScript(driver, tabNameElementInEditPageComponent(tabName, 50),
-													"Tab: " + tabName, action.SCROLLANDBOOLEAN)) {
+											if (CommonLib.clickUsingJavaScript(driver,
+													tabNameElementInEditPageComponent(tabName, 50), "Tab: " + tabName,
+													action.SCROLLANDBOOLEAN)) {
 												log(LogStatus.INFO, "Clicked on Tab: " + tabName + " Inside Page",
 														YesNo.No);
 
@@ -1925,102 +1928,203 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		}
 	}
 
+
+	
 	
 	
 	/**
-	 * @author Akul Bhutani
+	 * @author Ankur Huria
 	 * @param projectName
-	 * @param pageName
-	 * @param DropComponentName
-	 * @param fieldValues
 	 * @param source
 	 * @param target
-	 * @return true if drap N drop successfully
+	 * @param pageName
+	 * @param relatedTab
+	 * @param DropComponentName
+	 * @param fieldValues
 	 */
-	public boolean dragAndDropAccordian(String projectName, String DropComponentName,
-			String[] fieldValues, String source, String target) {
-		boolean flag = true;
-		Actions actions = new Actions(driver);
-		WebElement ele = null, dropComponentXpath = null, dropLocation = null;
-		if (switchToFrame(driver, 30, getEditPageFrame(projectName, 30))) {
-			log(LogStatus.INFO, "Click on Sub Tab : " + RelatedTab.Investment, YesNo.No);
-			ThreadSleep(12000);
-			if(clickUsingJavaScript(driver, getDetailsTab(20), "details tab"))
-			{
-				log(LogStatus.INFO, "clicked on details tab", YesNo.No);
-				
-				mouseOverOperation(driver, getDetailsTabFirstSDG(20));
-			
-			switchToDefaultContent(driver);
-			if (sendKeys(driver, getEditPageSeachTextBox(projectName, 10), DropComponentName,
-					DropComponentName + " component xpath", action.BOOLEAN)) {
-				log(LogStatus.INFO, "Enter component name in search box : " + DropComponentName, YesNo.No);
-				ThreadSleep(10000);
-				if (dragNDropUsingScreen(projectName, source, target, 10)) {
 
-					String value = "", field = "";
-					for (String fieldValue : fieldValues) {
-						value = fieldValue.split("<break>")[1];
-						field = fieldValue.split("<break>")[0];
-						if (sendKeys(driver, getFieldTextbox(projectName, field, 10), value, field, action.BOOLEAN)) {
-							log(LogStatus.INFO, "field : " + field + ", value: " + value, YesNo.No);
-						} else {
-							log(LogStatus.ERROR, "Not able to enter : " + value + " on" + field, YesNo.Yes);
-							flag = false;
-						}
-					}
-					if (!isSelected(driver, getexpandedCheckbox(projectName, 10), "expanded")) {
-						if (click(driver, getexpandedCheckbox(projectName, 10), "expanded", action.BOOLEAN)) {
+	public List<String> addTabInEditPage(String projectName, String referencedTabName, String tabLabel, String tabName,
+			String dropTabTo) {
+		List<String> result = new ArrayList<String>();
 
-							log(LogStatus.INFO, "expanded checkbox is now selected", YesNo.No);
+		if (clickOnEditPageLink()) {
+			CommonLib.ThreadSleep(50000);
+
+			if (addCloseButton(5) != null) {
+				CommonLib.click(driver, addCloseButton(5), "Close Button", action.SCROLLANDBOOLEAN);
+			}
+			if (addCloseButton(5) != null) {
+				CommonLib.click(driver, addCloseButton(5), "Close Button", action.SCROLLANDBOOLEAN);
+			}
+			CommonLib.switchToFrame(driver, 50, getAppBuilderIframe(50));
+			CommonLib.clickUsingJavaScript(driver, tabNameElementInEditPageComponent(referencedTabName, 40),
+					referencedTabName);
+			CommonLib.ThreadSleep(2000);
+
+			CommonLib.switchToDefaultContent(driver);
+			if (CommonLib.click(driver, addTabButtonInEditPage(50), "Add Tab Button", action.SCROLLANDBOOLEAN)) {
+
+				log(LogStatus.INFO, "Add Tab Button has been Clicked", YesNo.No);
+
+				if (CommonLib.click(driver, detailTabCreatedAfterAddTab(50), "detailTabCreatedAfterAddTab",
+						action.SCROLLANDBOOLEAN)) {
+
+					log(LogStatus.INFO, "Detail Tab Link has been Clicked", YesNo.No);
+					if (CommonLib.selectVisibleTextFromDropDown(driver, tabLabelSelectElement(30),
+							"tabLabelSelectElement", tabLabel)) {
+						if (CommonLib.sendKeys(driver, customLabelInputBox(50), tabName, "Custom Label Input Box",
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Entered the Value: " + tabName + " in Custom Label Input Box",
+									YesNo.No);
+							CommonLib.ThreadSleep(2000);
+							if (CommonLib.click(driver, doneButtonDivInTabLabel(50), "OutSide of Done Button",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on OutSide of Done Button", YesNo.No);
+
+								if (CommonLib.click(driver, doneButtonInTabLabel(50), "Done Button",
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "Clicked on Done Button", YesNo.No);
+
+									CommonLib.ThreadSleep(4000);
+									if (CommonLib.dragNDropField(driver, tabNameElementInEditPage(tabName, 30),
+											tabNameElementInEditPage(dropTabTo, 30))) {
+										log(LogStatus.INFO, "Successfully Drag the Tab: " + tabName + " And Drop it to "
+												+ dropTabTo, YesNo.No);
+										CommonLib.ThreadSleep(3000);
+
+										if (CommonLib.switchToFrame(driver, 50, getAppBuilderIframe(50))) {
+											log(LogStatus.INFO, "Successfully Switched to the Frame", YesNo.No);
+											if (CommonLib.clickUsingJavaScript(driver,
+													tabNameElementInEditPageComponent(tabName, 50), "Tab: " + tabName,
+													action.SCROLLANDBOOLEAN)) {
+
+												CommonLib.switchToDefaultContent(driver);
+
+												if (CommonLib.click(driver, getSaveButton(50), " Save Button",
+														action.SCROLLANDBOOLEAN)) {
+													log(LogStatus.INFO, " save button has been clicked", YesNo.No);
+													if (changesSavedMsg(50) != null) {
+														log(LogStatus.INFO, "Changes Saved Msg Displayed", YesNo.No);
+
+														if (CommonLib.click(driver,
+																getEditPageBackButton(projectName, 50),
+																"Edit Page Back Button", action.SCROLLANDBOOLEAN)) {
+															log(LogStatus.INFO, "Clicked on Edit Page Back Button",
+																	YesNo.No);
+
+															if (getTabNameOnPage(tabName, 30) != null) {
+																log(LogStatus.INFO,
+																		"Tab: " + tabName + " Added on Page Verified",
+																		YesNo.No);
+															} else {
+																log(LogStatus.ERROR,
+																		"Tab: " + tabName + " Not Added to Page",
+																		YesNo.No);
+
+																result.add(
+																		"Not Able to Click on Edit Page Back Button");
+															}
+
+														} else {
+															log(LogStatus.ERROR,
+																	"Not Able to Click on Edit Page Back Button",
+																	YesNo.No);
+
+															result.add("Not Able to Click on Edit Page Back Button");
+														}
+
+													} else {
+														log(LogStatus.ERROR, "Changes Saved Msg Not Displayed",
+																YesNo.Yes);
+
+													}
+
+												}
+
+												else {
+													log(LogStatus.ERROR, "Could not be click on save button",
+															YesNo.Yes);
+
+													result.add("Could not be click on save button");
+
+												}
+
+											}
+
+											else {
+												log(LogStatus.ERROR,
+														"Not Able to Click on Tab: " + tabName + " Inside Page",
+														YesNo.Yes);
+
+												result.add("Not Able to Click on Tab: " + tabName + " Inside Page");
+
+											}
+										}
+
+										else {
+											log(LogStatus.ERROR, "Not Successfully Switch to the Frame", YesNo.Yes);
+											result.add("Not Successfully Switch to the Frame");
+
+										}
+									}
+
+									else {
+										log(LogStatus.ERROR, "Not Successfully Drag the Tab: " + tabName
+												+ " And Drop it to " + dropTabTo, YesNo.Yes);
+										result.add("Not Successfully Drag the Tab: " + tabName + " And Drop it to "
+												+ dropTabTo);
+
+									}
+
+								}
+
+								else {
+									log(LogStatus.ERROR, "Not Able to Click on Done Button", YesNo.Yes);
+									result.add("Not Able to Click on Done Button");
+
+								}
+
+							}
+
+							else {
+								log(LogStatus.ERROR, "Not Able to Click on OutSide of Done Button", YesNo.Yes);
+								result.add("Not Able to Click on OutSide of Done Button");
+
+							}
+
 						} else {
-							log(LogStatus.ERROR, "could not click on expanded", YesNo.No);
-							flag = false;
+							log(LogStatus.ERROR,
+									"Not Able to Entered the Value: " + tabName + " in Custom Label Input Box",
+									YesNo.Yes);
+							result.add("Not Able to Entered the Value: " + tabName + " in Custom Label Input Box");
+
 						}
 
 					} else {
-						log(LogStatus.INFO, "expanded checkbox is already selected", YesNo.No);
-
-					}
-					if (click(driver, getCustomTabSaveBtn(projectName, 10), "save button", action.BOOLEAN)) {
-						log(LogStatus.INFO, "clicked on save button", YesNo.No);
-						ThreadSleep(2000);
-						actions.moveToElement(getBackButton(10)).build().perform();
-						ThreadSleep(2000);
-						if (clickUsingJavaScript(driver, getBackButton(10), "back button", action.BOOLEAN)) {
-							log(LogStatus.PASS, "clicked on back button", YesNo.No);
-						} else {
-							log(LogStatus.ERROR, "Not able to click on back button so cannot back on page ", YesNo.Yes);
-							flag = false;
-						}
-					} else {
-						log(LogStatus.ERROR, "Not able to click on save button so cannot create accordion : ",
-								YesNo.No);
+						log(LogStatus.ERROR, "Could not Select the Value: " + tabLabel + " from DropDown", YesNo.Yes);
+						result.add("Could not Select the Value: " + tabLabel + " from DropDown");
 					}
 				} else {
-					log(LogStatus.ERROR, "Drop location is not visible in list so cannot drag and drop component "
-							+ DropComponentName, YesNo.Yes);
-					flag = false;
+					log(LogStatus.ERROR, "Could not click on the Detail Tab Link", YesNo.Yes);
+					result.add("Could not click on the Detail Tab Link");
 				}
 			} else {
-				log(LogStatus.ERROR,
-						"Not able to search on component so cannot drag and drop component " + DropComponentName,
-						YesNo.Yes);
-				flag = false;
+				log(LogStatus.ERROR, "Could not click on the Add Tab Button", YesNo.Yes);
+				result.add("Could not click on the Add Tab Button");
 			}
-			}
-			else
-			{
-				log(LogStatus.ERROR, "not able to click on details tab", YesNo.No);
-			}
-		} else {
-			log(LogStatus.ERROR,
-					"Cannot switch in edit page iframe cannot drag and drop component " + DropComponentName, YesNo.Yes);
-			flag = false;
-		}
-		switchToDefaultContent(driver);
-		return flag;
 
+			CommonLib.switchToDefaultContent(driver);
+
+		}
+
+		else {
+			log(LogStatus.ERROR, "Could not click on the Edit Page", YesNo.Yes);
+			result.add("Could not click on the Edit Page");
+
+		}
+
+		CommonLib.switchToDefaultContent(driver);
+		return result;
 	}
-	
+
 }

@@ -6,6 +6,7 @@ import static com.navatar.generic.CommonVariables.ToggleDeal1;
 import static com.navatar.generic.CommonVariables.tabObj4;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.ArrayList;
 
 import org.openqa.selenium.JavascriptExecutor;
@@ -457,9 +458,18 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	 * @return WebElement
 	 */
 	public WebElement getconvertToPortfolioMessageAfterNext(int timeOut) {
+
 		String xpath = "//h2[text()='Convert to Portfolio']/../following-sibling::*//article//span[contains(text(),'successfully')]/..";
-		WebElement ele = FindElement(driver, xpath, "convert to portfolio", action.SCROLLANDBOOLEAN, 10);
-		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
+
+		List<WebElement> listOfElements = FindElements(driver, xpath, "convert to portfolio").stream()
+				.filter(x -> x.isDisplayed()).collect(Collectors.toList());
+
+		if (listOfElements.size() > 0) {
+			return listOfElements.get(0);
+		} else {
+			return null;
+
+		}
 
 	}
 
@@ -799,7 +809,8 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 
 					}
 
-					else if (labelNames[i].equalsIgnoreCase("Platform Company") || labelNames[i].equalsIgnoreCase("Source Firm")
+					else if (labelNames[i].equalsIgnoreCase("Platform Company")
+							|| labelNames[i].equalsIgnoreCase("Source Firm")
 							|| labelNames[i].equalsIgnoreCase("Source Contact")) {
 						if (click(driver, FindElement(driver, "//*[text()='" + labelNames[i]
 								+ "']/following-sibling::div[@class='slds-form-element__control']//input[@type='text']",
@@ -925,9 +936,9 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 //				return false;
 //			}
 
-		} else {
-			log(LogStatus.ERROR, "Not able to click on the new button", YesNo.No);
-		}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on the new button", YesNo.No);
+			}
 		}
 		return flag;
 
@@ -1221,19 +1232,18 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 //				}
 //			}
 
-			if (!dealName.isEmpty() && dealName != null) {
+		if (!dealName.isEmpty() && dealName != null) {
 
-				if (CommonLib.sendKeys(driver, getPopupdealNameInput(30), dealName, "Deal name",
-						action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, dealName + " value has been passed in Deal Name", YesNo.No);
-				} else {
-					log(LogStatus.ERROR, dealName + " value is not passed in Deal Name", YesNo.No);
-					return false;
-				}
+			if (CommonLib.sendKeys(driver, getPopupdealNameInput(30), dealName, "Deal name", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, dealName + " value has been passed in Deal Name", YesNo.No);
 			} else {
-				log(LogStatus.ERROR, "Deal Name not Provided", YesNo.No);
+				log(LogStatus.ERROR, dealName + " value is not passed in Deal Name", YesNo.No);
 				return false;
 			}
+		} else {
+			log(LogStatus.ERROR, "Deal Name not Provided", YesNo.No);
+			return false;
+		}
 
 //			if (!companyName.isEmpty() && companyName != null) {
 //
@@ -1260,143 +1270,139 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 //				log(LogStatus.ERROR, "Company Name not Provided", YesNo.No);
 //				return false;
 //			}
-			if (!stage.isEmpty() && stage != null) {
+		if (!stage.isEmpty() && stage != null) {
 
-				if (CommonLib.dropDownHandle(driver, getpopupstageField(40), "//div[@class=\"select-options\"]//li/a",
-						"Stage field", stage)) {
-					log(LogStatus.INFO, stage + " value has been selected from stage field", YesNo.No);
+			if (CommonLib.dropDownHandle(driver, getpopupstageField(40), "//div[@class=\"select-options\"]//li/a",
+					"Stage field", stage)) {
+				log(LogStatus.INFO, stage + " value has been selected from stage field", YesNo.No);
 
-				} else {
-					log(LogStatus.ERROR, stage + " value is not selected from stage field", YesNo.No);
-					return false;
-				}
-			}
-
-			else {
-				log(LogStatus.ERROR, "Stage not Provided", YesNo.No);
+			} else {
+				log(LogStatus.ERROR, stage + " value is not selected from stage field", YesNo.No);
 				return false;
 			}
+		}
 
-			int loopCount = 0;
-			int status = 0;
-			if (labelNames != null && labelValue != null) {
-				for (int i = 0; i < labelNames.length; i++) {
+		else {
+			log(LogStatus.ERROR, "Stage not Provided", YesNo.No);
+			return false;
+		}
 
-					if (labelNames[i].equalsIgnoreCase("Our Role")
-							|| labelNames[i].equalsIgnoreCase("Reason for Decline")
-							|| labelNames[i].equalsIgnoreCase("Reason to Park")
-							|| labelNames[i].equalsIgnoreCase("Deal Type")
-							|| labelNames[i].equalsIgnoreCase("Management Meeting")) {
+		int loopCount = 0;
+		int status = 0;
+		if (labelNames != null && labelValue != null) {
+			for (int i = 0; i < labelNames.length; i++) {
 
-						String firmDropDownElements = "//*[text()='" + labelNames[i]
-								+ "']/..//button/../following-sibling::div//lightning-base-combobox-item";
-						if (CommonLib.dropDownHandle(driver, dropDownWithLabelName(labelNames[i], 20),
-								firmDropDownElements, labelNames[i] + "DropDown", labelValue[i])) {
-							log(LogStatus.INFO, labelNames[i] + " has been Selected to:  " + labelValue[i], YesNo.No);
-							status++;
+				if (labelNames[i].equalsIgnoreCase("Our Role") || labelNames[i].equalsIgnoreCase("Reason for Decline")
+						|| labelNames[i].equalsIgnoreCase("Reason to Park")
+						|| labelNames[i].equalsIgnoreCase("Deal Type")
+						|| labelNames[i].equalsIgnoreCase("Management Meeting")) {
 
-						} else {
-							sa.assertTrue(false, labelNames[i] + " has not been Selected to:  " + labelValue[i]);
-							log(LogStatus.ERROR, labelNames[i] + " has not been Selected to:  " + labelValue[i],
-									YesNo.Yes);
+					String firmDropDownElements = "//*[text()='" + labelNames[i]
+							+ "']/..//button/../following-sibling::div//lightning-base-combobox-item";
+					if (CommonLib.dropDownHandle(driver, dropDownWithLabelName(labelNames[i], 20), firmDropDownElements,
+							labelNames[i] + "DropDown", labelValue[i])) {
+						log(LogStatus.INFO, labelNames[i] + " has been Selected to:  " + labelValue[i], YesNo.No);
+						status++;
 
-						}
+					} else {
+						sa.assertTrue(false, labelNames[i] + " has not been Selected to:  " + labelValue[i]);
+						log(LogStatus.ERROR, labelNames[i] + " has not been Selected to:  " + labelValue[i], YesNo.Yes);
 
 					}
 
-					else if (labelNames[i].equalsIgnoreCase("Platform Company") || labelNames[i].equalsIgnoreCase("	")
-							|| labelNames[i].equalsIgnoreCase("Source Contact")) {
-						if (click(driver,
+				}
+
+				else if (labelNames[i].equalsIgnoreCase("Platform Company") || labelNames[i].equalsIgnoreCase("	")
+						|| labelNames[i].equalsIgnoreCase("Source Contact")) {
+					if (click(driver,
+							FindElement(driver, "//span[text()='" + labelNames[i] + "']/../..//input[@type='text']",
+									"picklist " + labelNames[i], action.SCROLLANDBOOLEAN, 10),
+							"picklist " + labelNames[i], action.SCROLLANDBOOLEAN)) {
+						if (sendKeys(driver,
 								FindElement(driver, "//span[text()='" + labelNames[i] + "']/../..//input[@type='text']",
 										"picklist " + labelNames[i], action.SCROLLANDBOOLEAN, 10),
-								"picklist " + labelNames[i], action.SCROLLANDBOOLEAN)) {
-							if (sendKeys(driver,
-									FindElement(driver,
-											"//span[text()='" + labelNames[i] + "']/../..//input[@type='text']",
-											"picklist " + labelNames[i], action.SCROLLANDBOOLEAN, 10),
-									labelValue[i], "Label Names", action.SCROLLANDBOOLEAN)) {
-								appLog.info(labelNames[i] + "  is present in list.");
-							}
-							ThreadSleep(3000);
+								labelValue[i], "Label Names", action.SCROLLANDBOOLEAN)) {
+							appLog.info(labelNames[i] + "  is present in list.");
+						}
+						ThreadSleep(3000);
 
-							if (click(driver, FindElement(driver,
+						if (click(driver, FindElement(driver,
 //											"//span[text()='" + labelValue[i]
 //													+ "']/ancestor::lightning-base-combobox-item",
-									"//*[text()='" + labelNames[i] + "']/..//*[@title='" + labelValue[i] + "']",
-									"Legal Name List", action.THROWEXCEPTION, 30),
-									labelNames[i] + "   :   Account Name", action.BOOLEAN)) {
-								appLog.info(labelNames[i] + "  is present in list.");
-								status++;
+								"//*[text()='" + labelNames[i] + "']/..//*[@title='" + labelValue[i] + "']",
+								"Legal Name List", action.THROWEXCEPTION, 30), labelNames[i] + "   :   Account Name",
+								action.BOOLEAN)) {
+							appLog.info(labelNames[i] + "  is present in list.");
+							status++;
 
-							} else {
-								appLog.error("Not able to select " + labelValue[i] + " in " + labelNames[i] + " field");
-								BaseLib.sa.assertTrue(false,
-										"Not able to select " + labelValue[i] + " in " + labelNames[i] + " field");
-
-							}
 						} else {
 							appLog.error("Not able to select " + labelValue[i] + " in " + labelNames[i] + " field");
 							BaseLib.sa.assertTrue(false,
 									"Not able to select " + labelValue[i] + " in " + labelNames[i] + " field");
 
 						}
-					}
-
-					else if (labelNames[i].equalsIgnoreCase("Date Received")
-							|| labelNames[i].equalsIgnoreCase("LOI Due Date")
-							|| labelNames[i].equalsIgnoreCase("NDA Signed Date")
-							|| labelNames[i].equalsIgnoreCase("Management Meeting Date")
-							|| labelNames[i].equalsIgnoreCase("Pipeline Data Date")
-							|| labelNames[i].equalsIgnoreCase("Last Stage Change Date")) {
-
-						if (CommonLib.sendKeys(driver, popupcalendarInputBox(labelNames[i], 30), labelValue[i],
-								labelValue[i] + " Input Box", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Date has been Selected  " + labelValue[i], YesNo.No);
-							status++;
-						} else {
-							sa.assertTrue(false, "Date has not been Selected  " + labelValue[i]);
-							log(LogStatus.ERROR, "Date has not been Selected  " + labelValue[i], YesNo.Yes);
-							return false;
-						}
+					} else {
+						appLog.error("Not able to select " + labelValue[i] + " in " + labelNames[i] + " field");
+						BaseLib.sa.assertTrue(false,
+								"Not able to select " + labelValue[i] + " in " + labelNames[i] + " field");
 
 					}
-
-					else if (labelNames[i].equalsIgnoreCase("Deal Description")
-							|| labelNames[i].equalsIgnoreCase("Pipeline Comments")) {
-
-						if (CommonLib.sendKeys(driver, textAreaBoxBasedOnLabelName(labelNames[i], 10), labelValue[i],
-								"textBoxBasedOnLabelName: " + labelNames[i], action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, labelValue[i] + " value has been passed in " + labelNames[i], YesNo.No);
-							status++;
-						} else {
-							log(LogStatus.ERROR, labelValue[i] + " value is not passed in " + labelNames[i], YesNo.No);
-							sa.assertTrue(false, labelValue[i] + " value is not passed in " + labelNames[i]);
-
-						}
-					}
-
-					else {
-
-						if (CommonLib.sendKeys(driver, textBoxBasedOnLabelName(labelNames[i], 10), labelValue[i],
-								"textBoxBasedOnLabelName: " + labelNames[i], action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, labelValue[i] + " value has been passed in " + labelNames[i], YesNo.No);
-							status++;
-						} else {
-							log(LogStatus.ERROR, labelValue[i] + " value is not passed in " + labelNames[i], YesNo.No);
-							sa.assertTrue(false, labelValue[i] + " value is not passed in " + labelNames[i]);
-
-						}
-					}
-
-					loopCount++;
 				}
 
+				else if (labelNames[i].equalsIgnoreCase("Date Received")
+						|| labelNames[i].equalsIgnoreCase("LOI Due Date")
+						|| labelNames[i].equalsIgnoreCase("NDA Signed Date")
+						|| labelNames[i].equalsIgnoreCase("Management Meeting Date")
+						|| labelNames[i].equalsIgnoreCase("Pipeline Data Date")
+						|| labelNames[i].equalsIgnoreCase("Last Stage Change Date")) {
+
+					if (CommonLib.sendKeys(driver, popupcalendarInputBox(labelNames[i], 30), labelValue[i],
+							labelValue[i] + " Input Box", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Date has been Selected  " + labelValue[i], YesNo.No);
+						status++;
+					} else {
+						sa.assertTrue(false, "Date has not been Selected  " + labelValue[i]);
+						log(LogStatus.ERROR, "Date has not been Selected  " + labelValue[i], YesNo.Yes);
+						return false;
+					}
+
+				}
+
+				else if (labelNames[i].equalsIgnoreCase("Deal Description")
+						|| labelNames[i].equalsIgnoreCase("Pipeline Comments")) {
+
+					if (CommonLib.sendKeys(driver, textAreaBoxBasedOnLabelName(labelNames[i], 10), labelValue[i],
+							"textBoxBasedOnLabelName: " + labelNames[i], action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, labelValue[i] + " value has been passed in " + labelNames[i], YesNo.No);
+						status++;
+					} else {
+						log(LogStatus.ERROR, labelValue[i] + " value is not passed in " + labelNames[i], YesNo.No);
+						sa.assertTrue(false, labelValue[i] + " value is not passed in " + labelNames[i]);
+
+					}
+				}
+
+				else {
+
+					if (CommonLib.sendKeys(driver, textBoxBasedOnLabelName(labelNames[i], 10), labelValue[i],
+							"textBoxBasedOnLabelName: " + labelNames[i], action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, labelValue[i] + " value has been passed in " + labelNames[i], YesNo.No);
+						status++;
+					} else {
+						log(LogStatus.ERROR, labelValue[i] + " value is not passed in " + labelNames[i], YesNo.No);
+						sa.assertTrue(false, labelValue[i] + " value is not passed in " + labelNames[i]);
+
+					}
+				}
+
+				loopCount++;
 			}
 
-			if (status == loopCount) {
-				if (CommonLib.click(driver, getpopupsaveButton(30), tabObj4 + " save button",
-						action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on save button", YesNo.No);
+		}
+
+		if (status == loopCount) {
+			if (CommonLib.click(driver, getpopupsaveButton(30), tabObj4 + " save button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on save button", YesNo.No);
 //
 //					String xPath = "//lightning-formatted-text[contains(text(),'" + dealName + "')]";
 //					ele = CommonLib.FindElement(driver, xPath, dealName, action.SCROLLANDBOOLEAN, 40);
@@ -1409,16 +1415,16 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 //						log(LogStatus.ERROR, dealName + " deal is not created", YesNo.No);
 //
 //					}
-				} else {
-					log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
-
-				}
-
 			} else {
-				CommonLib.click(driver, getNewFinancingPopupCancelIcon(30), " Cancel button", action.SCROLLANDBOOLEAN);
-				log(LogStatus.ERROR, "Clicked on Cancel Button", YesNo.No);
-				return false;
+				log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
+
 			}
+
+		} else {
+			CommonLib.click(driver, getNewFinancingPopupCancelIcon(30), " Cancel button", action.SCROLLANDBOOLEAN);
+			log(LogStatus.ERROR, "Clicked on Cancel Button", YesNo.No);
+			return false;
+		}
 
 //		} else {
 //			log(LogStatus.ERROR, "Not able to click on the new button", YesNo.No);
@@ -1427,8 +1433,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return flag;
 
 	}
-	
-	
+
 	
 	public boolean createDealFromNavigation(String dealName, String companyName)
 	{
@@ -1499,5 +1504,6 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		}
 		return false;
 	}
+
 
 }

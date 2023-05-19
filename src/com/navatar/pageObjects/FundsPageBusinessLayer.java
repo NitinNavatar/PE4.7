@@ -179,16 +179,15 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	public List<String> returnAllValuesInRelatedList(String environment, String mode, String relatedList) {
 		List<WebElement> ele = null;
 		List<String> s = new ArrayList<String>();
-
+		CommonLib.refresh(driver);
 		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
 			ele = FindElements(driver,
 					"//h3[text()='" + relatedList + "']/../../../../../following-sibling::div//th//a",
 					"related list all elements");
 		} else
-			ele = FindElements(driver, "//table[@data-aura-class='uiVirtualDataTable']/tbody/tr//th[1]//a",
-					"list of all elements");
+			ele = FindElements(driver, "//table//*[@data-label]//a//span", "list of all elements");
 
-		if (ele != null) {
+		if (ele.size() > 0) {
 			for (int i = 0; i < ele.size(); i++) {
 				s.add(ele.get(i).getText().trim());
 			}
@@ -431,8 +430,18 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 
 	public boolean FieldValueVerificationOnFundPage(String projectName, String labelName, String labelValue,
 			String date) {
+
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		String xpath = "";
 		WebElement ele = null;
+		if (BP.clicktabOnPage("Details")) {
+			log(LogStatus.PASS, "Clicked on SubTab: " + "Details", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Not able to click on SubTab: " + "Details", YesNo.No);
+			sa.assertTrue(false, "Not able to click on SubTab: " + "Details");
+
+		}
+
 		String finalLabelName = labelName.replace("_", " ");
 		if (labelName.contains(excelLabel.Target_Commitments.toString().replaceAll("_", " "))) {
 			labelName = FundPageFieldLabelText.Target_Commitments.toString();
@@ -785,7 +794,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 				if (click(driver, getDealStage(projectName, timeOut), "Deal Status : " + stage,
 						action.SCROLLANDBOOLEAN)) {
 					ThreadSleep(2000);
-					appLog.error("Clicked on Deal stage");
+					appLog.info("Clicked on Deal stage");
 
 					xpath = "//span[@title='" + stage + "']";
 					WebElement dealStageEle = FindElement(driver, xpath, stage, action.SCROLLANDBOOLEAN, timeOut);
@@ -855,7 +864,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 					}
 				}
 				if (click(driver, popUpSaveButton(30), "Save Button", action.SCROLLANDBOOLEAN)) {
-					appLog.error("Click on save Button");
+					appLog.info("Click on save Button");
 
 					ThreadSleep(3000);
 					String str = getText(driver, verifyCreatedItemOnPage(Header.Deal, dealName),
@@ -1462,7 +1471,6 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		}
 		return flag;
 	}
-	
 
 	/**
 	 * @author sahil bansal
@@ -1518,30 +1526,23 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		return flag;
 	}
 
-	
-	public boolean deleteFund(String projectName, String fundName,int timeOut)
-	{
-		boolean flag=false;
+	public boolean deleteFund(String projectName, String fundName, int timeOut) {
+		boolean flag = false;
 		if (clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Delete, 10)) {
 			ThreadSleep(2000);
-			if(clickUsingJavaScript(driver, getDeleteFundConfirmationMsg(20), "fund delete", action.SCROLLANDBOOLEAN))
-			{
+			if (clickUsingJavaScript(driver, getDeleteFundConfirmationMsg(20), "fund delete",
+					action.SCROLLANDBOOLEAN)) {
 				appLog.info("Fund has been deleted");
-				flag=true;
-			}
-			else
-			{
+				flag = true;
+			} else {
 				appLog.info("Fund is not deleted");
 			}
-		}
-		else
-		{
+		} else {
 			appLog.error("Not Able to Click on delete Button");
 		}
-		
+
 		return flag;
-		
-		
+
 	}
 
 }

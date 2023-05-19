@@ -1017,6 +1017,7 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 								AppListeners.appLog.info("Clicked on element: " + elementName);
 								return true;
 							} catch (Exception e1) {
+								
 
 							}
 						}

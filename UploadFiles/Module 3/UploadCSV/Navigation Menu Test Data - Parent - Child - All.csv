@@ -1,20 +1,20 @@
-Navigation Label,Navigation Type,Order,Parent,Action Object,Action Record Type,List View Object,List View Name,URL
-Home,New Interactions,5,,,,,,/lightning/page/home
-Contact,New Interactions,25,,Contact,,,,
-Fund,New Interactions,-5,,navpeII__Fund__c,,,,
-Fundraising,New Interactions,90,,navpeII__Fundraising__c,,,,
-Partnership,New Interactions,55,,navpeII__Partnership__c,,,,
-Commitment,New Interactions,45,,navpeII__Commitment__c,,,,
-Pipelines,New Interactions,35,, navpeII__Pipeline__c,,,,
-Reports,New Interactions,50,,,,,,/lightning/o/Report/home?queryScope=mru
-Company,New Interactions,15,Firms,Account,Company,,,
-Fund Manager,New Interactions,30,Firms,Account,Fund_Manager,,,
-Fund Managers Fund,New Interactions,10,Firms,Account,Fund_Manager_s_Fund,,,
-Individual Investor,New Interactions,40,Firms,Account,Individual_Investor,,,
-Institution,New Interactions,25,Firms,Account,Institution,,,
-Intermediary,New Interactions,4,Firms,Account,Intermediary,,,
-Limited Partner,New Interactions,45,Firms,Account,LimitedPartner,,,
-Consultant,New Interactions,50,Firms,Account,Advisor,,,
-Lender,New Interactions,55,Firms,Account,Lender,,,
-Call,New Interactions,1,,Task,,,,
-Task,New Interactions,3,,Task,,,,
+"Partnership New","Navigation Type","Order","Parent","Action Object","Action Record Type","List View Object","List View Name","URL"
+"Home","Create","5","","","","","","/lightning/page/home"
+"Contact","Create","60","","Contact","","","",""
+"Fund","Create","-5","","navpeII__Fund__c","","","",""
+"Fundraising","Create","90","","navpeII__Fundraising__c","","","",""
+"Partnership New","Create","","","navpeII__Partnership__c","","","",""
+"Commitment","Create","45","","navpeII__Commitment__c","","","",""
+"Pipelines","Create","35",""," navpeII__Pipeline__c","","","",""
+"Reports","Create","-10","","","","","","/lightning/o/Report/home?queryScope=mru"
+"Company","Create","15","Firm","Account","Company","","",""
+"Fund Manager","Create","42","Firm","Account","Fund_Manager","","",""
+"Fund Managers Fund","Create","10","Firm","Account","Fund_Manager_s_Fund","","",""
+"Individual Investor","Create","40","Firm","Account","Individual_Investor","","",""
+"Institution","Create","-10","Firm","Account","Institution","","",""
+"Intermediary","Create","4","Firm","Account","Intermediary","","",""
+"Limited Partner","Create","45","Firm","Account","LimitedPartner","","",""
+"Consultant","Create","50","Firm","Account","Advisor","","",""
+"Lender","Create","55","Firm","Account","Lender","","",""
+"Call","Create","1","","Task","","","",""
+"Task","Create","3","","Task","","","",""

@@ -40,7 +40,7 @@ public class ThemePage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "//textarea[@name=\"Description__c\"]")
+	@FindBy(xpath = "//textarea[contains(@name,\"Description__c\")]")
 	private WebElement themeDescription;
 
 	public WebElement themeDescription(int timeOut) {

@@ -805,4 +805,12 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, detailsTabFirstSDG, "Visibility", timeOut, "details tab SDG");
 	}
 	
+
+	@FindBy(xpath = "//button[@title=\"Close\"]")
+	private WebElement addCloseButton;
+
+	public WebElement addCloseButton(int timeOut) {
+		return isDisplayed(driver, addCloseButton, "Visibility", timeOut, "addCloseButton");
+	}
+
 }

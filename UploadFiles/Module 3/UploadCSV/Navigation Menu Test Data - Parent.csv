@@ -1,9 +1,9 @@
 Navigation Label,Navigation Type,Order,Parent,Action Object,Action Record Type,List View Object,List View Name,URL
-Home,New Interactions,5,,,,,,/lightning/page/home
-Contact,New Interactions,25,,Contact,,,,
-Fund,New Interactions,-5,,navpeII__Fund__c,,,,
-Fundraising,New Interactions,90,,navpeII__Fundraising__c,,,,
-Partnership,New Interactions,55,,navpeII__Partnership__c,,,,
-Commitment,New Interactions,45,,navpeII__Commitment__c,,,,
-Pipelines,New Interactions,35,, navpeII__Pipeline__c,,,,
-Reports,New Interactions,50,,,,,,/lightning/o/Report/home?queryScope=mru
+Home,Create,5,,,,,,/lightning/page/home
+Contact,Create,25,,Contact,,,,
+Fund,Create,-5,,navpeII__Fund__c,,,,
+Fundraising,Create,90,,navpeII__Fundraising__c,,,,
+Partnership,Create,55,,navpeII__Partnership__c,,,,
+Commitment,Create,45,,navpeII__Commitment__c,,,,
+Pipelines,Create,35,, navpeII__Pipeline__c,,,,
+Reports,Create,50,,,,,,/lightning/o/Report/home?queryScope=mru
