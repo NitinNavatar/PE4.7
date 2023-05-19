@@ -314,133 +314,81 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		boolean flag = false;
 		WebElement ele = null, dropComponentXpath = null, dropLocation = null;
 		if (switchToFrame(driver, 30, getEditPageFrame(projectName, 30))) {
-			String related = relatedTab.toString().replace("_", " ");
-			String relatedTabXpath = "//*[@role='tablist']//li//*[@title='" + related + "' or text()='" + related
-					+ "']";
-			ele = isDisplayed(driver,
-					FindElement(driver, relatedTabXpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, 10),
-					"visiblity", 10, relatedTab.toString());
-			if (ele != null) {
-				if (click(driver, ele, relatedTab.toString() + " tab xpath", action.BOOLEAN)) {
-					log(LogStatus.INFO, "Click on Sub Tab : " + RelatedTab.Investment, YesNo.No);
-					ThreadSleep(2000);
-					switchToDefaultContent(driver);
-					if (sendKeys(driver, getEditPageSeachTextBox(projectName, 10), DropComponentName,
-							DropComponentName + " component xpath", action.BOOLEAN)) {
-						log(LogStatus.INFO, "Enter component name in search box : " + DropComponentName, YesNo.No);
-						String xpath = "//span[@title='" + DropComponentName + "' or text()='" + DropComponentName
-								+ "']";
-						dropComponentXpath = isDisplayed(driver,
-								FindElement(driver, xpath, "Search Value : " + DropComponentName, action.BOOLEAN, 10),
-								"Visibility", 10, "Search Value : " + DropComponentName);
-						if (dropComponentXpath != null) {
-							// Actions builder = new Actions(driver);
-							// builder.clickAndHold(dropComponentXpath).build().perform();
-							switchToFrame(driver, 30, getEditPageFrame(projectName, 30));
-							String dropLocationXpath = "";
-							if (pageName.toString().equalsIgnoreCase(PageName.Object5Page.toString())) {
-								dropLocationXpath = "//*[@class='actualNode']//*[@role='tablist']";
-								dropLocation = FindElement(driver, dropLocationXpath, "header xpath", action.BOOLEAN,
-										10);
+
+			if (clickUsingJavaScript(driver, getAddComponent("",20), "Add component button", action.BOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on add component button", YesNo.No);
+				switchToDefaultContent(driver);
+				if (sendKeys(driver, getEditPageSeachTextBox(projectName, 10), DropComponentName,
+						DropComponentName + " component xpath", action.BOOLEAN)) {
+					log(LogStatus.INFO, "Enter component name in search box : " + DropComponentName, YesNo.No);
+					String xpath = "//span[@title='" + DropComponentName + "' or text()='" + DropComponentName
+							+ "']";
+					ele=FindElement(driver, xpath, DropComponentName+"  component", action.SCROLLANDBOOLEAN, 30);
+					if(clickUsingJavaScript(driver, ele, DropComponentName))
+					{
+						log(LogStatus.INFO, "Clicked on component : "+DropComponentName, YesNo.No);
+					ThreadSleep(500);
+					if (sendKeys(driver, getFieldSetNameTextBox(10), fieldSetApiName,
+							"field set name text box", action.BOOLEAN)) {
+						log(LogStatus.INFO, "field set name : " + fieldSetApiName, YesNo.No);
+
+						if (imageFieldName != null) {
+							if (sendKeys(driver, getImageFieldNameTextBox(10), imageFieldName,
+									"image field name text box", action.BOOLEAN)) {
+								log(LogStatus.INFO, "image field set name : " + imageFieldName,
+										YesNo.No);
+
 							} else {
-								dropLocationXpath = "(//a[@class='flexipageEditorContainerPlaceholder'])[1]";
-								dropLocation = FindElement(driver, dropLocationXpath, "header xpath", action.BOOLEAN,
-										10);
+								log(LogStatus.ERROR, "Not able to enter image field set name : "
+										+ imageFieldName + " so cannot add field set", YesNo.Yes);
+								clickUsingJavaScript(driver, getBackButton(10), "back button",
+										action.BOOLEAN);
+								return false;
 							}
-							if (dropLocation != null) {
-								switchToDefaultContent(driver);
-								Screen screen = new Screen();
-								try {
-									if (pageName.toString().equalsIgnoreCase(PageName.Object5Page.toString())) {
-										screen.dragDrop("\\AutoIT\\FIeldSet.PNG",
-												"\\AutoIT\\AddComponentHereOnMEPage.PNG");
-									} else {
-										// screen.dropAt("\\AutoIT\\AddComponentHere.PNG");
-										screen.dragDrop("\\AutoIT\\FIeldSet.PNG", "\\AutoIT\\AddComponentHere.PNG");
-
-									}
-
-									ThreadSleep(500);
-									if (sendKeys(driver, getFieldSetNameTextBox(10), fieldSetApiName,
-											"field set name text box", action.BOOLEAN)) {
-										log(LogStatus.INFO, "field set name : " + fieldSetApiName, YesNo.No);
-
-										if (imageFieldName != null) {
-											if (sendKeys(driver, getImageFieldNameTextBox(10), imageFieldName,
-													"image field name text box", action.BOOLEAN)) {
-												log(LogStatus.INFO, "image field set name : " + imageFieldName,
-														YesNo.No);
-
-											} else {
-												log(LogStatus.ERROR, "Not able to enter image field set name : "
-														+ imageFieldName + " so cannot add field set", YesNo.Yes);
-												clickUsingJavaScript(driver, getBackButton(10), "back button",
-														action.BOOLEAN);
-												return false;
-											}
-										}
-										if (click(driver, getCustomTabSaveBtn(projectName, 10), "save button",
-												action.BOOLEAN)) {
-											log(LogStatus.INFO, "clicked on save button", YesNo.No);
-											ThreadSleep(7000);
-											if (clickUsingJavaScript(driver, getBackButton(10), "back button",
-													action.BOOLEAN)) {
-												log(LogStatus.PASS, "clicked on back button", YesNo.No);
-												flag = true;
-											} else {
-												log(LogStatus.ERROR,
-														"Not able to click on back button so cannot back on page ",
-														YesNo.Yes);
-											}
-										} else {
-											log(LogStatus.ERROR,
-													"Not able to click on save button so cannot add field set : "
-															+ fieldSetApiName,
-													YesNo.No);
-										}
-									} else {
-										log(LogStatus.ERROR, "Not able to enter field set name : " + fieldSetApiName
-												+ " so cannot add field set", YesNo.Yes);
-									}
-								} catch (FindFailed e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-									log(LogStatus.ERROR, "Drop location is not visible", YesNo.Yes);
-									clickUsingJavaScript(driver, getBackButton(10), "back button", action.BOOLEAN);
-									return false;
-								}
+						}
+						if (click(driver, getCustomTabSaveBtn(projectName, 10), "save button",
+								action.BOOLEAN)) {
+							log(LogStatus.INFO, "clicked on save button", YesNo.No);
+							ThreadSleep(7000);
+							if (clickUsingJavaScript(driver, getBackButton(10), "back button",
+									action.BOOLEAN)) {
+								log(LogStatus.PASS, "clicked on back button", YesNo.No);
+								flag = true;
 							} else {
 								log(LogStatus.ERROR,
-										"Drop location is not visible in list so cannot drag and drop component "
-												+ DropComponentName + " in " + relatedTab.toString(),
+										"Not able to click on back button so cannot back on page ",
 										YesNo.Yes);
 							}
 						} else {
 							log(LogStatus.ERROR,
-									"Searched component is not visible in list so cannot drag and drop component "
-											+ DropComponentName + " in " + relatedTab.toString(),
-									YesNo.Yes);
+									"Not able to click on save button so cannot add field set : "
+											+ fieldSetApiName,
+											YesNo.No);
 						}
 					} else {
-						log(LogStatus.ERROR, "Not able to search on component so cannot drag and drop component "
-								+ DropComponentName + " in " + relatedTab.toString(), YesNo.Yes);
+						log(LogStatus.ERROR, "Not able to enter field set name : " + fieldSetApiName
+								+ " so cannot add field set", YesNo.Yes);
 					}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on component "+DropComponentName, YesNo.Yes);
+					}
+
 				} else {
-					log(LogStatus.ERROR, "Not able to click on related tab so cannot drag and drop component "
+					log(LogStatus.ERROR, "Not able to search on component so cannot drag and drop component "
 							+ DropComponentName + " in " + relatedTab.toString(), YesNo.Yes);
 				}
+
 			} else {
-				log(LogStatus.ERROR, "Related tab is not present so cannot drag and drop component " + DropComponentName
+				log(LogStatus.ERROR, "Cannot switch in edit page iframe cannot drag and drop component " + DropComponentName
 						+ " in " + relatedTab.toString(), YesNo.Yes);
 			}
-		} else {
-			log(LogStatus.ERROR, "Cannot switch in edit page iframe cannot drag and drop component " + DropComponentName
-					+ " in " + relatedTab.toString(), YesNo.Yes);
 		}
-		switchToDefaultContent(driver);
-		return flag;
+			switchToDefaultContent(driver);
+			return flag;
 
-	}
+		}
 
 	/**
 	 * @return the editPageSeachTextBox
@@ -870,7 +818,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 					for (WebElement column : columns) {
 						columnsText.add(column.getText());
 					}
-					System.out.println(columnsText);
+					
 					if (CommonLib.compareList(columnsText, fieldsInComponent)) {
 						log(LogStatus.INFO, "All Fields are Matched ", YesNo.No);
 
@@ -950,7 +898,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 				for (WebElement column : columns) {
 					columnsText.add(column.getText().toLowerCase());
 				}
-				System.out.println(columnsText);
+				
 				fieldsInComponent = fieldsInComponent.stream().map(x -> x.toLowerCase()).collect(Collectors.toList());
 				if (CommonLib.compareList(columnsText, fieldsInComponent)) {
 					log(LogStatus.INFO, "All Fields are Matched ", YesNo.No);
@@ -1977,4 +1925,102 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		}
 	}
 
+	
+	
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param pageName
+	 * @param DropComponentName
+	 * @param fieldValues
+	 * @param source
+	 * @param target
+	 * @return true if drap N drop successfully
+	 */
+	public boolean dragAndDropAccordian(String projectName, String DropComponentName,
+			String[] fieldValues, String source, String target) {
+		boolean flag = true;
+		Actions actions = new Actions(driver);
+		WebElement ele = null, dropComponentXpath = null, dropLocation = null;
+		if (switchToFrame(driver, 30, getEditPageFrame(projectName, 30))) {
+			log(LogStatus.INFO, "Click on Sub Tab : " + RelatedTab.Investment, YesNo.No);
+			ThreadSleep(12000);
+			if(clickUsingJavaScript(driver, getDetailsTab(20), "details tab"))
+			{
+				log(LogStatus.INFO, "clicked on details tab", YesNo.No);
+				
+				mouseOverOperation(driver, getDetailsTabFirstSDG(20));
+			
+			switchToDefaultContent(driver);
+			if (sendKeys(driver, getEditPageSeachTextBox(projectName, 10), DropComponentName,
+					DropComponentName + " component xpath", action.BOOLEAN)) {
+				log(LogStatus.INFO, "Enter component name in search box : " + DropComponentName, YesNo.No);
+				ThreadSleep(10000);
+				if (dragNDropUsingScreen(projectName, source, target, 10)) {
+
+					String value = "", field = "";
+					for (String fieldValue : fieldValues) {
+						value = fieldValue.split("<break>")[1];
+						field = fieldValue.split("<break>")[0];
+						if (sendKeys(driver, getFieldTextbox(projectName, field, 10), value, field, action.BOOLEAN)) {
+							log(LogStatus.INFO, "field : " + field + ", value: " + value, YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "Not able to enter : " + value + " on" + field, YesNo.Yes);
+							flag = false;
+						}
+					}
+					if (!isSelected(driver, getexpandedCheckbox(projectName, 10), "expanded")) {
+						if (click(driver, getexpandedCheckbox(projectName, 10), "expanded", action.BOOLEAN)) {
+
+							log(LogStatus.INFO, "expanded checkbox is now selected", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "could not click on expanded", YesNo.No);
+							flag = false;
+						}
+
+					} else {
+						log(LogStatus.INFO, "expanded checkbox is already selected", YesNo.No);
+
+					}
+					if (click(driver, getCustomTabSaveBtn(projectName, 10), "save button", action.BOOLEAN)) {
+						log(LogStatus.INFO, "clicked on save button", YesNo.No);
+						ThreadSleep(2000);
+						actions.moveToElement(getBackButton(10)).build().perform();
+						ThreadSleep(2000);
+						if (clickUsingJavaScript(driver, getBackButton(10), "back button", action.BOOLEAN)) {
+							log(LogStatus.PASS, "clicked on back button", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "Not able to click on back button so cannot back on page ", YesNo.Yes);
+							flag = false;
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on save button so cannot create accordion : ",
+								YesNo.No);
+					}
+				} else {
+					log(LogStatus.ERROR, "Drop location is not visible in list so cannot drag and drop component "
+							+ DropComponentName, YesNo.Yes);
+					flag = false;
+				}
+			} else {
+				log(LogStatus.ERROR,
+						"Not able to search on component so cannot drag and drop component " + DropComponentName,
+						YesNo.Yes);
+				flag = false;
+			}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "not able to click on details tab", YesNo.No);
+			}
+		} else {
+			log(LogStatus.ERROR,
+					"Cannot switch in edit page iframe cannot drag and drop component " + DropComponentName, YesNo.Yes);
+			flag = false;
+		}
+		switchToDefaultContent(driver);
+		return flag;
+
+	}
+	
 }

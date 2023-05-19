@@ -98,7 +98,8 @@ public class NavigationPage extends BasePageBusinessLayer {
 	 * @return the NavigationList
 	 */
 	public List<WebElement> getNavigationList(String projectName, int timeOut) {
-		return FindElements(driver, "//div[contains(@id,'treeview')]//ul//li/span[3]", "Navigation List item");
+		return FindElements(driver, "//div[contains(@id,'treeview')]//ul//li[contains(@class,'list-group-item node-treeview')]", "Navigation List item");
+		
 	}
 
 	@FindBy(xpath = "//div[contains(@class,'body_container')]//div//input[contains(@class,'slds-input')]")

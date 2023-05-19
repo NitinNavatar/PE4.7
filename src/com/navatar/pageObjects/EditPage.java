@@ -25,7 +25,7 @@ public class EditPage extends BasePageBusinessLayer {
 		// TODO Auto-generated constructor stub
 	}
 
-	@FindBy(xpath = "//iframe[@class='surfaceFrame']")
+	@FindBy(xpath = "//iframe[@name='surfaceFrame']")
 	private WebElement editPageFrame;
 
 	/**
@@ -791,4 +791,18 @@ public class EditPage extends BasePageBusinessLayer {
 
 	}
 
+	@FindBy(xpath = "//div[@role='tablist']//span[@class='title' and text()='Details']")
+	private WebElement detailsTab;
+
+	public WebElement getDetailsTab(int timeOut) {
+		return isDisplayed(driver, detailsTab, "Visibility", timeOut, "details tab");
+	}
+	
+	@FindBy(xpath = "(//h3[@class='slds-section__title  test-id__section-header-container'])[1]")
+	private WebElement detailsTabFirstSDG;
+
+	public WebElement getDetailsTabFirstSDG(int timeOut) {
+		return isDisplayed(driver, detailsTabFirstSDG, "Visibility", timeOut, "details tab SDG");
+	}
+	
 }

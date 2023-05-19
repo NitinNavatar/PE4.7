@@ -1229,9 +1229,9 @@ public class HomePage extends BasePageBusinessLayer {
 		return NavigationMenuitem;
 	}
 
-	public List<WebElement> sdgGridFirstRowData(SDGGridName sdgGridName) {
+	public List<WebElement> sdgGridFirstRowData(SDGGridName sdgGridName, String dealName) {
 		String xpath = "//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='" + sdgGridName
-				+ "']/../../../../../..//tbody//tr[1]//td[@data-aura-class='navpeIISdgDatagridCell']";
+				+ "']/../../../../../..//tbody//tr//td//a[text()='"+dealName+"']/ancestor::tr//td[@data-aura-class='navpeIISdgDatagridCell']";
 		return FindElements(driver, xpath, sdgGridName + " grid first row data");
 	}
 
@@ -1610,14 +1610,17 @@ public class HomePage extends BasePageBusinessLayer {
 	public boolean clickOnEditButtonOnSDGGridOnHomePage(String projectName, String dataName, String field,
 			int timeOut) {
 
+		
 		String xpath = "//*[text()='" + dataName + "']/ancestor::tr//td[contains(@data-label,'"
-				+ field.replaceAll("_", " ") + "')]";
+				+ field.replaceAll("_", " ") + "')]//lightning-formatted-number";
 
 		WebElement ele = FindElement(driver, xpath, "edit button for " + field, action.SCROLLANDBOOLEAN, timeOut);
+		scrollDownThroughWebelementInCenter(driver, ele, "investment size");
+		ThreadSleep(2000);
 		mouseOverOperation(driver, ele);
 		ThreadSleep(2000);
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("return arguments[0].setAttribute('Styles','display: inline-block;')", ele);
+	//	JavascriptExecutor js = (JavascriptExecutor) driver;
+	//	js.executeScript("return arguments[0].setAttribute('Styles','display: inline-block;')", ele);
 		ThreadSleep(2000);
 		ele = FindElement(
 				driver, "//*[text()='" + dataName + "']/ancestor::tr//td[contains(@data-label,'"

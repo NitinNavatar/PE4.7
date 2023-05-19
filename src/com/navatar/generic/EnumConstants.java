@@ -1069,7 +1069,14 @@ public static enum PermissionType{
 			}, Contact_Transfer,Change_Date,Change_Record_Type,Change_Priority,Change_Status,Edit_Comments,New_Attendee
 		 ,New, New_Referral,New_Financing,Create_Distribution, Create_Drawdown, New_Partnership, New_Fundraising, Bulk_Fundraising, New_Fundraising_Contact, 
 		 Create_Commitments, Clone,Change_Owner,Sharing,Sharing_Hierarchy, Printable_View,Send_Distribution_Notice,Send_Capital_Call_Notices,
-		 New_Affiliation,New_Client,New_Contact ,New_Commitment,New_Advisor,New_Deal,New_Investor, Add_Prospect, Email_Prospects, Send_Distribution_Notices, Send_Distribution_Notices_Button
+		 New_Affiliation,New_Client,New_Contact ,New_Commitment,New_Advisor,New_Deal,New_Investor, Add_Prospect, Email_Prospects, Send_Distribution_Notices, Send_Distribution_Notices_Button,
+		 convertToPortfolio
+		 {
+				@Override
+				public String toString() {
+					return "Convert to Portfolio";
+		 }
+		 }
 
 			};
 		

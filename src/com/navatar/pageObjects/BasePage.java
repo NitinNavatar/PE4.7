@@ -10159,6 +10159,13 @@ public abstract class BasePage extends BaseLib {
 	
 	
 	
+	@FindBy(xpath = "//h2[text()='Update Photo']/../..//button[text()='Save']")
+	private WebElement saveButton;
+
+	public WebElement getUploadPhotoSaveButton(int timeOut) {
+		return isDisplayed(driver, saveButton, "Visibility", timeOut, "UploadPhotoSaveButton");
+
+	}
 	
 	
 	

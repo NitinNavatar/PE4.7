@@ -3838,7 +3838,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						ThreadSleep(500);
 						ThreadSleep(1000);
 						if (!errorMsgCheck) {
-							if (click(driver, getRecordPageSettingSave(10), "Save button", action.BOOLEAN)) {
+							if (click(driver, getUploadPhotoSaveButton(10), "Save button", action.BOOLEAN)) {
 								log(LogStatus.PASS,
 										"clicked on save button and image is updtaed " + path + " on " + pageName,
 										YesNo.No);
@@ -3851,7 +3851,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									log(LogStatus.ERROR, "could not find id of img uploaded", YesNo.Yes);
 								}
 							} else {
-								log(LogStatus.PASS,
+								log(LogStatus.ERROR,
 										"Not able to click on save button and so cannot updtaed image from path " + path
 												+ " on " + pageName,
 										YesNo.No);
@@ -24452,7 +24452,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (temp.length() > 0) {
 			tempList.add(temp);
 		}
-		System.out.print(tempList);
+		
 
 		for (String splittedNote : tempList) {
 
