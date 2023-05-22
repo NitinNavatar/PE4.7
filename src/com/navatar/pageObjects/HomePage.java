@@ -2114,7 +2114,11 @@ public class HomePage extends BasePageBusinessLayer {
 
 	public List<WebElement> sdgGridAllHeadersLabelNameList(String sdgGridName) {
 
-		String xpath = "//a[text()='" + sdgGridName + "']/../../../../../following-sibling::div//table/thead/tr/th";
+		// Choose that Locators in which checkbox not included and Blank header not
+		// included
+
+		String xpath = "//a[text()='" + sdgGridName
+				+ "']/../../../../../following-sibling::div//table/thead/tr/th[contains(@class,'navpeIISdgSortableColumn')]";
 		List<WebElement> ele = FindElements(driver, xpath, "SDG grid header label name " + sdgGridName);
 
 		return ele;

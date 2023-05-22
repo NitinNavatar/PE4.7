@@ -2363,15 +2363,17 @@ public class Module2 extends BaseLib{
 									sa.assertTrue(false,"edit link is not clickable for watchlist" );
 								}
 								switchToDefaultContent(driver);
+								ThreadSleep(4000);
 								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
 								ele=sp.clickOnEditInFrontOfFieldValues(projectName, PageLabel.Under_Evaluation.toString());
-								if (click(driver, ele, "watchlist", action.BOOLEAN)) {
+								if (clickUsingJavaScript(driver, ele, "watchlist", action.BOOLEAN)) {
 									switchToDefaultContent(driver);
+									ThreadSleep(4000);
 									switchToFrame(driver, 10, sp.getstatusPicklistFrame(10));
 									
 									if (sendKeys(driver, sp.getFieldLabelTextBox1(10), PageLabel.RenameUnder_Evaluation.toString().replace("_", " "), "label", action.BOOLEAN)) {
 										
-										if (click(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN)) {
+										if (clickUsingJavaScript(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN)) {
 											log(LogStatus.INFO,"successfully saved rename watchlist",YesNo.No);	
 											
 										}else {
@@ -2387,6 +2389,7 @@ public class Module2 extends BaseLib{
 									sa.assertTrue(false,"edit link is not clickable for watchlist" );
 								}
 								switchToDefaultContent(driver);
+								ThreadSleep(4000);
 								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
 								ele=sp.clickOnEditInFrontOfFieldValues(projectName, PageLabel.RenameUnder_Evaluation.toString());
 								WebElement ele1=null;
@@ -2509,6 +2512,7 @@ public class Module2 extends BaseLib{
 								ThreadSleep(3000);
 								if (click(driver, ele, "watchlist", action.BOOLEAN)) {
 									switchToDefaultContent(driver);
+									ThreadSleep(4000);
 									switchToFrame(driver, 10, sp.getstatusPicklistFrame(10));
 									if (sendKeys(driver, sp.getFieldLabelTextBox1(10), PageLabel.Watchlist.toString(), "label", action.BOOLEAN)) {
 										
@@ -2528,10 +2532,12 @@ public class Module2 extends BaseLib{
 									sa.assertTrue(false,"edit link is not clickable for watchlist" );
 								}
 								switchToDefaultContent(driver);
+								ThreadSleep(4000);
 								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
 								ele=sp.clickOnEditInFrontOfFieldValues(projectName, PageLabel.RenameUnder_Evaluation.toString());
 								if (click(driver, ele, "watchlist", action.BOOLEAN)) {
 									switchToDefaultContent(driver);
+									ThreadSleep(4000);
 									switchToFrame(driver, 10, sp.getstatusPicklistFrame(10));
 									
 									if (sendKeys(driver, sp.getFieldLabelTextBox1(10), PageLabel.Under_Evaluation.toString().replace("_", " "), "label", action.BOOLEAN)) {
@@ -2552,6 +2558,7 @@ public class Module2 extends BaseLib{
 									sa.assertTrue(false,"edit link is not clickable for watchlist" );
 								}
 								switchToDefaultContent(driver);
+								ThreadSleep(4000);
 								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
 								ele=sp.clickOnEditInFrontOfFieldValues(projectName, PageLabel.Under_Evaluation.toString());
 								WebElement ele1=null;
@@ -4556,6 +4563,7 @@ public class Module2 extends BaseLib{
 							if (sp.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
 								for (int i = 0;i<newAndOldStage.length;i++) {
 									switchToDefaultContent(driver);
+									ThreadSleep(4000);
 									switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
 									WebElement ele=sp.clickOnEditInFrontOfFieldValues(projectName, newAndOldStage[i][0]);
 									if (click(driver, ele, "watchlist", action.BOOLEAN)) {
@@ -4583,6 +4591,7 @@ public class Module2 extends BaseLib{
 								}
 								ThreadSleep(3000);
 								switchToDefaultContent(driver);
+								ThreadSleep(4000);
 								switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
 								WebElement ele=sp.clickOnEditInFrontOfFieldValues(projectName, newAndOldStage[0][1]);
 								WebElement ele1=null;
@@ -5279,6 +5288,7 @@ public class Module2 extends BaseLib{
 							if (sp.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
 								for (int i = 0;i<newAndOldStage.length;i++) {
 									switchToDefaultContent(driver);
+									ThreadSleep(4000);
 									switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
 									ThreadSleep(3000);
 									WebElement ele=sp.clickOnEditInFrontOfFieldValues(projectName, newAndOldStage[i][0]);
@@ -5304,6 +5314,7 @@ public class Module2 extends BaseLib{
 								}
 								ThreadSleep(5000);
 								switchToDefaultContent(driver);
+								ThreadSleep(4000);
 								switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
 								WebElement ele=sp.clickOnEditInFrontOfFieldValues(projectName, newAndOldStage[0][1]);
 								WebElement ele1=null;
