@@ -2748,6 +2748,25 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 *              on page and passed
 	 */
 	public boolean verifyDate(String dateToCheck, String valueOnPage) {
+		
+		String[] splittedDate = dateToCheck.split("/");
+		char dayMonth = splittedDate[0].charAt(0);
+		char day = splittedDate[1].charAt(0);
+		String month;
+		if (dayMonth == '0') {
+			month = splittedDate[0].replaceAll("0", "");
+		} else {
+			month = splittedDate[0];
+		}
+		String finalDay;
+		if (day == '0') {
+			finalDay = splittedDate[1].replaceAll("0", "");
+		} else {
+			finalDay = splittedDate[1];
+		}
+
+		dateToCheck = month + "/" + finalDay + "/" + splittedDate[2];
+		
 		int size1 = valueOnPage.split("/").length;
 		int size2 = 0;
 		if (dateToCheck.contains(".")) {
@@ -2765,6 +2784,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				values = dateToCheck.split("/");
 
 			}
+			
+
 			appLog.info("Excel Date : " + dateToCheck);
 			appLog.info("Page Date : " + valueOnPage);
 			if (dates[0].contains(values[0]) && dates[1].contains(values[1])
@@ -3844,7 +3865,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						ThreadSleep(500);
 						ThreadSleep(1000);
 						if (!errorMsgCheck) {
-							if (click(driver, getRecordPageSettingSave(10), "Save button", action.BOOLEAN)) {
+							if (click(driver, getUploadPhotoSaveButton(10), "Save button", action.BOOLEAN)) {
 								log(LogStatus.PASS,
 										"clicked on save button and image is updtaed " + path + " on " + pageName,
 										YesNo.No);
@@ -3857,7 +3878,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									log(LogStatus.ERROR, "could not find id of img uploaded", YesNo.Yes);
 								}
 							} else {
-								log(LogStatus.PASS,
+								log(LogStatus.ERROR,
 										"Not able to click on save button and so cannot updtaed image from path " + path
 												+ " on " + pageName,
 										YesNo.No);
@@ -24470,7 +24491,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (temp.length() > 0) {
 			tempList.add(temp);
 		}
-		System.out.print(tempList);
+		
 
 		for (String splittedNote : tempList) {
 
