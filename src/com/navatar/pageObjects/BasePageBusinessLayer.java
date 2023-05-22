@@ -50,6 +50,7 @@ import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -4706,7 +4707,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				ThreadSleep(3000);
 				ThreadSleep(5000);
 			} else {
-				appLog.error("Not able to Click on List View: "+viewList);
+				appLog.error("Not able to Click on List View: " + viewList);
 			}
 		} else {
 			appLog.error("Not able to select on Select View List : " + viewList);
@@ -9040,7 +9041,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 */
 
 	public void verifyColumnAscendingDescendingOrder(String sdgGridName, List<String> columnNames,
-			List<String> dateColumns, List<String> amountColumns, String FirstColumnAscYesOrNoByDefault) {
+			List<String> dateColumns, List<String> amountColumns, List<String> pickListColumnAndValues,
+			String FirstColumnAscYesOrNoByDefault) {
 
 		List<WebElement> headerList = sdgGridAllHeadersLabelNameList(sdgGridName);
 		List<String> columnDataText = headerList.stream().map(s -> s.getText()).collect(Collectors.toList()).stream()
@@ -9071,17 +9073,73 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (!dateColumns.contains(columnName)) {
 
 						if (!amountColumns.contains(columnName)) {
+							if (!pickListColumnAndValues.contains(columnName)) {
 
-							if (CommonLib.checkSorting(driver, SortOrder.Assecending,
-									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
-								log(LogStatus.PASS, "Verified " + SortOrder.Assecending + " Sorting on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								if (CommonLib.checkSorting(driver, SortOrder.Assecending,
+										sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+									log(LogStatus.PASS, "Verified " + SortOrder.Assecending + " Sorting on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								} else {
+									log(LogStatus.FAIL, SortOrder.Assecending + " Sorting not working on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+									sa.assertTrue(false, SortOrder.Assecending + " Sorting not working on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName);
+								}
 							} else {
-								log(LogStatus.FAIL, SortOrder.Assecending + " Sorting not working on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
-								sa.assertTrue(false, SortOrder.Assecending + " Sorting not working on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName);
+
+								for (String pickListColumnAndValue : pickListColumnAndValues) {
+									String[] pickListColumnAndValueArray = pickListColumnAndValue.split("<Section>");
+
+									String[] values = pickListColumnAndValueArray[1].split("<break>");
+
+									List<String> expectedPicklistColumnData = new ArrayList<String>();
+									List<String> actualPicklistColumnData = new ArrayList<String>();
+									List<String> customOrderOfPicklistColumnData = new ArrayList<String>();
+									expectedPicklistColumnData = actualPicklistColumnData;
+
+									List<WebElement> actualPicklistColumnDataWebElements = sdgGridColumnsDataList(
+											sdgGridName.toString(), columnIndex + 1);
+									actualPicklistColumnData = actualPicklistColumnDataWebElements.stream()
+											.map(pickList -> pickList.getText()).collect(Collectors.toList());
+
+									customOrderOfPicklistColumnData = Arrays.asList(values);
+									Collections.sort(expectedPicklistColumnData,
+											Comparator.comparingInt(customOrderOfPicklistColumnData::indexOf));
+
+									if (actualPicklistColumnData.size() > 0)
+
+									{
+										if (expectedPicklistColumnData.equals(actualPicklistColumnData)) {
+											log(LogStatus.PASS,
+													"Verified " + SortOrder.Assecending + " Sorting on SDG: "
+															+ sdgGridName.toString() + " for Column " + columnName,
+													YesNo.No);
+										} else {
+											log(LogStatus.FAIL,
+													SortOrder.Assecending + " Sorting not working on SDG: "
+															+ sdgGridName.toString() + " for Column " + columnName,
+													YesNo.No);
+											sa.assertTrue(false, SortOrder.Assecending + " Sorting not working on SDG: "
+													+ sdgGridName.toString() + " for Column " + columnName);
+										}
+									} else {
+
+										log(LogStatus.FAIL,
+												"Not Able to Check Sorting of type: " + SortOrder.Assecending
+														+ " on SDG: " + sdgGridName.toString() + " for Column "
+														+ columnName
+														+ " as either there is no data or locator has been changed",
+												YesNo.No);
+										sa.assertTrue(false,
+												"Not Able to Check Sorting of type: " + SortOrder.Assecending
+														+ " on SDG: " + sdgGridName.toString() + " for Column "
+														+ columnName
+														+ " as either there is no data or locator has been changed");
+									}
+
+								}
 							}
+
 						} else {
 
 							List<Integer> expectedAmount = new ArrayList<Integer>();
@@ -9156,16 +9214,70 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (!dateColumns.contains(columnName)) {
 						if (!amountColumns.contains(columnName)) {
 
-							if (CommonLib.checkSorting(driver, SortOrder.Decending,
-									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
-								log(LogStatus.PASS, "Verified " + SortOrder.Decending + " Sorting on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+							if (!pickListColumnAndValues.contains(columnName)) {
+
+								if (CommonLib.checkSorting(driver, SortOrder.Decending,
+										sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+									log(LogStatus.PASS, "Verified " + SortOrder.Decending + " Sorting on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								} else {
+									log(LogStatus.FAIL, SortOrder.Decending + " Sorting not working on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+									sa.assertTrue(false, SortOrder.Decending + " Sorting not working on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName);
+								}
+
 							} else {
-								log(LogStatus.FAIL, SortOrder.Decending + " Sorting not working on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
-								sa.assertTrue(false, SortOrder.Decending + " Sorting not working on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName);
+
+								for (String pickListColumnAndValue : pickListColumnAndValues) {
+									String[] pickListColumnAndValueArray = pickListColumnAndValue.split("<Section>");
+
+									String[] values = pickListColumnAndValueArray[1].split("<break>");
+
+									List<String> expectedPicklistColumnData = new ArrayList<String>();
+									List<String> actualPicklistColumnData = new ArrayList<String>();
+									List<String> customOrderOfPicklistColumnData = new ArrayList<String>();
+									expectedPicklistColumnData = actualPicklistColumnData;
+
+									List<WebElement> actualPicklistColumnDataWebElements = sdgGridColumnsDataList(
+											sdgGridName.toString(), columnIndex + 1);
+									actualPicklistColumnData = actualPicklistColumnDataWebElements.stream()
+											.map(pickList -> pickList.getText()).collect(Collectors.toList());
+
+									customOrderOfPicklistColumnData = Arrays.asList(values);
+									Collections.reverse(customOrderOfPicklistColumnData);
+									Collections.sort(expectedPicklistColumnData,
+											Comparator.comparingInt(customOrderOfPicklistColumnData::indexOf));
+
+									if (actualPicklistColumnData.size() > 0)
+
+									{
+										if (expectedPicklistColumnData.equals(actualPicklistColumnData)) {
+											log(LogStatus.PASS,
+													"Verified " + SortOrder.Decending + " Sorting on SDG: "
+															+ sdgGridName.toString() + " for Column " + columnName,
+													YesNo.No);
+										} else {
+											log(LogStatus.FAIL,
+													SortOrder.Decending + " Sorting not working on SDG: "
+															+ sdgGridName.toString() + " for Column " + columnName,
+													YesNo.No);
+											sa.assertTrue(false, SortOrder.Decending + " Sorting not working on SDG: "
+													+ sdgGridName.toString() + " for Column " + columnName);
+										}
+									} else {
+
+										log(LogStatus.FAIL, "Not Able to Check Sorting of type: " + SortOrder.Decending
+												+ " on SDG: " + sdgGridName.toString() + " for Column " + columnName
+												+ " as either there is no data or locator has been changed", YesNo.No);
+										sa.assertTrue(false, "Not Able to Check Sorting of type: " + SortOrder.Decending
+												+ " on SDG: " + sdgGridName.toString() + " for Column " + columnName
+												+ " as either there is no data or locator has been changed");
+									}
+
+								}
 							}
+
 						} else {
 
 							List<Integer> expectedAmount = new ArrayList<Integer>();

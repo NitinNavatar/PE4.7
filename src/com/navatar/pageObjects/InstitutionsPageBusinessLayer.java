@@ -310,7 +310,8 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 			for (String[] commitmentRowData : commitmentRowRecord) {
 				for (int i = 0; i < fundNamelist.size(); i++) {
 					String fund = fundNamelist.get(i).getText().trim();
-					String amount = commitmentAmountList.get(i).getText().trim();
+					String amount = Integer
+							.toString(Integer.parseInt(commitmentAmountList.get(i).getText().trim()) / 1000000);
 					String lp = LPList.get(i).getText().trim();
 
 					String CommitAmount = convertNumberAccordingToFormatWithCurrencySymbol(commitmentRowData[1],

@@ -105,13 +105,13 @@ public class BaseLib extends AppListeners {
 	@BeforeClass
 	public void config(String browserName){
 		if (browserName.equalsIgnoreCase("Chrome")) {
-			System.setProperty("webdriver.chrome.driver",
-					System.getProperty("user.dir") + "\\exefiles\\chromedriver.exe");
-			//WebDriverManager.chromedriver().setup();
+//			System.setProperty("webdriver.chrome.driver",
+//					System.getProperty("user.dir") + "\\exefiles\\chromedriver.exe");
+			WebDriverManager.chromedriver().setup();
 			ChromeOptions options = new ChromeOptions();
 			String OsName= System.getProperty("os.name");
 
-			options.setBinary("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
+//			options.setBinary("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
 			options.addArguments("disable-infobars");
 			options.addArguments("--disable-notifications");
 			options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));

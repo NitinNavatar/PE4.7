@@ -7561,7 +7561,7 @@ public class OldSmokeTestCases extends BaseLib {
 					ThreadSleep(2000);
 
 					// Deal Information 2nd
-					String expectedResult = "Company" + "," + "Fund Manager" + "," + "Fund Manager�s Fund" + ","
+					String expectedResult = "Company" + "," + "Fund Manager" + "," + "Fund Manager’s Fund" + ","
 							+ "Individual Investor" + "," + "Institution" + "," + "Limited Partner";
 					checkBox = nspbl.getEnableCheckBoxforNavatarSetUpSideMenuTab(environment, mode,
 							NavatarSetupSideMenuTab.CommitmentCreation, EditViewMode.Edit,

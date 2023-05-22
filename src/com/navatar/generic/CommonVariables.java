@@ -741,16 +741,16 @@ public class CommonVariables {
 
 
 	//Object Name 
-	public static String M9FC_1_ObjectName,M9FC_2_ObjectName,M9FC_3_ObjectName,M9FC_4_ObjectName,M9FC_5_ObjectName,M9FC_6_ObjectName,M9FC_7_ObjectName,M9FC_8_ObjectName,M9FC_9_ObjectName,M9FC_10_ObjectName,M9FC_11_ObjectName,M9FC_12_ObjectName;
+	public static String M9FC_1_ObjectName,M9FC_2_ObjectName,M9FC_3_ObjectName,M9FC_4_ObjectName,M9FC_5_ObjectName,M9FC_6_ObjectName,M9FC_7_ObjectName,M9FC_8_ObjectName,M9FC_9_ObjectName,M9FC_10_ObjectName,M9FC_11_ObjectName,M9FC_12_ObjectName,M9FC_13_ObjectName;
 
 	//Field Data Type
-	public static String M9FC_1_FieldType,M9FC_2_FieldType,M9FC_3_FieldType,M9FC_4_FieldType,M9FC_5_FieldType,M9FC_6_FieldType,M9FC_7_FieldType,M9FC_8_FieldType,M9FC_9_FieldType,M9FC_10_FieldType,M9FC_11_FieldType,M9FC_12_FieldType;
+	public static String M9FC_1_FieldType,M9FC_2_FieldType,M9FC_3_FieldType,M9FC_4_FieldType,M9FC_5_FieldType,M9FC_6_FieldType,M9FC_7_FieldType,M9FC_8_FieldType,M9FC_9_FieldType,M9FC_10_FieldType,M9FC_11_FieldType,M9FC_12_FieldType,M9FC_13_FieldType;
 
 	//Field Label
-	public static String M9FC_1_FieldLabel,M9FC_2_FieldLabel,M9FC_3_FieldLabel,M9FC_4_FieldLabel,M9FC_5_FieldLabel,M9FC_6_FieldLabel,M9FC_7_FieldLabel,M9FC_8_FieldLabel,M9FC_9_FieldLabel,M9FC_10_FieldLabel,M9FC_11_FieldLabel,M9FC_12_FieldLabel;
+	public static String M9FC_1_FieldLabel,M9FC_2_FieldLabel,M9FC_3_FieldLabel,M9FC_4_FieldLabel,M9FC_5_FieldLabel,M9FC_6_FieldLabel,M9FC_7_FieldLabel,M9FC_8_FieldLabel,M9FC_9_FieldLabel,M9FC_10_FieldLabel,M9FC_11_FieldLabel,M9FC_12_FieldLabel,M9FC_13_FieldLabel;
 
 	//Field Values
-	public static String M9FC_1_FieldValues,M9FC_2_FieldValues,M9FC_3_FieldValues,M9FC_4_FieldValues,M9FC_5_FieldValues,M9FC_6_FieldValues,M9FC_7_FieldValues,M9FC_8_FieldValues,M9FC_9_FieldValues,M9FC_10_FieldValues,M9FC_11_FieldValues,M9FC_12_FieldValues;
+	public static String M9FC_1_FieldValues,M9FC_2_FieldValues,M9FC_3_FieldValues,M9FC_4_FieldValues,M9FC_5_FieldValues,M9FC_6_FieldValues,M9FC_7_FieldValues,M9FC_8_FieldValues,M9FC_9_FieldValues,M9FC_10_FieldValues,M9FC_11_FieldValues,M9FC_12_FieldValues,M9FC_13_FieldValues;
 
 
 
@@ -5223,6 +5223,7 @@ public class CommonVariables {
 						M9FC_10_ObjectName=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M9Field10", excelLabel.Object_Name);
 						M9FC_11_ObjectName=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M9Field11", excelLabel.Object_Name);
 						M9FC_12_ObjectName=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M9Field12", excelLabel.Object_Name);
+						M9FC_13_ObjectName=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M9Field13", excelLabel.Object_Name);
 
 
 
@@ -5239,6 +5240,7 @@ public class CommonVariables {
 						M9FC_10_FieldType=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M9Field10", excelLabel.Field_Type);
 						M9FC_11_FieldType=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M9Field11", excelLabel.Field_Type);
 						M9FC_12_FieldType=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M9Field12", excelLabel.Field_Type);
+						M9FC_13_FieldType=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M9Field13", excelLabel.Field_Type);
 
 
 						//Field Label
@@ -5254,6 +5256,7 @@ public class CommonVariables {
 						M9FC_10_FieldLabel=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M9Field10", excelLabel.Field_Label);
 						M9FC_11_FieldLabel=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M9Field11", excelLabel.Field_Label);
 						M9FC_12_FieldLabel=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M9Field12", excelLabel.Field_Label);
+						M9FC_13_FieldLabel=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M9Field13", excelLabel.Field_Label);
 
 
 						//Field Values
@@ -5269,6 +5272,8 @@ public class CommonVariables {
 						M9FC_10_FieldValues=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M9Field10", excelLabel.Related_To);
 						M9FC_11_FieldValues=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M9Field11", excelLabel.Related_To);
 						M9FC_12_FieldValues=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M9Field12", excelLabel.Length);
+						M9FC_13_FieldValues=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M9Field13", excelLabel.Length);
+						
 
 						// Sheet Name: ListView
 						// Member
