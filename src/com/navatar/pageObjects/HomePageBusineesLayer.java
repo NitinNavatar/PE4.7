@@ -1198,8 +1198,8 @@ public class HomePageBusineesLayer extends HomePage {
 	public boolean clickOnTemplateForReportOnBulkEmail(String environment, String mode, String reportName,
 			String templateName) {
 		WebElement ele;
-		String xpath = "//span[text()='" + templateName + "']/ancestor::ul//span[contains(@id,'extd')][text()='"
-				+ reportName + "']";
+		String xpath = "//span[text()='" + reportName + "']/ancestor::ul//span[contains(@id,'extd')][text()='"
+				+ templateName + "']";
 		ele = FindElement(driver, xpath, reportName + " : " + templateName, action.SCROLLANDBOOLEAN, 10);
 		ThreadSleep(2000);
 		if (clickUsingJavaScript(driver, ele, reportName + " : " + templateName, action.SCROLLANDBOOLEAN)) {

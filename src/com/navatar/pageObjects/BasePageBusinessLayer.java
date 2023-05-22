@@ -2721,10 +2721,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		} else if (projectName.contains(ProjectName.PEEdge.toString()) && PageLabel.Account_Name.equals(pageLabel)) {
 			label = "Firm";
 		}
+		
 
 		WebElement ele1 = getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 		click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
-		ThreadSleep(2000);
+		ThreadSleep(5000);
 		xpath = "//span[text()='" + label + "']/../following-sibling::div//*[text()='" + labelValue + "']";
 
 		ele = FindElement(driver, xpath, label + " with Value " + labelValue, action.SCROLLANDBOOLEAN, 5);
@@ -2748,6 +2749,25 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 *              on page and passed
 	 */
 	public boolean verifyDate(String dateToCheck, String valueOnPage) {
+		
+		String[] splittedDate = dateToCheck.split("/");
+		char dayMonth = splittedDate[0].charAt(0);
+		char day = splittedDate[1].charAt(0);
+		String month;
+		if (dayMonth == '0') {
+			month = splittedDate[0].replaceAll("0", "");
+		} else {
+			month = splittedDate[0];
+		}
+		String finalDay;
+		if (day == '0') {
+			finalDay = splittedDate[1].replaceAll("0", "");
+		} else {
+			finalDay = splittedDate[1];
+		}
+
+		dateToCheck = month + "/" + finalDay + "/" + splittedDate[2];
+		
 		int size1 = valueOnPage.split("/").length;
 		int size2 = 0;
 		if (dateToCheck.contains(".")) {
@@ -2765,6 +2785,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				values = dateToCheck.split("/");
 
 			}
+			
+
 			appLog.info("Excel Date : " + dateToCheck);
 			appLog.info("Page Date : " + valueOnPage);
 			if (dates[0].contains(values[0]) && dates[1].contains(values[1])
@@ -3844,7 +3866,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						ThreadSleep(500);
 						ThreadSleep(1000);
 						if (!errorMsgCheck) {
-							if (click(driver, getRecordPageSettingSave(10), "Save button", action.BOOLEAN)) {
+							if (click(driver, getUploadPhotoSaveButton(10), "Save button", action.BOOLEAN)) {
 								log(LogStatus.PASS,
 										"clicked on save button and image is updtaed " + path + " on " + pageName,
 										YesNo.No);
@@ -3857,7 +3879,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									log(LogStatus.ERROR, "could not find id of img uploaded", YesNo.Yes);
 								}
 							} else {
-								log(LogStatus.PASS,
+								log(LogStatus.ERROR,
 										"Not able to click on save button and so cannot updtaed image from path " + path
 												+ " on " + pageName,
 										YesNo.No);
@@ -4846,9 +4868,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 */
 	public boolean restoreValueFromRecycleBin(String projectName, String restoreItem) {
 		boolean flag = false;
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TabName tabName = TabName.RecycleBinTab;
+		String recycleTab = lp.getTabName(projectName, TabName.RecycleBinTab);
 		WebElement ele;
-		if (clickOnTab(projectName, tabName)) {
+		if (lp.openAppFromAppLauchner(60, recycleTab)) {
 			log(LogStatus.INFO, "Clicked on Tab : " + tabName + " For : " + restoreItem, YesNo.No);
 			ThreadSleep(1000);
 			clickOnAlreadyCreatedItem(projectName, tabName, restoreItem, 20);
@@ -12006,7 +12030,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							} else {
 								log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
 								sa.assertTrue(false, "Not able to close the Note popup");
-								log(LogStatus.ERROR, "Activity timeline record is not created", YesNo.No);
+								log(LogStatus.ERROR, "								d", YesNo.No);
 								return false;
 							}
 						} else {
@@ -24579,7 +24603,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (temp.length() > 0) {
 			tempList.add(temp);
 		}
-		System.out.print(tempList);
+		
 
 		for (String splittedNote : tempList) {
 

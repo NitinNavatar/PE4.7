@@ -352,4 +352,65 @@ public class DealPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, replacevaluewithNullforstage, "Visibility", timeOut, "replacevaluewithNullforstage");
 	}
 
+	
+	@FindBy(xpath = "//h2[text()='New Deal']/../..//label[text()='Deal Name']/..//input")
+	private WebElement dealNameInputFromPopup;
+
+	public WebElement getDealNameInputFromPopup( int timeOut) {
+		return isDisplayed(driver, dealNameInputFromPopup, "Visibility", timeOut, "Deal Name");
+	}
+	
+	
+	@FindBy(xpath = "//button[text()='Yes']")
+	private WebElement yesButton;
+
+	public WebElement getYesButton(int timeOut) {
+		return isDisplayed(driver, yesButton, "Visibility", timeOut, "Yes Button");
+	}
+	
+	@FindBy(xpath = "//h2[text()='New Deal']/../..//label[text()='Company Name']/..//input[@type='search']")
+	private WebElement companyNameSearch;
+
+	public WebElement getCompanyNameSearch(int timeOut) {
+		return isDisplayed(driver, companyNameSearch, "Visibility", timeOut, "Companyname search");
+	}
+	
+	
+	public WebElement getCompanyNameSearch(String companyName, int timeOut) {
+		String xpath = "//h2[text()='New Deal']/../..//label[text()='Company Name']/..//ul//li[@role='listitem' and text()='"+companyName+"']";
+
+		try {
+			return FindElement(driver, xpath, "company name : " + companyName, action.SCROLLANDBOOLEAN,
+					timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "company name : " + companyName, action.SCROLLANDBOOLEAN,
+					timeOut);
+		}
+	}
+
+	
+	@FindBy(xpath = "//span[contains(@class,'toastMessage')]")
+	private WebElement createdConfirmationMsg;
+
+	public WebElement getCreatedConfirmationMsg(String projectName, int timeOut) {
+
+		return isDisplayed(driver, createdConfirmationMsg, "Visibility", timeOut, "Created Confirmation Msg");
+	}
+
+	@FindBy(xpath = "//h2[text()='New Deal']/../..//button[text()='Save']")
+	private WebElement dealPopupSaveBtn;
+
+	public WebElement getDealPopupSaveBtn(int timeOut) {
+
+		return isDisplayed(driver, dealPopupSaveBtn, "Visibility", timeOut, "deal popup save button");
+	}
+	
+	@FindBy(xpath = "//a[@title='Declined/Dead']/span[text()='Declined/Dead']")
+	private WebElement declinedDeadStage;
+
+	public WebElement getDeclinedDeadStage(int timeOut) {
+		return isDisplayed(driver, declinedDeadStage, "Visibility", timeOut, "declined dead stage");
+	}
+	
 }
