@@ -1029,7 +1029,7 @@ public class CommonVariables {
 		public static String PEFSTG_Tc013_UserProfile,PEFSTG_Tc014_UserProfile ;
 
 
-		static FileInputStream dataFile = null;
+		static FileInputStream dataFile = null, dataFile2 = null;
 		static Workbook dataWb = null,dataWb2 = null;
 		
 
@@ -3059,12 +3059,14 @@ public class CommonVariables {
 			
 			try {
 				dataFile=new FileInputStream(new File(phase1DataSheetFilePath));
+				dataFile2=new FileInputStream(new File(AcuityDataSheetFilePath));
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			try {
 				dataWb=WorkbookFactory.create(dataFile);
+				dataWb2=WorkbookFactory.create(dataFile2);
 			} catch (EncryptedDocumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -3186,6 +3188,27 @@ public class CommonVariables {
 			M3Deal1CompanyName=M3Ins1;
 			M3Deal1RecordType=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M3DEAL1", excelLabel.Record_Type);
 			M3Deal1Stage=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M3DEAL1", excelLabel.Stage);
+			
+			
+			AMNNR_TaskLabel1=ExcelUtils.readData(dataWb2,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel001", excelLabel.Field_Label);	
+		 	AMNNR_TaskLabel2=ExcelUtils.readData(dataWb2,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel002", excelLabel.Field_Label);	 	
+		 	AMNNR_TaskLabel3=ExcelUtils.readData(dataWb2,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel003", excelLabel.Field_Label);	 	
+		 	AMNNR_TaskLabel4=ExcelUtils.readData(dataWb2,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel004", excelLabel.Field_Label);	 	
+		 	AMNNR_TaskLabel5=ExcelUtils.readData(dataWb2,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel005", excelLabel.Field_Label);	 	
+		 	AMNNR_TaskLabel6=ExcelUtils.readData(dataWb2,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel006", excelLabel.Field_Label);	 	
+		 	AMNNR_TaskLabel7=ExcelUtils.readData(dataWb2,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel007", excelLabel.Field_Label);
+		 	AMNNR_TaskLabel8=ExcelUtils.readData(dataWb2,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_TaskLabel008", excelLabel.Field_Label);
+		 	
+		 		 	
+		 	AMNNR_CallLabel1=ExcelUtils.readData(dataWb2,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_CallLabel001", excelLabel.Field_Label);	
+		 	AMNNR_CallLabel2=ExcelUtils.readData(dataWb2,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_CallLabel002", excelLabel.Field_Label);	 	
+		 	AMNNR_CallLabel3=ExcelUtils.readData(dataWb2,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_CallLabel003", excelLabel.Field_Label);	 	
+		 	AMNNR_CallLabel4=ExcelUtils.readData(dataWb2,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_CallLabel004", excelLabel.Field_Label);	 	
+		 	AMNNR_CallLabel5=ExcelUtils.readData(dataWb2,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_CallLabel005", excelLabel.Field_Label);
+		 	AMNNR_CallLabel8=ExcelUtils.readData(dataWb2,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AMNNR_CallLabel008", excelLabel.Field_Label);
+		 	
+			
+			
 			try {
 				dataFile.close();
 			} catch (IOException e) {

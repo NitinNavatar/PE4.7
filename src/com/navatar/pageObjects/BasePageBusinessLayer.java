@@ -1352,6 +1352,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			tabName = "Fundraisings";
 			break;
 
+		case Interaction:
+			tabName = "Interactions";
+			break;
+
 		default:
 			return tabName;
 		}
@@ -4706,7 +4710,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				ThreadSleep(3000);
 				ThreadSleep(5000);
 			} else {
-				appLog.error("Not able to Click on List View: "+viewList);
+				appLog.error("Not able to Click on List View: " + viewList);
 			}
 		} else {
 			appLog.error("Not able to select on Select View List : " + viewList);
@@ -11409,7 +11413,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		if (fromNavigation == true) {
 			if (npbl.createNavPopUpMinimizeButton(2) != null) {
-				CommonLib.click(driver, npbl.createNavPopUpMinimizeButton(5), "Minimize", action.BOOLEAN);
+				CommonLib.click(driver, npbl.createNavPopUpMinimizeButton(2), "Minimize", action.BOOLEAN);
 			}
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, NavigationMenuItems.Create.toString(), action.BOOLEAN,
 					30)) {
@@ -11515,27 +11519,16 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 						xPath = "//div[label[text()='Notes']]//textarea";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
-						if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
-							log(LogStatus.INFO, "Clicked on " + labelName + " paragraph", YesNo.No);
-							ThreadSleep(500);
-							xPath = "//div[label[text()='Notes']]//textarea";
-							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
-									30);
-							if (sendKeys(driver, ele, value, labelName + " paragraph", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO, value + " has been passed on " + labelName + " paragraph",
-										YesNo.No);
+						if (sendKeys(driver, ele, value, labelName + " paragraph", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, value + " has been passed on " + labelName + " paragraph", YesNo.No);
 
-								CommonLib.ThreadSleep(500);
-							} else {
-								log(LogStatus.ERROR, value + " is not passed on " + labelName + " paragraph", YesNo.No);
-								sa.assertTrue(false, value + " is not passed on " + labelName + " paragraph");
-								return false;
-							}
+							CommonLib.ThreadSleep(500);
 						} else {
-							log(LogStatus.ERROR, "Not able to click on " + labelName + " paragraph", YesNo.No);
-							sa.assertTrue(false, "Not able to click on " + labelName + " paragraph");
+							log(LogStatus.ERROR, value + " is not passed on " + labelName + " paragraph", YesNo.No);
+							sa.assertTrue(false, value + " is not passed on " + labelName + " paragraph");
 							return false;
 						}
+
 					}
 
 				} else if (labelName.equalsIgnoreCase("Related To")) {

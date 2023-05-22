@@ -59,6 +59,11 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			return false;
 		}
 
+		if (fundPageRecordTypeNextButton(7) != null) {
+			if (click(driver, fundPageRecordTypeNextButton(7), "Fund Record Type Next Button", action.SCROLLANDBOOLEAN))
+				appLog.info("Clicked on Record Type Next Button");
+		}
+
 //		if (click(driver, getNewButton(environment, mode, 60), "New Button", action.BOOLEAN)) {
 		ThreadSleep(500);
 		if (sendKeys(driver, getFundName(projectName, 60), fundName, "Fund Name", action.BOOLEAN)) {

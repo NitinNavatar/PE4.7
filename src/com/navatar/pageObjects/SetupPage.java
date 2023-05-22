@@ -180,12 +180,16 @@ public class SetupPage extends BasePageBusinessLayer {
 				"Add Users frame in installed package.");
 	}
 
-	@FindBy(xpath = "//label[text()='Quick Find']/following-sibling::input")
+	@FindBy(xpath = "//input[@id='quickfind']")
 	private WebElement quickFindSearch;
 
 	public WebElement getquickFindSearch(int timeOut) {
 		return isDisplayed(driver, quickFindSearch, "Visibility", timeOut, "quickFindSearch");
 	}
+	
+	
+	
+	//input[@id='quickfind']
 
 	@FindBy(xpath = "//button[@title='Custom Field']")
 	private WebElement customFieldNewButton;

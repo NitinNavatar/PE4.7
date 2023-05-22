@@ -216,7 +216,7 @@ public class EnumConstants {
 		ReportsTab, Correspondence_Lists, LimitedPartner, CompaniesTab, TaskRayTab, TaskRay, TestCustomObjectTab,
 		TaskTab, Other, Object1Tab, Object2Tab, Object3Tab, Object4Tab, RecycleBinTab, SDGTab, DealTab, Object5Tab,
 		Object6Tab, AttendeeTab, Object7Tab, Entities, Deals, Marketing_Events, Events, Deal_Team, Financing,
-		Object8Tab, ContactTab, Deal, Acuity, ThemesTab, ClipsTab;
+		Object8Tab, ContactTab, Deal, Acuity, ThemesTab, ClipsTab,Interaction;
 	}
 
 	public static enum Mode {
