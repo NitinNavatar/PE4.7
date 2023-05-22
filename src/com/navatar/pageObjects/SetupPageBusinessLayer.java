@@ -7728,4 +7728,153 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 	}
 
+	/**
+	 * @author Ankur Huria
+	 * @param driver
+	 * @param userName
+	 * @param LabelswithCheck
+	 * @param timeOut
+	 * @return true if able to change permission for particular object for
+	 *         particular type for particular user
+	 */
+	public boolean reOrderOfPickListValues(String projectName, object Object, String fieldName, Condition condition) {
+
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		FieldAndRelationshipPageBusinessLayer frp = new FieldAndRelationshipPageBusinessLayer(driver);
+		boolean flag = false;
+		if (home.clickOnSetUpLink()) {
+
+			String parentWindowID = switchOnWindow(driver);
+			if (parentWindowID == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create App Page");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create App Page",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create App Page");
+			}
+			if (searchStandardOrCustomObject(projectName, mode, Object.toString())) {
+				if (clickOnObjectFeature(projectName, mode, Object, ObjectFeatureName.FieldAndRelationShip)) {
+
+					if (CommonLib.sendKeysAndPressEnter(driver, frp.getQucikSearchInFieldAndRelationshipPage(50),
+							fieldName, "Field", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Field value has been passed in " + fieldName, YesNo.No);
+						CommonLib.ThreadSleep(6000);
+
+						if (CommonLib.click(driver, getFieldName(fieldName, 20), fieldName + " field",
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on Field" + fieldName, YesNo.No);
+							CommonLib.ThreadSleep(7000);
+							CommonLib.switchToFrame(driver, 40, frp.getfieldsAndRelationshipsIframe(30));
+
+							if (CommonLib.click(driver, reorderButtonOfPickListValues(20), "Reorder Button",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "clicked on Reorder Button", YesNo.No);
+
+								CommonLib.switchToFrame(driver, 40, frp.getfieldsAndRelationshipsIframe(30));
+								if (condition.equals(Condition.SelectCheckbox)) {
+
+									if (!displayValueAlphabaticallyCheckbox(20).isSelected()) {
+										log(LogStatus.INFO,
+												"CHeckBox not Selected, Going to Check for Display Value Alphabetically",
+												YesNo.No);
+
+										if (CommonLib.click(driver, displayValueAlphabaticallyCheckbox(20),
+												"Display Value Alphabetically CheckBox", action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "clicked on Display Value Alphabetically CheckBox",
+													YesNo.No);
+
+										} else {
+											log(LogStatus.ERROR,
+													"Could not click on Display Value Alphabetically CheckBox",
+													YesNo.Yes);
+
+										}
+
+									} else {
+										log(LogStatus.ERROR,
+												"CHeckBox already Selected, So not Going to Check for Display Value Alphabetically",
+												YesNo.Yes);
+
+									}
+								} else {
+									if (displayValueAlphabaticallyCheckbox(20).isSelected()) {
+										log(LogStatus.INFO,
+												"CHeckBox Selected, Going to UnCheck for Display Value Alphabetically",
+												YesNo.No);
+
+										if (CommonLib.click(driver, displayValueAlphabaticallyCheckbox(20),
+												"Display Value Alphabetically CheckBox", action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "clicked on Display Value Alphabetically CheckBox",
+													YesNo.No);
+
+										} else {
+											log(LogStatus.ERROR,
+													"Could not click on Display Value Alphabetically CheckBox",
+													YesNo.Yes);
+
+										}
+
+									} else {
+										log(LogStatus.ERROR,
+												"CHeckBox already Selected, So not Going to Check for Display Value Alphabetically",
+												YesNo.Yes);
+
+									}
+								}
+
+								if (CommonLib.click(driver, reorderSaveButton(20), "Reorder Save Button",
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on Save Button of Reorder", YesNo.No);
+									CommonLib.switchToDefaultContent(driver);
+									CommonLib.switchToFrame(driver, 40, frp.getfieldsAndRelationshipsIframe(30));
+									if (reorderButtonOfPickListValues(30) != null) {
+										log(LogStatus.INFO, "-----Checkbox has been : " + condition
+												+ " for Display Input Value Alphabetically------", YesNo.No);
+										CommonLib.switchToDefaultContent(driver);
+										flag = true;
+									} else {
+										log(LogStatus.ERROR, "-----Checkbox has been : " + condition
+												+ " for Display Input Value Alphabetically------", YesNo.Yes);
+
+									}
+
+								} else {
+									log(LogStatus.ERROR, "Could not click on Save Button of Reorder", YesNo.Yes);
+
+								}
+
+							} else {
+								log(LogStatus.ERROR, "Could not click on Reorder Button", YesNo.Yes);
+
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Could not click on the " + fieldName, YesNo.Yes);
+
+						}
+					} else {
+						log(LogStatus.ERROR, "Could not pass the Field value " + fieldName, YesNo.Yes);
+
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on Object and Feature name", YesNo.Yes);
+
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to Search the Object", YesNo.Yes);
+
+			}
+
+			driver.close();
+			driver.switchTo().window(parentWindowID);
+		} else {
+			log(LogStatus.ERROR, "Not Able to open the setup page", YesNo.Yes);
+
+		}
+
+		return flag;
+	}
+
 }

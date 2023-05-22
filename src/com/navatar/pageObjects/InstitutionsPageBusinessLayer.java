@@ -310,7 +310,8 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 			for (String[] commitmentRowData : commitmentRowRecord) {
 				for (int i = 0; i < fundNamelist.size(); i++) {
 					String fund = fundNamelist.get(i).getText().trim();
-					String amount = commitmentAmountList.get(i).getText().trim();
+					String amount = Integer
+							.toString(Integer.parseInt(commitmentAmountList.get(i).getText().trim()) / 1000000);
 					String lp = LPList.get(i).getText().trim();
 
 					String CommitAmount = convertNumberAccordingToFormatWithCurrencySymbol(commitmentRowData[1],
@@ -1205,6 +1206,27 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		String finalLabelName;
 		WebElement ele = null;
 		labelValue = labelValue.replace("_", " ");
+		if(labelValue.contains("/"))
+		{
+			String[] splittedDate = labelValue.split("/");
+			char dayMonth = splittedDate[0].charAt(0);
+			char day = splittedDate[1].charAt(0);
+			String month;
+			if (dayMonth == '0') {
+				month = splittedDate[0].replaceAll("0", "");
+			} else {
+				month = splittedDate[0];
+			}
+			String finalDay;
+			if (day == '0') {
+				finalDay = splittedDate[1].replaceAll("0", "");
+			} else {
+				finalDay = splittedDate[1];
+			}
+
+		 labelValue = month + "/" + finalDay + "/" + splittedDate[2];
+
+		}
 
 		ThreadSleep(2000);
 

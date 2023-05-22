@@ -111,7 +111,9 @@ public class BaseLib extends AppListeners {
 			ChromeOptions options = new ChromeOptions();
 			String OsName= System.getProperty("os.name");
 
-//			options.setBinary("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe");
+
+//			options.setBinary("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
+
 			options.addArguments("disable-infobars");
 			options.addArguments("--disable-notifications");
 			options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
