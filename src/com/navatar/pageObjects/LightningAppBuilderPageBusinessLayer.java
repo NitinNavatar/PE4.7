@@ -60,7 +60,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 					log(LogStatus.INFO, "Title has been Entered", YesNo.No);
 					if (CommonLib.click(driver, getnextButton(80), "Next Button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on the next button", YesNo.No);
-						if (CommonLib.click(driver, getfinishButton(80), "Next Button", action.SCROLLANDBOOLEAN)) {
+						if (CommonLib.click(driver, getfinishButton(80), "Finish Button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on the Finish button", YesNo.No);
 							CommonLib.switchToFrame(driver, 50, getAppBuilderIframe(80));
 							CommonLib.ThreadSleep(20000);
