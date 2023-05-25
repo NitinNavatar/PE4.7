@@ -1,4 +1,4 @@
-"Partnership New","Navigation Type","Order","Parent","Action Object","Action Record Type","List View Object","List View Name","URL"
+"Navigation","Navigation Type","Order","Parent","Action Object","Action Record Type","List View Object","List View Name","URL"
 "Home","Create","5","","","","","","/lightning/page/home"
 "Contact","Create","60","","Contact","","","",""
 "Fund","Create","-5","","navpeII__Fund__c","","","",""

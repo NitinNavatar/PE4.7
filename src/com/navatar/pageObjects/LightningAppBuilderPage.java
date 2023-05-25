@@ -87,7 +87,7 @@ public class LightningAppBuilderPage extends BasePageBusinessLayer {
 	}
 	 */
 
-	@FindBy(xpath="//a[text()='Done']")
+	@FindBy(xpath="//a[text()='Finish']")
 	private WebElement finishButton;
 
 	public WebElement getfinishButton(int timeOut) {

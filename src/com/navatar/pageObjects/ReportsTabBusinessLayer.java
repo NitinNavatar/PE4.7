@@ -945,7 +945,7 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 
 							WebElement cusomFilterValueEle = FindElement(driver,
 
-									"//div[@id=\"report-main\"]/div//div[@id=\"wave-tooltip\"]/following-sibling::*//span[@title=\""
+									"//div[@id=\"report-main\"]/following-sibling::*//span[@title=\""
 											+ customFieldDrpDwnVal + "\"]/ancestor::li/span",
 									"Range Filter value : " + customFieldDrpDwnVal, action.SCROLLANDBOOLEAN, 15);
 							CommonLib.ThreadSleep(2000);
