@@ -3669,7 +3669,7 @@ public class PECloudSmoke extends BaseLib{
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		DealPageBusinessLayer dp=new DealPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-/*
+
 		String value="";
 		String type="";
 		String[][] EntityOrAccounts = {{ SmokePFIns1, SmokePFIns1RecordType ,null},
@@ -3708,8 +3708,6 @@ public class PECloudSmoke extends BaseLib{
 			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2,YesNo.Yes);
 		}
 		
-		
-	*/	
 		String labelName="Source Contact<Break>Source Firm";
 		String labelValue=SmokePFContact1FName+" "+SmokePFContact1LName+"<Break>"+SmokePFIns2;
 		String dealName=SmokeDeal2;

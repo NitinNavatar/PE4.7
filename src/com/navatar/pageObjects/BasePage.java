@@ -10254,6 +10254,25 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, saveButton, "Visibility", timeOut, "UploadPhotoSaveButton");
 
 	}
+
+	
+	@FindBy(xpath = "//h2[text()='New Event']/ancestor::div[contains(@class,'isModal inlinePanel')]//button[@title='Save' or text()='Save'or @name='SaveEdit']")
+	private WebElement eventSaveBtn;
+
+	public WebElement getEventSaveBtn(int timeOut) {
+		return isDisplayed(driver, eventSaveBtn, "Visibility", timeOut, "Event save button");
+
+	}
+	
+	@FindBy(xpath = "//h2[contains(text(),'Edit')]/ancestor::div[contains(@class,'isModal inlinePanel')]//button[@title='Save' or text()='Save'or @name='SaveEdit']")
+	private WebElement editEventSaveBtn;
+
+	public WebElement getEditEventSaveBtn(int timeOut) {
+		return isDisplayed(driver, editEventSaveBtn, "Visibility", timeOut, "Edit event save button");
+
+	}
+	
+	
 	
 
 }
