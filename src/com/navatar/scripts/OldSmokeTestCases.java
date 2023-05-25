@@ -147,6 +147,7 @@ public class OldSmokeTestCases extends BaseLib {
 //	Scanner scn = new Scanner(System.in);
 	// DRSmoke Modules Starts from here
 
+	// Marketing Initiative should be enabled for admin and user
 //	Default Settings of PE:-
 //	Deal Creation-->Checked
 //	Individual Investor--->Uncheck
@@ -206,8 +207,8 @@ public class OldSmokeTestCases extends BaseLib {
 					layoutName, sourceANDDestination);
 
 			if (!abc.isEmpty()) {
-				log(LogStatus.FAIL, "field not added/already present 2", YesNo.Yes);
-				sa.assertTrue(false, "field not added/already present 2");
+				log(LogStatus.FAIL, "field not added/already present 2, Reason: " + abc, YesNo.Yes);
+				sa.assertTrue(false, "field not added/already present 2, Reason: " + abc);
 			} else {
 				log(LogStatus.INFO, "field added/already present 2", YesNo.No);
 
@@ -441,7 +442,7 @@ public class OldSmokeTestCases extends BaseLib {
 			if (home.clickOnTab(environment, Mode.Classic.toString(), TabName.HomeTab)) {
 				SmokeReportName = "R2" + SmokeReportName;
 				if (report.createCustomReportForFolder(environment, mode, SmokeReportFolderName, ReportFormatName.Null,
-						SmokeReportName, SmokeReportName, SmokeReportType, null, SmokeReportShow, null,
+						SmokeReportName, SmokeReportName, SmokeReportType, reportField, SmokeReportShow, null,
 						SmokeReportRange, null, null)) {
 					appLog.info("Custom Report is created succesdfully : R2" + SmokeReportName);
 				} else {
@@ -496,6 +497,8 @@ public class OldSmokeTestCases extends BaseLib {
 		sa.assertAll();
 	}
 
+	// Before Execution of this Test Script, Please Make Sure Marketing Initiative
+	// Tab Should be added
 	@Parameters({ "environment", "mode" })
 	@Test
 	public void PESmokeTc001_4_createPreCondition(String environment, String mode) {
@@ -507,7 +510,7 @@ public class OldSmokeTestCases extends BaseLib {
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		String FieldLabels = excelLabel.Street.toString() + "," + excelLabel.City.toString() + ","
 				+ excelLabel.State.toString() + "," + excelLabel.Postal_Code.toString() + ","
-				+ excelLabel.Country.toString() + "," + excelLabel.Phone.toString();
+				+ excelLabel.Country.toString();
 		for (int j = 0; j < 10; j++) {
 			if (lp.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
 				ThreadSleep(2000);
@@ -522,7 +525,7 @@ public class OldSmokeTestCases extends BaseLib {
 				}
 				if (j == 1) {
 					String FielsValues = SmokeINS2_Street + "," + SmokeINS2_City + "," + SmokeINS2_State + ","
-							+ SmokeINS2_Postal_Code + "," + SmokeINS2_Country + "," + SmokeINS2_Phone;
+							+ SmokeINS2_Postal_Code + "," + SmokeINS2_Country;
 					if (ins.createInstitution(environment, mode, SmokeINS2, SmokeINS2_RecordType, FieldLabels,
 							FielsValues)) {
 						appLog.info("institution is created : " + SmokeINS2);
@@ -892,6 +895,7 @@ public class OldSmokeTestCases extends BaseLib {
 		ContactAndAccountName.put(SmokeC2_FName + " " + SmokeC2_LName, SmokeINS1);
 		ContactAndAccountName.put(SmokeC3_FName + " " + SmokeC3_LName, SmokeINDINV1);
 		ContactAndAccountName.put(SmokeC4_FName + " " + SmokeC4_LName, SmokeINDINV1);
+		String filterValue = SmokeINS1.substring(0, SmokeINS1.length() - 2);
 		if (market.clickOnTab(environment, mode, TabName.MarketingInitiatives)) {
 			if (market.clickOnCreatedMarketInitiatives(environment, mode, Smoke_MI1)) {
 				appLog.info("clicked on MI : " + Smoke_MI1);
@@ -950,7 +954,7 @@ public class OldSmokeTestCases extends BaseLib {
 								YesNo.Yes);
 					}
 					if (market.addProspects(environment, mode, AddProspectsTab.AccountAndContacts, "Account:Legal Name",
-							"not equal to", null, ContactAndAccountName, false)) {
+							"contains", filterValue, ContactAndAccountName, false)) {
 						appLog.info("Contacts is added Successfully in Market Initiative on MI " + Smoke_MI1);
 
 					} else {
@@ -7561,7 +7565,7 @@ public class OldSmokeTestCases extends BaseLib {
 					ThreadSleep(2000);
 
 					// Deal Information 2nd
-					String expectedResult = "Company" + "," + "Fund Manager" + "," + "Fund Manager�s Fund" + ","
+					String expectedResult = "Company" + "," + "Fund Manager" + "," + "Fund Manager’s Fund" + ","
 							+ "Individual Investor" + "," + "Institution" + "," + "Limited Partner";
 					checkBox = nspbl.getEnableCheckBoxforNavatarSetUpSideMenuTab(environment, mode,
 							NavatarSetupSideMenuTab.CommitmentCreation, EditViewMode.Edit,

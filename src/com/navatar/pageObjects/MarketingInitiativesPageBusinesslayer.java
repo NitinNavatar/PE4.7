@@ -315,7 +315,7 @@ public class MarketingInitiativesPageBusinesslayer extends MarketingInitiativesP
 			String beforeRecord = ele.getText().trim();
 			int beforeRecordDig = Integer.parseInt((beforeRecord.split(":")[1].trim()));
 			if (beforeRecordDig != 0) {
-				appLog.error("select  from search result record count is: " + beforeRecordDig);
+				appLog.info("select  from search result record count is: " + beforeRecordDig);
 				Set<String> contactFullName = ContactFullNameAndAccountName.keySet();
 				Iterator<String> itr = contactFullName.iterator();
 				while (itr.hasNext()) {

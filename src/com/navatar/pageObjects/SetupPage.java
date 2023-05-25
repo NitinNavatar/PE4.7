@@ -180,12 +180,16 @@ public class SetupPage extends BasePageBusinessLayer {
 				"Add Users frame in installed package.");
 	}
 
-	@FindBy(xpath = "//label[text()='Quick Find']/following-sibling::input")
+	@FindBy(xpath = "//input[@id='quickfind']")
 	private WebElement quickFindSearch;
 
 	public WebElement getquickFindSearch(int timeOut) {
 		return isDisplayed(driver, quickFindSearch, "Visibility", timeOut, "quickFindSearch");
 	}
+	
+	
+	
+	//input[@id='quickfind']
 
 	@FindBy(xpath = "//button[@title='Custom Field']")
 	private WebElement customFieldNewButton;
@@ -1426,6 +1430,37 @@ public class SetupPage extends BasePageBusinessLayer {
 				+ "']/..//td[@class='dataCol col02']//tr[@class='crudTableEdit']/td[4]/input";
 
 		return FindElement(driver, xpath, "delete checkbox", action.SCROLLANDBOOLEAN, timeOut);
+	}
+
+	@FindBy(xpath = "//input[@value='Reorder']")
+	private WebElement reorderButtonOfPickListValues;
+
+	public WebElement reorderButtonOfPickListValues(int timeOut) {
+		return isDisplayed(driver, reorderButtonOfPickListValues, "Visibility", timeOut,
+				"reorderButtonOfPickListValues");
+	}
+
+	public WebElement getFieldName(String fieldName, int timeOut) {
+		String xpath = "//span[text()='" + fieldName + "']";
+
+		return FindElement(driver, xpath, "getFieldName: " + fieldName, action.SCROLLANDBOOLEAN, timeOut);
+	}
+
+	@FindBy(xpath = "//input[@id=\"p15\"]")
+	private WebElement displayValueAlphabaticallyCheckbox;
+
+	public WebElement displayValueAlphabaticallyCheckbox(int timeOut) {
+
+		return isDisplayed(driver, displayValueAlphabaticallyCheckbox, "Visibility", timeOut,
+				"displayValueAlphabaticallyCheckbox");
+	}
+
+	@FindBy(xpath = "//input[@value=' Save ']")
+	private WebElement reorderSaveButton;
+
+	public WebElement reorderSaveButton(int timeOut) {
+
+		return isDisplayed(driver, reorderSaveButton, "Visibility", timeOut, "reorderSaveButton");
 	}
 
 }

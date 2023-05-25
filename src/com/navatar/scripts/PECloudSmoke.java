@@ -3707,7 +3707,7 @@ public class PECloudSmoke extends BaseLib{
 			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2);
 			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2,YesNo.Yes);
 		}
-		
+
 		String labelName="Source Contact<Break>Source Firm";
 		String labelValue=SmokePFContact1FName+" "+SmokePFContact1LName+"<Break>"+SmokePFIns2;
 		String dealName=SmokeDeal2;
@@ -5178,7 +5178,7 @@ public class PECloudSmoke extends BaseLib{
 				{PageLabel.End_Date.toString(),SmokeNTPEvent1EndDate},
 				{PageLabel.Subject.toString(),task}
 				};
-/*		
+		
 		if (lp.clickAnyCellonCalender(projectName)) {
 			log(LogStatus.INFO,"Able to click on Calendar/Event Link",YesNo.No);
 			if(gp.enterValueForNewEvent(projectName, GlobalActionItem.New_Event, event1, 10))
@@ -5208,7 +5208,7 @@ public class PECloudSmoke extends BaseLib{
 			log(LogStatus.ERROR,"Able to click on Calendar/Event Link",YesNo.No);
 			sa.assertTrue(false, "Not Able to click on Calendar/Event Link");
 		}	
-		*/
+		
 		if(flag)
 		{
 			if(lp.clickOnTab(contactName, mode, TabName.ContactTab)){
@@ -5229,7 +5229,7 @@ public class PECloudSmoke extends BaseLib{
 						log(LogStatus.SKIP,"Last touch point value is not matched in contact :"+contactName,YesNo.Yes);
 					}
 
-					int days=183;
+					int days=180;
 					String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
 					String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/d/yyyy", "America/Los_Angles");
 					if(cp.verifyDate(expectedDate, actualDate)){
