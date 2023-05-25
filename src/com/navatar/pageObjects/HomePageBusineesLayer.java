@@ -5749,7 +5749,7 @@ public class HomePageBusineesLayer extends HomePage {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		boolean flag = false;
 
-		CommonLib.ThreadSleep(1500);
+		CommonLib.ThreadSleep(20000);
 		if (click(driver, globalSearchButton(20), "globalSearchButton", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on globalSearchButton", YesNo.No);
 			CommonLib.ThreadSleep(1000);
