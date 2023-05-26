@@ -432,109 +432,91 @@ public class Module5New extends BaseLib {
 		String values = "";
 		lp.searchAndClickOnApp(SDG, 30);
 
-		if (lp.clickOnTab(projectName, TabName.SDGTab)) {
-			log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
+		log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
 
-			String[][] sdgLabels = { { SDGCreationLabel.SDG_Name.toString(), Sdg1Name },
-					{ SDGCreationLabel.SDG_Tag.toString(), Sdg1TagName },
-					{ SDGCreationLabel.sObjectName.toString(), Sdg1ObjectName } };
+		String[][] sdgLabels1 = { { SDGCreationLabel.SDG_Name.toString(), Sdg1Name },
+				{ SDGCreationLabel.SDG_Tag.toString(), Sdg1TagName },
+				{ SDGCreationLabel.sObjectName.toString(), Sdg1ObjectName } };
 
-			if (sdg.createCustomSDG(projectName, Sdg1Name, sdgLabels, action.BOOLEAN, 20)) {
-				log(LogStatus.PASS, "create/verify created SDG : " + Sdg1Name, YesNo.No);
+		if (sdg.createCustomSDG(projectName, Sdg1Name, sdgLabels1, action.BOOLEAN, 20)) {
+			log(LogStatus.PASS, "create/verify created SDG : " + Sdg1Name, YesNo.No);
 
-				for (int i = 0; i < 1; i++) {
-					String api = ExcelUtils.readData(phase1DataSheetFilePath, "Fields", excelLabel.Variable_Name,
-							"CField" + (i + 1), excelLabel.APIName);
-					values = api;
-					if (sdg.addFieldOnSDG(projectName, fields, values)) {
-						log(LogStatus.INFO, "Successfully added fields on " + Sdg1Name, YesNo.Yes);
+			for (int i = 0; i < 1; i++) {
+				String api = ExcelUtils.readData(phase1DataSheetFilePath, "Fields", excelLabel.Variable_Name,
+						"CField" + (i + 1), excelLabel.APIName);
+				values = api;
+				if (sdg.addFieldOnSDG(projectName, fields, values)) {
+					log(LogStatus.INFO, "Successfully added fields on " + Sdg1Name, YesNo.Yes);
 
-					} else {
-						sa.assertTrue(false, "Not Able to add fields on SDG : " + Sdg1Name);
-						log(LogStatus.SKIP, "Not Able to add fields on SDG : " + Sdg1Name, YesNo.Yes);
-					}
+				} else {
+					sa.assertTrue(false, "Not Able to add fields on SDG : " + Sdg1Name);
+					log(LogStatus.SKIP, "Not Able to add fields on SDG : " + Sdg1Name, YesNo.Yes);
 				}
-
-			} else {
-				sa.assertTrue(false, "Not Able to create/verify created SDG : " + Sdg1Name);
-				log(LogStatus.SKIP, "Not Able to create/verify created SDG : " + Sdg1Name, YesNo.Yes);
 			}
 
 		} else {
-			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.SDGTab);
-			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.SDGTab, YesNo.Yes);
+			sa.assertTrue(false, "Not Able to create/verify created SDG : " + Sdg1Name);
+			log(LogStatus.SKIP, "Not Able to create/verify created SDG : " + Sdg1Name, YesNo.Yes);
 		}
 
 		lp.searchAndClickOnApp(SDG, 30);
 
-		if (lp.clickOnTab(projectName, TabName.SDGTab)) {
-			log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
+		log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
 
-			String[][] sdgLabels = { { SDGCreationLabel.SDG_Name.toString(), M5Sdg2Name },
-					{ SDGCreationLabel.SDG_Tag.toString(), M5Sdg2TagName },
-					{ SDGCreationLabel.sObjectName.toString(), M5Sdg2ObjectName },
-					{ SDGCreationLabel.Parent_Field_Name.toString(), M5Sdg2ParentName } };
+		String[][] sdgLabels2 = { { SDGCreationLabel.SDG_Name.toString(), M5Sdg2Name },
+				{ SDGCreationLabel.SDG_Tag.toString(), M5Sdg2TagName },
+				{ SDGCreationLabel.sObjectName.toString(), M5Sdg2ObjectName },
+				{ SDGCreationLabel.Parent_Field_Name.toString(), M5Sdg2ParentName } };
 
-			if (sdg.createCustomSDG(projectName, M5Sdg2Name, sdgLabels, action.BOOLEAN, 20)) {
-				log(LogStatus.PASS, "create/verify created SDG : " + M5Sdg2Name, YesNo.No);
-				for (int i = 0; i < 3; i++) {
-					String api = ExcelUtils.readData(phase1DataSheetFilePath, "Fields", excelLabel.Variable_Name,
-							"SDGField" + (i + 1), excelLabel.APIName);
+		if (sdg.createCustomSDG(projectName, M5Sdg2Name, sdgLabels2, action.BOOLEAN, 20)) {
+			log(LogStatus.PASS, "create/verify created SDG : " + M5Sdg2Name, YesNo.No);
+			for (int i = 0; i < 3; i++) {
+				String api = ExcelUtils.readData(phase1DataSheetFilePath, "Fields", excelLabel.Variable_Name,
+						"SDGField" + (i + 1), excelLabel.APIName);
 
-					values = api;
-					if (sdg.addFieldOnSDG(projectName, fields, values)) {
-						log(LogStatus.INFO, "Successfully added fields on " + M5Sdg2Name, YesNo.Yes);
+				values = api;
+				if (sdg.addFieldOnSDG(projectName, fields, values)) {
+					log(LogStatus.INFO, "Successfully added fields on " + M5Sdg2Name, YesNo.Yes);
 
-					} else {
-						sa.assertTrue(false, "Not Able to add fields on SDG : " + M5Sdg2Name);
-						log(LogStatus.SKIP, "Not Able to add fields on SDG : " + M5Sdg2Name, YesNo.Yes);
-					}
+				} else {
+					sa.assertTrue(false, "Not Able to add fields on SDG : " + M5Sdg2Name);
+					log(LogStatus.SKIP, "Not Able to add fields on SDG : " + M5Sdg2Name, YesNo.Yes);
 				}
-			} else {
-				sa.assertTrue(false, "Not Able to create/verify created SDG : " + M5Sdg2Name);
-				log(LogStatus.SKIP, "Not Able to create/verify created SDG : " + M5Sdg2Name, YesNo.Yes);
 			}
-
 		} else {
-			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.SDGTab);
-			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.SDGTab, YesNo.Yes);
+			sa.assertTrue(false, "Not Able to create/verify created SDG : " + M5Sdg2Name);
+			log(LogStatus.SKIP, "Not Able to create/verify created SDG : " + M5Sdg2Name, YesNo.Yes);
 		}
 
 		ThreadSleep(3000);
 
 		lp.searchAndClickOnApp(SDG, 30);
 
-		if (lp.clickOnTab(projectName, TabName.SDGTab)) {
-			log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
+		log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
 
-			String[][] sdgLabels = { { SDGCreationLabel.SDG_Name.toString(), M5Sdg3Name },
-					{ SDGCreationLabel.SDG_Tag.toString(), M5Sdg3TagName },
-					{ SDGCreationLabel.sObjectName.toString(), M5Sdg3ObjectName },
-					{ SDGCreationLabel.Parent_Field_Name.toString(), M5Sdg3ParentName } };
+		String[][] sdgLabels3 = { { SDGCreationLabel.SDG_Name.toString(), M5Sdg3Name },
+				{ SDGCreationLabel.SDG_Tag.toString(), M5Sdg3TagName },
+				{ SDGCreationLabel.sObjectName.toString(), M5Sdg3ObjectName },
+				{ SDGCreationLabel.Parent_Field_Name.toString(), M5Sdg3ParentName } };
 
-			if (sdg.createCustomSDG(projectName, M5Sdg3Name, sdgLabels, action.BOOLEAN, 20)) {
-				log(LogStatus.PASS, "create/verify created SDG : " + M5Sdg3Name, YesNo.No);
-				for (int i = 3; i < 6; i++) {
-					String api = ExcelUtils.readData(phase1DataSheetFilePath, "Fields", excelLabel.Variable_Name,
-							"SDGField" + (i + 1), excelLabel.APIName);
+		if (sdg.createCustomSDG(projectName, M5Sdg3Name, sdgLabels3, action.BOOLEAN, 20)) {
+			log(LogStatus.PASS, "create/verify created SDG : " + M5Sdg3Name, YesNo.No);
+			for (int i = 3; i < 6; i++) {
+				String api = ExcelUtils.readData(phase1DataSheetFilePath, "Fields", excelLabel.Variable_Name,
+						"SDGField" + (i + 1), excelLabel.APIName);
 
-					values = api;
-					if (sdg.addFieldOnSDG(projectName, fields, values)) {
-						log(LogStatus.INFO, "Successfully added fields on " + M5Sdg3Name, YesNo.Yes);
+				values = api;
+				if (sdg.addFieldOnSDG(projectName, fields, values)) {
+					log(LogStatus.INFO, "Successfully added fields on " + M5Sdg3Name, YesNo.Yes);
 
-					} else {
-						sa.assertTrue(false, "Not Able to add fields on SDG : " + M5Sdg3Name);
-						log(LogStatus.SKIP, "Not Able to add fields on SDG : " + M5Sdg3Name, YesNo.Yes);
-					}
+				} else {
+					sa.assertTrue(false, "Not Able to add fields on SDG : " + M5Sdg3Name);
+					log(LogStatus.SKIP, "Not Able to add fields on SDG : " + M5Sdg3Name, YesNo.Yes);
 				}
-			} else {
-				sa.assertTrue(false, "Not Able to create/verify created SDG : " + M5Sdg3Name);
-				log(LogStatus.SKIP, "Not Able to create/verify created SDG : " + M5Sdg3Name, YesNo.Yes);
 			}
-
 		} else {
-			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.SDGTab);
-			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.SDGTab, YesNo.Yes);
+			sa.assertTrue(false, "Not Able to create/verify created SDG : " + M5Sdg3Name);
+			log(LogStatus.SKIP, "Not Able to create/verify created SDG : " + M5Sdg3Name, YesNo.Yes);
 		}
 
 		lp.CRMlogout();
@@ -866,7 +848,7 @@ public class Module5New extends BaseLib {
 							ThreadSleep(10000);
 							for (int j = 0; j < toggles.length; j++) {
 								toggleButton = toggles[j];
-								ele = ip.toggleSDGButtons(projectName, toggleButton, ToggleButtonGroup.SDGButton,
+								ele = ip.toggleSDGButtons1(projectName, toggleButton, ToggleButtonGroup.SDGButton,
 										action.BOOLEAN, true, 30);
 								if (clickUsingJavaScript(driver, ele, toggleButton + " SDG", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.PASS, "Click on " + toggleButton, YesNo.No);

@@ -703,9 +703,11 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 				if (CommonLib.clickUsingJavaScript(driver, getsortableDataGridFields(50), "View all button",
 						action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on the View all button", YesNo.No);
-
+					CommonLib.ThreadSleep(3000);
+					CommonLib.refresh(driver);
 					// xpath="//tbody//lst-formatted-text[text()='"++"']/ancestor::td/following-sibling::td//button";
-					xpath = "//div[contains(@class,\"forceRelatedListDesktop\")]//tbody//*[text()=\""+apiNameOrOverrideLabelName+"\"]/ancestor::td/following-sibling::td//button";
+					xpath = "//tbody//*[text()=\"" + apiNameOrOverrideLabelName
+							+ "\"]/ancestor::td/following-sibling::td//a";
 					ele = CommonLib.FindElement(driver, xpath, "Ero Button", action.SCROLLANDBOOLEAN, 50);
 					if (click(driver, ele, "Ero button", action.BOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on the Ero button", YesNo.No);
@@ -1438,9 +1440,8 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		ele = FindElement(driver, xPath, recordName + " Record Name", action.BOOLEAN, 50);
 		mouseOverOperation(driver, ele);
 		ThreadSleep(3000);
-		
-		xPath = "//a[text()=\"" + sdgName
-				+ "\"]/ancestor::article//lightning-helptext//button";
+
+		xPath = "//a[text()=\"" + sdgName + "\"]/ancestor::article//lightning-helptext//button";
 		ele = FindElement(driver, xPath, "Error triangle icon", action.BOOLEAN, 50);
 		if (mouseOverOperation(driver, ele)) {
 			log(LogStatus.INFO, "Mouse has been moved to error triangle icon", YesNo.No);
@@ -1602,6 +1603,7 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 								log(LogStatus.INFO, "Clicked on the " + sdgGridName + " body", YesNo.No);
 								ThreadSleep(5000);
 								xPath = "//a[text()='" + sdgGridName + "']//ancestor::article//button[text()='Save']";
+								
 								WebElement saveBtnElement = FindElement(driver, xPath, "Save button of " + sdgGridName,
 										action.BOOLEAN, 50);
 								xPath = "//a[text()='" + sdgGridName + "']//ancestor::article//button[text()='Cancel']";
@@ -2251,8 +2253,7 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		WebElement ele = null;
 		ThreadSleep(5000);
 
-		xPath = "//a[text()=\"" + sdgName
-				+ "\"]/ancestor::article//lightning-helptext//button";
+		xPath = "//a[text()=\"" + sdgName + "\"]/ancestor::article//lightning-helptext//button";
 		ele = FindElement(driver, xPath, "Error triangle icon", action.BOOLEAN, 50);
 		scrollDownThroughWebelementInCenter(driver, ele, recordName + " Triangle error message");
 
@@ -3188,8 +3189,7 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		WebElement ele = null;
 		ThreadSleep(5000);
 
-		xPath = "//a[text()=\"" + sdgName
-				+ "\"]/ancestor::article//lightning-helptext//button";
+		xPath = "//a[text()=\"" + sdgName + "\"]/ancestor::article//lightning-helptext//button";
 		ele = FindElement(driver, xPath, "Error triangle icon", action.BOOLEAN, 50);
 		scrollDownThroughWebelementInCenter(driver, ele, recordName + " Triangle error message");
 
@@ -3632,8 +3632,7 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		WebElement ele = null;
 		ThreadSleep(5000);
 
-		xPath = "//a[text()=\"" + sdgName
-				+ "\"]/ancestor::article//lightning-helptext//button";
+		xPath = "//a[text()=\"" + sdgName + "\"]/ancestor::article//lightning-helptext//button";
 		ele = FindElement(driver, xPath, "Error triangle icon", action.BOOLEAN, 50);
 		scrollDownThroughWebelementInCenter(driver, ele, recordName + " Triangle error message");
 
