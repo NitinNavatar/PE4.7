@@ -462,9 +462,7 @@ public class CommonVariables {
 	public static String M7NContact25FName,M7NContact25LName,M7NContact25EmailID,M7NContact25RecordType;
 	public static String M7NContact26FName,M7NContact26LName,M7NContact26EmailID,M7NContact26RecordType;
 	public static String M7NContact27FName,M7NContact27LName,M7NContact27EmailID,M7NContact27RecordType;
-	public static String M7NContact1Tier,M7NContact2Tier,M7NContact3Tier,M7NContact4Tier,M7NContact5Tier;
-	public static String M7NContact1NextTouchpointDay,M7NContact2NextTouchpointDay,M7NContact3NextTouchpointDay,M7NContact4NextTouchpointDay,M7NContact5NextTouchpointDay;
-	
+
 	
 
 	public static String M7NTask1Subject,M7NTask1dueDate,M7NTask1Status,M7NTask1Priority;
@@ -12714,57 +12712,7 @@ public class CommonVariables {
  					
  					break;
  					
-            	 case "Module7New" :
-  					
-  					try {
-  						dataFile=new FileInputStream(new File(AcuityDataSheetFilePath));
-  					} catch (FileNotFoundException e1) {
-  						// TODO Auto-generated catch block
-  						e1.printStackTrace();
-  					}
-  					
-  					try {
-  						dataWb=WorkbookFactory.create(dataFile);
-  					} catch (EncryptedDocumentException e) {
-  						// TODO Auto-generated catch block
-  						e.printStackTrace();
-  					} catch (InvalidFormatException e) {
-  						// TODO Auto-generated catch block
-  						e.printStackTrace();
-  					} catch (IOException e) {
-  						// TODO Auto-generated catch block
-  						e.printStackTrace();
-  					}	
-  					
- 					
- 					
- 					M7NContact1Tier=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7NCON12", excelLabel.Contact_Tier);
- 					M7NContact2Tier=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7NCON13", excelLabel.Contact_Tier);
- 					M7NContact3Tier=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7NCON14", excelLabel.Contact_Tier);
- 					M7NContact4Tier=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7NCON15", excelLabel.Contact_Tier);
- 					M7NContact5Tier=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7NCON16", excelLabel.Contact_Tier);
-
- 					M7NContact1NextTouchpointDay=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7NCON12", excelLabel.NextTouchPointDay);
- 					M7NContact2NextTouchpointDay=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7NCON13", excelLabel.NextTouchPointDay);
- 					M7NContact3NextTouchpointDay=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7NCON14", excelLabel.NextTouchPointDay);
- 					M7NContact4NextTouchpointDay=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7NCON15", excelLabel.NextTouchPointDay);
- 					M7NContact5NextTouchpointDay=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7NCON16", excelLabel.NextTouchPointDay);
-
- 					
- 					try {
- 						dataFile.close();
- 					} catch (IOException e) {
- 						// TODO Auto-generated catch block
- 						e.printStackTrace();
- 					}
- 					try {
- 						dataWb.close();
- 					} catch (IOException e) {
- 						// TODO Auto-generated catch block
- 						e.printStackTrace();
-
- 					}
- 					break;
+            	  				
  					
 				
 		default:

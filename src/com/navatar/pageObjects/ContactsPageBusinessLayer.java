@@ -501,6 +501,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 								refresh(driver);
 								ThreadSleep(5000);
 							}
+							CommonLib.refresh(driver);
 							ele = getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 							click(driver, ele, RelatedTab.Details.toString(), action.SCROLLANDBOOLEAN);
 

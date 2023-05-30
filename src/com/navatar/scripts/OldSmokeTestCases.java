@@ -30,7 +30,6 @@ import org.openqa.selenium.remote.server.handler.SwitchToWindow;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import com.android.dx.gen.Local;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.pageObjects.BasePageBusinessLayer;

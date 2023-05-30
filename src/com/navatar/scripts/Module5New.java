@@ -41,7 +41,6 @@ import org.sikuli.script.Screen;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import com.android.dx.gen.Local;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
@@ -550,7 +549,7 @@ public class Module5New extends BaseLib {
 		String fileLocation[] = { ".\\AutoIT\\EditPage\\EventTab.PNG", ".\\AutoIT\\EditPage\\Q&ATab.PNG",
 				".\\AutoIT\\EditPage\\MECreatedBy.PNG" };
 
-		String EnhanceLightningGridImg = ".\\AutoIT\\EditPage\\NavatarSDG.PNG";
+		String EnhanceLightningGridImg = "C:\\Users\\Navatar\\git\\PE4.7Automation\\AutoIT\\EditPage\\NavatarSDG.PNG";
 
 		for (int i = 0; i < tabNames.length; i++) {
 			tabName = tabNames[i];

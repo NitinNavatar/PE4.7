@@ -10151,14 +10151,12 @@ public abstract class BasePage extends BaseLib {
 
 	}
 
-
 	@FindBy(xpath = "//li//lightning-icon[@icon-name='utility:copy_to_clipboard']")
 	private WebElement clipIconOnNavigation;
 
 	public WebElement getClipIconOnNavigation(int timeOut) {
 		return isDisplayed(driver, clipIconOnNavigation, "Visibility", timeOut, "clip icon on Navigation");
 	}
-	
 
 	@FindBy(xpath = "//li//span[text()='Clips']")
 	private WebElement clipTextFromNavigation;
@@ -10166,87 +10164,84 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getClipTextFromNavigation(int timeOut) {
 		return isDisplayed(driver, clipTextFromNavigation, "Visibility", timeOut, "clip text on Navigation");
 	}
-	
+
 	@FindBy(xpath = "//div[contains(@class,'panel-header')]//lightning-icon[@icon-name=\"utility:copy_to_clipboard\"]")
 	private WebElement clipIconOnPopup;
 
 	public WebElement getClipIconOnPopup(int timeOut) {
 		return isDisplayed(driver, clipIconOnPopup, "Visibility", timeOut, "clip icon on popup");
 	}
-	
+
 	@FindBy(xpath = "//div[contains(@class,'panel-header')]//h2[text()='Clips']")
 	private WebElement clipTextOnPopup;
 
 	public WebElement getClipTextOnPopup(int timeOut) {
 		return isDisplayed(driver, clipTextOnPopup, "Visibility", timeOut, "clip text on popup");
 	}
-	
+
 	@FindBy(xpath = "//div[contains(@class,'panel-header')]//button[@title='Minimize']")
 	private WebElement minimizeIconOnpopup;
 
 	public WebElement getMinimizeIconOnpopup(int timeOut) {
 		return isDisplayed(driver, minimizeIconOnpopup, "Visibility", timeOut, "minimize icon on popup");
 	}
-	
+
 	@FindBy(xpath = "//div[contains(@class,'panel-header')]//button[@title='Pop-out']")
 	private WebElement popupIconOnpopupOut;
 
 	public WebElement getPopOutIconOnpopup(int timeOut) {
 		return isDisplayed(driver, popupIconOnpopupOut, "Visibility", timeOut, "pop out icon on popup");
 	}
-	
+
 	@FindBy(xpath = "//div[contains(@class,'panel-header')]//button[@title='Pop-in']")
 	private WebElement popinIconOnpopup;
 
 	public WebElement getPopInIconOnpopup(int timeOut) {
 		return isDisplayed(driver, popinIconOnpopup, "Visibility", timeOut, "pop in icon on popup");
 	}
-	
+
 	@FindBy(xpath = "//div[@class='slds-utility-panel__body']//textarea")
 	private WebElement textareaOnPopup;
 
 	public WebElement getTextareaOnPopup(int timeOut) {
 		return isDisplayed(driver, textareaOnPopup, "Visibility", timeOut, "textarea on popup");
 	}
-	
+
 	@FindBy(xpath = "//div[@class='slds-utility-panel__body']//button[@title='Help']")
 	private WebElement helpIconOnPopup;
 
 	public WebElement getHelpIconOnPopup(int timeOut) {
 		return isDisplayed(driver, helpIconOnPopup, "Visibility", timeOut, "help icon on popup");
 	}
-	
-	
+
 	@FindBy(xpath = "//div[@class='slds-utility-panel__body']//lightning-icon[@title='Tag']")
 	private WebElement tagIconOnPopup;
 
 	public WebElement getTagIconOnPopup(int timeOut) {
 		return isDisplayed(driver, tagIconOnPopup, "Visibility", timeOut, "tag icon on popup");
 	}
-	
+
 	@FindBy(xpath = "//div[@class='slds-utility-panel__body']//span[@class='slds-pill']")
 	private WebElement sldspillOnPopup;
 
 	public WebElement getSldspillOnPopup(int timeOut) {
 		return isDisplayed(driver, sldspillOnPopup, "Visibility", timeOut, "slds pill icon on popup");
 	}
-	
+
 	@FindBy(xpath = "//div[@class='slds-utility-panel__body']//button[@title='Clear']")
 	private WebElement clearButtonOnPopup;
 
 	public WebElement getClearButtonOnPopup(int timeOut) {
 		return isDisplayed(driver, clearButtonOnPopup, "Visibility", timeOut, "Clear on popup");
 	}
-	
+
 	@FindBy(xpath = "//div[@class='slds-utility-panel__body']//button[@title='Clear']")
 	private WebElement saveButtonOnPopup;
 
 	public WebElement getSaveButtonOnPopup(int timeOut) {
 		return isDisplayed(driver, saveButtonOnPopup, "Visibility", timeOut, "Save on popup");
 	}
-	
-	
-	
+
 	@FindBy(xpath = "//h2[text()='Update Photo']/../..//button[text()='Save']")
 	private WebElement saveButton;
 
@@ -10255,7 +10250,6 @@ public abstract class BasePage extends BaseLib {
 
 	}
 
-	
 	@FindBy(xpath = "//h2[text()='New Event']/ancestor::div[contains(@class,'isModal inlinePanel')]//button[@title='Save' or text()='Save'or @name='SaveEdit']")
 	private WebElement eventSaveBtn;
 
@@ -10263,7 +10257,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, eventSaveBtn, "Visibility", timeOut, "Event save button");
 
 	}
-	
+
 	@FindBy(xpath = "//h2[contains(text(),'Edit')]/ancestor::div[contains(@class,'isModal inlinePanel')]//button[@title='Save' or text()='Save'or @name='SaveEdit']")
 	private WebElement editEventSaveBtn;
 
@@ -10271,8 +10265,23 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, editEventSaveBtn, "Visibility", timeOut, "Edit event save button");
 
 	}
-	
-	
-	
+
+	public WebElement downArrowOfGlobalSearch(String recordName, int timeOut) {
+		String xpath = "//a[text()='" + recordName + "']/ancestor::*/following-sibling::td//a[@role='button']";
+//
+//		try {
+//			return FindElement(driver, xpath, "downArrowOfGlobalSearch: " + recordName, action.SCROLLANDBOOLEAN, timeOut);
+//		} catch (StaleElementReferenceException e) {
+//			return FindElement(driver, xpath, "downArrowOfGlobalSearch: " + recordName, action.SCROLLANDBOOLEAN, timeOut);
+//		}
+		List<WebElement> arrows = FindElements(driver, xpath, "xpath").stream().filter(x -> x.isDisplayed())
+				.collect(Collectors.toList());
+		if (arrows.size() > 0) {
+			return arrows.get(0);
+		} else {
+			return null;
+		}
+
+	}
 
 }
