@@ -605,7 +605,7 @@ public class HomePage extends BasePageBusinessLayer {
 		return isDisplayed(driver, placementFeeTextBox, "Visibility", timeOut, "placement fee text box");
 	}
 
-	@FindBy(xpath = "//div[contains(@class,'windowViewMode-normal')]//iframe[@title='Commitment Creation']")
+	@FindBy(xpath = "//div[contains(@class,'windowViewMode-normal')]//iframe[contains(@title,'accessibility title')]")
 	private WebElement createCommitmentFrame_Lightning;
 
 	/**

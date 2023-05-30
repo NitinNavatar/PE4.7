@@ -365,9 +365,9 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	public WebElement findDeactivateLink(String projectName, String stage) {
 
 		String xpath = "//th[text()='" + stage + "']/preceding-sibling::td//a[contains(@title,'Deactivate')]";
-		WebElement ele = FindElement(driver, xpath, "deactivate", action.SCROLLANDBOOLEAN, 10);
+		WebElement ele = FindElement(driver, xpath, "deactivate", action.SCROLLANDBOOLEAN, 20);
 		scrollDownThroughWebelement(driver, ele, "deactivate link for " + stage);
-		return isDisplayed(driver, ele, "Visibility", 10, "deactivate " + stage);
+		return isDisplayed(driver, ele, "Visibility", 20, "deactivate " + stage);
 
 	}
 

@@ -1608,7 +1608,7 @@ public class Module6 extends BaseLib {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M6Deal2, 10)) {
 				if (click(driver, dp.getconvertToPortfolio(10), "convert to portfolio button", action.BOOLEAN)) {
 
-					if (click(driver, dp.getnextButton(10), "next button", action.BOOLEAN)) {
+					if (click(driver, dp.getnextButton(20), "next button", action.BOOLEAN)) {
 						if (dp.getconvertToPortfolioMessageRepeat(10) != null) {
 
 							String text = dp.getconvertToPortfolioMessageRepeat(10).getText();
@@ -1740,7 +1740,7 @@ public class Module6 extends BaseLib {
 									switchToFrame(driver, 10, setup.getFrame(PageName.RecordTypePortfolioCompany, 10));
 									ThreadSleep(5000);
 
-									WebElement ele = setup.getRecordTypeLabel(projectName, "Record Type Label", 10);
+									WebElement ele = setup.getRecordTypeLabel(projectName, "Record Type Label", 15);
 									JavascriptExecutor js = (JavascriptExecutor) driver;
 									js.executeScript("arguments[0].setAttribute('value','')", ele);
 									ele.sendKeys(rt);
@@ -2246,11 +2246,11 @@ public class Module6 extends BaseLib {
 								excelLabel.Stage.toString(), "stage", action.BOOLEAN)) {
 							if (setup.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
-								ThreadSleep(15000);
+								switchToFrame(driver, 20, setup.getFrame(PageName.PipelineCustomPage, 20));
+								ThreadSleep(20000);
 								WebElement ele = dp.findDeactivateLink(projectName, Stage.Closed.toString());
 								if (clickUsingJavaScript(driver, ele, "deactivate  closed", action.BOOLEAN)) {
-									ThreadSleep(5000);
+									ThreadSleep(10000);
 
 //									if (!isAlertPresent(driver)) {
 //										clickUsingJavaScript(driver, ele, "deactivate closed", action.SCROLLANDBOOLEAN);
