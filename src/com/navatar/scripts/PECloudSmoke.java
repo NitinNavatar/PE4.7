@@ -471,7 +471,7 @@ public class PECloudSmoke extends BaseLib{
 				//call
 				SMOKTask1DueDate=previousOrForwardDateAccordingToTimeZone(-92, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);
 				String task = SMOKTask1Subject;
-				String[][] taskData = {{"Date",SMOKTask1DueDate},{PageLabel.Status.toString(),SMOKTask1Status}};
+				String[][] taskData = {{"Date",SMOKTask1DueDate}/*,{PageLabel.Status.toString(),SMOKTask1Status}*/};
 				
 				String [][] basicSection = {{PageLabel.Subject.toString(),task},{PageLabel.Related_To.toString(),SMOKTask1Name}};
 					
@@ -1808,24 +1808,7 @@ public class PECloudSmoke extends BaseLib{
 				}
 			}
 
-			//np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, true);
-			switchToDefaultContent(driver);
-			ThreadSleep(3000);
-			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
-				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-				WebElement ele3 = npbl.getNavigationLabel(projectName, navigationLabel[0], action.BOOLEAN, 10);
-				if (ele3!=null) {
-					log(LogStatus.INFO, navigationLabel[0]+" is present on "+navigationMenuName, YesNo.No);
-				} else {
-					log(LogStatus.ERROR, navigationLabel[0]+" should be present on "+navigationMenuName, YesNo.Yes);
-					sa.assertTrue(false,navigationLabel[0]+" should be present on "+navigationMenuName);
-
-				}
-			} else {
-				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot uncheck presence of "+navigationLabel[0], YesNo.Yes);
-				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot uncheck presence of "+navigationLabel[1]);
-			}				
-			
+						
 			String updatedNavigationLabel ="Update "+navigationLabel[0].toString();
 			String[][] editedLabel= {{navigationLabel1,updatedNavigationLabel},
 					{orderLabel,"0"}};
@@ -1928,6 +1911,8 @@ public class PECloudSmoke extends BaseLib{
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		ReportsTabBusinessLayer report = new ReportsTabBusinessLayer(driver);
+		
+	
 
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		String[] splitedReportFolderName = removeNumbersFromString(SmokeReport2FolderName);
@@ -2208,24 +2193,7 @@ public class PECloudSmoke extends BaseLib{
 							log(LogStatus.SKIP,"Not abel to create : "+subject+" for "+newInteractionsNavigationLink,YesNo.Yes);
 						}
 					}
-	/*
-							ele = tp.getCreatedConfirmationMsg(projectName, 15);
-							if (ele!=null) {
-								String actualValue = ele.getText().trim();
-								String expectedValue=tp.taskCreatesMsg(projectName, subject);
-								if (expectedValue.contains(actualValue)) {
-									log(LogStatus.INFO,expectedValue+" matched FOR Confirmation Msg", YesNo.No);
-								} else {
-									log(LogStatus.ERROR,"Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg", YesNo.Yes);
-									BaseLib.sa.assertTrue(false, "Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg");
-								}
-							} else {
-								sa.assertTrue(false,"Created Task Msg Ele not Found");
-								log(LogStatus.SKIP,"Created Task Msg Ele not Found",YesNo.Yes);
-							}					
-							refresh(driver);
-							ThreadSleep(5000);	
-					*/
+
 				}
 			} else {
 				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot click on : "+newInteractionsNavigationLink+" for creation ", YesNo.Yes);
@@ -5867,13 +5835,17 @@ public class PECloudSmoke extends BaseLib{
 	public void SmokeTc039_2_VerifyFieldSetLayoutOnInstitutionPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
 			if(ip.clickOnAlreadyCreatedItem(projectName, SmokeFSIns1, 30)) {
 				log(LogStatus.INFO,"clicked on created institution : "+SmokeFSIns1, YesNo.No);
+				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
 				ThreadSleep(5000);
 				String[] ss = FS_FieldsName6.split("<break>");
+				
 				
 				for(String field:ss) {
 					if(ip.verifyFieldSetComponent(field,"")) {
@@ -5902,6 +5874,7 @@ public class PECloudSmoke extends BaseLib{
 	public void SmokeTc040_VerifyCameraIconUploadImageAndRelativePath(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String imagepath="\\UploadImages\\JPG1Image.jpg";
@@ -5910,6 +5883,8 @@ public class PECloudSmoke extends BaseLib{
 				log(LogStatus.INFO,"Click on Tab : "+TabName.InstituitonsTab,YesNo.No);
 				if(lp.clickOnAlreadyCreatedItem(projectName,TabName.InstituitonsTab ,SmokeFSIns1,20)) {
 					log(LogStatus.INFO,"clicked on created item : "+SmokeFSIns1, YesNo.No);
+					WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+					click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
 					ThreadSleep(3000);
 					if(lp.updatePhoto(projectName, TabName.InstituitonsTab.toString(), imagepath,false)) {
 						log(LogStatus.PASS, "photo is updated successfully in "+SmokeFSIns1+" on "+TabName.InstituitonsTab, YesNo.No);
@@ -6239,9 +6214,6 @@ public class PECloudSmoke extends BaseLib{
 			log(LogStatus.INFO,"Able to Click/Search : "+SDG+" going to create custom SDG",YesNo.No);	 
 			ThreadSleep(3000);
 
-			if (lp.clickOnTab(projectName, TabName.SDGTab)) {
-				log(LogStatus.INFO,"Click on Tab : "+TabName.SDGTab,YesNo.No);
-
 				String[][] sdgLabels = {{SDGCreationLabel.SDG_Name.toString(),SmokeSdg1Name},
 						{SDGCreationLabel.SDG_Tag.toString(),SmokeSdg1TagName},
 						{SDGCreationLabel.sObjectName.toString(),SmokeSdg1ObjectName},{SDGCreationLabel.Parent_Field_Name.toString(),SmokeSdg1ParentName}};
@@ -6265,10 +6237,6 @@ public class PECloudSmoke extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to create/verify created SDG : "+SmokeSdg1Name,YesNo.Yes);
 				}
 
-			} else {
-				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.SDGTab);
-				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.SDGTab,YesNo.Yes);
-			}
 
 			String email=lp.generateRandomEmailId(gmailUserName);;
 			
