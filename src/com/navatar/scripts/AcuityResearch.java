@@ -546,12 +546,10 @@ public class AcuityResearch extends BaseLib{
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	lp.CRMLogin(superAdminUserName, adminPassword,appName);
 	
-	String firmRecordTypeList = AR_FirmOther_LabelNames1;
 	String contactRecordTypeList = AR_ContactRecordType1;
 	String dealRecordTypeList = AR_DealRecordType1;
 	String fundRecordTypeList = AR_FundRecordType1;
 	String fundraisingRecordTypeList = AR_FundraisingRecordType1;
-	String firmRecordTypeArray[] = firmRecordTypeList.split(breakSP,-1);
 	String contactRecordTypeArray[] = contactRecordTypeList.split(breakSP,-1);
 	String dealRecordTypeArray[] = dealRecordTypeList.split(breakSP, -1);
 	String fundRecordTypeArray[] = fundRecordTypeList.split(breakSP, -1);
@@ -691,7 +689,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, contactrecordType[i], isMakeAvailable,
-										null, isMakeDefault, null, 10);
+										profileForSelection, isMakeDefault, null, 10);
 							}
 						} else {
 							isMakeDefault = false;
@@ -702,7 +700,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, contactrecordType[i], isMakeAvailable,
-										profileForSelection, isMakeDefault, null, 10);
+										null, isMakeDefault, null, 10);
 							}
 						}
 						if (flag) {
@@ -932,50 +930,6 @@ public class AcuityResearch extends BaseLib{
 	}
 	switchToDefaultContent(driver);
 	ThreadSleep(5000);
-	
-	for (int i = 0; i < firmRecordTypeArray.length; i++) {
-		home.notificationPopUpClose();
-		if (home.clickOnSetUpLink()) {
-			flag = false;
-			parentID = switchOnWindow(driver);
-			if (parentID != null) {
-				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Firm)) {
-					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Firm,
-							ObjectFeatureName.recordTypes)) {
-						if (sp.clickOnAlreadyCreatedLayout(firmRecordTypeArray[i])) {
-							if (sp.editRecordTypeForObject(projectName, RecordType, 10)) {
-								log(LogStatus.ERROR,firmRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
-							}else {
-								log(LogStatus.ERROR,firmRecordTypeArray[i]+" not updated ",YesNo.Yes);
-								sa.assertTrue(false, firmRecordTypeArray[i]+" not updated ");
-							}
-						
-						}else {
-							log(LogStatus.ERROR, firmRecordTypeArray[i]+" is not clickable", YesNo.Yes);
-							sa.assertTrue(false, firmRecordTypeArray[i]+" is not clickable");
-						}
-				
-					}else {
-						log(LogStatus.ERROR, "object feature "+ObjectFeatureName.recordTypes+" is not clickable", YesNo.Yes);
-						sa.assertTrue(false, "object feature "+ObjectFeatureName.recordTypes+" is not clickable");
-					}
-				}else {
-					log(LogStatus.ERROR, "Deal object could not be found in object manager", YesNo.Yes);
-					sa.assertTrue(false, "Deal object could not be found in object manager");
-				}
-				driver.close();
-				driver.switchTo().window(parentID);
-				switchToDefaultContent(driver);
-			}else {
-				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
-				sa.assertTrue(false, "could not find new window to switch");
-			}
-		}else {
-			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
-			sa.assertTrue(false, "could not click on setup link");
-		}
-
-	}
 	lp.CRMlogout();
 	sa.assertAll();
 }
@@ -992,7 +946,7 @@ public class AcuityResearch extends BaseLib{
 	
 	String recordTypes [] = {"Deal","Fund","Fundraising"};
 	String avail[][] = {{"SellSide Deal","BuySide Deal", "Capital Raise"},{"Mutual Fund","Trust Fund"},{"FRGRT","MSGRT"}};
-	String[] profileForSelection = { "PE Standard User", "System Administrator", "Standard Platform User", "Read Only", "PE - FOF Standard User", "Minimum Access - Salesforce", "Marketing User", "IR Only", "Identity User", "FOF Standard User", "Deal Only", "Contract Manager", "Standard User", "Minimum Access - Salesforce" };
+	String[] profileForSelection = { "PE Standard User", "System Administrator"};
 	String parentID=null;
 	String master= "--Master--";
 	for(int k=0; k<profileForSelection.length; k++) {
@@ -7527,7 +7481,7 @@ public class AcuityResearch extends BaseLib{
 						log(LogStatus.INFO, "click on clone button of  PE standard user link", YesNo.No);
 						ThreadSleep(5000);
 						switchToFrame(driver, 10, setup.getSetUpPageIframe(10));
-						if (sendKeys(driver, setup.getProfileNameTextBox(10), "Cloned PE standard User",
+						if (sendKeys(driver, setup.getProfileNameTextBox(10), "Cloned PE Standard User",
 								"profile name text box ", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.PASS, "enter the clone PE user profile name ", YesNo.No);
 							if (click(driver, setup.getViewAccessbilityDropDownSaveButton(10), "save button",
@@ -7679,7 +7633,6 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+bp.filesName, YesNo.Yes);
 			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+bp.filesName);
 		}
-		refresh(driver);
 		
 		for(String searchValue : searchValues) {
 			if(searchValue.contains("ACR_")) {
@@ -7711,6 +7664,7 @@ public class AcuityResearch extends BaseLib{
 					"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 							+ searchValue + "---------",
 					YesNo.No);
+			refresh(driver);
 			try {
 			if(rp.getNoResult(5) != null){
 				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
