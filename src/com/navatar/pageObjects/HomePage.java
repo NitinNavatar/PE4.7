@@ -2557,12 +2557,13 @@ public class HomePage extends BasePageBusinessLayer {
 		}
 	}
 
-	@FindBy(xpath = "//button[@title=\"Show more searchable objects\"]")
-	private WebElement globalSearchSideNavShowMoreButton;
+	//@FindBy(xpath = "//button[@title=\"Show more searchable objects\"]")
+	//private WebElement globalSearchSideNavShowMoreButton;
 
 	public WebElement globalSearchSideNavShowMoreButton(int timeOut) {
-		return isDisplayed(driver, globalSearchSideNavShowMoreButton, "Visibility", timeOut,
-				"globalSearchSideNavShowMoreButton");
+		return FindElement(driver, "//button[@title=\"Show more searchable objects\"]", "show more", action.SCROLLANDBOOLEAN, 30);
+	//	return isDisplayed(driver, globalSearchSideNavShowMoreButton, "Visibility", timeOut,
+	//			"globalSearchSideNavShowMoreButton");
 	}
 
 	@FindBy(xpath = "//div[contains(@class,\"noResultsTitle\")]")

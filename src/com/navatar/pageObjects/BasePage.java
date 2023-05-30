@@ -9350,7 +9350,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement editButtonOfSubjectLinkPopUpInInteractionSection(int timeOut) {
 
-		String xpath = "//section//lightning-layout-item[contains(@class,'slds-carousel__panel')]//lightning-button";
+		String xpath = "//section//lightning-layout-item[contains(@class,'slds-carousel__panel')]//lightning-button/button";
 		String xpath2 = "//button[text()='Edjidst']";
 		WebElement editButton = isDisplayed(driver, FindElement(driver, xpath, "editButton", action.BOOLEAN, timeOut),
 				"visibility", timeOut, "editButton", action.BOOLEAN);
@@ -10254,6 +10254,16 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, saveButton, "Visibility", timeOut, "UploadPhotoSaveButton");
 
 	}
+	
+	
+	@FindBy(xpath = "//button[text()='Save']")
+	private WebElement saveButtonOfAppPage;
+
+	public WebElement getSaveButtonOfAppPage(int timeOut) {
+		return isDisplayed(driver, saveButtonOfAppPage, "Visibility", timeOut, "save button");
+
+	}
+	
 	
 
 }
