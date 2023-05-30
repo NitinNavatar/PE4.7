@@ -1327,6 +1327,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 								if (click(driver, getPageLayoutSaveBtn(object.Global_Actions, 10),
 										"page layouts save button", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "Clicked on Save button", YesNo.No);
+									ThreadSleep(15000);
 
 								} else {
 									log(LogStatus.ERROR,

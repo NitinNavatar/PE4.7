@@ -1298,6 +1298,7 @@ public class ExcelUtils {
 				
 			}
 			
+			headerList.remove("Status");
 			
 			System.out.println("List1:"+String.valueOf(headerList));
 			System.out.println("List2:"+headervalue);

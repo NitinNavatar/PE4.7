@@ -1367,7 +1367,7 @@ public class HomePageBusineesLayer extends HomePage {
 		switchToFrame(driver, 30, getCreateFundraisingsFrame_Lighting(20));
 		String SmokeReportFolderName = reportName;
 		String SmokeReportName = templateName;
-		if (hp.clickOnTemplateForReportOnBulkEmail(environment, mode, SmokeReportFolderName, SmokeReportName)) {
+		if (hp.clickOnTemplateForReportOnBulkEmail(environment, mode, SmokeReportName,SmokeReportFolderName)) {
 			log(LogStatus.INFO, "Clicked On " + SmokeReportFolderName + " : " + SmokeReportName, YesNo.No);
 			List<String> result = hp.selectContactAndVerifyInBulkEmail(environment, mode, fname, lname,
 					contactSearchValue, searchContactInEmailProspectGrid, 10);

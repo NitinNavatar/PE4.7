@@ -605,7 +605,7 @@ public class HomePage extends BasePageBusinessLayer {
 		return isDisplayed(driver, placementFeeTextBox, "Visibility", timeOut, "placement fee text box");
 	}
 
-	@FindBy(xpath = "//div[contains(@class,'windowViewMode-normal')]//iframe[@title='Commitment Creation']")
+	@FindBy(xpath = "//div[contains(@class,'windowViewMode-normal')]//iframe[@title='Commitment Creation' or @title='accessibility title']")
 	private WebElement createCommitmentFrame_Lightning;
 
 	/**
@@ -1814,7 +1814,7 @@ public class HomePage extends BasePageBusinessLayer {
 		return ele;
 	}
 
-	@FindBy(xpath = "//h1//div[contains(@class,'slds-page-header__title')]/span")
+	@FindBy(xpath = "//h2[contains(@class,'slds-text-heading_small slds-hyphenate')]")
 	private WebElement headerNameText;
 
 	public WebElement getHeaderNameText(int timeOut) {

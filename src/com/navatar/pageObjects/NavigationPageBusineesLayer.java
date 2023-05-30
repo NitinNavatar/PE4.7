@@ -579,9 +579,11 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		String navigationField;
 		String navigationvalue;
 		WebElement ele;
+		clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Edit, 20);
 		for (String[] navigationFieldAndvalue : navigationFieldWithValues) {
 			navigationField = navigationFieldAndvalue[0];
 			navigationvalue = navigationFieldAndvalue[1];
+			
 			ele = getNavigationField(projectName, navigationField, action, 20);
 
 			if (navigationField.equalsIgnoreCase(CSVLabel.Navigation_Type.toString())) {
