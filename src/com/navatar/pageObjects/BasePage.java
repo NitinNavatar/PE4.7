@@ -10140,6 +10140,17 @@ public abstract class BasePage extends BaseLib {
 
 	}
 
+	public WebElement recordNameOnActivityPopupofInteraction(String recordName, int timeOut) {
+
+		String xpath = "//span[@class=\"slds-pill__label\" and text()='" + recordName + "']";
+		try {
+			return FindElement(driver, xpath, "record name: " + recordName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "record name: " + recordName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+
 	@FindBy(xpath = "//li//lightning-icon[@icon-name='utility:copy_to_clipboard']")
 	private WebElement clipIconOnNavigation;
 
@@ -10231,13 +10242,44 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, saveButtonOnPopup, "Visibility", timeOut, "Save on popup");
 	}
 
-	public WebElement recordNameOnActivityPopupofInteraction(String recordName, int timeOut) {
+	@FindBy(xpath = "//h2[text()='Update Photo']/../..//button[text()='Save']")
+	private WebElement saveButton;
 
-		String xpath = "//span[@class=\"slds-pill__label\" and text()='" + recordName + "']";
-		try {
-			return FindElement(driver, xpath, "record name: " + recordName, action.SCROLLANDBOOLEAN, timeOut);
-		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, xpath, "record name: " + recordName, action.SCROLLANDBOOLEAN, timeOut);
+	public WebElement getUploadPhotoSaveButton(int timeOut) {
+		return isDisplayed(driver, saveButton, "Visibility", timeOut, "UploadPhotoSaveButton");
+
+	}
+
+	@FindBy(xpath = "//h2[text()='New Event']/ancestor::div[contains(@class,'isModal inlinePanel')]//button[@title='Save' or text()='Save'or @name='SaveEdit']")
+	private WebElement eventSaveBtn;
+
+	public WebElement getEventSaveBtn(int timeOut) {
+		return isDisplayed(driver, eventSaveBtn, "Visibility", timeOut, "Event save button");
+
+	}
+
+	@FindBy(xpath = "//h2[contains(text(),'Edit')]/ancestor::div[contains(@class,'isModal inlinePanel')]//button[@title='Save' or text()='Save'or @name='SaveEdit']")
+	private WebElement editEventSaveBtn;
+
+	public WebElement getEditEventSaveBtn(int timeOut) {
+		return isDisplayed(driver, editEventSaveBtn, "Visibility", timeOut, "Edit event save button");
+
+	}
+
+	public WebElement downArrowOfGlobalSearch(String recordName, int timeOut) {
+		String xpath = "//a[text()='" + recordName + "']/ancestor::*/following-sibling::td//a[@role='button']";
+//
+//		try {
+//			return FindElement(driver, xpath, "downArrowOfGlobalSearch: " + recordName, action.SCROLLANDBOOLEAN, timeOut);
+//		} catch (StaleElementReferenceException e) {
+//			return FindElement(driver, xpath, "downArrowOfGlobalSearch: " + recordName, action.SCROLLANDBOOLEAN, timeOut);
+//		}
+		List<WebElement> arrows = FindElements(driver, xpath, "xpath").stream().filter(x -> x.isDisplayed())
+				.collect(Collectors.toList());
+		if (arrows.size() > 0) {
+			return arrows.get(0);
+		} else {
+			return null;
 		}
 
 	}

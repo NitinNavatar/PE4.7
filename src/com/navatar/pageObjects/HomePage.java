@@ -306,8 +306,18 @@ public class HomePage extends BasePageBusinessLayer {
 	 * @return the fundraisingContactPopUpApplyBtn
 	 */
 	public WebElement getFundraisingContactPopUpApplyBtn(int timeOut) {
-		return isDisplayed(driver, fundraisingContactPopUpApplyBtn, "Visibility", timeOut,
-				"Fundraising Contact PopUp Apply Btn");
+
+		List<WebElement> applybuttons = FindElements(driver,
+				"//div[contains(@class,'ContactAccess_fancybox')]//button[text()='Apply']",
+				"getFundraisingContactPopUpApplyBtn");
+
+		for (WebElement applyButton : applybuttons) {
+
+			if (isDisplayed(driver, applyButton, "Visibility", 3, "Fundraising Contact PopUp Apply Btn") != null) {
+				return applyButton;
+			}
+		}
+		return null;
 	}
 
 	@FindBy(xpath = "//a[@title='Create Fundraisings']")
@@ -595,7 +605,9 @@ public class HomePage extends BasePageBusinessLayer {
 		return isDisplayed(driver, placementFeeTextBox, "Visibility", timeOut, "placement fee text box");
 	}
 
+
 	@FindBy(xpath = "//div[contains(@class,'windowViewMode-normal')]//iframe[@title='accessibility title']")
+
 	private WebElement createCommitmentFrame_Lightning;
 
 	/**
@@ -1084,7 +1096,7 @@ public class HomePage extends BasePageBusinessLayer {
 				"create Fundraising Default Fundraising Values AddRows Link");
 	}
 
-	@FindBy(xpath = "//div[@class='flexipagePage']//span[text()='Minimize']")
+	@FindBy(xpath = "//div[contains(@class,'slds-is-open')]//span[text()='Minimize']")
 	private WebElement navatarQuickLinkMinimize_Lighting;
 
 	/**
@@ -1229,9 +1241,10 @@ public class HomePage extends BasePageBusinessLayer {
 		return NavigationMenuitem;
 	}
 
-	public List<WebElement> sdgGridFirstRowData(SDGGridName sdgGridName) {
+	public List<WebElement> sdgGridFirstRowData(SDGGridName sdgGridName, String dealName) {
 		String xpath = "//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='" + sdgGridName
-				+ "']/../../../../../..//tbody//tr[1]//td[@data-aura-class='navpeIISdgDatagridCell']";
+				+ "']/../../../../../..//tbody//tr//td//a[text()='" + dealName
+				+ "']/ancestor::tr//td[@data-aura-class='navpeIISdgDatagridCell']";
 		return FindElements(driver, xpath, sdgGridName + " grid first row data");
 	}
 
@@ -1611,13 +1624,16 @@ public class HomePage extends BasePageBusinessLayer {
 			int timeOut) {
 
 		String xpath = "//*[text()='" + dataName + "']/ancestor::tr//td[contains(@data-label,'"
-				+ field.replaceAll("_", " ") + "')]";
+				+ field.replaceAll("_", " ") + "')]//lightning-formatted-number";
 
 		WebElement ele = FindElement(driver, xpath, "edit button for " + field, action.SCROLLANDBOOLEAN, timeOut);
+		scrollDownThroughWebelementInCenter(driver, ele, "investment size");
+		ThreadSleep(2000);
 		mouseOverOperation(driver, ele);
 		ThreadSleep(2000);
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("return arguments[0].setAttribute('Styles','display: inline-block;')", ele);
+		// JavascriptExecutor js = (JavascriptExecutor) driver;
+		// js.executeScript("return arguments[0].setAttribute('Styles','display:
+		// inline-block;')", ele);
 		ThreadSleep(2000);
 		ele = FindElement(
 				driver, "//*[text()='" + dataName + "']/ancestor::tr//td[contains(@data-label,'"
@@ -2101,7 +2117,11 @@ public class HomePage extends BasePageBusinessLayer {
 
 	public List<WebElement> sdgGridAllHeadersLabelNameList(String sdgGridName) {
 
-		String xpath = "//a[text()='" + sdgGridName + "']/../../../../../following-sibling::div//table/thead/tr/th";
+		// Choose that Locators in which checkbox not included and Blank header not
+		// included
+
+		String xpath = "//a[text()='" + sdgGridName
+				+ "']/../../../../../following-sibling::div//table/thead/tr/th[contains(@class,'navpeIISdgSortableColumn')]";
 		List<WebElement> ele = FindElements(driver, xpath, "SDG grid header label name " + sdgGridName);
 
 		return ele;
@@ -2325,7 +2345,7 @@ public class HomePage extends BasePageBusinessLayer {
 	}
 
 	public List<WebElement> getClonnedSDGColumns(int timeOut) {
-		String xpath = "//span[@title='Override Label']//ancestor::table//tbody//td[4]//lst-formatted-text";
+		String xpath = "//table//tbody//tr/*[4]";
 		return FindElements(driver, xpath, "Clonned SDG Columns");
 	}
 

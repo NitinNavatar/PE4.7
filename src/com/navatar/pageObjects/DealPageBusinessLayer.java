@@ -365,9 +365,9 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	public WebElement findDeactivateLink(String projectName, String stage) {
 
 		String xpath = "//th[text()='" + stage + "']/preceding-sibling::td//a[contains(@title,'Deactivate')]";
-		WebElement ele = FindElement(driver, xpath, "deactivate", action.SCROLLANDBOOLEAN, 10);
+		WebElement ele = FindElement(driver, xpath, "deactivate", action.SCROLLANDBOOLEAN, 20);
 		scrollDownThroughWebelement(driver, ele, "deactivate link for " + stage);
-		return isDisplayed(driver, ele, "Visibility", 10, "deactivate " + stage);
+		return isDisplayed(driver, ele, "Visibility", 20, "deactivate " + stage);
 
 	}
 
@@ -1433,5 +1433,77 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return flag;
 
 	}
+
+	
+	public boolean createDealFromNavigation(String dealName, String companyName)
+	{
+		if(sendKeys(driver, getDealNameInputFromPopup(20), dealName, "deal name", action.SCROLLANDBOOLEAN))
+		{
+			log(LogStatus.INFO, "Deal Name : "+dealName+"  has been passed", YesNo.No);
+
+			if(click(driver, getnextButton(20), "Next button", action.SCROLLANDBOOLEAN))
+			{
+				log(LogStatus.INFO, "Clicked on Next button", YesNo.No);
+
+				if(click(driver, getYesButton(20), "Yes button", action.SCROLLANDBOOLEAN))
+				{
+					log(LogStatus.INFO, "Clicked on Yes button", YesNo.No);	
+
+					if(sendKeys(driver, getCompanyNameSearch(20), companyName, "company name", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "Company name : "+companyName+" has been passed", YesNo.No);
+						ThreadSleep(3000);
+						if(clickUsingJavaScript(driver, getCompanyNameSearch(companyName,30), "Company name"))
+						{
+							log(LogStatus.INFO, "Company name "+companyName+" has been selected", YesNo.No);
+
+							if(click(driver, getDealPopupSaveBtn(20), "save button", action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "Clicked on save button", YesNo.No);
+								if(getCreatedConfirmationMsg("",30)!=null)
+								{
+									log(LogStatus.INFO, "Deal : "+dealName+" has been created", YesNo.No);
+									return true;
+								}
+								else
+								{
+									log(LogStatus.ERROR, "Deal : "+dealName+" is not created", YesNo.No);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Company name "+companyName+" is not selected", YesNo.No);
+						}
+					}
+
+					else
+					{
+						log(LogStatus.ERROR, "Not able to pass the Company name : "+companyName, YesNo.No);
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Yes button", YesNo.No);	
+				}
+			}
+
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on Next button", YesNo.No);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to pass Deal Name : "+dealName, YesNo.No);
+		}
+		return false;
+	}
+
 
 }

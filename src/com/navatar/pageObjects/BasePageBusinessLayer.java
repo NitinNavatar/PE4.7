@@ -50,6 +50,7 @@ import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -1215,6 +1216,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case OfficeLocations:
 			viewList = "All";
 			break;
+
 		default:
 			return false;
 		}
@@ -1349,6 +1351,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		case FundraisingsTab:
 			tabName = "Fundraisings";
+			break;
+
+		case Interaction:
+			tabName = "Interactions";
 			break;
 
 		default:
@@ -2719,10 +2725,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		} else if (projectName.contains(ProjectName.PEEdge.toString()) && PageLabel.Account_Name.equals(pageLabel)) {
 			label = "Firm";
 		}
+		
 
 		WebElement ele1 = getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 		click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
-		ThreadSleep(2000);
+		ThreadSleep(5000);
 		xpath = "//span[text()='" + label + "']/../following-sibling::div//*[text()='" + labelValue + "']";
 
 		ele = FindElement(driver, xpath, label + " with Value " + labelValue, action.SCROLLANDBOOLEAN, 5);
@@ -2746,6 +2753,25 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 *              on page and passed
 	 */
 	public boolean verifyDate(String dateToCheck, String valueOnPage) {
+		
+		String[] splittedDate = dateToCheck.split("/");
+		char dayMonth = splittedDate[0].charAt(0);
+		char day = splittedDate[1].charAt(0);
+		String month;
+		if (dayMonth == '0') {
+			month = splittedDate[0].replaceAll("0", "");
+		} else {
+			month = splittedDate[0];
+		}
+		String finalDay;
+		if (day == '0') {
+			finalDay = splittedDate[1].replaceAll("0", "");
+		} else {
+			finalDay = splittedDate[1];
+		}
+
+		dateToCheck = month + "/" + finalDay + "/" + splittedDate[2];
+		
 		int size1 = valueOnPage.split("/").length;
 		int size2 = 0;
 		if (dateToCheck.contains(".")) {
@@ -2763,6 +2789,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				values = dateToCheck.split("/");
 
 			}
+			
+
 			appLog.info("Excel Date : " + dateToCheck);
 			appLog.info("Page Date : " + valueOnPage);
 			if (dates[0].contains(values[0]) && dates[1].contains(values[1])
@@ -3503,7 +3531,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		WebElement ele;
 		String related = relatedTab.toString().replace("_", " ");
 		if (projectName.contains(ProjectName.PE.toString()))
-			xpath = "//ul[@role='tablist']//a[text()='" + related + "']";
+			xpath = "//ul[@role='presentation']//span[text()='"+related+"']/ancestor::a";
 		else
 			xpath = "//li//*[@title='" + related + "' or text()='" + related + "']";
 
@@ -3562,6 +3590,26 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : " + btname);
 		return ele;
 	}
+	
+	
+	
+	public WebElement toggleSDGButtons1(String projectName, String toggleTab, ToggleButtonGroup btnName, action action,
+			boolean isInside, int timeOut) {
+		String btname = btnName.toString();
+		String xpath = "";
+		if (isInside) {
+
+			xpath = "//div//a[text()='" + toggleTab + "']";
+		} else {
+			xpath = "//div//a[text()='" + toggleTab + "']";
+
+		}
+		WebElement ele = FindElement(driver, xpath, toggleTab + " >> " + btname, action, timeOut);
+		scrollDownThroughWebelement(driver, ele, "Toggle Button : " + btname);
+		ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : " + btname);
+		return ele;
+	}
+
 
 	/**
 	 * @author Azhar Alam
@@ -3842,7 +3890,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						ThreadSleep(500);
 						ThreadSleep(1000);
 						if (!errorMsgCheck) {
-							if (click(driver, getRecordPageSettingSave(10), "Save button", action.BOOLEAN)) {
+							if (click(driver, getUploadPhotoSaveButton(10), "Save button", action.BOOLEAN)) {
 								log(LogStatus.PASS,
 										"clicked on save button and image is updtaed " + path + " on " + pageName,
 										YesNo.No);
@@ -3855,7 +3903,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									log(LogStatus.ERROR, "could not find id of img uploaded", YesNo.Yes);
 								}
 							} else {
-								log(LogStatus.PASS,
+								log(LogStatus.ERROR,
 										"Not able to click on save button and so cannot updtaed image from path " + path
 												+ " on " + pageName,
 										YesNo.No);
@@ -4705,7 +4753,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				ThreadSleep(3000);
 				ThreadSleep(5000);
 			} else {
-				appLog.error("Not able to Click on List View: "+viewList);
+				appLog.error("Not able to Click on List View: " + viewList);
 			}
 		} else {
 			appLog.error("Not able to select on Select View List : " + viewList);
@@ -4844,9 +4892,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 */
 	public boolean restoreValueFromRecycleBin(String projectName, String restoreItem) {
 		boolean flag = false;
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TabName tabName = TabName.RecycleBinTab;
+		String recycleTab = lp.getTabName(projectName, TabName.RecycleBinTab);
 		WebElement ele;
-		if (clickOnTab(projectName, tabName)) {
+		if (lp.openAppFromAppLauchner(60, recycleTab)) {
 			log(LogStatus.INFO, "Clicked on Tab : " + tabName + " For : " + restoreItem, YesNo.No);
 			ThreadSleep(1000);
 			clickOnAlreadyCreatedItem(projectName, tabName, restoreItem, 20);
@@ -6875,10 +6925,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			viewList = "All";
 			break;
 		case Object1Tab:
-			viewList = "All";
+			viewList = "All Firms";
 			break;
 		case Object2Tab:
-			viewList = "All";
+			viewList = "All Contacts";
 			break;
 		case Object3Tab:
 			viewList = "All";
@@ -9039,7 +9089,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 */
 
 	public void verifyColumnAscendingDescendingOrder(String sdgGridName, List<String> columnNames,
-			List<String> dateColumns, List<String> amountColumns, String FirstColumnAscYesOrNoByDefault) {
+			List<String> dateColumns, List<String> amountColumns, List<String> pickListColumnAndValues,
+			String FirstColumnAscYesOrNoByDefault) {
 
 		List<WebElement> headerList = sdgGridAllHeadersLabelNameList(sdgGridName);
 		List<String> columnDataText = headerList.stream().map(s -> s.getText()).collect(Collectors.toList()).stream()
@@ -9070,17 +9121,73 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (!dateColumns.contains(columnName)) {
 
 						if (!amountColumns.contains(columnName)) {
+							if (!pickListColumnAndValues.contains(columnName)) {
 
-							if (CommonLib.checkSorting(driver, SortOrder.Assecending,
-									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
-								log(LogStatus.PASS, "Verified " + SortOrder.Assecending + " Sorting on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								if (CommonLib.checkSorting(driver, SortOrder.Assecending,
+										sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+									log(LogStatus.PASS, "Verified " + SortOrder.Assecending + " Sorting on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								} else {
+									log(LogStatus.FAIL, SortOrder.Assecending + " Sorting not working on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+									sa.assertTrue(false, SortOrder.Assecending + " Sorting not working on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName);
+								}
 							} else {
-								log(LogStatus.FAIL, SortOrder.Assecending + " Sorting not working on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
-								sa.assertTrue(false, SortOrder.Assecending + " Sorting not working on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName);
+
+								for (String pickListColumnAndValue : pickListColumnAndValues) {
+									String[] pickListColumnAndValueArray = pickListColumnAndValue.split("<Section>");
+
+									String[] values = pickListColumnAndValueArray[1].split("<break>");
+
+									List<String> expectedPicklistColumnData = new ArrayList<String>();
+									List<String> actualPicklistColumnData = new ArrayList<String>();
+									List<String> customOrderOfPicklistColumnData = new ArrayList<String>();
+									expectedPicklistColumnData = actualPicklistColumnData;
+
+									List<WebElement> actualPicklistColumnDataWebElements = sdgGridColumnsDataList(
+											sdgGridName.toString(), columnIndex + 1);
+									actualPicklistColumnData = actualPicklistColumnDataWebElements.stream()
+											.map(pickList -> pickList.getText()).collect(Collectors.toList());
+
+									customOrderOfPicklistColumnData = Arrays.asList(values);
+									Collections.sort(expectedPicklistColumnData,
+											Comparator.comparingInt(customOrderOfPicklistColumnData::indexOf));
+
+									if (actualPicklistColumnData.size() > 0)
+
+									{
+										if (expectedPicklistColumnData.equals(actualPicklistColumnData)) {
+											log(LogStatus.PASS,
+													"Verified " + SortOrder.Assecending + " Sorting on SDG: "
+															+ sdgGridName.toString() + " for Column " + columnName,
+													YesNo.No);
+										} else {
+											log(LogStatus.FAIL,
+													SortOrder.Assecending + " Sorting not working on SDG: "
+															+ sdgGridName.toString() + " for Column " + columnName,
+													YesNo.No);
+											sa.assertTrue(false, SortOrder.Assecending + " Sorting not working on SDG: "
+													+ sdgGridName.toString() + " for Column " + columnName);
+										}
+									} else {
+
+										log(LogStatus.FAIL,
+												"Not Able to Check Sorting of type: " + SortOrder.Assecending
+														+ " on SDG: " + sdgGridName.toString() + " for Column "
+														+ columnName
+														+ " as either there is no data or locator has been changed",
+												YesNo.No);
+										sa.assertTrue(false,
+												"Not Able to Check Sorting of type: " + SortOrder.Assecending
+														+ " on SDG: " + sdgGridName.toString() + " for Column "
+														+ columnName
+														+ " as either there is no data or locator has been changed");
+									}
+
+								}
 							}
+
 						} else {
 
 							List<Integer> expectedAmount = new ArrayList<Integer>();
@@ -9155,16 +9262,70 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (!dateColumns.contains(columnName)) {
 						if (!amountColumns.contains(columnName)) {
 
-							if (CommonLib.checkSorting(driver, SortOrder.Decending,
-									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
-								log(LogStatus.PASS, "Verified " + SortOrder.Decending + " Sorting on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+							if (!pickListColumnAndValues.contains(columnName)) {
+
+								if (CommonLib.checkSorting(driver, SortOrder.Decending,
+										sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+									log(LogStatus.PASS, "Verified " + SortOrder.Decending + " Sorting on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								} else {
+									log(LogStatus.FAIL, SortOrder.Decending + " Sorting not working on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+									sa.assertTrue(false, SortOrder.Decending + " Sorting not working on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName);
+								}
+
 							} else {
-								log(LogStatus.FAIL, SortOrder.Decending + " Sorting not working on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
-								sa.assertTrue(false, SortOrder.Decending + " Sorting not working on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName);
+
+								for (String pickListColumnAndValue : pickListColumnAndValues) {
+									String[] pickListColumnAndValueArray = pickListColumnAndValue.split("<Section>");
+
+									String[] values = pickListColumnAndValueArray[1].split("<break>");
+
+									List<String> expectedPicklistColumnData = new ArrayList<String>();
+									List<String> actualPicklistColumnData = new ArrayList<String>();
+									List<String> customOrderOfPicklistColumnData = new ArrayList<String>();
+									expectedPicklistColumnData = actualPicklistColumnData;
+
+									List<WebElement> actualPicklistColumnDataWebElements = sdgGridColumnsDataList(
+											sdgGridName.toString(), columnIndex + 1);
+									actualPicklistColumnData = actualPicklistColumnDataWebElements.stream()
+											.map(pickList -> pickList.getText()).collect(Collectors.toList());
+
+									customOrderOfPicklistColumnData = Arrays.asList(values);
+									Collections.reverse(customOrderOfPicklistColumnData);
+									Collections.sort(expectedPicklistColumnData,
+											Comparator.comparingInt(customOrderOfPicklistColumnData::indexOf));
+
+									if (actualPicklistColumnData.size() > 0)
+
+									{
+										if (expectedPicklistColumnData.equals(actualPicklistColumnData)) {
+											log(LogStatus.PASS,
+													"Verified " + SortOrder.Decending + " Sorting on SDG: "
+															+ sdgGridName.toString() + " for Column " + columnName,
+													YesNo.No);
+										} else {
+											log(LogStatus.FAIL,
+													SortOrder.Decending + " Sorting not working on SDG: "
+															+ sdgGridName.toString() + " for Column " + columnName,
+													YesNo.No);
+											sa.assertTrue(false, SortOrder.Decending + " Sorting not working on SDG: "
+													+ sdgGridName.toString() + " for Column " + columnName);
+										}
+									} else {
+
+										log(LogStatus.FAIL, "Not Able to Check Sorting of type: " + SortOrder.Decending
+												+ " on SDG: " + sdgGridName.toString() + " for Column " + columnName
+												+ " as either there is no data or locator has been changed", YesNo.No);
+										sa.assertTrue(false, "Not Able to Check Sorting of type: " + SortOrder.Decending
+												+ " on SDG: " + sdgGridName.toString() + " for Column " + columnName
+												+ " as either there is no data or locator has been changed");
+									}
+
+								}
 							}
+
 						} else {
 
 							List<Integer> expectedAmount = new ArrayList<Integer>();
@@ -11408,7 +11569,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		if (fromNavigation == true) {
 			if (npbl.createNavPopUpMinimizeButton(2) != null) {
-				CommonLib.click(driver, npbl.createNavPopUpMinimizeButton(5), "Minimize", action.BOOLEAN);
+				CommonLib.click(driver, npbl.createNavPopUpMinimizeButton(2), "Minimize", action.BOOLEAN);
 			}
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, NavigationMenuItems.Create.toString(), action.BOOLEAN,
 					30)) {
@@ -11514,27 +11675,16 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 						xPath = "//div[label[text()='Notes']]//textarea";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
-						if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
-							log(LogStatus.INFO, "Clicked on " + labelName + " paragraph", YesNo.No);
-							ThreadSleep(500);
-							xPath = "//div[label[text()='Notes']]//textarea";
-							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
-									30);
-							if (sendKeys(driver, ele, value, labelName + " paragraph", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO, value + " has been passed on " + labelName + " paragraph",
-										YesNo.No);
+						if (sendKeys(driver, ele, value, labelName + " paragraph", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, value + " has been passed on " + labelName + " paragraph", YesNo.No);
 
-								CommonLib.ThreadSleep(500);
-							} else {
-								log(LogStatus.ERROR, value + " is not passed on " + labelName + " paragraph", YesNo.No);
-								sa.assertTrue(false, value + " is not passed on " + labelName + " paragraph");
-								return false;
-							}
+							CommonLib.ThreadSleep(500);
 						} else {
-							log(LogStatus.ERROR, "Not able to click on " + labelName + " paragraph", YesNo.No);
-							sa.assertTrue(false, "Not able to click on " + labelName + " paragraph");
+							log(LogStatus.ERROR, value + " is not passed on " + labelName + " paragraph", YesNo.No);
+							sa.assertTrue(false, value + " is not passed on " + labelName + " paragraph");
 							return false;
 						}
+
 					}
 
 				} else if (labelName.equalsIgnoreCase("Related To")) {
@@ -11893,7 +12043,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							} else {
 								log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
 								sa.assertTrue(false, "Not able to close the Note popup");
-								log(LogStatus.ERROR, "Activity timeline record is not created", YesNo.No);
+								log(LogStatus.ERROR, "								d", YesNo.No);
 								return false;
 							}
 						} else {
@@ -24466,7 +24616,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (temp.length() > 0) {
 			tempList.add(temp);
 		}
-		System.out.print(tempList);
+		
 
 		for (String splittedNote : tempList) {
 
@@ -24933,205 +25083,144 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return result;
 	}
-	
 
-	public ArrayList<String> verifyUIOfClipPopupFromNavigation()
-	{
-		ArrayList<String> result=new ArrayList<String>();		
-			if(getClipIconOnPopup(10)!=null)
-			{
-				log(LogStatus.INFO, "clip icon has been verified on icon popup", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "clip icon is not verified on icon popup", YesNo.No);	
-				result.add("clip icon is not verified on icon popup");
-			}
-			
-			if(getClipTextOnPopup(10)!=null)
-			{
-				log(LogStatus.INFO, "clip text has been verified on icon popup", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "clip text is not verified on icon popup", YesNo.No);	
-				result.add("clip text is not verified on icon popup");
-			}
-			
-			if(getMinimizeIconOnpopup(10)!=null)
-			{
-				log(LogStatus.INFO, "Minimize icon has been verified on icon popup", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Minimize icon is not verified on icon popup", YesNo.No);	
-				result.add("Minimize icon is not verified on icon popup");
-			}
-			if(getPopOutIconOnpopup(10)!=null)
-			{
-				log(LogStatus.INFO, "Pop-out icon has been verified on icon popup", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Pop-out icon is not verified on icon popup", YesNo.No);	
-				result.add("Pop-out icon is not verified on icon popup");
-			}
-			
-			if(getTextareaOnPopup(10)!=null)
-			{
-				log(LogStatus.INFO, "textarea has been verified on icon popup", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "textarea is not verified on icon popup", YesNo.No);	
-				result.add("textarea is not verified on icon popup");
-			}
-			
-			if(getHelpIconOnPopup(10)!=null)
-			{
-				log(LogStatus.INFO, "Help icon has been verified on icon popup", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Help icon is not verified on icon popup", YesNo.No);	
-				result.add("Help icon is not verified on icon popup");
-			}
-			
-			if(getTagIconOnPopup(10)!=null)
-			{
-				log(LogStatus.INFO, "Tag icon has been verified on icon popup", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Tag icon is not verified on icon popup", YesNo.No);	
-				result.add("Tag icon is not verified on icon popup");
-			}
-			
-			if(getSldspillOnPopup(10)!=null)
-			{
-				log(LogStatus.INFO, "Tagged record has been verified on icon popup", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Tagged record is not verified on icon popup", YesNo.No);	
-				result.add("Tagged record is not verified on icon popup");
-			}
-			
-			if(getClearButtonOnPopup(10)!=null)
-			{
-				log(LogStatus.INFO, "Clear button has been verified on icon popup", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Clear button is not verified on icon popup", YesNo.No);	
-				result.add("Clear button is not verified on icon popup");
-			}
-			
-			if(getSaveButtonOnPopup(10)!=null)
-			{
-				log(LogStatus.INFO, "Save button has been verified on icon popup", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Save button is not verified on icon popup", YesNo.No);	
-				result.add("Save button is not verified on icon popup");
-			}	
+	public ArrayList<String> verifyUIOfClipPopupFromNavigation() {
+		ArrayList<String> result = new ArrayList<String>();
+		if (getClipIconOnPopup(10) != null) {
+			log(LogStatus.INFO, "clip icon has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "clip icon is not verified on icon popup", YesNo.No);
+			result.add("clip icon is not verified on icon popup");
+		}
+
+		if (getClipTextOnPopup(10) != null) {
+			log(LogStatus.INFO, "clip text has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "clip text is not verified on icon popup", YesNo.No);
+			result.add("clip text is not verified on icon popup");
+		}
+
+		if (getMinimizeIconOnpopup(10) != null) {
+			log(LogStatus.INFO, "Minimize icon has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Minimize icon is not verified on icon popup", YesNo.No);
+			result.add("Minimize icon is not verified on icon popup");
+		}
+		if (getPopOutIconOnpopup(10) != null) {
+			log(LogStatus.INFO, "Pop-out icon has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Pop-out icon is not verified on icon popup", YesNo.No);
+			result.add("Pop-out icon is not verified on icon popup");
+		}
+
+		if (getTextareaOnPopup(10) != null) {
+			log(LogStatus.INFO, "textarea has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "textarea is not verified on icon popup", YesNo.No);
+			result.add("textarea is not verified on icon popup");
+		}
+
+		if (getHelpIconOnPopup(10) != null) {
+			log(LogStatus.INFO, "Help icon has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Help icon is not verified on icon popup", YesNo.No);
+			result.add("Help icon is not verified on icon popup");
+		}
+
+		if (getTagIconOnPopup(10) != null) {
+			log(LogStatus.INFO, "Tag icon has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Tag icon is not verified on icon popup", YesNo.No);
+			result.add("Tag icon is not verified on icon popup");
+		}
+
+		if (getSldspillOnPopup(10) != null) {
+			log(LogStatus.INFO, "Tagged record has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Tagged record is not verified on icon popup", YesNo.No);
+			result.add("Tagged record is not verified on icon popup");
+		}
+
+		if (getClearButtonOnPopup(10) != null) {
+			log(LogStatus.INFO, "Clear button has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Clear button is not verified on icon popup", YesNo.No);
+			result.add("Clear button is not verified on icon popup");
+		}
+
+		if (getSaveButtonOnPopup(10) != null) {
+			log(LogStatus.INFO, "Save button has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Save button is not verified on icon popup", YesNo.No);
+			result.add("Save button is not verified on icon popup");
+		}
 		return result;
 	}
 
-	
-	public ArrayList<String> verifyUIOfClipPopupAfterClickOfPopOut()
-	{
-		ArrayList<String> result=new ArrayList<String>();		
-			if(getClipIconOnPopup(10)!=null)
-			{
-				log(LogStatus.INFO, "clip icon has been verified on icon popup", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "clip icon is not verified on icon popup", YesNo.No);	
-				result.add("clip icon is not verified on icon popup");
-			}
-			
-			if(getClipTextOnPopup(10)!=null)
-			{
-				log(LogStatus.INFO, "clip text has been verified on icon popup", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "clip text is not verified on icon popup", YesNo.No);	
-				result.add("clip text is not verified on icon popup");
-			}
-					
-			if(getPopInIconOnpopup(10)!=null)
-			{
-				log(LogStatus.INFO, "Pop-out icon has been verified on icon popup", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Pop-out icon is not verified on icon popup", YesNo.No);	
-				result.add("Pop-out icon is not verified on icon popup");
-			}
-			
-			if(getTextareaOnPopup(10)!=null)
-			{
-				log(LogStatus.INFO, "textarea has been verified on icon popup", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "textarea is not verified on icon popup", YesNo.No);	
-				result.add("textarea is not verified on icon popup");
-			}
-			
-			if(getHelpIconOnPopup(10)!=null)
-			{
-				log(LogStatus.INFO, "Help icon has been verified on icon popup", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Help icon is not verified on icon popup", YesNo.No);	
-				result.add("Help icon is not verified on icon popup");
-			}
-			
-			if(getTagIconOnPopup(10)!=null)
-			{
-				log(LogStatus.INFO, "Tag icon has been verified on icon popup", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Tag icon is not verified on icon popup", YesNo.No);	
-				result.add("Tag icon is not verified on icon popup");
-			}
-			
-			if(getSldspillOnPopup(10)!=null)
-			{
-				log(LogStatus.INFO, "Tagged record has been verified on icon popup", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Tagged record is not verified on icon popup", YesNo.No);	
-				result.add("Tagged record is not verified on icon popup");
-			}
-			
-			if(getClearButtonOnPopup(10)!=null)
-			{
-				log(LogStatus.INFO, "Clear button has been verified on icon popup", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Clear button is not verified on icon popup", YesNo.No);	
-				result.add("Clear button is not verified on icon popup");
-			}
-			
-			if(getSaveButtonOnPopup(10)!=null)
-			{
-				log(LogStatus.INFO, "Save button has been verified on icon popup", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Save button is not verified on icon popup", YesNo.No);	
-				result.add("Save button is not verified on icon popup");
-			}	
+	public ArrayList<String> verifyUIOfClipPopupAfterClickOfPopOut() {
+		ArrayList<String> result = new ArrayList<String>();
+		if (getClipIconOnPopup(10) != null) {
+			log(LogStatus.INFO, "clip icon has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "clip icon is not verified on icon popup", YesNo.No);
+			result.add("clip icon is not verified on icon popup");
+		}
+
+		if (getClipTextOnPopup(10) != null) {
+			log(LogStatus.INFO, "clip text has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "clip text is not verified on icon popup", YesNo.No);
+			result.add("clip text is not verified on icon popup");
+		}
+
+		if (getPopInIconOnpopup(10) != null) {
+			log(LogStatus.INFO, "Pop-out icon has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Pop-out icon is not verified on icon popup", YesNo.No);
+			result.add("Pop-out icon is not verified on icon popup");
+		}
+
+		if (getTextareaOnPopup(10) != null) {
+			log(LogStatus.INFO, "textarea has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "textarea is not verified on icon popup", YesNo.No);
+			result.add("textarea is not verified on icon popup");
+		}
+
+		if (getHelpIconOnPopup(10) != null) {
+			log(LogStatus.INFO, "Help icon has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Help icon is not verified on icon popup", YesNo.No);
+			result.add("Help icon is not verified on icon popup");
+		}
+
+		if (getTagIconOnPopup(10) != null) {
+			log(LogStatus.INFO, "Tag icon has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Tag icon is not verified on icon popup", YesNo.No);
+			result.add("Tag icon is not verified on icon popup");
+		}
+
+		if (getSldspillOnPopup(10) != null) {
+			log(LogStatus.INFO, "Tagged record has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Tagged record is not verified on icon popup", YesNo.No);
+			result.add("Tagged record is not verified on icon popup");
+		}
+
+		if (getClearButtonOnPopup(10) != null) {
+			log(LogStatus.INFO, "Clear button has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Clear button is not verified on icon popup", YesNo.No);
+			result.add("Clear button is not verified on icon popup");
+		}
+
+		if (getSaveButtonOnPopup(10) != null) {
+			log(LogStatus.INFO, "Save button has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Save button is not verified on icon popup", YesNo.No);
+			result.add("Save button is not verified on icon popup");
+		}
 		return result;
 	}
 
@@ -25174,7 +25263,5 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 
 	}
-
-
 
 }

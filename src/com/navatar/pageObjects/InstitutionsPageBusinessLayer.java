@@ -310,12 +310,14 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 			for (String[] commitmentRowData : commitmentRowRecord) {
 				for (int i = 0; i < fundNamelist.size(); i++) {
 					String fund = fundNamelist.get(i).getText().trim();
-					String amount = commitmentAmountList.get(i).getText().trim();
+					String amount = Integer
+							.toString(Integer.parseInt(commitmentAmountList.get(i).getText().trim()) / 1000000);
 					String lp = LPList.get(i).getText().trim();
 
 					String CommitAmount = convertNumberAccordingToFormatWithCurrencySymbol(commitmentRowData[1],
 							"0,000.00");
 
+					System.out.println("Expected Converted Amount: " + CommitAmount);
 					if (commitmentRowData[0].contains(fund) && CommitAmount.contains(amount)
 							&& commitmentRowData[2].contains(lp)) {
 						/* && createdDate.contains(commitmentRowData[5] */
@@ -1204,6 +1206,27 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		String finalLabelName;
 		WebElement ele = null;
 		labelValue = labelValue.replace("_", " ");
+		if(labelValue.contains("/"))
+		{
+			String[] splittedDate = labelValue.split("/");
+			char dayMonth = splittedDate[0].charAt(0);
+			char day = splittedDate[1].charAt(0);
+			String month;
+			if (dayMonth == '0') {
+				month = splittedDate[0].replaceAll("0", "");
+			} else {
+				month = splittedDate[0];
+			}
+			String finalDay;
+			if (day == '0') {
+				finalDay = splittedDate[1].replaceAll("0", "");
+			} else {
+				finalDay = splittedDate[1];
+			}
+
+		 labelValue = month + "/" + finalDay + "/" + splittedDate[2];
+
+		}
 
 		ThreadSleep(2000);
 
@@ -1243,7 +1266,8 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 
 				if (finalLabelName.contains("Street") || finalLabelName.contains("City")
 						|| finalLabelName.contains("State") || finalLabelName.contains("Postal")
-						|| finalLabelName.contains("Zip") || finalLabelName.contains("Country")) {
+						|| finalLabelName.contains("Zip") || finalLabelName.contains("Country")
+						|| finalLabelName.contains("Postal Code")) {
 
 					if (finalLabelName.contains("Shipping") || finalLabelName.contains("Other Street")
 							|| finalLabelName.contains("Other City") || finalLabelName.contains("Other State")
@@ -1251,7 +1275,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 						xpath = "//span[text()='Shipping Address']/../following-sibling::div//a[contains(@title,'"
 								+ labelValue + "')]";
 					} else {
-						xpath = "//span[text()='Address']/../following-sibling::div//a[contains(@title,'" + labelValue
+						xpath = "//span[text()='Address']/parent::div/following-sibling::*//a/div[contains(text(),'" + labelValue
 								+ "')]";
 					}
 
@@ -1331,7 +1355,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 
 		if (finalLabelName.contains("Street") || finalLabelName.contains("City") || finalLabelName.contains("State")
 				|| finalLabelName.contains("Postal") || finalLabelName.contains("Zip")
-				|| finalLabelName.contains("Country")) {
+				|| finalLabelName.contains("Country") || finalLabelName.contains("Postal Code")) {
 
 			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 				CommonLib.refresh(driver);

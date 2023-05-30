@@ -37,6 +37,7 @@ import com.navatar.generic.EnumConstants.EmailTemplateType;
 import com.navatar.generic.EnumConstants.EnableDisable;
 import com.navatar.generic.EnumConstants.FolderAccess;
 import com.navatar.generic.EnumConstants.FundraisingContactPageTab;
+import com.navatar.generic.EnumConstants.IconType;
 import com.navatar.generic.EnumConstants.IndiviualInvestorFieldLabel;
 import com.navatar.generic.EnumConstants.InstitutionPageFieldLabelText;
 import com.navatar.generic.EnumConstants.Mode;
@@ -1033,7 +1034,7 @@ public class Module3New extends BaseLib {
 
 				SmokeReportName = "R2" + SmokeReportName;
 				if (report.createCustomReportForFolder(environment, mode, SmokeReportFolderName, ReportFormatName.Null,
-						SmokeReportName, SmokeReportName, SmokeReportType, null, SmokeReportShow, null,
+						SmokeReportName, SmokeReportName, SmokeReportType, field, SmokeReportShow, null,
 						SmokeReportRange, null, null)) {
 					appLog.info("Custom Report is created succesdfully : R2" + SmokeReportName);
 				} else {
@@ -1126,7 +1127,7 @@ public class Module3New extends BaseLib {
 						String lname = M3Contact1LName;
 						String folderName = EmailTemplate1_FolderName;
 						String emailTemplateName = EmailTemplate1_TemplateName;
-						if (hp.VerifyBulkEmailFunctionality(environment, mode, templateName, reportName, fname, lname,
+						if (hp.VerifyBulkEmailFunctionality(environment, mode, reportName, templateName, fname, lname,
 								lname, searchContactInEmailProspectGrid.Yes, folderName, emailTemplateName)) {
 							log(LogStatus.INFO, bulkActionNavigationLink + " functionality is verified succesfuly ",
 									YesNo.No);
@@ -1375,7 +1376,6 @@ public class Module3New extends BaseLib {
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		BasePageBusinessLayer bl = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		/* navigationMenuName = NavigationMenuItems.New_Interactions.toString(); */
 		navigationMenuName = NavigationMenuItems.Create.toString();
@@ -1395,172 +1395,306 @@ public class Module3New extends BaseLib {
 		String[][] dropDownLabelWithValues = new String[3][];
 		String[][] dropDownLabel1WithValues = new String[3][];
 
+		String[][] basicsectionCall = { { AMNNR_CallLabel1, M3Call1Subject }, { AMNNR_CallLabel2, "Demo Notes" },
+				{ AMNNR_CallLabel3, M3Contact1FName + " " + M3Contact1LName } };
+		String[][] advanceSectionCall = { { AMNNR_CallLabel4, todaysDate } };
+		String[][] taskSectionCall = { { AMNNR_TaskLabel1, "ABC 1" }, { AMNNR_TaskLabel4, "06/04/2020" },
+				{ AMNNR_TaskLabel5, "In Progress" } };
+
+		String[][] basicsectionTask = { { AMNNR_TaskLabel1, M3Task1Subject }, { AMNNR_TaskLabel2, "Demo Notes" },
+				{ AMNNR_TaskLabel3, M3Contact1FName + " " + M3Contact1LName } };
+		String[][] advanceSectionTask = { { AMNNR_TaskLabel4, todaysDate }, { AMNNR_TaskLabel5, M3Task1Status },
+				{ AMNNR_TaskLabel6, M3Task1Priority } };
+		String[][] taskSectionTask = { { AMNNR_TaskLabel1, "ABC 2" }, { AMNNR_TaskLabel4, "06/04/2020" },
+				{ AMNNR_TaskLabel5, "In Progress" } };
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		for (i = 0; i < newInteractionsNavigationLinks.length; i++) {
 			String newInteractionsNavigationLink = newInteractionsNavigationLinks[i];
 			flag = false;
-			String[][] basicsection = { { "Subject", M3Call1Subject },
-					{ "Related_To", M3Contact1FName + " " + M3Contact1LName } };
-			String[][] advanceSection = { { "Priority", "Normal" }, { "Due Date Only", todaysDate } };
-			String[][] taskSection = { { "Subject", "ABC" }, { "Due Date Only", "06/04/2020" },
-					{ "Status", "In Progress" } };
-			if (bl.createActivityTimeline(projectName, true, newInteractionsNavigationLink, basicsection,
-					advanceSection, null, null, false, null, null, null, null, null, null))
-//			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
-//				log(LogStatus.INFO, "Able to Click on "+navigationMenuName+" Going to click on : "+newInteractionsNavigationLink+" for creation ", YesNo.No);
 
-//				WebElement ele = npbl.getNavigationLabel(projectName, newInteractionsNavigationLink, action.BOOLEAN, 10);
-//				if (ele!=null && click(driver, ele, newInteractionsNavigationLink, action.BOOLEAN)) {
-//					log(LogStatus.INFO, "Click on "+newInteractionsNavigationLink+" so going for creation", YesNo.No);
-//					flag = true;
+			if (newInteractionsNavigationLink.equalsIgnoreCase(NewInteractions_DefaultValues.Task.toString())) {
+
+				subject = M3Task1Subject;
+				if (bl.createActivityTimeline(projectName, true, newInteractionsNavigationLink, basicsectionTask,
+						advanceSectionTask, taskSectionTask, null, false, null, null, null, null, null, null)) {
+					log(LogStatus.INFO, "Created " + newInteractionsNavigationLink + " of Subject: " + subject,
+							YesNo.No);
+
+				} else {
+					log(LogStatus.ERROR,
+							"Not able to Create " + newInteractionsNavigationLink + " of Subject: " + subject,
+							YesNo.Yes);
+					sa.assertTrue(false,
+							"Not able to Create " + newInteractionsNavigationLink + " of Subject: " + subject);
+				}
+
+				if (lp.clickOnTab(projectName, TabName.Interaction)) {
+					log(LogStatus.INFO, "Click on Tab : " + TabName.Interaction, YesNo.No);
+
+					ArrayList<String> subjectLinkPopUpNegativeResult = bl.verifySubjectLinkPopUpOnIntraction(driver,
+							subject, basicsectionTask, advanceSectionTask, IconType.Task, PageName.Interaction);
+
+					if (subjectLinkPopUpNegativeResult.isEmpty()) {
+						log(LogStatus.PASS, "------" + subject
+								+ " record is able to open popup after click on it and verify its data" + "------",
+								YesNo.No);
+
+					} else {
+						log(LogStatus.ERROR, "------" + subject + " record link popup is not verified, Reason: "
+								+ subjectLinkPopUpNegativeResult + "------", YesNo.Yes);
+						sa.assertTrue(false, "------" + subject + " record link popup is not verified, Reason: "
+								+ subjectLinkPopUpNegativeResult + "------");
+
+					}
+
+				} else {
+
+					log(LogStatus.ERROR, "Not Able to Open Tab: " + TabName.Interaction + " ,So Not able to verify: "
+							+ newInteractionsNavigationLink, YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not Able to Open Tab: " + TabName.Interaction
+							+ " ,So Not able to verify: " + newInteractionsNavigationLink);
+
+				}
+
+			}
+
+			else if (newInteractionsNavigationLink.equalsIgnoreCase(NewInteractions_DefaultValues.Call.toString())) {
+
+				subject = M3Call1Subject;
+				if (bl.createActivityTimeline(projectName, true, newInteractionsNavigationLink, basicsectionCall,
+						advanceSectionCall, taskSectionCall, null, false, null, null, null, null, null, null)) {
+					log(LogStatus.INFO, "Created " + newInteractionsNavigationLink + " of Subject: " + subject,
+							YesNo.No);
+
+				} else {
+					log(LogStatus.ERROR,
+							"Not able to Create " + newInteractionsNavigationLink + " of Subject: " + subject,
+							YesNo.Yes);
+					sa.assertTrue(false,
+							"Not able to Create " + newInteractionsNavigationLink + " of Subject: " + subject);
+				}
+
+				if (lp.clickOnTab(projectName, TabName.Interaction)) {
+					log(LogStatus.INFO, "Click on Tab : " + TabName.Interaction, YesNo.No);
+
+					ArrayList<String> subjectLinkPopUpNegativeResult = bl.verifySubjectLinkPopUpOnIntraction(driver,
+							subject, basicsectionCall, advanceSectionCall, IconType.Call, PageName.Interaction);
+
+					if (subjectLinkPopUpNegativeResult.isEmpty()) {
+						log(LogStatus.PASS, "------" + subject
+								+ " record is able to open popup after click on it and verify its data" + "------",
+								YesNo.No);
+
+					} else {
+						log(LogStatus.ERROR, "------" + subject + " record link popup is not verified, Reason: "
+								+ subjectLinkPopUpNegativeResult + "------", YesNo.Yes);
+						sa.assertTrue(false, "------" + subject + " record link popup is not verified, Reason: "
+								+ subjectLinkPopUpNegativeResult + "------");
+
+					}
+				} else {
+
+					log(LogStatus.ERROR, "Not Able to Open Tab: " + TabName.Interaction + " ,So Not able to verify: "
+							+ newInteractionsNavigationLink, YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not Able to Open Tab: " + TabName.Interaction
+							+ " ,So Not able to verify: " + newInteractionsNavigationLink);
+
+				}
+
+			}
+
+////			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+////				log(LogStatus.INFO, "Able to Click on "+navigationMenuName+" Going to click on : "+newInteractionsNavigationLink+" for creation ", YesNo.No);
+//
+////				WebElement ele = npbl.getNavigationLabel(projectName, newInteractionsNavigationLink, action.BOOLEAN, 10);
+////				if (ele!=null && click(driver, ele, newInteractionsNavigationLink, action.BOOLEAN)) {
+////					log(LogStatus.INFO, "Click on "+newInteractionsNavigationLink+" so going for creation", YesNo.No);
+////					flag = true;
+////				} else {
+////					log(LogStatus.ERROR, "Not Able to Click on "+newInteractionsNavigationLink+" so cannot create data related to this ", YesNo.Yes);
+////					sa.assertTrue(false,"Not Able to Click on "+newInteractionsNavigationLink+" so cannot create data related to this ");
+////
+////				}
+////				flag=true;
+////				if (flag) {
+////
+////					ele=cp.getCrossButtonForAlreadySelectedItem(projectName, PageName.CallPopUp, PageLabel.Assigned_To.toString(),false, adminUerName, action.SCROLLANDBOOLEAN, 20);
+////					if (ele!=null) {
+////						log(LogStatus.INFO, adminUerName+" Found For Label "+PageLabel.Assigned_To.toString(),YesNo.No);	
+////					} else {
+////						sa.assertTrue(false,adminUerName+" not Found For Label "+PageLabel.Assigned_To.toString());
+////						log(LogStatus.ERROR, adminUerName+" not Found For Label "+PageLabel.Assigned_To.toString(),YesNo.Yes);
+////
+////					}
+//
+//			if (i == 0) {
+//				subject = M3Call1Subject;
+////					status = M3Call1Status;
+////					priority = M3Cal11Priority;
+//
+//				String[][] task1BasicSection = { { AMNNR_CallLabel1, subject }, { AMNNR_CallLabel2, task1Notes },
+//						{ AMNNR_CallLabel3, relatedTo } };
+//
+//				String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate },
+//						{ AMNNR_CallLabel8, classification } };
+//
+//				if (home.globalSearchAndNavigate(subject, "Tasks", false, projectName)) {
+//
+//					log(LogStatus.INFO, "-----Verified Task named: " + subject + " found in Tasks Object-----",
+//							YesNo.No);
+//
+//					ArrayList<String> subjectLinkPopUpNegativeResult = bl.verifySubjectLinkPopUpOnIntraction(driver,
+//							subject, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
+//							PageName.Interaction);
+//
+//					if (subjectLinkPopUpNegativeResult.isEmpty()) {
+//						log(LogStatus.PASS, "------" + subject
+//								+ " record is able to open popup after click on it and verify its data" + "------",
+//								YesNo.No);
+//
+//					} else {
+//						log(LogStatus.ERROR, "------" + subject + " record link popup is not verified, Reason: "
+//								+ subjectLinkPopUpNegativeResult + "------", YesNo.Yes);
+//						sa.assertTrue(false, "------" + subject + " record link popup is not verified, Reason: "
+//								+ subjectLinkPopUpNegativeResult + "------");
+//
+//					}
+//
 //				} else {
-//					log(LogStatus.ERROR, "Not Able to Click on "+newInteractionsNavigationLink+" so cannot create data related to this ", YesNo.Yes);
-//					sa.assertTrue(false,"Not Able to Click on "+newInteractionsNavigationLink+" so cannot create data related to this ");
+//
+//					log(LogStatus.ERROR, "-----Task named: " + subject + " not found in Tasks Object-----", YesNo.Yes);
+//					BaseLib.sa.assertTrue(false, "-----Task named: " + subject + " not found in Tasks Object-----");
 //
 //				}
-//				flag=true;
-//				if (flag) {
 //
-//					ele=cp.getCrossButtonForAlreadySelectedItem(projectName, PageName.CallPopUp, PageLabel.Assigned_To.toString(),false, adminUerName, action.SCROLLANDBOOLEAN, 20);
-//					if (ele!=null) {
-//						log(LogStatus.INFO, adminUerName+" Found For Label "+PageLabel.Assigned_To.toString(),YesNo.No);	
-//					} else {
-//						sa.assertTrue(false,adminUerName+" not Found For Label "+PageLabel.Assigned_To.toString());
-//						log(LogStatus.ERROR, adminUerName+" not Found For Label "+PageLabel.Assigned_To.toString(),YesNo.Yes);
+////						String[][] dropDownLabel1WithValues1 = {{PageLabel.Subject.toString(),subject},
+////								{PageLabel.Name.toString(),contactNAme}};
+////
+////						dropDownLabel1WithValues=dropDownLabel1WithValues1;
+////
+////						String[][] dropDownLabelWithValues1 = {{PageLabel.Status.toString(),status},
+////								{PageLabel.Priority.toString(),priority}};
+////
+////						dropDownLabelWithValues=dropDownLabelWithValues1;
 //
-//					}
-
-				if (i == 0) {
-					subject = M3Call1Subject;
-					status = M3Call1Status;
-					priority = M3Cal11Priority;
-
-//						String[][] dropDownLabel1WithValues1 = {{PageLabel.Subject.toString(),subject},
-//								{PageLabel.Name.toString(),contactNAme}};
+//			} else if (i == 1) {
 //
-//						dropDownLabel1WithValues=dropDownLabel1WithValues1;
+//				subject = M3Meeting1Subject;
+//				String[][] dropDownLabel1WithValues2 = { { PageLabel.Subject.toString(), subject },
+//						{ PageLabel.Name.toString(), contactNAme } };
 //
-//						String[][] dropDownLabelWithValues1 = {{PageLabel.Status.toString(),status},
-//								{PageLabel.Priority.toString(),priority}};
+//				dropDownLabel1WithValues = dropDownLabel1WithValues2;
 //
-//						dropDownLabelWithValues=dropDownLabelWithValues1;
-
-				} else if (i == 1) {
-
-					subject = M3Meeting1Subject;
-					String[][] dropDownLabel1WithValues2 = { { PageLabel.Subject.toString(), subject },
-							{ PageLabel.Name.toString(), contactNAme } };
-
-					dropDownLabel1WithValues = dropDownLabel1WithValues2;
-
-					dropDownLabelWithValues = null;
-
-				} else {
-					subject = M3Task1Subject;
-					status = M3Task1Status;
-					priority = M3Task1Priority;
-
-					String[][] dropDownLabel1WithValues3 = { { PageLabel.Subject.toString(), subject },
-							{ PageLabel.Name.toString(), contactNAme } };
-
-					dropDownLabel1WithValues = dropDownLabel1WithValues3;
-					String[][] dropDownLabelWithValues3 = { { PageLabel.Status.toString(), status },
-							{ PageLabel.Priority.toString(), priority } };
-					dropDownLabelWithValues = dropDownLabelWithValues3;
-				}
-
-//					if (tp.enteringSubjectAndSelectDropDownValuesonTaskPopUp(projectName, PageName.TaskPage, subject, dropDownLabelWithValues, action.SCROLLANDBOOLEAN, 10)) {
-//						log(LogStatus.INFO, "Entered value to Subject Text Box ", YesNo.No);
-//						ThreadSleep(1000);
-//						if(i!=1) {
-//						if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), dueDate, PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
-//							log(LogStatus.INFO, "Entered value to Due Date Text Box", YesNo.No);
-//							ThreadSleep(1000);
-//						}else {
-//							log(LogStatus.ERROR, "Not able to enter value on duedate textbox "+newInteractionsNavigationLink, YesNo.Yes);
-//							sa.assertTrue(false,"Not able to enter value on duedate textbox "+newInteractionsNavigationLink );
-//						}
-//						}
-//						flag = cp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Name.toString(), TabName.TaskTab, contactNAme, action.SCROLLANDBOOLEAN, 10);		
-//						if (flag) {
-//							ele=cp.getCrossButtonForAlreadySelectedItem(projectName, PageName.TaskPage, PageLabel.Name.toString(),true, contactNAme, action.SCROLLANDBOOLEAN, 5);
-//							if (ele!=null) {
-//								log(LogStatus.INFO, contactNAme+" Found For Label "+PageLabel.Name.toString()+" at "+newInteractionsNavigationLink,YesNo.No);	
-//							} else {
-//								sa.assertTrue(false,contactNAme+" not Found For Label "+PageLabel.Name.toString()+" at "+newInteractionsNavigationLink);
-//								log(LogStatus.ERROR, contactNAme+" not Found For Label "+PageLabel.Name.toString()+" at "+newInteractionsNavigationLink,YesNo.Yes);
-//							}
-//						} else {
-//							sa.assertTrue(false,"Not Able to Select "+contactNAme+" For Label "+PageLabel.Name);
-//							log(LogStatus.SKIP,"Not Able to Select "+contactNAme+" For Label "+PageLabel.Name,YesNo.Yes);
+//				dropDownLabelWithValues = null;
 //
-//						}
-//						if (clickUsingJavaScript(driver, tp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-//							log(LogStatus.INFO,"successfully created : "+subject+" for "+newInteractionsNavigationLink,  YesNo.No);
-//							ExcelUtils.writeData(phase1DataSheetFilePath,dueDate, "Task1", excelLabel.Variable_Name, "M3CALL1", excelLabel.Due_Date);
-//							ele = tp.getCreatedConfirmationMsg(projectName, 15);
-//							if (ele!=null) {
-//								String actualValue = ele.getText().trim();
-//								String expectedValue=tp.taskCreatesMsg(projectName, subject);
-//								if (expectedValue.contains(actualValue)) {
-//									log(LogStatus.INFO,expectedValue+" matched FOR Confirmation Msg", YesNo.No);
-//								} else {
-//									log(LogStatus.ERROR,"Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg", YesNo.Yes);
-//									BaseLib.sa.assertTrue(false, "Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg");
-//								}
-//							} else {
-//								sa.assertTrue(false,"Created Task Msg Ele not Found");
-//								log(LogStatus.SKIP,"Created Task Msg Ele not Found",YesNo.Yes);
-//							}
-
-			if (i != 1) {
-				String[][] fieldsWithValues = { { PageLabel.Subject.toString(), subject },
-						{ PageLabel.Due_Date.toString(), dueDate }, { PageLabel.Name.toString(), contactNAme },
-						{ PageLabel.Status.toString(), status }, { PageLabel.Priority.toString(), priority } };
-
-				tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN,
-						10);
-			} else {
-				String[][] fieldsWithValues = { { PageLabel.Subject.toString(), subject },
-						{ PageLabel.Name.toString(), contactNAme } };
-
-				tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN,
-						10);
-			}
-//						}
-//						else {
-//							log(LogStatus.ERROR, "Save Button is not visible so could not be create "+newInteractionsNavigationLink, YesNo.Yes);
-//							sa.assertTrue(false,"Save Button is not visible so could not be create "+newInteractionsNavigationLink );
-//						}
+//			} else {
+//				subject = M3Task1Subject;
+//				status = M3Task1Status;
+//				priority = M3Task1Priority;
 //
+//				String[][] dropDownLabel1WithValues3 = { { PageLabel.Subject.toString(), subject },
+//						{ PageLabel.Name.toString(), contactNAme } };
 //
-//					}else {
-//						log(LogStatus.ERROR, "Subject textbox is not visible so could not be create "+newInteractionsNavigationLink, YesNo.Yes);
-//						sa.assertTrue(false,"Subject textbox is not visible so could not be create "+newInteractionsNavigationLink );
-//					}
-
-			if (hp.clickOnTab(environment, mode, TabName.ContactTab)) {
-				log(LogStatus.INFO, "clicked on Contact Tab", YesNo.No);
-				if (hp.clickOnAlreadyCreatedItem(projectName, contactNAme, 120)) {
-					log(LogStatus.INFO, "Clicked on " + contactNAme, YesNo.No);
-					ele = lp.moreStepsBtn(projectName, EnableDisable.Enable, 10);
-					click(driver, ele, "More Steps", action.BOOLEAN);
-
-					ele = tp.getActivityTimeLineItem2(projectName, PageName.Object2Page,
-							ActivityTimeLineItem.Expand_All, 10);
-					click(driver, ele, ActivityTimeLineItem.Expand_All.toString(), action.BOOLEAN);
-					tp.verifyActivityAtNextStep2(projectName, PageName.Object2Page, contactNAme, subject, null, dueDate,
-							false, null, false, "", 10);
-
-				} else {
-					log(LogStatus.ERROR, "Not able to Clicked on " + contactNAme, YesNo.Yes);
-					sa.assertTrue(false, "Not able to Clicked on " + contactNAme);
-				}
-			} else {
-				log(LogStatus.ERROR, "Not able to click on Contact tab so can not check created " + subject
-						+ " for contact " + contactNAme, YesNo.Yes);
-				sa.assertTrue(false, "Not able to click on Contact tab so can not check created " + subject
-						+ " for contact " + contactNAme);
-			}
+//				dropDownLabel1WithValues = dropDownLabel1WithValues3;
+//				String[][] dropDownLabelWithValues3 = { { PageLabel.Status.toString(), status },
+//						{ PageLabel.Priority.toString(), priority } };
+//				dropDownLabelWithValues = dropDownLabelWithValues3;
+//			}
+//
+////					if (tp.enteringSubjectAndSelectDropDownValuesonTaskPopUp(projectName, PageName.TaskPage, subject, dropDownLabelWithValues, action.SCROLLANDBOOLEAN, 10)) {
+////						log(LogStatus.INFO, "Entered value to Subject Text Box ", YesNo.No);
+////						ThreadSleep(1000);
+////						if(i!=1) {
+////						if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), dueDate, PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
+////							log(LogStatus.INFO, "Entered value to Due Date Text Box", YesNo.No);
+////							ThreadSleep(1000);
+////						}else {
+////							log(LogStatus.ERROR, "Not able to enter value on duedate textbox "+newInteractionsNavigationLink, YesNo.Yes);
+////							sa.assertTrue(false,"Not able to enter value on duedate textbox "+newInteractionsNavigationLink );
+////						}
+////						}
+////						flag = cp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Name.toString(), TabName.TaskTab, contactNAme, action.SCROLLANDBOOLEAN, 10);		
+////						if (flag) {
+////							ele=cp.getCrossButtonForAlreadySelectedItem(projectName, PageName.TaskPage, PageLabel.Name.toString(),true, contactNAme, action.SCROLLANDBOOLEAN, 5);
+////							if (ele!=null) {
+////								log(LogStatus.INFO, contactNAme+" Found For Label "+PageLabel.Name.toString()+" at "+newInteractionsNavigationLink,YesNo.No);	
+////							} else {
+////								sa.assertTrue(false,contactNAme+" not Found For Label "+PageLabel.Name.toString()+" at "+newInteractionsNavigationLink);
+////								log(LogStatus.ERROR, contactNAme+" not Found For Label "+PageLabel.Name.toString()+" at "+newInteractionsNavigationLink,YesNo.Yes);
+////							}
+////						} else {
+////							sa.assertTrue(false,"Not Able to Select "+contactNAme+" For Label "+PageLabel.Name);
+////							log(LogStatus.SKIP,"Not Able to Select "+contactNAme+" For Label "+PageLabel.Name,YesNo.Yes);
+////
+////						}
+////						if (clickUsingJavaScript(driver, tp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+////							log(LogStatus.INFO,"successfully created : "+subject+" for "+newInteractionsNavigationLink,  YesNo.No);
+////							ExcelUtils.writeData(phase1DataSheetFilePath,dueDate, "Task1", excelLabel.Variable_Name, "M3CALL1", excelLabel.Due_Date);
+////							ele = tp.getCreatedConfirmationMsg(projectName, 15);
+////							if (ele!=null) {
+////								String actualValue = ele.getText().trim();
+////								String expectedValue=tp.taskCreatesMsg(projectName, subject);
+////								if (expectedValue.contains(actualValue)) {
+////									log(LogStatus.INFO,expectedValue+" matched FOR Confirmation Msg", YesNo.No);
+////								} else {
+////									log(LogStatus.ERROR,"Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg", YesNo.Yes);
+////									BaseLib.sa.assertTrue(false, "Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg");
+////								}
+////							} else {
+////								sa.assertTrue(false,"Created Task Msg Ele not Found");
+////								log(LogStatus.SKIP,"Created Task Msg Ele not Found",YesNo.Yes);
+////							}
+//
+//			if (i != 1) {
+//				String[][] fieldsWithValues = { { PageLabel.Subject.toString(), subject },
+//						{ PageLabel.Due_Date.toString(), dueDate }, { PageLabel.Name.toString(), contactNAme },
+//						{ PageLabel.Status.toString(), status }, { PageLabel.Priority.toString(), priority } };
+//
+//				tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN,
+//						10);
+//			} else {
+//				String[][] fieldsWithValues = { { PageLabel.Subject.toString(), subject },
+//						{ PageLabel.Name.toString(), contactNAme } };
+//
+//				tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN,
+//						10);
+//			}
+////						}
+////						else {
+////							log(LogStatus.ERROR, "Save Button is not visible so could not be create "+newInteractionsNavigationLink, YesNo.Yes);
+////							sa.assertTrue(false,"Save Button is not visible so could not be create "+newInteractionsNavigationLink );
+////						}
+////
+////
+////					}else {
+////						log(LogStatus.ERROR, "Subject textbox is not visible so could not be create "+newInteractionsNavigationLink, YesNo.Yes);
+////						sa.assertTrue(false,"Subject textbox is not visible so could not be create "+newInteractionsNavigationLink );
+////					}
+//
+//			if (hp.clickOnTab(environment, mode, TabName.ContactTab)) {
+//				log(LogStatus.INFO, "clicked on Contact Tab", YesNo.No);
+//				if (hp.clickOnAlreadyCreatedItem(projectName, contactNAme, 120)) {
+//					log(LogStatus.INFO, "Clicked on " + contactNAme, YesNo.No);
+//					ele = lp.moreStepsBtn(projectName, EnableDisable.Enable, 10);
+//					click(driver, ele, "More Steps", action.BOOLEAN);
+//
+//					ele = tp.getActivityTimeLineItem2(projectName, PageName.Object2Page,
+//							ActivityTimeLineItem.Expand_All, 10);
+//					click(driver, ele, ActivityTimeLineItem.Expand_All.toString(), action.BOOLEAN);
+//					tp.verifyActivityAtNextStep2(projectName, PageName.Object2Page, contactNAme, subject, null, dueDate,
+//							false, null, false, "", 10);
+//
+//				} else {
+//					log(LogStatus.ERROR, "Not able to Clicked on " + contactNAme, YesNo.Yes);
+//					sa.assertTrue(false, "Not able to Clicked on " + contactNAme);
+//				}
+//			} else {
+//				log(LogStatus.ERROR, "Not able to click on Contact tab so can not check created " + subject
+//						+ " for contact " + contactNAme, YesNo.Yes);
+//				sa.assertTrue(false, "Not able to click on Contact tab so can not check created " + subject
+//						+ " for contact " + contactNAme);
+//			}
 		}
 //			} else {
 //				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot click on : "+newInteractionsNavigationLink+" for creation ", YesNo.Yes);
@@ -1720,7 +1854,7 @@ public class Module3New extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
+	
 	public void M3Tc008_VerifyTheFunctionlityOfMeetingTypeFieldInTaskPopup(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -1888,144 +2022,144 @@ public class Module3New extends BaseLib {
 		// New Interaction
 
 		/* navigationMenuName = NavigationMenuItems.New_Interactions.toString(); */
-		navigationMenuName = NavigationMenuItems.Create.toString();
-		String[] newInteractionsNavigationLinks1 = { NewInteractions_DefaultValues.Call.toString(),
-				/* NewInteractions_DefaultValues.Meeting.toString(), */
-				NewInteractions_DefaultValues.Task.toString() };
-		i = 0;
-		for (String newInteractionsNavigationLink : newInteractionsNavigationLinks1) {
-			flag = false;
-			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
-				log(LogStatus.INFO, "Able to Click on " + navigationMenuName + " Going to click on : "
-						+ newInteractionsNavigationLink + " for creation ", YesNo.No);
-				ele = npbl.getNavigationLabel(projectName, newInteractionsNavigationLink, action.BOOLEAN, 10);
-				if (ele != null && click(driver, ele, newInteractionsNavigationLink, action.BOOLEAN)) {
-					log(LogStatus.INFO, "Click on " + newInteractionsNavigationLink, YesNo.No);
-					flag = true;
-				} else {
-					log(LogStatus.ERROR, "Not Able to Click on " + newInteractionsNavigationLink, YesNo.Yes);
-					sa.assertTrue(false, "Not Able to Click on " + newInteractionsNavigationLink);
-
-				}
-				if (flag) {
-					ThreadSleep(10000);
-					driver.navigate().back();
-					ThreadSleep(5000);
-					actualUrl = getURL(driver, 30);
-					if (homeUrl.equalsIgnoreCase(actualUrl)) {
-						log(LogStatus.INFO,
-								newInteractionsNavigationLink
-										+ " After Click on Browser Back Buton page is redirected to previous page/url ",
-								YesNo.Yes);
-
-					} else {
-						log(LogStatus.ERROR, newInteractionsNavigationLink
-								+ " After Click on Browser Back Buton page is not redirected to previous page/url \n Actual : "
-								+ actualUrl + " \n Expeted : " + homeUrl, YesNo.Yes);
-						sa.assertTrue(false, newInteractionsNavigationLink
-								+ " After Click on Browser Back Buton page is not redirected to previous page/url \n Actual : "
-								+ actualUrl + " \n Expeted : " + homeUrl);
-					}
-					String tabName = lp.getTabName(projectName, TabName.HomeTab);
-
-					if (lp.getSelectedTab(projectName, tabName)) {
-						log(LogStatus.INFO,
-								newInteractionsNavigationLink
-										+ " After Click on Browser Back Buton Page is redirected to " + tabName,
-								YesNo.Yes);
-
-					} else {
-						log(LogStatus.ERROR,
-								newInteractionsNavigationLink
-										+ " After Click on Browser Back Buton Page is not redirected to " + tabName,
-								YesNo.Yes);
-						sa.assertTrue(false, newInteractionsNavigationLink
-								+ " After Click on Browser Back Buton Page is not redirected to " + tabName);
-					}
-
-				}
-			} else {
-				log(LogStatus.ERROR, "Not Able to Click on " + navigationMenuName + " so cannot click on : "
-						+ newInteractionsNavigationLink, YesNo.Yes);
-				sa.assertTrue(false, "Not Able to Click on " + navigationMenuName + " so cannot click on : "
-						+ newInteractionsNavigationLink);
-			}
-			ele = npbl.getCrossButtonForNavigationLabelPopuP(projectName, "", action.BOOLEAN, 2);
-			click(driver, ele, "", action.BOOLEAN);
-			i++;
-			ThreadSleep(2000);
-			refresh(driver);
-		}
-
-		// Create New
-
-		navigationMenuName = NavigationMenuItems.Create.toString();
-		String[] newInteractionsNavigationLinks2 = { CreateNew_DefaultValues.New_Deal.toString(),
-				CreateNew_DefaultValues.New_Contact.toString(), CreateNew_DefaultValues.New_Institution.toString() };
-		i = 0;
-		for (String newInteractionsNavigationLink : newInteractionsNavigationLinks2) {
-			flag = false;
-			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
-				log(LogStatus.INFO, "Able to Click on " + navigationMenuName + " Going to click on : "
-						+ newInteractionsNavigationLink + " for creation ", YesNo.No);
-				ele = npbl.getNavigationLabel(projectName, newInteractionsNavigationLink, action.BOOLEAN, 10);
-				if (ele != null && click(driver, ele, newInteractionsNavigationLink, action.BOOLEAN)) {
-					log(LogStatus.INFO, "Click on " + newInteractionsNavigationLink, YesNo.No);
-					flag = true;
-				} else {
-					log(LogStatus.ERROR, "Not Able to Click on " + newInteractionsNavigationLink, YesNo.Yes);
-					sa.assertTrue(false, "Not Able to Click on " + newInteractionsNavigationLink);
-
-				}
-				if (flag) {
-					ThreadSleep(10000);
-					driver.navigate().back();
-					ThreadSleep(5000);
-					actualUrl = getURL(driver, 30);
-					if (homeUrl.equalsIgnoreCase(actualUrl)) {
-						log(LogStatus.INFO,
-								newInteractionsNavigationLink
-										+ " After Click on Browser Back Buton page is redirected to previous page/url ",
-								YesNo.Yes);
-
-					} else {
-						log(LogStatus.ERROR, newInteractionsNavigationLink
-								+ " After Click on Browser Back Buton page is not redirected to previous page/url \n Actual : "
-								+ actualUrl + " \n Expeted : " + homeUrl, YesNo.Yes);
-						sa.assertTrue(false, newInteractionsNavigationLink
-								+ " After Click on Browser Back Buton page is not redirected to previous page/url \n Actual : "
-								+ actualUrl + " \n Expeted : " + homeUrl);
-					}
-					String tabName = lp.getTabName(projectName, TabName.HomeTab);
-
-					if (lp.getSelectedTab(projectName, tabName)) {
-						log(LogStatus.INFO,
-								newInteractionsNavigationLink
-										+ " After Click on Browser Back Buton Page is redirected to " + tabName,
-								YesNo.Yes);
-
-					} else {
-						log(LogStatus.ERROR,
-								newInteractionsNavigationLink
-										+ " After Click on Browser Back Buton Page is not redirected to " + tabName,
-								YesNo.Yes);
-						sa.assertTrue(false, newInteractionsNavigationLink
-								+ " After Click on Browser Back Buton Page is not redirected to " + tabName);
-					}
-
-				}
-			} else {
-				log(LogStatus.ERROR, "Not Able to Click on " + navigationMenuName + " so cannot click on : "
-						+ newInteractionsNavigationLink, YesNo.Yes);
-				sa.assertTrue(false, "Not Able to Click on " + navigationMenuName + " so cannot click on : "
-						+ newInteractionsNavigationLink);
-			}
-			ele = npbl.getCrossButtonForNavigationLabelPopuP(projectName, "", action.BOOLEAN, 2);
-			click(driver, ele, "", action.BOOLEAN);
-			i++;
-			ThreadSleep(2000);
-			refresh(driver);
-		}
+//		navigationMenuName = NavigationMenuItems.Create.toString();
+//		String[] newInteractionsNavigationLinks1 = { NewInteractions_DefaultValues.Call.toString(),
+//				/* NewInteractions_DefaultValues.Meeting.toString(), */
+//				NewInteractions_DefaultValues.Task.toString() };
+//		i = 0;
+//		for (String newInteractionsNavigationLink : newInteractionsNavigationLinks1) {
+//			flag = false;
+//			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+//				log(LogStatus.INFO, "Able to Click on " + navigationMenuName + " Going to click on : "
+//						+ newInteractionsNavigationLink + " for creation ", YesNo.No);
+//				ele = npbl.getNavigationLabel(projectName, newInteractionsNavigationLink, action.BOOLEAN, 10);
+//				if (ele != null && click(driver, ele, newInteractionsNavigationLink, action.BOOLEAN)) {
+//					log(LogStatus.INFO, "Click on " + newInteractionsNavigationLink, YesNo.No);
+//					flag = true;
+//				} else {
+//					log(LogStatus.ERROR, "Not Able to Click on " + newInteractionsNavigationLink, YesNo.Yes);
+//					sa.assertTrue(false, "Not Able to Click on " + newInteractionsNavigationLink);
+//
+//				}
+//				if (flag) {
+//					ThreadSleep(10000);
+//					driver.navigate().back();
+//					ThreadSleep(5000);
+//					actualUrl = getURL(driver, 30);
+//					if (homeUrl.equalsIgnoreCase(actualUrl)) {
+//						log(LogStatus.INFO,
+//								newInteractionsNavigationLink
+//										+ " After Click on Browser Back Buton page is redirected to previous page/url ",
+//								YesNo.Yes);
+//
+//					} else {
+//						log(LogStatus.ERROR, newInteractionsNavigationLink
+//								+ " After Click on Browser Back Buton page is not redirected to previous page/url \n Actual : "
+//								+ actualUrl + " \n Expeted : " + homeUrl, YesNo.Yes);
+//						sa.assertTrue(false, newInteractionsNavigationLink
+//								+ " After Click on Browser Back Buton page is not redirected to previous page/url \n Actual : "
+//								+ actualUrl + " \n Expeted : " + homeUrl);
+//					}
+//					String tabName = lp.getTabName(projectName, TabName.HomeTab);
+//
+//					if (lp.getSelectedTab(projectName, tabName)) {
+//						log(LogStatus.INFO,
+//								newInteractionsNavigationLink
+//										+ " After Click on Browser Back Buton Page is redirected to " + tabName,
+//								YesNo.Yes);
+//
+//					} else {
+//						log(LogStatus.ERROR,
+//								newInteractionsNavigationLink
+//										+ " After Click on Browser Back Buton Page is not redirected to " + tabName,
+//								YesNo.Yes);
+//						sa.assertTrue(false, newInteractionsNavigationLink
+//								+ " After Click on Browser Back Buton Page is not redirected to " + tabName);
+//					}
+//
+//				}
+//			} else {
+//				log(LogStatus.ERROR, "Not Able to Click on " + navigationMenuName + " so cannot click on : "
+//						+ newInteractionsNavigationLink, YesNo.Yes);
+//				sa.assertTrue(false, "Not Able to Click on " + navigationMenuName + " so cannot click on : "
+//						+ newInteractionsNavigationLink);
+//			}
+//			ele = npbl.getCrossButtonForNavigationLabelPopuP(projectName, "", action.BOOLEAN, 2);
+//			click(driver, ele, "", action.BOOLEAN);
+//			i++;
+//			ThreadSleep(2000);
+//			refresh(driver);
+//		}
+//
+//		// Create New
+//
+//		navigationMenuName = NavigationMenuItems.Create.toString();
+//		String[] newInteractionsNavigationLinks2 = { CreateNew_DefaultValues.New_Deal.toString(),
+//				CreateNew_DefaultValues.New_Contact.toString(), CreateNew_DefaultValues.New_Institution.toString() };
+//		i = 0;
+//		for (String newInteractionsNavigationLink : newInteractionsNavigationLinks2) {
+//			flag = false;
+//			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+//				log(LogStatus.INFO, "Able to Click on " + navigationMenuName + " Going to click on : "
+//						+ newInteractionsNavigationLink + " for creation ", YesNo.No);
+//				ele = npbl.getNavigationLabel(projectName, newInteractionsNavigationLink, action.BOOLEAN, 10);
+//				if (ele != null && click(driver, ele, newInteractionsNavigationLink, action.BOOLEAN)) {
+//					log(LogStatus.INFO, "Click on " + newInteractionsNavigationLink, YesNo.No);
+//					flag = true;
+//				} else {
+//					log(LogStatus.ERROR, "Not Able to Click on " + newInteractionsNavigationLink, YesNo.Yes);
+//					sa.assertTrue(false, "Not Able to Click on " + newInteractionsNavigationLink);
+//
+//				}
+//				if (flag) {
+//					ThreadSleep(10000);
+//					driver.navigate().back();
+//					ThreadSleep(5000);
+//					actualUrl = getURL(driver, 30);
+//					if (homeUrl.equalsIgnoreCase(actualUrl)) {
+//						log(LogStatus.INFO,
+//								newInteractionsNavigationLink
+//										+ " After Click on Browser Back Buton page is redirected to previous page/url ",
+//								YesNo.Yes);
+//
+//					} else {
+//						log(LogStatus.ERROR, newInteractionsNavigationLink
+//								+ " After Click on Browser Back Buton page is not redirected to previous page/url \n Actual : "
+//								+ actualUrl + " \n Expeted : " + homeUrl, YesNo.Yes);
+//						sa.assertTrue(false, newInteractionsNavigationLink
+//								+ " After Click on Browser Back Buton page is not redirected to previous page/url \n Actual : "
+//								+ actualUrl + " \n Expeted : " + homeUrl);
+//					}
+//					String tabName = lp.getTabName(projectName, TabName.HomeTab);
+//
+//					if (lp.getSelectedTab(projectName, tabName)) {
+//						log(LogStatus.INFO,
+//								newInteractionsNavigationLink
+//										+ " After Click on Browser Back Buton Page is redirected to " + tabName,
+//								YesNo.Yes);
+//
+//					} else {
+//						log(LogStatus.ERROR,
+//								newInteractionsNavigationLink
+//										+ " After Click on Browser Back Buton Page is not redirected to " + tabName,
+//								YesNo.Yes);
+//						sa.assertTrue(false, newInteractionsNavigationLink
+//								+ " After Click on Browser Back Buton Page is not redirected to " + tabName);
+//					}
+//
+//				}
+//			} else {
+//				log(LogStatus.ERROR, "Not Able to Click on " + navigationMenuName + " so cannot click on : "
+//						+ newInteractionsNavigationLink, YesNo.Yes);
+//				sa.assertTrue(false, "Not Able to Click on " + navigationMenuName + " so cannot click on : "
+//						+ newInteractionsNavigationLink);
+//			}
+//			ele = npbl.getCrossButtonForNavigationLabelPopuP(projectName, "", action.BOOLEAN, 2);
+//			click(driver, ele, "", action.BOOLEAN);
+//			i++;
+//			ThreadSleep(2000);
+//			refresh(driver);
+//		}
 
 		lp.CRMlogout();
 		sa.assertAll();
@@ -3583,6 +3717,7 @@ public class Module3New extends BaseLib {
 				log(LogStatus.INFO, "Click on Tab : " + tabCustomObj, YesNo.No);
 				if (click(driver, lp.getNewButton(projectName, 90), "new button", action.BOOLEAN)) {
 					log(LogStatus.SKIP, "Click on New Button", YesNo.Yes);
+					CommonLib.refresh(driver);
 					for (int i = 0; i < recordTypeArray.length; i++) {
 						ele = npbl.getRadioButtonforRecordTypeAtAccount(recordTypeArray[i], 30);
 						if (ele != null) {

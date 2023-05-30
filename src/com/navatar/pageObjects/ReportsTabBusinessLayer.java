@@ -267,7 +267,7 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 													"//div[@id='fieldsTree']//span[text()='" + value + "']",
 													"Drag Field : " + value.toString(), action.SCROLLANDBOOLEAN, 10);
 											WebElement dropLocation = FindElement(driver,
-													"(//div[@id=\"previewPanelGrid\"]//tr)[1]",
+													"//div[@id='gridViewScrollpreviewPanelGrid']",
 													"Drop Location Salutation", action.SCROLLANDBOOLEAN, 10);
 
 											if (dragNDropOperation(driver, dragEle, dropLocation)) {
@@ -945,7 +945,7 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 
 							WebElement cusomFilterValueEle = FindElement(driver,
 
-									"//div[@id=\"report-main\"]/div//div[@id=\"wave-tooltip\"]/following-sibling::*//span[@title=\""
+									"//div[@id=\"report-main\"]/following-sibling::*//span[@title=\""
 											+ customFieldDrpDwnVal + "\"]/ancestor::li/span",
 									"Range Filter value : " + customFieldDrpDwnVal, action.SCROLLANDBOOLEAN, 15);
 							CommonLib.ThreadSleep(2000);

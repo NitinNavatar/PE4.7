@@ -73,6 +73,7 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		driver.get("https://" + URL);
+
 		sendKeys(driver, getUserNameTextBox(20), username, "Username Text Box", action.BOOLEAN);
 		sendKeys(driver, getPasswordTextBox(20), password, "Password Text Box", action.BOOLEAN);
 		click(driver, getLoginButton(20), "Login Button", action.BOOLEAN);
@@ -134,12 +135,12 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		driver.get("https://" + URL);
+
 		sendKeys(driver, getUserNameTextBox(20), username, "Username Text Box", action.BOOLEAN);
 		sendKeys(driver, getPasswordTextBox(20), password, "Password Text Box", action.BOOLEAN);
 		click(driver, getLoginButton(20), "Login Button", action.BOOLEAN);
 		click(driver, getLightingCloseButton(10), "Lighting Pop-Up Close Button.", action.BOOLEAN);
 		ThreadSleep(1000);
-
 
 		String mode = ExcelUtils.readDataFromPropertyFile("Mode");
 
@@ -222,6 +223,7 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 	/*******************************
 	 * Activity Association
 	 ****************************/
+
 	/**
 	 * @author Akul Bhutani
 	 * @param environment

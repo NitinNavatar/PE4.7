@@ -133,7 +133,7 @@ public class EnumConstants {
 		Task_Subject, Task_Status, User_Name, OrgPassword, Password, Participants, Tags, MeetingAndCallsHeader,
 		ValidationRuleErrorMsg, ValidationRuleErrorMsgLocation, CreateNewRecordPopUp, AddContactsToDealTeamPopUp,
 		AddContactsToFundraisingPopup, Classification, ValidationRuleFormula, ParticipantRecord,
-		ParticipantRecordObject, TagsRecord, TagsObject, Tab_Name, Record_Name, RecordName, ObjectName;
+		ParticipantRecordObject, TagsRecord, TagsObject, Tab_Name, Record_Name, RecordName, ObjectName,NextTouchPointDay,NextTouchPointDate;
 
 	};
 
@@ -216,7 +216,7 @@ public class EnumConstants {
 		ReportsTab, Correspondence_Lists, LimitedPartner, CompaniesTab, TaskRayTab, TaskRay, TestCustomObjectTab,
 		TaskTab, Other, Object1Tab, Object2Tab, Object3Tab, Object4Tab, RecycleBinTab, SDGTab, DealTab, Object5Tab,
 		Object6Tab, AttendeeTab, Object7Tab, Entities, Deals, Marketing_Events, Events, Deal_Team, Financing,
-		Object8Tab, ContactTab, Deal, Acuity, ThemesTab, ClipsTab;
+		Object8Tab, ContactTab, Deal, Acuity, ThemesTab, ClipsTab,Interaction;
 	}
 
 	public static enum Mode {
@@ -1203,40 +1203,47 @@ public class EnumConstants {
 		Fundraising_Information, Additional_Information, Fields_for_New_Limited_Partner, Fields_for_New_Partnership
 	};
 
-	public static enum RevertToDefaultPopUpButton {
-		YesButton, NoButton, CrossIcon
-	};
 
-	public static enum ShowMoreActionDropDownList {
-		New_Task, New_Call, Edit, Delete, DS, New_Meeting, LogCaLLWithMultiple {
-			@Override
-			public String toString() {
-				return "Log a Call with Multiple Associations";
-			}
-		},
-		NewTaskWithMultiple {
-			@Override
-			public String toString() {
-				return "New Task with Multiple Associations";
-			}
+public static enum RevertToDefaultPopUpButton {
+	YesButton, NoButton, CrossIcon
+};
 
-		},
-		Contact_Transfer, Change_Date, Change_Record_Type, Change_Priority, Change_Status, Edit_Comments, New_Attendee,
-		New, New_Referral, New_Financing, Create_Distribution, Create_Drawdown, New_Partnership, New_Fundraising,
-		Bulk_Fundraising, New_Fundraising_Contact, Create_Commitments, Clone, Change_Owner, Sharing, Sharing_Hierarchy,
-		Printable_View, Send_Distribution_Notice, Send_Capital_Call_Notices, New_Affiliation, New_Client, New_Contact,
-		New_Commitment, New_Advisor, New_Deal, New_Investor, Add_Prospect, Email_Prospects, Send_Distribution_Notices,
-		Send_Distribution_Notices_Button
+public static enum ShowMoreActionDropDownList {
+	New_Task, New_Call, Edit, Delete, DS, New_Meeting, LogCaLLWithMultiple {
+		@Override
+		public String toString() {
+			return "Log a Call with Multiple Associations";
+		}
+	},
+	NewTaskWithMultiple {
+		@Override
+		public String toString() {
+			return "New Task with Multiple Associations";
+		}
 
-	};
+	}, Contact_Transfer,Change_Date,Change_Record_Type,Change_Priority,Change_Status,Edit_Comments,New_Attendee
+	,New, New_Referral,New_Financing,Create_Distribution, Create_Drawdown, New_Partnership, New_Fundraising, Bulk_Fundraising, New_Fundraising_Contact, 
+	Create_Commitments, Clone,Change_Owner,Sharing,Sharing_Hierarchy, Printable_View,Send_Distribution_Notice,Send_Capital_Call_Notices,
 
-	public static enum IndiviualInvestorSectionsName {
-		Contact_Information, Address_Information, Additional_Information;
-	};
+	New_Affiliation,New_Client,New_Contact ,New_Commitment,New_Advisor,New_Deal,New_Investor, Add_Prospect, Email_Prospects, Send_Distribution_Notices, Send_Distribution_Notices_Button,
+	convertToPortfolio
+	{
+		@Override
+		public String toString() {
+			return "Convert to Portfolio";
+		}
+	}
 
-	public static enum IndiviualInvestorFieldLabel {
-		First_Name, Last_Name, Contact_Description, Business_Phone, Business_Fax, Mobile_Phone, Email, Mailing_Street,
-		Mailing_City, Mailing_State {
+};
+		
+	public static enum IndiviualInvestorSectionsName{
+		Contact_Information,Address_Information,Additional_Information;
+				};
+	
+	public static enum IndiviualInvestorFieldLabel{
+		First_Name,Last_Name,Contact_Description,Business_Phone,Business_Fax,Mobile_Phone,Email,Mailing_Street,Mailing_City,
+		Mailing_State{
+
 			@Override
 			public String toString() {
 				return "Mailing State/Province";
@@ -1467,12 +1474,9 @@ public class EnumConstants {
 				return "Assigned To ID";
 			}
 		},
-		Start_Date, End_Date, End_Time, Start_Time, Type, Date {
-			@Override
-			public String toString() {
-				return "Start Date";
-			}
-		},
+		Start_Date, End_Date, End_Time, Start_Time, Type, Date,
+			
+		
 		Navigation_Type {
 			@Override
 			public String toString() {

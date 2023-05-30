@@ -59,6 +59,11 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			return false;
 		}
 
+		if (fundPageRecordTypeNextButton(7) != null) {
+			if (click(driver, fundPageRecordTypeNextButton(7), "Fund Record Type Next Button", action.SCROLLANDBOOLEAN))
+				appLog.info("Clicked on Record Type Next Button");
+		}
+
 //		if (click(driver, getNewButton(environment, mode, 60), "New Button", action.BOOLEAN)) {
 		ThreadSleep(500);
 		if (sendKeys(driver, getFundName(projectName, 60), fundName, "Fund Name", action.BOOLEAN)) {
@@ -179,16 +184,15 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	public List<String> returnAllValuesInRelatedList(String environment, String mode, String relatedList) {
 		List<WebElement> ele = null;
 		List<String> s = new ArrayList<String>();
-
+		CommonLib.refresh(driver);
 		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
 			ele = FindElements(driver,
 					"//h3[text()='" + relatedList + "']/../../../../../following-sibling::div//th//a",
 					"related list all elements");
 		} else
-			ele = FindElements(driver, "//table[@data-aura-class='uiVirtualDataTable']/tbody/tr//th[1]//a",
-					"list of all elements");
+			ele = FindElements(driver, "//table//tbody//tr/*[2]//a", "list of all elements");
 
-		if (ele != null) {
+		if (ele.size() > 0) {
 			for (int i = 0; i < ele.size(); i++) {
 				s.add(ele.get(i).getText().trim());
 			}

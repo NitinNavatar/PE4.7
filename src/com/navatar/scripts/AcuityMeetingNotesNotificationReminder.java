@@ -6172,7 +6172,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 	@Deprecated
 	@Parameters({ "projectName" })
 
-	@Test
+	
 	public void AcuityMNNRTc024_VerifyWhenEditButtonIsClickedForTheTaskHavingFollowUpTaskAndIsDeletedFromTaskDetailPage(
 			String projectName) {
 
@@ -6294,7 +6294,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 	@Deprecated
 	@Parameters({ "projectName" })
 
-	@Test
+	
 	public void AcuityMNNRTc025_VerifyWhenTheRemovedTaskIsRestoredAndItsImpactOnInteractionSection(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -11470,10 +11470,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Deprecated
+	@Test
 	@Parameters({ "projectName" })
 
-	@Test
+	
 	public void AcuityMNNRTc045_VerifyChangingTheStatusOfCallFromAdvancedSectionOfNotesPopUpAndItsEffectOnInteractionSection(
 			String projectName) {
 
@@ -12675,8 +12675,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
-	@Test
+    @Test
+	
 	public void AcuityMNNRTc050_VerifyWhenUserTagsAccountsAndContactsInNotesTextAreaAndClicksOnCloseButtonOrCrossIconInCaseOfCall(
 			String projectName) {
 
@@ -13010,7 +13010,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 	@Deprecated
 	@Parameters({ "projectName" })
 
-	@Test
+	
 	public void AcuityMNNRTc051_VerifyWhenEditButtonIsClickedForTheCallHavingFollowUpTaskAndIsDeletedFromTaskDetailPage(
 			String projectName) {
 
@@ -13131,7 +13131,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 	@Deprecated
 	@Parameters({ "projectName" })
 
-	@Test
+	
 	public void AcuityMNNRTc052_VerifyWhenTheRemovedCallIsRestoredAndItsImpactOnInteractionSection(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -13332,7 +13332,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 	@Deprecated
 	@Parameters({ "projectName" })
 
-	@Test
+	
 	public void AcuityMNNRTc053_CreateAFollowUpTaskFromCallDetailPageAndVerifyItsDetailsOnTaskDetailPage(
 			String projectName) {
 
