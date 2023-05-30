@@ -5617,11 +5617,11 @@ public class AcuityResearch extends BaseLib{
 		ThreadSleep(2000);
 			if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
 				if (cp.clickOnCreatedContact(projectName, contactName[0], contactName[1])) {
-					if (isDisplayed(driver, cp.getPhoneFieldOnContactPage(10), "Visibility", 10, "Phone") != null) {
-						log(LogStatus.PASS, "Phone Field is visible", YesNo.Yes);
+					if (isDisplayed(driver, cp.getPhoneFieldOnContactPage(10), "Visibility", 10, "Phone") == null) {
+						log(LogStatus.PASS, "Phone Field is not visible", YesNo.Yes);
 					} else {
-						log(LogStatus.ERROR, "Phone Field is not visible", YesNo.Yes);
-						sa.assertTrue(false, "Phone Field is not visible");
+						log(LogStatus.ERROR, "Phone Field is visible", YesNo.Yes);
+						sa.assertTrue(false, "Phone Field is visible");
 					}
 				}
 

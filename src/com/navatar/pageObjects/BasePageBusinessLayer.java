@@ -12831,9 +12831,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								for (String gridName : gridNameAndCount.keySet()) {
 
 									String navName = gridName;
-									if (gridName.equalsIgnoreCase("Contact")) {
-										navName = gridName + "s";
-									}
+//									if (gridName.equalsIgnoreCase("Contact")) {
+//										navName = gridName + "s";
+//									}
 									if (gridNameAndCount.get(gridName).equals(sideNavNameAndCount.get(navName))) {
 										log(LogStatus.INFO, "Counts for " + gridName + " matched and i.e.: "
 												+ gridNameAndCount.get(gridName), YesNo.No);

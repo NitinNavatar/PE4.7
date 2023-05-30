@@ -9690,8 +9690,8 @@ public class CommonVariables {
 					AR_Research5=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up5", excelLabel.ResearchFindings);
 					AR_Research6=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up6", excelLabel.ResearchFindings);
 					AR_Research7=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up7", excelLabel.ResearchFindings);
-					AR_Research54=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up54", excelLabel.ResearchFindings);
-					AR_Research55=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up55", excelLabel.ResearchFindings);
+					AR_Research54=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up52", excelLabel.ResearchFindings);
+					AR_Research55=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up53", excelLabel.ResearchFindings);
 					
 					AR_Data1=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_1", excelLabel.ResearchFindings);
 					AR_Data2=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_37", excelLabel.ResearchFindings);

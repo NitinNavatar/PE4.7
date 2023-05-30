@@ -206,7 +206,7 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 			headersAndValues = ExcelUtils.dataRead(ResearchDataSheetFilePath,"UpdatedRecordType",excelLabel.Variable_Name, variableName);
 		}
 		else if(variableName.contains("ARCR_")) {
-			headersAndValues = ExcelUtils.dataRead(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, variableName);
+			headersAndValues = ExcelUtils.dataReadForCurrentRecord(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, variableName);
 		}
 		else {
 			headersAndValues = ExcelUtils.dataRead(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, variableName);
@@ -217,7 +217,7 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 		{
 			headerAndValue.put(headersAndValues.get("headers").get(i), headersAndValues.get("value").get(i));
 		}
-				
+		
 		for(String header: headersAndValues.get("headers")) {
 			
 			if(!headerAndValue.get(header).equalsIgnoreCase("NA")) {
