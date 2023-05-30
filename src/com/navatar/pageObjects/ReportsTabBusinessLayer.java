@@ -267,7 +267,7 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 													"//div[@id='fieldsTree']//span[text()='" + value + "']",
 													"Drag Field : " + value.toString(), action.SCROLLANDBOOLEAN, 10);
 											WebElement dropLocation = FindElement(driver,
-													"(//div[@id=\"previewPanelGrid\"]//tr)[1]",
+													"//div[@id='gridViewScrollpreviewPanelGrid']",
 													"Drop Location Salutation", action.SCROLLANDBOOLEAN, 10);
 
 											if (dragNDropOperation(driver, dragEle, dropLocation)) {
