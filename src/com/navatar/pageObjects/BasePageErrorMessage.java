@@ -68,8 +68,7 @@ public interface BasePageErrorMessage {
 	
 	public String filesName = "Enter one or more research terms";
 	public String recordTypeDescription = "Description Record Type";
-	public String errorName = "Your search term must have 2 or more characters.";
-	public String errorName1 = "No results for";
+	public String errorName1 = "No results for All Categories";
 	
 	public static String defaultPhotoText="standard";
 

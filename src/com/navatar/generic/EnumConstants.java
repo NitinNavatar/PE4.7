@@ -133,7 +133,7 @@ public class EnumConstants {
 		Task_Subject, Task_Status, User_Name, OrgPassword, Password, Participants, Tags, MeetingAndCallsHeader,
 		ValidationRuleErrorMsg, ValidationRuleErrorMsgLocation, CreateNewRecordPopUp, AddContactsToDealTeamPopUp,
 		AddContactsToFundraisingPopup, Classification, ValidationRuleFormula, ParticipantRecord,
-		ParticipantRecordObject, TagsRecord, TagsObject, Tab_Name, Record_Name, RecordName, ObjectName;
+		ParticipantRecordObject, TagsRecord, TagsObject, Tab_Name, Record_Name, RecordName, ObjectName,NextTouchPointDay,NextTouchPointDate;
 
 	};
 
@@ -216,7 +216,7 @@ public class EnumConstants {
 		ReportsTab, Correspondence_Lists, LimitedPartner, CompaniesTab, TaskRayTab, TaskRay, TestCustomObjectTab,
 		TaskTab, Other, Object1Tab, Object2Tab, Object3Tab, Object4Tab, RecycleBinTab, SDGTab, DealTab, Object5Tab,
 		Object6Tab, AttendeeTab, Object7Tab, Entities, Deals, Marketing_Events, Events, Deal_Team, Financing,
-		Object8Tab, ContactTab, Deal, Acuity, ThemesTab, ClipsTab;
+		Object8Tab, ContactTab, Deal, Acuity, ThemesTab, ClipsTab,Interaction;
 	}
 
 	public static enum Mode {
