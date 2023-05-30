@@ -3531,7 +3531,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		WebElement ele;
 		String related = relatedTab.toString().replace("_", " ");
 		if (projectName.contains(ProjectName.PE.toString()))
-			xpath = "//ul[@role='tablist']//a[text()='" + related + "']";
+			xpath = "//ul[@role='presentation']//span[text()='"+related+"']/ancestor::a";
 		else
 			xpath = "//li//*[@title='" + related + "' or text()='" + related + "']";
 
@@ -3590,6 +3590,26 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : " + btname);
 		return ele;
 	}
+	
+	
+	
+	public WebElement toggleSDGButtons1(String projectName, String toggleTab, ToggleButtonGroup btnName, action action,
+			boolean isInside, int timeOut) {
+		String btname = btnName.toString();
+		String xpath = "";
+		if (isInside) {
+
+			xpath = "//div//a[text()='" + toggleTab + "']";
+		} else {
+			xpath = "//div//a[text()='" + toggleTab + "']";
+
+		}
+		WebElement ele = FindElement(driver, xpath, toggleTab + " >> " + btname, action, timeOut);
+		scrollDownThroughWebelement(driver, ele, "Toggle Button : " + btname);
+		ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : " + btname);
+		return ele;
+	}
+
 
 	/**
 	 * @author Azhar Alam

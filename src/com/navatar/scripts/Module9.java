@@ -6911,7 +6911,7 @@ public class Module9 extends BaseLib {
 																			appLog.info(
 																					tablename + " View All Clicked");
 																			CommonLib.ThreadSleep(5000);
-
+																			CommonLib.refresh(driver);
 																			int index = hp.getClonnedSDGColumns(30)
 																					.size() - 1;
 
@@ -11570,6 +11570,9 @@ public class Module9 extends BaseLib {
 						sa.assertTrue(false, "\"Website\" record is not updated to www.google.com");
 					}
 				}
+			} else {
+				log(LogStatus.FAIL, "One of the Permission not Given, SO not able to Continue further", YesNo.No);
+				sa.assertTrue(false, "One of the Permission not Given, SO not able to Continue further");
 			}
 
 		}

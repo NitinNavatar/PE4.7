@@ -605,7 +605,9 @@ public class HomePage extends BasePageBusinessLayer {
 		return isDisplayed(driver, placementFeeTextBox, "Visibility", timeOut, "placement fee text box");
 	}
 
-	@FindBy(xpath = "//div[contains(@class,'windowViewMode-normal')]//iframe[contains(@title,'accessibility title')]")
+
+	@FindBy(xpath = "//div[contains(@class,'windowViewMode-normal')]//iframe[@title='accessibility title']")
+
 	private WebElement createCommitmentFrame_Lightning;
 
 	/**
@@ -1241,7 +1243,8 @@ public class HomePage extends BasePageBusinessLayer {
 
 	public List<WebElement> sdgGridFirstRowData(SDGGridName sdgGridName, String dealName) {
 		String xpath = "//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='" + sdgGridName
-				+ "']/../../../../../..//tbody//tr//td//a[text()='"+dealName+"']/ancestor::tr//td[@data-aura-class='navpeIISdgDatagridCell']";
+				+ "']/../../../../../..//tbody//tr//td//a[text()='" + dealName
+				+ "']/ancestor::tr//td[@data-aura-class='navpeIISdgDatagridCell']";
 		return FindElements(driver, xpath, sdgGridName + " grid first row data");
 	}
 
@@ -1620,7 +1623,6 @@ public class HomePage extends BasePageBusinessLayer {
 	public boolean clickOnEditButtonOnSDGGridOnHomePage(String projectName, String dataName, String field,
 			int timeOut) {
 
-		
 		String xpath = "//*[text()='" + dataName + "']/ancestor::tr//td[contains(@data-label,'"
 				+ field.replaceAll("_", " ") + "')]//lightning-formatted-number";
 
@@ -1629,8 +1631,9 @@ public class HomePage extends BasePageBusinessLayer {
 		ThreadSleep(2000);
 		mouseOverOperation(driver, ele);
 		ThreadSleep(2000);
-	//	JavascriptExecutor js = (JavascriptExecutor) driver;
-	//	js.executeScript("return arguments[0].setAttribute('Styles','display: inline-block;')", ele);
+		// JavascriptExecutor js = (JavascriptExecutor) driver;
+		// js.executeScript("return arguments[0].setAttribute('Styles','display:
+		// inline-block;')", ele);
 		ThreadSleep(2000);
 		ele = FindElement(
 				driver, "//*[text()='" + dataName + "']/ancestor::tr//td[contains(@data-label,'"
@@ -2342,7 +2345,7 @@ public class HomePage extends BasePageBusinessLayer {
 	}
 
 	public List<WebElement> getClonnedSDGColumns(int timeOut) {
-		String xpath = "//span[@title='Override Label']//ancestor::table//tbody//td[4]//lst-formatted-text";
+		String xpath = "//table//tbody//tr/*[4]";
 		return FindElements(driver, xpath, "Clonned SDG Columns");
 	}
 

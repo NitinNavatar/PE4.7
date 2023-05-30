@@ -1854,7 +1854,7 @@ public class Module3New extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
+	
 	public void M3Tc008_VerifyTheFunctionlityOfMeetingTypeFieldInTaskPopup(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -3717,6 +3717,7 @@ public class Module3New extends BaseLib {
 				log(LogStatus.INFO, "Click on Tab : " + tabCustomObj, YesNo.No);
 				if (click(driver, lp.getNewButton(projectName, 90), "new button", action.BOOLEAN)) {
 					log(LogStatus.SKIP, "Click on New Button", YesNo.Yes);
+					CommonLib.refresh(driver);
 					for (int i = 0; i < recordTypeArray.length; i++) {
 						ele = npbl.getRadioButtonforRecordTypeAtAccount(recordTypeArray[i], 30);
 						if (ele != null) {

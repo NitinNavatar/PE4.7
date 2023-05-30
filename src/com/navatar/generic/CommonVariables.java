@@ -463,6 +463,8 @@ public class CommonVariables {
 	public static String M7NContact26FName,M7NContact26LName,M7NContact26EmailID,M7NContact26RecordType;
 	public static String M7NContact27FName,M7NContact27LName,M7NContact27EmailID,M7NContact27RecordType;
 
+	
+
 	public static String M7NTask1Subject,M7NTask1dueDate,M7NTask1Status,M7NTask1Priority;
 	public static String M7NTask2Subject,M7NTask2dueDate,M7NTask2Status,M7NTask2Priority;
 	public static String M7NTask3Subject,M7NTask3dueDate,M7NTask3Status,M7NTask3Priority;
@@ -3986,6 +3988,9 @@ public class CommonVariables {
 			M7NContact27EmailID=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7NCON27", excelLabel.Contact_EmailId);
 			M7NContact27RecordType=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7NCON27", excelLabel.Record_Type);
 
+			
+		
+			
 			M7NTask1Subject=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7NTask1", excelLabel.Subject);
 			M7NTask1Status=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7NTask1", excelLabel.Status);
 			M7NTask1dueDate=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7NTask1", excelLabel.Due_Date);
@@ -7615,11 +7620,6 @@ public class CommonVariables {
 					ADEDealTeamMember19=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_19", excelLabel.Member);
 					ADEDealTeamRole19=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_19", excelLabel.Role);
 					ADEDealTeamID19=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_19", excelLabel.DealTeamID);
-					
-					
-					
-					
-								
 						
 					try {
 						dataFile.close();
@@ -12711,6 +12711,8 @@ public class CommonVariables {
  					
  					
  					break;
+ 					
+            	  				
  					
 				
 		default:

@@ -1,6 +1,5 @@
 package com.navatar.pageObjects;
 
-import org.bridj.cpp.std.list;
 import static com.navatar.generic.CommonLib.FindElement;
 import static com.navatar.generic.CommonLib.FindElements;
 import static com.navatar.generic.CommonLib.ThreadSleep;

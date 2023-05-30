@@ -1198,8 +1198,8 @@ public class HomePageBusineesLayer extends HomePage {
 	public boolean clickOnTemplateForReportOnBulkEmail(String environment, String mode, String reportName,
 			String templateName) {
 		WebElement ele;
-		String xpath = "//span[text()='" + reportName + "']/ancestor::ul//span[contains(@id,'extd')][text()='"
-				+ templateName + "']";
+		String xpath = "//span[text()='" + templateName + "']/ancestor::ul//span[contains(@id,'extd')][text()='"
+				+ reportName + "']";
 		ele = FindElement(driver, xpath, reportName + " : " + templateName, action.SCROLLANDBOOLEAN, 10);
 		ThreadSleep(2000);
 		if (clickUsingJavaScript(driver, ele, reportName + " : " + templateName, action.SCROLLANDBOOLEAN)) {
@@ -5911,7 +5911,7 @@ public class HomePageBusineesLayer extends HomePage {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		boolean flag = false;
 
-		CommonLib.ThreadSleep(1500);
+		CommonLib.ThreadSleep(20000);
 		if (click(driver, globalSearchButton(20), "globalSearchButton", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on globalSearchButton", YesNo.No);
 			CommonLib.ThreadSleep(1000);
@@ -5936,6 +5936,12 @@ public class HomePageBusineesLayer extends HomePage {
 						}
 					} else {
 
+						for (int i = 0; i <= 4; i++) {
+							if (globalSearchRecord(recordName, 7) != null) {
+								break;
+							}
+							CommonLib.refresh(driver);
+						}
 						if (globalSearchRecord(recordName, 7) != null) {
 							log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
 							if (click(driver, globalSearchRecord(recordName, 7), "globalSearchRecord: " + recordName,
@@ -6032,6 +6038,12 @@ public class HomePageBusineesLayer extends HomePage {
 									}
 								} else {
 
+									for (int i = 0; i <= 4; i++) {
+										if (globalSearchRecord(recordName, 7) != null) {
+											break;
+										}
+										CommonLib.refresh(driver);
+									}
 									if (globalSearchRecord(recordName, 7) != null) {
 										log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
 										if (click(driver, globalSearchRecord(recordName, 7),
@@ -6167,6 +6179,12 @@ public class HomePageBusineesLayer extends HomePage {
 						}
 					} else {
 
+						for (int i = 0; i <= 4; i++) {
+							if (globalSearchRecord(recordName, 7) != null) {
+								break;
+							}
+							CommonLib.refresh(driver);
+						}
 						if (globalSearchRecord(recordName, 7) != null) {
 							log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
 //							if (click(driver, globalSearchRecord(recordName, 7), "globalSearchRecord: " + recordName,
@@ -6236,6 +6254,12 @@ public class HomePageBusineesLayer extends HomePage {
 									}
 								} else {
 
+									for (int i = 0; i <= 4; i++) {
+										if (globalSearchRecord(recordName, 7) != null) {
+											break;
+										}
+										CommonLib.refresh(driver);
+									}
 									if (globalSearchRecord(recordName, 7) != null) {
 										log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
 //										if (click(driver, globalSearchRecord(recordName, 7),
@@ -6378,6 +6402,13 @@ public class HomePageBusineesLayer extends HomePage {
 						}
 					} else {
 
+						for (int i = 0; i <= 4; i++) {
+							if (globalSearchRecord(recordName, 7) != null) {
+								break;
+							}
+							CommonLib.refresh(driver);
+						}
+
 						if (globalSearchRecord(recordName, 7) != null) {
 							log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
 //							if (click(driver, globalSearchRecord(recordName, 7), "globalSearchRecord: " + recordName,
@@ -6447,6 +6478,12 @@ public class HomePageBusineesLayer extends HomePage {
 									}
 								} else {
 
+									for (int i = 0; i <= 4; i++) {
+										if (globalSearchRecord(recordName, 7) != null) {
+											break;
+										}
+										CommonLib.refresh(driver);
+									}
 									if (globalSearchRecord(recordName, 7) != null) {
 										log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
 //										if (click(driver, globalSearchRecord(recordName, 7),
@@ -6520,7 +6557,8 @@ public class HomePageBusineesLayer extends HomePage {
 		}
 
 		ThreadSleep(2000);
-		if (click(driver, downArrowButton(20), "downArrowButton", action.SCROLLANDBOOLEAN)) {
+		if (click(driver, downArrowOfGlobalSearch(recordName, 20), "downArrowOfGlobalSearch: " + recordName,
+				action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
 
 			if (click(driver, taskBP.buttonInTheDownArrowList("Edit", 20), "Edit Button in downArrowButton",

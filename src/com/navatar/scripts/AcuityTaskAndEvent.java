@@ -8490,7 +8490,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 									xPath="//li[@class='slds-button slds-button--neutral']//div[@title='Create Follow-Up Task']";
 									ele=FindElement(driver, xPath, "followup", action.SCROLLANDBOOLEAN, 20);
 
-									if(click(dDriver, ele, "followup task", action.SCROLLANDBOOLEAN))
+									if(click(driver, ele, "followup task", action.SCROLLANDBOOLEAN))
 									{
 
 										log(LogStatus.INFO, "clicked on followup button" , YesNo.No);
