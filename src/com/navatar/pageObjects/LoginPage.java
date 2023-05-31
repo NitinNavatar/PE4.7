@@ -13,16 +13,19 @@ import com.navatar.generic.EnumConstants.action;
 //import static com.navatar.generic.CommonLib.*;
 
 import static com.navatar.generic.CommonLib.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author Parul Singh
  *
  */
-public class LoginPage extends BasePageBusinessLayer{
+public class LoginPage extends BasePageBusinessLayer {
 
 	/**
 	 * @param driver
 	 */
-
 
 	public LoginPage(WebDriver driver) {
 		// TODO Auto-generated constructor stub
@@ -30,19 +33,19 @@ public class LoginPage extends BasePageBusinessLayer{
 		PageFactory.initElements(driver, this);
 	}
 
-	@FindBy(id="username")
+	@FindBy(id = "username")
 	private WebElement userNameTextBox;
-	
+
 	/**
 	 * @return the userNameTextBox
 	 */
 	public WebElement getUserNameTextBox(int timeOut) {
 		return isDisplayed(driver, userNameTextBox, "Visibility", timeOut, "Username Text Box.");
 	}
-	
-	@FindBy(id="password")
+
+	@FindBy(id = "password")
 	private WebElement passwordTextBox;
-	
+
 	/**
 	 * @return the passwordTextBox
 	 */
@@ -50,18 +53,37 @@ public class LoginPage extends BasePageBusinessLayer{
 		return isDisplayed(driver, passwordTextBox, "Visibility", timeOut, "Password Text Box.");
 	}
 
-	@FindBy(id="Login")
-	private WebElement loginButton;
-	
-	/**
-	 * @return the loginButton
-	 */
+	/*
+	 * @FindBy(id = "Login") private WebElement loginButton;
+	 * 
+	 *//**
+		 * @return the loginButton
+		 *//*
+			 * public WebElement getLoginButton(int timeOut) { return isDisplayed(driver,
+			 * loginButton, "Visibility", timeOut, "Login Button."); }
+			 */
+
 	public WebElement getLoginButton(int timeOut) {
-		return isDisplayed(driver, loginButton, "Visibility", timeOut, "Login Button.");
+
+		String xpath = "//input[@id=\"Login\"]";
+
+		List<WebElement> listOfElements = FindElements(driver, xpath, "getLoginButton").stream()
+				.filter(x -> x.isDisplayed()).collect(Collectors.toList());
+
+		if (listOfElements.size() > 0) {
+			return listOfElements.get(0);
+		} else {
+			return null;
+
+		}
+
 	}
-	/**********************************investor login************************************************/
-	
-	@FindBy (xpath = "//input[@id='page:frmid:username']")
+
+	/**********************************
+	 * investor login
+	 ************************************************/
+
+	@FindBy(xpath = "//input[@id='page:frmid:username']")
 	private WebElement investorUsernameTextbox;
 
 	/**
@@ -70,7 +92,7 @@ public class LoginPage extends BasePageBusinessLayer{
 	public WebElement getInvestorUsernameTextbox(int timeOut) {
 		return isDisplayed(driver, investorUsernameTextbox, "Visibility", timeOut, "Investor username text box");
 	}
-	
+
 	@FindBy(xpath = "//*[@id='page:frmid:password']")
 	private WebElement investorPasswordTextbox;
 
@@ -80,6 +102,7 @@ public class LoginPage extends BasePageBusinessLayer{
 	public WebElement getInvestorPasswordTextbox(int timeOut) {
 		return isDisplayed(driver, investorPasswordTextbox, "Visibility", timeOut, "Investor password textbox");
 	}
+
 	@FindBy(xpath = "//input[@title='Login']")
 	private WebElement investorLoginButton;
 
@@ -89,7 +112,7 @@ public class LoginPage extends BasePageBusinessLayer{
 	public WebElement getInvestorLoginButton(int timeOut) {
 		return isDisplayed(driver, investorLoginButton, "Visibility", timeOut, "Investor login button ");
 	}
-	
+
 	@FindBy(xpath = "//img[contains(@src,'twitter')]")
 	private WebElement twitterIcon;
 
@@ -99,6 +122,7 @@ public class LoginPage extends BasePageBusinessLayer{
 	public WebElement getTwitterIcon(int timeOut) {
 		return isDisplayed(driver, twitterIcon, "Visibility", timeOut, "Twitter icon");
 	}
+
 	@FindBy(xpath = "//img[contains(@src,'facebook')]")
 	private WebElement facebookIcon;
 
@@ -108,6 +132,7 @@ public class LoginPage extends BasePageBusinessLayer{
 	public WebElement getFacebookIcon(int timeOut) {
 		return isDisplayed(driver, facebookIcon, "Visibility", timeOut, "Facebook icon");
 	}
+
 	@FindBy(xpath = "//img[contains(@src,'navatar')]")
 	private WebElement navatarImg;
 
@@ -117,6 +142,7 @@ public class LoginPage extends BasePageBusinessLayer{
 	public WebElement getNavatarImg(int timeOut) {
 		return isDisplayed(driver, navatarImg, "Visibility", timeOut, "Navatar image logo");
 	}
+
 	@FindBy(xpath = "//a[@title='Forgot your password?']")
 	private WebElement forgotPasswordInvestor;
 
@@ -124,8 +150,10 @@ public class LoginPage extends BasePageBusinessLayer{
 	 * @return the forgotPasswordInvestor
 	 */
 	public WebElement getForgotPasswordInvestor(int timeOut) {
-		return isDisplayed(driver, forgotPasswordInvestor, "Visibility", timeOut, "Forgot your password link on investor login page");
+		return isDisplayed(driver, forgotPasswordInvestor, "Visibility", timeOut,
+				"Forgot your password link on investor login page");
 	}
+
 	@FindBy(xpath = "//a[@title='Forgot your user name?']")
 	private WebElement forgotUsernameInvestor;
 
@@ -133,8 +161,10 @@ public class LoginPage extends BasePageBusinessLayer{
 	 * @return the forgotPasswordInvestor
 	 */
 	public WebElement getForgotUsernameInvestor(int timeOut) {
-		return isDisplayed(driver, forgotUsernameInvestor, "Visibility", timeOut, "Forgot your username link on investor login page");
+		return isDisplayed(driver, forgotUsernameInvestor, "Visibility", timeOut,
+				"Forgot your username link on investor login page");
 	}
+
 	@FindBy(xpath = "(//a[@title='Signup'])[1]")
 	private WebElement investorAlreadyInvitedSignupLink;
 
@@ -142,8 +172,10 @@ public class LoginPage extends BasePageBusinessLayer{
 	 * @return the investorAlreadyInvitedSignupLink
 	 */
 	public WebElement getInvestorAlreadyInvitedSignupLink(int timeOut) {
-		return isDisplayed(driver, investorAlreadyInvitedSignupLink, "Visibility", timeOut, "Sign up button for investor and already invited on investor login page");
+		return isDisplayed(driver, investorAlreadyInvitedSignupLink, "Visibility", timeOut,
+				"Sign up button for investor and already invited on investor login page");
 	}
+
 	@FindBy(xpath = "(//a[@title='Signup'])[2]")
 	private WebElement generalPartnerAlreadyInvitedSignupLink;
 
@@ -151,9 +183,13 @@ public class LoginPage extends BasePageBusinessLayer{
 	 * @return the generalPartnerAlreadyInvitedSignupLink
 	 */
 	public WebElement getGeneralPartnerAlreadyInvitedSignupLink(int timeOut) {
-		return isDisplayed(driver, generalPartnerAlreadyInvitedSignupLink, "Visibility", timeOut, "Sign up button for general partner and already invited on investor login page");
+		return isDisplayed(driver, generalPartnerAlreadyInvitedSignupLink, "Visibility", timeOut,
+				"Sign up button for general partner and already invited on investor login page");
 	}
-	/**************************investor forgot password*******************************/
+
+	/**************************
+	 * investor forgot password
+	 *******************************/
 	@FindBy(xpath = "//input[@id='forgotPassword:SiteTemplate:theForm:username']")
 	private WebElement emailTextbox;
 
@@ -163,6 +199,7 @@ public class LoginPage extends BasePageBusinessLayer{
 	public WebElement getEmailTextbox(int timeOut) {
 		return isDisplayed(driver, emailTextbox, "Visibility", timeOut, "Email textbox on forgot password page");
 	}
+
 	@FindBy(xpath = "//input[@id='forgotPassword:SiteTemplate:theForm:submit']")
 	private WebElement submitButton;
 
@@ -172,17 +209,19 @@ public class LoginPage extends BasePageBusinessLayer{
 	public WebElement getSubmitButton(int timeOut) {
 		return isDisplayed(driver, submitButton, "Visibility", timeOut, "Submit button on forgot password page");
 	}
-	
-	/***************************investor forgot password reset page**********************/
+
+	/***************************
+	 * investor forgot password reset page
+	 **********************/
 	@FindBy(xpath = "//span[@class='title']")
 	private WebElement enterEmailIdTextForgotPasswordPage;
-	
-	
+
 	/**
 	 * @return the enterEmailIdTextForgotPasswordPage
 	 */
 	public WebElement getEnterEmailIdTextForgotPasswordPage(int timeOut) {
-		return isDisplayed(driver, enterEmailIdTextForgotPasswordPage, "Visibility", timeOut, "Enter email id text present on forgot password page");
+		return isDisplayed(driver, enterEmailIdTextForgotPasswordPage, "Visibility", timeOut,
+				"Enter email id text present on forgot password page");
 	}
 
 	@FindBy(xpath = "//input[@id='changePassword:SiteTemplate:theForm:psw']")
@@ -192,9 +231,10 @@ public class LoginPage extends BasePageBusinessLayer{
 	 * @return the forgotPasswordNewPasswordTextbox
 	 */
 	public WebElement getForgotPasswordNewPasswordTextbox(int timeOut) {
-		return isDisplayed(driver, forgotPasswordNewPasswordTextbox, "Visibility", timeOut, "new password textbox on forgot password page");
+		return isDisplayed(driver, forgotPasswordNewPasswordTextbox, "Visibility", timeOut,
+				"new password textbox on forgot password page");
 	}
-	
+
 	@FindBy(xpath = "//input[@id='changePassword:SiteTemplate:theForm:vpsw']")
 	private WebElement forgotPasswordVerifyNewPasswordTextbox;
 
@@ -202,8 +242,10 @@ public class LoginPage extends BasePageBusinessLayer{
 	 * @return the forgotPasswordNewPasswordTextbox
 	 */
 	public WebElement getForgotPasswordVerifyNewPasswordTextbox(int timeOut) {
-		return isDisplayed(driver, forgotPasswordVerifyNewPasswordTextbox, "Visibility", timeOut, "verify new password textbox on forgot password page");
+		return isDisplayed(driver, forgotPasswordVerifyNewPasswordTextbox, "Visibility", timeOut,
+				"verify new password textbox on forgot password page");
 	}
+
 	@FindBy(xpath = "//span[contains(text(),'An email has been sent to you with your temporary password')]")
 	private WebElement emailHasBeenSentText;
 
@@ -211,8 +253,10 @@ public class LoginPage extends BasePageBusinessLayer{
 	 * @return the emailHasBeenSentText
 	 */
 	public WebElement getEmailHasBeenSentText(int timeOut) {
-		return isDisplayed(driver, emailHasBeenSentText, "Visibility", timeOut, "Email has been sent to reset password on forgot password page");
+		return isDisplayed(driver, emailHasBeenSentText, "Visibility", timeOut,
+				"Email has been sent to reset password on forgot password page");
 	}
+
 	@FindBy(xpath = "//span[contains(text(),'Change Your Password')]")
 	private WebElement changeYourPasswordText;
 
@@ -223,7 +267,7 @@ public class LoginPage extends BasePageBusinessLayer{
 		return isDisplayed(driver, changeYourPasswordText, "Visibility", timeOut,
 				"change your password text present on forgot password page");
 	}
-	
+
 	@FindBy(xpath = "(//form[@id='changePassword:SiteTemplate:theForm']//label)[1]")
 	private WebElement newPasswordText;
 
@@ -231,8 +275,10 @@ public class LoginPage extends BasePageBusinessLayer{
 	 * @return the newPasswordText
 	 */
 	public WebElement getNewPasswordText(int timeOut) {
-		return isDisplayed(driver, newPasswordText, "Visibility", timeOut, "new password text present on forgot password page");
+		return isDisplayed(driver, newPasswordText, "Visibility", timeOut,
+				"new password text present on forgot password page");
 	}
+
 	@FindBy(xpath = "(//form[@id='changePassword:SiteTemplate:theForm']//label)[2]")
 	private WebElement verifyYourPasswordText;
 
@@ -243,7 +289,7 @@ public class LoginPage extends BasePageBusinessLayer{
 		return isDisplayed(driver, verifyYourPasswordText, "Visibility", timeOut,
 				"verify your password text present on forgot password page");
 	}
-	
+
 	@FindBy(xpath = "//input[@id='changePassword:SiteTemplate:theForm:cpwbtn']")
 	private WebElement changePasswordBtnForgotPassword;
 
@@ -251,9 +297,10 @@ public class LoginPage extends BasePageBusinessLayer{
 	 * @return the changePasswordBtnForgotPassword
 	 */
 	public WebElement getChangePasswordBtnForgotPassword(int timeOut) {
-		return isDisplayed(driver, changePasswordBtnForgotPassword, "Visibility",
-				timeOut, "change password buton on forgot password page");
+		return isDisplayed(driver, changePasswordBtnForgotPassword, "Visibility", timeOut,
+				"change password buton on forgot password page");
 	}
+
 	@FindBy(xpath = "//td[contains(text(),'Please contact our')]")
 	private WebElement pleaseContactOurLabel;
 
@@ -263,7 +310,7 @@ public class LoginPage extends BasePageBusinessLayer{
 	public WebElement getPleaseContactOurLabel(int timeOut) {
 		return isDisplayed(driver, pleaseContactOurLabel, "Visibility", timeOut, "Please contact our, label text");
 	}
-	
+
 	@FindBy(xpath = "//a[contains(text(),'Customer Support')]")
 	private WebElement customerSupportLink;
 
@@ -271,9 +318,10 @@ public class LoginPage extends BasePageBusinessLayer{
 	 * @return the customerSupportLink
 	 */
 	public WebElement getCustomerSupportLink(int timeOut) {
-		return isDisplayed(driver, customerSupportLink, "Visibility", timeOut, "Customer support url on forgot password page");
+		return isDisplayed(driver, customerSupportLink, "Visibility", timeOut,
+				"Customer support url on forgot password page");
 	}
-	
+
 	@FindBy(xpath = "//a[contains(text(),'close')]")
 	private WebElement closeButtonForgotPassword;
 
@@ -281,8 +329,10 @@ public class LoginPage extends BasePageBusinessLayer{
 	 * @return the closeButtonForgotPassword
 	 */
 	public WebElement getCloseButtonForgotPassword(int timeOut) {
-		return isDisplayed(driver, closeButtonForgotPassword, "Visibility", timeOut, "close button forgot password page");
+		return isDisplayed(driver, closeButtonForgotPassword, "Visibility", timeOut,
+				"close button forgot password page");
 	}
+
 	@FindBy(xpath = "//a[contains(text(),'About Navatar Group')]")
 	private WebElement aboutNavatarLink;
 
@@ -292,6 +342,7 @@ public class LoginPage extends BasePageBusinessLayer{
 	public WebElement getAboutNavatarLink(int timeOut) {
 		return isDisplayed(driver, aboutNavatarLink, "Visibility", timeOut, "About Navatar url on forgot page");
 	}
+
 	@FindBy(xpath = "//a[contains(text(),'Contact Us')]")
 	private WebElement contactUsLink;
 
@@ -301,8 +352,10 @@ public class LoginPage extends BasePageBusinessLayer{
 	public WebElement getContactUsLink(int timeOut) {
 		return isDisplayed(driver, contactUsLink, "Visibility", timeOut, "contact us url on forgot password url");
 	}
-	
-	/****************************************forgot password error messages*********************************/
+
+	/****************************************
+	 * forgot password error messages
+	 *********************************/
 	@FindBy(xpath = "(//li[contains(text(),'Validation Error: Value is required')])[1]")
 	private WebElement valueIsRequiredError;
 
@@ -310,9 +363,10 @@ public class LoginPage extends BasePageBusinessLayer{
 	 * @return the valueIsRequiredError
 	 */
 	public WebElement getValueIsRequiredError(int timeOut) {
-		return isDisplayed(driver, valueIsRequiredError, "Visibility", timeOut, "value is required error message on forgot password page");
+		return isDisplayed(driver, valueIsRequiredError, "Visibility", timeOut,
+				"value is required error message on forgot password page");
 	}
-	
+
 	@FindBy(xpath = "//div[contains(text(),'Error: You cannot reuse this old password')]")
 	private WebElement cannotReuseOldPassword;
 
@@ -320,8 +374,10 @@ public class LoginPage extends BasePageBusinessLayer{
 	 * @return the cannotReuseOldPassword
 	 */
 	public WebElement getCannotReuseOldPassword(int timeOut) {
-		return isDisplayed(driver, cannotReuseOldPassword, "Visibility", timeOut, "cannot reuse old password error message on forgot password page");
+		return isDisplayed(driver, cannotReuseOldPassword, "Visibility", timeOut,
+				"cannot reuse old password error message on forgot password page");
 	}
+
 	@FindBy(xpath = "//div[contains(text(),'The passwords do not match')]")
 	private WebElement passwordsNotMatch;
 
@@ -329,48 +385,51 @@ public class LoginPage extends BasePageBusinessLayer{
 	 * @return the passwordsNotMatch
 	 */
 	public WebElement getPasswordsNotMatch(int timeOut) {
-		return isDisplayed(driver, passwordsNotMatch, "Visibility", timeOut, "Passwords do not match error message on forgot password page");
+		return isDisplayed(driver, passwordsNotMatch, "Visibility", timeOut,
+				"Passwords do not match error message on forgot password page");
 	}
-	
 
 	public WebElement getAppNameXpathInLightning(String appName, int timeOut) {
-		String xpath="//span[contains(@class,'appName')]//span[text()='"+appName+"']";
-		return isDisplayed(driver, FindElement(driver,xpath,appName+" App Name Xpath", action.BOOLEAN,timeOut), "visibility", timeOut,appName+" App Name xpath in Lightning");	
+		String xpath = "//span[contains(@class,'appName')]//span[text()='" + appName + "']";
+		return isDisplayed(driver, FindElement(driver, xpath, appName + " App Name Xpath", action.BOOLEAN, timeOut),
+				"visibility", timeOut, appName + " App Name xpath in Lightning");
 	}
-	
+
 	@FindBy(xpath = "//button[@class='slds-button slds-show']/div[@class='slds-icon-waffle']")
 	private WebElement appLuncherXpath;
 
 	public WebElement getAppLuncherXpath(int timeOut) {
 		return isDisplayed(driver, appLuncherXpath, "Visibility", timeOut, "app luncher xpath");
 	}
-	
+
 	@FindBy(xpath = "//input[@placeholder='Search apps and items...']")
 	private WebElement searchAppTextBoxInAppLuncher;
 
 	public WebElement getSearchAppTextBoxInAppLuncher(int timeOut) {
-		return isDisplayed(driver, searchAppTextBoxInAppLuncher, "Visibility", timeOut, "search app text box in app luncher ");
+		return isDisplayed(driver, searchAppTextBoxInAppLuncher, "Visibility", timeOut,
+				"search app text box in app luncher ");
 	}
-	
+
 	public WebElement getAppNameLabelTextInAppLuncher(String appName, int timeOut) {
-		String xpath="//a[@data-label='"+appName+"'][@role ='option']";
-		return isDisplayed(driver, FindElement(driver,xpath,appName+" app name xpath in App luncher Name ", action.BOOLEAN,timeOut), "visibility", timeOut,appName+" app name xpath in App luncher Name ");	
-	
+		String xpath = "//a[@data-label='" + appName + "'][@role ='option']";
+		return isDisplayed(driver,
+				FindElement(driver, xpath, appName + " app name xpath in App luncher Name ", action.BOOLEAN, timeOut),
+				"visibility", timeOut, appName + " app name xpath in App luncher Name ");
+
 	}
-	
-	public WebElement getProfilePageLink(String projectName, String user,int timeOut) {
-		String xpath="//a[text()='"+user+"']/../../..//img[@alt='User']";
-		return isDisplayed(driver, FindElement(driver,xpath," user profile link", action.BOOLEAN,timeOut), "visibility", timeOut," app name xpath in App luncher Name ");	
-	
+
+	public WebElement getProfilePageLink(String projectName, String user, int timeOut) {
+		String xpath = "//a[text()='" + user + "']/../../..//img[@alt='User']";
+		return isDisplayed(driver, FindElement(driver, xpath, " user profile link", action.BOOLEAN, timeOut),
+				"visibility", timeOut, " app name xpath in App luncher Name ");
+
 	}
-	
-	
+
 	@FindBy(xpath = "//button[@title='Close']/lightning-icon/parent::button")
 	private WebElement notificationPopup;
 
 	public WebElement notificationPopup(int timeOut) {
 		return isDisplayed(driver, notificationPopup, "Visibility", timeOut, "notificationPopup");
 	}
-	
-	
+
 }

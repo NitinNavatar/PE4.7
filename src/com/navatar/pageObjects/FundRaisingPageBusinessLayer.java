@@ -131,7 +131,7 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage {
 										action.THROWEXCEPTION, 30), "Stage input", action.BOOLEAN)) {
 									appLog.info("Click on stage input");
 									ThreadSleep(2000);
-									click(driver, FindElement(driver, "//*[text()='" + stage + "']/..", "stage list",
+									click(driver, FindElement(driver, "//lightning-base-combobox-item//span[@class=\"slds-truncate\" and text()='"+stage +"']", "stage list",
 											action.THROWEXCEPTION, 30), "stage list", action.BOOLEAN);
 									appLog.info("Click on stage list item:" + stage);
 
@@ -180,7 +180,7 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						if (click(driver, getCustomTabSaveBtn("", 60), "Save Button", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, fundRaisingSaveButton("", 60), "Save Button", action.SCROLLANDBOOLEAN)) {
 							ThreadSleep(500);
 
 							ThreadSleep(2000);

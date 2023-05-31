@@ -7293,7 +7293,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			CommonLib.refresh(driver);
 			home.notificationPopUpClose();
-			if (home.globalSearchAndNavigate(eventTitle, "Events", true)) {
+			if (home.globalSearchAndNavigate(eventTitle, "Events", true, projectName)) {
 
 				log(LogStatus.INFO, "-----Verified No Event named: " + eventTitle + " found in Events Object-----",
 						YesNo.No);
@@ -7397,7 +7397,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			CommonLib.refresh(driver);
 			home.notificationPopUpClose();
-			if (home.globalSearchAndNavigate(contact1, "Contacts", false)) {
+			if (home.globalSearchAndNavigate(contact1, "Contacts", false, projectName)) {
 
 				log(LogStatus.INFO, "-----Verified Contact named: " + contact1 + " found in Contacts Object-----",
 						YesNo.No);
@@ -7451,7 +7451,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			CommonLib.refresh(driver);
 			home.notificationPopUpClose();
-			if (home.globalSearchAndNavigate(contact2, "Contacts", false)) {
+			if (home.globalSearchAndNavigate(contact2, "Contacts", false, projectName)) {
 
 				log(LogStatus.INFO, "-----Verified Contact named: " + contact2 + " found in Contacts Object-----",
 						YesNo.No);
@@ -7667,7 +7667,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			CommonLib.refresh(driver);
 			home.notificationPopUpClose();
-			if (home.globalSearchAndNavigate(contact1, "Contacts", false)) {
+			if (home.globalSearchAndNavigate(contact1, "Contacts", false, projectName)) {
 
 				log(LogStatus.INFO, "-----Verified Contact named: " + contact1 + " found in Contacts Object-----",
 						YesNo.No);
@@ -7720,7 +7720,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			CommonLib.refresh(driver);
 			home.notificationPopUpClose();
-			if (home.globalSearchAndNavigate(contact2, "Contacts", false)) {
+			if (home.globalSearchAndNavigate(contact2, "Contacts", false, projectName)) {
 
 				log(LogStatus.INFO, "-----Verified Contact named: " + contact2 + " found in Contacts Object-----",
 						YesNo.No);

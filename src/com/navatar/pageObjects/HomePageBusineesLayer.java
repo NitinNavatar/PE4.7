@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 
 import com.navatar.generic.EnumConstants.AddProspectsTab;
 import com.navatar.generic.EnumConstants.CommitmentType;
+import com.navatar.generic.EnumConstants.Condition;
 import com.navatar.generic.EnumConstants.CreateCommitmentPageFieldLabelText;
 import com.navatar.generic.EnumConstants.CreatedOrNot;
 import com.navatar.generic.EnumConstants.FundraisingContactPageTab;
@@ -28,6 +29,7 @@ import com.navatar.generic.EnumConstants.TopOrBottom;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.generic.EnumConstants.fundraisingContactActions;
+import com.navatar.generic.EnumConstants.object;
 import com.navatar.generic.AppListeners;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
@@ -35,6 +37,7 @@ import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.EnumConstants.NavatarQuickLink;
 import com.navatar.generic.EnumConstants.NavigationMenuItems;
 import com.navatar.generic.EnumConstants.NewInteractions_DefaultValues;
+import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
@@ -62,8 +65,12 @@ import static com.navatar.generic.CommonVariables.EmailTemplate1_FolderName;
 import static com.navatar.generic.CommonVariables.EmailTemplate1_TemplateName;
 import static com.navatar.generic.CommonVariables.SmokeReportFolderName;
 import static com.navatar.generic.CommonVariables.SmokeReportName;
+import static com.navatar.generic.CommonVariables.adminPassword;
+import static com.navatar.generic.CommonVariables.appName;
+import static com.navatar.generic.CommonVariables.crmUser1EmailID;
 import static com.navatar.generic.CommonVariables.environment;
 import static com.navatar.generic.CommonVariables.mode;
+import static com.navatar.generic.CommonVariables.tabObj1;
 import static com.navatar.generic.AppListeners.*;
 
 public class HomePageBusineesLayer extends HomePage {
@@ -1366,7 +1373,7 @@ public class HomePageBusineesLayer extends HomePage {
 		switchToFrame(driver, 30, getCreateFundraisingsFrame_Lighting(20));
 		String SmokeReportFolderName = reportName;
 		String SmokeReportName = templateName;
-		if (hp.clickOnTemplateForReportOnBulkEmail(environment, mode, SmokeReportFolderName, SmokeReportName)) {
+		if (hp.clickOnTemplateForReportOnBulkEmail(environment, mode, SmokeReportName,SmokeReportFolderName)) {
 			log(LogStatus.INFO, "Clicked On " + SmokeReportFolderName + " : " + SmokeReportName, YesNo.No);
 			List<String> result = hp.selectContactAndVerifyInBulkEmail(environment, mode, fname, lname,
 					contactSearchValue, searchContactInEmailProspectGrid, 10);
@@ -2002,6 +2009,7 @@ public class HomePageBusineesLayer extends HomePage {
 		WebElement ele1 = null;
 		String xpath = "", xpath1 = "";
 		if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			driver.switchTo().defaultContent();
 			switchToFrame(driver, 30, getCreateCommitmentFrame_Lightning(20));
 
 		}
@@ -3008,7 +3016,7 @@ public class HomePageBusineesLayer extends HomePage {
 				int columnIndex = columnDataText.indexOf(columnName);
 				if (i == 0) {
 					if (CommonLib.checkSorting(driver, SortOrder.Decending,
-							sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+							sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 2))) {
 						log(LogStatus.PASS, SortOrder.Decending + "Check Sorting on " + columnName + " Columns ",
 								YesNo.No);
 					} else {
@@ -3029,7 +3037,7 @@ public class HomePageBusineesLayer extends HomePage {
 						if (!dateColumns.contains(columnName)) {
 
 							if (CommonLib.checkSorting(driver, SortOrder.Assecending,
-									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 2))) {
 								log(LogStatus.PASS, SortOrder.Assecending + " Check Sorting on "
 										+ sdgGridName.toString() + " Columns " + columnName, YesNo.No);
 							} else {
@@ -3045,15 +3053,17 @@ public class HomePageBusineesLayer extends HomePage {
 							List<String> expectedDateListText = new ArrayList<String>();
 							List<String> actualDateListText = new ArrayList<String>();
 							List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
-									columnIndex + 1);
+									columnIndex + 2);
 							actualDateListText = actualDateListWebElement.stream().map(date -> date.getText())
 									.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
 									.collect(Collectors.toList());
 							expectedDateListText = dateToAscendingOrder(actualDateListWebElement);
 
 							if (actualDateListText.equals(expectedDateListText)) {
-								log(LogStatus.PASS, SortOrder.Assecending + " Check Sorting on "
-										+ sdgGridName.toString() + " Columns " + columnName, YesNo.No);
+								log(LogStatus.PASS,
+										SortOrder.Assecending + " Check Sorting on " + sdgGridName.toString()
+												+ " Columns " + columnName + " & i.e.: " + actualDateListText,
+										YesNo.No);
 							} else {
 								log(LogStatus.FAIL, SortOrder.Assecending + " Not Checked Sorting on "
 										+ sdgGridName.toString() + " Columns " + columnName, YesNo.No);
@@ -3080,7 +3090,7 @@ public class HomePageBusineesLayer extends HomePage {
 								"Clicked on Header" + columnName + " Clomun " + (i + 1) + SortOrder.Assecending,
 								YesNo.No);
 						if (CommonLib.checkSorting(driver, SortOrder.Assecending,
-								sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+								sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 2))) {
 							log(LogStatus.PASS, SortOrder.Assecending + " Check Sorting on " + columnName
 									+ " Column on " + sdgGridName.toString() + " SDG Grid", YesNo.No);
 						} else {
@@ -3104,7 +3114,7 @@ public class HomePageBusineesLayer extends HomePage {
 
 						if (!dateColumns.contains(columnName)) {
 							if (CommonLib.checkSorting(driver, SortOrder.Decending,
-									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 2))) {
 								log(LogStatus.PASS, SortOrder.Decending + " Check Sorting on " + columnName
 										+ " Columns on SDG Grid " + sdgGridName.toString(), YesNo.No);
 							} else {
@@ -3120,7 +3130,7 @@ public class HomePageBusineesLayer extends HomePage {
 							List<String> expectedDateListText = new ArrayList<String>();
 							List<String> actualDateListText = new ArrayList<String>();
 							List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
-									columnIndex + 1);
+									columnIndex + 2);
 							actualDateListText = actualDateListWebElement.stream().map(date -> date.getText())
 									.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
 									.collect(Collectors.toList());
@@ -3213,7 +3223,7 @@ public class HomePageBusineesLayer extends HomePage {
 		if (pageSizeSelect != null) {
 			if (CommonLib.selectVisibleTextFromDropDown(driver, pageSizeSelect, "Page Size Select", pageSize)) {
 				log(LogStatus.INFO, "Selected the Page Size", YesNo.No);
-				CommonLib.ThreadSleep(25000);
+				CommonLib.ThreadSleep(5000);
 				flag = true;
 			} else {
 				log(LogStatus.ERROR, "Not Able To Select Page Size ", YesNo.No);
@@ -3266,19 +3276,18 @@ public class HomePageBusineesLayer extends HomePage {
 
 		if (fundNameElement(Title, FundName) != null) {
 			log(LogStatus.INFO, "Record Found " + FundName, YesNo.No);
-			if (click(driver, deleteRecordBtn(Title, FundName), "Delete Button: " + FundName,
-					action.SCROLLANDBOOLEAN)) {
+			if (click(driver, deleteRecordBtn(Title, FundName), "Delete Button: " + FundName, action.BOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on Delete button of the record " + FundName, YesNo.No);
 
 				if (click(driver, deleteRecordConfirmBtn(Title), "Delete Confirm Button", action.BOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on Delete Confirm Button", YesNo.No);
 					flag = true;
-					String msg = getText(dDriver, deleteRecordMsg(10), "", action.BOOLEAN).trim();
+					String msg = getText(driver, deleteRecordMsg(10), "", action.BOOLEAN).trim();
 					if (msg != null && !msg.equalsIgnoreCase("") && !msg.isEmpty()) {
 
 						if (msg.contains("Successfully")) {
 							log(LogStatus.INFO, "Message Verified: " + msg, YesNo.No);
-							CommonLib.ThreadSleep(30000);
+							CommonLib.ThreadSleep(35000);
 							flag = true;
 						} else {
 							log(LogStatus.FAIL, "Not Able to Delete, Message : " + msg, YesNo.No);
@@ -3325,6 +3334,7 @@ public class HomePageBusineesLayer extends HomePage {
 				"//a[text()=\"" + Title
 						+ "\"]/ancestor::article//tbody/tr//span[not(text()=\"No data returned\")]/ancestor::tr",
 				"Records");
+		records = records.stream().filter(x -> x.isDisplayed()).collect(Collectors.toList());
 		System.out.println("No. of Records Present: " + records.size());
 		if (records.size() != 0) {
 			log(LogStatus.INFO, "No. of Records: " + records.size(), YesNo.No);
@@ -3829,7 +3839,7 @@ public class HomePageBusineesLayer extends HomePage {
 			for (String columnName : columnNames) {
 				int columnIndex = columnDataText.indexOf(columnName);
 
-				List<WebElement> ListOfDataBeforeHeaderClick = sdgGridColumnsDataList(sdgGridName, columnIndex + 1);
+				List<WebElement> ListOfDataBeforeHeaderClick = sdgGridColumnsDataList(sdgGridName, columnIndex + 2);
 
 				if (clickUsingJavaScript(driver, headerList.get(columnIndex),
 						sdgGridName.toString() + " SDG Grid header column " + columnName, action.SCROLLANDBOOLEAN)) {
@@ -3837,7 +3847,7 @@ public class HomePageBusineesLayer extends HomePage {
 							"Clicked on Header" + columnName + " Column " + (columnIndex + 1) + " for Sorting Check",
 							YesNo.No);
 					ThreadSleep(15000);
-					List<WebElement> ListOfDataAfterHeaderClick = sdgGridColumnsDataList(sdgGridName, columnIndex + 1);
+					List<WebElement> ListOfDataAfterHeaderClick = sdgGridColumnsDataList(sdgGridName, columnIndex + 2);
 					if (ListOfDataBeforeHeaderClick.equals(ListOfDataAfterHeaderClick)) {
 						log(LogStatus.PASS, "Sorting of Column is not Working for Column: " + columnName, YesNo.No);
 						flag = true;
@@ -5070,7 +5080,7 @@ public class HomePageBusineesLayer extends HomePage {
 					if (!"".equals(columnName) || columnName != null) {
 						if (columnIndex >= 0) {
 							if (CommonLib.checkSorting(driver, SortOrder.Decending,
-									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 2))) {
 								log(LogStatus.PASS,
 										SortOrder.Decending + "Check Sorting on " + columnName + " Columns ", YesNo.No);
 								flag = true;
@@ -5102,7 +5112,7 @@ public class HomePageBusineesLayer extends HomePage {
 					List<String> expectedDateListText = new ArrayList<String>();
 					List<String> actualDateListText = new ArrayList<String>();
 					List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
-							columnIndex + 1);
+							columnIndex + 2);
 					actualDateListText = actualDateListWebElement.stream().map(date -> date.getText())
 							.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
 							.collect(Collectors.toList());
@@ -5132,7 +5142,7 @@ public class HomePageBusineesLayer extends HomePage {
 					if (!"".equals(columnName) || columnName != null) {
 						if (columnIndex >= 0) {
 							if (CommonLib.checkSorting(driver, SortOrder.Assecending,
-									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 2))) {
 								log(LogStatus.PASS,
 										SortOrder.Assecending + "Check Sorting on " + columnName + " Columns ",
 										YesNo.No);
@@ -5164,7 +5174,7 @@ public class HomePageBusineesLayer extends HomePage {
 					List<String> expectedDateListText = new ArrayList<String>();
 					List<String> actualDateListText = new ArrayList<String>();
 					List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
-							columnIndex + 1);
+							columnIndex + 2);
 					actualDateListText = actualDateListWebElement.stream().map(date -> date.getText())
 							.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
 							.collect(Collectors.toList());
@@ -5235,7 +5245,7 @@ public class HomePageBusineesLayer extends HomePage {
 					if (!dateColumns.contains(columnName)) {
 
 						if (CommonLib.checkSorting(driver, SortOrder.Assecending,
-								sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+								sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 2))) {
 							log(LogStatus.PASS, "Verified " + SortOrder.Assecending + " Sorting on SDG: "
 									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
 						} else {
@@ -5251,15 +5261,17 @@ public class HomePageBusineesLayer extends HomePage {
 						List<String> expectedDateListText = new ArrayList<String>();
 						List<String> actualDateListText = new ArrayList<String>();
 						List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
-								columnIndex + 1);
+								columnIndex + 2);
 						actualDateListText = actualDateListWebElement.stream().map(date -> date.getText())
 								.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
 								.collect(Collectors.toList());
 						expectedDateListText = dateToAscendingOrder(actualDateListWebElement);
 
 						if (actualDateListText.equals(expectedDateListText)) {
-							log(LogStatus.PASS, "Verified " + SortOrder.Assecending + " Sorting on SDG: "
-									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+							log(LogStatus.PASS,
+									"Verified " + SortOrder.Assecending + " Sorting on SDG: " + sdgGridName.toString()
+											+ " for Column " + columnName + " & i.e.: " + actualDateListText,
+									YesNo.No);
 						} else {
 							log(LogStatus.FAIL, SortOrder.Assecending + " Sorting not working on SDG: "
 									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
@@ -5286,7 +5298,7 @@ public class HomePageBusineesLayer extends HomePage {
 
 					if (!dateColumns.contains(columnName)) {
 						if (CommonLib.checkSorting(driver, SortOrder.Decending,
-								sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+								sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 2))) {
 							log(LogStatus.PASS, "Verified " + SortOrder.Decending + " Sorting on SDG: "
 									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
 						} else {
@@ -5302,7 +5314,7 @@ public class HomePageBusineesLayer extends HomePage {
 						List<String> expectedDateListText = new ArrayList<String>();
 						List<String> actualDateListText = new ArrayList<String>();
 						List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
-								columnIndex + 1);
+								columnIndex + 2);
 						actualDateListText = actualDateListWebElement.stream().map(date -> date.getText())
 								.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
 								.collect(Collectors.toList());
@@ -5342,11 +5354,13 @@ public class HomePageBusineesLayer extends HomePage {
 	 */
 
 	public void verifyColumnAscendingDescendingOrder(String sdgGridName, List<String> columnNames,
-			List<String> dateColumns, List<String> amountColumns, String FirstColumnAscYesOrNoByDefault) {
+			List<String> dateColumns, List<String> amountColumns, List<String> pickListColumnAndValues,
+			String FirstColumnAscYesOrNoByDefault) {
 
 		List<WebElement> headerList = sdgGridAllHeadersLabelNameList(sdgGridName);
 		List<String> columnDataText = headerList.stream().map(s -> s.getText()).collect(Collectors.toList()).stream()
-				.map(t -> t.trim()).collect(Collectors.toList());
+				.map(t -> t.trim()).collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
+				.collect(Collectors.toList());
 		if (!headerList.isEmpty()) {
 			int i = 0;
 
@@ -5373,24 +5387,85 @@ public class HomePageBusineesLayer extends HomePage {
 					if (!dateColumns.contains(columnName)) {
 
 						if (!amountColumns.contains(columnName)) {
+							if (pickListColumnAndValues.stream().filter(x -> x.contains(columnName))
+									.collect(Collectors.toList()).size() == 0) {
 
-							if (CommonLib.checkSorting(driver, SortOrder.Assecending,
-									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
-								log(LogStatus.PASS, "Verified " + SortOrder.Assecending + " Sorting on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								if (CommonLib.checkSorting(driver, SortOrder.Assecending,
+										sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 2))) {
+									log(LogStatus.PASS, "Verified " + SortOrder.Assecending + " Sorting on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								} else {
+									log(LogStatus.FAIL, SortOrder.Assecending + " Sorting not working on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+									sa.assertTrue(false, SortOrder.Assecending + " Sorting not working on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName);
+								}
 							} else {
-								log(LogStatus.FAIL, SortOrder.Assecending + " Sorting not working on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
-								sa.assertTrue(false, SortOrder.Assecending + " Sorting not working on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName);
+
+								for (String pickListColumnAndValue : pickListColumnAndValues) {
+									String[] pickListColumnAndValueArray = pickListColumnAndValue.split("<Section>");
+
+									String[] values = pickListColumnAndValueArray[1].split("<break>");
+
+									List<String> expectedPicklistColumnData = new ArrayList<String>();
+									List<String> actualPicklistColumnData = new ArrayList<String>();
+									List<String> customOrderOfPicklistColumnData = new ArrayList<String>();
+
+									List<WebElement> actualPicklistColumnDataWebElements = sdgGridColumnsDataList(
+											sdgGridName.toString(), columnIndex + 2);
+									actualPicklistColumnData = actualPicklistColumnDataWebElements.stream()
+											.map(pickList -> pickList.getText()).collect(Collectors.toList());
+									expectedPicklistColumnData = actualPicklistColumnData;
+
+									customOrderOfPicklistColumnData = Arrays.asList(values);
+									Collections.sort(expectedPicklistColumnData,
+											Comparator.comparingInt(customOrderOfPicklistColumnData::indexOf));
+
+									if (actualPicklistColumnData.size() > 0)
+
+									{
+										if (expectedPicklistColumnData.equals(actualPicklistColumnData)) {
+											log(LogStatus.PASS,
+													"Verified " + SortOrder.Assecending + " Sorting on SDG: "
+															+ sdgGridName.toString() + " for Column " + columnName
+															+ " & i.e.: " + actualPicklistColumnData,
+													YesNo.No);
+										} else {
+											log(LogStatus.FAIL, SortOrder.Assecending + " Sorting not working on SDG: "
+													+ sdgGridName.toString() + " for Column " + columnName
+
+													, YesNo.No);
+											sa.assertTrue(false,
+													SortOrder.Assecending + " Sorting not working on SDG: "
+															+ sdgGridName.toString() + " for Column " + columnName
+															+ ", Expected: " + expectedPicklistColumnData
+															+ " & Actual: " + actualPicklistColumnData);
+										}
+									} else {
+
+										log(LogStatus.FAIL,
+												"Not Able to Check Sorting of type: " + SortOrder.Assecending
+														+ " on SDG: " + sdgGridName.toString() + " for Column "
+														+ columnName
+														+ " as either there is no data or locator has been changed",
+												YesNo.No);
+										sa.assertTrue(false,
+												"Not Able to Check Sorting of type: " + SortOrder.Assecending
+														+ " on SDG: " + sdgGridName.toString() + " for Column "
+														+ columnName
+														+ " as either there is no data or locator has been changed");
+									}
+
+								}
 							}
+
 						} else {
 
 							List<Integer> expectedAmount = new ArrayList<Integer>();
 							List<String> actualAmount = new ArrayList<String>();
 							List<Integer> sortedActualAmount = new ArrayList<Integer>();
 							List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
-									columnIndex + 1);
+									columnIndex + 2);
 							actualAmount = actualDateListWebElement.stream().map(date -> date.getText())
 									.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
 									.collect(Collectors.toList());
@@ -5405,13 +5480,21 @@ public class HomePageBusineesLayer extends HomePage {
 							expectedAmount = amountToAscendingOrder(actualDateListWebElement);
 
 							if (sortedActualAmount.equals(expectedAmount)) {
-								log(LogStatus.PASS, "Verified " + SortOrder.Assecending + " Sorting on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								log(LogStatus.PASS,
+										"Verified " + SortOrder.Assecending + " Sorting on SDG: "
+												+ sdgGridName.toString() + " for Column " + columnName + " & i.e.: "
+												+ sortedActualAmount,
+										YesNo.No);
 							} else {
-								log(LogStatus.FAIL, SortOrder.Assecending + " Sorting not working on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
-								sa.assertTrue(false, SortOrder.Assecending + " Sorting not working on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName);
+								log(LogStatus.FAIL,
+										SortOrder.Assecending + " Sorting not working on SDG: " + sdgGridName.toString()
+												+ " for Column " + columnName + " , Expected: " + expectedAmount
+												+ " but Actual: " + sortedActualAmount,
+										YesNo.No);
+								sa.assertTrue(false,
+										SortOrder.Assecending + " Sorting not working on SDG: " + sdgGridName.toString()
+												+ " for Column " + columnName + " , Expected: " + expectedAmount
+												+ " but Actual: " + sortedActualAmount);
 							}
 
 						}
@@ -5422,20 +5505,27 @@ public class HomePageBusineesLayer extends HomePage {
 						List<String> expectedDateListText = new ArrayList<String>();
 						List<String> actualDateListText = new ArrayList<String>();
 						List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
-								columnIndex + 1);
+								columnIndex + 2);
 						actualDateListText = actualDateListWebElement.stream().map(date -> date.getText())
 								.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
 								.collect(Collectors.toList());
 						expectedDateListText = dateToAscendingOrder(actualDateListWebElement);
 
 						if (actualDateListText.equals(expectedDateListText)) {
-							log(LogStatus.PASS, "Verified " + SortOrder.Assecending + " Sorting on SDG: "
-									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+							log(LogStatus.PASS,
+									"Verified " + SortOrder.Assecending + " Sorting on SDG: " + sdgGridName.toString()
+											+ " for Column " + columnName + " & i.e.: " + actualDateListText,
+									YesNo.No);
 						} else {
-							log(LogStatus.FAIL, SortOrder.Assecending + " Sorting not working on SDG: "
-									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
-							sa.assertTrue(false, SortOrder.Assecending + " Sorting not working on SDG: "
-									+ sdgGridName.toString() + " for Column " + columnName);
+							log(LogStatus.FAIL,
+									SortOrder.Assecending + " Sorting not working on SDG: " + sdgGridName.toString()
+											+ " for Column " + columnName + " , Expected: " + expectedDateListText
+											+ " but Actual: " + actualDateListText,
+									YesNo.No);
+							sa.assertTrue(false,
+									SortOrder.Assecending + " Sorting not working on SDG: " + sdgGridName.toString()
+											+ " for Column " + columnName + " , Expected: " + expectedDateListText
+											+ " but Actual: " + actualDateListText);
 						}
 
 					}
@@ -5446,7 +5536,6 @@ public class HomePageBusineesLayer extends HomePage {
 					sa.assertTrue(false, "Not able to click on " + sdgGridName.toString() + " SDG Grid header "
 							+ columnName + " so cannot check Sorting " + SortOrder.Assecending);
 				}
-				headerList = sdgGridAllHeadersLabelNameList(sdgGridName);
 
 				if (clickUsingJavaScript(driver, headerList.get(columnIndex),
 						sdgGridName.toString() + " SDG Grid header column", action.SCROLLANDBOOLEAN)) {
@@ -5458,23 +5547,84 @@ public class HomePageBusineesLayer extends HomePage {
 					if (!dateColumns.contains(columnName)) {
 						if (!amountColumns.contains(columnName)) {
 
-							if (CommonLib.checkSorting(driver, SortOrder.Decending,
-									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
-								log(LogStatus.PASS, "Verified " + SortOrder.Decending + " Sorting on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+							if (pickListColumnAndValues.stream().filter(x -> x.contains(columnName))
+									.collect(Collectors.toList()).size() == 0) {
+
+								if (CommonLib.checkSorting(driver, SortOrder.Decending,
+										sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 2))) {
+									log(LogStatus.PASS, "Verified " + SortOrder.Decending + " Sorting on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								} else {
+									log(LogStatus.FAIL, SortOrder.Decending + " Sorting not working on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+									sa.assertTrue(false, SortOrder.Decending + " Sorting not working on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName);
+								}
+
 							} else {
-								log(LogStatus.FAIL, SortOrder.Decending + " Sorting not working on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
-								sa.assertTrue(false, SortOrder.Decending + " Sorting not working on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName);
+
+								for (String pickListColumnAndValue : pickListColumnAndValues) {
+									String[] pickListColumnAndValueArray = pickListColumnAndValue.split("<Section>");
+
+									String[] values = pickListColumnAndValueArray[1].split("<break>");
+
+									List<String> expectedPicklistColumnData = new ArrayList<String>();
+									List<String> actualPicklistColumnData = new ArrayList<String>();
+									List<String> customOrderOfPicklistColumnData = new ArrayList<String>();
+
+									List<WebElement> actualPicklistColumnDataWebElements = sdgGridColumnsDataList(
+											sdgGridName.toString(), columnIndex + 1);
+									actualPicklistColumnData = actualPicklistColumnDataWebElements.stream()
+											.map(pickList -> pickList.getText()).collect(Collectors.toList());
+
+									expectedPicklistColumnData = actualPicklistColumnData;
+									customOrderOfPicklistColumnData = Arrays.asList(values);
+									Collections.reverse(customOrderOfPicklistColumnData);
+									Collections.sort(expectedPicklistColumnData,
+											Comparator.comparingInt(customOrderOfPicklistColumnData::indexOf));
+
+									if (actualPicklistColumnData.size() > 0)
+
+									{
+										if (expectedPicklistColumnData.equals(actualPicklistColumnData)) {
+											log(LogStatus.PASS,
+													"Verified " + SortOrder.Decending + " Sorting on SDG: "
+															+ sdgGridName.toString() + " for Column " + columnName
+															+ " & i.e.: " + actualPicklistColumnData,
+													YesNo.No);
+										} else {
+											log(LogStatus.FAIL,
+													SortOrder.Decending + " Sorting not working on SDG: "
+															+ sdgGridName.toString() + " for Column " + columnName
+															+ ", Expected: " + expectedPicklistColumnData
+															+ " & Actual: " + actualPicklistColumnData,
+													YesNo.No);
+											sa.assertTrue(false,
+													SortOrder.Decending + " Sorting not working on SDG: "
+															+ sdgGridName.toString() + " for Column " + columnName
+															+ ", Expected: " + expectedPicklistColumnData
+															+ " & Actual: " + actualPicklistColumnData);
+										}
+									} else {
+
+										log(LogStatus.FAIL, "Not Able to Check Sorting of type: " + SortOrder.Decending
+												+ " on SDG: " + sdgGridName.toString() + " for Column " + columnName
+												+ " as either there is no data or locator has been changed", YesNo.No);
+										sa.assertTrue(false, "Not Able to Check Sorting of type: " + SortOrder.Decending
+												+ " on SDG: " + sdgGridName.toString() + " for Column " + columnName
+												+ " as either there is no data or locator has been changed");
+									}
+
+								}
 							}
+
 						} else {
 
 							List<Integer> expectedAmount = new ArrayList<Integer>();
 							List<String> actualAmount = new ArrayList<String>();
 							List<Integer> sortedActualAmount = new ArrayList<Integer>();
 							List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
-									columnIndex + 1);
+									columnIndex + 2);
 							actualAmount = actualDateListWebElement.stream().map(date -> date.getText())
 									.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
 									.collect(Collectors.toList());
@@ -5489,13 +5639,21 @@ public class HomePageBusineesLayer extends HomePage {
 							expectedAmount = amountToDescendingOrder(actualDateListWebElement);
 
 							if (sortedActualAmount.equals(expectedAmount)) {
-								log(LogStatus.PASS, "Verified " + SortOrder.Decending + " Sorting on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								log(LogStatus.PASS,
+										"Verified " + SortOrder.Decending + " Sorting on SDG: " + sdgGridName.toString()
+												+ " for Column " + columnName + columnName + " & i.e.: "
+												+ sortedActualAmount,
+										YesNo.No);
 							} else {
-								log(LogStatus.FAIL, SortOrder.Decending + " Sorting not working on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
-								sa.assertTrue(false, SortOrder.Decending + " Sorting not working on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName);
+								log(LogStatus.FAIL,
+										SortOrder.Decending + " Sorting not working on SDG: " + sdgGridName.toString()
+												+ " for Column " + columnName + " , Expected: " + expectedAmount
+												+ " but Actual: " + sortedActualAmount,
+										YesNo.No);
+								sa.assertTrue(false,
+										SortOrder.Decending + " Sorting not working on SDG: " + sdgGridName.toString()
+												+ " for Column " + columnName + " , Expected: " + expectedAmount
+												+ " but Actual: " + sortedActualAmount);
 							}
 
 						}
@@ -5506,20 +5664,27 @@ public class HomePageBusineesLayer extends HomePage {
 						List<String> expectedDateListText = new ArrayList<String>();
 						List<String> actualDateListText = new ArrayList<String>();
 						List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
-								columnIndex + 1);
+								columnIndex + 2);
 						actualDateListText = actualDateListWebElement.stream().map(date -> date.getText())
 								.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
 								.collect(Collectors.toList());
 						expectedDateListText = dateToDescendingOrder(actualDateListWebElement);
 
 						if (actualDateListText.equals(expectedDateListText)) {
-							log(LogStatus.PASS, "Verified " + SortOrder.Decending + " Sorting on SDG: "
-									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+							log(LogStatus.PASS,
+									"Verified " + SortOrder.Decending + " Sorting on SDG: " + sdgGridName.toString()
+											+ " for Column " + columnName + " & i.e.: " + actualDateListText,
+									YesNo.No);
 						} else {
-							log(LogStatus.FAIL, SortOrder.Decending + " Sorting not working on SDG: "
-									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
-							sa.assertTrue(false, SortOrder.Decending + " Sorting not working on SDG: "
-									+ sdgGridName.toString() + " for Column " + columnName);
+							log(LogStatus.FAIL,
+									SortOrder.Decending + " Sorting not working on SDG: " + sdgGridName.toString()
+											+ " for Column " + columnName + " , Expected: " + expectedDateListText
+											+ " but Actual: " + actualDateListText,
+									YesNo.No);
+							sa.assertTrue(false,
+									SortOrder.Decending + " Sorting not working on SDG: " + sdgGridName.toString()
+											+ " for Column " + columnName + " , Expected: " + expectedDateListText
+											+ " but Actual: " + actualDateListText);
 						}
 
 					}
@@ -5740,9 +5905,13 @@ public class HomePageBusineesLayer extends HomePage {
 
 	}
 
-	public boolean globalSearchAndNavigate(String recordName, String sideNavOption, boolean noResultMsg) {
+	public boolean globalSearchAndNavigate(String recordName, String sideNavOption, boolean noResultMsg,
+			String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		boolean flag = false;
-		CommonLib.ThreadSleep(1500);
+
+		CommonLib.ThreadSleep(20000);
 		if (click(driver, globalSearchButton(20), "globalSearchButton", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on globalSearchButton", YesNo.No);
 			CommonLib.ThreadSleep(1000);
@@ -5767,11 +5936,49 @@ public class HomePageBusineesLayer extends HomePage {
 						}
 					} else {
 
+						for (int i = 0; i <= 4; i++) {
+							if (globalSearchRecord(recordName, 7) != null) {
+								break;
+							}
+							CommonLib.refresh(driver);
+						}
 						if (globalSearchRecord(recordName, 7) != null) {
 							log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
 							if (click(driver, globalSearchRecord(recordName, 7), "globalSearchRecord: " + recordName,
 									action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Record: " + recordName, YesNo.No);
+
+								if (sideNavOption.equalsIgnoreCase("Tasks")) {
+									if (editButtonOfSubjectLinkPopUpInInteractionSection(5) != null) {
+										flag = true;
+									} else {
+
+										if (lp.clickOnTab(projectName, "Interactions")) {
+
+											log(LogStatus.INFO, "Clicked on Tab : " + "Interactions", YesNo.No);
+											CommonLib.refresh(driver);
+											if (CommonLib.clickUsingJavaScript(driver,
+													BP.subjectOfInteractionPage(recordName, 15),
+													"Subject Name on Intraction", action.BOOLEAN)) {
+												log(LogStatus.INFO, "clicked on " + recordName, YesNo.No);
+
+												flag = true;
+
+											} else {
+												log(LogStatus.ERROR, "not able to click on " + recordName, YesNo.No);
+												sa.assertTrue(false, "not able to click on " + recordName);
+											}
+
+										} else {
+											log(LogStatus.ERROR, "Not able to click on Tab : " + "Interactions",
+													YesNo.No);
+											sa.assertTrue(false, "Not able to click on Tab : " + "Interactions");
+										}
+
+									}
+								} else {
+									flag = true;
+								}
 
 								/*
 								 * if (sideNavOption.equalsIgnoreCase("Tasks")) { CommonLib.ThreadSleep(4000);
@@ -5788,8 +5995,6 @@ public class HomePageBusineesLayer extends HomePage {
 								 * else { log(LogStatus.ERROR, "No New Window Open after click on Record: " +
 								 * recordName, YesNo.Yes); } } else { flag = true; }
 								 */
-
-								flag = true;
 
 							} else {
 								log(LogStatus.ERROR, "Not able to Click on Record: " + recordName, YesNo.Yes);
@@ -5833,11 +6038,55 @@ public class HomePageBusineesLayer extends HomePage {
 									}
 								} else {
 
+									for (int i = 0; i <= 4; i++) {
+										if (globalSearchRecord(recordName, 7) != null) {
+											break;
+										}
+										CommonLib.refresh(driver);
+									}
 									if (globalSearchRecord(recordName, 7) != null) {
 										log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
 										if (click(driver, globalSearchRecord(recordName, 7),
 												"globalSearchRecord: " + recordName, action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "Clicked on Record: " + recordName, YesNo.No);
+
+											if (sideNavOption.equalsIgnoreCase("Tasks")) {
+												if (editButtonOfSubjectLinkPopUpInInteractionSection(5) != null) {
+													flag = true;
+												} else {
+
+													if (lp.clickOnTab(projectName, "Interactions")) {
+
+														log(LogStatus.INFO, "Clicked on Tab : " + "Interactions",
+																YesNo.No);
+
+														CommonLib.refresh(driver);
+														if (CommonLib.clickUsingJavaScript(driver,
+																BP.subjectOfInteractionPage(recordName, 15),
+																"Subject Name on Intraction", action.BOOLEAN)) {
+															log(LogStatus.INFO, "clicked on " + recordName, YesNo.No);
+
+															flag = true;
+
+														} else {
+															log(LogStatus.ERROR, "not able to click on " + recordName,
+																	YesNo.No);
+															sa.assertTrue(false, "not able to click on " + recordName);
+														}
+
+													} else {
+														log(LogStatus.ERROR,
+																"Not able to click on Tab : " + "Interactions",
+																YesNo.No);
+														sa.assertTrue(false,
+																"Not able to click on Tab : " + "Interactions");
+													}
+
+												}
+											} else {
+												flag = true;
+											}
+
 											/*
 											 * if (sideNavOption.equalsIgnoreCase("Tasks")) {
 											 * CommonLib.ThreadSleep(4000); String parentID =
@@ -5855,7 +6104,6 @@ public class HomePageBusineesLayer extends HomePage {
 											 * + recordName, YesNo.Yes); } } else { flag = true; }
 											 */
 
-											flag = true;
 										} else {
 											log(LogStatus.ERROR, "Not able to Click on Record: " + recordName,
 													YesNo.Yes);
@@ -5903,7 +6151,6 @@ public class HomePageBusineesLayer extends HomePage {
 		return flag;
 	}
 
-	
 	public boolean globalSearchAndDeleteTaskorCall(String recordName, String sideNavOption, boolean noResultMsg) {
 		boolean flag = false;
 		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
@@ -5932,6 +6179,12 @@ public class HomePageBusineesLayer extends HomePage {
 						}
 					} else {
 
+						for (int i = 0; i <= 4; i++) {
+							if (globalSearchRecord(recordName, 7) != null) {
+								break;
+							}
+							CommonLib.refresh(driver);
+						}
 						if (globalSearchRecord(recordName, 7) != null) {
 							log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
 //							if (click(driver, globalSearchRecord(recordName, 7), "globalSearchRecord: " + recordName,
@@ -6001,6 +6254,12 @@ public class HomePageBusineesLayer extends HomePage {
 									}
 								} else {
 
+									for (int i = 0; i <= 4; i++) {
+										if (globalSearchRecord(recordName, 7) != null) {
+											break;
+										}
+										CommonLib.refresh(driver);
+									}
 									if (globalSearchRecord(recordName, 7) != null) {
 										log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
 //										if (click(driver, globalSearchRecord(recordName, 7),
@@ -6072,7 +6331,7 @@ public class HomePageBusineesLayer extends HomePage {
 			sa.assertTrue(false, "Not able to click on globalSearchButton");
 
 		}
-		
+
 		ThreadSleep(2000);
 		if (click(driver, downArrowButton(20), "downArrowButton", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
@@ -6088,7 +6347,7 @@ public class HomePageBusineesLayer extends HomePage {
 					if (taskBP.taskDeletedMsg(15) != null) {
 						log(LogStatus.ERROR, "Task Delete Msg display, So Task gets deleted", YesNo.Yes);
 
-						flag=true;
+						flag = true;
 					} else {
 						log(LogStatus.ERROR, "Task Delete Msg not display, So Task not gets deleted", YesNo.Yes);
 						sa.assertTrue(false, "Task Delete Msg not display, So Task not gets deleted");
@@ -6114,7 +6373,7 @@ public class HomePageBusineesLayer extends HomePage {
 		}
 		return flag;
 	}
-	
+
 	public boolean globalSearchAndEditTaskorCall(String recordName, String sideNavOption, boolean noResultMsg) {
 		boolean flag = false;
 		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
@@ -6143,6 +6402,13 @@ public class HomePageBusineesLayer extends HomePage {
 						}
 					} else {
 
+						for (int i = 0; i <= 4; i++) {
+							if (globalSearchRecord(recordName, 7) != null) {
+								break;
+							}
+							CommonLib.refresh(driver);
+						}
+
 						if (globalSearchRecord(recordName, 7) != null) {
 							log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
 //							if (click(driver, globalSearchRecord(recordName, 7), "globalSearchRecord: " + recordName,
@@ -6212,6 +6478,12 @@ public class HomePageBusineesLayer extends HomePage {
 									}
 								} else {
 
+									for (int i = 0; i <= 4; i++) {
+										if (globalSearchRecord(recordName, 7) != null) {
+											break;
+										}
+										CommonLib.refresh(driver);
+									}
 									if (globalSearchRecord(recordName, 7) != null) {
 										log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
 //										if (click(driver, globalSearchRecord(recordName, 7),
@@ -6283,9 +6555,10 @@ public class HomePageBusineesLayer extends HomePage {
 			sa.assertTrue(false, "Not able to click on globalSearchButton");
 
 		}
-		
+
 		ThreadSleep(2000);
-		if (click(driver, downArrowButton(20), "downArrowButton", action.SCROLLANDBOOLEAN)) {
+		if (click(driver, downArrowOfGlobalSearch(recordName, 20), "downArrowOfGlobalSearch: " + recordName,
+				action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
 
 			if (click(driver, taskBP.buttonInTheDownArrowList("Edit", 20), "Edit Button in downArrowButton",

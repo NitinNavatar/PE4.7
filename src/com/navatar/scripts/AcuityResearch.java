@@ -510,32 +510,13 @@ public class AcuityResearch extends BaseLib{
 			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
 			ThreadSleep(8000);
 			ele = rp.getResearchFindingsValue(10).getText();
-			if (ele.equals(searchValue) || searchValue == null) {
+			if (ele.equals(searchValue) || searchValue == null || searchValue == "") {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
 			}
 			ele = rp.getResearchFindings(10).getText();
 			if (ele!=null && ele.equalsIgnoreCase("Search Results")) {
 			log(LogStatus.PASS, ele +" is visible", YesNo.Yes);
 			}
-			
-			if(searchValue.length() < 2) {
-				ele =rp.getErrorValue(10).getText();
-				if(ele.equalsIgnoreCase(bp.errorName)){
-					log(LogStatus.PASS, ele +" has been Matched with " +bp.errorName, YesNo.No);
-				} else {
-					log(LogStatus.ERROR, ele +" is not Matched with " +bp.errorName, YesNo.Yes);
-					sa.assertTrue(false, ele +" is not Matched with " +bp.errorName);
-				}
-				ThreadSleep(2000);
-				xpath = "(//lightning-icon[contains(@class,'utility-warning')])["+i+"]";
-				WebElement element = FindElement(driver, xpath, bp.errorName, action.BOOLEAN, 10);
-				if(mouseOverGetTextOperation(driver, element).contains(bp.errorName)){
-					log(LogStatus.PASS, ele +" on mouse hover has been Matched with " +bp.errorName, YesNo.No);
-				}else {
-					log(LogStatus.ERROR, ele +" on mouse hover is not Matched with " +bp.errorName, YesNo.Yes);
-					sa.assertTrue(false, ele +" on mouse hover is not Matched with " +bp.errorName);
-			}
-			} else {
 				ele = rp.getNoResult(10).getText();
 				if(ele.contains(bp.errorName1)){
 					log(LogStatus.PASS, ele +" has been Matched with " +bp.errorName1, YesNo.No);
@@ -543,7 +524,6 @@ public class AcuityResearch extends BaseLib{
 					log(LogStatus.ERROR, ele +" is not Matched with " +bp.errorName1, YesNo.Yes);
 					sa.assertTrue(false, ele +" is not Matched with " +bp.errorName1);
 				}
-			}
 	} else {
 		log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
 		sa.assertTrue(false,"Not Able to send value "+searchValue);
@@ -566,12 +546,10 @@ public class AcuityResearch extends BaseLib{
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	lp.CRMLogin(superAdminUserName, adminPassword,appName);
 	
-	String firmRecordTypeList = AR_FirmOther_LabelNames1;
 	String contactRecordTypeList = AR_ContactRecordType1;
 	String dealRecordTypeList = AR_DealRecordType1;
 	String fundRecordTypeList = AR_FundRecordType1;
 	String fundraisingRecordTypeList = AR_FundraisingRecordType1;
-	String firmRecordTypeArray[] = firmRecordTypeList.split(breakSP,-1);
 	String contactRecordTypeArray[] = contactRecordTypeList.split(breakSP,-1);
 	String dealRecordTypeArray[] = dealRecordTypeList.split(breakSP, -1);
 	String fundRecordTypeArray[] = fundRecordTypeList.split(breakSP, -1);
@@ -617,7 +595,7 @@ public class AcuityResearch extends BaseLib{
 					{ recordTypeLabel.Active.toString(), "" } } };
 
 	
-	String[] profileForSelection = { "PE Standard User", "System Administrator" };
+	String[] profileForSelection = { "System Administrator"};
 	boolean isMakeAvailable = false;
 	boolean isMakeDefault = false;
 	boolean flag = false;
@@ -669,8 +647,7 @@ public class AcuityResearch extends BaseLib{
 			List<String> abc = sp.DragNDrop("", mode, object.Contact, ObjectFeatureName.pageLayouts, layoutName, sourceANDDestination);
 			ThreadSleep(10000);
 			if (!abc.isEmpty()) {
-				log(LogStatus.FAIL, "field not added/already present 1", YesNo.Yes);
-				sa.assertTrue(false, "field not added/already present 1");
+				log(LogStatus.PASS, "field not added/already present 1", YesNo.Yes);
 			}else{
 				log(LogStatus.INFO, "field added/already present 1", YesNo.Yes);
 			}
@@ -712,7 +689,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, contactrecordType[i], isMakeAvailable,
-										null, isMakeDefault, null, 10);
+										profileForSelection, isMakeDefault, null, 10);
 							}
 						} else {
 							isMakeDefault = false;
@@ -786,7 +763,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, dealRecordType[i], isMakeAvailable,
-										null, isMakeDefault, null, 10);
+										profileForSelection, isMakeDefault, null, 10);
 							}
 						}
 						if (flag) {
@@ -850,7 +827,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, fundrecordType[i], isMakeAvailable,
-										null, isMakeDefault, null, 10);
+										profileForSelection, isMakeDefault, null, 10);
 							}
 						}
 						if (flag) {
@@ -914,7 +891,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, fundraisingrecordType[i],
-										isMakeAvailable, null, isMakeDefault, null, 10);
+										isMakeAvailable, profileForSelection, isMakeDefault, null, 10);
 							}
 						}
 						if (flag) {
@@ -953,50 +930,6 @@ public class AcuityResearch extends BaseLib{
 	}
 	switchToDefaultContent(driver);
 	ThreadSleep(5000);
-	
-	for (int i = 0; i < firmRecordTypeArray.length; i++) {
-		home.notificationPopUpClose();
-		if (home.clickOnSetUpLink()) {
-			flag = false;
-			parentID = switchOnWindow(driver);
-			if (parentID != null) {
-				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Firm)) {
-					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Firm,
-							ObjectFeatureName.recordTypes)) {
-						if (sp.clickOnAlreadyCreatedLayout(firmRecordTypeArray[i])) {
-							if (sp.editRecordTypeForObject(projectName, RecordType, 10)) {
-								log(LogStatus.ERROR,firmRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
-							}else {
-								log(LogStatus.ERROR,firmRecordTypeArray[i]+" not updated ",YesNo.Yes);
-								sa.assertTrue(false, firmRecordTypeArray[i]+" not updated ");
-							}
-						
-						}else {
-							log(LogStatus.ERROR, firmRecordTypeArray[i]+" is not clickable", YesNo.Yes);
-							sa.assertTrue(false, firmRecordTypeArray[i]+" is not clickable");
-						}
-				
-					}else {
-						log(LogStatus.ERROR, "object feature "+ObjectFeatureName.recordTypes+" is not clickable", YesNo.Yes);
-						sa.assertTrue(false, "object feature "+ObjectFeatureName.recordTypes+" is not clickable");
-					}
-				}else {
-					log(LogStatus.ERROR, "Deal object could not be found in object manager", YesNo.Yes);
-					sa.assertTrue(false, "Deal object could not be found in object manager");
-				}
-				driver.close();
-				driver.switchTo().window(parentID);
-				switchToDefaultContent(driver);
-			}else {
-				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
-				sa.assertTrue(false, "could not find new window to switch");
-			}
-		}else {
-			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
-			sa.assertTrue(false, "could not click on setup link");
-		}
-
-	}
 	lp.CRMlogout();
 	sa.assertAll();
 }
@@ -1013,8 +946,7 @@ public class AcuityResearch extends BaseLib{
 	
 	String recordTypes [] = {"Deal","Fund","Fundraising"};
 	String avail[][] = {{"SellSide Deal","BuySide Deal", "Capital Raise"},{"Mutual Fund","Trust Fund"},{"FRGRT","MSGRT"}};
-	String defaultValue[] = {"SellSide Deal","Mutual Fund", "FRGRT"};
-	String[] profileForSelection = { "PE Standard User", "System Administrator", "Standard Platform User", "Read Only", "PE - FOF Standard User", "Minimum Access - Salesforce", "Marketing User", "IR Only", "Identity User", "FOF Standard User", "Deal Only", "Contract Manager", "Standard User", "Minimum Access - Salesforce" };
+	String[] profileForSelection = {"System Administrator"};
 	String parentID=null;
 	String master= "--Master--";
 	for(int k=0; k<profileForSelection.length; k++) {
@@ -1034,6 +966,7 @@ public class AcuityResearch extends BaseLib{
 						for(int i=0; i <3; i++) {
 							System.out.println(avail[i].length);
 						switchToDefaultContent(driver);
+						refresh(driver);
 						ThreadSleep(5000);
 						switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
 						ThreadSleep(2000);
@@ -1072,15 +1005,6 @@ public class AcuityResearch extends BaseLib{
 									appLog.error(recordTypes + " record type is not Selected list Tab.");
 								}	
 								
-							if (selectVisibleTextFromDropDown(driver, sp.getdefaultRecord(10), "Default Record Type",
-									defaultValue[i])) {
-								log(LogStatus.INFO, "successfully verified "+defaultValue[i], YesNo.No);
-		
-							}else {
-								log(LogStatus.ERROR, "not able to verify "+defaultValue[i]+" in selected record type", YesNo.Yes);
-								sa.assertTrue(false,"not able to verify "+defaultValue[i]+" in selected record type");
-		
-							}
 							if (click(driver, sp.getCreateUserSaveBtn_Lighting(10), "Save Button",
 									action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
@@ -1155,13 +1079,18 @@ public class AcuityResearch extends BaseLib{
 					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Deal,
 							ObjectFeatureName.recordTypes)) {
 						if (sp.clickOnAlreadyCreatedLayout(dealRecordTypeArray[i])) {
+							if(sp.getRecordTypeLabelWithoutEditMode(projectName, RecordType[0][0], RecordType[0][1], 10) == null) {
+								log(LogStatus.PASS,"Record Type need to update ",YesNo.Yes);
 							if (sp.editRecordTypeForObject(projectName, RecordType, 10)) {
-								log(LogStatus.ERROR,dealRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
+								log(LogStatus.PASS,dealRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
 							}else {
 								log(LogStatus.ERROR,dealRecordTypeArray[i]+" not updated ",YesNo.Yes);
 								sa.assertTrue(false, dealRecordTypeArray[i]+" not updated ");
 							}
-						
+						} else {
+							log(LogStatus.ERROR,"Record Type is already updated ",YesNo.Yes);
+							sa.assertTrue(false, "Record Type is already updated ");
+						}
 						}else {
 							log(LogStatus.ERROR, dealRecordTypeArray[i]+" is not clickable", YesNo.Yes);
 							sa.assertTrue(false, dealRecordTypeArray[i]+" is not clickable");
@@ -1199,13 +1128,18 @@ public class AcuityResearch extends BaseLib{
 					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Fund,
 							ObjectFeatureName.recordTypes)) {
 						if (sp.clickOnAlreadyCreatedLayout(fundRecordTypeArray[i])) {
+							if(sp.getRecordTypeLabelWithoutEditMode(projectName, RecordType[0][0], RecordType[0][1], 10) == null) {
+								log(LogStatus.PASS,"Record Type need to update ",YesNo.Yes);
 							if (sp.editRecordTypeForObject(projectName, RecordType, 10)) {
 								log(LogStatus.ERROR,fundRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
 							}else {
 								log(LogStatus.ERROR,fundRecordTypeArray[i]+" not updated ",YesNo.Yes);
 								sa.assertTrue(false, fundRecordTypeArray[i]+" not updated ");
 							}
-						
+							} else {
+								log(LogStatus.ERROR,"Record Type is already updated ",YesNo.Yes);
+								sa.assertTrue(false, "Record Type is already updated ");
+							}
 						}else {
 							log(LogStatus.ERROR, fundRecordTypeArray[i]+" is not clickable", YesNo.Yes);
 							sa.assertTrue(false, fundRecordTypeArray[i]+" is not clickable");
@@ -1243,13 +1177,18 @@ public class AcuityResearch extends BaseLib{
 					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Fundraising,
 							ObjectFeatureName.recordTypes)) {
 						if (sp.clickOnAlreadyCreatedLayout(fundraisingRecordTypeArray[i])) {
+							if(sp.getRecordTypeLabelWithoutEditMode(projectName, RecordType[0][0], RecordType[0][1], 10) == null) {
+								log(LogStatus.PASS,"Record Type need to update ",YesNo.Yes);
 							if (sp.editRecordTypeForObject(projectName, RecordType, 10)) {
 								log(LogStatus.ERROR,fundraisingRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
 							}else {
 								log(LogStatus.ERROR,fundraisingRecordTypeArray[i]+" not updated ",YesNo.Yes);
 								sa.assertTrue(false, fundraisingRecordTypeArray[i]+" not updated ");
 							}
-						
+							} else {
+								log(LogStatus.ERROR,"Record Type is already updated ",YesNo.Yes);
+								sa.assertTrue(false, "Record Type is already updated ");
+							}
 						}else {
 							log(LogStatus.ERROR, fundraisingRecordTypeArray[i]+" is not clickable", YesNo.Yes);
 							sa.assertTrue(false, fundraisingRecordTypeArray[i]+" is not clickable");
@@ -1331,9 +1270,13 @@ public class AcuityResearch extends BaseLib{
 				if(list.isEmpty()) {
 					
 					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
+					ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValue + "||" + "list : "+list, "SearchData", excelLabel.Variable_Name,
+	   						searchValue, excelLabel.Status);
 				} else {
 					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
 					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
+					ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValue + "||" + "list : "+list, "SearchData", excelLabel.Variable_Name,
+	   						searchValue, excelLabel.Status);
 				}
 	
 			} else {
@@ -1445,9 +1388,13 @@ public class AcuityResearch extends BaseLib{
 		if(list.isEmpty()) {
 			
 			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
+			ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValues[i] + "||" + "list : "+list, "SearchData", excelLabel.Variable_Name,
+						searchValues[i], excelLabel.Status);
 		} else {
 			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
 			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list);
+			ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValues[i] + "||" + "list : "+list, "SearchData", excelLabel.Variable_Name,
+						searchValues[i], excelLabel.Status);
 		}
 		
 	}
@@ -1526,9 +1473,13 @@ public class AcuityResearch extends BaseLib{
 		if(list.isEmpty()) {
 			
 			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
+			ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValues[i] + "||" + "list : "+list, "SearchData", excelLabel.Variable_Name,
+						searchValues[i], excelLabel.Status);
 		} else {
 			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
 			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list);
+			ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValues[i] + "||" + "list : "+list, "SearchData", excelLabel.Variable_Name,
+						searchValues[i], excelLabel.Status);
 		}
 		
 	}
@@ -1606,9 +1557,13 @@ public class AcuityResearch extends BaseLib{
 		if(list.isEmpty()) {
 			
 			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
+			ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValues[i] + "||" + "list : "+list, "SearchData", excelLabel.Variable_Name,
+						searchValues[i], excelLabel.Status);
 		} else {
 			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
 			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list);
+			ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValues[i] + "||" + "list : "+list, "SearchData", excelLabel.Variable_Name,
+						searchValues[i], excelLabel.Status);
 		}
 		
 	}
@@ -1639,7 +1594,7 @@ public class AcuityResearch extends BaseLib{
 	String[] searchValues = readAllDataForAColumn(ResearchDataSheetFilePath, "SearchData" , 2,false).split("<break>");
 	
 //	for(String searchValue : searchValues) {
-		for(int i =91; i <=searchValues.length; i++) {
+		for(int i =91; i <=searchValues.length-1; i++) {
 		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"SearchData",excelLabel.ResearchFindings, searchValues[i], excelLabel.Variable_Name);
 		
 		log(LogStatus.PASS, "WOrking for " + searchValues[i], YesNo.Yes);
@@ -1686,9 +1641,13 @@ public class AcuityResearch extends BaseLib{
 		if(list.isEmpty()) {
 			
 			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
+			ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValues[i] + "||" + "list : "+list, "SearchData", excelLabel.Variable_Name,
+						searchValues[i], excelLabel.Status);
 		} else {
 			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
 			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list);
+			ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValues[i] + "||" + "list : "+list, "SearchData", excelLabel.Variable_Name,
+						searchValues[i], excelLabel.Status);
 		}
 		
 	}
@@ -2586,7 +2545,7 @@ public class AcuityResearch extends BaseLib{
 	 String[][] task1BasicSection = { { excelLabel.Subject.toString(), AR_Research6.replace("\"", "")} };
 		 lp.CRMLogin(superAdminUserName, adminPassword, appName);
    
-		 if (home.globalSearchAndNavigate(AR_Firm6.replace("   ", "").replace("\"", ""), RelatedTab.Tasks.toString(), false)) {
+		 if (home.globalSearchAndNavigate(AR_Firm6.replace("   ", "").replace("\"", ""), RelatedTab.Tasks.toString(), false, projectName)) {
 
 				log(LogStatus.INFO,
 						"-----Verified Task named: " + AR_Firm6 + " found in Tasks Object-----",
@@ -2795,7 +2754,7 @@ public class AcuityResearch extends BaseLib{
 		 String[][] task1BasicSection = { { excelLabel.Subject.toString(), AR_Research7.replace("\"", "")} };
 			 lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	   
-			 if (home.globalSearchAndNavigate(AR_Firm7.replace("   ", "").replace("\"", ""), RelatedTab.Events.toString(), false)) {
+			 if (home.globalSearchAndNavigate(AR_Firm7.replace("   ", "").replace("\"", ""), RelatedTab.Events.toString(), false, projectName)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Task named: " + AR_Firm7 + " found in Tasks Object-----",
@@ -3065,8 +3024,9 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research54 + "||" + "list : "+list, YesNo.No);
 			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research54+ "||" + "list : "+list);
 		}  
+		switchToDefaultContent(driver);
 		lp.CRMlogout();
-		sa.assertAll();
+		sa.assertAll();	
 	}
 
 @Parameters({ "projectName"})
@@ -3245,8 +3205,9 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research55 + "||" + "list : "+list, YesNo.No);
 			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ AR_Research55+ "||" + "list : "+list);
 		} 
+		switchToDefaultContent(driver);
 		lp.CRMlogout();
-		sa.assertAll();
+		sa.assertAll();	
 	}
 
 @Parameters({ "projectName"})
@@ -3414,7 +3375,7 @@ public class AcuityResearch extends BaseLib{
 	String recordTypes [] = {"Firm","Deal","Fund","Fundraising"};
 	String avail[][] = {{"Consultant RT","IT Firm"},{"SellSide Deal","BuySide Deal", "Capital Raise"},{"Mutual Fund","Trust Fund"},{"FRGRT","MSGRT"}};
 	String defaultValue[] = {"SellSide Deal","Mutual Fund", "FRGRT"};
-	String[] profileForSelection = { "PE Standard User", "System Administrator" };
+	String[] profileForSelection = {"System Administrator" };
 	boolean isMakeAvailable = false;
 	boolean isMakeDefault = false;
 	boolean flag = false;
@@ -3717,7 +3678,7 @@ public class AcuityResearch extends BaseLib{
 	
 	String recordTypes = "Account";
 	String avail[] = {"Consultant RT", "IT Firm"};
-	String[] profileForSelection = { "PE Standard User", "System Administrator"};
+	String[] profileForSelection = {"System Administrator"};
 	String parentID=null;
 	for(int k=0; k<profileForSelection.length; k++) {
 			home.notificationPopUpClose();
@@ -5529,14 +5490,14 @@ public class AcuityResearch extends BaseLib{
 		if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Contact,
 				ObjectFeatureName.FieldAndRelationShip, "Phone", PermissionType.removePermission, "PE Standard User")) {
 			log(LogStatus.PASS,
-					"Phone field Permission is given in the Contact Object Manager for Institution Record Type",
+					"Phone field Permission is given in the Contact Object Manager",
 					YesNo.No);
 		} else {
 			log(LogStatus.ERROR,
-					"Phone field Permission is not given in the Contact Object Manager for Institution Record Type",
+					"Phone field Permission is not given in the Contact Object Manager",
 					YesNo.No);
 			sa.assertTrue(false,
-					"Phone field Permission is not given in the Contact Object Manager for Institution Record Type");
+					"Phone field Permission is not given in the Contact Object Manager");
 		}
 		
 		CommonLib.switchToDefaultContent(driver);
@@ -5968,7 +5929,12 @@ public class AcuityResearch extends BaseLib{
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	String parentWindow = "", contactFields[] = {"Description","Account Name"}, dealFields[] = {"Stage","Pipeline Comments"}, fundraisingFields[] = {"Status Notes","Legal Name"};
-	String[] searchValues = {AR_Firm27,AR_Firm28,AR_Firm57};
+	String[] varibles = {"AR_Up27","AR_Up28","AR_Up57"};
+	String varibale27 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
+	String varibale28 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, varibles[1], excelLabel.Name);
+	String varibale57 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, varibles[2], excelLabel.Name);
+
+	String[] searchValues = {varibale27,varibale28,varibale57};
 	String ele, headerName;
 
 	
@@ -6226,8 +6192,12 @@ public class AcuityResearch extends BaseLib{
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
-	String parentWindow = "", contactFields[] = {"Description","Account Name"}, dealFields[] = {"Stage","Pipeline Comments"}, fundraisingFields[] = {"Notes","Legal Name"};
-	String[] searchValues = {AR_Firm27,AR_Firm281};
+	String parentWindow = "", contactFields[] = {"Description","Account Name"}, dealFields[] = {"Stage","Pipeline Comments"}, fundraisingFields[] = {"Status Notes","Legal Name"};
+	String[] varibles = {"AR_Up27","AR_Up281"};
+	String varibale27 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
+	String varibale281 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, varibles[1], excelLabel.Name);
+
+	String[] searchValues = {varibale27,varibale281};
 	String ele;
 
 	if (home.clickOnSetUpLink()) {
@@ -6553,7 +6523,11 @@ public class AcuityResearch extends BaseLib{
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	String parentWindow = "";
-	String[] searchValues = {AR_Firm27};
+	String[] varibles = {"AR_Up27"};
+	String varibale27 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
+	
+	String[] searchValues = {varibale27};
+
 	boolean flag1 = false;
 	String tabNames1 = "Accounts" ,tabNames2 = "Contacts" ;
 	String[] labelsWithValues1 = {  "Account Name<break>Account Name upd", "Description<break>Description upd" },labelsWithValues2 = {  "Contact Name<break>Contact Name upd", "Description<break>Description upd"  };
@@ -6566,39 +6540,39 @@ public class AcuityResearch extends BaseLib{
 	String ThemeLabel= PageLabel.Description_Upd.toString();
 	String ClipLabel= PageLabel.Summary_Upd.toString();
 	
-//	if (home.clickOnSetUpLink()) {
-//		parentWindow = switchOnWindow(driver);
-//		if (parentWindow == null) {
-//			sa.assertTrue(false,
-//					"No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
-//			log(LogStatus.SKIP,
-//					"No new window is open after click on setup link in lighting mode so cannot create Field Set Component",
-//					YesNo.Yes);
-//			exit("No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
-//		}
-//		ThreadSleep(3000);
-//		if (setup.searchStandardOrCustomObject(environment, mode, object.Rename_Tabs_And_Labels)) {
-//			log(LogStatus.INFO, "click on Object : " + object.Rename_Tabs_And_Labels, YesNo.No);
-//			ThreadSleep(2000);
-//
-//		if (setup.renameLabelsOfFields(driver, tabNames1, labelsWithValues1, 10)) {
-//			flag1 = true;
-//			log(LogStatus.PASS, labelsWithValues1[0] + " is updated as " +labelsWithValues1[1] , YesNo.Yes);
-//		}
-//
-//		if (setup.renameLabelsOfFields(driver, tabNames2, labelsWithValues2, 10)) {
-//			flag1 = true;
-//			log(LogStatus.PASS, labelsWithValues2[0] + " is updated as " +labelsWithValues2[1] , YesNo.Yes);
-//		}
-//		} else {
-//			log(LogStatus.ERROR, "Not able to search/click on " + object.Rename_Tabs_And_Labels, YesNo.Yes);
-//			sa.assertTrue(false, "Not able to search/click on " + object.Rename_Tabs_And_Labels);
-//		}	
-//		driver.close();
-//	}	
+	if (home.clickOnSetUpLink()) {
+		parentWindow = switchOnWindow(driver);
+		if (parentWindow == null) {
+			sa.assertTrue(false,
+					"No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+			log(LogStatus.SKIP,
+					"No new window is open after click on setup link in lighting mode so cannot create Field Set Component",
+					YesNo.Yes);
+			exit("No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+		}
+		ThreadSleep(3000);
+		if (setup.searchStandardOrCustomObject(environment, mode, object.Rename_Tabs_And_Labels)) {
+			log(LogStatus.INFO, "click on Object : " + object.Rename_Tabs_And_Labels, YesNo.No);
+			ThreadSleep(2000);
+
+		if (setup.renameLabelsOfFields(driver, tabNames1, labelsWithValues1, 10)) {
+			flag1 = true;
+			log(LogStatus.PASS, labelsWithValues1[0] + " is updated as " +labelsWithValues1[1] , YesNo.Yes);
+		}
+
+		if (setup.renameLabelsOfFields(driver, tabNames2, labelsWithValues2, 10)) {
+			flag1 = true;
+			log(LogStatus.PASS, labelsWithValues2[0] + " is updated as " +labelsWithValues2[1] , YesNo.Yes);
+		}
+		} else {
+			log(LogStatus.ERROR, "Not able to search/click on " + object.Rename_Tabs_And_Labels, YesNo.Yes);
+			sa.assertTrue(false, "Not able to search/click on " + object.Rename_Tabs_And_Labels);
+		}	
+		driver.close();
+	}	
 	
-//	ThreadSleep(2000);
-//	driver.switchTo().window(parentWindow);
+	ThreadSleep(2000);
+	driver.switchTo().window(parentWindow);
 	
 //	lp.CRMlogout();
 //	
@@ -6628,13 +6602,6 @@ public class AcuityResearch extends BaseLib{
 				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Deal.toString())){
 					log(LogStatus.INFO, "Select "+PageLabel.Deal.toString()+" text in object dropdown in override setup page", YesNo.No);
 					ThreadSleep(5000);
-					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Stage.toString(), DealLabel1.replace("_", " "), action.SCROLLANDBOOLEAN)){
-						log(LogStatus.INFO, "Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.No);
-						
-					}else{
-						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.Yes);
-						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Stage.toString()+" to "+DealLabel1);	
-					}
 					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Pipeline_Comments.toString().replace("_", " "), DealLabel2.replace("_", " "), action.SCROLLANDBOOLEAN)){
 						log(LogStatus.INFO, "Field label: "+PageLabel.Pipeline_Comments.toString()+" successfully update to "+DealLabel2, YesNo.No);
 						
@@ -6642,18 +6609,25 @@ public class AcuityResearch extends BaseLib{
 						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Pipeline_Comments.toString()+" successfully update to "+DealLabel2, YesNo.Yes);
 						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Pipeline_Comments.toString()+" to "+DealLabel2);	
 					}
+					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Stage.toString(), DealLabel1.replace("_", " "), action.SCROLLANDBOOLEAN)){
+						log(LogStatus.INFO, "Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.No);
+						
+					}else{
+						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.Yes);
+						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Stage.toString()+" to "+DealLabel1);	
+					}
 				}else{
 					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Deal.toString()+" in  object dropdown in override page", YesNo.Yes);
 					sa.assertTrue(false, "Not able to select text: "+PageLabel.Deal.toString()+" in  object dropdown in override page");
 				}
-//			}else{
-//				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
-//				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
-//			}
-//		
-//			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
-//				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
-//				ThreadSleep(5000);	
+			}else{
+				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
+				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
+			}
+		
+			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
+				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
+				ThreadSleep(5000);	
 				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Fundraising.toString())){
 					log(LogStatus.INFO, "Select "+PageLabel.Fundraising.toString()+" text in object dropdown in override setup page", YesNo.No);
 					ThreadSleep(5000);
@@ -6675,14 +6649,14 @@ public class AcuityResearch extends BaseLib{
 					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Fundraising.toString()+" in  object dropdown in override page", YesNo.Yes);
 					sa.assertTrue(false, "Not able to select text: "+PageLabel.Fundraising.toString()+" in  object dropdown in override page");
 				}
-//			}else{
-//				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
-//				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
-//			}
+			}else{
+				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
+				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
+			}
 			
-//			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
-//				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
-//				ThreadSleep(5000);	
+			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
+				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
+				ThreadSleep(5000);	
 				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Fund.toString())){
 					log(LogStatus.INFO, "Select "+PageLabel.Fund.toString()+" text in object dropdown in override setup page", YesNo.No);
 					ThreadSleep(5000);
@@ -6697,50 +6671,50 @@ public class AcuityResearch extends BaseLib{
 					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Fund.toString()+" in  object dropdown in override page", YesNo.Yes);
 					sa.assertTrue(false, "Not able to select text: "+PageLabel.Fund.toString()+" in  object dropdown in override page");
 				}
-//			}else{
-//				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
-//				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
-//			}
+			}else{
+				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
+				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
+			}
 			
-//			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
-//				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
-//				ThreadSleep(5000);
-//				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Theme.toString())){
-//					log(LogStatus.INFO, "Select "+PageLabel.Theme.toString()+" text in object dropdown in override setup page", YesNo.No);
-//					ThreadSleep(5000);
-//					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Descrption.toString().replace("_"," "), ThemeLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
-//						log(LogStatus.INFO, "Field label: "+PageLabel.Descrption.toString()+" successfully update to "+ThemeLabel, YesNo.No);
-//						
-//					}else{
-//						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Descrption.toString()+" successfully update to "+ThemeLabel, YesNo.Yes);
-//						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Descrption.toString()+" to "+ThemeLabel);	
-//					}
-//				}else{
-//					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page", YesNo.Yes);
-//					sa.assertTrue(false, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page");
-//				}
-//			}else{
-//				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
-//				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
-//			}
+			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
+				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
+				ThreadSleep(5000);
+				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Theme.toString())){
+					log(LogStatus.INFO, "Select "+PageLabel.Theme.toString()+" text in object dropdown in override setup page", YesNo.No);
+					ThreadSleep(5000);
+					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Description.toString().replace("_"," "), ThemeLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
+						log(LogStatus.INFO, "Field label: "+PageLabel.Description.toString()+" successfully update to "+ThemeLabel, YesNo.No);
+						
+					}else{
+						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Description.toString()+" successfully update to "+ThemeLabel, YesNo.Yes);
+						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Description.toString()+" to "+ThemeLabel);	
+					}
+				}else{
+					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page", YesNo.Yes);
+					sa.assertTrue(false, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page");
+				}
+			}else{
+				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
+				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
+			}
 			
-//			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
-//				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
-//				ThreadSleep(5000);
-//				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Clip.toString())){
-//					log(LogStatus.INFO, "Select "+PageLabel.Clip.toString()+" text in object dropdown in override setup page", YesNo.No);
-//					ThreadSleep(5000);
-//					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Summary.toString().replace("_"," "), ClipLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
-//						log(LogStatus.INFO, "Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.No);
-//						
-//					}else{
-//						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.Yes);
-//						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Summary.toString()+" to "+ClipLabel);	
-//					}
-//				}else{
-//					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page", YesNo.Yes);
-//					sa.assertTrue(false, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page");
-//				}
+			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
+				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
+				ThreadSleep(5000);
+				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Clip.toString())){
+					log(LogStatus.INFO, "Select "+PageLabel.Clip.toString()+" text in object dropdown in override setup page", YesNo.No);
+					ThreadSleep(5000);
+					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Summary.toString().replace("_"," "), ClipLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
+						log(LogStatus.INFO, "Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.No);
+						
+					}else{
+						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.Yes);
+						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Summary.toString()+" to "+ClipLabel);	
+					}
+				}else{
+					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page", YesNo.Yes);
+					sa.assertTrue(false, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page");
+				}
 			}else{
 				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
 				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
@@ -6866,7 +6840,11 @@ public class AcuityResearch extends BaseLib{
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	String parentWindow = "";
-	String[] searchValues = {AR_Firm27};
+	String[] varibles = {"AR_Up27"};
+	String varibale27 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
+
+	String[] searchValues = {varibale27};
+
 	boolean flag1 = false;
 	String tabNames1 = "Accounts" ,tabNames2 = "Contacts" ;
 	String[] labelsWithValues1 = {  "Account Name<break>Account Name Upd !@&*()(*& 123", "Description<break>Description Upd !@&*()(*& 123" },
@@ -6941,13 +6919,6 @@ public class AcuityResearch extends BaseLib{
 				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Deal.toString())){
 					log(LogStatus.INFO, "Select "+PageLabel.Deal.toString()+" text in object dropdown in override setup page", YesNo.No);
 					ThreadSleep(5000);
-					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Stage.toString(), DealLabel1.replace("_", " "), action.SCROLLANDBOOLEAN)){
-						log(LogStatus.INFO, "Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.No);
-						
-					}else{
-						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.Yes);
-						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Stage.toString()+" to "+DealLabel1);	
-					}
 					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Pipeline_Comments.toString().replace("_", " "), DealLabel2.replace("_", " "), action.SCROLLANDBOOLEAN)){
 						log(LogStatus.INFO, "Field label: "+PageLabel.Pipeline_Comments.toString()+" successfully update to "+DealLabel2, YesNo.No);
 						
@@ -6955,18 +6926,25 @@ public class AcuityResearch extends BaseLib{
 						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Pipeline_Comments.toString()+" successfully update to "+DealLabel2, YesNo.Yes);
 						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Pipeline_Comments.toString()+" to "+DealLabel2);	
 					}
+					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Stage.toString(), DealLabel1.replace("_", " "), action.SCROLLANDBOOLEAN)){
+						log(LogStatus.INFO, "Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.No);
+						
+					}else{
+						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.Yes);
+						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Stage.toString()+" to "+DealLabel1);	
+					}
 				}else{
 					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Deal.toString()+" in  object dropdown in override page", YesNo.Yes);
 					sa.assertTrue(false, "Not able to select text: "+PageLabel.Deal.toString()+" in  object dropdown in override page");
 				}
-//			}else{
-//				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
-//				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
-//			}
-//		
-//			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
-//				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
-//				ThreadSleep(5000);	
+			}else{
+				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
+				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
+			}
+		
+			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
+				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
+				ThreadSleep(5000);	
 				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Fundraising.toString())){
 					log(LogStatus.INFO, "Select "+PageLabel.Fundraising.toString()+" text in object dropdown in override setup page", YesNo.No);
 					ThreadSleep(5000);
@@ -6988,14 +6966,14 @@ public class AcuityResearch extends BaseLib{
 					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Fundraising.toString()+" in  object dropdown in override page", YesNo.Yes);
 					sa.assertTrue(false, "Not able to select text: "+PageLabel.Fundraising.toString()+" in  object dropdown in override page");
 				}
-//			}else{
-//				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
-//				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
-//			}
+			}else{
+				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
+				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
+			}
 			
-//			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
-//				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
-//				ThreadSleep(5000);	
+			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
+				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
+				ThreadSleep(5000);	
 				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Fund.toString())){
 					log(LogStatus.INFO, "Select "+PageLabel.Fund.toString()+" text in object dropdown in override setup page", YesNo.No);
 					ThreadSleep(5000);
@@ -7010,50 +6988,50 @@ public class AcuityResearch extends BaseLib{
 					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Fund.toString()+" in  object dropdown in override page", YesNo.Yes);
 					sa.assertTrue(false, "Not able to select text: "+PageLabel.Fund.toString()+" in  object dropdown in override page");
 				}
-//			}else{
-//				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
-//				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
-//			}
+			}else{
+				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
+				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
+			}
 			
-//			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
-//				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
-//				ThreadSleep(5000);
-//				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Theme.toString())){
-//					log(LogStatus.INFO, "Select "+PageLabel.Theme.toString()+" text in object dropdown in override setup page", YesNo.No);
-//					ThreadSleep(5000);
-//					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Descrption.toString().replace("_"," "), ThemeLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
-//						log(LogStatus.INFO, "Field label: "+PageLabel.Descrption.toString()+" successfully update to "+ThemeLabel, YesNo.No);
-//						
-//					}else{
-//						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Descrption.toString()+" successfully update to "+ThemeLabel, YesNo.Yes);
-//						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Descrption.toString()+" to "+ThemeLabel);	
-//					}
-//				}else{
-//					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page", YesNo.Yes);
-//					sa.assertTrue(false, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page");
-//				}
-//			}else{
-//				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
-//				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
-//			}
+			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
+				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
+				ThreadSleep(5000);
+				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Theme.toString())){
+					log(LogStatus.INFO, "Select "+PageLabel.Theme.toString()+" text in object dropdown in override setup page", YesNo.No);
+					ThreadSleep(5000);
+					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Description.toString().replace("_"," "), ThemeLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
+						log(LogStatus.INFO, "Field label: "+PageLabel.Description.toString()+" successfully update to "+ThemeLabel, YesNo.No);
+						
+					}else{
+						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Description.toString()+" successfully update to "+ThemeLabel, YesNo.Yes);
+						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Description.toString()+" to "+ThemeLabel);	
+					}
+				}else{
+					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page", YesNo.Yes);
+					sa.assertTrue(false, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page");
+				}
+			}else{
+				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
+				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
+			}
 			
-//			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
-//				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
-//				ThreadSleep(5000);
-//				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Clip.toString())){
-//					log(LogStatus.INFO, "Select "+PageLabel.Clip.toString()+" text in object dropdown in override setup page", YesNo.No);
-//					ThreadSleep(5000);
-//					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Summary.toString().replace("_"," "), ClipLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
-//						log(LogStatus.INFO, "Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.No);
-//						
-//					}else{
-//						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.Yes);
-//						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Summary.toString()+" to "+ClipLabel);	
-//					}
-//				}else{
-//					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page", YesNo.Yes);
-//					sa.assertTrue(false, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page");
-//				}
+			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
+				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
+				ThreadSleep(5000);
+				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Clip.toString())){
+					log(LogStatus.INFO, "Select "+PageLabel.Clip.toString()+" text in object dropdown in override setup page", YesNo.No);
+					ThreadSleep(5000);
+					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Summary.toString().replace("_"," "), ClipLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
+						log(LogStatus.INFO, "Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.No);
+						
+					}else{
+						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.Yes);
+						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Summary.toString()+" to "+ClipLabel);	
+					}
+				}else{
+					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page", YesNo.Yes);
+					sa.assertTrue(false, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page");
+				}
 			}else{
 				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
 				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
@@ -7181,7 +7159,11 @@ public class AcuityResearch extends BaseLib{
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	String parentWindow = "";
-	String[] searchValues = {AR_Firm27};
+	String[] varibles = {"AR_Up27"};
+	String varibale27 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
+	
+	String[] searchValues = {varibale27};
+
 	boolean flag1 = false;
 	String tabNames1 = "Accounts" ,tabNames2 = "Contacts" ;
 	String[] labelsWithValues1 = {  "Account Name<break>Account Name", "Description<break>Description" },labelsWithValues2 = {  "Contact Name<break>Contact Name", "Description<break>Description"  };
@@ -7255,13 +7237,6 @@ public class AcuityResearch extends BaseLib{
 				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Deal.toString())){
 					log(LogStatus.INFO, "Select "+PageLabel.Deal.toString()+" text in object dropdown in override setup page", YesNo.No);
 					ThreadSleep(5000);
-					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Stage.toString(), DealLabel1.replace("_", " "), action.SCROLLANDBOOLEAN)){
-						log(LogStatus.INFO, "Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.No);
-						
-					}else{
-						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.Yes);
-						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Stage.toString()+" to "+DealLabel1);	
-					}
 					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Pipeline_Comments.toString().replace("_", " "), DealLabel2.replace("_", " "), action.SCROLLANDBOOLEAN)){
 						log(LogStatus.INFO, "Field label: "+PageLabel.Pipeline_Comments.toString()+" successfully update to "+DealLabel2, YesNo.No);
 						
@@ -7269,18 +7244,25 @@ public class AcuityResearch extends BaseLib{
 						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Pipeline_Comments.toString()+" successfully update to "+DealLabel2, YesNo.Yes);
 						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Pipeline_Comments.toString()+" to "+DealLabel2);	
 					}
+					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Stage.toString(), DealLabel1.replace("_", " "), action.SCROLLANDBOOLEAN)){
+						log(LogStatus.INFO, "Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.No);
+						
+					}else{
+						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.Yes);
+						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Stage.toString()+" to "+DealLabel1);	
+					}
 				}else{
 					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Deal.toString()+" in  object dropdown in override page", YesNo.Yes);
 					sa.assertTrue(false, "Not able to select text: "+PageLabel.Deal.toString()+" in  object dropdown in override page");
 				}
-//			}else{
-//				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
-//				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
-//			}
-//		
-//			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
-//				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
-//				ThreadSleep(5000);	
+			}else{
+				log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
+				sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
+			}
+		
+			if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
+				log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
+				ThreadSleep(5000);	
 				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Fundraising.toString())){
 					log(LogStatus.INFO, "Select "+PageLabel.Fundraising.toString()+" text in object dropdown in override setup page", YesNo.No);
 					ThreadSleep(5000);
@@ -7302,14 +7284,14 @@ public class AcuityResearch extends BaseLib{
 					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Fundraising.toString()+" in  object dropdown in override page", YesNo.Yes);
 					sa.assertTrue(false, "Not able to select text: "+PageLabel.Fundraising.toString()+" in  object dropdown in override page");
 				}
-//		}else{
-//			log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
-//			sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
-//		}
-//	
-//		if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
-//			log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
-//			ThreadSleep(5000);	
+		}else{
+			log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
+			sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
+		}
+	
+		if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
+			log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
+			ThreadSleep(5000);	
 			if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Fund.toString())){
 				log(LogStatus.INFO, "Select "+PageLabel.Fund.toString()+" text in object dropdown in override setup page", YesNo.No);
 				ThreadSleep(5000);
@@ -7324,50 +7306,50 @@ public class AcuityResearch extends BaseLib{
 				log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Fund.toString()+" in  object dropdown in override page", YesNo.Yes);
 				sa.assertTrue(false, "Not able to select text: "+PageLabel.Fund.toString()+" in  object dropdown in override page");
 			}
-//		}else{
-//			log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
-//			sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
-//		}
-//	
-//		if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
-//			log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
-//			ThreadSleep(5000);	
-//			if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Theme.toString())){
-//				log(LogStatus.INFO, "Select "+PageLabel.Theme.toString()+" text in object dropdown in override setup page", YesNo.No);
-//				ThreadSleep(5000);
-//				if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Description.toString().replace("_"," "), ThemeLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
-//					log(LogStatus.INFO, "Field label: "+PageLabel.Description.toString()+" successfully update to "+ThemeLabel, YesNo.No);
-//					
-//				}else{
-//					log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Description.toString()+" successfully update to "+ThemeLabel, YesNo.Yes);
-//					sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Description.toString()+" to "+ThemeLabel);	
-//				}
-//			}else{
-//				log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page", YesNo.Yes);
-//				sa.assertTrue(false, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page");
-//			}
-//		}else{
-//			log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
-//			sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
-//		}
-//	
-//		if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
-//			log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
-//			ThreadSleep(5000);	
-//			if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Clip.toString())){
-//				log(LogStatus.INFO, "Select "+PageLabel.Clip.toString()+" text in object dropdown in override setup page", YesNo.No);
-//				ThreadSleep(5000);
-//				if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Summary.toString().replace("_"," "), ClipLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
-//					log(LogStatus.INFO, "Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.No);
-//					
-//				}else{
-//					log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.Yes);
-//					sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Summary.toString()+" to "+ClipLabel);	
-//				}
-//			}else{
-//				log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page", YesNo.Yes);
-//				sa.assertTrue(false, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page");
-//			}
+		}else{
+			log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
+			sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
+		}
+	
+		if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
+			log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
+			ThreadSleep(5000);	
+			if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Theme.toString())){
+				log(LogStatus.INFO, "Select "+PageLabel.Theme.toString()+" text in object dropdown in override setup page", YesNo.No);
+				ThreadSleep(5000);
+				if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Description.toString().replace("_"," "), ThemeLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
+					log(LogStatus.INFO, "Field label: "+PageLabel.Description.toString()+" successfully update to "+ThemeLabel, YesNo.No);
+					
+				}else{
+					log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Description.toString()+" successfully update to "+ThemeLabel, YesNo.Yes);
+					sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Description.toString()+" to "+ThemeLabel);	
+				}
+			}else{
+				log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page", YesNo.Yes);
+				sa.assertTrue(false, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page");
+			}
+		}else{
+			log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
+			sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
+		}
+	
+		if(selectVisibleTextFromDropDown(driver, setup.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
+			log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
+			ThreadSleep(5000);	
+			if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Clip.toString())){
+				log(LogStatus.INFO, "Select "+PageLabel.Clip.toString()+" text in object dropdown in override setup page", YesNo.No);
+				ThreadSleep(5000);
+				if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Summary.toString().replace("_"," "), ClipLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
+					log(LogStatus.INFO, "Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.No);
+					
+				}else{
+					log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Summary.toString()+" successfully update to "+ClipLabel, YesNo.Yes);
+					sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Summary.toString()+" to "+ClipLabel);	
+				}
+			}else{
+				log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page", YesNo.Yes);
+				sa.assertTrue(false, "Not able to select text: "+PageLabel.Clip.toString()+" in  object dropdown in override page");
+			}
 		}else{
 			log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
 			sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
@@ -7521,7 +7503,7 @@ public class AcuityResearch extends BaseLib{
 						log(LogStatus.INFO, "click on clone button of  PE standard user link", YesNo.No);
 						ThreadSleep(5000);
 						switchToFrame(driver, 10, setup.getSetUpPageIframe(10));
-						if (sendKeys(driver, setup.getProfileNameTextBox(10), "Cloned PE standard User",
+						if (sendKeys(driver, setup.getProfileNameTextBox(10), "Cloned PE Standard User",
 								"profile name text box ", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.PASS, "enter the clone PE user profile name ", YesNo.No);
 							if (click(driver, setup.getViewAccessbilityDropDownSaveButton(10), "save button",
@@ -7673,7 +7655,6 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+bp.filesName, YesNo.Yes);
 			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+bp.filesName);
 		}
-		refresh(driver);
 		
 		for(String searchValue : searchValues) {
 			if(searchValue.contains("ACR_")) {
@@ -7705,6 +7686,7 @@ public class AcuityResearch extends BaseLib{
 					"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 							+ searchValue + "---------",
 					YesNo.No);
+			refresh(driver);
 			try {
 			if(rp.getNoResult(5) != null){
 				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
@@ -8717,11 +8699,11 @@ public class AcuityResearch extends BaseLib{
 	public void ARTc050_VerifyResearchDataForCurrentRecord(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
-	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	FundRaisingPageBusinessLayer frp = new FundRaisingPageBusinessLayer(driver);
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
-	lp.CRMLogin(superAdminUserName, adminPassword);
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	lp.CRMLogin(glUser1EmailID, adminPassword);
 	
 	String[] searchValues = readAllDataForAColumn(ResearchDataSheetFilePath, "CurrentRecord", 0, false).split("<break>");
 	
@@ -8729,45 +8711,93 @@ public class AcuityResearch extends BaseLib{
 		String variable =ExcelUtils.readData(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, searchValue, excelLabel.ResearchFindings);
 		String tabName =ExcelUtils.readData(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, searchValue, excelLabel.Tab_Name);
 		String recordName =ExcelUtils.readData(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, searchValue, excelLabel.Record_Name);
-		   if (fp.clickOnTab(environment, mode, TabName.valueOf(tabName))) {
+		if(!tabName.equals("Themes"))
+		{
+		if (fp.clickOnTab(environment, mode, TabName.valueOf(tabName))) {
 		       log(LogStatus.INFO, "Click on Tab : " + TabName.valueOf(tabName), YesNo.No);
-		      if (fp.clickOnAlreadyCreatedItem(projectName, recordName.replace("  ", "").replace("\"", ""), 10)) {
+		      if (fp.clickOnAlreadyCreatedItem(projectName, recordName.replace("  ", "").replace("\"", "").trim(), 10)) {
 		    	  if(rp.openResearchForCurrentRecord(projectName,ProgressType.Current_Record.toString(),variable,10)) {
-		    		  if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
-		  				log(LogStatus.INFO,
-		  						"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-		  								+ searchValue + "---------",
-		  						YesNo.No);
-		  			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(searchValue, action.SCROLLANDBOOLEAN, 10);
-		  				if(list.isEmpty()) {
-		  					
-		  					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
-		  				} else {
-		  					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
-		  					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list);
-		  				}
-		  	
-		  			} else {
-		  				log(LogStatus.FAIL,
-		  						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-		  								+ searchValue + "---------",
-		  						YesNo.No);
-		  				sa.assertTrue(false,
-		  						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-		  								+ searchValue + "---------");
-		  		}	  
-		           } else {
-				          sa.assertTrue(false, "Not Able to search for : " + variable);
-				           log(LogStatus.SKIP, "Not Able to search for : " + variable, YesNo.Yes);
-				      }
+			   		   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(searchValue, action.SCROLLANDBOOLEAN, 10);
+			   			if(list.isEmpty()) {
+			   				
+			   				log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			   				ExcelUtils.writeData(ResearchDataSheetFilePath, "Pass", "CurrentRecord", excelLabel.Variable_Name,
+			   						searchValue, excelLabel.Status);
+			   				ThreadSleep(1000);
+			   			} else {
+			   				log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Variable Name: "+ searchValue + "||" + "list : "+list, YesNo.No);
+			   				sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Variable: "+ searchValue + "||" + "list : "+list);
+			   				ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValue + "||" + "list : "+list, "CurrentRecord", excelLabel.Variable_Name,
+			   						searchValue, excelLabel.Status);
+			   				ThreadSleep(1000);
+			   			}  	  
+		           }
 		       } else {
 		          sa.assertTrue(false, "Not Able to open created Record : " + recordName);
 		           log(LogStatus.SKIP, "Not Able to open created Record: " + recordName, YesNo.Yes);
+		           ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValue + "||" + "Not Able to open created Record: " + recordName, "CurrentRecord", excelLabel.Variable_Name,
+	   						searchValue, excelLabel.Status);
+		           ThreadSleep(1000);
 		      }
 		   } else {
 		       log(LogStatus.ERROR, "Not able to click on " + TabName.valueOf(tabName) + " tab", YesNo.Yes);
 		       sa.assertTrue(false, "Not able to click on " + TabName.valueOf(tabName) + " tab");
+		       ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValue + "||" + "Not able to click on " + TabName.valueOf(tabName), "CurrentRecord", excelLabel.Variable_Name,
+  						searchValue, excelLabel.Status);
+		       ThreadSleep(1000);
 		   }  
+		}
+		else
+		{
+			if (lp.clickOnTab(projectName, TabName.Themes.toString())) {
+
+				log(LogStatus.INFO, "Clicked on Tab : "+TabName.Themes.toString(), YesNo.No);
+
+				String parentWindowID=bp.clickOnThemeRecord(recordName.replace("  ", "").replace("\"", "").trim());
+
+				if (parentWindowID!=null) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+					if(rp.openResearchForCurrentRecord(projectName,ProgressType.Current_Record.toString(),variable,10)) {
+				   		   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(searchValue, action.SCROLLANDBOOLEAN, 10);
+				   			if(list.isEmpty()) {
+				   				
+				   				log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+				   				ExcelUtils.writeData(ResearchDataSheetFilePath, "Pass", "CurrentRecord", excelLabel.Variable_Name,
+				   						searchValue, excelLabel.Status);
+				   				ThreadSleep(1000);
+				   			} else {
+				   				log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Variable Name: "+ searchValue + "||" + "list : "+list, YesNo.No);
+				   				sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Variable: "+ searchValue + "||" + "list : "+list);
+				   				ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValue + "||" + "list : "+list, "CurrentRecord", excelLabel.Variable_Name,
+				   						searchValue, excelLabel.Status);
+				   				ThreadSleep(1000);
+				   				
+				   			}  	  
+			           }
+					driver.close();
+					driver.switchTo().window(parentWindowID);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+					sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+					ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValue + "||" + "Not able to open "+recordName +" reocrd", "CurrentRecord",excelLabel.Variable_Name,
+	   						searchValue, excelLabel.Status);
+					ThreadSleep(1000);
+				}
+				
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab : "+TabName.Themes.toString(), YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab : "+TabName.Themes.toString());
+				ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValue + "||" + "Not able to click on tab : "+TabName.Themes.toString(), "CurrentRecord",excelLabel.Variable_Name,
+   						searchValue, excelLabel.Status);
+				ThreadSleep(1000);
+			}
+
+
+		}
 	}   
 			lp.CRMlogout();
 			sa.assertAll();

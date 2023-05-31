@@ -29,6 +29,7 @@ import com.navatar.generic.EmailLib;
 import com.navatar.generic.EnumConstants.CreationPage;
 import com.navatar.generic.EnumConstants.Environment;
 import com.navatar.generic.EnumConstants.IconType;
+import com.navatar.generic.EnumConstants.InstitutionPageFieldLabelText;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.NavigationMenuItems;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
@@ -44,6 +45,7 @@ import com.navatar.generic.ExcelUtils;
 import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
 import com.navatar.pageObjects.CustomObjPageBusinessLayer;
+import com.navatar.pageObjects.DataLoaderWizardPageBusinessLayer;
 import com.navatar.pageObjects.DealPageBusinessLayer;
 import com.navatar.pageObjects.FundRaisingPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageBusinessLayer;
@@ -492,15 +494,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String themeTabName = "Themes";
 
-		/*
-		 * String[][] contacts = { { AP2NT_Con1FirstName, AP2NT_Con1LastName,
-		 * AP2NT_Con1InstitutionName, AP2NT_Con1ContactEmail,
-		 * AP2NT_Con1OtherLabelsNames, AP2NT_Con1OtherLabelsValues }, {
-		 * AP2NT_Con2FirstName, AP2NT_Con2LastName, AP2NT_Con2InstitutionName,
-		 * AP2NT_Con2ContactEmail, AP2NT_Con2OtherLabelsNames,
-		 * AP2NT_Con2OtherLabelsValues } };
-		 */
-
 		String[][] contacts = { { AP2NT_Con1FirstName, AP2NT_Con1LastName, AP2NT_Con1InstitutionName,
 				AP2NT_Con1ContactEmail, AP2NT_Con1OtherLabelsNames, AP2NT_Con1OtherLabelsValues } };
 
@@ -510,10 +503,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		// contact
+
 		for (String[] contact : contacts) {
 
-			if (BP.clickOnTab(environment, mode, TabName.ContactTab)) {
-				log(LogStatus.INFO, "Click on Tab : " + TabName.ContactTab, YesNo.No);
+			if (BP.clickOnTab(environment, mode, BP.returnTabName(tabObj2))) {
+				log(LogStatus.INFO, "Click on Tab : " + BP.returnTabName(tabObj2), YesNo.No);
 
 				String firstName = "";
 				String lastName = "";
@@ -527,8 +521,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				email = contact[3];
 				contactOtherLabelNames = contact[4];
 				contactOtherLabelValues = contact[5];
-				log(LogStatus.INFO, "---------Now Going to Create " + TabName.ContactTab + " : " + firstName + " "
-						+ lastName + "---------", YesNo.No);
+				log(LogStatus.INFO, "---------Now Going to Create " + BP.returnTabName(tabObj2) + " : " + firstName
+						+ " " + lastName + "---------", YesNo.No);
 				if (cp.createContact(projectName, firstName, lastName, legalName, email, "", contactOtherLabelNames,
 						contactOtherLabelValues, CreationPage.ContactPage, null, null)) {
 					log(LogStatus.INFO, "successfully Created Contact : " + firstName + " " + lastName, YesNo.No);
@@ -538,8 +532,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 
 			} else {
-				sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.ContactTab);
-				log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.ContactTab, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to Click on Tab : " + BP.returnTabName(tabObj2));
+				log(LogStatus.SKIP, "Not Able to Click on Tab : " + BP.returnTabName(tabObj2), YesNo.Yes);
 			}
 
 		}
@@ -804,13 +798,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								+ " record is not verified on intraction, Reason: " + result + "------");
 					}
 
-					if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+					if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 						log(LogStatus.INFO,
 								"-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 								YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -1312,7 +1307,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, recordName, 30)) {
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj2), recordName, 30)) {
 				log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
 				ThreadSleep(4000);
 				if (BP.clicktabOnPage("Acuity")) {
@@ -1462,6 +1457,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
 				{ AMNNR_TaskLabel6, priority } };
 
+		String[][] task1AdvancedSectionVerification = { { AMNNR_TaskLabel4, getAdvanceDueDate },
+				{ AMNNR_TaskLabel5, status }, { AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "-None-" } };
+
 		String recordName = AMNNR_Contact2;
 
 		String updatedNotesOfTask = AMNNR_Notes9;
@@ -1503,7 +1501,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, recordName, 30)) {
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj2), recordName, 30)) {
 				log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
 				ThreadSleep(4000);
 				if (BP.clicktabOnPage("Acuity")) {
@@ -1515,12 +1513,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
 
-						if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+						if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 							log(LogStatus.INFO,
 									"-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 									YesNo.No);
-							if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+							if (clickUsingJavaScript(driver,
+									BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 									"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -1529,7 +1528,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								ThreadSleep(10000);
 								ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
 										.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSection,
-												task1AdvancedSection, null);
+												task1AdvancedSectionVerification, null);
 								if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
 									log(LogStatus.INFO,
 											"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
@@ -1538,7 +1537,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 									refresh(driver);
 									ThreadSleep(2000);
 
-									if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+									if (clickUsingJavaScript(driver,
+											BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 											"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 										if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection, null,
@@ -1550,7 +1550,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 											String url2 = getURL(driver, 10);
 
-											if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+											if (clickUsingJavaScript(driver,
+													BP.editButtonOfSubjectLinkPopUpInInteractionSection(
+															task1SubjectName, 20),
 													"Edit Note Button of: " + task1SubjectName,
 													action.SCROLLANDBOOLEAN)) {
 												log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup",
@@ -1558,7 +1560,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 												ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
 														.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
-																task1UpdateBasicSection, task1AdvancedSection, null);
+																task1UpdateBasicSection,
+																task1AdvancedSectionVerification, null);
 												if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
 													log(LogStatus.INFO,
 															"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
@@ -1591,7 +1594,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 												log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
 
 												if (BP.clickOnAlreadyCreated_Lighting(environment, mode,
-														TabName.ContactTab, recordName, 30)) {
+														BP.returnTabName(tabObj2), recordName, 30)) {
 													log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
 													ThreadSleep(4000);
 													if (BP.clicktabOnPage("Acuity")) {
@@ -1773,7 +1776,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, recordName, 30)) {
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj2), recordName, 30)) {
 				log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
 				ThreadSleep(4000);
 				if (BP.clicktabOnPage("Acuity")) {
@@ -1785,12 +1788,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
 
-						if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+						if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 							log(LogStatus.INFO,
 									"-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 									YesNo.No);
-							if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+							if (clickUsingJavaScript(driver,
+									BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 									"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -1806,7 +1810,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 									refresh(driver);
 
-									if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+									if (clickUsingJavaScript(driver,
+											BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 											"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -1817,7 +1822,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 											CommonLib.refresh(driver);
 
-											if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+											if (clickUsingJavaScript(driver,
+													BP.editButtonOfSubjectLinkPopUpInInteractionSection(
+															task1SubjectName, 20),
 													"Edit Note Button of: " + task1SubjectName,
 													action.SCROLLANDBOOLEAN)) {
 												log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup",
@@ -1860,7 +1867,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 												log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
 
 												if (BP.clickOnAlreadyCreated_Lighting(environment, mode,
-														TabName.ContactTab, recordName, 30)) {
+														BP.returnTabName(tabObj2), recordName, 30)) {
 													log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
 													ThreadSleep(4000);
 													if (BP.clicktabOnPage("Acuity")) {
@@ -2038,7 +2045,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, recordName, 30)) {
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj2), recordName, 30)) {
 				log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
 				ThreadSleep(4000);
 				if (BP.clicktabOnPage("Acuity")) {
@@ -2300,12 +2307,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					CommonLib.refresh(driver);
 
 					ThreadSleep(10000);
-					if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+					if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 						log(LogStatus.INFO,
 								"-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 								YesNo.No);
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -2333,7 +2341,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							}
 							CommonLib.refresh(driver);
 
-							if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+							if (clickUsingJavaScript(driver,
+									BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 									"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -2962,12 +2971,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.PASS,
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
-						if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+						if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 							log(LogStatus.INFO,
 									"-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 									YesNo.No);
-							if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+							if (clickUsingJavaScript(driver,
+									BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 									"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 								String url = getURL(driver, 10);
@@ -2992,7 +3002,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								refresh(driver);
 
-								if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+								if (clickUsingJavaScript(driver,
+										BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -3023,7 +3034,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 													+ task1SubjectName);
 								}
 								refresh(driver);
-								if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+								if (clickUsingJavaScript(driver,
+										BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -3034,7 +3046,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										CommonLib.refresh(driver);
 
-										if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+										if (clickUsingJavaScript(driver,
+												BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName,
+														20),
 												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup",
 													YesNo.No);
@@ -4212,7 +4226,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, recordName, 30)) {
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj2), recordName, 30)) {
 				log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
 				ThreadSleep(4000);
 				if (BP.clicktabOnPage("Acuity")) {
@@ -6158,7 +6172,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 	@Deprecated
 	@Parameters({ "projectName" })
 
-	@Test
+	
 	public void AcuityMNNRTc024_VerifyWhenEditButtonIsClickedForTheTaskHavingFollowUpTaskAndIsDeletedFromTaskDetailPage(
 			String projectName) {
 
@@ -6177,7 +6191,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		log(LogStatus.INFO,
 				"---------Now Going to Verify Task: " + task1SubjectName + " in Note PopUp Section---------", YesNo.No);
 
-		if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+		if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 					YesNo.No);
@@ -6280,7 +6294,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 	@Deprecated
 	@Parameters({ "projectName" })
 
-	@Test
+	
 	public void AcuityMNNRTc025_VerifyWhenTheRemovedTaskIsRestoredAndItsImpactOnInteractionSection(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -6389,7 +6403,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 							}
 
-							if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+							if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 								log(LogStatus.INFO,
 										"-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
@@ -7077,7 +7091,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										+ " in Interaction Section---------", YesNo.No);
 
-								if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+								if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 									log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName
 											+ " found in Tasks Object-----", YesNo.No);
@@ -7090,7 +7104,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 									}
 
-									if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+									if (clickUsingJavaScript(driver,
+											BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 											"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -7503,13 +7518,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								+ " record is not verified on intraction, Reason: " + result + "------");
 					}
 
-					if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+					if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 						log(LogStatus.INFO,
 								"-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 								YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -8002,7 +8018,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, recordName, 30)) {
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj2), recordName, 30)) {
 				log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
 				ThreadSleep(4000);
 				if (BP.clicktabOnPage("Acuity")) {
@@ -8161,6 +8177,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_CallLabel3, relatedTo } };
 
 		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate } };
+		String[][] task1AdvancedSectionVerification = { { AMNNR_CallLabel4, getAdvanceDueDate },
+				{ AMNNR_CallLabel8, "-None-" } };
 
 		String recordName = AMNNR_Contact2;
 
@@ -8203,7 +8221,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, recordName, 30)) {
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj2), recordName, 30)) {
 				log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
 				ThreadSleep(4000);
 				if (BP.clicktabOnPage("Acuity")) {
@@ -8215,13 +8233,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
 
-						if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+						if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 							log(LogStatus.INFO,
 									"-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 									YesNo.No);
 
-							if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+							if (clickUsingJavaScript(driver,
+									BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 									"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -8230,7 +8249,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								ThreadSleep(10000);
 								ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
 										.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSection,
-												task1AdvancedSection, null);
+												task1AdvancedSectionVerification, null);
 								if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
 									log(LogStatus.INFO,
 											"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
@@ -8239,7 +8258,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 									refresh(driver);
 									ThreadSleep(2000);
 
-									if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+									if (clickUsingJavaScript(driver,
+											BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 											"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 										if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection, null,
@@ -8249,7 +8269,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 											CommonLib.refresh(driver);
 
-											if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+											if (clickUsingJavaScript(driver,
+													BP.editButtonOfSubjectLinkPopUpInInteractionSection(
+															task1SubjectName, 20),
 													"Edit Note Button of: " + task1SubjectName,
 													action.SCROLLANDBOOLEAN)) {
 												log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup",
@@ -8260,7 +8282,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 												ThreadSleep(10000);
 												ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
 														.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
-																task1UpdateBasicSection, task1AdvancedSection, null);
+																task1UpdateBasicSection,
+																task1AdvancedSectionVerification, null);
 												if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
 													log(LogStatus.INFO,
 															"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
@@ -8293,7 +8316,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 												log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
 
 												if (BP.clickOnAlreadyCreated_Lighting(environment, mode,
-														TabName.ContactTab, recordName, 30)) {
+														BP.returnTabName(tabObj2), recordName, 30)) {
 													log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
 													ThreadSleep(4000);
 													if (BP.clicktabOnPage("Acuity")) {
@@ -8476,7 +8499,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, recordName, 30)) {
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj2), recordName, 30)) {
 				log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
 				ThreadSleep(4000);
 				if (BP.clicktabOnPage("Acuity")) {
@@ -8488,13 +8511,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
 
-						if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+						if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 							log(LogStatus.INFO,
 									"-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 									YesNo.No);
 
-							if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+							if (clickUsingJavaScript(driver,
+									BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 									"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -8511,7 +8535,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 									refresh(driver);
 
-									if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+									if (clickUsingJavaScript(driver,
+											BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 											"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -8522,7 +8547,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 											CommonLib.refresh(driver);
 
-											if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+											if (clickUsingJavaScript(driver,
+													BP.editButtonOfSubjectLinkPopUpInInteractionSection(
+															task1SubjectName, 20),
 													"Edit Note Button of: " + task1SubjectName,
 													action.SCROLLANDBOOLEAN)) {
 												log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup",
@@ -8565,7 +8592,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 												log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
 
 												if (BP.clickOnAlreadyCreated_Lighting(environment, mode,
-														TabName.ContactTab, recordName, 30)) {
+														BP.returnTabName(tabObj2), recordName, 30)) {
 													log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
 													ThreadSleep(4000);
 													if (BP.clicktabOnPage("Acuity")) {
@@ -8743,7 +8770,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, recordName, 30)) {
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj2), recordName, 30)) {
 				log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
 				ThreadSleep(4000);
 				if (BP.clicktabOnPage("Acuity")) {
@@ -9012,13 +9039,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 					CommonLib.refresh(driver);
 					ThreadSleep(10000);
-					if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+					if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 						log(LogStatus.INFO,
 								"-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 								YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -9690,13 +9718,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
 
-						if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+						if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 							log(LogStatus.INFO,
 									"-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 									YesNo.No);
 
-							if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+							if (clickUsingJavaScript(driver,
+									BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 									"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -9724,7 +9753,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								refresh(driver);
 								ThreadSleep(1000);
 
-								if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+								if (clickUsingJavaScript(driver,
+										BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 									ArrayList<String> verifyRelatedToNotContainsNegativeResults = BP
@@ -9757,7 +9787,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								refresh(driver);
 								ThreadSleep(1000);
 
-								if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+								if (clickUsingJavaScript(driver,
+										BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 									if (BP.updateActivityTimelineRecord(projectName, task1UpdatedBasicSection, null,
@@ -9771,7 +9802,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										ThreadSleep(10000);
 
-										if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+										if (clickUsingJavaScript(driver,
+												BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName,
+														20),
 												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup",
 													YesNo.No);
@@ -10983,7 +11016,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
 
-			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, recordName, 30)) {
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj2), recordName, 30)) {
 				log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
 				ThreadSleep(4000);
 				if (BP.clicktabOnPage("Acuity")) {
@@ -11437,10 +11470,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Deprecated
+	@Test
 	@Parameters({ "projectName" })
 
-	@Test
+	
 	public void AcuityMNNRTc045_VerifyChangingTheStatusOfCallFromAdvancedSectionOfNotesPopUpAndItsEffectOnInteractionSection(
 			String projectName) {
 
@@ -12642,8 +12675,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
-	@Test
+    @Test
+	
 	public void AcuityMNNRTc050_VerifyWhenUserTagsAccountsAndContactsInNotesTextAreaAndClicksOnCloseButtonOrCrossIconInCaseOfCall(
 			String projectName) {
 
@@ -12977,7 +13010,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 	@Deprecated
 	@Parameters({ "projectName" })
 
-	@Test
+	
 	public void AcuityMNNRTc051_VerifyWhenEditButtonIsClickedForTheCallHavingFollowUpTaskAndIsDeletedFromTaskDetailPage(
 			String projectName) {
 
@@ -12995,7 +13028,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		log(LogStatus.INFO,
 				"---------Now Going to Verify Task: " + task1SubjectName + " in Note PopUp Section---------", YesNo.No);
 
-		if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+		if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 					YesNo.No);
@@ -13098,7 +13131,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 	@Deprecated
 	@Parameters({ "projectName" })
 
-	@Test
+	
 	public void AcuityMNNRTc052_VerifyWhenTheRemovedCallIsRestoredAndItsImpactOnInteractionSection(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -13207,7 +13240,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 							}
 
-							if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+							if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 								log(LogStatus.INFO,
 										"-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
@@ -13299,7 +13332,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 	@Deprecated
 	@Parameters({ "projectName" })
 
-	@Test
+	
 	public void AcuityMNNRTc053_CreateAFollowUpTaskFromCallDetailPageAndVerifyItsDetailsOnTaskDetailPage(
 			String projectName) {
 
@@ -13335,7 +13368,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
-		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Tasks", false)) {
+		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Tasks", false, projectName)) {
 
 			log(LogStatus.INFO,
 					"-----Verified Task named: " + task1SubjectNameNavigation + " found in Tasks Object-----",
@@ -13352,14 +13385,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 						log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
 
-						if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, recordNameVerify,
-								30)) {
+						if (BP.clickOnAlreadyCreated_Lighting(environment, mode, BP.returnTabName(tabObj2),
+								recordNameVerify, 30)) {
 							log(LogStatus.INFO, recordNameVerify + " record has been open", YesNo.No);
 							ThreadSleep(4000);
 							if (BP.clicktabOnPage("Acuity")) {
 								log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-								if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+								if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 									log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName
 											+ " found in Tasks Object-----", YesNo.No);
@@ -13511,12 +13544,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				CommonLib.refresh(driver);
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
 
-					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+					if (clickUsingJavaScript(driver,
+							BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 						if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection1,
@@ -13552,12 +13586,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
 
-					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+					if (clickUsingJavaScript(driver,
+							BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 						if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection2,
@@ -13592,12 +13627,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
 
-					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+					if (clickUsingJavaScript(driver,
+							BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 						if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection3,
@@ -13632,12 +13668,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
 
-					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+					if (clickUsingJavaScript(driver,
+							BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 						if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection4,
@@ -13829,7 +13866,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -13858,7 +13895,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -13971,7 +14009,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -14000,7 +14038,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -14124,7 +14163,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -14153,7 +14192,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -14272,7 +14312,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				CommonLib.refresh(driver);
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false)) {
+				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord1 + " found in Firm Object-----",
 							YesNo.No);
@@ -14339,7 +14379,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				}
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord2, "Firms", false)) {
+				if (home.globalSearchAndNavigate(firmRecord2, "Firms", false, projectName)) {
 					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord2 + " found in Firm Object-----",
 							YesNo.No);
 					CommonLib.refresh(driver);
@@ -14405,7 +14445,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord3ShouldNotThere, "Firms", true)) {
+				if (home.globalSearchAndNavigate(firmRecord3ShouldNotThere, "Firms", true, projectName)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Firm named: " + firmRecord3ShouldNotThere + " not found in Firm Object-----",
@@ -14421,7 +14461,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(contactRecord, "Contacts", false)) {
+				if (home.globalSearchAndNavigate(contactRecord, "Contacts", false, projectName)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Contact named: " + contactRecord + " found in Contact Object-----",
@@ -14458,7 +14498,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				}
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -14562,7 +14602,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				CommonLib.refresh(driver);
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(contactRecord, "Contacts", false)) {
+				if (home.globalSearchAndNavigate(contactRecord, "Contacts", false, projectName)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Contact named: " + contactRecord + " found in Contact Object-----",
@@ -14632,7 +14672,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false)) {
+				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord1 + " found in Firm Object-----",
 							YesNo.No);
@@ -14646,12 +14686,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
 
-					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+					if (clickUsingJavaScript(driver,
+							BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -14693,12 +14734,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
 
-					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+					if (clickUsingJavaScript(driver,
+							BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -14760,6 +14802,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer sp = new SetupPageBusinessLayer(driver);
+		DataLoaderWizardPageBusinessLayer dlwp = new DataLoaderWizardPageBusinessLayer(driver);
 
 		String contactRecordTypeList = "Contact<break>Banker";
 		String contactRecordTypeArray[] = contactRecordTypeList.split(breakSP, -1);
@@ -14879,6 +14922,16 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		lp.CRMlogout();
 		CommonLib.ThreadSleep(5000);
+		if (flag) {
+			dlwp.addFieldsToLayoutPageInAdminCase("Contact Record Type", "Contact Layout", object.Contact.toString());
+		} else {
+			log(LogStatus.ERROR, "------"
+					+ "Record Types Not created, So not able to add Label: Contact Record Type to page layout level"
+					+ "------", YesNo.Yes);
+			sa.assertTrue(false, "------"
+					+ "Record Types Not created, So not able to add Label: Contact Record Type to page layout level"
+					+ "------");
+		}
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -14889,7 +14942,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					null, null, false, null, null, createNewRecordPopUp, null, null, null)) {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -14926,7 +14979,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				CommonLib.refresh(driver);
 				CommonLib.ThreadSleep(4000);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(contactRecord, "Contacts", false)) {
+				if (home.globalSearchAndNavigate(contactRecord, "Contacts", false, projectName)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Contact named: " + contactRecord + " found in Contact Object-----",
@@ -14976,7 +15029,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false)) {
+				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord1 + " found in Firm Object-----",
 							YesNo.No);
@@ -15060,43 +15113,39 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		lp.CRMLogin(superAdminUserName, adminPassword);
 
-		
-			home.notificationPopUpClose();
-			if (home.clickOnSetUpLink()) {
-				flag = false;
-				String parentID = switchOnWindow(driver);
-				if (parentID != null) {
+		home.notificationPopUpClose();
+		if (home.clickOnSetUpLink()) {
+			flag = false;
+			String parentID = switchOnWindow(driver);
+			if (parentID != null) {
 
-					if (sp.searchStandardOrCustomObject(projectName, mode, object.Profiles)) {
-						log(LogStatus.INFO, "Profile has been open", YesNo.Yes);
+				if (sp.searchStandardOrCustomObject(projectName, mode, object.Profiles)) {
+					log(LogStatus.INFO, "Profile has been open", YesNo.Yes);
 
-						if (sp.removeRecordTypeOfObject("PE Standard User",
-								com.navatar.generic.EnumConstants.RecordType.Contact)) {
-							log(LogStatus.INFO, "The record type of Contact has been removed", YesNo.No);
-							
+					if (sp.removeRecordTypeOfObject("PE Standard User",
+							com.navatar.generic.EnumConstants.RecordType.Contact)) {
+						log(LogStatus.INFO, "The record type of Contact has been removed", YesNo.No);
 
-						} else {
-							log(LogStatus.ERROR, "The record type of Contact is not removed", YesNo.No);
-							sa.assertTrue(false, "The record type of Contact is not removed");
-						}
 					} else {
-						log(LogStatus.ERROR, "Not Able to Search the " + object.Profiles + " object", YesNo.Yes);
-						sa.assertTrue(false, "Not Able to Search the Object" + object.Profiles + " object");
+						log(LogStatus.ERROR, "The record type of Contact is not removed", YesNo.No);
+						sa.assertTrue(false, "The record type of Contact is not removed");
 					}
-
-					driver.close();
-					driver.switchTo().window(parentID);
-					switchToDefaultContent(driver);
 				} else {
-					log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
-					sa.assertTrue(false, "could not find new window to switch");
+					log(LogStatus.ERROR, "Not Able to Search the " + object.Profiles + " object", YesNo.Yes);
+					sa.assertTrue(false, "Not Able to Search the Object" + object.Profiles + " object");
 				}
-			} else {
-				log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
-				sa.assertTrue(false, "could not click on setup link");
-			}
 
-		
+				driver.close();
+				driver.switchTo().window(parentID);
+				switchToDefaultContent(driver);
+			} else {
+				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch");
+			}
+		} else {
+			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "could not click on setup link");
+		}
 
 		lp.CRMlogout();
 		sa.assertAll();
@@ -15157,7 +15206,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -15193,7 +15242,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.ThreadSleep(4000);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(contactRecord, "Contacts", false)) {
+				if (home.globalSearchAndNavigate(contactRecord, "Contacts", false, projectName)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Contact named: " + contactRecord + " found in Contact Object-----",
@@ -15243,7 +15292,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false)) {
+				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord1 + " found in Firm Object-----",
 							YesNo.No);
@@ -15377,7 +15426,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -15413,7 +15462,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.ThreadSleep(4000);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(record1, "Contacts", true)) {
+				if (home.globalSearchAndNavigate(record1, "Contacts", true, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Contact named: " + record1 + " not found in Contact Object-----",
 							YesNo.No);
@@ -15427,7 +15476,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.ThreadSleep(4000);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(record2, "Contacts", true)) {
+				if (home.globalSearchAndNavigate(record2, "Contacts", true, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Contact named: " + record2 + " not found in Contact Object-----",
 							YesNo.No);
@@ -15442,7 +15491,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				CommonLib.refresh(driver);
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(record1, "Firms", true)) {
+				if (home.globalSearchAndNavigate(record1, "Firms", true, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + record1 + " not found in Firm Object-----",
 							YesNo.No);
@@ -15457,7 +15506,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				CommonLib.refresh(driver);
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(record2, "Firms", true)) {
+				if (home.globalSearchAndNavigate(record2, "Firms", true, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + record2 + " not found in Firm Object-----",
 							YesNo.No);
@@ -15470,12 +15519,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
 
-					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+					if (clickUsingJavaScript(driver,
+							BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -15634,7 +15684,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 					CommonLib.refresh(driver);
 					lp.clickOnTab(projectName, TabName.HomeTab);
-					if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+					if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 						log(LogStatus.INFO,
 								"-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
@@ -15670,7 +15720,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					}
 
 					lp.clickOnTab(projectName, TabName.HomeTab);
-					if (home.globalSearchAndNavigate(firmRecord1, "Firms", false)) {
+					if (home.globalSearchAndNavigate(firmRecord1, "Firms", false, projectName)) {
 
 						log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord1 + " found in Firm Object-----",
 								YesNo.No);
@@ -15685,7 +15735,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					}
 
 					lp.clickOnTab(projectName, TabName.HomeTab);
-					if (home.globalSearchAndNavigate(firmRecord2, "Firms", false)) {
+					if (home.globalSearchAndNavigate(firmRecord2, "Firms", false, projectName)) {
 
 						log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord2 + " found in Firm Object-----",
 								YesNo.No);
@@ -15700,13 +15750,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					}
 
 					lp.clickOnTab(projectName, TabName.HomeTab);
-					if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+					if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 						log(LogStatus.INFO,
 								"-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 								YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -15823,7 +15874,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String priority = AMNNR_AdvancePriority95;
 		String status = AMNNR_AdvanceStatus95;
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-				+ (crmUser1FirstName + " " + crmUser1LastName) ;
+				+ (crmUser1FirstName + " " + crmUser1LastName);
 		String updatedRelatedToNotContainsVerify = "";
 		for (int i = 1; i <= 51; i++) {
 			updatedRelatedToNotContainsVerify = updatedRelatedToNotContainsVerify + AMNNR_RelatedTo96 + i + "<break>";
@@ -15866,7 +15917,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		System.out.println(contactRecord1);
 		System.out.println(contactRecord2);
 
-		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify+ "<break>" + AMNNR_SuggestedTag95 } };
+		String[][] relatedAssociationNotContains = {
+				{ AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify + "<break>" + AMNNR_SuggestedTag95 } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -15878,7 +15930,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -15914,7 +15966,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(contactRecord1, "Contacts", false)) {
+				if (home.globalSearchAndNavigate(contactRecord1, "Contacts", false, projectName)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Contact named: " + contactRecord1 + " found in Contact Object-----",
@@ -15930,7 +15982,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(contactRecord2, "Contacts", false)) {
+				if (home.globalSearchAndNavigate(contactRecord2, "Contacts", false, projectName)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Contact named: " + contactRecord2 + " found in Contact Object-----",
@@ -15947,12 +15999,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
 
-					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+					if (clickUsingJavaScript(driver,
+							BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -16063,7 +16116,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -16092,7 +16145,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -16131,7 +16185,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					if (CommonLib.click(driver, BP.subjectOfInteractionPage(task1SubjectName, 15),
 							"Subject Name on Intraction", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -16167,7 +16222,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -16183,7 +16239,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 							ArrayList<String> subjectLinkPopUpNegativeResult2 = BP.verifySubjectLinkPopUpOnIntraction(
 									driver, task1SubjectName, task1BasicSectionVerificationAfterUpdate,
-									task1AdvancedSection, IconType.Task, PageName.TaskPage);
+									task1AdvancedSection, IconType.Task, PageName.Interaction);
 
 							if (subjectLinkPopUpNegativeResult2.isEmpty()) {
 								log(LogStatus.PASS,
@@ -16299,7 +16355,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -16328,7 +16384,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -16436,7 +16493,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -16465,7 +16522,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -16585,7 +16643,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -16614,7 +16672,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -16653,7 +16712,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					if (CommonLib.click(driver, BP.subjectOfInteractionPage(task1SubjectName, 15),
 							"Subject Name on Intraction", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -16689,7 +16749,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					if (CommonLib.click(driver, BP.subjectOfInteractionPage(task1SubjectName, 15),
 							"Subject Name on Intraction", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -16705,7 +16766,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 							ArrayList<String> subjectLinkPopUpNegativeResult2 = BP.verifySubjectLinkPopUpOnIntraction(
 									driver, task1SubjectName, task1BasicSectionVerificationAfterUpdate,
-									task1AdvancedSection, IconType.Task, PageName.TaskPage);
+									task1AdvancedSection, IconType.Task, PageName.Interaction);
 
 							if (subjectLinkPopUpNegativeResult2.isEmpty()) {
 								log(LogStatus.PASS,
@@ -16838,7 +16899,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -16867,7 +16928,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -17054,7 +17116,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -17083,7 +17145,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -17210,12 +17273,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		CommonLib.refresh(driver);
 		lp.clickOnTab(projectName, TabName.HomeTab);
-		if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+		if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 					YesNo.No);
 
-			if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+			if (clickUsingJavaScript(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 					"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 				if (BP.updateActivityTimelineRecord(projectName, task1BasicSection, task1AdvancedSection, null,
@@ -17306,12 +17369,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
 
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
 
-					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+					if (clickUsingJavaScript(driver,
+							BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 						if (BP.updateActivityTimelineRecord(projectName, updateTask1BasicSection,
@@ -17521,12 +17585,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		CommonLib.refresh(driver);
 		lp.clickOnTab(projectName, TabName.HomeTab);
-		if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+		if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 					YesNo.No);
 
-			if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+			if (clickUsingJavaScript(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 					"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 				if (BP.updateActivityTimelineRecord(projectName, updateTask1BasicSection1, updateTask1AdvancedSection,
@@ -17578,12 +17642,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		CommonLib.refresh(driver);
 		lp.clickOnTab(projectName, TabName.HomeTab);
-		if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+		if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 					YesNo.No);
 
-			if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+			if (clickUsingJavaScript(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 					"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 				if (BP.updateActivityTimelineRecord(projectName, updateTask1BasicSection2, updateTask1AdvancedSection,
@@ -17682,12 +17746,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		CommonLib.refresh(driver);
 		lp.clickOnTab(projectName, TabName.HomeTab);
-		if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+		if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 					YesNo.No);
 
-			if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+			if (clickUsingJavaScript(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 					"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 				if (BP.updateActivityTimelineRecord(projectName, updateTask1BasicSection1, updateTask1AdvancedSection,
@@ -17881,7 +17945,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -17910,7 +17974,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 							if (BP.updateActivityTimelineRecord(projectName, null, null, null, SuggestedTags, null,
@@ -17944,7 +18009,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -18118,7 +18184,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -18147,7 +18213,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 							if (BP.updateActivityTimelineRecord(projectName, null, null, null, SuggestedTags, null,
@@ -18181,7 +18248,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -18222,7 +18290,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -18441,7 +18510,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -18472,7 +18541,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -18608,7 +18678,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -18639,7 +18709,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -18685,7 +18756,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(followUptask1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(followUptask1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Task named: " + followUptask1SubjectName + " found in Tasks Object-----",
@@ -18717,7 +18788,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + followUptask1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(followUptask1SubjectName, 20),
 								"Edit Note Button of: " + followUptask1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -18798,9 +18870,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("2"));
 		String getAdvanceDueDate = AdvanceDueDate;
 
-		String task1SubjectName = "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated  nsuser firm record 1608 updated";
+		String task1SubjectName = "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated";
 		String task1Notes = "Jasbinder singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdgg nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated  nsuser firm record 1608 updated @Jasbinder";
-		String relatedTo = "Vitara Deal<break>Houlihan Lokey-Vitara Deal";
+		String relatedTo = "Vitara Deal<break>FCR 1";
 		String priority = "High";
 		String status = "Not Started";
 		String task1NotesVerify = task1Notes;
@@ -18840,6 +18912,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String value = "";
 		String type = "";
 
+		String labelName = null;
+		String labelValue = null;
+
 		String[][] EntityOrAccounts = { {
 				"nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated",
 				"Company", null, null } };
@@ -18850,7 +18925,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.INFO, "Click on Tab : " + BP.returnTabName(tabObj1), YesNo.No);
 				value = accounts[0];
 				type = accounts[1];
-				if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
+
+				if (ip.createInstitution(projectName, environment, mode, value, type, labelName, labelValue)) {
 					log(LogStatus.INFO, "successfully Created Account/Entity : " + value + " of record type : " + type,
 							YesNo.No);
 				} else {
@@ -18873,92 +18949,91 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					addContactsToFundraisingObjectPopup, detailSectionVerifcation)) {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 
-				CommonLib.refresh(driver);
-				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
-
-					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
-							YesNo.No);
-
-					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
-							PageName.TaskPage);
-
-					if (subjectLinkPopUpNegativeResult.isEmpty()) {
-						log(LogStatus.PASS, "------" + task1SubjectName
-								+ " record is able to open popup after click on it and verify its data" + "------",
-								YesNo.No);
-
-					} else {
-						log(LogStatus.ERROR,
-								"------" + task1SubjectName + " record link popup is not verified, Reason: "
-										+ subjectLinkPopUpNegativeResult + "------",
-								YesNo.Yes);
-						sa.assertTrue(false,
-								"------" + task1SubjectName + " record link popup is not verified, Reason: "
-										+ subjectLinkPopUpNegativeResult + "------");
-
-					}
-
-					CommonLib.refresh(driver);
-
-					if (CommonLib.click(driver, BP.subjectOfInteractionPage(task1SubjectName, 15),
-							"Subject Name on Intraction", action.BOOLEAN)) {
-						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
-
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
-								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
-
-							String url = getURL(driver, 10);
-
-							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
-									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
-											task1AdvancedSection, null);
-							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
-								log(LogStatus.INFO,
-										"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
-										YesNo.No);
-
-							} else {
-								log(LogStatus.ERROR,
-										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-												+ NotesPopUpPrefilledNegativeResult,
-										YesNo.No);
-								sa.assertTrue(false,
-										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-												+ NotesPopUpPrefilledNegativeResult);
-							}
-						} else {
-							log(LogStatus.ERROR, "Not able to click on Edit button on Subject Link Popup of Task: "
-									+ task1SubjectName, YesNo.No);
-							sa.assertTrue(false, "Not able to click on Edit button on Subject Link Popup of Task: "
-									+ task1SubjectName);
-						}
-
-					} else {
-						log(LogStatus.ERROR, "not able to click on " + task1SubjectName, YesNo.No);
-						sa.assertTrue(false, "not able to click on " + task1SubjectName);
-					}
-
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
-				} else {
-
-					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
-							YesNo.Yes);
-					BaseLib.sa.assertTrue(false,
-							"-----Task named: " + task1SubjectName + " not found in Tasks Object-----");
-
-				}
-
 			} else {
 				log(LogStatus.FAIL,
 						"-----Activity timeline record is not created for Task: " + task1SubjectName + "-----",
 						YesNo.No);
 				sa.assertTrue(false,
 						"-----Activity timeline record is not created for Task: " + task1SubjectName + "-----");
+			}
+
+			CommonLib.refresh(driver);
+			lp.clickOnTab(projectName, TabName.HomeTab);
+			if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
+
+				log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
+						YesNo.No);
+
+				ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
+						task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+						PageName.TaskPage);
+
+				if (subjectLinkPopUpNegativeResult.isEmpty()) {
+					log(LogStatus.PASS,
+							"------" + task1SubjectName
+									+ " record is able to open popup after click on it and verify its data" + "------",
+							YesNo.No);
+
+				} else {
+					log(LogStatus.ERROR, "------" + task1SubjectName + " record link popup is not verified, Reason: "
+							+ subjectLinkPopUpNegativeResult + "------", YesNo.Yes);
+					sa.assertTrue(false, "------" + task1SubjectName + " record link popup is not verified, Reason: "
+							+ subjectLinkPopUpNegativeResult + "------");
+
+				}
+
+				CommonLib.refresh(driver);
+
+				if (CommonLib.click(driver, BP.subjectOfInteractionPage(task1SubjectName, 15),
+						"Subject Name on Intraction", action.BOOLEAN)) {
+					log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
+
+					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
+
+						String url = getURL(driver, 10);
+
+						ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
+								.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
+										task1AdvancedSection, null);
+						if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+							log(LogStatus.INFO,
+									"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+									YesNo.No);
+
+						} else {
+							log(LogStatus.ERROR,
+									"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+											+ NotesPopUpPrefilledNegativeResult,
+									YesNo.No);
+							sa.assertTrue(false,
+									"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+											+ NotesPopUpPrefilledNegativeResult);
+						}
+					} else {
+						log(LogStatus.ERROR,
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName,
+								YesNo.No);
+						sa.assertTrue(false,
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
+					}
+
+				} else {
+					log(LogStatus.ERROR, "not able to click on " + task1SubjectName, YesNo.No);
+					sa.assertTrue(false, "not able to click on " + task1SubjectName);
+				}
+
+//				driver.close();
+//				driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+
+			} else {
+
+				log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
+						YesNo.Yes);
+				BaseLib.sa.assertTrue(false,
+						"-----Task named: " + task1SubjectName + " not found in Tasks Object-----");
+
 			}
 
 		} else
@@ -18970,8 +19045,187 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		lp.CRMlogout();
 		sa.assertAll();
+		CommonLib.ThreadSleep(3000);
 	}
 
+	/*
+	 * @Parameters({ "projectName" })
+	 * 
+	 * @Test public void
+	 * AcuityMNNRTc084_VerifyWhenMaxCharLengthTaskIsCreatedWithMaxCharLengthRecordsEnteredUnderNotesSectionUsingAtTheRateWhenRecordDoesNotExistInTheOrg(
+	 * String projectName) {
+	 * 
+	 * LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	 * BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	 * HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	 * InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+	 * 
+	 * String task1ButtonName = AMNNR_ActivityType59; String recordName =
+	 * AMNNR_FirmLegalName3; String AdvanceDueDate =
+	 * CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy",
+	 * Integer.parseInt("2")); String getAdvanceDueDate = AdvanceDueDate;
+	 * 
+	 * String task1SubjectName =
+	 * "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated  nsuser firm record 1608 updated"
+	 * ; String task1Notes =
+	 * "Jasbinder singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdgg nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated  nsuser firm record 1608 updated @Jasbinder"
+	 * ; String relatedTo = "Vitara Deal<break>Houlihan Lokey-Vitara Deal"; String
+	 * priority = "High"; String status = "Not Started"; String task1NotesVerify =
+	 * task1Notes; String updatedRelatedToVerifyForDetails = relatedTo + "<break>" +
+	 * recordName + "<break>" + (crmUser1FirstName + " " + crmUser1LastName); String
+	 * updatedRelatedToVerify = updatedRelatedToVerifyForDetails + "<break>" +
+	 * "jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdg"
+	 * + "<break>" +
+	 * "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated"
+	 * ;
+	 * 
+	 * String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, {
+	 * AMNNR_TaskLabel2, task1Notes }, { AMNNR_TaskLabel3, relatedTo } };
+	 * 
+	 * String[][] task1BasicSectionVerificationForDetailsSection = { {
+	 * AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1NotesVerify },
+	 * { AMNNR_TaskLabel3, updatedRelatedToVerifyForDetails } }; String[][]
+	 * task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName }, {
+	 * AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3,
+	 * updatedRelatedToVerify } };
+	 * 
+	 * String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate },
+	 * { AMNNR_TaskLabel5, status }, { AMNNR_TaskLabel6, priority }, {
+	 * AMNNR_TaskLabel8, "C" } };
+	 * 
+	 * String[][] followUptask1 = null;
+	 * 
+	 * String[] SuggestedTags = "All Records Select".split("<break>", -1);
+	 * String[][] createNewRecordPopUp = {
+	 * ("checked<break>Jasbinder<break>jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdg<break>Contact<break>nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated<existing><break>Create"
+	 * ) .split("<break>") }; String[][] addContactsToDealTeamPopUp = {
+	 * "allRecords<break>jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdg<break><break>Add"
+	 * .split("<break>") }; String[][] addContactsToFundraisingObjectPopup = {
+	 * "allRecords<break>jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdg<break><break>Add"
+	 * .split("<break>") };
+	 * 
+	 * String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1,
+	 * task1SubjectName } }, task1BasicSectionVerificationForDetailsSection,
+	 * task1AdvancedSection };
+	 * 
+	 * String value = ""; String type = "";
+	 * 
+	 * String[][] EntityOrAccounts = { {
+	 * "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated"
+	 * , "Company", null, null } }; lp.CRMLogin(crmUser1EmailID, adminPassword);
+	 * 
+	 * for (String[] accounts : EntityOrAccounts) { if (lp.clickOnTab(projectName,
+	 * mode, BP.returnTabName(tabObj1))) { log(LogStatus.INFO, "Click on Tab : " +
+	 * BP.returnTabName(tabObj1), YesNo.No); value = accounts[0]; type =
+	 * accounts[1]; if (ip.createEntityOrAccount(projectName, mode, value, type,
+	 * null, null, 20)) { log(LogStatus.INFO,
+	 * "successfully Created Account/Entity : " + value + " of record type : " +
+	 * type, YesNo.No); } else { sa.assertTrue(false,
+	 * "Not Able to Create Account/Entity : " + value + " of record type : " +
+	 * type); log(LogStatus.SKIP, "Not Able to Create Account/Entity : " + value +
+	 * " of record type : " + type, YesNo.Yes); }
+	 * 
+	 * } else { sa.assertTrue(false, "Not Able to Click on Tab : " +
+	 * BP.returnTabName(tabObj1)); log(LogStatus.SKIP, "Not Able to Click on Tab : "
+	 * + BP.returnTabName(tabObj1), YesNo.Yes); } }
+	 * 
+	 * if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName,
+	 * null)) { log(LogStatus.INFO, "Able to Open the Record: " + recordName,
+	 * YesNo.No);
+	 * 
+	 * if (BP.createActivityTimeline(projectName, false, task1ButtonName,
+	 * task1BasicSection, task1AdvancedSection, followUptask1, SuggestedTags, false,
+	 * null, null, createNewRecordPopUp, addContactsToDealTeamPopUp,
+	 * addContactsToFundraisingObjectPopup, detailSectionVerifcation)) {
+	 * log(LogStatus.PASS, "-----Activity timeline record has been created-----",
+	 * YesNo.No);
+	 * 
+	 * CommonLib.refresh(driver); lp.clickOnTab(projectName, TabName.HomeTab); if
+	 * (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName))
+	 * {
+	 * 
+	 * log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName +
+	 * " found in Tasks Object-----", YesNo.No);
+	 * 
+	 * ArrayList<String> subjectLinkPopUpNegativeResult =
+	 * BP.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName,
+	 * task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+	 * PageName.TaskPage);
+	 * 
+	 * if (subjectLinkPopUpNegativeResult.isEmpty()) { log(LogStatus.PASS, "------"
+	 * + task1SubjectName +
+	 * " record is able to open popup after click on it and verify its data" +
+	 * "------", YesNo.No);
+	 * 
+	 * } else { log(LogStatus.ERROR, "------" + task1SubjectName +
+	 * " record link popup is not verified, Reason: " +
+	 * subjectLinkPopUpNegativeResult + "------", YesNo.Yes); sa.assertTrue(false,
+	 * "------" + task1SubjectName + " record link popup is not verified, Reason: "
+	 * + subjectLinkPopUpNegativeResult + "------");
+	 * 
+	 * }
+	 * 
+	 * CommonLib.refresh(driver);
+	 * 
+	 * if (CommonLib.click(driver, BP.subjectOfInteractionPage(task1SubjectName,
+	 * 15), "Subject Name on Intraction", action.BOOLEAN)) { log(LogStatus.INFO,
+	 * "clicked on " + task1SubjectName, YesNo.No);
+	 * 
+	 * if (clickUsingJavaScript(driver,
+	 * BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
+	 * "Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+	 * log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup",
+	 * YesNo.No);
+	 * 
+	 * String url = getURL(driver, 10);
+	 * 
+	 * ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
+	 * .verifyNotesPopupWithPrefilledValueAndOnSameUrl(url,
+	 * task1BasicSectionVerification, task1AdvancedSection, null); if
+	 * (NotesPopUpPrefilledNegativeResult.isEmpty()) { log(LogStatus.INFO,
+	 * "Notes Popup has been verified and Notes popup is opening in same page with prefilled value"
+	 * , YesNo.No);
+	 * 
+	 * } else { log(LogStatus.ERROR,
+	 * "Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+	 * + NotesPopUpPrefilledNegativeResult, YesNo.No); sa.assertTrue(false,
+	 * "Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+	 * + NotesPopUpPrefilledNegativeResult); } } else { log(LogStatus.ERROR,
+	 * "Not able to click on Edit button on Subject Link Popup of Task: " +
+	 * task1SubjectName, YesNo.No); sa.assertTrue(false,
+	 * "Not able to click on Edit button on Subject Link Popup of Task: " +
+	 * task1SubjectName); }
+	 * 
+	 * } else { log(LogStatus.ERROR, "not able to click on " + task1SubjectName,
+	 * YesNo.No); sa.assertTrue(false, "not able to click on " + task1SubjectName);
+	 * }
+	 * 
+	 * // driver.close(); //
+	 * driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get()
+	 * );
+	 * 
+	 * } else {
+	 * 
+	 * log(LogStatus.ERROR, "-----Task named: " + task1SubjectName +
+	 * " not found in Tasks Object-----", YesNo.Yes); BaseLib.sa.assertTrue(false,
+	 * "-----Task named: " + task1SubjectName + " not found in Tasks Object-----");
+	 * 
+	 * }
+	 * 
+	 * } else { log(LogStatus.FAIL,
+	 * "-----Activity timeline record is not created for Task: " + task1SubjectName
+	 * + "-----", YesNo.No); sa.assertTrue(false,
+	 * "-----Activity timeline record is not created for Task: " + task1SubjectName
+	 * + "-----"); }
+	 * 
+	 * } else
+	 * 
+	 * { log(LogStatus.ERROR, "Not able to Open the Record: " + recordName,
+	 * YesNo.No); sa.assertTrue(false, "Not able to Open the Record: " +
+	 * recordName); }
+	 * 
+	 * lp.CRMlogout(); sa.assertAll(); }
+	 */
 	@Parameters({ "projectName" })
 
 	@Test
@@ -19072,7 +19326,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -19101,7 +19355,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -19213,7 +19468,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -19242,7 +19497,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -19364,7 +19620,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -19393,7 +19649,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -19511,7 +19768,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				CommonLib.refresh(driver);
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false)) {
+				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord1 + " found in Firm Object-----",
 							YesNo.No);
@@ -19578,7 +19835,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				}
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord2, "Firms", false)) {
+				if (home.globalSearchAndNavigate(firmRecord2, "Firms", false, projectName)) {
 					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord2 + " found in Firm Object-----",
 							YesNo.No);
 					CommonLib.refresh(driver);
@@ -19644,7 +19901,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord3ShouldNotThere, "Firms", true)) {
+				if (home.globalSearchAndNavigate(firmRecord3ShouldNotThere, "Firms", true, projectName)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Firm named: " + firmRecord3ShouldNotThere + " not found in Firm Object-----",
@@ -19660,7 +19917,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(contactRecord, "Contacts", false)) {
+				if (home.globalSearchAndNavigate(contactRecord, "Contacts", false, projectName)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Contact named: " + contactRecord + " found in Contact Object-----",
@@ -19697,7 +19954,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				}
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -19799,7 +20056,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				CommonLib.refresh(driver);
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(contactRecord, "Contacts", false)) {
+				if (home.globalSearchAndNavigate(contactRecord, "Contacts", false, projectName)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Contact named: " + contactRecord + " found in Contact Object-----",
@@ -19869,7 +20126,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false)) {
+				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord1 + " found in Firm Object-----",
 							YesNo.No);
@@ -19883,12 +20140,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
 
-					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+					if (clickUsingJavaScript(driver,
+							BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -19930,12 +20188,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
 
-					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+					if (clickUsingJavaScript(driver,
+							BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -20124,7 +20383,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					null, null, false, null, null, createNewRecordPopUp, null, null, null)) {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -20161,7 +20420,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				CommonLib.refresh(driver);
 				CommonLib.ThreadSleep(4000);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(contactRecord, "Contacts", false)) {
+				if (home.globalSearchAndNavigate(contactRecord, "Contacts", false, projectName)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Contact named: " + contactRecord + " found in Contact Object-----",
@@ -20211,7 +20470,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false)) {
+				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord1 + " found in Firm Object-----",
 							YesNo.No);
@@ -20295,43 +20554,39 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		lp.CRMLogin(superAdminUserName, adminPassword);
 
-		
-			home.notificationPopUpClose();
-			if (home.clickOnSetUpLink()) {
-				flag = false;
-				String parentID = switchOnWindow(driver);
-				if (parentID != null) {
+		home.notificationPopUpClose();
+		if (home.clickOnSetUpLink()) {
+			flag = false;
+			String parentID = switchOnWindow(driver);
+			if (parentID != null) {
 
-					if (sp.searchStandardOrCustomObject(projectName, mode, object.Profiles)) {
-						log(LogStatus.INFO, "Profile has been open", YesNo.Yes);
+				if (sp.searchStandardOrCustomObject(projectName, mode, object.Profiles)) {
+					log(LogStatus.INFO, "Profile has been open", YesNo.Yes);
 
-						if (sp.removeRecordTypeOfObject("PE Standard User",
-								com.navatar.generic.EnumConstants.RecordType.Contact)) {
-							log(LogStatus.INFO, "The record type of Contact has been removed", YesNo.No);
-							
+					if (sp.removeRecordTypeOfObject("PE Standard User",
+							com.navatar.generic.EnumConstants.RecordType.Contact)) {
+						log(LogStatus.INFO, "The record type of Contact has been removed", YesNo.No);
 
-						} else {
-							log(LogStatus.ERROR, "The record type of Contact is not removed", YesNo.No);
-							sa.assertTrue(false, "The record type of Contact is not removed");
-						}
 					} else {
-						log(LogStatus.ERROR, "Not Able to Search the " + object.Profiles + " object", YesNo.Yes);
-						sa.assertTrue(false, "Not Able to Search the Object" + object.Profiles + " object");
+						log(LogStatus.ERROR, "The record type of Contact is not removed", YesNo.No);
+						sa.assertTrue(false, "The record type of Contact is not removed");
 					}
-
-					driver.close();
-					driver.switchTo().window(parentID);
-					switchToDefaultContent(driver);
 				} else {
-					log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
-					sa.assertTrue(false, "could not find new window to switch");
+					log(LogStatus.ERROR, "Not Able to Search the " + object.Profiles + " object", YesNo.Yes);
+					sa.assertTrue(false, "Not Able to Search the Object" + object.Profiles + " object");
 				}
+
+				driver.close();
+				driver.switchTo().window(parentID);
+				switchToDefaultContent(driver);
 			} else {
-				log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
-				sa.assertTrue(false, "could not click on setup link");
+				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch");
 			}
-
-
+		} else {
+			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "could not click on setup link");
+		}
 
 		lp.CRMlogout();
 		sa.assertAll();
@@ -20391,7 +20646,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -20427,7 +20682,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.ThreadSleep(4000);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(contactRecord, "Contacts", false)) {
+				if (home.globalSearchAndNavigate(contactRecord, "Contacts", false, projectName)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Contact named: " + contactRecord + " found in Contact Object-----",
@@ -20477,7 +20732,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false)) {
+				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord1 + " found in Firm Object-----",
 							YesNo.No);
@@ -20610,7 +20865,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -20646,7 +20901,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.ThreadSleep(4000);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(record1, "Contacts", true)) {
+				if (home.globalSearchAndNavigate(record1, "Contacts", true, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Contact named: " + record1 + " not found in Contact Object-----",
 							YesNo.No);
@@ -20660,7 +20915,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.ThreadSleep(4000);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(record2, "Contacts", true)) {
+				if (home.globalSearchAndNavigate(record2, "Contacts", true, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Contact named: " + record2 + " not found in Contact Object-----",
 							YesNo.No);
@@ -20675,7 +20930,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				CommonLib.refresh(driver);
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(record1, "Firms", true)) {
+				if (home.globalSearchAndNavigate(record1, "Firms", true, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + record1 + " not found in Firm Object-----",
 							YesNo.No);
@@ -20690,7 +20945,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				CommonLib.refresh(driver);
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(record2, "Firms", true)) {
+				if (home.globalSearchAndNavigate(record2, "Firms", true, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + record2 + " not found in Firm Object-----",
 							YesNo.No);
@@ -20703,12 +20958,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
 
-					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+					if (clickUsingJavaScript(driver,
+							BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -20862,7 +21118,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 					CommonLib.refresh(driver);
 					lp.clickOnTab(projectName, TabName.HomeTab);
-					if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+					if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 						log(LogStatus.INFO,
 								"-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
@@ -20898,7 +21154,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					}
 
 					lp.clickOnTab(projectName, TabName.HomeTab);
-					if (home.globalSearchAndNavigate(firmRecord1, "Firms", false)) {
+					if (home.globalSearchAndNavigate(firmRecord1, "Firms", false, projectName)) {
 
 						log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord1 + " found in Firm Object-----",
 								YesNo.No);
@@ -20913,7 +21169,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					}
 
 					lp.clickOnTab(projectName, TabName.HomeTab);
-					if (home.globalSearchAndNavigate(firmRecord2, "Firms", false)) {
+					if (home.globalSearchAndNavigate(firmRecord2, "Firms", false, projectName)) {
 
 						log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord2 + " found in Firm Object-----",
 								YesNo.No);
@@ -20928,13 +21184,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					}
 
 					lp.clickOnTab(projectName, TabName.HomeTab);
-					if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+					if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 						log(LogStatus.INFO,
 								"-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 								YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -21049,7 +21306,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String relatedTo = AMNNR_RelatedTo95;
 
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-				+ (crmUser1FirstName + " " + crmUser1LastName) ;
+				+ (crmUser1FirstName + " " + crmUser1LastName);
 		String updatedRelatedToNotContainsVerify = "";
 		for (int i = 1; i <= 51; i++) {
 			updatedRelatedToNotContainsVerify = updatedRelatedToNotContainsVerify + AMNNR_RelatedTo167 + i + "<break>";
@@ -21092,7 +21349,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		System.out.println(contactRecord1);
 		System.out.println(contactRecord2);
 
-		String[][] relatedAssociationNotContains = { { AMNNR_CallLabel3, updatedRelatedToNotContainsVerify + "<break>" + AMNNR_SuggestedTag95 } };
+		String[][] relatedAssociationNotContains = {
+				{ AMNNR_CallLabel3, updatedRelatedToNotContainsVerify + "<break>" + AMNNR_SuggestedTag95 } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -21104,7 +21362,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -21140,7 +21398,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(contactRecord1, "Contacts", false)) {
+				if (home.globalSearchAndNavigate(contactRecord1, "Contacts", false, projectName)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Contact named: " + contactRecord1 + " found in Contact Object-----",
@@ -21156,7 +21414,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(contactRecord2, "Contacts", false)) {
+				if (home.globalSearchAndNavigate(contactRecord2, "Contacts", false, projectName)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Contact named: " + contactRecord2 + " found in Contact Object-----",
@@ -21173,12 +21431,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
 
-					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+					if (clickUsingJavaScript(driver,
+							BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -21291,7 +21550,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -21320,7 +21579,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -21359,7 +21619,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					if (CommonLib.click(driver, BP.subjectOfInteractionPage(task1SubjectName, 15),
 							"Subject Name on Intraction", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -21395,7 +21656,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -21411,7 +21673,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 							ArrayList<String> subjectLinkPopUpNegativeResult2 = BP.verifySubjectLinkPopUpOnIntraction(
 									driver, task1SubjectName, task1BasicSectionVerificationAfterUpdate,
-									task1AdvancedSection, IconType.Call, PageName.TaskPage);
+									task1AdvancedSection, IconType.Call, PageName.Interaction);
 
 							if (subjectLinkPopUpNegativeResult2.isEmpty()) {
 								log(LogStatus.PASS,
@@ -21525,7 +21787,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -21554,7 +21816,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -21661,7 +21924,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -21690,7 +21953,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -21809,7 +22073,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -21838,7 +22102,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -21877,7 +22142,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					if (CommonLib.click(driver, BP.subjectOfInteractionPage(task1SubjectName, 15),
 							"Subject Name on Intraction", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -21913,7 +22179,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					if (CommonLib.click(driver, BP.subjectOfInteractionPage(task1SubjectName, 15),
 							"Subject Name on Intraction", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -21929,7 +22196,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 							ArrayList<String> subjectLinkPopUpNegativeResult2 = BP.verifySubjectLinkPopUpOnIntraction(
 									driver, task1SubjectName, task1BasicSectionVerificationAfterUpdate,
-									task1AdvancedSection, IconType.Call, PageName.TaskPage);
+									task1AdvancedSection, IconType.Call, PageName.Interaction);
 
 							if (subjectLinkPopUpNegativeResult2.isEmpty()) {
 								log(LogStatus.PASS,
@@ -22061,7 +22328,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -22090,7 +22357,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -22269,7 +22537,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -22298,7 +22566,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -22425,12 +22694,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		CommonLib.refresh(driver);
 		lp.clickOnTab(projectName, TabName.HomeTab);
-		if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+		if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 					YesNo.No);
 
-			if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+			if (clickUsingJavaScript(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 					"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 				if (BP.updateActivityTimelineRecord(projectName, task1BasicSection, task1AdvancedSection, null,
@@ -22519,12 +22788,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
 
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
 
-					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+					if (clickUsingJavaScript(driver,
+							BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 						if (BP.updateActivityTimelineRecord(projectName, updateTask1BasicSection,
@@ -22732,12 +23002,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		CommonLib.refresh(driver);
 		lp.clickOnTab(projectName, TabName.HomeTab);
-		if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+		if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 					YesNo.No);
 
-			if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+			if (clickUsingJavaScript(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 					"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 				if (BP.updateActivityTimelineRecord(projectName, updateTask1BasicSection1, updateTask1AdvancedSection,
@@ -22789,12 +23059,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		CommonLib.refresh(driver);
 		lp.clickOnTab(projectName, TabName.HomeTab);
-		if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+		if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 					YesNo.No);
 
-			if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+			if (clickUsingJavaScript(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 					"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 				if (BP.updateActivityTimelineRecord(projectName, updateTask1BasicSection2, updateTask1AdvancedSection,
@@ -22893,12 +23163,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		CommonLib.refresh(driver);
 		lp.clickOnTab(projectName, TabName.HomeTab);
-		if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+		if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 					YesNo.No);
 
-			if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+			if (clickUsingJavaScript(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 					"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 				if (BP.updateActivityTimelineRecord(projectName, updateTask1BasicSection1, updateTask1AdvancedSection,
@@ -23089,7 +23359,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -23118,7 +23388,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 							if (BP.updateActivityTimelineRecord(projectName, null, null, null, SuggestedTags, null,
@@ -23152,7 +23423,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -23325,7 +23597,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -23354,7 +23626,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 							if (BP.updateActivityTimelineRecord(projectName, null, null, null, SuggestedTags, null,
@@ -23388,7 +23661,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -23429,7 +23703,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -23644,7 +23919,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -23675,7 +23950,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -23811,7 +24087,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 							YesNo.No);
@@ -23842,7 +24118,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
 								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -23888,7 +24165,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(followUptask1SubjectName, "Tasks", false)) {
+				if (home.globalSearchAndNavigate(followUptask1SubjectName, "Tasks", false, projectName)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Task named: " + followUptask1SubjectName + " found in Tasks Object-----",
@@ -23920,7 +24197,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 							"Subject Name on Intraction", action.BOOLEAN)) {
 						log(LogStatus.INFO, "clicked on " + followUptask1SubjectName, YesNo.No);
 
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+						if (clickUsingJavaScript(driver,
+								BP.editButtonOfSubjectLinkPopUpInInteractionSection(followUptask1SubjectName, 20),
 								"Edit Note Button of: " + followUptask1SubjectName, action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
 
@@ -24001,12 +24279,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("2"));
 		String getAdvanceDueDate = AdvanceDueDate;
 
-		String task1SubjectName = "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated  nsuser firm record 1608 updated"
+		String task1SubjectName = "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated"
 				+ " " + AMNNR_ActivityType54;
 		String task1Notes = "Jasbinder singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdgg nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated  nsuser firm record 1608 updated @Jasbinder";
-		String relatedTo = "Vitara Deal<break>Houlihan Lokey-Vitara Deal";
-		String priority = "High";
-		String status = "Not Started";
+		String relatedTo = "Vitara Deal<break>FCR 1";
+
 		String task1NotesVerify = task1Notes;
 		String updatedRelatedToVerifyForDetails = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
@@ -24014,16 +24291,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				+ "jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djhCall" + "<break>"
 				+ "CallUs firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated";
 
-		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-				{ AMNNR_TaskLabel3, relatedTo } };
+		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
+				{ AMNNR_CallLabel3, relatedTo } };
 
-		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_TaskLabel1, task1SubjectName },
-				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyForDetails } };
-		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
+		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_CallLabel1, task1SubjectName },
+				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerifyForDetails } };
+		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
+				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
-		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "C" } };
+		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate }, { AMNNR_CallLabel8, "C" } };
 
 		String[][] followUptask1 = null;
 
@@ -24044,6 +24320,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String value = "";
 		String type = "";
 
+		String labelName = null;
+		String labelValue = null;
+
 		String[][] EntityOrAccounts = { {
 				"CallUs firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated",
 				"Company", null, null } };
@@ -24054,7 +24333,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.INFO, "Click on Tab : " + BP.returnTabName(tabObj1), YesNo.No);
 				value = accounts[0];
 				type = accounts[1];
-				if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
+				if (ip.createInstitution(projectName, environment, mode, value, type, labelName, labelValue)) {
 					log(LogStatus.INFO, "successfully Created Account/Entity : " + value + " of record type : " + type,
 							YesNo.No);
 				} else {
@@ -24077,92 +24356,91 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					addContactsToFundraisingObjectPopup, detailSectionVerifcation)) {
 				log(LogStatus.PASS, "-----Activity timeline record has been created-----", YesNo.No);
 
-				CommonLib.refresh(driver);
-				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
-
-					log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
-							YesNo.No);
-
-					ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-							task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
-							PageName.TaskPage);
-
-					if (subjectLinkPopUpNegativeResult.isEmpty()) {
-						log(LogStatus.PASS, "------" + task1SubjectName
-								+ " record is able to open popup after click on it and verify its data" + "------",
-								YesNo.No);
-
-					} else {
-						log(LogStatus.ERROR,
-								"------" + task1SubjectName + " record link popup is not verified, Reason: "
-										+ subjectLinkPopUpNegativeResult + "------",
-								YesNo.Yes);
-						sa.assertTrue(false,
-								"------" + task1SubjectName + " record link popup is not verified, Reason: "
-										+ subjectLinkPopUpNegativeResult + "------");
-
-					}
-
-					CommonLib.refresh(driver);
-
-					if (CommonLib.click(driver, BP.subjectOfInteractionPage(task1SubjectName, 15),
-							"Subject Name on Intraction", action.BOOLEAN)) {
-						log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
-
-						if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
-								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
-
-							String url = getURL(driver, 10);
-
-							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
-									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
-											task1AdvancedSection, null);
-							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
-								log(LogStatus.INFO,
-										"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
-										YesNo.No);
-
-							} else {
-								log(LogStatus.ERROR,
-										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-												+ NotesPopUpPrefilledNegativeResult,
-										YesNo.No);
-								sa.assertTrue(false,
-										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-												+ NotesPopUpPrefilledNegativeResult);
-							}
-						} else {
-							log(LogStatus.ERROR, "Not able to click on Edit button on Subject Link Popup of Task: "
-									+ task1SubjectName, YesNo.No);
-							sa.assertTrue(false, "Not able to click on Edit button on Subject Link Popup of Task: "
-									+ task1SubjectName);
-						}
-
-					} else {
-						log(LogStatus.ERROR, "not able to click on " + task1SubjectName, YesNo.No);
-						sa.assertTrue(false, "not able to click on " + task1SubjectName);
-					}
-
-//					driver.close();
-//					driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
-				} else {
-
-					log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
-							YesNo.Yes);
-					BaseLib.sa.assertTrue(false,
-							"-----Task named: " + task1SubjectName + " not found in Tasks Object-----");
-
-				}
-
 			} else {
 				log(LogStatus.FAIL,
 						"-----Activity timeline record is not created for Task: " + task1SubjectName + "-----",
 						YesNo.No);
 				sa.assertTrue(false,
 						"-----Activity timeline record is not created for Task: " + task1SubjectName + "-----");
+			}
+
+			CommonLib.refresh(driver);
+			lp.clickOnTab(projectName, TabName.HomeTab);
+			if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName)) {
+
+				log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
+						YesNo.No);
+
+				ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
+						task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+						PageName.TaskPage);
+
+				if (subjectLinkPopUpNegativeResult.isEmpty()) {
+					log(LogStatus.PASS,
+							"------" + task1SubjectName
+									+ " record is able to open popup after click on it and verify its data" + "------",
+							YesNo.No);
+
+				} else {
+					log(LogStatus.ERROR, "------" + task1SubjectName + " record link popup is not verified, Reason: "
+							+ subjectLinkPopUpNegativeResult + "------", YesNo.Yes);
+					sa.assertTrue(false, "------" + task1SubjectName + " record link popup is not verified, Reason: "
+							+ subjectLinkPopUpNegativeResult + "------");
+
+				}
+
+				CommonLib.refresh(driver);
+
+				if (CommonLib.click(driver, BP.subjectOfInteractionPage(task1SubjectName, 15),
+						"Subject Name on Intraction", action.BOOLEAN)) {
+					log(LogStatus.INFO, "clicked on " + task1SubjectName, YesNo.No);
+
+					if (click(driver, BP.editButtonOfSubjectLinkPopUpInInteractionSection(20),
+							"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup", YesNo.No);
+
+						String url = getURL(driver, 10);
+
+						ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
+								.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
+										task1AdvancedSection, null);
+						if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+							log(LogStatus.INFO,
+									"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+									YesNo.No);
+
+						} else {
+							log(LogStatus.ERROR,
+									"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+											+ NotesPopUpPrefilledNegativeResult,
+									YesNo.No);
+							sa.assertTrue(false,
+									"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+											+ NotesPopUpPrefilledNegativeResult);
+						}
+					} else {
+						log(LogStatus.ERROR,
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName,
+								YesNo.No);
+						sa.assertTrue(false,
+								"Not able to click on Edit button on Subject Link Popup of Task: " + task1SubjectName);
+					}
+
+				} else {
+					log(LogStatus.ERROR, "not able to click on " + task1SubjectName, YesNo.No);
+					sa.assertTrue(false, "not able to click on " + task1SubjectName);
+				}
+
+//				driver.close();
+//				driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+
+			} else {
+
+				log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
+						YesNo.Yes);
+				BaseLib.sa.assertTrue(false,
+						"-----Task named: " + task1SubjectName + " not found in Tasks Object-----");
+
 			}
 
 		} else
@@ -24174,9 +24452,190 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		lp.CRMlogout();
 		sa.assertAll();
+		CommonLib.ThreadSleep(3000);
 
 	}
 
+	/*
+	 * @Parameters({ "projectName" })
+	 * 
+	 * @Test public void
+	 * AcuityMNNRTc113_VerifyWhenMaxCharLengthCallIsCreatedWithMaxCharLengthRecordsEnteredUnderNotesSectionUsingAtTheRateWhenRecordDoesNotExistInTheOrg(
+	 * String projectName) {
+	 * 
+	 * LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	 * BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	 * HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	 * InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+	 * 
+	 * String task1ButtonName = AMNNR_ActivityType142; String recordName =
+	 * AMNNR_FirmLegalName3; String AdvanceDueDate =
+	 * CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy",
+	 * Integer.parseInt("2")); String getAdvanceDueDate = AdvanceDueDate;
+	 * 
+	 * String task1SubjectName =
+	 * "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated  nsuser firm record 1608 updated"
+	 * + " " + AMNNR_ActivityType54; String task1Notes =
+	 * "Jasbinder singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdgg nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated  nsuser firm record 1608 updated @Jasbinder"
+	 * ; String relatedTo = "Vitara Deal<break>Houlihan Lokey-Vitara Deal"; String
+	 * priority = "High"; String status = "Not Started"; String task1NotesVerify =
+	 * task1Notes; String updatedRelatedToVerifyForDetails = relatedTo + "<break>" +
+	 * recordName + "<break>" + (crmUser1FirstName + " " + crmUser1LastName); String
+	 * updatedRelatedToVerify = updatedRelatedToVerifyForDetails + "<break>" +
+	 * "jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djhCall"
+	 * + "<break>" +
+	 * "CallUs firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated"
+	 * ;
+	 * 
+	 * String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, {
+	 * AMNNR_TaskLabel2, task1Notes }, { AMNNR_TaskLabel3, relatedTo } };
+	 * 
+	 * String[][] task1BasicSectionVerificationForDetailsSection = { {
+	 * AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1NotesVerify },
+	 * { AMNNR_TaskLabel3, updatedRelatedToVerifyForDetails } }; String[][]
+	 * task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName }, {
+	 * AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3,
+	 * updatedRelatedToVerify } };
+	 * 
+	 * String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate },
+	 * { AMNNR_TaskLabel5, status }, { AMNNR_TaskLabel6, priority }, {
+	 * AMNNR_TaskLabel8, "C" } };
+	 * 
+	 * String[][] followUptask1 = null;
+	 * 
+	 * String[] SuggestedTags = "All Records Select".split("<break>", -1);
+	 * String[][] createNewRecordPopUp = {
+	 * ("checked<break>Jasbinder<break>jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djhCall<break>Contact<break>CallUs firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated<existing><break>Create"
+	 * ) .split("<break>") }; String[][] addContactsToDealTeamPopUp = {
+	 * "allRecords<break>jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djhCall<break><break>Add"
+	 * .split("<break>") }; String[][] addContactsToFundraisingObjectPopup = {
+	 * "allRecords<break>jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djhCall<break><break>Add"
+	 * .split("<break>") };
+	 * 
+	 * String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1,
+	 * task1SubjectName } }, task1BasicSectionVerificationForDetailsSection,
+	 * task1AdvancedSection };
+	 * 
+	 * String value = ""; String type = "";
+	 * 
+	 * String[][] EntityOrAccounts = { {
+	 * "CallUs firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated"
+	 * , "Company", null, null } }; lp.CRMLogin(crmUser1EmailID, adminPassword);
+	 * 
+	 * for (String[] accounts : EntityOrAccounts) { if (lp.clickOnTab(projectName,
+	 * mode, BP.returnTabName(tabObj1))) { log(LogStatus.INFO, "Click on Tab : " +
+	 * BP.returnTabName(tabObj1), YesNo.No); value = accounts[0]; type =
+	 * accounts[1]; if (ip.createEntityOrAccount(projectName, mode, value, type,
+	 * null, null, 20)) { log(LogStatus.INFO,
+	 * "successfully Created Account/Entity : " + value + " of record type : " +
+	 * type, YesNo.No); } else { sa.assertTrue(false,
+	 * "Not Able to Create Account/Entity : " + value + " of record type : " +
+	 * type); log(LogStatus.SKIP, "Not Able to Create Account/Entity : " + value +
+	 * " of record type : " + type, YesNo.Yes); }
+	 * 
+	 * } else { sa.assertTrue(false, "Not Able to Click on Tab : " +
+	 * BP.returnTabName(tabObj1)); log(LogStatus.SKIP, "Not Able to Click on Tab : "
+	 * + BP.returnTabName(tabObj1), YesNo.Yes); } }
+	 * 
+	 * if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName,
+	 * null)) { log(LogStatus.INFO, "Able to Open the Record: " + recordName,
+	 * YesNo.No);
+	 * 
+	 * if (BP.createActivityTimeline(projectName, false, task1ButtonName,
+	 * task1BasicSection, task1AdvancedSection, followUptask1, SuggestedTags, false,
+	 * null, null, createNewRecordPopUp, addContactsToDealTeamPopUp,
+	 * addContactsToFundraisingObjectPopup, detailSectionVerifcation)) {
+	 * log(LogStatus.PASS, "-----Activity timeline record has been created-----",
+	 * YesNo.No);
+	 * 
+	 * CommonLib.refresh(driver); lp.clickOnTab(projectName, TabName.HomeTab); if
+	 * (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false, projectName))
+	 * {
+	 * 
+	 * log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectName +
+	 * " found in Tasks Object-----", YesNo.No);
+	 * 
+	 * ArrayList<String> subjectLinkPopUpNegativeResult =
+	 * BP.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName,
+	 * task1BasicSectionVerification, task1AdvancedSection, IconType.Task,
+	 * PageName.TaskPage);
+	 * 
+	 * if (subjectLinkPopUpNegativeResult.isEmpty()) { log(LogStatus.PASS, "------"
+	 * + task1SubjectName +
+	 * " record is able to open popup after click on it and verify its data" +
+	 * "------", YesNo.No);
+	 * 
+	 * } else { log(LogStatus.ERROR, "------" + task1SubjectName +
+	 * " record link popup is not verified, Reason: " +
+	 * subjectLinkPopUpNegativeResult + "------", YesNo.Yes); sa.assertTrue(false,
+	 * "------" + task1SubjectName + " record link popup is not verified, Reason: "
+	 * + subjectLinkPopUpNegativeResult + "------");
+	 * 
+	 * }
+	 * 
+	 * CommonLib.refresh(driver);
+	 * 
+	 * if (CommonLib.click(driver, BP.subjectOfInteractionPage(task1SubjectName,
+	 * 15), "Subject Name on Intraction", action.BOOLEAN)) { log(LogStatus.INFO,
+	 * "clicked on " + task1SubjectName, YesNo.No);
+	 * 
+	 * if (clickUsingJavaScript(driver,
+	 * BP.editButtonOfSubjectLinkPopUpInInteractionSection(task1SubjectName, 20),
+	 * "Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+	 * log(LogStatus.INFO, "clicked on Edit button on Subject Link Popup",
+	 * YesNo.No);
+	 * 
+	 * String url = getURL(driver, 10);
+	 * 
+	 * ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
+	 * .verifyNotesPopupWithPrefilledValueAndOnSameUrl(url,
+	 * task1BasicSectionVerification, task1AdvancedSection, null); if
+	 * (NotesPopUpPrefilledNegativeResult.isEmpty()) { log(LogStatus.INFO,
+	 * "Notes Popup has been verified and Notes popup is opening in same page with prefilled value"
+	 * , YesNo.No);
+	 * 
+	 * } else { log(LogStatus.ERROR,
+	 * "Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+	 * + NotesPopUpPrefilledNegativeResult, YesNo.No); sa.assertTrue(false,
+	 * "Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+	 * + NotesPopUpPrefilledNegativeResult); } } else { log(LogStatus.ERROR,
+	 * "Not able to click on Edit button on Subject Link Popup of Task: " +
+	 * task1SubjectName, YesNo.No); sa.assertTrue(false,
+	 * "Not able to click on Edit button on Subject Link Popup of Task: " +
+	 * task1SubjectName); }
+	 * 
+	 * } else { log(LogStatus.ERROR, "not able to click on " + task1SubjectName,
+	 * YesNo.No); sa.assertTrue(false, "not able to click on " + task1SubjectName);
+	 * }
+	 * 
+	 * // driver.close(); //
+	 * driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get()
+	 * );
+	 * 
+	 * } else {
+	 * 
+	 * log(LogStatus.ERROR, "-----Task named: " + task1SubjectName +
+	 * " not found in Tasks Object-----", YesNo.Yes); BaseLib.sa.assertTrue(false,
+	 * "-----Task named: " + task1SubjectName + " not found in Tasks Object-----");
+	 * 
+	 * }
+	 * 
+	 * } else { log(LogStatus.FAIL,
+	 * "-----Activity timeline record is not created for Task: " + task1SubjectName
+	 * + "-----", YesNo.No); sa.assertTrue(false,
+	 * "-----Activity timeline record is not created for Task: " + task1SubjectName
+	 * + "-----"); }
+	 * 
+	 * } else
+	 * 
+	 * { log(LogStatus.ERROR, "Not able to Open the Record: " + recordName,
+	 * YesNo.No); sa.assertTrue(false, "Not able to Open the Record: " +
+	 * recordName); }
+	 * 
+	 * lp.CRMlogout(); sa.assertAll();
+	 * 
+	 * }
+	 */
 	@Parameters({ "projectName" })
 
 	@Test
@@ -24207,7 +24666,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedRelatedTo = "Max<break>Sumo Kind";
 
 		String updatedGetAdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy",
-				Integer.parseInt("5"));
+				Integer.parseInt("10"));
 
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1Notes }, { AMNNR_CallLabel3, relatedTo } };

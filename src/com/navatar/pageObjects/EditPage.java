@@ -26,6 +26,7 @@ public class EditPage extends BasePageBusinessLayer {
 	}
 
 	@FindBy(xpath = "//iframe[@class=' surfaceFrame' or @name='surfaceFrame']")
+
 	private WebElement editPageFrame;
 
 	/**
@@ -789,6 +790,28 @@ public class EditPage extends BasePageBusinessLayer {
 		String xpath = "//div[@class='navpeIICustomFilterCompForSDG']";
 		return FindElement(driver, xpath, "Custom Filter Component", action.SCROLLANDBOOLEAN, timeOut);
 
+	}
+
+	@FindBy(xpath = "//div[@role='tablist']//span[@class='title' and text()='Details']")
+	private WebElement detailsTab;
+
+	public WebElement getDetailsTab(int timeOut) {
+		return isDisplayed(driver, detailsTab, "Visibility", timeOut, "details tab");
+	}
+	
+	@FindBy(xpath = "(//h3[@class='slds-section__title  test-id__section-header-container'])[1]")
+	private WebElement detailsTabFirstSDG;
+
+	public WebElement getDetailsTabFirstSDG(int timeOut) {
+		return isDisplayed(driver, detailsTabFirstSDG, "Visibility", timeOut, "details tab SDG");
+	}
+	
+
+	@FindBy(xpath = "//button[@title=\"Close\"]")
+	private WebElement addCloseButton;
+
+	public WebElement addCloseButton(int timeOut) {
+		return isDisplayed(driver, addCloseButton, "Visibility", timeOut, "addCloseButton");
 	}
 
 }

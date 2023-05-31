@@ -1,6 +1,5 @@
 package com.navatar.pageObjects;
 
-import org.bridj.cpp.std.list;
 import static com.navatar.generic.CommonLib.FindElement;
 import static com.navatar.generic.CommonLib.FindElements;
 import static com.navatar.generic.CommonLib.ThreadSleep;
@@ -126,7 +125,7 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, setupPageIframe, "Visibility", timeOut, "active users iframe");
 	}
 
-	@FindBy(xpath = "//td[contains(@id,'ButtonRow')]//input[@name='save']")
+	@FindBy(xpath = "//td[@id='bottomButtonRow']//input[@value=' Save ']")
 	private WebElement createUserSaveBtn_Lighting;
 
 	/**
@@ -180,12 +179,16 @@ public class SetupPage extends BasePageBusinessLayer {
 				"Add Users frame in installed package.");
 	}
 
-	@FindBy(xpath = "//label[text()='Quick Find']/following-sibling::input")
+	@FindBy(xpath = "//input[@id='quickfind']")
 	private WebElement quickFindSearch;
 
 	public WebElement getquickFindSearch(int timeOut) {
 		return isDisplayed(driver, quickFindSearch, "Visibility", timeOut, "quickFindSearch");
 	}
+	
+	
+	
+	//input[@id='quickfind']
 
 	@FindBy(xpath = "//button[@title='Custom Field']")
 	private WebElement customFieldNewButton;
@@ -239,6 +242,13 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, overrideSetupFieldNextBtn, "Visibility", timeOut, "override field next button");
 	}
 
+	@FindBy(xpath = "//table[@id='firstBtn']//button")
+	private WebElement overrideSetupFieldFirstBtn;
+
+	public WebElement getOverrideSetupFieldFirstBtn(int timeOut) {
+		return isDisplayed(driver, overrideSetupFieldFirstBtn, "Visibility", timeOut, "override field first button");
+	}
+	
 	@FindBy(xpath = "//input[@id='quickfind']")
 	private WebElement quickFindSearchBox;
 
@@ -1330,13 +1340,133 @@ public class SetupPage extends BasePageBusinessLayer {
 
 	}
 
-	
 	@FindBy(id = "p5")
 	private WebElement defaultRecordTypeOption;
 
 	public WebElement defaultRecordTypeOption(int timeOut) {
 		return isDisplayed(driver, defaultRecordTypeOption, "Visibility", timeOut, "defaultRecordTypeOption");
 	}
-	
-	
+
+	public WebElement editButtonOfUser(String email, int timeOut) {
+		String xpath = "//a[text()='" + email
+				+ "']/parent::td//preceding-sibling::td[@class='actionColumn']//a[text()='Edit']";
+		return isDisplayed(driver, FindElement(driver, xpath, "Status", action.SCROLLANDBOOLEAN, timeOut), "Visibility",
+				timeOut, "editButtonOfUser: " + email);
+	}
+
+	@FindBy(xpath = "//span[@title='PE Cloud']/ancestor::tr//td//a[@role='button']")
+	private WebElement PECouldShowMoreIcon;
+
+	public WebElement getPECouldShowMoreIcon(int timeOut) {
+		return isDisplayed(driver, PECouldShowMoreIcon, "Visibility", timeOut, "PE Cloud show more icon");
+	}
+
+	@FindBy(xpath = "//div[@class='forceActionLink' and @title='Edit']/..")
+	private WebElement editBtn;
+
+	public WebElement getEditBtn(int timeOut) {
+		return isDisplayed(driver, editBtn, "Visibility", timeOut, "edit button");
+	}
+
+	@FindBy(xpath = "//a[text()='Utility Items (Desktop Only)']")
+	private WebElement utilityItems;
+
+	public WebElement getUtilityItems(int timeOut) {
+		return isDisplayed(driver, utilityItems, "Visibility", timeOut, "utility items");
+	}
+
+	@FindBy(xpath = "//li[@class='tabs__item uiTabItem']//span[text()='Clips']")
+	private WebElement clipUtility;
+
+	public WebElement getClipUtility(int timeOut) {
+		return isDisplayed(driver, clipUtility, "Visibility", timeOut, "clip utility");
+	}
+
+	@FindBy(xpath = "//span[text()='Navatar Clip Menu']/ancestor::section[@role='tabpanel']//label[text()='Panel Width']/..//input")
+	private WebElement panelWidthValue;
+
+	public WebElement getPanelWidthValue(int timeOut) {
+		return isDisplayed(driver, panelWidthValue, "Visibility", timeOut, "panel width value");
+	}
+
+	@FindBy(xpath = "//span[text()='Navatar Clip Menu']/ancestor::section[@role='tabpanel']//label[text()='Panel Height']/..//input")
+	private WebElement panelHeightValue;
+
+	public WebElement getpanelHeightValue(int timeOut) {
+		return isDisplayed(driver, panelHeightValue, "Visibility", timeOut, "panel height value");
+	}
+
+	public WebElement getEditButtonOfProfileUser(String userProfile, int timeOut) {
+		String xpath = "//div[@class='bRelatedList']//a[text()='" + userProfile
+				+ "']/ancestor::tr/td[@class='actionColumn']/a[text()='Edit']";
+
+		return FindElement(driver, xpath, "Edit button of user profile", action.SCROLLANDBOOLEAN, timeOut);
+	}
+
+	@FindBy(xpath = "//iframe[contains(@title,'Profile Edit')]")
+	private WebElement profileEditPageIframe;
+
+	public WebElement getProfileEditPageIframe(int timeOut) {
+		return isDisplayed(driver, profileEditPageIframe, "Visibility", timeOut, "profile page edit button");
+	}
+
+	public WebElement getReadcheckbox(String objectName, int timeOut) {
+		String xpath = "//th[@class=\"labelCol\" and text()='" + objectName
+				+ "']/..//td[@class='dataCol col02']//tr[@class='crudTableEdit']/td[1]/input";
+
+		return FindElement(driver, xpath, "read checkbox", action.SCROLLANDBOOLEAN, timeOut);
+	}
+
+	public WebElement getCreatecheckbox(String objectName, int timeOut) {
+		String xpath = "//th[@class=\"labelCol\" and text()='" + objectName
+				+ "']/..//td[@class='dataCol col02']//tr[@class='crudTableEdit']/td[2]/input";
+
+		return FindElement(driver, xpath, "create checkbox", action.SCROLLANDBOOLEAN, timeOut);
+	}
+
+	public WebElement getEditcheckbox(String objectName, int timeOut) {
+		String xpath = "//th[@class=\"labelCol\" and text()='" + objectName
+				+ "']/..//td[@class='dataCol col02']//tr[@class='crudTableEdit']/td[3]/input";
+
+		return FindElement(driver, xpath, "edit checkbox", action.SCROLLANDBOOLEAN, timeOut);
+	}
+
+	public WebElement getDeleteCheckbox(String objectName, int timeOut) {
+		String xpath = "//th[@class=\"labelCol\" and text()='" + objectName
+				+ "']/..//td[@class='dataCol col02']//tr[@class='crudTableEdit']/td[4]/input";
+
+		return FindElement(driver, xpath, "delete checkbox", action.SCROLLANDBOOLEAN, timeOut);
+	}
+
+	@FindBy(xpath = "//input[@value='Reorder']")
+	private WebElement reorderButtonOfPickListValues;
+
+	public WebElement reorderButtonOfPickListValues(int timeOut) {
+		return isDisplayed(driver, reorderButtonOfPickListValues, "Visibility", timeOut,
+				"reorderButtonOfPickListValues");
+	}
+
+	public WebElement getFieldName(String fieldName, int timeOut) {
+		String xpath = "//span[text()='" + fieldName + "']";
+
+		return FindElement(driver, xpath, "getFieldName: " + fieldName, action.SCROLLANDBOOLEAN, timeOut);
+	}
+
+	@FindBy(xpath = "//input[@id=\"p15\"]")
+	private WebElement displayValueAlphabaticallyCheckbox;
+
+	public WebElement displayValueAlphabaticallyCheckbox(int timeOut) {
+
+		return isDisplayed(driver, displayValueAlphabaticallyCheckbox, "Visibility", timeOut,
+				"displayValueAlphabaticallyCheckbox");
+	}
+
+	@FindBy(xpath = "//input[@value=' Save ']")
+	private WebElement reorderSaveButton;
+
+	public WebElement reorderSaveButton(int timeOut) {
+
+		return isDisplayed(driver, reorderSaveButton, "Visibility", timeOut, "reorderSaveButton");
+	}
+
 }

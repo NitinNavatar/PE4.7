@@ -580,7 +580,7 @@ public class Module9 extends BaseLib {
 				SDGLabels.APIName.toString() + "," + SDGLabels.Override_Label.toString() };
 		String[] values = { M9SDGFieldValue_1_APIName, M9SDGFieldValue_1_OverrideLabel };
 
-		lp.searchAndClickOnApp(SDG, 30);
+		lp.openAppFromAppLauchner(SDG, 30);
 
 		if (lp.clickOnTab(projectName, TabName.SDGTab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
@@ -629,7 +629,7 @@ public class Module9 extends BaseLib {
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String sdgName = M9_TC003_SDGName;
 
-		lp.searchAndClickOnApp(SDG, 30);
+		lp.openAppFromAppLauchner(SDG, 30);
 
 		if (lp.clickOnTab(projectName, TabName.SDGTab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
@@ -672,7 +672,7 @@ public class Module9 extends BaseLib {
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
-		lp.searchAndClickOnApp(SDG, 30);
+		lp.openAppFromAppLauchner(SDG, 30);
 
 		if (lp.clickOnTab(projectName, TabName.SDGTab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
@@ -958,20 +958,42 @@ public class Module9 extends BaseLib {
 							"------------Component Already Added to Home Page " + TitleOfSDG + "---------------");
 
 					CommonLib.ThreadSleep(8000);
-					if (home.verifySDGExpandByDefault(TitleOfSDG)) {
-						log(LogStatus.PASS, "-----------SDG: " + TitleOfSDG + " is Expanded By Default in case of "
-								+ Email + "--------------", YesNo.No);
-						sa.assertTrue(true, "-----------SDG: " + TitleOfSDG + " is Expanded By Default in case of "
-								+ Email + "--------------");
 
-					}
+					if (Email.equalsIgnoreCase(superAdminUserName)) {
+						if (!home.verifySDGExpandByDefault(TitleOfSDG)) {
+							log(LogStatus.PASS, "-----------Verified SDG: " + TitleOfSDG
+									+ " is not Expanded By Default in case of " + Email + "--------------", YesNo.No);
+							sa.assertTrue(true, "-----------Verified SDG: " + TitleOfSDG
+									+ " is not Expanded By Default in case of " + Email + "--------------");
 
-					else {
-						log(LogStatus.FAIL, "-----------SDG: " + TitleOfSDG + " is not Expanded By Default in case of "
-								+ Email + "--------------", YesNo.No);
-						sa.assertTrue(false, "-----------SDG: " + TitleOfSDG + " is not Expanded By Default in case of "
-								+ Email + "--------------");
+						}
 
+						else {
+							log(LogStatus.FAIL, "-----------SDG: " + TitleOfSDG + " is Expanded By Default in case of "
+									+ Email + "--------------", YesNo.No);
+							sa.assertTrue(false, "-----------SDG: " + TitleOfSDG + " is Expanded By Default in case of "
+									+ Email + "--------------");
+
+						}
+
+						home.sdgGridExpandedByDefaultIfNotThenExpand(TitleOfSDG);
+
+					} else {
+						if (home.verifySDGExpandByDefault(TitleOfSDG)) {
+							log(LogStatus.PASS, "-----------SDG: " + TitleOfSDG + " is Expanded By Default in case of "
+									+ Email + "--------------", YesNo.No);
+							sa.assertTrue(true, "-----------SDG: " + TitleOfSDG + " is Expanded By Default in case of "
+									+ Email + "--------------");
+
+						}
+
+						else {
+							log(LogStatus.FAIL, "-----------SDG: " + TitleOfSDG
+									+ " is not Expanded By Default in case of " + Email + "--------------", YesNo.No);
+							sa.assertTrue(false, "-----------SDG: " + TitleOfSDG
+									+ " is not Expanded By Default in case of " + Email + "--------------");
+
+						}
 					}
 
 					if (home.verifyGearIconPresentAndVerifyTooltip(TitleOfSDG)) {
@@ -1025,10 +1047,13 @@ public class Module9 extends BaseLib {
 				M9_TC005_SDGField5, M9_TC005_SDGField6, M9_TC005_SDGField7, M9_TC005_SDGField9 };
 		String[] datefieldsInSDG = { M9_TC005_SDGField5 };
 		String[] amountfieldsInSDG = { M9_TC005_SDGField9 };
+		String[] pickListFieldsAndValues = { M9_TC005_SDGField7
+				+ "<Section>North America<break><break>South America<break>Europe<break>Africa<break>Asia Pacific" };
 
 		List<String> columnInSDG = Arrays.asList(fieldsInSDG);
 		List<String> dateColumnInSDG = Arrays.asList(datefieldsInSDG);
 		List<String> amountColumnInSDG = Arrays.asList(amountfieldsInSDG);
+		List<String> pickListColumnAndValues = Arrays.asList(pickListFieldsAndValues);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
@@ -1089,7 +1114,7 @@ public class Module9 extends BaseLib {
 				}
 
 				home.verifyColumnAscendingDescendingOrder(TitleOfSDG, columnInSDG, dateColumnInSDG, amountColumnInSDG,
-						"No");
+						pickListColumnAndValues, "No");
 
 			} else {
 				log(LogStatus.ERROR, "-----------Component Not Added to Home Page: " + TitleOfSDG + " -------------",
@@ -1129,7 +1154,7 @@ public class Module9 extends BaseLib {
 
 		int numberOfRecords = Integer.parseInt(M9_TC009_SDGNumberOfRecords);
 
-		lp.searchAndClickOnApp(SDG, 30);
+		lp.openAppFromAppLauchner(SDG, 30);
 
 		if (lp.clickOnTab(projectName, TabName.SDGTab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
@@ -1303,7 +1328,7 @@ public class Module9 extends BaseLib {
 		String[] expectedNumberOfRecords = M9_TC011_SDGNumberOfRecords.split("<break>");
 		int i = 0;
 		for (String[][] sdgLabel : sdgLabels) {
-			lp.searchAndClickOnApp(SDG, 30);
+			lp.openAppFromAppLauchner(SDG, 30);
 
 			if (lp.clickOnTab(projectName, TabName.SDGTab)) {
 				log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
@@ -1524,7 +1549,7 @@ public class Module9 extends BaseLib {
 
 					int i = 1;
 					for (String[][] sdgLabel : sdgLabelsPart2) {
-						lp.searchAndClickOnApp(SDG, 30);
+						lp.openAppFromAppLauchner(SDG, 30);
 
 						if (lp.clickOnTab(projectName, TabName.SDGTab)) {
 							log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
@@ -1635,7 +1660,7 @@ public class Module9 extends BaseLib {
 					// part 3
 
 					String[][] sdgLabelsPart3 = { { SDGCreationLabel.List_View_Name.toString(), "" } };
-					lp.searchAndClickOnApp(SDG, 30);
+					lp.openAppFromAppLauchner(SDG, 30);
 
 					if (lp.clickOnTab(projectName, TabName.SDGTab)) {
 						log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
@@ -1711,7 +1736,10 @@ public class Module9 extends BaseLib {
 							sa.assertTrue(true, "------------Record Deleted Message Show for " + fundNameToDelete
 									+ "---------------");
 
-							if (home.numberOfRecordsInComponent(sdgName) == noRecordsBeforeDelete - 1) {
+							CommonLib.ThreadSleep(10000);
+							int actualRecordAfterDelete = home.numberOfRecordsInComponent(sdgName);
+
+							if (actualRecordAfterDelete == (noRecordsBeforeDelete - 1)) {
 								log(LogStatus.INFO,
 										"------------Record Gets Deleted " + fundNameToDelete + "----------------",
 										YesNo.Yes);
@@ -1722,12 +1750,12 @@ public class Module9 extends BaseLib {
 								log(LogStatus.ERROR,
 										"-----------Record Not Gets Deleted " + fundNameToDelete + " ,Expected:"
 												+ (noRecordsBeforeDelete - 1) + " " + ",But Actual:"
-												+ home.numberOfRecordsInComponent(sdgName) + "-------------",
+												+ actualRecordAfterDelete + "-------------",
 										YesNo.Yes);
 								sa.assertTrue(false,
 										"-----------Record Not Gets Deleted " + fundNameToDelete + " ,Expected:"
 												+ (noRecordsBeforeDelete - 1) + " " + ",But Actual:"
-												+ home.numberOfRecordsInComponent(sdgName) + "-------------");
+												+ actualRecordAfterDelete + "-------------");
 
 							}
 
@@ -6883,7 +6911,7 @@ public class Module9 extends BaseLib {
 																			appLog.info(
 																					tablename + " View All Clicked");
 																			CommonLib.ThreadSleep(5000);
-
+																			CommonLib.refresh(driver);
 																			int index = hp.getClonnedSDGColumns(30)
 																					.size() - 1;
 
@@ -7095,13 +7123,16 @@ public class Module9 extends BaseLib {
 		String pageSize = "100";
 		int expectedDefaultRecordsInUserCase = Integer.parseInt(numberOfRecords[1]);
 		String[] fieldsInSDG = { M9_TC005_SDGField1, M9_TC005_SDGField2, M9_TC005_SDGField3, M9_TC005_SDGField4,
-				M9_TC005_SDGField5, M9_TC005_SDGField6, M9_TC005_SDGField7 };
+				M9_TC005_SDGField5, M9_TC005_SDGField6, M9_TC005_SDGField7, M9_TC005_SDGField9 };
 		String[] datefieldsInSDG = { M9_TC005_SDGField5 };
 		String[] amountfieldsInSDG = { M9_TC005_SDGField9 };
-		List<String> amountColumnInSDG = Arrays.asList(amountfieldsInSDG);
+		String[] pickListFieldsAndValues = { M9_TC005_SDGField7
+				+ "<Section>North America<break><break>South America<break>Europe<break>Africa<break>Asia Pacific" };
 
 		List<String> columnInSDG = Arrays.asList(fieldsInSDG);
 		List<String> dateColumnInSDG = Arrays.asList(datefieldsInSDG);
+		List<String> amountColumnInSDG = Arrays.asList(amountfieldsInSDG);
+		List<String> pickListColumnAndValues = Arrays.asList(pickListFieldsAndValues);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
@@ -7183,7 +7214,7 @@ public class Module9 extends BaseLib {
 							YesNo.No);
 					CommonLib.ThreadSleep(25000);
 					home.verifyColumnAscendingDescendingOrder(TitleOfSDG, columnInSDG, dateColumnInSDG,
-							amountColumnInSDG, "No");
+							amountColumnInSDG, pickListColumnAndValues, "No");
 				} else {
 					log(LogStatus.FAIL, "-----------Not able to Select Page Size: " + pageSize + "--------------",
 							YesNo.No);
@@ -8032,6 +8063,16 @@ public class Module9 extends BaseLib {
 						driver.close();
 						driver.switchTo().window(parentWindowID);
 						CommonLib.refresh(driver);
+						if (setup.reOrderOfPickListValues(projectName, object.Firm, "Industry",
+								Condition.SelectCheckbox)) {
+							log(LogStatus.PASS, "Display Record Alphabetically for: " + "Industry"
+									+ " Field has Selected as: " + Condition.SelectCheckbox, YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "Display Record Alphabetically for: " + "Industry"
+									+ " Field not able to Select as: " + Condition.SelectCheckbox, YesNo.Yes);
+							sa.assertTrue(false, "Display Record Alphabetically for: " + "Industry"
+									+ " Field not able to Select as: " + Condition.SelectCheckbox);
+						}
 						lp.CRMlogout();
 						CommonLib.ThreadSleep(14000);
 
@@ -8812,9 +8853,85 @@ public class Module9 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		DataLoaderWizardPageBusinessLayer dataload = new DataLoaderWizardPageBusinessLayer(driver);
+		FieldAndRelationshipPageBusinessLayer frp = new FieldAndRelationshipPageBusinessLayer(driver);
 		String parentWindow = "";
 
 		String data;
+
+		String[][] labelAndValues = {
+
+				{ M9FC_13_FieldType, M9FC_13_FieldLabel, excelLabel.Length.toString(), M9FC_13_FieldValues,
+						M9FC_13_ObjectName }, };
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object Marketing Event");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object Marketing Event",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object Marketing Event");
+			}
+
+			WebElement ele = null;
+			String xPath = "";
+			if (setup.searchStandardOrCustomObject(environment, mode, object.User)) {
+				log(LogStatus.INFO, "User Object has been search", YesNo.No);
+
+				if (setup.clickOnObjectFeature(environment, mode, object.User,
+						ObjectFeatureName.FieldAndRelationShip)) {
+					log(LogStatus.INFO, "Field and relationship Feature has been open", YesNo.No);
+
+					if (CommonLib.sendKeysAndPressEnter(driver, frp.getQucikSearchInFieldAndRelationshipPage(50),
+							M9FC_13_FieldLabel, M9FC_13_FieldLabel + " field", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Field value has been passed in " + M9FC_13_FieldLabel, YesNo.No);
+						CommonLib.ThreadSleep(6000);
+						xPath = "//span[text()='" + M9FC_13_FieldLabel + "']";
+						ele = FindElement(driver, xPath, M9FC_13_FieldLabel + " xpath", action.SCROLLANDBOOLEAN, 30);
+
+						if (ele != null) {
+							log(LogStatus.INFO, "Field Already added, So not able to Add Field: " + M9FC_13_FieldLabel,
+									YesNo.No);
+							ThreadSleep(3000);
+							switchToDefaultContent(driver);
+							driver.close();
+							driver.switchTo().window(parentWindow);
+							lp.CRMlogout();
+						} else {
+							ThreadSleep(3000);
+							switchToDefaultContent(driver);
+							driver.close();
+							driver.switchTo().window(parentWindow);
+							lp.CRMlogout();
+
+							setup.createFieldsForCustomObject(projectName, labelAndValues);
+
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not able to pass the " + M9FC_13_FieldLabel + " in the searchbox",
+								YesNo.Yes);
+						sa.assertTrue(false, "Not able to pass the " + M9FC_13_FieldLabel + " in the searchbox");
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able click on the field and relationship Feature Name", YesNo.Yes);
+					sa.assertTrue(false, "Not able click on the field and relationship Feature Name");
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to search the object", YesNo.Yes);
+				sa.assertTrue(false, "Not able to search the object");
+			}
+
+		} else {
+			log(LogStatus.ERROR,
+					"Not able to click on setup link so cannot create Fields Objects for custom object Marketing Event",
+					YesNo.Yes);
+			sa.assertTrue(false,
+					"Not able to click on setup link so cannot create Fields Objects for custom object Marketing Event");
+		}
+
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (home.clickOnSetUpLink()) {
 			parentWindow = switchOnWindow(driver);
@@ -10744,6 +10861,7 @@ public class Module9 extends BaseLib {
 		String sdgName = M9Tc080_SDGTableName;
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String parentWindow = "";
+		int status = 0;
 		if (home.clickOnSetUpLink()) {
 			parentWindow = switchOnWindow(driver);
 			if (parentWindow == null) {
@@ -10764,7 +10882,7 @@ public class Module9 extends BaseLib {
 						YesNo.No);
 				sa.assertTrue(true,
 						"Annual Revenue field Permission is given from the Firm Object Manager for Institution Record Type");
-
+				status++;
 			} else {
 				log(LogStatus.ERROR,
 						"Annual Revenue field Permission is not given from the Firm Object Manager for Institution Record Type",
@@ -10783,7 +10901,7 @@ public class Module9 extends BaseLib {
 						YesNo.No);
 				sa.assertTrue(true,
 						"Annual Revenue field Permission is given from the Firm Object Manager for Intermediary Record Type");
-
+				status++;
 			} else {
 				log(LogStatus.ERROR,
 						"Annual Revenue field Permission is not given from the Firm Object Manager for Intermediary Record Type",
@@ -10803,7 +10921,7 @@ public class Module9 extends BaseLib {
 						YesNo.No);
 				sa.assertTrue(true,
 						"Source field Permission is given from the Firm Object Manager for Intermediary Record Type");
-
+				status++;
 			} else {
 				log(LogStatus.ERROR,
 						"Source field Permission is not given from the Firm Object Manager for Institution Record Type",
@@ -10823,7 +10941,7 @@ public class Module9 extends BaseLib {
 						YesNo.No);
 				sa.assertTrue(true,
 						"Source field Permission is given from the Firm Object Manager for Intermediary Record Type");
-
+				status++;
 			} else {
 				log(LogStatus.ERROR,
 						"Source field Permission is not given from the Firm Object Manager for Intermediary Record Type",
@@ -10843,7 +10961,7 @@ public class Module9 extends BaseLib {
 						YesNo.No);
 				sa.assertTrue(true,
 						"Location Preferences field Permission is given from the Firm Object Manager for Institution Record Type");
-
+				status++;
 			} else {
 				log(LogStatus.ERROR,
 						"Location Preferences field Permission is not given from the Firm Object Manager for Institution Record Type",
@@ -10863,7 +10981,7 @@ public class Module9 extends BaseLib {
 						YesNo.No);
 				sa.assertTrue(true,
 						"Location Preferences field Permission is given from the Firm Object Manager for Intermediary Record Type");
-
+				status++;
 			} else {
 				log(LogStatus.ERROR,
 						"Location Preferences field Permission is not given from the Firm Object Manager for Intermediary Record Type",
@@ -10881,566 +10999,580 @@ public class Module9 extends BaseLib {
 			lp.CRMlogout();
 			lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
-			if (BP.openAppFromAppLauchner(appPage, 50)) {
+			if (status == 6) {
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
 
-				log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
-				CommonLib.refresh(driver);
-				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 2", "Revenue", "70000", "Text",
-						null)) {
-					log(LogStatus.INFO, "\"Account 2\" Revenue record has been updated to 70000", YesNo.No);
-					sa.assertTrue(true, "\"Account 2\" Revenue record has been updated to 70000");
+					log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
+					CommonLib.refresh(driver);
+					if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 2", "Revenue", "70000", "Text",
+							null)) {
+						log(LogStatus.INFO, "\"Account 2\" Revenue record has been updated to 70000", YesNo.No);
+						sa.assertTrue(true, "\"Account 2\" Revenue record has been updated to 70000");
 
-					if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
-						log(LogStatus.INFO, TabName.InstituitonsTab.toString() + "Tab has been opened", YesNo.No);
-						if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, "Account 2",
-								50)) {
-							log(LogStatus.INFO, "Clicked on the Account 2 name", YesNo.No);
-							CommonLib.ThreadSleep(5000);
-							if (IB.verifyValueOnFirm("Annual Revenue", "70,000")) {
-								log(LogStatus.INFO, "\"Annual Revenue - 70000\" data has been matched", YesNo.No);
+						if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
+							log(LogStatus.INFO, TabName.InstituitonsTab.toString() + "Tab has been opened", YesNo.No);
+							if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+									"Account 2", 50)) {
+								log(LogStatus.INFO, "Clicked on the Account 2 name", YesNo.No);
+								CommonLib.ThreadSleep(5000);
+								if (IB.verifyValueOnFirm("Annual Revenue", "70,000")) {
+									log(LogStatus.INFO, "\"Annual Revenue - 70000\" data has been matched", YesNo.No);
+								} else {
+									log(LogStatus.ERROR, "\"Annual Revenue - 70000\" data is not matched", YesNo.No);
+
+								}
+
 							} else {
-								log(LogStatus.ERROR, "\"Annual Revenue - 70000\" data is not matched", YesNo.No);
-
+								log(LogStatus.ERROR, "Could not click on the Account 2 name", YesNo.No);
 							}
-
 						} else {
-							log(LogStatus.ERROR, "Could not click on the Account 2 name", YesNo.No);
+							log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " is not open", YesNo.No);
 						}
+
 					} else {
-						log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " is not open", YesNo.No);
+						log(LogStatus.ERROR, "\"Account 2\" Revenue record is not updated to 70000", YesNo.No);
+						sa.assertTrue(false, "\"Account 2\" Revenue record is not updated to 70000");
 					}
-
-				} else {
-					log(LogStatus.ERROR, "\"Account 2\" Revenue record is not updated to 70000", YesNo.No);
-					sa.assertTrue(false, "\"Account 2\" Revenue record is not updated to 70000");
 				}
-			}
 
-			if (BP.openAppFromAppLauchner(appPage, 50)) {
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
 
-				log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
-				CommonLib.refresh(driver);
-				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 8", "Phone", "9874563215", "Text",
-						null)) {
-					log(LogStatus.INFO, "\"Account 8\" phone record has been updated to 9874563215", YesNo.No);
-					sa.assertTrue(true, "\"Account 8\" phone record has been updated to 9874563215");
+					log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
+					CommonLib.refresh(driver);
+					if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 8", "Phone", "9874563215", "Text",
+							null)) {
+						log(LogStatus.INFO, "\"Account 8\" phone record has been updated to 9874563215", YesNo.No);
+						sa.assertTrue(true, "\"Account 8\" phone record has been updated to 9874563215");
 
-					if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
-						log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
-						if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 8", 50)) {
+						if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
+							log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
+							if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 8", 50)) {
 
-							log(LogStatus.INFO, "Clicked on the Account 8 name", YesNo.No);
-							CommonLib.ThreadSleep(5000);
-							if (IB.verifyValueOnFirm("Phone", "(987) 456-3215")) {
-								log(LogStatus.INFO, "\"Phone - (987) 456-3215\" data has been matched", YesNo.No);
+								log(LogStatus.INFO, "Clicked on the Account 8 name", YesNo.No);
+								CommonLib.ThreadSleep(5000);
+								if (IB.verifyValueOnFirm("Phone", "(987) 456-3215")) {
+									log(LogStatus.INFO, "\"Phone - (987) 456-3215\" data has been matched", YesNo.No);
+								} else {
+									log(LogStatus.ERROR, "\"Phone - (987) 456-3215\" data is not matched", YesNo.No);
+
+								}
+
 							} else {
-								log(LogStatus.ERROR, "\"Phone - (987) 456-3215\" data is not matched", YesNo.No);
-
+								log(LogStatus.ERROR, "Could not clicks on the Account 8 name", YesNo.No);
 							}
-
 						} else {
-							log(LogStatus.ERROR, "Could not clicks on the Account 8 name", YesNo.No);
+							log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " is not open", YesNo.No);
 						}
+
 					} else {
-						log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " is not open", YesNo.No);
+						log(LogStatus.FAIL, "\"Account 8\" Phone record is not updated to (987) 456-3215", YesNo.No);
+						sa.assertTrue(false, "\"Account 8\" Phone record is not updated to (987) 456-3215");
 					}
-
-				} else {
-					log(LogStatus.FAIL, "\"Account 8\" Phone record is not updated to (987) 456-3215", YesNo.No);
-					sa.assertTrue(false, "\"Account 8\" Phone record is not updated to (987) 456-3215");
 				}
-			}
 
-			if (BP.openAppFromAppLauchner(appPage, 50)) {
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
 
-				log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
-				CommonLib.refresh(driver);
-				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 8", "Source", "Navatar Deal Connect",
-						"Picklist", null)) {
-					log(LogStatus.INFO, "\"Account 8\" Source record has been updated to Navatar Deal Connect",
-							YesNo.No);
-					sa.assertTrue(true, "\"Account 8\" Source record has been updated to Navatar Deal Connect");
+					log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
+					CommonLib.refresh(driver);
+					if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 8", "Source",
+							"Navatar Deal Connect", "Picklist", null)) {
+						log(LogStatus.INFO, "\"Account 8\" Source record has been updated to Navatar Deal Connect",
+								YesNo.No);
+						sa.assertTrue(true, "\"Account 8\" Source record has been updated to Navatar Deal Connect");
 
-					if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
-						log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
-						if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 8", 50)) {
+						if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
+							log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
+							if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 8", 50)) {
 
-							log(LogStatus.INFO, "Clicked on the Account 8 name", YesNo.No);
-							CommonLib.ThreadSleep(5000);
-							if (IB.verifyValueOnFirm("Source", "Navatar Deal Connect")) {
-								log(LogStatus.INFO, "\"Source - Navatar Deal Connect\" data has been matched",
-										YesNo.No);
+								log(LogStatus.INFO, "Clicked on the Account 8 name", YesNo.No);
+								CommonLib.ThreadSleep(5000);
+								if (IB.verifyValueOnFirm("Source", "Navatar Deal Connect")) {
+									log(LogStatus.INFO, "\"Source - Navatar Deal Connect\" data has been matched",
+											YesNo.No);
+								} else {
+									log(LogStatus.ERROR, "\"Source - Navatar Deal Connect\" data is not matched",
+											YesNo.No);
+
+								}
+
 							} else {
-								log(LogStatus.ERROR, "\"Source - Navatar Deal Connect\" data is not matched", YesNo.No);
-
+								log(LogStatus.ERROR, "Could not clicks on the name Account 8", YesNo.No);
 							}
-
 						} else {
-							log(LogStatus.ERROR, "Could not clicks on the name Account 8", YesNo.No);
+							log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " is not open", YesNo.No);
 						}
+
 					} else {
-						log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " is not open", YesNo.No);
+						log(LogStatus.FAIL, "\"Source\" record is not updated to Navatar Deal Connect", YesNo.No);
+						sa.assertTrue(false, "\"Source\" record is not updated to Navatar Deal Connect ");
 					}
 
-				} else {
-					log(LogStatus.FAIL, "\"Source\" record is not updated to Navatar Deal Connect", YesNo.No);
-					sa.assertTrue(false, "\"Source\" record is not updated to Navatar Deal Connect ");
 				}
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
 
-			}
-			if (BP.openAppFromAppLauchner(appPage, 50)) {
+					log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
+					CommonLib.refresh(driver);
 
-				log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
-				CommonLib.refresh(driver);
+					ArrayList<String> val = new ArrayList<String>();
+					val.add("Asia");
+					if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 8", "Location Preferences",
+							"Asia", "Multipicklist", val)) {
+						log(LogStatus.INFO, "\"Account 8\" Location record has been updated to Asia", YesNo.No);
+						sa.assertTrue(true, "\"Account 8\" Location record has been updated to Asia");
 
-				ArrayList<String> val = new ArrayList<String>();
-				val.add("Asia");
-				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 8", "Location Preferences", "Asia",
-						"Multipicklist", val)) {
-					log(LogStatus.INFO, "\"Account 8\" Location record has been updated to Asia", YesNo.No);
-					sa.assertTrue(true, "\"Account 8\" Location record has been updated to Asia");
+						if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
+							log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
+							if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 8", 50)) {
 
-					if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
-						log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
-						if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 8", 50)) {
+								log(LogStatus.INFO, "Clicked on the Account 8 name", YesNo.No);
+								CommonLib.ThreadSleep(5000);
+								if (IB.verifyValueOnFirm("Location Preferences", "Asia")) {
+									log(LogStatus.INFO, "\"Location - Asia\" data has been matched", YesNo.No);
+								} else {
+									log(LogStatus.ERROR, "\"Location - Asia\" data is not matched", YesNo.No);
 
-							log(LogStatus.INFO, "Clicked on the Account 8 name", YesNo.No);
-							CommonLib.ThreadSleep(5000);
-							if (IB.verifyValueOnFirm("Location Preferences", "Asia")) {
-								log(LogStatus.INFO, "\"Location - Asia\" data has been matched", YesNo.No);
+								}
+
 							} else {
-								log(LogStatus.ERROR, "\"Location - Asia\" data is not matched", YesNo.No);
-
+								log(LogStatus.ERROR, "Could not clicks on the Account 8 name", YesNo.No);
 							}
-
 						} else {
-							log(LogStatus.ERROR, "Could not clicks on the Account 8 name", YesNo.No);
+							log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " tab is not open", YesNo.No);
 						}
+
 					} else {
-						log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " tab is not open", YesNo.No);
+						log(LogStatus.FAIL, "\"Location\" record is not updated to Asia", YesNo.No);
+						sa.assertTrue(false, "\"Location\" record is not updated to Asia");
 					}
-
-				} else {
-					log(LogStatus.FAIL, "\"Location\" record is not updated to Asia", YesNo.No);
-					sa.assertTrue(false, "\"Location\" record is not updated to Asia");
 				}
-			}
-			if (BP.openAppFromAppLauchner(appPage, 50)) {
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
 
-				log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
-				CommonLib.refresh(driver);
+					log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
+					CommonLib.refresh(driver);
 
-				ArrayList<String> val1 = new ArrayList<String>();
-				val1.add("Far East");
-				val1.add("Global");
-				val1.add("Middle East");
-				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 8", "Location Preferences", null,
-						"Multipicklist", val1)) {
-					log(LogStatus.INFO,
-							"\"Account 8\" Location record has been updated to Far East, Global, Middle East",
-							YesNo.No);
-					sa.assertTrue(true,
-							"\"Account 8\" Location record is not updated to Far East, Global, Middle East");
+					ArrayList<String> val1 = new ArrayList<String>();
+					val1.add("Far East");
+					val1.add("Global");
+					val1.add("Middle East");
+					if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 8", "Location Preferences", null,
+							"Multipicklist", val1)) {
+						log(LogStatus.INFO,
+								"\"Account 8\" Location record has been updated to Far East, Global, Middle East",
+								YesNo.No);
+						sa.assertTrue(true,
+								"\"Account 8\" Location record is not updated to Far East, Global, Middle East");
 
-					if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
-						log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
-						if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 8", 50)) {
+						if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
+							log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
+							if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 8", 50)) {
 
-							log(LogStatus.INFO, "Clicked on the name Account 8", YesNo.No);
-							CommonLib.ThreadSleep(5000);
-							if (IB.verifyValueOnFirm("Location Preferences", "Far East;Global;Middle East")) {
-								log(LogStatus.INFO,
-										"\"Location Preferences - East;Global;Middle East\" data has been matched",
-										YesNo.No);
-							} else {
-								log(LogStatus.ERROR,
-										"\"Location Preferences - East;Global;Middle East\" data is not matched",
-										YesNo.No);
-							}
-
-						} else {
-							log(LogStatus.ERROR, "Could not click on the Account name", YesNo.No);
-						}
-					}
-
-					else {
-						log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " tab is not open", YesNo.No);
-					}
-
-				} else {
-					log(LogStatus.FAIL, "\"Location Preferences\" record is not updated to East;Global;Middle East",
-							YesNo.No);
-					sa.assertTrue(false, "\"Location Preferences\" record is not updated to East;Global;Middle East");
-				}
-
-			}
-			if (BP.openAppFromAppLauchner(appPage, 50)) {
-
-				log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
-				CommonLib.refresh(driver);
-				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 8", "Description",
-						"The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.",
-						"Textarea", null)) {
-					log(LogStatus.INFO,
-							"\"Account 8\" Description record has been updated to The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.",
-							YesNo.No);
-					sa.assertTrue(true,
-							"\"Account 8\" Description record is not updated to The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.");
-
-					if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
-						log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
-						if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 8", 50)) {
-							log(LogStatus.INFO, "Clicked on the Account 8 name", YesNo.No);
-							CommonLib.ThreadSleep(5000);
-							if (IB.verifyValueOnFirm("Description", "The company was founded in 1999")) {
-								log(LogStatus.INFO,
-										"\"Description - The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.\" data has been matched",
-										YesNo.No);
+								log(LogStatus.INFO, "Clicked on the name Account 8", YesNo.No);
+								CommonLib.ThreadSleep(5000);
+								if (IB.verifyValueOnFirm("Location Preferences", "Far East;Global;Middle East")) {
+									log(LogStatus.INFO,
+											"\"Location Preferences - East;Global;Middle East\" data has been matched",
+											YesNo.No);
+								} else {
+									log(LogStatus.ERROR,
+											"\"Location Preferences - East;Global;Middle East\" data is not matched",
+											YesNo.No);
+								}
 
 							} else {
-								log(LogStatus.ERROR,
-										"\"Description - The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.\" data is not matched",
-										YesNo.No);
-
+								log(LogStatus.ERROR, "Could not click on the Account name", YesNo.No);
 							}
-
-						} else {
-							log(LogStatus.ERROR, "Could not clicks on the Account 8 name", YesNo.No);
 						}
-					} else
 
-					{
-						log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " tab is not open", YesNo.No);
-					}
-
-				} else {
-					log(LogStatus.FAIL,
-							"\"Description\" record is not updated to The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.",
-							YesNo.No);
-					sa.assertTrue(false,
-							"\"Description\" record is not updated to The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.");
-				}
-
-			}
-			if (BP.openAppFromAppLauchner(appPage, 50)) {
-
-				log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
-				CommonLib.refresh(driver);
-				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 8", "Website", "www.google.com",
-						"Text", null)) {
-					log(LogStatus.INFO, "\"Account 8\" Website record has been updated to www.google.com", YesNo.No);
-					sa.assertTrue(true, "\"Account 8\" Websote record is not updated to www.google.com");
-
-					if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
-						log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
-						if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 8", 50)) {
-							log(LogStatus.INFO, "Clicked on the Account 8 name", YesNo.No);
-							CommonLib.ThreadSleep(5000);
-							if (IB.verifyValueOnFirm("Website", "google")) {
-								log(LogStatus.INFO, "\"Website - www.google.com\" data has been matched", YesNo.No);
-
-							} else {
-								log(LogStatus.ERROR, "\"Website - www.google.com\" data is not matched", YesNo.Yes);
-
-							}
-
-						} else {
-							log(LogStatus.ERROR, "Could not click on the Account 8 name", YesNo.No);
+						else {
+							log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " tab is not open", YesNo.No);
 						}
-					} else
 
-					{
-						log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " tab is not open", YesNo.No);
-					}
-
-				} else {
-					log(LogStatus.FAIL, "\"Website\" record is not updated to www.google.com", YesNo.No);
-					sa.assertTrue(false, "\"Website\" record is not updated to www.google.com");
-				}
-
-			}
-
-			if (BP.openAppFromAppLauchner(appPage, 50)) {
-
-				log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
-				CommonLib.refresh(driver);
-				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated", "Revenue", "90000",
-						"Text", null)) {
-					log(LogStatus.INFO, "\"Account 1 Updated\" Revenue record has been updated to 90000", YesNo.No);
-					sa.assertTrue(true, "\"Account 1 Updated\" Revenue record has been updated to 90000");
-
-					if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
-						log(LogStatus.INFO, TabName.InstituitonsTab.toString() + "Tab has been opened", YesNo.No);
-						if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, "Account 2",
-								50)) {
-							log(LogStatus.INFO, "Clicked on the Account 1 Updated name", YesNo.No);
-							CommonLib.ThreadSleep(5000);
-							if (IB.verifyValueOnFirm("Annual Revenue", "90,000")) {
-								log(LogStatus.INFO, "\"Annual Revenue - 90000\" data has been matched", YesNo.No);
-							} else {
-								log(LogStatus.ERROR, "\"Annual Revenue - 90000\" data is not matched", YesNo.No);
-
-							}
-
-						} else {
-							log(LogStatus.ERROR, "Could not click on the Account 1 Updated name", YesNo.No);
-						}
 					} else {
-						log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " is not open", YesNo.No);
+						log(LogStatus.FAIL, "\"Location Preferences\" record is not updated to East;Global;Middle East",
+								YesNo.No);
+						sa.assertTrue(false,
+								"\"Location Preferences\" record is not updated to East;Global;Middle East");
 					}
 
-				} else {
-					log(LogStatus.FAIL, "\"Account 1 Updated\" Revenue record is not updated to 90000", YesNo.No);
-					sa.assertTrue(false, "\"Account 1 Updated\" Revenue record is not updated to 90000");
 				}
-			}
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
 
-			if (BP.openAppFromAppLauchner(appPage, 50)) {
+					log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
+					CommonLib.refresh(driver);
+					if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 8", "Description",
+							"The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.",
+							"Textarea", null)) {
+						log(LogStatus.INFO,
+								"\"Account 8\" Description record has been updated to The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.",
+								YesNo.No);
+						sa.assertTrue(true,
+								"\"Account 8\" Description record is not updated to The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.");
 
-				log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
-				CommonLib.refresh(driver);
-				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated", "Phone", "9874563235",
-						"Text", null)) {
-					log(LogStatus.INFO, "\"Account 1 Updated\" phone record has been updated to 9874563235", YesNo.No);
-					sa.assertTrue(true, "\"Account 1 Updated\" phone record has been updated to 9874563235");
+						if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
+							log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
+							if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 8", 50)) {
+								log(LogStatus.INFO, "Clicked on the Account 8 name", YesNo.No);
+								CommonLib.ThreadSleep(5000);
+								if (IB.verifyValueOnFirm("Description", "The company was founded in 1999")) {
+									log(LogStatus.INFO,
+											"\"Description - The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.\" data has been matched",
+											YesNo.No);
 
-					if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
-						log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
-						if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 8", 50)) {
+								} else {
+									log(LogStatus.ERROR,
+											"\"Description - The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.\" data is not matched",
+											YesNo.No);
 
-							log(LogStatus.INFO, "Clicked on the Account 1 Updated name", YesNo.No);
-							CommonLib.ThreadSleep(5000);
-							if (IB.verifyValueOnFirm("Phone", "(987) 456-3235")) {
-								log(LogStatus.INFO, "\"Phone - (987) 456-3235\" data has been matched", YesNo.No);
+								}
+
 							} else {
-								log(LogStatus.ERROR, "\"Phone - (987) 456-3235\" data is not matched", YesNo.No);
-
+								log(LogStatus.ERROR, "Could not clicks on the Account 8 name", YesNo.No);
 							}
+						} else
 
-						} else {
-							log(LogStatus.ERROR, "Could not clicks on the Account 1 Updated name", YesNo.No);
+						{
+							log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " tab is not open", YesNo.No);
 						}
+
 					} else {
-						log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " is not open", YesNo.No);
+						log(LogStatus.FAIL,
+								"\"Description\" record is not updated to The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.",
+								YesNo.No);
+						sa.assertTrue(false,
+								"\"Description\" record is not updated to The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.");
 					}
 
-				} else {
-					log(LogStatus.FAIL, "\"Account 8\" Phone record is not updated to (987) 456-3235", YesNo.No);
-					sa.assertTrue(false, "\"Account 8\" Phone record is not updated to (987) 456-3235");
 				}
-			}
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
 
-			if (BP.openAppFromAppLauchner(appPage, 50)) {
+					log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
+					CommonLib.refresh(driver);
+					if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 8", "Website", "www.google.com",
+							"Text", null)) {
+						log(LogStatus.INFO, "\"Account 8\" Website record has been updated to www.google.com",
+								YesNo.No);
+						sa.assertTrue(true, "\"Account 8\" Websote record is not updated to www.google.com");
 
-				log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
-				CommonLib.refresh(driver);
-				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated", "Source",
-						"Navatar Deal Connect", "Picklist", null)) {
-					log(LogStatus.INFO, "\"Account 1 Updated\" Source record has been updated to Navatar Deal Connect",
-							YesNo.No);
-					sa.assertTrue(true, "\"Account 1 Updated\" Source record has been updated to Navatar Deal Connect");
+						if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
+							log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
+							if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 8", 50)) {
+								log(LogStatus.INFO, "Clicked on the Account 8 name", YesNo.No);
+								CommonLib.ThreadSleep(5000);
+								if (IB.verifyValueOnFirm("Website", "google")) {
+									log(LogStatus.INFO, "\"Website - www.google.com\" data has been matched", YesNo.No);
 
-					if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
-						log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
-						if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 8", 50)) {
+								} else {
+									log(LogStatus.ERROR, "\"Website - www.google.com\" data is not matched", YesNo.Yes);
 
-							log(LogStatus.INFO, "Clicked on the Account Account 1 Updated name", YesNo.No);
-							CommonLib.ThreadSleep(5000);
-							if (IB.verifyValueOnFirm("Source", "Navatar Deal Connect")) {
-								log(LogStatus.INFO, "\"Source - Navatar Deal Connect\" data has been matched",
-										YesNo.No);
+								}
+
 							} else {
-								log(LogStatus.ERROR, "\"Source - Navatar Deal Connect\" data is not matched", YesNo.No);
-
+								log(LogStatus.ERROR, "Could not click on the Account 8 name", YesNo.No);
 							}
+						} else
 
-						} else {
-							log(LogStatus.ERROR, "Could not clicks on the name Account 1 Updated", YesNo.No);
+						{
+							log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " tab is not open", YesNo.No);
 						}
+
 					} else {
-						log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " is not open", YesNo.No);
+						log(LogStatus.FAIL, "\"Website\" record is not updated to www.google.com", YesNo.No);
+						sa.assertTrue(false, "\"Website\" record is not updated to www.google.com");
 					}
 
-				} else {
-					log(LogStatus.FAIL, "\"Source\" record is not updated to Navatar Deal Connect", YesNo.No);
-					sa.assertTrue(false, "\"Source\" record is not updated to Navatar Deal Connect ");
 				}
 
-			}
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
 
-			if (BP.openAppFromAppLauchner(appPage, 50)) {
+					log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
+					CommonLib.refresh(driver);
+					if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated", "Revenue", "90000",
+							"Text", null)) {
+						log(LogStatus.INFO, "\"Account 1 Updated\" Revenue record has been updated to 90000", YesNo.No);
+						sa.assertTrue(true, "\"Account 1 Updated\" Revenue record has been updated to 90000");
 
-				log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
-				CommonLib.refresh(driver);
+						if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
+							log(LogStatus.INFO, TabName.InstituitonsTab.toString() + "Tab has been opened", YesNo.No);
+							if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+									"Account 2", 50)) {
+								log(LogStatus.INFO, "Clicked on the Account 1 Updated name", YesNo.No);
+								CommonLib.ThreadSleep(5000);
+								if (IB.verifyValueOnFirm("Annual Revenue", "90,000")) {
+									log(LogStatus.INFO, "\"Annual Revenue - 90000\" data has been matched", YesNo.No);
+								} else {
+									log(LogStatus.ERROR, "\"Annual Revenue - 90000\" data is not matched", YesNo.No);
 
-				ArrayList<String> val = new ArrayList<String>();
-				val.add("Far East");
-				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated", "Location Preferences",
-						"null", "Multipicklist", val)) {
-					log(LogStatus.INFO, "\"Account 1 Updated\" Location record has been updated to Far East", YesNo.No);
-					sa.assertTrue(true, "\"Account Updated\" Location record has been updated to Far East");
+								}
 
-					if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
-						log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
-						if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 1 Updated",
-								50)) {
-
-							log(LogStatus.INFO, "Clicked on the Account 1 Updated name", YesNo.No);
-							CommonLib.ThreadSleep(5000);
-							if (IB.verifyValueOnFirm("Location Preferences", "Far East")) {
-								log(LogStatus.INFO, "\"Location - Far East\" data has been matched", YesNo.No);
 							} else {
-								log(LogStatus.ERROR, "\"Location - Far East\" data is not matched", YesNo.No);
-
+								log(LogStatus.ERROR, "Could not click on the Account 1 Updated name", YesNo.No);
 							}
-
 						} else {
-							log(LogStatus.ERROR, "Could not click on the Account 1 Updated name", YesNo.No);
+							log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " is not open", YesNo.No);
 						}
+
 					} else {
-						log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " tab is not open", YesNo.No);
+						log(LogStatus.FAIL, "\"Account 1 Updated\" Revenue record is not updated to 90000", YesNo.No);
+						sa.assertTrue(false, "\"Account 1 Updated\" Revenue record is not updated to 90000");
 					}
-
-				} else {
-					log(LogStatus.FAIL, "\"Location\" record is not updated to Far East", YesNo.No);
-					sa.assertTrue(false, "\"Location\" record is not updated to Far East");
-				}
-			}
-			if (BP.openAppFromAppLauchner(appPage, 50)) {
-
-				log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
-				CommonLib.refresh(driver);
-
-				ArrayList<String> val1 = new ArrayList<String>();
-				val1.add("Asia");
-				val1.add("Middle East");
-				val1.add("Global");
-				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated", "Location Preferences",
-						null, "Multipicklist", val1)) {
-					log(LogStatus.INFO,
-							"\"Account 1 Updated\" Location record has been updated to Far Asia, Global, Middle East",
-							YesNo.No);
-					sa.assertTrue(true,
-							"\"Account 1 Updated\" Location record is not updated to Far Asia, Global, Middle East");
-
-					if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
-						log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
-						if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 1 Updated",
-								50)) {
-
-							log(LogStatus.INFO, "Clicked on the name Account 1 Updated", YesNo.No);
-							CommonLib.ThreadSleep(5000);
-							if (IB.verifyValueOnFirm("Location Preferences", "Far Asia;Global;Middle East")) {
-								log(LogStatus.INFO,
-										"\"Location Preferences - Asia;Global;Middle East\" data has been matched",
-										YesNo.No);
-							} else {
-								log(LogStatus.ERROR,
-										"\"Location Preferences - Asia;Global;Middle East\" data is not matched",
-										YesNo.No);
-							}
-
-						} else {
-							log(LogStatus.ERROR, "Could not click on the Account name", YesNo.No);
-						}
-					}
-
-					else {
-						log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " tab is not open", YesNo.No);
-					}
-
-				} else {
-					log(LogStatus.FAIL, "\"Location Preferences\" record is not updated to Asia;Global;Middle East",
-							YesNo.No);
-					sa.assertTrue(false, "\"Location Preferences\" record is not updated to Asia;Global;Middle East");
 				}
 
-			}
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
 
-			if (BP.openAppFromAppLauchner(appPage, 50)) {
+					log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
+					CommonLib.refresh(driver);
+					if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated", "Phone", "9874563235",
+							"Text", null)) {
+						log(LogStatus.INFO, "\"Account 1 Updated\" phone record has been updated to 9874563235",
+								YesNo.No);
+						sa.assertTrue(true, "\"Account 1 Updated\" phone record has been updated to 9874563235");
 
-				log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
-				CommonLib.refresh(driver);
-				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated", "Description",
-						"The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.",
-						"Textarea", null)) {
-					log(LogStatus.INFO,
-							"\"Account 1 Updated\" Description record has been updated to The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.",
-							YesNo.No);
-					sa.assertTrue(true,
-							"\"Account 1 Updated\" Description record is not updated to The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.");
+						if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
+							log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
+							if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 8", 50)) {
 
-					if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
-						log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
-						if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 8", 50)) {
-							log(LogStatus.INFO, "Clicked on the Account 1 Updated name", YesNo.No);
-							CommonLib.ThreadSleep(5000);
-							if (IB.verifyValueOnFirm("Description", "The company was founded in 1999")) {
-								log(LogStatus.INFO,
-										"\"Description - The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.\" data has been matched",
-										YesNo.No);
+								log(LogStatus.INFO, "Clicked on the Account 1 Updated name", YesNo.No);
+								CommonLib.ThreadSleep(5000);
+								if (IB.verifyValueOnFirm("Phone", "(987) 456-3235")) {
+									log(LogStatus.INFO, "\"Phone - (987) 456-3235\" data has been matched", YesNo.No);
+								} else {
+									log(LogStatus.ERROR, "\"Phone - (987) 456-3235\" data is not matched", YesNo.No);
+
+								}
 
 							} else {
-								log(LogStatus.ERROR,
-										"\"Description - The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.",
-										YesNo.No);
-
+								log(LogStatus.ERROR, "Could not clicks on the Account 1 Updated name", YesNo.No);
 							}
-
 						} else {
-							log(LogStatus.ERROR, "Could not clicks on the Account 8 name", YesNo.No);
+							log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " is not open", YesNo.No);
 						}
-					} else
 
-					{
-						log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " tab is not open", YesNo.Yes);
+					} else {
+						log(LogStatus.FAIL, "\"Account 8\" Phone record is not updated to (987) 456-3235", YesNo.No);
+						sa.assertTrue(false, "\"Account 8\" Phone record is not updated to (987) 456-3235");
 					}
-
-				} else {
-					log(LogStatus.FAIL,
-							"\"Description\" record is not updated to The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.",
-							YesNo.No);
-					sa.assertTrue(false,
-							"\"Description\" record is not updated to The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.");
 				}
 
-			}
-			if (BP.openAppFromAppLauchner(appPage, 50)) {
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
 
-				log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
-				CommonLib.refresh(driver);
-				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated", "Website",
-						"www.google.com", "Text", null)) {
-					log(LogStatus.INFO, "\"Account 1 Updated\" Website record has been updated to www.google.com",
-							YesNo.No);
-					sa.assertTrue(true, "\"Account 1 Updated\" Websote record is not updated to www.google.com");
+					log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
+					CommonLib.refresh(driver);
+					if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated", "Source",
+							"Navatar Deal Connect", "Picklist", null)) {
+						log(LogStatus.INFO,
+								"\"Account 1 Updated\" Source record has been updated to Navatar Deal Connect",
+								YesNo.No);
+						sa.assertTrue(true,
+								"\"Account 1 Updated\" Source record has been updated to Navatar Deal Connect");
 
-					if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
-						log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
-						if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 8", 50)) {
-							log(LogStatus.INFO, "Clicked on the Account 1 Updated name", YesNo.No);
-							CommonLib.ThreadSleep(5000);
-							if (IB.verifyValueOnFirm("Website", "google")) {
-								log(LogStatus.INFO, "\"Website - www.google.com\" data has been matched", YesNo.No);
+						if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
+							log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
+							if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 8", 50)) {
+
+								log(LogStatus.INFO, "Clicked on the Account Account 1 Updated name", YesNo.No);
+								CommonLib.ThreadSleep(5000);
+								if (IB.verifyValueOnFirm("Source", "Navatar Deal Connect")) {
+									log(LogStatus.INFO, "\"Source - Navatar Deal Connect\" data has been matched",
+											YesNo.No);
+								} else {
+									log(LogStatus.ERROR, "\"Source - Navatar Deal Connect\" data is not matched",
+											YesNo.No);
+
+								}
 
 							} else {
-								log(LogStatus.ERROR, "\"Website - www.google.com\" data is not matched", YesNo.Yes);
-
+								log(LogStatus.ERROR, "Could not clicks on the name Account 1 Updated", YesNo.No);
 							}
-
 						} else {
-							log(LogStatus.ERROR, "Could not click on the Account 1 Updated name", YesNo.No);
+							log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " is not open", YesNo.No);
 						}
-					} else
 
-					{
-						log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " tab is not open", YesNo.Yes);
+					} else {
+						log(LogStatus.FAIL, "\"Source\" record is not updated to Navatar Deal Connect", YesNo.No);
+						sa.assertTrue(false, "\"Source\" record is not updated to Navatar Deal Connect ");
 					}
 
-				} else {
-					log(LogStatus.FAIL, "\"Website\" record is not updated to www.google.com", YesNo.No);
-					sa.assertTrue(false, "\"Website\" record is not updated to www.google.com");
 				}
+
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+					log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
+					CommonLib.refresh(driver);
+
+					ArrayList<String> val = new ArrayList<String>();
+					val.add("Far East");
+					if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated",
+							"Location Preferences", "null", "Multipicklist", val)) {
+						log(LogStatus.INFO, "\"Account 1 Updated\" Location record has been updated to Far East",
+								YesNo.No);
+						sa.assertTrue(true, "\"Account Updated\" Location record has been updated to Far East");
+
+						if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
+							log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
+							if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab,
+									"Account 1 Updated", 50)) {
+
+								log(LogStatus.INFO, "Clicked on the Account 1 Updated name", YesNo.No);
+								CommonLib.ThreadSleep(5000);
+								if (IB.verifyValueOnFirm("Location Preferences", "Far East")) {
+									log(LogStatus.INFO, "\"Location - Far East\" data has been matched", YesNo.No);
+								} else {
+									log(LogStatus.ERROR, "\"Location - Far East\" data is not matched", YesNo.No);
+
+								}
+
+							} else {
+								log(LogStatus.ERROR, "Could not click on the Account 1 Updated name", YesNo.No);
+							}
+						} else {
+							log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " tab is not open", YesNo.No);
+						}
+
+					} else {
+						log(LogStatus.FAIL, "\"Location\" record is not updated to Far East", YesNo.No);
+						sa.assertTrue(false, "\"Location\" record is not updated to Far East");
+					}
+				}
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+					log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
+					CommonLib.refresh(driver);
+
+					ArrayList<String> val1 = new ArrayList<String>();
+					val1.add("Asia");
+					val1.add("Middle East");
+					val1.add("Global");
+					if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated",
+							"Location Preferences", null, "Multipicklist", val1)) {
+						log(LogStatus.INFO,
+								"\"Account 1 Updated\" Location record has been updated to Far Asia, Global, Middle East",
+								YesNo.No);
+						sa.assertTrue(true,
+								"\"Account 1 Updated\" Location record is not updated to Far Asia, Global, Middle East");
+
+						if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
+							log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
+							if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab,
+									"Account 1 Updated", 50)) {
+
+								log(LogStatus.INFO, "Clicked on the name Account 1 Updated", YesNo.No);
+								CommonLib.ThreadSleep(5000);
+								if (IB.verifyValueOnFirm("Location Preferences", "Far Asia;Global;Middle East")) {
+									log(LogStatus.INFO,
+											"\"Location Preferences - Asia;Global;Middle East\" data has been matched",
+											YesNo.No);
+								} else {
+									log(LogStatus.ERROR,
+											"\"Location Preferences - Asia;Global;Middle East\" data is not matched",
+											YesNo.No);
+								}
+
+							} else {
+								log(LogStatus.ERROR, "Could not click on the Account name", YesNo.No);
+							}
+						}
+
+						else {
+							log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " tab is not open", YesNo.No);
+						}
+
+					} else {
+						log(LogStatus.FAIL, "\"Location Preferences\" record is not updated to Asia;Global;Middle East",
+								YesNo.No);
+						sa.assertTrue(false,
+								"\"Location Preferences\" record is not updated to Asia;Global;Middle East");
+					}
+
+				}
+
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+					log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
+					CommonLib.refresh(driver);
+					if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated", "Description",
+							"The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.",
+							"Textarea", null)) {
+						log(LogStatus.INFO,
+								"\"Account 1 Updated\" Description record has been updated to The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.",
+								YesNo.No);
+						sa.assertTrue(true,
+								"\"Account 1 Updated\" Description record is not updated to The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.");
+
+						if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
+							log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
+							if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 8", 50)) {
+								log(LogStatus.INFO, "Clicked on the Account 1 Updated name", YesNo.No);
+								CommonLib.ThreadSleep(5000);
+								if (IB.verifyValueOnFirm("Description", "The company was founded in 1999")) {
+									log(LogStatus.INFO,
+											"\"Description - The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.\" data has been matched",
+											YesNo.No);
+
+								} else {
+									log(LogStatus.ERROR,
+											"\"Description - The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.",
+											YesNo.No);
+
+								}
+
+							} else {
+								log(LogStatus.ERROR, "Could not clicks on the Account 8 name", YesNo.No);
+							}
+						} else
+
+						{
+							log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " tab is not open", YesNo.Yes);
+						}
+
+					} else {
+						log(LogStatus.FAIL,
+								"\"Description\" record is not updated to The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.",
+								YesNo.No);
+						sa.assertTrue(false,
+								"\"Description\" record is not updated to The company was founded in 1999 by former�Oracle�executive�Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a�software as a service�(SaaS) company.");
+					}
+
+				}
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+					log(LogStatus.INFO, appPage + " has been open from the App launcher", YesNo.No);
+					CommonLib.refresh(driver);
+					if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated", "Website",
+							"www.google.com", "Text", null)) {
+						log(LogStatus.INFO, "\"Account 1 Updated\" Website record has been updated to www.google.com",
+								YesNo.No);
+						sa.assertTrue(true, "\"Account 1 Updated\" Websote record is not updated to www.google.com");
+
+						if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
+							log(LogStatus.INFO, TabName.InstituitonsTab.toString() + " tab has been open", YesNo.No);
+							if (BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab, "Account 8", 50)) {
+								log(LogStatus.INFO, "Clicked on the Account 1 Updated name", YesNo.No);
+								CommonLib.ThreadSleep(5000);
+								if (IB.verifyValueOnFirm("Website", "google")) {
+									log(LogStatus.INFO, "\"Website - www.google.com\" data has been matched", YesNo.No);
+
+								} else {
+									log(LogStatus.ERROR, "\"Website - www.google.com\" data is not matched", YesNo.Yes);
+
+								}
+
+							} else {
+								log(LogStatus.ERROR, "Could not click on the Account 1 Updated name", YesNo.No);
+							}
+						} else
+
+						{
+							log(LogStatus.ERROR, TabName.InstituitonsTab.toString() + " tab is not open", YesNo.Yes);
+						}
+
+					} else {
+						log(LogStatus.FAIL, "\"Website\" record is not updated to www.google.com", YesNo.No);
+						sa.assertTrue(false, "\"Website\" record is not updated to www.google.com");
+					}
+				}
+			} else {
+				log(LogStatus.FAIL, "One of the Permission not Given, SO not able to Continue further", YesNo.No);
+				sa.assertTrue(false, "One of the Permission not Given, SO not able to Continue further");
 			}
 
 		}
@@ -12069,7 +12201,7 @@ public class Module9 extends BaseLib {
 				if (setup.addCustomFieldforFormula(environment, mode, objects[4],
 						ObjectFeatureName.FieldAndRelationShip, objects[0], objects[1], valuesandLabel, null, null)) {
 					log(LogStatus.PASS, "Field Object is created for :" + objects[1], YesNo.No);
-					sa.assertTrue(true, "Field Object is created for :" + objects[1]);
+
 				} else {
 					log(LogStatus.ERROR, "Field Object is not created for :" + objects[1], YesNo.Yes);
 					sa.assertTrue(false, "Field Object is not created for :" + objects[1]);

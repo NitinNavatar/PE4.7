@@ -50,6 +50,7 @@ import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -1110,9 +1111,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		tabName = getTabName(projectName, TabName);
 		System.err.println("Passed switch statement");
 		if (tabName != null) {
-			ele = FindElement(driver, "//a[contains(@href,'lightning') and contains(@title,'" + tabName + "')]/span/..",
-					tabName, action.SCROLLANDBOOLEAN, 30);
-			ele = isDisplayed(driver, ele, "visibility", 30, tabName);
+			CommonLib.refresh(driver);
+			ele = getTabNameLightning(tabName, 30);
+
 			if (ele != null) {
 				appLog.info("Tab Found");
 				ThreadSleep(5000);
@@ -1127,16 +1128,22 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			} else {
 				CommonLib.log(LogStatus.INFO, "Going to found tab after clicking on More Icon", YesNo.No);
 				if (click(driver, getMoreTabIcon(projectName, 10), "More Icon", action.SCROLLANDBOOLEAN)) {
-					ele = FindElement(driver,
-							"//a[contains(@href,'lightning')]/span[@class='slds-truncate']/span[contains(text(),'"
-									+ tabName + "')]",
-							tabName, action.SCROLLANDBOOLEAN, 10);
-					ele = isDisplayed(driver, ele, "visibility", 10, tabName);
+					ele = getTabNameLightningInMoreTab(tabName, 10);
+
 					if (ele != null) {
 						if (clickUsingJavaScript(driver, ele, tabName + " :Tab")) {
 							appLog.info("Clicked on Tab on More Icon: " + tabName);
 							CommonLib.log(LogStatus.INFO, "Tab found on More Icon", YesNo.No);
 							flag = true;
+						}
+
+						else {
+							if (click(driver, ele, tabName + " :Tab", action.BOOLEAN)) {
+								appLog.info("Clicked on Tab on More Icon: " + tabName);
+								CommonLib.log(LogStatus.INFO, "Tab found on More Icon", YesNo.No);
+								flag = true;
+							}
+
 						}
 					}
 
@@ -1209,6 +1216,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case OfficeLocations:
 			viewList = "All";
 			break;
+
 		default:
 			return false;
 		}
@@ -1343,6 +1351,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		case FundraisingsTab:
 			tabName = "Fundraisings";
+			break;
+
+		case Interaction:
+			tabName = "Interactions";
 			break;
 
 		default:
@@ -2713,10 +2725,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		} else if (projectName.contains(ProjectName.PEEdge.toString()) && PageLabel.Account_Name.equals(pageLabel)) {
 			label = "Firm";
 		}
+		
 
 		WebElement ele1 = getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 		click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
-		ThreadSleep(2000);
+		ThreadSleep(5000);
 		xpath = "//span[text()='" + label + "']/../following-sibling::div//*[text()='" + labelValue + "']";
 
 		ele = FindElement(driver, xpath, label + " with Value " + labelValue, action.SCROLLANDBOOLEAN, 5);
@@ -2740,6 +2753,25 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 *              on page and passed
 	 */
 	public boolean verifyDate(String dateToCheck, String valueOnPage) {
+		
+		String[] splittedDate = dateToCheck.split("/");
+		char dayMonth = splittedDate[0].charAt(0);
+		char day = splittedDate[1].charAt(0);
+		String month;
+		if (dayMonth == '0') {
+			month = splittedDate[0].replaceAll("0", "");
+		} else {
+			month = splittedDate[0];
+		}
+		String finalDay;
+		if (day == '0') {
+			finalDay = splittedDate[1].replaceAll("0", "");
+		} else {
+			finalDay = splittedDate[1];
+		}
+
+		dateToCheck = month + "/" + finalDay + "/" + splittedDate[2];
+		
 		int size1 = valueOnPage.split("/").length;
 		int size2 = 0;
 		if (dateToCheck.contains(".")) {
@@ -2757,6 +2789,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				values = dateToCheck.split("/");
 
 			}
+			
+
 			appLog.info("Excel Date : " + dateToCheck);
 			appLog.info("Page Date : " + valueOnPage);
 			if (dates[0].contains(values[0]) && dates[1].contains(values[1])
@@ -3467,9 +3501,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		System.err.println("Passed switch statement");
 		if (tabName != null) {
-			ele = FindElement(driver, "//a[contains(@href,'lightning') and contains(@title,'" + tabName + "')]/span/..",
-					tabName, action.SCROLLANDBOOLEAN, 30);
-			ele = isDisplayed(driver, ele, "visibility", 30, tabName);
+			ele = getTabNameLightning(tabName, 30);
 			if (ele != null) {
 				appLog.info("Tab Found");
 				ThreadSleep(3000);
@@ -3584,7 +3616,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		WebElement ele;
 		String related = relatedTab.toString().replace("_", " ");
 		if (projectName.contains(ProjectName.PE.toString()))
-			xpath = "//div[@role='tablist']//span[text()='" + related + "']";
+	xpath = "//ul[@role='presentation']//span[text()='"+related+"']/ancestor::a";
 		else
 			xpath = "//li//*[@title='" + related + "' or text()='" + related + "']";
 
@@ -3673,6 +3705,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return ele;
 	}
 	
+	
+	
 	public WebElement toggleSDGButtons1(String projectName, String toggleTab, ToggleButtonGroup btnName, action action,
 			boolean isInside, int timeOut) {
 		String btname = btnName.toString();
@@ -3689,6 +3723,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : " + btname);
 		return ele;
 	}
+
 
 	/**
 	 * @author Azhar Alam
@@ -3969,7 +4004,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						ThreadSleep(500);
 						ThreadSleep(1000);
 						if (!errorMsgCheck) {
-							if (click(driver, getRecordPageSettingSave(10), "Save button", action.BOOLEAN)) {
+							if (click(driver, getUploadPhotoSaveButton(10), "Save button", action.BOOLEAN)) {
 								log(LogStatus.PASS,
 										"clicked on save button and image is updtaed " + path + " on " + pageName,
 										YesNo.No);
@@ -3982,7 +4017,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									log(LogStatus.ERROR, "could not find id of img uploaded", YesNo.Yes);
 								}
 							} else {
-								log(LogStatus.PASS,
+								log(LogStatus.ERROR,
 										"Not able to click on save button and so cannot updtaed image from path " + path
 												+ " on " + pageName,
 										YesNo.No);
@@ -4877,7 +4912,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				ThreadSleep(3000);
 				ThreadSleep(5000);
 			} else {
-				appLog.error("Not able to enter value on Search Box");
+				appLog.error("Not able to Click on List View: " + viewList);
 			}
 		} else {
 			appLog.error("Not able to select on Select View List : " + viewList);
@@ -4972,7 +5007,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		Calendar cal = Calendar.getInstance();
 
 		SimpleDateFormat sdf = new SimpleDateFormat("H:mm a");
-		sdf.setTimeZone(TimeZone.getTimeZone("GMT-8:00"));
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT-07:00"));
 		sdf.applyPattern("h:mm a");
 		// System.out.println(sdf.format(Calendar.getInstance().getTime()));
 		System.out.println(sdf.format(cal.getTime()));
@@ -5016,9 +5051,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 */
 	public boolean restoreValueFromRecycleBin(String projectName, String restoreItem) {
 		boolean flag = false;
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TabName tabName = TabName.RecycleBinTab;
+		String recycleTab = lp.getTabName(projectName, TabName.RecycleBinTab);
 		WebElement ele;
-		if (clickOnTab(projectName, tabName)) {
+		if (lp.openAppFromAppLauchner(60, recycleTab)) {
 			log(LogStatus.INFO, "Clicked on Tab : " + tabName + " For : " + restoreItem, YesNo.No);
 			ThreadSleep(1000);
 			clickOnAlreadyCreatedItem(projectName, tabName, restoreItem, 20);
@@ -7047,10 +7084,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			viewList = "All";
 			break;
 		case Object1Tab:
-			viewList = "All";
+			viewList = "All Firms";
 			break;
 		case Object2Tab:
-			viewList = "All";
+			viewList = "All Contacts";
 			break;
 		case Object3Tab:
 			viewList = "All";
@@ -7076,6 +7113,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case SDGTab:
 			viewList = "All";
 			break;
+		case Deals:
+			viewList = "All";
+			break;
+
 		default:
 			return false;
 		}
@@ -9207,7 +9248,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 */
 
 	public void verifyColumnAscendingDescendingOrder(String sdgGridName, List<String> columnNames,
-			List<String> dateColumns, List<String> amountColumns, String FirstColumnAscYesOrNoByDefault) {
+			List<String> dateColumns, List<String> amountColumns, List<String> pickListColumnAndValues,
+			String FirstColumnAscYesOrNoByDefault) {
 
 		List<WebElement> headerList = sdgGridAllHeadersLabelNameList(sdgGridName);
 		List<String> columnDataText = headerList.stream().map(s -> s.getText()).collect(Collectors.toList()).stream()
@@ -9238,17 +9280,73 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (!dateColumns.contains(columnName)) {
 
 						if (!amountColumns.contains(columnName)) {
+							if (!pickListColumnAndValues.contains(columnName)) {
 
-							if (CommonLib.checkSorting(driver, SortOrder.Assecending,
-									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
-								log(LogStatus.PASS, "Verified " + SortOrder.Assecending + " Sorting on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								if (CommonLib.checkSorting(driver, SortOrder.Assecending,
+										sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+									log(LogStatus.PASS, "Verified " + SortOrder.Assecending + " Sorting on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								} else {
+									log(LogStatus.FAIL, SortOrder.Assecending + " Sorting not working on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+									sa.assertTrue(false, SortOrder.Assecending + " Sorting not working on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName);
+								}
 							} else {
-								log(LogStatus.FAIL, SortOrder.Assecending + " Sorting not working on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
-								sa.assertTrue(false, SortOrder.Assecending + " Sorting not working on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName);
+
+								for (String pickListColumnAndValue : pickListColumnAndValues) {
+									String[] pickListColumnAndValueArray = pickListColumnAndValue.split("<Section>");
+
+									String[] values = pickListColumnAndValueArray[1].split("<break>");
+
+									List<String> expectedPicklistColumnData = new ArrayList<String>();
+									List<String> actualPicklistColumnData = new ArrayList<String>();
+									List<String> customOrderOfPicklistColumnData = new ArrayList<String>();
+									expectedPicklistColumnData = actualPicklistColumnData;
+
+									List<WebElement> actualPicklistColumnDataWebElements = sdgGridColumnsDataList(
+											sdgGridName.toString(), columnIndex + 1);
+									actualPicklistColumnData = actualPicklistColumnDataWebElements.stream()
+											.map(pickList -> pickList.getText()).collect(Collectors.toList());
+
+									customOrderOfPicklistColumnData = Arrays.asList(values);
+									Collections.sort(expectedPicklistColumnData,
+											Comparator.comparingInt(customOrderOfPicklistColumnData::indexOf));
+
+									if (actualPicklistColumnData.size() > 0)
+
+									{
+										if (expectedPicklistColumnData.equals(actualPicklistColumnData)) {
+											log(LogStatus.PASS,
+													"Verified " + SortOrder.Assecending + " Sorting on SDG: "
+															+ sdgGridName.toString() + " for Column " + columnName,
+													YesNo.No);
+										} else {
+											log(LogStatus.FAIL,
+													SortOrder.Assecending + " Sorting not working on SDG: "
+															+ sdgGridName.toString() + " for Column " + columnName,
+													YesNo.No);
+											sa.assertTrue(false, SortOrder.Assecending + " Sorting not working on SDG: "
+													+ sdgGridName.toString() + " for Column " + columnName);
+										}
+									} else {
+
+										log(LogStatus.FAIL,
+												"Not Able to Check Sorting of type: " + SortOrder.Assecending
+														+ " on SDG: " + sdgGridName.toString() + " for Column "
+														+ columnName
+														+ " as either there is no data or locator has been changed",
+												YesNo.No);
+										sa.assertTrue(false,
+												"Not Able to Check Sorting of type: " + SortOrder.Assecending
+														+ " on SDG: " + sdgGridName.toString() + " for Column "
+														+ columnName
+														+ " as either there is no data or locator has been changed");
+									}
+
+								}
 							}
+
 						} else {
 
 							List<Integer> expectedAmount = new ArrayList<Integer>();
@@ -9323,16 +9421,70 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (!dateColumns.contains(columnName)) {
 						if (!amountColumns.contains(columnName)) {
 
-							if (CommonLib.checkSorting(driver, SortOrder.Decending,
-									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
-								log(LogStatus.PASS, "Verified " + SortOrder.Decending + " Sorting on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+							if (!pickListColumnAndValues.contains(columnName)) {
+
+								if (CommonLib.checkSorting(driver, SortOrder.Decending,
+										sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+									log(LogStatus.PASS, "Verified " + SortOrder.Decending + " Sorting on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								} else {
+									log(LogStatus.FAIL, SortOrder.Decending + " Sorting not working on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+									sa.assertTrue(false, SortOrder.Decending + " Sorting not working on SDG: "
+											+ sdgGridName.toString() + " for Column " + columnName);
+								}
+
 							} else {
-								log(LogStatus.FAIL, SortOrder.Decending + " Sorting not working on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
-								sa.assertTrue(false, SortOrder.Decending + " Sorting not working on SDG: "
-										+ sdgGridName.toString() + " for Column " + columnName);
+
+								for (String pickListColumnAndValue : pickListColumnAndValues) {
+									String[] pickListColumnAndValueArray = pickListColumnAndValue.split("<Section>");
+
+									String[] values = pickListColumnAndValueArray[1].split("<break>");
+
+									List<String> expectedPicklistColumnData = new ArrayList<String>();
+									List<String> actualPicklistColumnData = new ArrayList<String>();
+									List<String> customOrderOfPicklistColumnData = new ArrayList<String>();
+									expectedPicklistColumnData = actualPicklistColumnData;
+
+									List<WebElement> actualPicklistColumnDataWebElements = sdgGridColumnsDataList(
+											sdgGridName.toString(), columnIndex + 1);
+									actualPicklistColumnData = actualPicklistColumnDataWebElements.stream()
+											.map(pickList -> pickList.getText()).collect(Collectors.toList());
+
+									customOrderOfPicklistColumnData = Arrays.asList(values);
+									Collections.reverse(customOrderOfPicklistColumnData);
+									Collections.sort(expectedPicklistColumnData,
+											Comparator.comparingInt(customOrderOfPicklistColumnData::indexOf));
+
+									if (actualPicklistColumnData.size() > 0)
+
+									{
+										if (expectedPicklistColumnData.equals(actualPicklistColumnData)) {
+											log(LogStatus.PASS,
+													"Verified " + SortOrder.Decending + " Sorting on SDG: "
+															+ sdgGridName.toString() + " for Column " + columnName,
+													YesNo.No);
+										} else {
+											log(LogStatus.FAIL,
+													SortOrder.Decending + " Sorting not working on SDG: "
+															+ sdgGridName.toString() + " for Column " + columnName,
+													YesNo.No);
+											sa.assertTrue(false, SortOrder.Decending + " Sorting not working on SDG: "
+													+ sdgGridName.toString() + " for Column " + columnName);
+										}
+									} else {
+
+										log(LogStatus.FAIL, "Not Able to Check Sorting of type: " + SortOrder.Decending
+												+ " on SDG: " + sdgGridName.toString() + " for Column " + columnName
+												+ " as either there is no data or locator has been changed", YesNo.No);
+										sa.assertTrue(false, "Not Able to Check Sorting of type: " + SortOrder.Decending
+												+ " on SDG: " + sdgGridName.toString() + " for Column " + columnName
+												+ " as either there is no data or locator has been changed");
+									}
+
+								}
 							}
+
 						} else {
 
 							List<Integer> expectedAmount = new ArrayList<Integer>();
@@ -11576,7 +11728,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		if (fromNavigation == true) {
 			if (npbl.createNavPopUpMinimizeButton(2) != null) {
-				CommonLib.click(driver, npbl.createNavPopUpMinimizeButton(5), "Minimize", action.BOOLEAN);
+				CommonLib.click(driver, npbl.createNavPopUpMinimizeButton(2), "Minimize", action.BOOLEAN);
 			}
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, NavigationMenuItems.Create.toString(), action.BOOLEAN,
 					30)) {
@@ -11682,27 +11834,16 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 						xPath = "//div[label[text()='Notes']]//textarea";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
-						if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
-							log(LogStatus.INFO, "Clicked on " + labelName + " paragraph", YesNo.No);
-							ThreadSleep(500);
-							xPath = "//div[label[text()='Notes']]//textarea";
-							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
-									30);
-							if (sendKeys(driver, ele, value, labelName + " paragraph", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO, value + " has been passed on " + labelName + " paragraph",
-										YesNo.No);
+						if (sendKeys(driver, ele, value, labelName + " paragraph", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, value + " has been passed on " + labelName + " paragraph", YesNo.No);
 
-								CommonLib.ThreadSleep(500);
-							} else {
-								log(LogStatus.ERROR, value + " is not passed on " + labelName + " paragraph", YesNo.No);
-								sa.assertTrue(false, value + " is not passed on " + labelName + " paragraph");
-								return false;
-							}
+							CommonLib.ThreadSleep(500);
 						} else {
-							log(LogStatus.ERROR, "Not able to click on " + labelName + " paragraph", YesNo.No);
-							sa.assertTrue(false, "Not able to click on " + labelName + " paragraph");
+							log(LogStatus.ERROR, value + " is not passed on " + labelName + " paragraph", YesNo.No);
+							sa.assertTrue(false, value + " is not passed on " + labelName + " paragraph");
 							return false;
 						}
+
 					}
 
 				} else if (labelName.equalsIgnoreCase("Related To")) {
@@ -12061,7 +12202,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							} else {
 								log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
 								sa.assertTrue(false, "Not able to close the Note popup");
-								log(LogStatus.ERROR, "Activity timeline record is not created", YesNo.No);
+								log(LogStatus.ERROR, "								d", YesNo.No);
 								return false;
 							}
 						} else {
@@ -12849,9 +12990,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								for (String gridName : gridNameAndCount.keySet()) {
 
 									String navName = gridName;
-									if (gridName.equalsIgnoreCase("Contact")) {
-										navName = gridName + "s";
-									}
+//									if (gridName.equalsIgnoreCase("Contact")) {
+//										navName = gridName + "s";
+//									}
 									if (gridNameAndCount.get(gridName).equals(sideNavNameAndCount.get(navName))) {
 										log(LogStatus.INFO, "Counts for " + gridName + " matched and i.e.: "
 												+ gridNameAndCount.get(gridName), YesNo.No);
@@ -13398,6 +13539,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	/**
 	 * @author Sourabh Saini
+	 * @author Ankur Huria
 	 * @param projectName
 	 * @param basicSection
 	 * @param advanceSection
@@ -14087,16 +14229,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						if (crossIconButtonInNotePopUp(8) != null) {
 							if (clickUsingJavaScript(driver, crossIconButtonInNotePopUp(8), "close button")) {
 								log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
-								log(LogStatus.INFO, "Activity timeline record has been created", YesNo.No);
+								log(LogStatus.INFO, "Activity timeline record has been updated", YesNo.No);
 								flag = true;
 							} else {
 								log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
 								sa.assertTrue(false, "Not able to close the Note popup");
-								log(LogStatus.ERROR, "Activity timeline record is not created", YesNo.No);
+								log(LogStatus.ERROR, "Activity timeline record is not updated", YesNo.No);
 
 							}
 						} else {
-
+							log(LogStatus.INFO, "Activity timeline record has been updated", YesNo.No);
+							flag = true;
 						}
 					} else {
 						log(LogStatus.ERROR, "Not able to click on footer tag button", YesNo.No);
@@ -14123,7 +14266,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						return false;
 					}
 				} else {
-					return true;
+					flag = true;
 				}
 
 			}
@@ -22260,7 +22403,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	}
 
-	public ArrayList<String> verifyRedirectionOnClickEntityTypeOnTaggedSection(boolean isInstitutionRecord) {
+	public ArrayList<String> verifyRedirectionOnClickEntityTypeOnTaggedSection() {
 
 		ArrayList<String> result = new ArrayList<String>();
 
@@ -22336,43 +22479,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			result.add("Not able to click on Companies tab name");
 		}
 
-		if (isInstitutionRecord == true) {
-			if (click(driver, getTaggedRecordName(TaggedName.Funds.toString(), 30),
-					TaggedName.Funds.toString() + " tab", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on Fund tab name", YesNo.No);
-				ThreadSleep(5000);
-				if (CommonLib.clickUsingJavaScript(driver, recordsNameOnTaggedSection(TaggedName.Funds.toString(), 30),
-						"Records on Fund Tagged", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on record on fund tab", YesNo.No);
-
-					String id = switchOnWindow(driver);
-					if (id != null) {
-						if (getTabName("Fund", 20) != null) {
-							log(LogStatus.INFO,
-									"The page is redirecting to fund tab after click on Entity type of fund", YesNo.No);
-						} else {
-							log(LogStatus.ERROR,
-									"The page is not redirecting to Fund tab after click on Entity type of fund",
-									YesNo.No);
-							result.add("The page is not redirecting to Fund tab after click on Entity type of fund");
-						}
-						driver.close();
-						driver.switchTo().window(id);
-					} else {
-						log(LogStatus.ERROR, "The new tab is not opening after clicking on entity type of Fund",
-								YesNo.No);
-						result.add("The new tab is not opening after clicking on entity type of Fund");
-					}
-
-				} else {
-					log(LogStatus.ERROR, "Not able to click on record of fund tab name", YesNo.No);
-					result.add("Not able to click on record of fund tab name");
-				}
-			} else {
-				log(LogStatus.ERROR, "Not able to click on Fund tab name", YesNo.No);
-				result.add("Not able to click on Fund tab name");
-			}
-		}
 		return result;
 	}
 
@@ -22570,7 +22676,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		if (activitySubjetLinkPopupHeaderOnInteraction(20) != null) {
 
-			if (editButtonOfSubjectLinkPopUpInInteractionSection(5) != null) {
+			if (editButtonOfSubjectLinkPopUpInInteractionSection(subjectName, 5) != null) {
 
 				log(LogStatus.INFO, "Edit Button Verified", YesNo.No);
 			} else {
@@ -22805,6 +22911,28 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								log(LogStatus.ERROR, value + " link Popup header has not been verified", YesNo.No);
 								negativeResult.add(value + " link Popup header has not been verified");
 
+							}
+						}
+
+						else if (labelName.contains(excelLabel.Notes.toString())) {
+							if (valueOfLabelInSubjectLinkPopUpInInteractionSection(labelName, 3) != null) {
+								String actualValue = getText(driver,
+										valueOfLabelInSubjectLinkPopUpInInteractionSection(labelName, 7), labelName,
+										action.SCROLLANDBOOLEAN);
+								value = value.trim().replaceAll(" +", " ");
+								log(LogStatus.INFO, "Successfully get the value from " + labelName + " field",
+										YesNo.No);
+								if (actualValue.equals(value)) {
+									log(LogStatus.INFO, "Successfully get the value from " + labelName + " field",
+											YesNo.No);
+
+								} else {
+									log(LogStatus.ERROR, labelName + " label's value is not verify, Expected: " + value
+											+ " but Actual: " + actualValue, YesNo.No);
+									negativeResult.add(labelName + " label's value is not verify, Expected: " + value
+											+ " but Actual: " + actualValue);
+
+								}
 							}
 						}
 
@@ -23161,21 +23289,24 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							+ NotesPopUpPrefilledNegativeResult);
 		}
 
-		if (click(driver, notePopUpCrossButton(7), "Note Popup Cross Button", action.BOOLEAN)) {
-			log(LogStatus.INFO, "Clicked on Note Popup Cross button", YesNo.No);
+		if (notePopUpHeading(expectedHeaderName, 3) != null) {
 
-			if (notePopUpHeading(expectedHeaderName, 3) == null) {
-				log(LogStatus.INFO, "PopUp has been closed", YesNo.No);
+			if (click(driver, notePopUpCrossButton(7), "Note Popup Cross Button", action.BOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Note Popup Cross button", YesNo.No);
+
+				if (notePopUpHeading(expectedHeaderName, 3) == null) {
+					log(LogStatus.INFO, "PopUp has been closed", YesNo.No);
+				}
+
+				else {
+					log(LogStatus.ERROR, "PopUp has not been closed after click on Cross icon", YesNo.No);
+					sa.assertTrue(false, "PopUp has not been closed after click on Cross icon");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to Click on Note Popup Cross button", YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on Note Popup Cross button");
 			}
-
-			else {
-				log(LogStatus.ERROR, "PopUp has not been closed after click on Cross icon", YesNo.No);
-				sa.assertTrue(false, "PopUp has not been closed after click on Cross icon");
-			}
-
-		} else {
-			log(LogStatus.ERROR, "Not able to Click on Note Popup Cross button", YesNo.Yes);
-			sa.assertTrue(false, "Not able to Click on Note Popup Cross button");
 		}
 
 	}
@@ -23681,207 +23812,199 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 */
 	public boolean addContactsToDealTeamPopupHandle(String[][] addContactsToDealTeamObject) {
 		boolean flag = false;
-		try {
-			String buttonNameOfAddContactsToDealTeamPopUp = "";
-			boolean allCheckedFlag = false;
-			for (String[] addContactsToDealTeamPopUpSingleArray : addContactsToDealTeamObject) {
 
-				if (addContactsToDealTeamPopUpSingleArray[0]
-						.equalsIgnoreCase("addContactsToDealTeamPopUpShouldNotThere")) {
+		String buttonNameOfAddContactsToDealTeamPopUp = "";
+		boolean allCheckedFlag = false;
+		for (String[] addContactsToDealTeamPopUpSingleArray : addContactsToDealTeamObject) {
 
-					if (addContactsToDealTeamPopUpHeader(5) == null) {
-						log(LogStatus.INFO, "------Verified Add Contacts To Deal Team Popup is not Open-----",
-								YesNo.No);
-						return true;
+			if (addContactsToDealTeamPopUpSingleArray[0].equalsIgnoreCase("addContactsToDealTeamPopUpShouldNotThere")) {
+
+				if (addContactsToDealTeamPopUpHeader(5) == null) {
+					log(LogStatus.INFO, "------Verified Add Contacts To Deal Team Popup is not Open-----", YesNo.No);
+					return true;
+				} else {
+					log(LogStatus.ERROR, "------Add Contacts To Deal Team Popup should not Open-----", YesNo.No);
+					sa.assertTrue(false, "------Add Contacts To Deal Team Popup should not Open-----");
+					return false;
+				}
+
+			} else {
+
+				String checked = addContactsToDealTeamPopUpSingleArray[0];
+				String recordName = addContactsToDealTeamPopUpSingleArray[1];
+				String role = addContactsToDealTeamPopUpSingleArray[2];
+				buttonNameOfAddContactsToDealTeamPopUp = addContactsToDealTeamPopUpSingleArray[3];
+
+				Integer index;
+
+				index = addContactsToDealTeamPopUpContactNames().indexOf(recordName);
+				if (index.equals(-1)) {
+					log(LogStatus.ERROR, "Record: " + recordName + " not found in Add Contacts To Deal Team Popup",
+							YesNo.No);
+					sa.assertTrue(false, "Record: " + recordName + " not found in Add Contacts To Deal Team Popup");
+					return false;
+				}
+
+				if (checked.equalsIgnoreCase("allRecords")) {
+
+					if (!allCheckedFlag) {
+						if (clickUsingJavaScript(driver, addContactsToDealTeamPopUpAllRecordCheckBox(4), checked)) {
+							log(LogStatus.INFO,
+									"Clicked on Checkbox of All Record Checkbox in Add Contacts To Deal Team Popup"
+											+ recordName,
+									YesNo.No);
+
+							if (CommonLib.isSelected(driver, addContactsToDealTeamPopUpAllRecordCheckBox(4),
+									recordName)) {
+								log(LogStatus.INFO,
+										"All Record checkbox has selected in Add Contacts To Deal Team Popup",
+										YesNo.No);
+								allCheckedFlag = true;
+
+							} else {
+								log(LogStatus.ERROR,
+										"All Record checkbox has not selected in Add Contacts To Deal Team Popup",
+										YesNo.No);
+								sa.assertTrue(false,
+										"All Record checkbox has not selected in Add Contacts To Deal Team Popup");
+
+								return false;
+							}
+						} else {
+							log(LogStatus.ERROR,
+									"Not able to Click on Checkbox of All Record Checkbox in Add Contacts To Deal Team Popup",
+									YesNo.No);
+							sa.assertTrue(false,
+									"Not able to Click on Checkbox of All Record Checkbox in Add Contacts To Deal Team Popup");
+
+							return false;
+						}
+					}
+				}
+
+				else if (checked.equalsIgnoreCase("checked")) {
+					if (clickUsingJavaScript(driver, addContactsToDealTeamPopUpCheckBoxes().get(index), checked)) {
+						log(LogStatus.INFO, "Clicked on Checkbox of Record: " + recordName, YesNo.No);
+
+						if (CommonLib.isSelected(driver, addContactsToDealTeamPopUpCheckBoxes().get(index),
+								recordName)) {
+							log(LogStatus.INFO,
+									"Record: " + recordName + " has checked in Add Contacts To Deal Team Popup",
+									YesNo.No);
+
+						} else {
+							log(LogStatus.ERROR,
+									"Record: " + recordName + " has not checked in Add Contacts To Deal Team Popup",
+									YesNo.No);
+							sa.assertTrue(false,
+									"Record: " + recordName + " has not checked in Add Contacts To Deal Team Popup");
+
+							return false;
+						}
 					} else {
-						log(LogStatus.ERROR, "------Add Contacts To Deal Team Popup should not Open-----", YesNo.No);
-						sa.assertTrue(false, "------Add Contacts To Deal Team Popup should not Open-----");
+						log(LogStatus.ERROR, "Not able to Click on Checkbox of Record: " + recordName, YesNo.No);
+						sa.assertTrue(false, "Not able to Click on Checkbox of Record: " + recordName);
+
 						return false;
 					}
+				} else if (checked.equalsIgnoreCase("")) {
 
 				} else {
 
-					String checked = addContactsToDealTeamPopUpSingleArray[0];
-					String recordName = addContactsToDealTeamPopUpSingleArray[1];
-					String role = addContactsToDealTeamPopUpSingleArray[2];
-					buttonNameOfAddContactsToDealTeamPopUp = addContactsToDealTeamPopUpSingleArray[3];
+					log(LogStatus.ERROR, "Please Provide the One of the Deatils for CheckBox of Record: " + recordName
+							+ " i.e. Either \"\" or checked", YesNo.No);
+					sa.assertTrue(false, "Please Provide the One of the Deatils for CheckBox of Record: " + recordName
+							+ " i.e. Either \"\" or checked");
 
-					Integer index;
-
-					index = addContactsToDealTeamPopUpContactNames().indexOf(recordName);
-					if (index.equals(-1)) {
-						log(LogStatus.ERROR, "Record: " + recordName + " not found in Add Contacts To Deal Team Popup",
-								YesNo.No);
-						sa.assertTrue(false, "Record: " + recordName + " not found in Add Contacts To Deal Team Popup");
-						return false;
-					}
-
-					if (checked.equalsIgnoreCase("allRecords")) {
-
-						if (!allCheckedFlag) {
-							if (clickUsingJavaScript(driver, addContactsToDealTeamPopUpAllRecordCheckBox(4), checked)) {
-								log(LogStatus.INFO,
-										"Clicked on Checkbox of All Record Checkbox in Add Contacts To Deal Team Popup"
-												+ recordName,
-										YesNo.No);
-
-								if (CommonLib.isSelected(driver, addContactsToDealTeamPopUpAllRecordCheckBox(4),
-										recordName)) {
-									log(LogStatus.INFO,
-											"All Record checkbox has selected in Add Contacts To Deal Team Popup",
-											YesNo.No);
-									allCheckedFlag = true;
-
-								} else {
-									log(LogStatus.ERROR,
-											"All Record checkbox has not selected in Add Contacts To Deal Team Popup",
-											YesNo.No);
-									sa.assertTrue(false,
-											"All Record checkbox has not selected in Add Contacts To Deal Team Popup");
-
-									return false;
-								}
-							} else {
-								log(LogStatus.ERROR,
-										"Not able to Click on Checkbox of All Record Checkbox in Add Contacts To Deal Team Popup",
-										YesNo.No);
-								sa.assertTrue(false,
-										"Not able to Click on Checkbox of All Record Checkbox in Add Contacts To Deal Team Popup");
-
-								return false;
-							}
-						}
-					}
-
-					else if (checked.equalsIgnoreCase("checked")) {
-						if (clickUsingJavaScript(driver, addContactsToDealTeamPopUpCheckBoxes().get(index), checked)) {
-							log(LogStatus.INFO, "Clicked on Checkbox of Record: " + recordName, YesNo.No);
-
-							if (CommonLib.isSelected(driver, addContactsToDealTeamPopUpCheckBoxes().get(index),
-									recordName)) {
-								log(LogStatus.INFO,
-										"Record: " + recordName + " has checked in Add Contacts To Deal Team Popup",
-										YesNo.No);
-
-							} else {
-								log(LogStatus.ERROR,
-										"Record: " + recordName + " has not checked in Add Contacts To Deal Team Popup",
-										YesNo.No);
-								sa.assertTrue(false, "Record: " + recordName
-										+ " has not checked in Add Contacts To Deal Team Popup");
-
-								return false;
-							}
-						} else {
-							log(LogStatus.ERROR, "Not able to Click on Checkbox of Record: " + recordName, YesNo.No);
-							sa.assertTrue(false, "Not able to Click on Checkbox of Record: " + recordName);
-
-							return false;
-						}
-					} else if (checked.equalsIgnoreCase("")) {
-
-					} else {
-
-						log(LogStatus.ERROR, "Please Provide the One of the Deatils for CheckBox of Record: "
-								+ recordName + " i.e. Either \"\" or checked", YesNo.No);
-						sa.assertTrue(false, "Please Provide the One of the Deatils for CheckBox of Record: "
-								+ recordName + " i.e. Either \"\" or checked");
-
-						return false;
-
-					}
-
-					if (!role.equalsIgnoreCase("")) {
-						if (clickUsingJavaScript(driver, addContactsToDealTeamPopUpRoleDropDown().get(index), role)) {
-							log(LogStatus.INFO, "Clicked on ComboBox of Record: " + recordName, YesNo.No);
-
-							List<String> addContactsToDealTeamPopUpRoleDropDownValuesText = addContactsToDealTeamPopUpRoleDropDownValues()
-									.stream().map(x -> x.getText()).collect(Collectors.toList());
-							CommonLib.ThreadSleep(1000);
-
-							if (clickUsingJavaScript(driver, addContactsToDealTeamPopUpRoleDropDownValues()
-									.get(addContactsToDealTeamPopUpRoleDropDownValuesText.indexOf(role)), role)) {
-								log(LogStatus.INFO, "Clicked on Role: " + role + " of Record: " + recordName, YesNo.No);
-
-							} else {
-								log(LogStatus.ERROR, "Not able to Click on Role: " + role + " of Record: " + recordName,
-										YesNo.No);
-								sa.assertTrue(false,
-										"Not able to Click on Role: " + role + " of Record: " + recordName);
-
-								return false;
-							}
-
-						} else {
-							log(LogStatus.ERROR, "Not able to Click on ComboBox of Record: " + recordName, YesNo.No);
-							sa.assertTrue(false, "Not able to Click on ComboBox of Record: " + recordName);
-
-							return false;
-						}
-					}
+					return false;
 
 				}
 
+				if (!role.equalsIgnoreCase("")) {
+					if (clickUsingJavaScript(driver, addContactsToDealTeamPopUpRoleDropDown().get(index), role)) {
+						log(LogStatus.INFO, "Clicked on ComboBox of Record: " + recordName, YesNo.No);
+
+						List<String> addContactsToDealTeamPopUpRoleDropDownValuesText = addContactsToDealTeamPopUpRoleDropDownValues()
+								.stream().map(x -> x.getText()).collect(Collectors.toList());
+						CommonLib.ThreadSleep(1000);
+
+						if (clickUsingJavaScript(driver, addContactsToDealTeamPopUpRoleDropDownValues()
+								.get(addContactsToDealTeamPopUpRoleDropDownValuesText.indexOf(role)), role)) {
+							log(LogStatus.INFO, "Clicked on Role: " + role + " of Record: " + recordName, YesNo.No);
+
+						} else {
+							log(LogStatus.ERROR, "Not able to Click on Role: " + role + " of Record: " + recordName,
+									YesNo.No);
+							sa.assertTrue(false, "Not able to Click on Role: " + role + " of Record: " + recordName);
+
+							return false;
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not able to Click on ComboBox of Record: " + recordName, YesNo.No);
+						sa.assertTrue(false, "Not able to Click on ComboBox of Record: " + recordName);
+
+						return false;
+					}
+				}
+
 			}
-			String button = "";
+
+		}
+		String button = "";
+		if (buttonNameOfAddContactsToDealTeamPopUp.contains("Add")
+				&& buttonNameOfAddContactsToDealTeamPopUp.contains("<")) {
+
+			button = buttonNameOfAddContactsToDealTeamPopUp.replace(buttonNameOfAddContactsToDealTeamPopUp.substring(
+					buttonNameOfAddContactsToDealTeamPopUp.indexOf("<"),
+					buttonNameOfAddContactsToDealTeamPopUp.indexOf(">") + 1), "");
+		} else {
+			button = buttonNameOfAddContactsToDealTeamPopUp;
+		}
+		if (clickUsingJavaScript(driver, addContactsToDealTeamPopUpFooterButtonName(button, 7), button)) {
+			log(LogStatus.INFO, "Clicked on Footer Button: " + button + " of Add Contacts To Deal Team Popup",
+					YesNo.No);
+
+			WebElement msgElement = null;
+			String actualMsg = "";
+			if (buttonNameOfAddContactsToDealTeamPopUp.contains("Add")) {
+
+				msgElement = addContactsToDealTeamPopupSuccessMsg(7);
+				actualMsg = CommonLib.getText(driver, msgElement, "Msg", action.BOOLEAN);
+
+			}
+
 			if (buttonNameOfAddContactsToDealTeamPopUp.contains("Add")
 					&& buttonNameOfAddContactsToDealTeamPopUp.contains("<")) {
+				if (msgElement != null) {
 
-				button = buttonNameOfAddContactsToDealTeamPopUp.replace(buttonNameOfAddContactsToDealTeamPopUp
-						.substring(buttonNameOfAddContactsToDealTeamPopUp.indexOf("<"),
-								buttonNameOfAddContactsToDealTeamPopUp.indexOf(">") + 1),
-						"");
-			} else {
-				button = buttonNameOfAddContactsToDealTeamPopUp;
-			}
-			if (clickUsingJavaScript(driver, addContactsToDealTeamPopUpFooterButtonName(button, 7), button)) {
-				log(LogStatus.INFO, "Clicked on Footer Button: " + button + " of Add Contacts To Deal Team Popup",
-						YesNo.No);
-
-				WebElement msgElement = null;
-				String actualMsg = "";
-				if (buttonNameOfAddContactsToDealTeamPopUp.contains("Add")) {
-
-					if (addContactsToDealTeamPopupSuccessMsg(7) != null) {
-						msgElement = addContactsToDealTeamPopupSuccessMsg(7);
-						actualMsg = msgElement.getText();
+					log(LogStatus.INFO, "Toast Msg is Showing for Add Contacts To Deal Team Popup", YesNo.No);
+					flag = true;
+					String errorMsg = buttonNameOfAddContactsToDealTeamPopUp.substring(
+							buttonNameOfAddContactsToDealTeamPopUp.indexOf("<") + 1,
+							buttonNameOfAddContactsToDealTeamPopUp.indexOf(">"));
+					if (errorMsg.equalsIgnoreCase(actualMsg)) {
+						log(LogStatus.INFO,
+								"Success Msg is Showing for Add Contacts To Deal Team Popup and i.e.: " + errorMsg,
+								YesNo.No);
+					} else {
+						log(LogStatus.ERROR, "Toast Msg is not matched for Add Contacts To Deal Team Popup, Actual: "
+								+ actualMsg + " but Expected: " + errorMsg, YesNo.No);
+						sa.assertTrue(false, "Toast Msg is not matched for Add Contacts To Deal Team Popup, Actual: "
+								+ actualMsg + " but Expected: " + errorMsg);
 					}
+				} else {
+					log(LogStatus.ERROR, "Toast Msg is not Showing for Add Contacts To Deal Team Popup", YesNo.No);
+					sa.assertTrue(false, "Toast Msg is not Showing for Add Contacts To Deal Team Popup");
 
+					return false;
 				}
 
-				if (buttonNameOfAddContactsToDealTeamPopUp.contains("Add")
-						&& buttonNameOfAddContactsToDealTeamPopUp.contains("<")) {
-					if (msgElement != null) {
+				clickUsingJavaScript(driver, addContactsToDealTeamPopUpFooterButtonName("Cancel", 7), "Cancel");
 
-						log(LogStatus.INFO, "Toast Msg is Showing for Add Contacts To Deal Team Popup", YesNo.No);
-						flag = true;
-						String errorMsg = buttonNameOfAddContactsToDealTeamPopUp.substring(
-								buttonNameOfAddContactsToDealTeamPopUp.indexOf("<") + 1,
-								buttonNameOfAddContactsToDealTeamPopUp.indexOf(">"));
-						if (errorMsg.equalsIgnoreCase(actualMsg)) {
-							log(LogStatus.INFO,
-									"Success Msg is Showing for Add Contacts To Deal Team Popup and i.e.: " + errorMsg,
-									YesNo.No);
-						} else {
-							log(LogStatus.ERROR,
-									"Toast Msg is not matched for Add Contacts To Deal Team Popup, Actual: " + actualMsg
-											+ " but Expected: " + errorMsg,
-									YesNo.No);
-							sa.assertTrue(false,
-									"Toast Msg is not matched for Add Contacts To Deal Team Popup, Actual: " + actualMsg
-											+ " but Expected: " + errorMsg);
-						}
-					} else {
-						log(LogStatus.ERROR, "Toast Msg is not Showing for Add Contacts To Deal Team Popup", YesNo.No);
-						sa.assertTrue(false, "Toast Msg is not Showing for Add Contacts To Deal Team Popup");
+			} else if (buttonNameOfAddContactsToDealTeamPopUp.equalsIgnoreCase("Add")) {
 
-						return false;
-					}
-
-					clickUsingJavaScript(driver, addContactsToDealTeamPopUpFooterButtonName("Cancel", 7), "Cancel");
-
-				} else if (buttonNameOfAddContactsToDealTeamPopUp.equalsIgnoreCase("Add")) {
-
+				if (!actualMsg.equals("")) {
 					if ("Deal Team Added Successfully".equalsIgnoreCase(actualMsg)) {
 						log(LogStatus.INFO, "Success Msg is Showing for Add Contacts To Deal Team Popup and i.e.: "
 								+ "Deal Team Added Successfully", YesNo.No);
@@ -23892,28 +24015,26 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						sa.assertTrue(false, "Toast Msg is not matched for Add Contacts To Deal Team Popup, Actual: "
 								+ actualMsg + " but Expected: " + "Deal Team Added Successfully");
 					}
-
-				}
-
-				else {
+				} else {
+					// Sometimes Msg goes before Loader Invisible
 					flag = true;
 				}
 
-			} else {
-				log(LogStatus.ERROR,
-						"Not Able to Click on Footer Button: " + button + " of Add Contacts To Deal Team Popup",
-						YesNo.No);
-				sa.assertTrue(false,
-						"Not Able to Click on Footer Button: " + button + " of Add Contacts To Deal Team Popup");
-
-				return false;
 			}
 
-		} catch (Exception e) {
-			log(LogStatus.ERROR, "Error Occured in Create New record Popup: Exception: " + e.getMessage(), YesNo.No);
-			sa.assertTrue(false, "Error Occured in Create New record Popup: Exception: " + e.getMessage());
+			else {
+				flag = true;
+			}
+
+		} else {
+			log(LogStatus.ERROR,
+					"Not Able to Click on Footer Button: " + button + " of Add Contacts To Deal Team Popup", YesNo.No);
+			sa.assertTrue(false,
+					"Not Able to Click on Footer Button: " + button + " of Add Contacts To Deal Team Popup");
+
 			return false;
 		}
+
 		return flag;
 	}
 
@@ -23927,212 +24048,201 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		boolean flag = false;
 		boolean allCheckedFlag = false;
-		try {
-			String buttonNameOfAddContactsToFundraisingPopUpp = "";
-			for (String[] addContactsToFundraisingPopUpSingleArray : addContactsToFundraisingObject) {
 
-				if (addContactsToFundraisingPopUpSingleArray[0]
-						.equalsIgnoreCase("addContactsToFundraisingPopUpShouldNotThere")) {
+		String buttonNameOfAddContactsToFundraisingPopUpp = "";
+		for (String[] addContactsToFundraisingPopUpSingleArray : addContactsToFundraisingObject) {
 
-					if (addToFundraisingContactsPopUpHeader(5) == null) {
-						log(LogStatus.INFO, "------Verified Add Contacts To Fundraising Popup is not Open-----",
-								YesNo.No);
-						return true;
+			if (addContactsToFundraisingPopUpSingleArray[0]
+					.equalsIgnoreCase("addContactsToFundraisingPopUpShouldNotThere")) {
+
+				if (addToFundraisingContactsPopUpHeader(5) == null) {
+					log(LogStatus.INFO, "------Verified Add Contacts To Fundraising Popup is not Open-----", YesNo.No);
+					return true;
+				} else {
+					log(LogStatus.ERROR, "------Add Contacts To Fundraising Popup should not Open-----", YesNo.No);
+					sa.assertTrue(false, "------Add Contacts To Fundraising Popup should not Open-----");
+					return false;
+				}
+
+			} else {
+
+				String checked = addContactsToFundraisingPopUpSingleArray[0];
+				String recordName = addContactsToFundraisingPopUpSingleArray[1];
+				String role = addContactsToFundraisingPopUpSingleArray[2];
+				buttonNameOfAddContactsToFundraisingPopUpp = addContactsToFundraisingPopUpSingleArray[3];
+
+				Integer index;
+
+				index = addToFundraisingContactsTeamPopUpContactNames().indexOf(recordName);
+				if (index.equals(-1)) {
+					log(LogStatus.ERROR, "Record: " + recordName + " not found in Add Contacts To Fundraising Popup",
+							YesNo.No);
+					sa.assertTrue(false, "Record: " + recordName + " not found in Add Contacts To Fundraising Popup");
+					return false;
+				}
+
+				if (checked.equalsIgnoreCase("allRecords")) {
+
+					if (!allCheckedFlag) {
+						if (clickUsingJavaScript(driver, addToFundraisingContactsPopUpAllRecordCheckBox(4), checked)) {
+							log(LogStatus.INFO,
+									"Clicked on Checkbox of All Record Checkbox in Add Contacts To Fundraising Popup"
+											+ recordName,
+									YesNo.No);
+
+							if (CommonLib.isSelected(driver, addToFundraisingContactsPopUpAllRecordCheckBox(4),
+									recordName)) {
+								log(LogStatus.INFO,
+										"All Record checkbox has selected in Add Contacts To Fundraising Popup",
+										YesNo.No);
+								allCheckedFlag = true;
+
+							} else {
+								log(LogStatus.ERROR,
+										"All Record checkbox has not selected in Add Contacts To Fundraising Popup",
+										YesNo.No);
+								sa.assertTrue(false,
+										"All Record checkbox has not selected in Add Contacts To Fundraising Popup");
+
+								return false;
+							}
+						} else {
+							log(LogStatus.ERROR,
+									"Not able to Click on Checkbox of All Record Checkbox in Add Contacts To Fundraising Popup",
+									YesNo.No);
+							sa.assertTrue(false,
+									"Not able to Click on Checkbox of All Record Checkbox in Add Contacts To Fundraising Popup");
+
+							return false;
+						}
+					}
+				} else if (checked.equalsIgnoreCase("checked")) {
+					if (clickUsingJavaScript(driver, addToFundraisingContactsPopUpCheckBoxes().get(index), checked)) {
+						log(LogStatus.INFO, "Clicked on Checkbox of Record: " + recordName, YesNo.No);
+
+						if (CommonLib.isSelected(driver, addToFundraisingContactsPopUpCheckBoxes().get(index),
+								recordName)) {
+							log(LogStatus.INFO,
+									"Record: " + recordName + " has checked in Add Contacts To Fundraising Popup",
+									YesNo.No);
+
+						} else {
+							log(LogStatus.ERROR,
+									"Record: " + recordName + " has not checked in Add Contacts To Fundraising Popup",
+									YesNo.No);
+							sa.assertTrue(false,
+									"Record: " + recordName + " has not checked in Add Contacts To Fundraising Popup");
+
+							return false;
+						}
 					} else {
-						log(LogStatus.ERROR, "------Add Contacts To Fundraising Popup should not Open-----", YesNo.No);
-						sa.assertTrue(false, "------Add Contacts To Fundraising Popup should not Open-----");
+						log(LogStatus.ERROR, "Not able to Click on Checkbox of Record: " + recordName, YesNo.No);
+						sa.assertTrue(false, "Not able to Click on Checkbox of Record: " + recordName);
+
 						return false;
 					}
+				} else if (checked.equalsIgnoreCase("")) {
 
 				} else {
 
-					String checked = addContactsToFundraisingPopUpSingleArray[0];
-					String recordName = addContactsToFundraisingPopUpSingleArray[1];
-					String role = addContactsToFundraisingPopUpSingleArray[2];
-					buttonNameOfAddContactsToFundraisingPopUpp = addContactsToFundraisingPopUpSingleArray[3];
+					log(LogStatus.ERROR, "Please Provide the One of the Deatils for CheckBox of Record: " + recordName
+							+ " i.e. Either \"\" or checked", YesNo.No);
+					sa.assertTrue(false, "Please Provide the One of the Deatils for CheckBox of Record: " + recordName
+							+ " i.e. Either \"\" or checked");
 
-					Integer index;
+					return false;
 
-					index = addToFundraisingContactsTeamPopUpContactNames().indexOf(recordName);
-					if (index.equals(-1)) {
-						log(LogStatus.ERROR,
-								"Record: " + recordName + " not found in Add Contacts To Fundraising Popup", YesNo.No);
-						sa.assertTrue(false,
-								"Record: " + recordName + " not found in Add Contacts To Fundraising Popup");
-						return false;
-					}
+				}
 
-					if (checked.equalsIgnoreCase("allRecords")) {
+				if (!role.equalsIgnoreCase("")) {
+					if (clickUsingJavaScript(driver, addToFundraisingContactsPopUpRoleDropDown().get(index), role)) {
+						log(LogStatus.INFO, "Clicked on ComboBox of Record: " + recordName, YesNo.No);
 
-						if (!allCheckedFlag) {
-							if (clickUsingJavaScript(driver, addToFundraisingContactsPopUpAllRecordCheckBox(4),
-									checked)) {
-								log(LogStatus.INFO,
-										"Clicked on Checkbox of All Record Checkbox in Add Contacts To Fundraising Popup"
-												+ recordName,
-										YesNo.No);
+						List<String> addToFundraisingContactsPopUpRoleDropDownValuesText = addToFundraisingContactsPopUpRoleDropDownValues()
+								.stream().map(x -> x.getText()).collect(Collectors.toList());
+						CommonLib.ThreadSleep(500);
 
-								if (CommonLib.isSelected(driver, addToFundraisingContactsPopUpAllRecordCheckBox(4),
-										recordName)) {
-									log(LogStatus.INFO,
-											"All Record checkbox has selected in Add Contacts To Fundraising Popup",
-											YesNo.No);
-									allCheckedFlag = true;
+						if (clickUsingJavaScript(driver, addToFundraisingContactsPopUpRoleDropDownValues()
+								.get(addToFundraisingContactsPopUpRoleDropDownValuesText.indexOf(role)), role)) {
+							log(LogStatus.INFO, "Clicked on Role: " + role + " of Record: " + recordName, YesNo.No);
 
-								} else {
-									log(LogStatus.ERROR,
-											"All Record checkbox has not selected in Add Contacts To Fundraising Popup",
-											YesNo.No);
-									sa.assertTrue(false,
-											"All Record checkbox has not selected in Add Contacts To Fundraising Popup");
-
-									return false;
-								}
-							} else {
-								log(LogStatus.ERROR,
-										"Not able to Click on Checkbox of All Record Checkbox in Add Contacts To Fundraising Popup",
-										YesNo.No);
-								sa.assertTrue(false,
-										"Not able to Click on Checkbox of All Record Checkbox in Add Contacts To Fundraising Popup");
-
-								return false;
-							}
-						}
-					} else if (checked.equalsIgnoreCase("checked")) {
-						if (clickUsingJavaScript(driver, addToFundraisingContactsPopUpCheckBoxes().get(index),
-								checked)) {
-							log(LogStatus.INFO, "Clicked on Checkbox of Record: " + recordName, YesNo.No);
-
-							if (CommonLib.isSelected(driver, addToFundraisingContactsPopUpCheckBoxes().get(index),
-									recordName)) {
-								log(LogStatus.INFO,
-										"Record: " + recordName + " has checked in Add Contacts To Fundraising Popup",
-										YesNo.No);
-
-							} else {
-								log(LogStatus.ERROR, "Record: " + recordName
-										+ " has not checked in Add Contacts To Fundraising Popup", YesNo.No);
-								sa.assertTrue(false, "Record: " + recordName
-										+ " has not checked in Add Contacts To Fundraising Popup");
-
-								return false;
-							}
 						} else {
-							log(LogStatus.ERROR, "Not able to Click on Checkbox of Record: " + recordName, YesNo.No);
-							sa.assertTrue(false, "Not able to Click on Checkbox of Record: " + recordName);
+							log(LogStatus.ERROR, "Not able to Click on Role: " + role + " of Record: " + recordName,
+									YesNo.No);
+							sa.assertTrue(false, "Not able to Click on Role: " + role + " of Record: " + recordName);
 
 							return false;
 						}
-					} else if (checked.equalsIgnoreCase("")) {
 
 					} else {
-
-						log(LogStatus.ERROR, "Please Provide the One of the Deatils for CheckBox of Record: "
-								+ recordName + " i.e. Either \"\" or checked", YesNo.No);
-						sa.assertTrue(false, "Please Provide the One of the Deatils for CheckBox of Record: "
-								+ recordName + " i.e. Either \"\" or checked");
+						log(LogStatus.ERROR, "Not able to Click on ComboBox of Record: " + recordName, YesNo.No);
+						sa.assertTrue(false, "Not able to Click on ComboBox of Record: " + recordName);
 
 						return false;
-
 					}
-
-					if (!role.equalsIgnoreCase("")) {
-						if (clickUsingJavaScript(driver, addToFundraisingContactsPopUpRoleDropDown().get(index),
-								role)) {
-							log(LogStatus.INFO, "Clicked on ComboBox of Record: " + recordName, YesNo.No);
-
-							List<String> addToFundraisingContactsPopUpRoleDropDownValuesText = addToFundraisingContactsPopUpRoleDropDownValues()
-									.stream().map(x -> x.getText()).collect(Collectors.toList());
-							CommonLib.ThreadSleep(500);
-
-							if (clickUsingJavaScript(driver, addToFundraisingContactsPopUpRoleDropDownValues()
-									.get(addToFundraisingContactsPopUpRoleDropDownValuesText.indexOf(role)), role)) {
-								log(LogStatus.INFO, "Clicked on Role: " + role + " of Record: " + recordName, YesNo.No);
-
-							} else {
-								log(LogStatus.ERROR, "Not able to Click on Role: " + role + " of Record: " + recordName,
-										YesNo.No);
-								sa.assertTrue(false,
-										"Not able to Click on Role: " + role + " of Record: " + recordName);
-
-								return false;
-							}
-
-						} else {
-							log(LogStatus.ERROR, "Not able to Click on ComboBox of Record: " + recordName, YesNo.No);
-							sa.assertTrue(false, "Not able to Click on ComboBox of Record: " + recordName);
-
-							return false;
-						}
-					}
-
 				}
 
 			}
 
-			String button = "";
+		}
+
+		String button = "";
+		if (buttonNameOfAddContactsToFundraisingPopUpp.contains("Add")
+				&& buttonNameOfAddContactsToFundraisingPopUpp.contains("<")) {
+
+			button = buttonNameOfAddContactsToFundraisingPopUpp.replace(buttonNameOfAddContactsToFundraisingPopUpp
+					.substring(buttonNameOfAddContactsToFundraisingPopUpp.indexOf("<"),
+							buttonNameOfAddContactsToFundraisingPopUpp.indexOf(">") + 1),
+					"");
+		} else {
+			button = buttonNameOfAddContactsToFundraisingPopUpp;
+		}
+		if (clickUsingJavaScript(driver, addToFundraisingContactsPopUpFooterButtonName(button, 7), button)) {
+			log(LogStatus.INFO, "Clicked on Footer Button: " + button + " of Add Contacts To Fundraising Popup",
+					YesNo.No);
+
+			WebElement msgElement = null;
+			String actualMsg = "";
+			if (buttonNameOfAddContactsToFundraisingPopUpp.contains("Add")) {
+
+				msgElement = addContactsToDealTeamPopupSuccessMsg(7);
+				actualMsg = CommonLib.getText(driver, msgElement, "Msg", action.BOOLEAN);
+
+			}
 			if (buttonNameOfAddContactsToFundraisingPopUpp.contains("Add")
 					&& buttonNameOfAddContactsToFundraisingPopUpp.contains("<")) {
+				if (msgElement != null) {
 
-				button = buttonNameOfAddContactsToFundraisingPopUpp.replace(buttonNameOfAddContactsToFundraisingPopUpp
-						.substring(buttonNameOfAddContactsToFundraisingPopUpp.indexOf("<"),
-								buttonNameOfAddContactsToFundraisingPopUpp.indexOf(">") + 1),
-						"");
-			} else {
-				button = buttonNameOfAddContactsToFundraisingPopUpp;
-			}
-			if (clickUsingJavaScript(driver, addToFundraisingContactsPopUpFooterButtonName(button, 7), button)) {
-				log(LogStatus.INFO, "Clicked on Footer Button: " + button + " of Add Contacts To Fundraising Popup",
-						YesNo.No);
+					log(LogStatus.INFO, "Toast Msg is Showing for Add Contacts To Fundraising Popup", YesNo.No);
+					flag = true;
+					String errorMsg = buttonNameOfAddContactsToFundraisingPopUpp.substring(
+							buttonNameOfAddContactsToFundraisingPopUpp.indexOf("<") + 1,
+							buttonNameOfAddContactsToFundraisingPopUpp.indexOf(">"));
 
-				WebElement msgElement = null;
-				String actualMsg = "";
-				if (buttonNameOfAddContactsToFundraisingPopUpp.contains("Add")) {
-
-					if (addContactsToDealTeamPopupSuccessMsg(7) != null) {
-						msgElement = addContactsToDealTeamPopupSuccessMsg(7);
-						actualMsg = msgElement.getText();
-					}
-
-				}
-				if (buttonNameOfAddContactsToFundraisingPopUpp.contains("Add")
-						&& buttonNameOfAddContactsToFundraisingPopUpp.contains("<")) {
-					if (msgElement != null) {
-
-						log(LogStatus.INFO, "Toast Msg is Showing for Add Contacts To Fundraising Popup", YesNo.No);
-						flag = true;
-						String errorMsg = buttonNameOfAddContactsToFundraisingPopUpp.substring(
-								buttonNameOfAddContactsToFundraisingPopUpp.indexOf("<") + 1,
-								buttonNameOfAddContactsToFundraisingPopUpp.indexOf(">"));
-
-						if (errorMsg.equalsIgnoreCase(actualMsg)) {
-							log(LogStatus.INFO,
-									"Success Msg is Showing for Add Contacts To Fundraising Popup and i.e.: "
-											+ errorMsg,
-									YesNo.No);
-						} else {
-							log(LogStatus.ERROR,
-									"Toast Msg is not matched for Add Contacts To Fundraising Popup, Actual: "
-											+ actualMsg + " but Expected: " + errorMsg,
-									YesNo.No);
-							sa.assertTrue(false,
-									"Toast Msg is not matched for Add Contacts To Fundraising Popup, Actual: "
-											+ actualMsg + " but Expected: " + errorMsg);
-						}
-					} else {
-						log(LogStatus.ERROR, "Toast Msg is not Showing for Add Contacts To Fundraising Popup",
+					if (errorMsg.equalsIgnoreCase(actualMsg)) {
+						log(LogStatus.INFO,
+								"Success Msg is Showing for Add Contacts To Fundraising Popup and i.e.: " + errorMsg,
 								YesNo.No);
-						sa.assertTrue(false, "Toast Msg is not Showing for Add Contacts To Fundraising Popup");
-
-						return false;
+					} else {
+						log(LogStatus.ERROR, "Toast Msg is not matched for Add Contacts To Fundraising Popup, Actual: "
+								+ actualMsg + " but Expected: " + errorMsg, YesNo.No);
+						sa.assertTrue(false, "Toast Msg is not matched for Add Contacts To Fundraising Popup, Actual: "
+								+ actualMsg + " but Expected: " + errorMsg);
 					}
+				} else {
+					log(LogStatus.ERROR, "Toast Msg is not Showing for Add Contacts To Fundraising Popup", YesNo.No);
+					sa.assertTrue(false, "Toast Msg is not Showing for Add Contacts To Fundraising Popup");
 
-					clickUsingJavaScript(driver, addContactsToDealTeamPopUpFooterButtonName("Cancel", 7), "Cancel");
-
+					return false;
 				}
 
-				else if (buttonNameOfAddContactsToFundraisingPopUpp.equalsIgnoreCase("Add")) {
+				clickUsingJavaScript(driver, addContactsToDealTeamPopUpFooterButtonName("Cancel", 7), "Cancel");
 
+			}
+
+			else if (buttonNameOfAddContactsToFundraisingPopUpp.equalsIgnoreCase("Add")) {
+
+				if (!actualMsg.equals("")) {
 					if ("Contact was successfully added to your Fundraising.".equalsIgnoreCase(actualMsg)) {
 
 						log(LogStatus.INFO, "Success Msg is Showing for Add Contacts To Fundraising Popup and i.e.: "
@@ -24149,25 +24259,22 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										+ " but Expected: " + "Contact was successfully added to your Fundraising.");
 
 					}
-
 				} else {
+					// Sometimes Msg goes before Loader Invisible
 					flag = true;
 				}
 
 			} else {
-				log(LogStatus.ERROR,
-						"Not Able to Click on Footer Button: " + button + " of Add Contacts To Fundraising Popup",
-						YesNo.No);
-				sa.assertTrue(false,
-						"Not Able to Click on Footer Button: " + button + " of Add Contacts To Fundraising Popup");
-
-				return false;
+				flag = true;
 			}
 
-		} catch (Exception e) {
-			log(LogStatus.ERROR, "Error Occured in Add Contacts To Fundraising Popup: Exception: " + e.getMessage(),
+		} else {
+			log(LogStatus.ERROR,
+					"Not Able to Click on Footer Button: " + button + " of Add Contacts To Fundraising Popup",
 					YesNo.No);
-			sa.assertTrue(false, "Error Occured in Add Contacts To Fundraising Popup: Exception: " + e.getMessage());
+			sa.assertTrue(false,
+					"Not Able to Click on Footer Button: " + button + " of Add Contacts To Fundraising Popup");
+
 			return false;
 		}
 
@@ -24507,7 +24614,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		if (VerificationData != null) {
 
-			if (clickUsingJavaScript(driver, detailsButtonUnderSuggestedTag(7), "Details Button Under Suggested Popup",
+			if (click(driver, detailsButtonUnderSuggestedTag(15), "Details Button Under Suggested Popup",
 					action.SCROLLANDBOOLEAN)) {
 
 				log(LogStatus.INFO, "Clicked on Details Button under Suggested Tags Popup", YesNo.No);
@@ -24765,6 +24872,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	public TabName returnTabName(String tab) {
 		TabName viewList = null;
+		if (!tab.substring(tab.length() - 1).equalsIgnoreCase("s")) {
+			tab = tab + "s";
+		}
 		switch (tab) {
 		case "Contacts":
 			viewList = TabName.ContactTab;
@@ -24841,22 +24951,22 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			ele.clear();
 			ele.sendKeys(notes);
 			if (recordNameListInNotesSuggestionBox().size() > 0) {
-				log(LogStatus.INFO, "Suggestion Box Found in Notes Section for record: " + records[0], YesNo.No);
+				log(LogStatus.INFO, "Suggestion Box Found in Notes Section for record: " + notes, YesNo.No);
 				return true;
 			} else {
-				sa.assertTrue(false, "Suggestion Box not Found in Notes Section for Record: " + records[0]);
-				log(LogStatus.ERROR, "Suggestion Box not Found in Notes Section for Record: " + records[0], YesNo.Yes);
+				sa.assertTrue(false, "Suggestion Box not Found in Notes Section for Record: " + notes);
+				log(LogStatus.ERROR, "Suggestion Box not Found in Notes Section for Record: " + notes, YesNo.Yes);
 				return false;
 			}
 		} else if (records[0].contains("<suggestionShouldNotThere>")) {
 			ele.clear();
 			ele.sendKeys(notes);
 			if (recordNameListInNotesSuggestionBox().size() == 0) {
-				log(LogStatus.INFO, "Suggestion Box not Found in Notes Section for record: " + records[0], YesNo.No);
+				log(LogStatus.INFO, "Suggestion Box not Found in Notes Section for record: " + notes, YesNo.No);
 				return true;
 			} else {
-				sa.assertTrue(false, "Suggestion Box Found in Notes Section for Record: " + records[0]);
-				log(LogStatus.ERROR, "Suggestion Box Found in Notes Section for Record: " + records[0], YesNo.Yes);
+				sa.assertTrue(false, "Suggestion Box Found in Notes Section for Record: " + notes);
+				log(LogStatus.ERROR, "Suggestion Box Found in Notes Section for Record: " + notes, YesNo.Yes);
 				return false;
 			}
 		} else if (records[0].contains("<recordsVerify>")) {
@@ -24906,7 +25016,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (temp.length() > 0) {
 			tempList.add(temp);
 		}
-		System.out.print(tempList);
+		
 
 		for (String splittedNote : tempList) {
 
@@ -25373,7 +25483,147 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return result;
 	}
-	
+
+	public ArrayList<String> verifyUIOfClipPopupFromNavigation() {
+		ArrayList<String> result = new ArrayList<String>();
+		if (getClipIconOnPopup(10) != null) {
+			log(LogStatus.INFO, "clip icon has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "clip icon is not verified on icon popup", YesNo.No);
+			result.add("clip icon is not verified on icon popup");
+		}
+
+		if (getClipTextOnPopup(10) != null) {
+			log(LogStatus.INFO, "clip text has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "clip text is not verified on icon popup", YesNo.No);
+			result.add("clip text is not verified on icon popup");
+		}
+
+		if (getMinimizeIconOnpopup(10) != null) {
+			log(LogStatus.INFO, "Minimize icon has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Minimize icon is not verified on icon popup", YesNo.No);
+			result.add("Minimize icon is not verified on icon popup");
+		}
+		if (getPopOutIconOnpopup(10) != null) {
+			log(LogStatus.INFO, "Pop-out icon has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Pop-out icon is not verified on icon popup", YesNo.No);
+			result.add("Pop-out icon is not verified on icon popup");
+		}
+
+		if (getTextareaOnPopup(10) != null) {
+			log(LogStatus.INFO, "textarea has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "textarea is not verified on icon popup", YesNo.No);
+			result.add("textarea is not verified on icon popup");
+		}
+
+		if (getHelpIconOnPopup(10) != null) {
+			log(LogStatus.INFO, "Help icon has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Help icon is not verified on icon popup", YesNo.No);
+			result.add("Help icon is not verified on icon popup");
+		}
+
+		if (getTagIconOnPopup(10) != null) {
+			log(LogStatus.INFO, "Tag icon has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Tag icon is not verified on icon popup", YesNo.No);
+			result.add("Tag icon is not verified on icon popup");
+		}
+
+		if (getSldspillOnPopup(10) != null) {
+			log(LogStatus.INFO, "Tagged record has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Tagged record is not verified on icon popup", YesNo.No);
+			result.add("Tagged record is not verified on icon popup");
+		}
+
+		if (getClearButtonOnPopup(10) != null) {
+			log(LogStatus.INFO, "Clear button has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Clear button is not verified on icon popup", YesNo.No);
+			result.add("Clear button is not verified on icon popup");
+		}
+
+		if (getSaveButtonOnPopup(10) != null) {
+			log(LogStatus.INFO, "Save button has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Save button is not verified on icon popup", YesNo.No);
+			result.add("Save button is not verified on icon popup");
+		}
+		return result;
+	}
+
+	public ArrayList<String> verifyUIOfClipPopupAfterClickOfPopOut() {
+		ArrayList<String> result = new ArrayList<String>();
+		if (getClipIconOnPopup(10) != null) {
+			log(LogStatus.INFO, "clip icon has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "clip icon is not verified on icon popup", YesNo.No);
+			result.add("clip icon is not verified on icon popup");
+		}
+
+		if (getClipTextOnPopup(10) != null) {
+			log(LogStatus.INFO, "clip text has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "clip text is not verified on icon popup", YesNo.No);
+			result.add("clip text is not verified on icon popup");
+		}
+
+		if (getPopInIconOnpopup(10) != null) {
+			log(LogStatus.INFO, "Pop-out icon has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Pop-out icon is not verified on icon popup", YesNo.No);
+			result.add("Pop-out icon is not verified on icon popup");
+		}
+
+		if (getTextareaOnPopup(10) != null) {
+			log(LogStatus.INFO, "textarea has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "textarea is not verified on icon popup", YesNo.No);
+			result.add("textarea is not verified on icon popup");
+		}
+
+		if (getHelpIconOnPopup(10) != null) {
+			log(LogStatus.INFO, "Help icon has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Help icon is not verified on icon popup", YesNo.No);
+			result.add("Help icon is not verified on icon popup");
+		}
+
+		if (getTagIconOnPopup(10) != null) {
+			log(LogStatus.INFO, "Tag icon has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Tag icon is not verified on icon popup", YesNo.No);
+			result.add("Tag icon is not verified on icon popup");
+		}
+
+		if (getSldspillOnPopup(10) != null) {
+			log(LogStatus.INFO, "Tagged record has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Tagged record is not verified on icon popup", YesNo.No);
+			result.add("Tagged record is not verified on icon popup");
+		}
+
+		if (getClearButtonOnPopup(10) != null) {
+			log(LogStatus.INFO, "Clear button has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Clear button is not verified on icon popup", YesNo.No);
+			result.add("Clear button is not verified on icon popup");
+		}
+
+		if (getSaveButtonOnPopup(10) != null) {
+			log(LogStatus.INFO, "Save button has been verified on icon popup", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Save button is not verified on icon popup", YesNo.No);
+			result.add("Save button is not verified on icon popup");
+		}
+		return result;
+	}
+
 	public ArrayList<String> verifyRedirectionOfActivityPopupFromIntractionPage(String[] recordName,
 			String[] objectName) {
 		ArrayList<String> result = new ArrayList<String>();
@@ -25413,6 +25663,5 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 
 	}
-
 
 }

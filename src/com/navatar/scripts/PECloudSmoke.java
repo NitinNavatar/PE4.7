@@ -409,10 +409,10 @@ public class PECloudSmoke extends BaseLib{
 					sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.DealTab);
 					log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.DealTab,YesNo.Yes);
 				}
+		
 				
 				SMOKDeal2LogInDate= previousOrForwardDateAccordingToTimeZone(-5, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);
 				ExcelUtils.writeData(phase1DataSheetFilePath, SMOKDeal2LogInDate, "Deal", excelLabel.Variable_Name, "SMOKDeal2",excelLabel.Log_In_Date);
-
 				String[][] otherlabel2={{excelLabel.Source_Firm.toString(),SMOKDeal2SourceFirm},{excelLabel.Investment_Size.toString(),SMOKDeal2InvestmentSize},
 						{excelLabel.Source_Contact.toString(),SMOKDeal2SourceContact},{excelLabel.Log_In_Date.toString(),SMOKDeal2LogInDate}};
 				if(bp.clickOnTab(environment,mode, TabName.DealTab)){
@@ -433,7 +433,7 @@ public class PECloudSmoke extends BaseLib{
 					sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.DealTab);
 					log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.DealTab,YesNo.Yes);
 				}
-				
+			
 				String[][] label = {{excelLabel.Vintage_Year.toString(),SMOKFund1VintageYear}};
 				ThreadSleep(2000);
 				//fund
@@ -468,14 +468,14 @@ public class PECloudSmoke extends BaseLib{
 				}
 				ThreadSleep(2000);
 				
-				//task
+				//call
 				SMOKTask1DueDate=previousOrForwardDateAccordingToTimeZone(-92, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);
 				String task = SMOKTask1Subject;
-				String[][] taskData = {{"Due Date Only",SMOKTask1DueDate},{PageLabel.Status.toString(),SMOKTask1Status}};
+				String[][] taskData = {{"Date",SMOKTask1DueDate}/*,{PageLabel.Status.toString(),SMOKTask1Status}*/};
 				
 				String [][] basicSection = {{PageLabel.Subject.toString(),task},{PageLabel.Related_To.toString(),SMOKTask1Name}};
 					
-				if (lp.createActivityTimeline("", true, "Task", basicSection, taskData, null, null, false, null, null, null, null, null, null)) {
+				if (lp.createActivityTimeline("", true, "Call", basicSection, taskData, null, null, false, null, null, null, null, null, null)) {
 					log(LogStatus.INFO,"Able to create task Value for : "+task,YesNo.No);
 						
 					ExcelUtils.writeData(phase1DataSheetFilePath,SMOKTask1DueDate, "Task1", excelLabel.Variable_Name, "SMOKTask1", excelLabel.Due_Date);
@@ -485,6 +485,7 @@ public class PECloudSmoke extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to create task : "+task,YesNo.Yes);	
 				}
 				
+
 				lp.CRMlogout();
 				sa.assertAll();
 		
@@ -522,7 +523,7 @@ public class PECloudSmoke extends BaseLib{
 				log(LogStatus.PASS, "Search Deal Name in filter " + deal, YesNo.No);
 				ThreadSleep(7000);
 				
-				List<WebElement> all =home.sdgGridFirstRowData(SDGGridName.Deals);
+				List<WebElement> all =home.sdgGridFirstRowData(SDGGridName.Deals, deal);
 				if(compareMultipleListSepratedByBreak(driver, dealLabel[i], all).isEmpty()){
 					log(LogStatus.PASS, deal+" Deal SDG Record is verified " , YesNo.No);
 					
@@ -553,7 +554,7 @@ public class PECloudSmoke extends BaseLib{
 				log(LogStatus.PASS, "Search FundRaising Name in filter " + SMOKFR1FundraisingName, YesNo.No);
 				ThreadSleep(7000);
 				
-				List<WebElement> all =home.sdgGridFirstRowData(SDGGridName.Fundraising);
+				List<WebElement> all =home.sdgGridFirstRowData(SDGGridName.Fundraising,SMOKFR1FundraisingName);
 				if(compareMultipleListSepratedByBreak(driver, labelName, all).isEmpty()){
 					log(LogStatus.PASS, SMOKFR1FundraisingName+" fundraising SDG Record is verified " , YesNo.No);
 					
@@ -583,7 +584,7 @@ public class PECloudSmoke extends BaseLib{
 				log(LogStatus.PASS, "Search My Call List Name in filter " + SMOKCon1FirstName + " " + SMOKCon1LastName, YesNo.No);
 				ThreadSleep(5000);
 
-				List<WebElement> all =home.sdgGridFirstRowData(SDGGridName.My_Call_List);
+				List<WebElement> all =home.sdgGridFirstRowData(SDGGridName.My_Call_List,SMOKCon1FirstName + " " + SMOKCon1LastName);
 				if(compareMultipleListSepratedByBreak(driver, labelName, all).isEmpty()){
 					log(LogStatus.PASS, SMOKCon1FirstName + " " + SMOKCon1LastName+" my call list SDG Record is verified " , YesNo.No);
 					
@@ -802,7 +803,7 @@ public class PECloudSmoke extends BaseLib{
 									Buttons.Add, 10), "Add button", action.SCROLLANDBOOLEAN);
 
 							if (click(driver, home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(
-									Buttons.Save, 10), "Add button", action.SCROLLANDBOOLEAN)) {
+									Buttons.Save, 10), "Save button", action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.PASS, "clicked on save button for " + SDGGridName.Deals,
 										YesNo.No);
 								ThreadSleep(5000);
@@ -936,7 +937,7 @@ public class PECloudSmoke extends BaseLib{
 		 
 		//task
 		String task = SMOKTask2Subject;
-		String[][] taskData = {{"Due Date Only",SMOKTask2DueDate}};
+		String[][] taskData = {{"Due Date",SMOKTask2DueDate}};
 		
 		String [][] basicSection = {{PageLabel.Subject.toString(),task},{PageLabel.Related_To.toString(),SMOKTask2Name}};
 			
@@ -1042,7 +1043,7 @@ public class PECloudSmoke extends BaseLib{
 				log(LogStatus.PASS, "Search Deal Name in filter " + deal, YesNo.No);
 				ThreadSleep(7000);
 				
-				List<WebElement> all =home.sdgGridFirstRowData(SDGGridName.Deals);
+				List<WebElement> all =home.sdgGridFirstRowData(SDGGridName.Deals,deal);
 				if(compareMultipleListSepratedByBreak(driver, dealLabel[i], all).isEmpty()){
 					log(LogStatus.PASS, deal+" Deal SDG Record is verified " , YesNo.No);
 					
@@ -1074,7 +1075,7 @@ public class PECloudSmoke extends BaseLib{
 				click(driver, home.sdgGridSideIcons(SDGGridName.Deals, SDGGridSideIcons.Toggle_Filters, 10), "filter icon",
 						action.SCROLLANDBOOLEAN);
 				
-				List<WebElement> all =home.sdgGridFirstRowData(SDGGridName.Deals);
+				List<WebElement> all =home.sdgGridFirstRowData(SDGGridName.Deals,SMOKDeal2DealName);
 				if(compareMultipleListSepratedByBreak(driver, dealLabel[1], all).isEmpty()){
 					log(LogStatus.PASS, SMOKDeal2DealName+" Deal SDG Record is verified " , YesNo.No);
 					
@@ -1139,7 +1140,7 @@ public class PECloudSmoke extends BaseLib{
 				click(driver, home.sdgGridSideIcons(SDGGridName.Deals, SDGGridSideIcons.Toggle_Filters, 10), "filter icon",
 						action.SCROLLANDBOOLEAN);
 				
-				List<WebElement> all =home.sdgGridFirstRowData(SDGGridName.Deals);
+				List<WebElement> all =home.sdgGridFirstRowData(SDGGridName.Deals,deal);
 				if(compareMultipleListSepratedByBreak(driver, dealLabel[i], all).isEmpty()){
 					log(LogStatus.PASS, deal+" Deal SDG Record is verified " , YesNo.No);
 					
@@ -1169,7 +1170,7 @@ public class PECloudSmoke extends BaseLib{
 				ThreadSleep(7000);
 				click(driver, home.sdgGridSideIcons(SDGGridName.Deals, SDGGridSideIcons.Toggle_Filters, 10), "filter icon",
 						action.BOOLEAN);
-				ThreadSleep(3000);
+				ThreadSleep(4000);
 				if (home.clickOnEditButtonOnSDGGridOnHomePage(projectName,SMOKDeal1DealName , excelLabel.Investment_Size.toString(), 10)) {
 					ThreadSleep(3000);
 					log(LogStatus.PASS, "mouse over on Investmetn column of Deal : "+SMOKDeal1DealName, YesNo.No);
@@ -1222,7 +1223,7 @@ public class PECloudSmoke extends BaseLib{
 				click(driver, home.sdgGridSideIcons(SDGGridName.Deals, SDGGridSideIcons.Toggle_Filters, 10), "filter icon",
 						action.SCROLLANDBOOLEAN);
 				
-				List<WebElement> all =home.sdgGridFirstRowData(SDGGridName.Deals);
+				List<WebElement> all =home.sdgGridFirstRowData(SDGGridName.Deals,SMOKDeal1DealName);
 				if(compareMultipleListSepratedByBreak(driver, labelValue, all).isEmpty()){
 					log(LogStatus.PASS, SMOKDeal1DealName+" Deal SDG Record is verified " , YesNo.No);
 					
@@ -1318,7 +1319,7 @@ public class PECloudSmoke extends BaseLib{
 				click(driver, home.sdgGridSideIcons(SDGGridName.Deals, SDGGridSideIcons.Toggle_Filters, 10), "filter icon",
 						action.SCROLLANDBOOLEAN);
 				
-				List<WebElement> all =home.sdgGridFirstRowData(SDGGridName.Deals);
+				List<WebElement> all =home.sdgGridFirstRowData(SDGGridName.Deals,SMOKDeal2DealName);
 				if(all.size()==0){
 					log(LogStatus.PASS, SMOKDeal2DealName+" Deal is deleted successflly  " , YesNo.No);
 					
@@ -1439,7 +1440,8 @@ public class PECloudSmoke extends BaseLib{
 			sa.assertTrue(false,"Plus(Add) icon is not verified for navigation menu:"+navigationMenuName);
 			
 		}
-
+		refresh(driver);
+		ThreadSleep(2000);
 		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 			List<String> abc = compareMultipleList(driver, filesName, npbl.getNavigationList(projectName, 10));
@@ -1464,7 +1466,7 @@ public class PECloudSmoke extends BaseLib{
 	@Parameters("projectName")
 	@Test		
 	public void smokeTc008_createDataForBulkAction(String projectName){
-		
+
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1472,12 +1474,11 @@ public class PECloudSmoke extends BaseLib{
 		FundsPageBusinessLayer fp= new FundsPageBusinessLayer(driver);
 		FundRaisingPageBusinessLayer fr = new FundRaisingPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		
-		
+
 		String value="";
 		String type="";
 		String[][] EntityOrAccounts = {{ SMOKIns4InsName, SMOKIns4RecordType ,null} ,{ SMOKIns5InsName, SMOKIns5RecordType ,null},{ SMOKIns6InsName, SMOKIns6RecordType ,null},
-			{ SMOKIns7InsName, SMOKIns7RecordType ,null},{ SMOKIns8InsName, SMOKIns8RecordType ,null},{ SMOKIns9InsName, SMOKIns9RecordType ,null}};
+				{ SMOKIns7InsName, SMOKIns7RecordType ,null},{ SMOKIns8InsName, SMOKIns8RecordType ,null},{ SMOKIns9InsName, SMOKIns9RecordType ,null}};
 
 		//ins
 		for (String[] accounts : EntityOrAccounts) {
@@ -1498,86 +1499,83 @@ public class PECloudSmoke extends BaseLib{
 				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.InstituitonsTab,YesNo.Yes);
 			}
 		}
-		
+
 		String firstName="";
 		String lastName="";
 		String legalName="";
 		String email="";
 		String phone="";
 		String[][] contacts = {{ SMOKCon2FirstName, SMOKCon2LastName ,SMOKCon2InstitutionName,SMOKCon2ContactEmail,SMOKCon2Phone} ,
-							{ SMOKCon3FirstName, SMOKCon3LastName ,SMOKCon3InstitutionName,SMOKCon3ContactEmail,SMOKCon3Phone},
-							{ SMOKCon4FirstName, SMOKCon4LastName ,SMOKCon4InstitutionName,SMOKCon4ContactEmail,SMOKCon4Phone},
-							{ SMOKCon5FirstName, SMOKCon5LastName ,SMOKCon5InstitutionName,SMOKCon5ContactEmail,SMOKCon5Phone},
-							{ SMOKCon6FirstName, SMOKCon6LastName ,SMOKCon6InstitutionName,SMOKCon6ContactEmail,SMOKCon6Phone},
-							{ SMOKCon7FirstName, SMOKCon7LastName ,SMOKCon7InstitutionName,SMOKCon7ContactEmail,SMOKCon7Phone}};
+				{ SMOKCon3FirstName, SMOKCon3LastName ,SMOKCon3InstitutionName,SMOKCon3ContactEmail,SMOKCon3Phone},
+				{ SMOKCon4FirstName, SMOKCon4LastName ,SMOKCon4InstitutionName,SMOKCon4ContactEmail,SMOKCon4Phone},
+				{ SMOKCon5FirstName, SMOKCon5LastName ,SMOKCon5InstitutionName,SMOKCon5ContactEmail,SMOKCon5Phone},
+				{ SMOKCon6FirstName, SMOKCon6LastName ,SMOKCon6InstitutionName,SMOKCon6ContactEmail,SMOKCon6Phone},
+				{ SMOKCon7FirstName, SMOKCon7LastName ,SMOKCon7InstitutionName,SMOKCon7ContactEmail,SMOKCon7Phone}};
 
 		ThreadSleep(2000);
 		// contact
 		for (String[] contact : contacts) {
-			
-				if (bp.clickOnTab(environment,mode, TabName.ContactTab)) {
-					log(LogStatus.INFO,"Click on Tab : "+TabName.ContactTab,YesNo.No);	
-					firstName = contact[0];
-					lastName = contact[1];
-					legalName=contact[2];
-					email=contact[3];
-					phone =contact[4];
-					
-					if (cp.createContact(projectName, firstName, lastName, legalName, email,"", excelLabel.Phone.toString(), phone, CreationPage.ContactPage, null,null)) {
-						log(LogStatus.INFO,"successfully Created Contact : "+firstName+" "+lastName,YesNo.No);	
-					} else {
-						sa.assertTrue(false,"Not Able to Create Contact : "+firstName+" "+lastName);
-						log(LogStatus.SKIP,"Not Able to Create Contact: "+firstName+" "+lastName,YesNo.Yes);
-					}
 
+			if (bp.clickOnTab(environment,mode, TabName.ContactTab)) {
+				log(LogStatus.INFO,"Click on Tab : "+TabName.ContactTab,YesNo.No);	
+				firstName = contact[0];
+				lastName = contact[1];
+				legalName=contact[2];
+				email=contact[3];
+				phone =contact[4];
 
+				if (cp.createContact(projectName, firstName, lastName, legalName, email,"", excelLabel.Phone.toString(), phone, CreationPage.ContactPage, null,null)) {
+					log(LogStatus.INFO,"successfully Created Contact : "+firstName+" "+lastName,YesNo.No);	
 				} else {
-					sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.ContactTab);
-					log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.ContactTab,YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Create Contact : "+firstName+" "+lastName);
+					log(LogStatus.SKIP,"Not Able to Create Contact: "+firstName+" "+lastName,YesNo.Yes);
 				}
-				
+
+
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.ContactTab);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.ContactTab,YesNo.Yes);
+			}
+
 		}
-				ThreadSleep(2000);
-				
-				String[][] labelWithValue ={{excelLabel.Vintage_Year.toString(),SMOKFund2VintageYear}};
-				//fund
-				if (bp.clickOnTab(environment,mode, TabName.FundsTab)) {
-					log(LogStatus.INFO,"Click on Tab : "+TabName.FundsTab,YesNo.No);	
-					if (fp.createFundPE(projectName,SMOKFund2FundName,"",SMOKFund2FundType,SMOKFund2InvestmentCategory, labelWithValue, 15)) {
-						log(LogStatus.INFO,"Created Fund : "+SMOKFund2FundName,YesNo.No);	
-					} else {
-						sa.assertTrue(false,"Not Able to Create Fund : "+SMOKFund2FundName);
-						log(LogStatus.SKIP,"Not Able to Create Fund  : "+SMOKFund2FundName,YesNo.Yes);
-					}
+		ThreadSleep(2000);
 
-				} else {
-					sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.FundsTab);
-					log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.FundsTab,YesNo.Yes);
-				}
-				
-				ThreadSleep(2000);
-				
-				// FR
-				
-				if(bp.clickOnTab(environment,mode,TabName.FundraisingsTab)) {
-					if(fr.createFundRaising(environment,mode,SMOKFR2FundraisingName,SMOKFR2FundName,SMOKFR2InstitutionName, null, null, null, null)){
-						appLog.info("fundraising is created : "+SMOKFR2FundraisingName);
-					}else {
-						appLog.error("Not able to create fundraising: "+SMOKFR2FundraisingName);
-						sa.assertTrue(false, "Not able to create fundraising: "+SMOKFR2FundraisingName);
-					}
-				}else {
-					appLog.error("Not able to click on fundraising tab so cannot create fundraising: "+SMOKFR2FundraisingName);
-					sa.assertTrue(false,"Not able to click on fundraising tab so cannot create fundraising: "+SMOKFR2FundraisingName);
-				}
-				
-				lp.CRMlogout();
-				sa.assertAll();
-				closeBrowser();
-	
-				
-	}
-	
+		String[][] labelWithValue ={{excelLabel.Vintage_Year.toString(),SMOKFund2VintageYear}};
+		//fund
+		if (bp.clickOnTab(environment,mode, TabName.FundsTab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.FundsTab,YesNo.No);	
+			if (fp.createFundPE(projectName,SMOKFund2FundName,"",SMOKFund2FundType,SMOKFund2InvestmentCategory, labelWithValue, 15)) {
+				log(LogStatus.INFO,"Created Fund : "+SMOKFund2FundName,YesNo.No);	
+			} else {
+				sa.assertTrue(false,"Not Able to Create Fund : "+SMOKFund2FundName);
+				log(LogStatus.SKIP,"Not Able to Create Fund  : "+SMOKFund2FundName,YesNo.Yes);
+			}
+
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.FundsTab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.FundsTab,YesNo.Yes);
+		}
+
+		ThreadSleep(2000);
+
+		// FR
+
+		if(bp.clickOnTab(environment,mode,TabName.FundraisingsTab)) {
+			if(fr.createFundRaising(environment,mode,SMOKFR2FundraisingName,SMOKFR2FundName,SMOKFR2InstitutionName, null, null, null, null)){
+				appLog.info("fundraising is created : "+SMOKFR2FundraisingName);
+			}else {
+				appLog.error("Not able to create fundraising: "+SMOKFR2FundraisingName);
+				sa.assertTrue(false, "Not able to create fundraising: "+SMOKFR2FundraisingName);
+			}
+		}else {
+			appLog.error("Not able to click on fundraising tab so cannot create fundraising: "+SMOKFR2FundraisingName);
+			sa.assertTrue(false,"Not able to click on fundraising tab so cannot create fundraising: "+SMOKFR2FundraisingName);
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+		}
+
 	@Parameters("projectName")
 	@Test
 	public void smokeTc009_1_enableDisableCheckboxOfBulkAction(String projectName){
@@ -1751,10 +1749,11 @@ public class PECloudSmoke extends BaseLib{
 			setupSideMenuTab=navatarSetupSideMenuTab[0];
 			log(LogStatus.INFO, "<<<<<< Going to Check >>>>>>>", YesNo.No);
 			
-			if(np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, true)){
+			if(np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, true));
 				switchToDefaultContent(driver);
 				
 				lp.CRMlogout();
+				ThreadSleep(12000);
 				lp.CRMLogin(crmUser1EmailID, adminPassword );
 				ThreadSleep(5000);
 				// Verification on navigation menu
@@ -1773,11 +1772,6 @@ public class PECloudSmoke extends BaseLib{
 					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabel[0], YesNo.Yes);
 					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabel[0]);
 				}
-			} else {
-				log(LogStatus.ERROR, "Not Able to disable "+setupSideMenuTab+" so cannot uncheck absenece of "+navigationLabel[0]+" on "+navigationMenuName, YesNo.Yes);
-				sa.assertTrue(false,"Not Able to disable "+setupSideMenuTab+" so cannot uncheck absenece of "+navigationLabel[0]+" on "+navigationMenuName);
-			}
-
 
 				String[][] labelWithValue= {{navigationLabel1,navigationLabel[0]},
 						{orderLabel,orderLabelValue},
@@ -1814,24 +1808,7 @@ public class PECloudSmoke extends BaseLib{
 				}
 			}
 
-			//np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, true);
-			switchToDefaultContent(driver);
-			ThreadSleep(3000);
-			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
-				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-				WebElement ele3 = npbl.getNavigationLabel(projectName, navigationLabel[0], action.BOOLEAN, 10);
-				if (ele3!=null) {
-					log(LogStatus.INFO, navigationLabel[0]+" is present on "+navigationMenuName, YesNo.No);
-				} else {
-					log(LogStatus.ERROR, navigationLabel[0]+" should be present on "+navigationMenuName, YesNo.Yes);
-					sa.assertTrue(false,navigationLabel[0]+" should be present on "+navigationMenuName);
-
-				}
-			} else {
-				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot uncheck presence of "+navigationLabel[0], YesNo.Yes);
-				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot uncheck presence of "+navigationLabel[1]);
-			}				
-			
+						
 			String updatedNavigationLabel ="Update "+navigationLabel[0].toString();
 			String[][] editedLabel= {{navigationLabel1,updatedNavigationLabel},
 					{orderLabel,"0"}};
@@ -1840,6 +1817,7 @@ public class PECloudSmoke extends BaseLib{
 				log(LogStatus.INFO, "Click on Tab : "+navigationTab, YesNo.No);
 				if(npbl.clickOnAlreadyCreatedItem(projectName, TabName.Navigation,navigationLabel[0], 30)) {
 					log(LogStatus.INFO, "Click on "+navigationLabel[0]+" going to edit ", YesNo.No);
+					
 					npbl.enteringValueForNavigation(projectName, editedLabel, action.BOOLEAN, 30);
 					ThreadSleep(2000);
 					if (click(driver,  npbl.getNavigationTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
@@ -1933,6 +1911,8 @@ public class PECloudSmoke extends BaseLib{
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		ReportsTabBusinessLayer report = new ReportsTabBusinessLayer(driver);
+		
+	
 
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		String[] splitedReportFolderName = removeNumbersFromString(SmokeReport2FolderName);
@@ -2186,7 +2166,7 @@ public class PECloudSmoke extends BaseLib{
 						
 						subject =SMOKTask3Subject;
 						String[][] basicCall= {{excelLabel.Subject.toString(),subject},{excelLabel.Related_To.toString(),contactNAme}};
-						String[][] advanceCall= {{"Due Date Only",dueDate}};
+						String[][] advanceCall= {{"Date",dueDate}};
 						
 						ExcelUtils.writeData(phase1DataSheetFilePath,dueDate, "Task1", excelLabel.Variable_Name, "SMOKTask3", excelLabel.Due_Date);
 						
@@ -2202,7 +2182,7 @@ public class PECloudSmoke extends BaseLib{
 						subject =SMOKTask5Subject;
 						ExcelUtils.writeData(phase1DataSheetFilePath,dueDate, "Task1", excelLabel.Variable_Name, "SMOKTask5", excelLabel.Due_Date);
 						String[][] basicTask= {{excelLabel.Subject.toString(),subject},{excelLabel.Related_To.toString(),contactNAme}};
-						String[][] advanceTask= {{"Due Date Only",dueDate}};
+						String[][] advanceTask= {{"Date",dueDate}};
 						
 
 						if(lp.createActivityTimeline("", true,NewInteractions_DefaultValues.Call.toString(), basicTask, advanceTask, null, null, false, null, null, null, null, null, null)) {
@@ -2213,30 +2193,18 @@ public class PECloudSmoke extends BaseLib{
 							log(LogStatus.SKIP,"Not abel to create : "+subject+" for "+newInteractionsNavigationLink,YesNo.Yes);
 						}
 					}
-	
-							ele = tp.getCreatedConfirmationMsg(projectName, 15);
-							if (ele!=null) {
-								String actualValue = ele.getText().trim();
-								String expectedValue=tp.taskCreatesMsg(projectName, subject);
-								if (expectedValue.contains(actualValue)) {
-									log(LogStatus.INFO,expectedValue+" matched FOR Confirmation Msg", YesNo.No);
-								} else {
-									log(LogStatus.ERROR,"Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg", YesNo.Yes);
-									BaseLib.sa.assertTrue(false, "Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg");
-								}
-							} else {
-								sa.assertTrue(false,"Created Task Msg Ele not Found");
-								log(LogStatus.SKIP,"Created Task Msg Ele not Found",YesNo.Yes);
-							}					
-							refresh(driver);
-							ThreadSleep(5000);	
-					
+
 				}
 			} else {
 				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot click on : "+newInteractionsNavigationLink+" for creation ", YesNo.Yes);
 				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot click on : "+newInteractionsNavigationLink+" for creation ");
 			}
+			
 		}
+		
+		refresh(driver);
+		ThreadSleep(5000);	
+		
 		lp.CRMlogout();
 		sa.assertAll();
 
@@ -2251,6 +2219,7 @@ public class PECloudSmoke extends BaseLib{
 		NavigationPageBusineesLayer  npbl = new NavigationPageBusineesLayer(driver) ;
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		DealPageBusinessLayer dp=new DealPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		navigationMenuName = NavigationMenuItems.Create.toString();
@@ -2573,7 +2542,7 @@ public class PECloudSmoke extends BaseLib{
 		String task = SmokeCTTask1Subject;
 		
 		String[][] basictask = {{ActivityRelatedLabel.Subject.toString(),task},{excelLabel.Related_To.toString(),contactName},{excelLabel.Related_To.toString(),SmokeCTContactInst}};
-		String[][] advancetask ={{"Due Date Only",SmokeCTTask1dueDate},{PageLabel.Priority.toString(),SmokeCTTask1Priority}};
+		String[][] advancetask ={{"Due Date",SmokeCTTask1dueDate},{PageLabel.Priority.toString(),SmokeCTTask1Priority}};
 
 		if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Task.toString(), basictask, advancetask, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.INFO,"Able to create task : "+task,YesNo.No);
@@ -2589,7 +2558,7 @@ public class PECloudSmoke extends BaseLib{
 		task = SmokeCTLogACall1Subject;
 		
 		String[][] basiccall = {{ActivityRelatedLabel.Subject.toString(),task},{excelLabel.Notes.toString(),SmokeCTLogACall1Comment},{excelLabel.Related_To.toString(),contactName},{excelLabel.Related_To.toString(),SmokeCTContactInst}};
-		String[][] advancecall ={{"Due Date Only",todaysDate},{PageLabel.Priority.toString(),SmokeCTTask1Priority}};
+		String[][] advancecall ={{"Date",todaysDate}/*,{PageLabel.Priority.toString(),SmokeCTTask1Priority}*/};
 
 		if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Call.toString(), basiccall, advancecall, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.INFO,"Able to create task : "+task,YesNo.No);
@@ -2988,7 +2957,7 @@ public class PECloudSmoke extends BaseLib{
 		
 		
 		String[][] basictask = {{ActivityRelatedLabel.Subject.toString(),task},{excelLabel.Related_To.toString(),contactName},{excelLabel.Related_To.toString(),SmokeCTContactInst}};
-		String[][] advancetask ={{"Due Date Only",SmokeCTTask2dueDate},{PageLabel.Priority.toString(),SmokeCTTask2Priority}};
+		String[][] advancetask ={{"Due Date",SmokeCTTask2dueDate},{PageLabel.Priority.toString(),SmokeCTTask2Priority}};
 
 		if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Task.toString(), basictask, advancetask, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.INFO,"Able to create task : "+task,YesNo.No);
@@ -3003,7 +2972,7 @@ public class PECloudSmoke extends BaseLib{
 		task = SmokeCTLogACall2Subject;
 		
 		String[][] basiccall = {{ActivityRelatedLabel.Subject.toString(),task},{excelLabel.Notes.toString(),SmokeCTLogACall2Comment},{excelLabel.Related_To.toString(),contactName},{excelLabel.Related_To.toString(),SmokeCTContact2Inst}};
-		String[][] advancecall ={{"Due Date Only",todaysDate}};
+		String[][] advancecall ={{"Date",todaysDate}};
 
 		if (lp.createActivityTimeline("", true, NewInteractions_DefaultValues.Call.toString(), basiccall, advancecall, null, null, false, null, null, null, null, null, null)) {
 			log(LogStatus.INFO,"Able to create task : "+task,YesNo.No);
@@ -3213,6 +3182,8 @@ public class PECloudSmoke extends BaseLib{
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		DealPageBusinessLayer dp=new DealPageBusinessLayer(driver);
+		
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
 		String value="";
@@ -3238,6 +3209,7 @@ public class PECloudSmoke extends BaseLib{
 			}
 		}
 
+
 		if (lp.clickOnTab(projectName, tabObj2)) {
 			log(LogStatus.INFO,"Click on Tab : "+tabObj2,YesNo.No);	
 			SmokeDealContact1EmailID=	lp.generateRandomEmailId(gmailUserName);
@@ -3252,45 +3224,33 @@ public class PECloudSmoke extends BaseLib{
 			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2);
 			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2,YesNo.Yes);
 		}
+		
+		String labelName="Source Contact<Break>Source Firm";
+		String labelValue=SmokeDealContact1FName+" "+SmokeDealContact1LName+"<Break>"+SmokeDealIns2;
+		String dealName=SmokeDeal1;
+		String dealCompanyName=SmokeDeal1CompanyName;
+		String dealStage=SmokeDeal1Stage;
+		
+		
+		if (lp.clickOnTab(projectName, tabObj4)) {
 
-		navigationMenuName=NavigationMenuItems.Create.toString();
-		boolean flag = false;
-		WebElement ele=null;
-		String createNewNavigationLink=CreateNew_DefaultValues.New_Deal.toString();
-		flag=false;
-		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
-			log(LogStatus.INFO, "Able to Click on "+navigationMenuName+" Going to click on : "+createNewNavigationLink+" for creation ", YesNo.No);
+			log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
+			ThreadSleep(3000);
 
-			ele = npbl.getNavigationLabel(projectName, createNewNavigationLink, action.BOOLEAN, 10);
-			if (ele!=null && click(driver, ele, createNewNavigationLink, action.BOOLEAN)) {
-				log(LogStatus.INFO, "Click on "+createNewNavigationLink+" so going for creation", YesNo.No);
-				flag = true;
+			if (dp.createDeal(null, dealName, dealCompanyName, dealStage, labelName,labelValue)) {
+				log(LogStatus.INFO, dealName + " deal has been created", YesNo.No);
+				sa.assertTrue(true, dealName + " deal has been created");
 			} else {
-				log(LogStatus.ERROR, "Not Able to Click on "+createNewNavigationLink+" so cannot create data related to this ", YesNo.Yes);
-				sa.assertTrue(false,"Not Able to Click on "+createNewNavigationLink+" so cannot create data related to this ");
-
+				log(LogStatus.ERROR, dealName + " deal is not created", YesNo.No);
+				sa.assertTrue(false, dealName + " deal is not created");
 			}
-
-			if (flag) {
-				String[][] labelswithValues = {{excelLabel.Source_Contact.toString(),SmokeDealContact1FName+" "+SmokeDealContact1LName},{excelLabel.Source_Firm.toString(),SmokeDealIns2}};
-				if (fp.createDealPopUp(projectName,SmokeDeal1RecordType,SmokeDeal1,SmokeDeal1CompanyName, SmokeDeal1Stage,labelswithValues, 15)) {
-					log(LogStatus.INFO,"Created Deal : "+SmokeDeal1+" through "+createNewNavigationLink,YesNo.No);	
-				} else {
-					sa.assertTrue(false,"Not Able to Create Deal  : "+" through "+createNewNavigationLink);
-					log(LogStatus.SKIP,"Not Able to Create Deal  : "+" through "+createNewNavigationLink,YesNo.Yes);
-				}
-
-			} else {
-				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot click on : "+createNewNavigationLink+" for creation ", YesNo.Yes);
-				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot click on : "+createNewNavigationLink+" for creation ");
-			}
-		} else {
-			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot click on : "+createNewNavigationLink+" for creation ", YesNo.Yes);
-			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot click on : "+createNewNavigationLink+" for creation ");
+		}
+		else {
+			log(LogStatus.ERROR, "Not able to click on " + tabObj4 + " Tab", YesNo.No);
+			sa.assertTrue(false, "Not able to click on " + tabObj4 + " Tab");
 		}
 
-
-		switchToDefaultContent(driver);
+		
 		lp.CRMlogout();
 		sa.assertAll();
 
@@ -3596,6 +3556,7 @@ public class PECloudSmoke extends BaseLib{
 		String label="";
 		String value="";
 		String stageValue =Stage.DeclinedDead.toString();
+		String currentStageValue=Stage.Management_Meeting.toString();
 		String stage ="";
 		
 		ExcelUtils.writeData(phase1DataSheetFilePath, stageValue, "Deal", excelLabel.Variable_Name, "SMOKEDEAL1", excelLabel.Updated_Stage);
@@ -3604,57 +3565,54 @@ public class PECloudSmoke extends BaseLib{
 			if (fp.clickOnAlreadyCreatedItem(projectName, SmokeDeal1, 10)){
 				log(LogStatus.INFO," Able to click "+SmokeDeal1,YesNo.No);
 
-				if (fp.changeStage(projectName, stageValue, 10)) {	
-					log(LogStatus.INFO,"not able to change stage to "+stageValue,YesNo.No);
-				}else {
-					sa.assertTrue(false,"not able to change stage to "+stageValue);
-					log(LogStatus.SKIP,"not able to change stage to "+stageValue,YesNo.Yes);
-				}
+				if(clickUsingJavaScript(driver, dp.getDeclinedDeadStage(20), "Declined stage"))			
+				{
+					log(LogStatus.INFO," Clicked on declined dead stage ",YesNo.No);
+					if (click(driver, dp.getmarkAsCurrentStage(10), "Mark Stage as complete button ", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO," Clicked on mark stage as complete button ",YesNo.No);
+						ThreadSleep(2000);
+						refresh(driver);
+						if (click(driver, ip.getRelatedTab(projectName, RelatedTab.Details.toString(), 10), "details tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO,"click on details tab",YesNo.No);
+							
+							String labelWithValues[][] = {{excelLabel.Highest_Stage_Reached.toString(),currentStageValue},
+									{excelLabel.Stage.toString(),stageValue},
+									{excelLabel.Last_Stage_Change_Date.toString(),getDateAccToTimeZone("America/Los_Angles", "M/d/yyyy")}};
 
+							for (String[] lbWithValue : labelWithValues) {
+								label=lbWithValue[0];
+								value=lbWithValue[1];
+								if (fp.FieldValueVerificationOnFundPage(projectName, label,value)) {
+									log(LogStatus.INFO, label+" with value "+value+" verified", YesNo.No);
 
-				ele = dp.getmarkAsCurrentStage(10);
-				if (click(driver, ele, "Mark Stage as current button ", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO,"click on Mark Stage as current button ",YesNo.No);
-					ThreadSleep(10000);
-					stage = DealStage.Current.toString();
-					stageValue = Stage.DeclinedDead.toString();
-					ele =  dp.getStagePath(stage,stageValue);
-					if (ele!=null) {
-						log(LogStatus.INFO,"Stage Path have "+stage+" stage as "+stageValue+" after click on Mark Stage as curremt button ",YesNo.No);
-					}else {
-						sa.assertTrue(false,"Stage Path should have "+stage+" stage as "+stageValue+" after click on Mark Stage as Complete button ");
-						log(LogStatus.SKIP,"Stage Path Should have "+stage+" stage as "+stageValue+" after click on Mark Stage as Complete button ",YesNo.Yes);
-					}
-
-					
-					ele=ip.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
-					if (click(driver, ele, "details tab", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO,"click on details tab",YesNo.No);
-
-						String labelWithValues[][] = {{excelLabel.Highest_Stage_Reached.toString(),stageValue},
-								{excelLabel.Stage.toString(),stageValue},
-								{excelLabel.Last_Stage_Change_Date.toString(),getDateAccToTimeZone("America/Los_Angles", "MM/dd/yyyy")}};
-
-						for (String[] lbWithValue : labelWithValues) {
-							label=lbWithValue[0];
-							value=lbWithValue[1];
-							if (fp.FieldValueVerificationOnFundPage(projectName, label,value)) {
-								log(LogStatus.INFO, label+" with value "+value+" verified", YesNo.No);
-
-							}else {
-								log(LogStatus.ERROR, label+" with value "+value+" not verified", YesNo.Yes);
-								sa.assertTrue(false,label+" with value "+value+" not verified");
+								}else {
+									log(LogStatus.ERROR, label+" with value "+value+" not verified", YesNo.Yes);
+									sa.assertTrue(false,label+" with value "+value+" not verified");
+								}
 							}
 						}
-					}else {
-						sa.assertTrue(false,"not able to click on details tab");
-						log(LogStatus.SKIP,"not able to click on details tab",YesNo.Yes);
+						else
+						{
+							log(LogStatus.ERROR,"Not able to click on details tab button",YesNo.No);
+							sa.assertTrue(false,"Not able to click on details tab button");
+						}
+						
 					}
-
-				}else {
-					sa.assertTrue(false,"Not able to click on Mark Stage as Complete button ");
-					log(LogStatus.SKIP,"Not able to click on Mark Stage as Complete button ",YesNo.Yes);
+					else
+					{
+						log(LogStatus.ERROR," Not able to click on mark stage as complete button ",YesNo.No);
+						sa.assertTrue(false,"Not able to click on mark stage as complete button ");
+					}
+					
 				}
+				else
+				{
+					log(LogStatus.ERROR,"Not able to click on declined dead stage ",YesNo.No);
+					sa.assertTrue(false,"Not able to click on declined dead stage ");
+				}
+					
+				
+				
 			}else {
 				sa.assertTrue(false,"Not Able to click "+SmokeDeal1);
 				log(LogStatus.SKIP,"Not Able to click "+SmokeDeal1,YesNo.Yes);
@@ -3663,6 +3621,9 @@ public class PECloudSmoke extends BaseLib{
 			sa.assertTrue(false,"not able to click on deal tab");
 			log(LogStatus.SKIP,"not able to click on deal tab",YesNo.Yes);
 		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
 	}
 
 	@Parameters({ "projectName"})
@@ -3674,6 +3635,7 @@ public class PECloudSmoke extends BaseLib{
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		DealPageBusinessLayer dp=new DealPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
 		String value="";
@@ -3713,44 +3675,32 @@ public class PECloudSmoke extends BaseLib{
 			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2);
 			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2,YesNo.Yes);
 		}
-		navigationMenuName = NavigationMenuItems.Create.toString();
-		boolean flag = false;
-		WebElement ele=null;
-		String createNewNavigationLink = CreateNew_DefaultValues.New_Deal.toString();
-		flag=false;
-		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName,navigationMenuName, action.BOOLEAN, 30)) {
-			log(LogStatus.INFO, "Able to Click on "+navigationMenuName+" Going to click on : "+createNewNavigationLink+" for creation ", YesNo.No);
 
-			ele = npbl.getNavigationLabel(projectName, createNewNavigationLink, action.BOOLEAN, 10);
-			if (ele!=null && click(driver, ele, createNewNavigationLink, action.BOOLEAN)) {
-				log(LogStatus.INFO, "Click on "+createNewNavigationLink+" so going for creation", YesNo.No);
-				flag = true;
+		String labelName="Source Contact<Break>Source Firm";
+		String labelValue=SmokePFContact1FName+" "+SmokePFContact1LName+"<Break>"+SmokePFIns2;
+		String dealName=SmokeDeal2;
+		String dealCompanyName=SmokeDeal2CompanyName;
+		String dealStage=SmokeDeal2Stage;
+		
+		
+		if (lp.clickOnTab(projectName, tabObj4)) {
+
+			log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
+			ThreadSleep(3000);
+
+			if (dp.createDeal(null, dealName, dealCompanyName, dealStage, labelName,labelValue)) {
+				log(LogStatus.INFO, dealName + " deal has been created", YesNo.No);
+				sa.assertTrue(true, dealName + " deal has been created");
 			} else {
-				log(LogStatus.ERROR, "Not Able to Click on "+createNewNavigationLink+" so cannot create data related to this ", YesNo.Yes);
-				sa.assertTrue(false,"Not Able to Click on "+createNewNavigationLink+" so cannot create data related to this ");
-
+				log(LogStatus.ERROR, dealName + " deal is not created", YesNo.No);
+				sa.assertTrue(false, dealName + " deal is not created");
 			}
-
-			if (flag) {
-				String[][] labelswithValues = {{excelLabel.Source_Contact.toString(),SmokePFContact1FName+" "+SmokePFContact1LName},{excelLabel.Source_Firm.toString(),SmokePFIns2}};
-				if (fp.createDealPopUp(projectName,SmokeDeal2RecordType,SmokeDeal2,SmokeDeal2CompanyName, SmokeDeal2Stage,labelswithValues, 25)) {
-					log(LogStatus.INFO,"Created Deal : "+SmokeDeal2+" through "+createNewNavigationLink,YesNo.No);	
-				} else {
-					sa.assertTrue(false,"Not Able to Create Deal  : "+" through "+createNewNavigationLink);
-					log(LogStatus.SKIP,"Not Able to Create Deal  : "+" through "+createNewNavigationLink,YesNo.Yes);
-				}
-
-			} else {
-				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot click on : "+createNewNavigationLink+" for creation ", YesNo.Yes);
-				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot click on : "+createNewNavigationLink+" for creation ");
-			}
-		} else {
-			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot click on : "+createNewNavigationLink+" for creation ", YesNo.Yes);
-			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot click on : "+createNewNavigationLink+" for creation ");
+		}
+		else {
+			log(LogStatus.ERROR, "Not able to click on " + tabObj4 + " Tab", YesNo.No);
+			sa.assertTrue(false, "Not able to click on " + tabObj4 + " Tab");
 		}
 
-
-		switchToDefaultContent(driver);
 		lp.CRMlogout();
 		sa.assertAll();
 
@@ -3762,15 +3712,15 @@ public class PECloudSmoke extends BaseLib{
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
 		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
 			log(LogStatus.INFO,"Click on deal tab",YesNo.No);
 			if (fp.clickOnAlreadyCreatedItem(projectName, SmokeDeal2, 10)){
 				log(LogStatus.INFO," Able to click "+SmokeDeal2,YesNo.No);	
-
-				if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
-					log(LogStatus.INFO,"click on convert to portfolio button",YesNo.No);
+				if (bp.clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.convertToPortfolio, 10)) {
+					ThreadSleep(2000);
 
 					if (dp.getconvertToPortfolioMessage(SmokeDeal2CompanyName,10)!=null) {
 						log(LogStatus.INFO, "successfully verified convert to portfolio text message : "+SmokeDeal2, YesNo.No);
@@ -3882,6 +3832,7 @@ public class PECloudSmoke extends BaseLib{
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		dealQualityScore=closedScore;totalDealsshown=1;averageDealQualityScore=dealQualityScore/totalDealsshown;
@@ -3894,8 +3845,9 @@ public class PECloudSmoke extends BaseLib{
 			if (fp.clickOnAlreadyCreatedItem(projectName, SmokeDeal2, 10)){
 				log(LogStatus.INFO," Able to click "+SmokeDeal2,YesNo.No);	
 
-				if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
-					log(LogStatus.INFO,"click on convert to portfolio button",YesNo.No);
+				if (bp.clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.convertToPortfolio, 10)) {
+					log(LogStatus.INFO, "Clicked on convert to portfolio button", YesNo.No);
+					ThreadSleep(2000);
 
 					if (dp.getconvertToPortfolioMessage(SmokeDeal2CompanyName,10)!=null) {
 						log(LogStatus.INFO, "successfully verified convert to portfolio text message : "+SmokeDeal2, YesNo.No);
@@ -3967,6 +3919,8 @@ public class PECloudSmoke extends BaseLib{
 								label=labelWithValue[0];
 								value=labelWithValue[1];
 								String header = labelWithValue[2];
+								refresh(driver);
+								bp.clicktabOnPage("Details");
 								ele=cp.getElementAtPage(projectName, label, value, action.SCROLLANDBOOLEAN, 20);
 								if (ele!=null) {
 									log(LogStatus.INFO, label+" with value "+value+" found", YesNo.No);
@@ -4383,6 +4337,8 @@ public class PECloudSmoke extends BaseLib{
 		sa.assertAll();
 	}
 
+	/*   Uder discussion
+	
 	@Parameters({ "projectName"})
 	@Test
 	public void SmokeTc027_CreateACompanyAndContactWithStatusWatchlist(String projectName) {
@@ -4479,10 +4435,10 @@ public class PECloudSmoke extends BaseLib{
 				{PageLabel.Related_To.toString(),SmokeWlContact2FName+" "+SmokeWlContact2LName},
 				{PageLabel.Related_To.toString(),SmokeWlContact2Inst}}};
 		
-		String[][][] advancetask= {{{"Due Date Only",SmokeWLTask1dueDate},
+		String[][][] advancetask= {{{"Due Date",SmokeWLTask1dueDate},
 			{PageLabel.Priority.toString(),SmokeWLTask1Priority},
 			{PageLabel.Status.toString(),SmokeWLTask1Status}},
-			{{"Due Date Only",SmokeWLTask2dueDate},
+			{{"Due Date",SmokeWLTask2dueDate},
 			{PageLabel.Priority.toString(),SmokeWLTask2Priority},
 			{PageLabel.Status.toString(),SmokeWLTask2Status}}};
 		
@@ -4732,7 +4688,7 @@ public class PECloudSmoke extends BaseLib{
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-	
+	*/
 	@Parameters({ "projectName"})
 	@Test
 	public void SmokeTc030_CreateACompanyAndContact(String projectName) {
@@ -4798,11 +4754,13 @@ public class PECloudSmoke extends BaseLib{
 
 		SmokeCTTask1dueDate=todaysDate;
 		String task = SmokeLTPLogACall1Subject;
-
+		
 		SmokeLTPLogACall1dueDate=todaysDate;
+	//	SmokeLTPLogACall1dueDate=yesterdaysDate;
 		String[][] logACall = {{PageLabel.Subject.toString(),task},
 				{PageLabel.Related_To.toString(),contactName2},{PageLabel.Related_To.toString(),contactName}};
-		String[][] advanceCall={{PageLabel.Status.toString(),SmokeLTPLogACall1Status}};
+		//String[][] advanceCall={{PageLabel.Status.toString(),SmokeLTPLogACall1Status}};
+		String[][] advanceCall= null;
 				
 
 		if (lp.createActivityTimeline("",true, "Call", logACall, advanceCall, null, null, false, null, null, null, null, null, null)) {
@@ -4821,7 +4779,7 @@ public class PECloudSmoke extends BaseLib{
 				ThreadSleep(3000);
 				String value= cp.getlastTouchPointValue(projectName, 30).getText();
 //				if(cp.verifyDate(SmokeLTPLogACall1dueDate, value)){
-					if(bp.verifyDate(SmokeLTPLogACall1dueDate, null, "M/d/yyyy")){
+					if(bp.verifyDate(SmokeLTPLogACall1dueDate, null, value)){
 					log(LogStatus.INFO,"Last touch point value is matched in :"+contactName,YesNo.No);	
 
 				}else{
@@ -4847,7 +4805,7 @@ public class PECloudSmoke extends BaseLib{
 				ThreadSleep(3000);
 				String value= cp.getlastTouchPointValue(projectName, 30).getText();
 //				if(cp.verifyDate(SmokeLTPLogACall1dueDate, value)){
-					if(bp.verifyDate(SmokeLTPLogACall1dueDate, null, "M/d/yyyy")){
+					if(bp.verifyDate(SmokeLTPLogACall1dueDate, null, value)){
 					log(LogStatus.INFO,"Last touch point value is matched in :"+contactName2,YesNo.No);	
 
 				}else{
@@ -4877,62 +4835,77 @@ public class PECloudSmoke extends BaseLib{
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String contactName=SmokeLTPContact3FName+" "+SmokeLTPContact3LName;
-		
+		boolean flag=false;
 		String task = SmokeLTPEvent1Subject;
-		
-		if(lp.clickOnTab(contactName, mode, TabName.ContactTab)){
-			log(LogStatus.INFO,"Click on Tab : "+tabObj2,YesNo.No);
-			if(lp.clickOnAlreadyCreatedItem(projectName, TabName.ContactTab, contactName, 30)){
-				log(LogStatus.INFO,"click on Created Contact : "+contactName,YesNo.No);	
-				ThreadSleep(3000);
-				
-				SmokeLTPEvent1StartDate=previousOrForwardDateAccordingToTimeZone(-1, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);
-				SmokeLTPEvent1EndDate=todaysDate;
-				String[][] event1 = {{PageLabel.Subject.toString(),task},
-						{PageLabel.Name.toString(),contactName},
-						{PageLabel.Start_Date.toString(),SmokeLTPEvent1StartDate},
-						{PageLabel.End_Date.toString(),SmokeLTPEvent1EndDate}
-						};
+		SmokeLTPEvent1StartDate=previousOrForwardDateAccordingToTimeZone(-1, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);
+		SmokeLTPEvent1EndDate=todaysDate;
+		String[][] event1 = {
+				{PageLabel.Name.toString(),contactName},
+				{PageLabel.Start_Date.toString(),SmokeLTPEvent1StartDate},
+				{PageLabel.End_Date.toString(),SmokeLTPEvent1EndDate},
+				{PageLabel.Subject.toString(),task}
+		};
 
-				if (gp.clickOnGlobalActionAndEnterValue(projectName, GlobalActionItem.New_Event, event1)) {
-					log(LogStatus.INFO,"Able to Enter Value for : "+task,YesNo.No);
-					ExcelUtils.writeData(phase1DataSheetFilePath,SmokeLTPEvent1StartDate, "Events", excelLabel.Variable_Name, "SmokeLTPEvent1", excelLabel.Start_Date);
-					ExcelUtils.writeData(phase1DataSheetFilePath,SmokeLTPEvent1EndDate, "Events", excelLabel.Variable_Name, "SmokeLTPEvent1", excelLabel.End_Date);
+		if (lp.clickAnyCellonCalender(projectName)) {
+			log(LogStatus.INFO,"Able to click on Calendar/Event Link",YesNo.No);
+			if(gp.enterValueForNewEvent(projectName, GlobalActionItem.New_Event, event1, 10))
+			{
+				log(LogStatus.INFO,"The values are entered in Event popup",YesNo.No);
+				if(clickUsingJavaScript(driver, gp.getSaveBtnOfEventPopup( totalDealsshown), "save button"))
+				{
+					log(LogStatus.INFO,"Clicked on save button of Event popup. Event has been created",YesNo.No);
+					ThreadSleep(8000);
+					flag=true;
 
-					if (click(driver, gp.getSaveButtonForEvent(projectName, 10), "Save Button", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);		
-						
-					}else {
-						sa.assertTrue(false,"Not Able to Click on Save Button For Task : "+task);
-						log(LogStatus.SKIP,"Not Able to Click on Save Button For Task : "+task,YesNo.Yes);	
-					}
-				} else {
-					sa.assertTrue(false,"Not Able to Click/Enter Value : "+task);
-					log(LogStatus.SKIP,"Not Able to Click/Enter Value : "+task,YesNo.Yes);	
 				}
-				
-				refresh(driver);
-				ThreadSleep(5000);
-				String value= cp.getlastTouchPointValue(projectName, 30).getText();
-//				if(cp.verifyDate(todaysDate, value)){
-					if(bp.verifyDate(todaysDate, null, "M/d/yyyy")){
-					log(LogStatus.INFO,"Last touch point value is matched in :"+contactName,YesNo.No);	
+				else
+				{
+					log(LogStatus.ERROR,"Not able to clicked on save button of Event popu",YesNo.No);
+					sa.assertTrue(false, "Not able to clicked on save button of Event popu");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR,"The values are not entered in Event popup",YesNo.No);
+				sa.assertTrue(false, "The values are not entered in Event popup");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Able to click on Calendar/Event Link",YesNo.No);
+			sa.assertTrue(false, "Not Able to click on Calendar/Event Link");
+		}	
+		if(flag)
+		{
+			refresh(driver);
+
+			if(lp.clickOnTab(contactName, mode, TabName.ContactTab)){
+				log(LogStatus.INFO,"Click on Tab : "+tabObj2,YesNo.No);
+				if(lp.clickOnAlreadyCreatedItem(projectName, TabName.ContactTab, contactName, 30)){
+					log(LogStatus.INFO,"click on Created Contact : "+contactName,YesNo.No);	
+					ThreadSleep(3000);
+					click(driver, lp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10), "Related details tab", action.BOOLEAN);
+					ThreadSleep(3000);
+					String value= cp.getlastTouchPointValue(projectName, 30).getText();
+					//				if(cp.verifyDate(todaysDate, value)){
+					if(bp.verifyDate(todaysDate, null, value)){
+						log(LogStatus.INFO,"Last touch point value is matched in :"+contactName,YesNo.No);	
+
+					}else{
+						sa.assertTrue(false,"Last touch point value is not matched in contact :"+contactName);
+						log(LogStatus.SKIP,"Last touch point value is not matched in contact :"+contactName,YesNo.Yes);
+					}
 
 				}else{
-					sa.assertTrue(false,"Last touch point value is not matched in contact :"+contactName);
-					log(LogStatus.SKIP,"Last touch point value is not matched in contact :"+contactName,YesNo.Yes);
+					sa.assertTrue(false,"Not Able to click on Create Contact : "+contactName);
+					log(LogStatus.SKIP,"Not Able to click on created Contact: "+contactName,YesNo.Yes);
 				}
-				
-			}else{
-				sa.assertTrue(false,"Not Able to click on Create Contact : "+contactName);
-				log(LogStatus.SKIP,"Not Able to click on created Contact: "+contactName,YesNo.Yes);
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2,YesNo.Yes);
 			}
-		} else {
-			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2);
-			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2,YesNo.Yes);
-		}
 
-		
+		}
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
 		sa.assertAll();
@@ -4972,6 +4945,9 @@ public class PECloudSmoke extends BaseLib{
 			log(LogStatus.INFO,"successfully Created Contact : "+contactName,YesNo.No);	
 			refresh(driver);	
 			ThreadSleep(10000);
+			click(driver, lp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10), "Related details tab", action.BOOLEAN);
+			ThreadSleep(3000);
+			
 			String lastTouchPoint= cp.getlastTouchPointValue(projectName, 30).getText();
 			if(lastTouchPoint.contains("")||lastTouchPoint.equalsIgnoreCase("")){
 				log(LogStatus.INFO,"Last touch point value is matched As blank in :"+contactName,YesNo.No);	
@@ -5013,6 +4989,9 @@ public class PECloudSmoke extends BaseLib{
 				log(LogStatus.INFO,"Contact tier updated as: "+tier,YesNo.No);	
 				refresh(driver);		
 				ThreadSleep(5000);
+				click(driver, lp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10), "Related details tab", action.BOOLEAN);
+				ThreadSleep(3000);
+				
 				String lastTouchPoint= cp.getlastTouchPointValue(projectName, 30).getText();
 				if(lastTouchPoint.contains("")||lastTouchPoint.equalsIgnoreCase("")){
 					log(LogStatus.INFO,"Last touch point value is matched As blank in :"+contactName,YesNo.No);	
@@ -5058,6 +5037,9 @@ public class PECloudSmoke extends BaseLib{
 				log(LogStatus.INFO,"Contact tier updated as: "+tier,YesNo.No);	
 				refresh(driver);		
 				ThreadSleep(5000);
+				click(driver, lp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10), "Related details tab", action.BOOLEAN);
+				ThreadSleep(3000);
+				
 				String lastTouchPoint= cp.getlastTouchPointValue(projectName, 30).getText();
 				if(lastTouchPoint.contains("")||lastTouchPoint.equalsIgnoreCase("")){
 					log(LogStatus.INFO,"Last touch point value is matched As blank in :"+contactName,YesNo.No);	
@@ -5103,6 +5085,9 @@ public class PECloudSmoke extends BaseLib{
 				log(LogStatus.INFO,"Contact tier updated as: "+tier,YesNo.No);	
 				refresh(driver);		
 				ThreadSleep(5000);
+				click(driver, lp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10), "Related details tab", action.BOOLEAN);
+				ThreadSleep(3000);
+				
 				String lastTouchPoint= cp.getlastTouchPointValue(projectName, 30).getText();
 				if(lastTouchPoint.contains("")||lastTouchPoint.equalsIgnoreCase("")){
 					log(LogStatus.INFO,"Last touch point value is matched As blank in :"+contactName,YesNo.No);	
@@ -5150,74 +5135,90 @@ public class PECloudSmoke extends BaseLib{
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String contactName=SmokeNTPContact1FName+" "+SmokeNTPContact1LName;
-		
+		boolean flag=true;
 		String task = SmokeNTPEvent1Subject;
+		SmokeNTPEvent1StartDate=previousOrForwardDateAccordingToTimeZone(-1, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);
+		SmokeNTPEvent1EndDate=previousOrForwardDateAccordingToTimeZone(3, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);;
+		String expectedLastTouchpointDate=previousOrForwardDateAccordingToTimeZone(3, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);;
+		String[][] event1 = {
+				{PageLabel.Name.toString(),contactName},
+				{PageLabel.Start_Date.toString(),SmokeNTPEvent1StartDate},
+				{PageLabel.End_Date.toString(),SmokeNTPEvent1EndDate},
+				{PageLabel.Subject.toString(),task}
+				};
 		
-		if(lp.clickOnTab(contactName, mode, TabName.ContactTab)){
-			log(LogStatus.INFO,"Click on Tab : "+tabObj2,YesNo.No);
-			if(lp.clickOnAlreadyCreatedItem(projectName, TabName.ContactTab, contactName, 30)){
-				log(LogStatus.INFO,"click on Created Contact : "+contactName,YesNo.No);	
-				ThreadSleep(3000);
-				
-				SmokeNTPEvent1StartDate=previousOrForwardDateAccordingToTimeZone(-1, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);
-				SmokeNTPEvent1EndDate=previousOrForwardDateAccordingToTimeZone(3, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);;
-				String[][] event1 = {{PageLabel.Subject.toString(),task},
-						{PageLabel.Name.toString(),contactName},
-						{PageLabel.Start_Date.toString(),SmokeNTPEvent1StartDate},
-						{PageLabel.End_Date.toString(),SmokeNTPEvent1EndDate}
-						};
+		if (lp.clickAnyCellonCalender(projectName)) {
+			log(LogStatus.INFO,"Able to click on Calendar/Event Link",YesNo.No);
+			if(gp.enterValueForNewEvent(projectName, GlobalActionItem.New_Event, event1, 10))
+			{
+				log(LogStatus.INFO,"The values are entered in Event popup",YesNo.No);
+				if(clickUsingJavaScript(driver, gp.getSaveBtnOfEventPopup( totalDealsshown), "save button"))
+				{
+					log(LogStatus.INFO,"Clicked on save button of Event popup. Event has been created",YesNo.No);
+					ThreadSleep(8000);
+					flag=true;
 
-				if (gp.clickOnGlobalActionAndEnterValue(projectName, GlobalActionItem.New_Event, event1)) {
-					log(LogStatus.INFO,"Able to Enter Value for : "+task,YesNo.No);
-					ExcelUtils.writeData(phase1DataSheetFilePath,SmokeNTPEvent1StartDate, "Events", excelLabel.Variable_Name, "SmokeNTPEvent1", excelLabel.Start_Date);
-					ExcelUtils.writeData(phase1DataSheetFilePath,SmokeNTPEvent1EndDate, "Events", excelLabel.Variable_Name, "SmokeNTPEvent1", excelLabel.End_Date);
-
-					if (click(driver, gp.getSaveButtonForEvent(projectName, 10), "Save Button", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);		
-						
-					}else {
-						sa.assertTrue(false,"Not Able to Click on Save Button For Task : "+task);
-						log(LogStatus.SKIP,"Not Able to Click on Save Button For Task : "+task,YesNo.Yes);	
-					}
-				} else {
-					sa.assertTrue(false,"Not Able to Click/Enter Value : "+task);
-					log(LogStatus.SKIP,"Not Able to Click/Enter Value : "+task,YesNo.Yes);	
 				}
-				
-				refresh(driver);
-				ThreadSleep(5000);
-				String value= cp.getlastTouchPointValue(projectName, 30).getText();
-//				if(cp.verifyDate(SmokeNTPEvent1EndDate, value)){
-					if(bp.verifyDate(SmokeNTPEvent1EndDate, null, "M/d/yyyy")){
-					log(LogStatus.INFO,"Last touch point value is matched in :"+contactName,YesNo.No);	
-
-				}else{
-					sa.assertTrue(false,"Last touch point value is not matched in contact :"+contactName);
-					log(LogStatus.SKIP,"Last touch point value is not matched in contact :"+contactName,YesNo.Yes);
+				else
+				{
+					log(LogStatus.ERROR,"Not able to clicked on save button of Event popu",YesNo.No);
+					sa.assertTrue(false, "Not able to clicked on save button of Event popu");
 				}
-				
-				int days=183;
-				String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/d/yyyy", "America/Los_Angles");
-				if(cp.verifyDate(expectedDate, actualDate)){
-					log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
-
-				}else{
-					sa.assertTrue(false,"Next touch point value is not matched As after "+days+" days from created date  in contact :"+contactName);
-					log(LogStatus.SKIP,"Next touch point value is not matched As after "+days+" days from created date  in contact :"+contactName,YesNo.Yes);
-				}
-				
-			}else{
-				sa.assertTrue(false,"Not Able to click on Create Contact : "+contactName);
-				log(LogStatus.SKIP,"Not Able to click on created Contact: "+contactName,YesNo.Yes);
 			}
-		} else {
-			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2);
-			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2,YesNo.Yes);
+			else
+			{
+				log(LogStatus.ERROR,"The values are not entered in Event popup",YesNo.No);
+				sa.assertTrue(false, "The values are not entered in Event popup");
+			}
 		}
-
+		else
+		{
+			log(LogStatus.ERROR,"Able to click on Calendar/Event Link",YesNo.No);
+			sa.assertTrue(false, "Not Able to click on Calendar/Event Link");
+		}	
 		
-		switchToDefaultContent(driver);
+		if(flag)
+		{
+			if(lp.clickOnTab(contactName, mode, TabName.ContactTab)){
+				log(LogStatus.INFO,"Click on Tab : "+tabObj2,YesNo.No);
+				if(lp.clickOnAlreadyCreatedItem(projectName, TabName.ContactTab, contactName, 30)){
+					log(LogStatus.INFO,"click on Created Contact : "+contactName,YesNo.No);	
+					ThreadSleep(3000);
+					refresh(driver);
+					click(driver, lp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10), "Related details tab", action.BOOLEAN);
+					ThreadSleep(5000);
+					String value= cp.getlastTouchPointValue(projectName, 30).getText();
+					//				if(cp.verifyDate(SmokeNTPEvent1EndDate, value)){
+					if(cp.verifyDate(expectedLastTouchpointDate, value)){
+						log(LogStatus.INFO,"Last touch point value is matched in :"+contactName,YesNo.No);	
+
+					}else{
+						sa.assertTrue(false,"Last touch point value is not matched in contact :"+contactName);
+						log(LogStatus.SKIP,"Last touch point value is not matched in contact :"+contactName,YesNo.Yes);
+					}
+
+					int days=180;
+					String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
+					String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/d/yyyy", "America/Los_Angles");
+					if(cp.verifyDate(expectedDate, actualDate)){
+						log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
+
+					}else{
+						sa.assertTrue(false,"Next touch point value is not matched As after "+days+" days from created date  in contact :"+contactName);
+						log(LogStatus.SKIP,"Next touch point value is not matched As after "+days+" days from created date  in contact :"+contactName,YesNo.Yes);
+					}
+
+				}else{
+					sa.assertTrue(false,"Not Able to click on Create Contact : "+contactName);
+					log(LogStatus.SKIP,"Not Able to click on created Contact: "+contactName,YesNo.Yes);
+				}
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2,YesNo.Yes);
+			}
+
+		}
+		
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -5834,13 +5835,17 @@ public class PECloudSmoke extends BaseLib{
 	public void SmokeTc039_2_VerifyFieldSetLayoutOnInstitutionPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
 			if(ip.clickOnAlreadyCreatedItem(projectName, SmokeFSIns1, 30)) {
 				log(LogStatus.INFO,"clicked on created institution : "+SmokeFSIns1, YesNo.No);
+				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
 				ThreadSleep(5000);
 				String[] ss = FS_FieldsName6.split("<break>");
+				
 				
 				for(String field:ss) {
 					if(ip.verifyFieldSetComponent(field,"")) {
@@ -5869,6 +5874,7 @@ public class PECloudSmoke extends BaseLib{
 	public void SmokeTc040_VerifyCameraIconUploadImageAndRelativePath(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String imagepath="\\UploadImages\\JPG1Image.jpg";
@@ -5877,6 +5883,8 @@ public class PECloudSmoke extends BaseLib{
 				log(LogStatus.INFO,"Click on Tab : "+TabName.InstituitonsTab,YesNo.No);
 				if(lp.clickOnAlreadyCreatedItem(projectName,TabName.InstituitonsTab ,SmokeFSIns1,20)) {
 					log(LogStatus.INFO,"clicked on created item : "+SmokeFSIns1, YesNo.No);
+					WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+					click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
 					ThreadSleep(3000);
 					if(lp.updatePhoto(projectName, TabName.InstituitonsTab.toString(), imagepath,false)) {
 						log(LogStatus.PASS, "photo is updated successfully in "+SmokeFSIns1+" on "+TabName.InstituitonsTab, YesNo.No);
@@ -6206,9 +6214,6 @@ public class PECloudSmoke extends BaseLib{
 			log(LogStatus.INFO,"Able to Click/Search : "+SDG+" going to create custom SDG",YesNo.No);	 
 			ThreadSleep(3000);
 
-			if (lp.clickOnTab(projectName, TabName.SDGTab)) {
-				log(LogStatus.INFO,"Click on Tab : "+TabName.SDGTab,YesNo.No);
-
 				String[][] sdgLabels = {{SDGCreationLabel.SDG_Name.toString(),SmokeSdg1Name},
 						{SDGCreationLabel.SDG_Tag.toString(),SmokeSdg1TagName},
 						{SDGCreationLabel.sObjectName.toString(),SmokeSdg1ObjectName},{SDGCreationLabel.Parent_Field_Name.toString(),SmokeSdg1ParentName}};
@@ -6232,10 +6237,6 @@ public class PECloudSmoke extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to create/verify created SDG : "+SmokeSdg1Name,YesNo.Yes);
 				}
 
-			} else {
-				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.SDGTab);
-				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.SDGTab,YesNo.Yes);
-			}
 
 			String email=lp.generateRandomEmailId(gmailUserName);;
 			

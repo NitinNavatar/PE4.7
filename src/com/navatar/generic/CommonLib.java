@@ -1017,6 +1017,7 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 								AppListeners.appLog.info("Clicked on element: " + elementName);
 								return true;
 							} catch (Exception e1) {
+								
 
 							}
 						}
@@ -1155,6 +1156,7 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 
 	public static boolean sendKeysAndPressEnter(WebDriver driver, WebElement element, String value, String elementName,
 			action action) {
+		CommonLib.ThreadSleep(3000);
 		try {
 			if (element != null) {
 				if (action == CommonLib.action.SCROLLANDTHROWEXCEPTION || action == CommonLib.action.SCROLLANDBOOLEAN)

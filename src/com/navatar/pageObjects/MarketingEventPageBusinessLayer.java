@@ -74,7 +74,7 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 				String value;
 				if (!date.equals("") || !date.isEmpty()) {
 
-					WebElement ele = getLabelTextBox(projectName, PageName.Object5Page.toString(), PageLabel.Date.toString(), timeOut);
+					WebElement ele = getLabelTextBox(projectName, PageName.Object5Page.toString(), PageLabel.Start_Date.toString(), timeOut);
 					if (sendKeys(driver,ele, date, date, action.BOOLEAN)) {
 						appLog.info("Successfully Entered value on date TextBox : "+date);		
 						ThreadSleep(1000);

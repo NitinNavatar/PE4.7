@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 
 
-import com.android.dx.cf.iface.Field;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
@@ -299,7 +298,7 @@ public class Module2 extends BaseLib{
 				ThreadSleep(3000);
 				WebElement ele;
 				String[][] basicsection= {{"Subject",TWTask1Subject},{"Related_To",Smoke_TWContact3FName+" "+Smoke_TWContact3LName}};
-				String[][] advanceSection= {{"Priority","Normal"},{"Due Date Only",todaysDate}};
+				String[][] advanceSection= {{"Priority","Normal"},{"Due Date",todaysDate}};
 		        String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
 //				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task , 10);
 //				scrollDownThroughWebelement(driver, ele, "new task");
@@ -376,7 +375,7 @@ public class Module2 extends BaseLib{
 					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.TaskPage,null, TWTask1Subject, SubjectElement.SubjectLink, 10);
 					ThreadSleep(2000);
 					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
-						String[][] fieldsWithValues= {{PageLabel.Subject_updated.toString(),TWTask1Subject},
+						String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask1Subject},
 								{PageLabel.Watchlist.toString(),Watchlist.True.toString()}};
 
 						tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
@@ -424,21 +423,21 @@ public class Module2 extends BaseLib{
 				ThreadSleep(3000);
 				WebElement ele;
 				String[][] basicsection= {{"Subject",TWTask2Subject},{"Related_To",Smoke_TWContact1FName+" "+Smoke_TWContact1LName}};
-				String[][] advanceSection= {{"Priority","Normal"},{"Due Date Only",todaysDate}};
+				String[][] advanceSection= {{"Priority","Normal"},{"Due Date",todaysDate}};
 		        String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
 
 
-
+/*
                bp.createActivityTimeline(projectName,true,"Task", basicsection, advanceSection,null,null, false, null, null, null, null, null, null);
 				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 				CommonLib.ThreadSleep(50000);
 					
 					refresh(driver);
 					ThreadSleep(2000);
-					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+	*/		/*		WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
 					click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
 					ThreadSleep(2000);
-				
+				*/
 //				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task , 10);
 //				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task.toString(), action.BOOLEAN)) {				
 //				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.Add , 10);
@@ -502,9 +501,11 @@ public class Module2 extends BaseLib{
 //					ThreadSleep(2000);
 //					refresh(driver);
 //					ThreadSleep(2000);
+					ip.clickOnTab(projectName, TabName.TaskTab);
+					
 					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.Object3Page,ActivityType.Next, TWTask2Subject, SubjectElement.SubjectLink, 10);
 					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
-						String[][] fieldsWithValues= {{PageLabel.Subject_updated.toString(),TWTask2Subject},
+						String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask2Subject},
 								{PageLabel.Watchlist.toString(),Watchlist.False.toString()}};
 
 						tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
@@ -552,8 +553,10 @@ public class Module2 extends BaseLib{
 				ThreadSleep(3000);
 				WebElement ele;
 				String[][] basicsection= {{"Subject",TWTask3Subject},{"Related_To",Smoke_TWContact3FName+" "+Smoke_TWContact3LName}};
-				String[][] advanceSection= {{"Priority","Normal"}};
-		        String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
+				//String[][] advanceSection= {{"Priority","Normal"}};
+				String[][] advanceSection= null;
+		        
+				String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
 
 
 
@@ -608,9 +611,11 @@ public class Module2 extends BaseLib{
 //					ThreadSleep(2000);
 //					refresh(driver);
 //					ThreadSleep(2000);
+					ip.clickOnTab(projectName, TabName.TaskTab);
+					
 					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.TaskPage,null, TWTask3Subject, SubjectElement.SubjectLink, 10);
 					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
-						String[][] fieldsWithValues= {{PageLabel.Subject_updated.toString(),TWTask3Subject},
+						String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask3Subject},
 								{PageLabel.Watchlist.toString(),Watchlist.True.toString()}};
 
 						tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
@@ -654,7 +659,8 @@ public class Module2 extends BaseLib{
 				ThreadSleep(3000);
 				WebElement ele;
 				String[][] basicsection= {{"Subject",TWTask4Subject},{"Related_To",Smoke_TWContact1FName+" "+Smoke_TWContact1LName}};
-				String[][] advanceSection= {{"Priority","Normal"}};
+				//String[][] advanceSection= {{"Priority","Normal"}};
+				String[][] advanceSection= null;
 		        String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
 
 
@@ -711,9 +717,11 @@ public class Module2 extends BaseLib{
 //					ThreadSleep(2000);
 //					refresh(driver);
 //					ThreadSleep(2000);
+					ip.clickOnTab(projectName, TabName.TaskTab);
+					
 					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.TaskPage,ActivityType.Past, TWTask4Subject, SubjectElement.SubjectLink, 10);
 					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
-						String[][] fieldsWithValues= {{PageLabel.Subject_updated.toString(),TWTask4Subject},
+						String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask4Subject},
 								{PageLabel.Watchlist.toString(),Watchlist.False.toString()}};
 
 						tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
@@ -757,7 +765,7 @@ public class Module2 extends BaseLib{
 				ThreadSleep(3000);
 				WebElement ele;
 				String[][] basicsection= {{"Subject",TWTask5Subject},{"Related_To",Smoke_TWContact1FName+" "+Smoke_TWContact1LName},{"Related_To",Smoke_TWContact3FName+" "+Smoke_TWContact3LName}};
-				String[][] advanceSection= {{"Priority","Normal"},{"Due Date Only",todaysDate}};
+				String[][] advanceSection= {/*{"Priority","Normal"},*/{"Date",todaysDate}};
 		        String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
 
 
@@ -846,7 +854,7 @@ public class Module2 extends BaseLib{
 //					ThreadSleep(2000);
 					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.Object3Page,ActivityType.Next, TWTask5Subject, SubjectElement.SubjectLink, 10);
 					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
-						String[][] fieldsWithValues= {{PageLabel.Subject_updated.toString(),TWTask5Subject},
+						String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask5Subject},
 								{PageLabel.Watchlist.toString(),Watchlist.True.toString()}};
 
 						tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
@@ -893,7 +901,7 @@ public class Module2 extends BaseLib{
 				ThreadSleep(3000);
 				WebElement ele;
 				String[][] basicsection= {{"Subject",TWTask6Subject},{"Related_To",Smoke_TWContact3FName+" "+Smoke_TWContact3LName},{"Related_To",Smoke_TWContact1FName+" "+Smoke_TWContact1LName}};
-				String[][] advanceSection= {{"Priority","Normal"},{"Due Date Only",todaysDate}};
+				String[][] advanceSection= {/*{"Priority","Normal"},*/{"Date",todaysDate}};
 		        String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
 
 
@@ -988,7 +996,7 @@ public class Module2 extends BaseLib{
 //					ThreadSleep(2000);
 					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.Object3Page,ActivityType.Past, TWTask6Subject, SubjectElement.SubjectLink, 10);
 					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
-						String[][] fieldsWithValues= {{PageLabel.Subject_updated.toString(),TWTask6Subject},
+						String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask6Subject},
 								{PageLabel.Watchlist.toString(),Watchlist.True.toString()}};
 
 						tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
@@ -2167,11 +2175,14 @@ public class Module2 extends BaseLib{
 		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
 		String mode="Lightning";
-		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	
 		String labels[]={PageLabel.Status.toString(),PageLabel.Deal_Conversion_Date.toString()};
 		int i=0;
 		String values1[]={PageLabel.Under_Evaluation.toString().replace("_", " "),todaysDate};
 		String values2[]={PageLabel.Watchlist.toString(),todaysDate};
+		
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 		if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_CDINS1Name, 10)) {
 			if (ip.changeStatus(projectName, PageLabel.Under_Evaluation.toString())) {
@@ -2227,7 +2238,7 @@ public class Module2 extends BaseLib{
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		
 		String values1[]={PageLabel.Under_Evaluation.toString(),""};
 		String values2[]={PageLabel.Watchlist.toString(),""};
 		String values3[]={PageLabel.Under_Evaluation.toString(),todaysDate};
@@ -2235,7 +2246,7 @@ public class Module2 extends BaseLib{
 		
 		String labels[]={PageLabel.Status.toString(),PageLabel.Deal_Conversion_Date.toString()};
 		int i=0;
-		
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.createEntityOrAccount(projectName, mode, Smoke_CDINS2Name, Smoke_CDINS2RecordType, null, new String[][] {{PageLabel.Status.toString(),Smoke_CDINS2Status}}, 10)) {
 				log(LogStatus.INFO,"successfully Created Account/Entity : "+Smoke_CDINS1Name+" of record type : "+Smoke_CDINS1RecordType,YesNo.No);	
@@ -2351,15 +2362,17 @@ public class Module2 extends BaseLib{
 									sa.assertTrue(false,"edit link is not clickable for watchlist" );
 								}
 								switchToDefaultContent(driver);
+								ThreadSleep(4000);
 								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
 								ele=sp.clickOnEditInFrontOfFieldValues(projectName, PageLabel.Under_Evaluation.toString());
-								if (click(driver, ele, "watchlist", action.BOOLEAN)) {
+								if (clickUsingJavaScript(driver, ele, "watchlist", action.BOOLEAN)) {
 									switchToDefaultContent(driver);
+									ThreadSleep(4000);
 									switchToFrame(driver, 10, sp.getstatusPicklistFrame(10));
 									
 									if (sendKeys(driver, sp.getFieldLabelTextBox1(10), PageLabel.RenameUnder_Evaluation.toString().replace("_", " "), "label", action.BOOLEAN)) {
 										
-										if (click(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN)) {
+										if (clickUsingJavaScript(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN)) {
 											log(LogStatus.INFO,"successfully saved rename watchlist",YesNo.No);	
 											
 										}else {
@@ -2375,6 +2388,7 @@ public class Module2 extends BaseLib{
 									sa.assertTrue(false,"edit link is not clickable for watchlist" );
 								}
 								switchToDefaultContent(driver);
+								ThreadSleep(4000);
 								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
 								ele=sp.clickOnEditInFrontOfFieldValues(projectName, PageLabel.RenameUnder_Evaluation.toString());
 								WebElement ele1=null;
@@ -2487,7 +2501,7 @@ public class Module2 extends BaseLib{
 		if (home.clickOnSetUpLink()) {
 			parentID=switchOnWindow(driver);
 			if (parentID!=null) {
-				if (sp.searchStandardOrCustomObject(environment, mode,object.Institution )) {
+				if (sp.searchStandardOrCustomObject(environment, mode,object.Firm )) {
 					if(sp.clickOnObjectFeature(environment, mode,object.Firm, ObjectFeatureName.FieldAndRelationShip)) {
 						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), PageLabel.Status.toString()+Keys.ENTER, "status", action.BOOLEAN)) {
 							if (sp.clickOnAlreadyCreatedLayout(PageLabel.Status.toString())) {
@@ -2497,6 +2511,7 @@ public class Module2 extends BaseLib{
 								ThreadSleep(3000);
 								if (click(driver, ele, "watchlist", action.BOOLEAN)) {
 									switchToDefaultContent(driver);
+									ThreadSleep(4000);
 									switchToFrame(driver, 10, sp.getstatusPicklistFrame(10));
 									if (sendKeys(driver, sp.getFieldLabelTextBox1(10), PageLabel.Watchlist.toString(), "label", action.BOOLEAN)) {
 										
@@ -2516,10 +2531,12 @@ public class Module2 extends BaseLib{
 									sa.assertTrue(false,"edit link is not clickable for watchlist" );
 								}
 								switchToDefaultContent(driver);
+								ThreadSleep(4000);
 								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
 								ele=sp.clickOnEditInFrontOfFieldValues(projectName, PageLabel.RenameUnder_Evaluation.toString());
 								if (click(driver, ele, "watchlist", action.BOOLEAN)) {
 									switchToDefaultContent(driver);
+									ThreadSleep(4000);
 									switchToFrame(driver, 10, sp.getstatusPicklistFrame(10));
 									
 									if (sendKeys(driver, sp.getFieldLabelTextBox1(10), PageLabel.Under_Evaluation.toString().replace("_", " "), "label", action.BOOLEAN)) {
@@ -2540,6 +2557,7 @@ public class Module2 extends BaseLib{
 									sa.assertTrue(false,"edit link is not clickable for watchlist" );
 								}
 								switchToDefaultContent(driver);
+								ThreadSleep(4000);
 								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
 								ele=sp.clickOnEditInFrontOfFieldValues(projectName, PageLabel.Under_Evaluation.toString());
 								WebElement ele1=null;
@@ -4147,6 +4165,7 @@ public class Module2 extends BaseLib{
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
 		ThreadSleep(5000);
@@ -4195,10 +4214,11 @@ public class Module2 extends BaseLib{
 		String label="";
 		String value="";
 		String[][] labelAndValue={{excelLabel.Highest_Stage_Reached.toString(),M2_HSRPipeline3Stage},{excelLabel.Deal_Quality_Score.toString(),String.valueOf(dealQualityScore)}};
-		
+		refresh(driver);
 		for(String[] data:labelAndValue){
 			label = data[0];
 			value =data[1];
+			refresh(driver);
 		if(fp.fieldValueVerification(projectName, PageName.DealPage, PageLabel.valueOf(label), value, 30)){
 			
 			log(LogStatus.INFO,"successfully verify  field value  on : "+M2_HSRPipeline3Name,YesNo.No);	
@@ -4209,20 +4229,22 @@ public class Module2 extends BaseLib{
 		}
 		}
 		
-		
+	
 		String[][] labelAndValue2={{excelLabel.Average_Deal_Quality_Score.toString(),String.valueOf(averageDealQualityScore)},{excelLabel.Total_Deals_Shown.toString(),String.valueOf(totalDealsshown)}};
 
 		if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
 			
-			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline3SourceFirm, 30)){
-				
+			
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						M2_HSRPipeline3SourceFirm, 30))
+				{
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline3SourceFirm,YesNo.No);	
-				
-
+				ThreadSleep(8000);
+				refresh(driver);
 				for(String[] data:labelAndValue2){
 					label = data[0];
-					value =data[1];
+				value =data[1];
 				if(fp.fieldValueVerification(projectName, PageName.InstitutionsPage, PageLabel.valueOf(label), value, 30)){
 					log(LogStatus.INFO,"successfully verify  field value  on : "+M2_HSRPipeline3SourceFirm,YesNo.No);	
 					
@@ -4249,15 +4271,16 @@ public class Module2 extends BaseLib{
 		
 		if(fp.clickOnTab(environment,mode, TabName.Object2Tab)){
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
-			
-			if(fp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline3SourceContact, 30)){
-				
+			refresh(driver);
+		
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+						M2_HSRPipeline3SourceContact, 30)) {
 				log(LogStatus.INFO,"open created item"+M2_HSRPipeline3SourceContact,YesNo.No);	
 				
 
 				for(String[] data:labelAndValue3){
-					label = data[0];
-					value =data[1];
+				label = data[0];
+				value =data[1];
 				if(fp.fieldValueVerification(projectName, PageName.DealPage, PageLabel.valueOf(label), value, 30)){
 					
 					log(LogStatus.INFO,"successfully verify  field value  on : "+M2_HSRPipeline3SourceContact,YesNo.No);	
@@ -4402,45 +4425,22 @@ public class Module2 extends BaseLib{
 	public void M2tc045_1_HighestStageReachedRestorePipeline_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		WebElement ele = null ;
 	
 		
 		TabName tabName = TabName.RecycleBinTab;
 		String name = M2_HSRPipeline1Name;
 		
-			if (cp.clickOnTab(projectName, tabName)) {
-				log(LogStatus.INFO,"Clicked on Tab : "+tabName+" For : "+name,YesNo.No);
-				ThreadSleep(1000);
-				cp.clickOnAlreadyCreatedItem(projectName, tabName, name, 20);
-					log(LogStatus.INFO,"Clicked on  : "+name+" For : "+tabName,YesNo.No);
-					ThreadSleep(2000);
-					
-					 ele=cp.getCheckboxOfRestoreItemOnRecycleBin(projectName, name, 10);
-					 if (clickUsingJavaScript(driver, ele, "Check box against : "+name, action.BOOLEAN)) {
-						 log(LogStatus.INFO,"Click on checkbox for "+name,YesNo.No);
-						 
-						 ThreadSleep(1000);
-						 ele=cp.getRestoreButtonOnRecycleBin(projectName, 10);
-						 if (clickUsingJavaScript(driver, ele, "Restore Button : "+name, action.BOOLEAN)) {
-							 log(LogStatus.INFO,"Click on Restore Button for "+name,YesNo.No);
-							 ThreadSleep(1000);
-						} else {
-							sa.assertTrue(false,"Not Able to Click on Restore Button for "+name);
-							log(LogStatus.SKIP,"Not Able to Click on Restore Button for "+name,YesNo.Yes);
-						}
-						 
-					} else {
-						sa.assertTrue(false,"Not Able to Click on checkbox for "+name);
-						log(LogStatus.SKIP,"Not Able to Click on checkbox for "+name,YesNo.Yes);
-					}
+		if (lp.restoreValueFromRecycleBin(projectName, name)) {
+			log(LogStatus.INFO,"Able to restore item from Recycle Bin "+name,YesNo.Yes);
+			
+		} else {
+			sa.assertTrue(false,"Not Able to restore item from Recycle Bin "+name);
+			log(LogStatus.SKIP,"Not Able to restore item from Recycle Bin "+name,YesNo.Yes);
 
-			} else {
-				sa.assertTrue(false,"Not Able to Click on Tab : "+tabName+" For : "+name);
-				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabName+" For : "+name,YesNo.Yes);
-			}
+		}
 
-		switchToDefaultContent(driver);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -4559,10 +4559,10 @@ public class Module2 extends BaseLib{
 				if (sp.searchStandardOrCustomObject(environment, mode,object.Deal )) {
 					if(sp.clickOnObjectFeature(environment, mode,object.Deal, ObjectFeatureName.FieldAndRelationShip)) {
 						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), excelLabel.Stage.toString()+Keys.ENTER, "status", action.BOOLEAN)) {
-
 							if (sp.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
 								for (int i = 0;i<newAndOldStage.length;i++) {
 									switchToDefaultContent(driver);
+									ThreadSleep(4000);
 									switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
 									WebElement ele=sp.clickOnEditInFrontOfFieldValues(projectName, newAndOldStage[i][0]);
 									if (click(driver, ele, "watchlist", action.BOOLEAN)) {
@@ -4575,6 +4575,9 @@ public class Module2 extends BaseLib{
 										if (clickUsingJavaScript(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN)) {
 
 											log(LogStatus.INFO, "successfully changed watchlist label", YesNo.No);
+											ThreadSleep(10000);
+											switchToDefaultContent(driver);
+											refresh(driver);
 										}else {
 											sa.assertTrue(false,"not able to click on save button");
 											log(LogStatus.SKIP,"not able to click on save button",YesNo.Yes);
@@ -4587,6 +4590,7 @@ public class Module2 extends BaseLib{
 								}
 								ThreadSleep(3000);
 								switchToDefaultContent(driver);
+								ThreadSleep(4000);
 								switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
 								WebElement ele=sp.clickOnEditInFrontOfFieldValues(projectName, newAndOldStage[0][1]);
 								WebElement ele1=null;
@@ -4732,7 +4736,7 @@ public class Module2 extends BaseLib{
 				if (click(driver, ele, "details tab", action.SCROLLANDBOOLEAN)) {
 					for (int i =0;i<labelName.length;i++) {
 						if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i])) {
-							log(LogStatus.SKIP,"successfully verified "+labelName[i],YesNo.No);
+							log(LogStatus.PASS,"successfully verified "+labelName[i],YesNo.No);
 							
 						}else {
 							sa.assertTrue(false,"Not Able to verify "+labelName[i]);
@@ -4755,6 +4759,7 @@ public class Module2 extends BaseLib{
 		for (TabName tab:tabName) {
 			if (lp.clickOnTab(projectName, tab)) {
 				if (fp.clickOnAlreadyCreatedItem(projectName, records[j], 10)){
+					refresh(driver);
 					ele=ip.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 					if (click(driver, ele, "details tab", action.SCROLLANDBOOLEAN)) {
 						if (j==0){
@@ -4811,7 +4816,10 @@ public class Module2 extends BaseLib{
 		String type ="";
 		String[][] data = {{M2_HSRINS7Name,M2_HSRINS7RecordType},
 							{M2_HSRINS8Name,M2_HSRINS8RecordType},
-							{M2_HSRINS9Name,M2_HSRINS9RecordType}};
+							{M2_HSRINS9Name,M2_HSRINS9RecordType},
+							{M2_DQSINS4Name,M2_DQSINS4RecordType},
+							{M2_DQSINS5Name,M2_DQSINS5RecordType},
+							{M2_DQSINS6Name,M2_DQSINS6RecordType}};
 		
 		for(String[] value:data){
 			name=value[0];
@@ -4861,6 +4869,30 @@ public class Module2 extends BaseLib{
 			} else {
 				sa.assertTrue(false, "Not Able to Create Contact : " + M2_HSRContact3FName + " " + M2_HSRContact3LName);
 				log(LogStatus.SKIP, "Not Able to Create Contact: " + M2_HSRContact3FName + " " + M2_HSRContact3LName,
+						YesNo.Yes);
+			}
+
+		} else {
+			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.Object2Tab);
+			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.Object2Tab, YesNo.Yes);
+		}
+			
+		
+		refresh(driver);
+		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.Object2Tab, YesNo.No);
+
+			mailID = lp.generateRandomEmailId(gmailUserName);
+			ExcelUtils.writeData(phase1DataSheetFilePath, mailID, "Contacts", excelLabel.Variable_Name, "M2DQSCON3",
+					excelLabel.Contact_EmailId);
+
+			if (cp.createContact(projectName, M2_DQSContact3FName, M2_DQSContact3LName, M2_DQSContact3Ins, mailID, "",
+					null, null, CreationPage.ContactPage, null, null)) {
+				log(LogStatus.INFO, "successfully Created Contact : " + M2_DQSContact3FName + " " + M2_DQSContact3LName,
+						YesNo.No);
+			} else {
+				sa.assertTrue(false, "Not Able to Create Contact : " + M2_DQSContact3FName + " " + M2_DQSContact3LName);
+				log(LogStatus.SKIP, "Not Able to Create Contact: " + M2_DQSContact3FName + " " + M2_DQSContact3LName,
 						YesNo.Yes);
 			}
 
@@ -4987,10 +5019,13 @@ public class Module2 extends BaseLib{
 	public void M2tc052_DQSVerifyConvertToPortfolio(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
 			if (dp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline5Name, 10)) {
-				if (click(driver, dp.getconvertToPortfolio(10), "convert to portfolio button", action.BOOLEAN)) {
+				
+				if (bp.clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.convertToPortfolio, 10)) {
+					
 					if (dp.getconvertToPortfolioMessage(M2_HSRPipeline5Company,10)!=null) {
 						log(LogStatus.INFO, "successfully verified convert to portfolio text message", YesNo.No);
 					}else {
@@ -5116,6 +5151,7 @@ public class Module2 extends BaseLib{
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		
 		lp.CRMLogin(crmUser1EmailID, adminPassword,appName);
+			
 		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object4Tab,YesNo.No);	
 			String[][] otherLabels = {{excelLabel.Source_Contact.toString(),M2_DQSPipeline6SourceContact},{excelLabel.Source_Firm.toString(),M2_DQSPipeline6SourceFirm}};
@@ -5251,6 +5287,7 @@ public class Module2 extends BaseLib{
 							if (sp.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
 								for (int i = 0;i<newAndOldStage.length;i++) {
 									switchToDefaultContent(driver);
+									ThreadSleep(4000);
 									switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
 									ThreadSleep(3000);
 									WebElement ele=sp.clickOnEditInFrontOfFieldValues(projectName, newAndOldStage[i][0]);
@@ -5276,6 +5313,7 @@ public class Module2 extends BaseLib{
 								}
 								ThreadSleep(5000);
 								switchToDefaultContent(driver);
+								ThreadSleep(4000);
 								switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
 								WebElement ele=sp.clickOnEditInFrontOfFieldValues(projectName, newAndOldStage[0][1]);
 								WebElement ele1=null;
