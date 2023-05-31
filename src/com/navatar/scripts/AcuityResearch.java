@@ -1678,7 +1678,7 @@ public class AcuityResearch extends BaseLib{
 	   if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 	
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm1.replace("  ", "").replace("\"", ""), 10)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, TabName.InstituitonsTab, AR_Firm1.replace("  ", "").replace("\"", ""), 10)) {
 	           if (ip.UpdateLegalNameAccount(projectName, AR_Research1.replace("  ", "").replace("\"", ""), 5)) {
 	               log(LogStatus.INFO, "successfully update legal name " + AR_Research1, YesNo.Yes);
 	           } else {
@@ -1856,7 +1856,7 @@ public class AcuityResearch extends BaseLib{
 	   if (fp.clickOnTab(environment, mode, TabName.ContactTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.ContactTab, YesNo.No);
 	
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm2.replace("  ", "").replace("\"", ""), 10)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, TabName.ContactsTab, AR_Firm2.replace("  ", "").replace("\"", ""), 10)) {
 	           if (cp.UpdateLastName(projectName, PageName.ContactPage,AR_Research2.replace("  ", "").replace("\"", ""))) {
 	               log(LogStatus.INFO, "successfully update contact name " + AR_Research2, YesNo.Yes);
 	           } else {
@@ -2032,7 +2032,7 @@ public class AcuityResearch extends BaseLib{
    
 	   if (fp.clickOnTab(environment, mode, TabName.DealTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.DealTab, YesNo.No);
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm3.replace("  ", "").replace("\"", ""), 10)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, TabName.DealTab, AR_Firm3.replace("  ", "").replace("\"", ""), 10)) {
 	           if (dp.UpdateOtherLable(projectName, PageLabel.Deal_Name.toString(), AR_Research3.replace("  ", "").replace("\"", ""), 10)) {
 	               log(LogStatus.INFO, "successfully update contact name " + AR_Research3, YesNo.Yes);
 	           } else {
@@ -2204,7 +2204,7 @@ public class AcuityResearch extends BaseLib{
    
 	   if (fp.clickOnTab(environment, mode, TabName.FundsTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.FundsTab, YesNo.No);
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm4.replace("  ", "").replace("\"", ""), 10)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, TabName.FundsTab, AR_Firm4.replace("  ", "").replace("\"", ""), 10)) {
 	           if (fp.UpdateFundName(projectName, AR_Research4.replace("  ", "").replace("\"", ""), 10)) {
 	               log(LogStatus.INFO, "successfully update contact name " + AR_Research4, YesNo.Yes);
 	           } else {
@@ -2375,7 +2375,7 @@ public class AcuityResearch extends BaseLib{
    
 	   if (fp.clickOnTab(environment, mode, TabName.FundraisingsTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.FundraisingsTab, YesNo.No);
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm5.replace("  ", "").replace("\"", ""), 10)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, TabName.FundraisingsTab, AR_Firm5.replace("  ", "").replace("\"", ""), 10)) {
 	           if (frp.UpdateFundRaisingName(projectName, AR_Research5.replace("  ", "").replace("\"", ""), 10)) {
 	               log(LogStatus.INFO, "successfully update Fundraising name " + AR_Research5, YesNo.Yes);
 	           } else {

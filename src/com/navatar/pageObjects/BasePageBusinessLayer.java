@@ -1427,6 +1427,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case ContactTab:
 			viewList = "All";
 			break;
+		case ContactsTab:
+			viewList = "All Contacts";
+			break;
 		case FundsTab:
 			viewList = "All";
 			break;
