@@ -595,7 +595,7 @@ public class AcuityResearch extends BaseLib{
 					{ recordTypeLabel.Active.toString(), "" } } };
 
 	
-	String[] profileForSelection = { "PE Standard User", "System Administrator" };
+	String[] profileForSelection = { "System Administrator"};
 	boolean isMakeAvailable = false;
 	boolean isMakeDefault = false;
 	boolean flag = false;
@@ -700,7 +700,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, contactrecordType[i], isMakeAvailable,
-										null, isMakeDefault, null, 10);
+										profileForSelection, isMakeDefault, null, 10);
 							}
 						}
 						if (flag) {
@@ -763,7 +763,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, dealRecordType[i], isMakeAvailable,
-										null, isMakeDefault, null, 10);
+										profileForSelection, isMakeDefault, null, 10);
 							}
 						}
 						if (flag) {
@@ -827,7 +827,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, fundrecordType[i], isMakeAvailable,
-										null, isMakeDefault, null, 10);
+										profileForSelection, isMakeDefault, null, 10);
 							}
 						}
 						if (flag) {
@@ -891,7 +891,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, fundraisingrecordType[i],
-										isMakeAvailable, null, isMakeDefault, null, 10);
+										isMakeAvailable, profileForSelection, isMakeDefault, null, 10);
 							}
 						}
 						if (flag) {
@@ -946,7 +946,7 @@ public class AcuityResearch extends BaseLib{
 	
 	String recordTypes [] = {"Deal","Fund","Fundraising"};
 	String avail[][] = {{"SellSide Deal","BuySide Deal", "Capital Raise"},{"Mutual Fund","Trust Fund"},{"FRGRT","MSGRT"}};
-	String[] profileForSelection = { "PE Standard User", "System Administrator"};
+	String[] profileForSelection = {"System Administrator"};
 	String parentID=null;
 	String master= "--Master--";
 	for(int k=0; k<profileForSelection.length; k++) {
@@ -966,6 +966,7 @@ public class AcuityResearch extends BaseLib{
 						for(int i=0; i <3; i++) {
 							System.out.println(avail[i].length);
 						switchToDefaultContent(driver);
+						refresh(driver);
 						ThreadSleep(5000);
 						switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
 						ThreadSleep(2000);
@@ -1078,7 +1079,7 @@ public class AcuityResearch extends BaseLib{
 					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Deal,
 							ObjectFeatureName.recordTypes)) {
 						if (sp.clickOnAlreadyCreatedLayout(dealRecordTypeArray[i])) {
-							if(sp.getRecordTypeLabelWithoutEditMode(projectName, RecordType[0][0], RecordType[0][1], 10) != null) {
+							if(sp.getRecordTypeLabelWithoutEditMode(projectName, RecordType[0][0], RecordType[0][1], 10) == null) {
 								log(LogStatus.PASS,"Record Type need to update ",YesNo.Yes);
 							if (sp.editRecordTypeForObject(projectName, RecordType, 10)) {
 								log(LogStatus.PASS,dealRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
@@ -1127,7 +1128,7 @@ public class AcuityResearch extends BaseLib{
 					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Fund,
 							ObjectFeatureName.recordTypes)) {
 						if (sp.clickOnAlreadyCreatedLayout(fundRecordTypeArray[i])) {
-							if(sp.getRecordTypeLabelWithoutEditMode(projectName, RecordType[0][0], RecordType[0][1], 10) != null) {
+							if(sp.getRecordTypeLabelWithoutEditMode(projectName, RecordType[0][0], RecordType[0][1], 10) == null) {
 								log(LogStatus.PASS,"Record Type need to update ",YesNo.Yes);
 							if (sp.editRecordTypeForObject(projectName, RecordType, 10)) {
 								log(LogStatus.ERROR,fundRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
@@ -1176,7 +1177,7 @@ public class AcuityResearch extends BaseLib{
 					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Fundraising,
 							ObjectFeatureName.recordTypes)) {
 						if (sp.clickOnAlreadyCreatedLayout(fundraisingRecordTypeArray[i])) {
-							if(sp.getRecordTypeLabelWithoutEditMode(projectName, RecordType[0][0], RecordType[0][1], 10) != null) {
+							if(sp.getRecordTypeLabelWithoutEditMode(projectName, RecordType[0][0], RecordType[0][1], 10) == null) {
 								log(LogStatus.PASS,"Record Type need to update ",YesNo.Yes);
 							if (sp.editRecordTypeForObject(projectName, RecordType, 10)) {
 								log(LogStatus.ERROR,fundraisingRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
@@ -3374,7 +3375,7 @@ public class AcuityResearch extends BaseLib{
 	String recordTypes [] = {"Firm","Deal","Fund","Fundraising"};
 	String avail[][] = {{"Consultant RT","IT Firm"},{"SellSide Deal","BuySide Deal", "Capital Raise"},{"Mutual Fund","Trust Fund"},{"FRGRT","MSGRT"}};
 	String defaultValue[] = {"SellSide Deal","Mutual Fund", "FRGRT"};
-	String[] profileForSelection = { "PE Standard User", "System Administrator" };
+	String[] profileForSelection = {"System Administrator" };
 	boolean isMakeAvailable = false;
 	boolean isMakeDefault = false;
 	boolean flag = false;
@@ -3677,7 +3678,7 @@ public class AcuityResearch extends BaseLib{
 	
 	String recordTypes = "Account";
 	String avail[] = {"Consultant RT", "IT Firm"};
-	String[] profileForSelection = { "PE Standard User", "System Administrator"};
+	String[] profileForSelection = {"System Administrator"};
 	String parentID=null;
 	for(int k=0; k<profileForSelection.length; k++) {
 			home.notificationPopUpClose();
@@ -5927,8 +5928,13 @@ public class AcuityResearch extends BaseLib{
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
-	String parentWindow = "", contactFields[] = {"Description","Legal Name"}, dealFields[] = {"Stage","Pipeline Comments"}, fundraisingFields[] = {"Status Notes","Legal Name"};
-	String[] searchValues = {AR_Firm27,AR_Firm28,AR_Firm57};
+	String parentWindow = "", contactFields[] = {"Description","Account Name"}, dealFields[] = {"Stage","Pipeline Comments"}, fundraisingFields[] = {"Status Notes","Legal Name"};
+	String[] varibles = {"AR_Up27","AR_Up28","AR_Up57"};
+	String varibale27 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
+	String varibale28 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, varibles[1], excelLabel.Name);
+	String varibale57 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, varibles[2], excelLabel.Name);
+
+	String[] searchValues = {varibale27,varibale28,varibale57};
 	String ele, headerName;
 
 	
@@ -6186,8 +6192,12 @@ public class AcuityResearch extends BaseLib{
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
-	String parentWindow = "", contactFields[] = {"Description","Legal Name"}, dealFields[] = {"Stage","Pipeline Comments"}, fundraisingFields[] = {"Status Notes","Legal Name"};
-	String[] searchValues = {AR_Firm27,AR_Firm281};
+	String parentWindow = "", contactFields[] = {"Description","Account Name"}, dealFields[] = {"Stage","Pipeline Comments"}, fundraisingFields[] = {"Status Notes","Legal Name"};
+	String[] varibles = {"AR_Up27","AR_Up281"};
+	String varibale27 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
+	String varibale281 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, varibles[1], excelLabel.Name);
+
+	String[] searchValues = {varibale27,varibale281};
 	String ele;
 
 	if (home.clickOnSetUpLink()) {
@@ -6513,7 +6523,11 @@ public class AcuityResearch extends BaseLib{
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	String parentWindow = "";
-	String[] searchValues = {AR_Firm27};
+	String[] varibles = {"AR_Up27"};
+	String varibale27 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
+	
+	String[] searchValues = {varibale27};
+
 	boolean flag1 = false;
 	String tabNames1 = "Accounts" ,tabNames2 = "Contacts" ;
 	String[] labelsWithValues1 = {  "Account Name<break>Account Name upd", "Description<break>Description upd" },labelsWithValues2 = {  "Contact Name<break>Contact Name upd", "Description<break>Description upd"  };
@@ -6826,7 +6840,11 @@ public class AcuityResearch extends BaseLib{
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	String parentWindow = "";
-	String[] searchValues = {AR_Firm27};
+	String[] varibles = {"AR_Up27"};
+	String varibale27 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
+
+	String[] searchValues = {varibale27};
+
 	boolean flag1 = false;
 	String tabNames1 = "Accounts" ,tabNames2 = "Contacts" ;
 	String[] labelsWithValues1 = {  "Account Name<break>Account Name Upd !@&*()(*& 123", "Description<break>Description Upd !@&*()(*& 123" },
@@ -7141,7 +7159,11 @@ public class AcuityResearch extends BaseLib{
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	String parentWindow = "";
-	String[] searchValues = {AR_Firm27};
+	String[] varibles = {"AR_Up27"};
+	String varibale27 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
+	
+	String[] searchValues = {varibale27};
+
 	boolean flag1 = false;
 	String tabNames1 = "Accounts" ,tabNames2 = "Contacts" ;
 	String[] labelsWithValues1 = {  "Account Name<break>Account Name", "Description<break>Description" },labelsWithValues2 = {  "Contact Name<break>Contact Name", "Description<break>Description"  };
