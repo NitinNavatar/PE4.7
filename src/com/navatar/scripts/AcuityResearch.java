@@ -1856,7 +1856,7 @@ public class AcuityResearch extends BaseLib{
 	   if (fp.clickOnTab(environment, mode, TabName.ContactTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.ContactTab, YesNo.No);
 	
-	      if (fp.clickOnAlreadyCreatedItem(projectName, TabName.ContactTab, AR_Firm2.replace("  ", "").replace("\"", ""), 10)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, TabName.ContactsTab, AR_Firm2.replace("  ", "").replace("\"", ""), 10)) {
 	           if (cp.UpdateLastName(projectName, PageName.ContactPage,AR_Research2.replace("  ", "").replace("\"", ""))) {
 	               log(LogStatus.INFO, "successfully update contact name " + AR_Research2, YesNo.Yes);
 	           } else {
