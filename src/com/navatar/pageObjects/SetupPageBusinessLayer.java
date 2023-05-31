@@ -3580,6 +3580,9 @@ public class SetupPageBusinessLayer extends SetupPage {
 				// js.executeScript("arguments[0].setAttribute(arguments[1],arguments[2])",
 				// ele,"Value","");
 				doubleClickUsingAction(driver, ele);
+				ThreadSleep(2000);
+				ac.keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).sendKeys(Keys.BACK_SPACE).build().perform();
+				ThreadSleep(2000);
 				ac.moveToElement(ele).sendKeys(UpdatedfieldName).sendKeys(Keys.ENTER).build().perform();
 				log(LogStatus.INFO, "Pass value:" + UpdatedfieldName + " to override field label of field:" + fieldName,
 						YesNo.No);
@@ -3588,15 +3591,19 @@ public class SetupPageBusinessLayer extends SetupPage {
 						action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Successfully click on override save button", YesNo.No);
 					status = true;
+					ThreadSleep(5000);
+					clickUsingJavaScript(driver, setup.getOverrideSetupFieldFirstBtn(20), "override field next button",
+							action.SCROLLANDBOOLEAN);
+					ThreadSleep(5000);
 					return true;
 				} else {
 					log(LogStatus.FAIL,
 							"Not able to  click on save button name so cannot update field name" + fieldName,
 							YesNo.Yes);
-					sa.assertTrue(false, "Not able to  click on fsave button so cannot update field name" + fieldName);
+					sa.assertTrue(false, "Not able to  click on save button so cannot update field name" + fieldName);
 
 				}
-
+				
 			} else {
 				log(LogStatus.FAIL, "Not able to double click on field name so cannot update field name" + fieldName,
 						YesNo.Yes);
@@ -3608,7 +3615,6 @@ public class SetupPageBusinessLayer extends SetupPage {
 					+ " on next page", YesNo.No);
 
 		}
-
 		switchToDefaultContent(driver);
 		return false;
 

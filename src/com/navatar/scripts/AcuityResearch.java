@@ -6602,19 +6602,19 @@ public class AcuityResearch extends BaseLib{
 				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Deal.toString())){
 					log(LogStatus.INFO, "Select "+PageLabel.Deal.toString()+" text in object dropdown in override setup page", YesNo.No);
 					ThreadSleep(5000);
-					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Stage.toString(), DealLabel1.replace("_", " "), action.SCROLLANDBOOLEAN)){
-						log(LogStatus.INFO, "Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.No);
-						
-					}else{
-						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.Yes);
-						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Stage.toString()+" to "+DealLabel1);	
-					}
 					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Pipeline_Comments.toString().replace("_", " "), DealLabel2.replace("_", " "), action.SCROLLANDBOOLEAN)){
 						log(LogStatus.INFO, "Field label: "+PageLabel.Pipeline_Comments.toString()+" successfully update to "+DealLabel2, YesNo.No);
 						
 					}else{
 						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Pipeline_Comments.toString()+" successfully update to "+DealLabel2, YesNo.Yes);
 						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Pipeline_Comments.toString()+" to "+DealLabel2);	
+					}
+					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Stage.toString(), DealLabel1.replace("_", " "), action.SCROLLANDBOOLEAN)){
+						log(LogStatus.INFO, "Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.No);
+						
+					}else{
+						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.Yes);
+						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Stage.toString()+" to "+DealLabel1);	
 					}
 				}else{
 					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Deal.toString()+" in  object dropdown in override page", YesNo.Yes);
@@ -6682,12 +6682,12 @@ public class AcuityResearch extends BaseLib{
 				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Theme.toString())){
 					log(LogStatus.INFO, "Select "+PageLabel.Theme.toString()+" text in object dropdown in override setup page", YesNo.No);
 					ThreadSleep(5000);
-					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Descrption.toString().replace("_"," "), ThemeLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
-						log(LogStatus.INFO, "Field label: "+PageLabel.Descrption.toString()+" successfully update to "+ThemeLabel, YesNo.No);
+					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Description.toString().replace("_"," "), ThemeLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
+						log(LogStatus.INFO, "Field label: "+PageLabel.Description.toString()+" successfully update to "+ThemeLabel, YesNo.No);
 						
 					}else{
-						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Descrption.toString()+" successfully update to "+ThemeLabel, YesNo.Yes);
-						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Descrption.toString()+" to "+ThemeLabel);	
+						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Description.toString()+" successfully update to "+ThemeLabel, YesNo.Yes);
+						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Description.toString()+" to "+ThemeLabel);	
 					}
 				}else{
 					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page", YesNo.Yes);
@@ -6919,19 +6919,19 @@ public class AcuityResearch extends BaseLib{
 				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Deal.toString())){
 					log(LogStatus.INFO, "Select "+PageLabel.Deal.toString()+" text in object dropdown in override setup page", YesNo.No);
 					ThreadSleep(5000);
-					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Stage.toString(), DealLabel1.replace("_", " "), action.SCROLLANDBOOLEAN)){
-						log(LogStatus.INFO, "Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.No);
-						
-					}else{
-						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.Yes);
-						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Stage.toString()+" to "+DealLabel1);	
-					}
 					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Pipeline_Comments.toString().replace("_", " "), DealLabel2.replace("_", " "), action.SCROLLANDBOOLEAN)){
 						log(LogStatus.INFO, "Field label: "+PageLabel.Pipeline_Comments.toString()+" successfully update to "+DealLabel2, YesNo.No);
 						
 					}else{
 						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Pipeline_Comments.toString()+" successfully update to "+DealLabel2, YesNo.Yes);
 						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Pipeline_Comments.toString()+" to "+DealLabel2);	
+					}
+					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Stage.toString(), DealLabel1.replace("_", " "), action.SCROLLANDBOOLEAN)){
+						log(LogStatus.INFO, "Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.No);
+						
+					}else{
+						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.Yes);
+						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Stage.toString()+" to "+DealLabel1);	
 					}
 				}else{
 					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Deal.toString()+" in  object dropdown in override page", YesNo.Yes);
@@ -6999,12 +6999,12 @@ public class AcuityResearch extends BaseLib{
 				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Theme.toString())){
 					log(LogStatus.INFO, "Select "+PageLabel.Theme.toString()+" text in object dropdown in override setup page", YesNo.No);
 					ThreadSleep(5000);
-					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Descrption.toString().replace("_"," "), ThemeLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
-						log(LogStatus.INFO, "Field label: "+PageLabel.Descrption.toString()+" successfully update to "+ThemeLabel, YesNo.No);
+					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Description.toString().replace("_"," "), ThemeLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
+						log(LogStatus.INFO, "Field label: "+PageLabel.Description.toString()+" successfully update to "+ThemeLabel, YesNo.No);
 						
 					}else{
-						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Descrption.toString()+" successfully update to "+ThemeLabel, YesNo.Yes);
-						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Descrption.toString()+" to "+ThemeLabel);	
+						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Description.toString()+" successfully update to "+ThemeLabel, YesNo.Yes);
+						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Description.toString()+" to "+ThemeLabel);	
 					}
 				}else{
 					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page", YesNo.Yes);
@@ -7237,19 +7237,19 @@ public class AcuityResearch extends BaseLib{
 				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Deal.toString())){
 					log(LogStatus.INFO, "Select "+PageLabel.Deal.toString()+" text in object dropdown in override setup page", YesNo.No);
 					ThreadSleep(5000);
-					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Stage.toString(), DealLabel1.replace("_", " "), action.SCROLLANDBOOLEAN)){
-						log(LogStatus.INFO, "Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.No);
-						
-					}else{
-						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.Yes);
-						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Stage.toString()+" to "+DealLabel1);	
-					}
 					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Pipeline_Comments.toString().replace("_", " "), DealLabel2.replace("_", " "), action.SCROLLANDBOOLEAN)){
 						log(LogStatus.INFO, "Field label: "+PageLabel.Pipeline_Comments.toString()+" successfully update to "+DealLabel2, YesNo.No);
 						
 					}else{
 						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Pipeline_Comments.toString()+" successfully update to "+DealLabel2, YesNo.Yes);
 						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Pipeline_Comments.toString()+" to "+DealLabel2);	
+					}
+					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Stage.toString(), DealLabel1.replace("_", " "), action.SCROLLANDBOOLEAN)){
+						log(LogStatus.INFO, "Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.No);
+						
+					}else{
+						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.Yes);
+						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Stage.toString()+" to "+DealLabel1);	
 					}
 				}else{
 					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Deal.toString()+" in  object dropdown in override page", YesNo.Yes);
