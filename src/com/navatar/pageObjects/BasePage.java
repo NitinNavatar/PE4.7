@@ -258,7 +258,7 @@ public abstract class BasePage extends BaseLib {
 //	private WebElement recordPageSettingSave;
 
 	@FindBy(xpath = "//button[@name='SaveEdit']")
-	private WebElement recordPageSettingSave;
+	 private WebElement recordPageSettingSave;
 
 	/**
 	 * @return the recordPageSettingSave
@@ -611,6 +611,15 @@ public abstract class BasePage extends BaseLib {
 
 	}
 
+	public WebElement sdgHeaderElement(String HeaderSDG, int timeOut) {
+		String xpath = "//a[text()='" + HeaderSDG + "']";
+		try {return FindElement(driver, xpath, "sdgHeaderElement", action.SCROLLANDBOOLEAN, timeOut);
+		}
+		catch (Exception e) {
+			return FindElement(driver, xpath, "sdgHeaderElement", action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+	  
 	@FindBy(xpath = "//button[@name=\"SaveEdit\"]")
 	private WebElement fundRaisingSaveButton;
 
@@ -3756,7 +3765,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getPeopleTabOnTagged(int timeOut) {
 		return isDisplayed(driver, peopleTabOnTagged, "Visibility", timeOut, "People Tab On Tagged");
 	}
-	
+
 	@FindBy(xpath = "//button[@name='timesRef']")
 	private WebElement countLink;
 
@@ -3766,16 +3775,16 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getCountLinkOnTagged(int timeOut) {
 		return isDisplayed(driver, countLink, "Visibility", timeOut, "Count Link");
 	}
-	
+
 	public WebElement returnXpathOfSubjectInInteractionPage(String name, int timeOut) {
-		String xpath = "//td[@data-label='Subject']//button[@title='" + name + "']"; 
+		String xpath = "//td[@data-label='Subject']//button[@title='" + name + "']";
 		try {
-			return FindElement(driver, xpath, "Subject Of Interaction Page",action.BOOLEAN,timeOut);
+			return FindElement(driver, xpath, "Subject Of Interaction Page", action.BOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, xpath, "Subject Of Interaction Page",action.BOOLEAN,timeOut);
+			return FindElement(driver, xpath, "Subject Of Interaction Page", action.BOOLEAN, timeOut);
 		}
 	}
-	
+
 	@FindBy(xpath = "//input[contains(@id,'txtDueDate')]/following-sibling::span")
 	private WebElement todaysDueDate;
 
@@ -7124,11 +7133,13 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement dealAcuityDealName(String dealName, int timeOut) {
 
-		String xpath = "//a[text()='" + dealName + "']/ancestor::th[@data-label='Deal Name']";
-		try {
-			return FindElement(driver, xpath, "Header: " + dealName, action.SCROLLANDBOOLEAN, timeOut);
-		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, xpath, "Header: " + dealName, action.SCROLLANDBOOLEAN, timeOut);
+		List<WebElement> ele = FindElements(driver,
+				"5//a[text()='" + dealName + "']/ancestor::th[@data-label='Deal Name']").stream()
+				.filter(x -> x.isDisplayed()).collect(Collectors.toList());
+		if (ele.size() > 0) {
+			return ele.get(0);
+		} else {
+			return null;
 		}
 
 	}
@@ -7143,7 +7154,7 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
-	
+
 	public WebElement dealTeamAcuityUserName(String Name, int timeOut) {
 
 		String xpath = "//button[text()='" + Name + "']/ancestor::th[@data-label='Name']";
@@ -7154,10 +7165,10 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
-	
+
 	public WebElement InteractionRecord(String Name, int timeOut) {
 
-		String xpath = "//span[contains(text(),'Interactions')]/ancestor::div//a[text()='"+ Name +"']";
+		String xpath = "//span[contains(text(),'Interactions')]/ancestor::div//a[text()='" + Name + "']";
 		try {
 			return FindElement(driver, xpath, "Header: " + Name, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7165,7 +7176,7 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
-	
+
 	public WebElement dealAcuity2DealName(String dealName, int timeOut) {
 
 		String xpath = "//a[text()='" + dealName + "']/ancestor::th[@data-label='Deal']";
@@ -7224,10 +7235,12 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
-	
+
 	public WebElement dealTeamAcuityTitleName(String dealName, String stage, int timeOut) {
 
-		String xpath = "//a[text()='" + dealName + "']/ancestor::th[@data-label='Name']/following-sibling::td/ancestor::div//span[@title='Title']/ancestor::div//lightning-base-formatted-text[text()='" + stage + "']";
+		String xpath = "//a[text()='" + dealName
+				+ "']/ancestor::th[@data-label='Name']/following-sibling::td/ancestor::div//span[@title='Title']/ancestor::div//lightning-base-formatted-text[text()='"
+				+ stage + "']";
 		try {
 			return FindElement(driver, xpath, "Header: " + stage, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7238,7 +7251,9 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement dealTeamAcuityRole(String dealName, String role, int timeOut) {
 
-		String xpath = "//a[text()='" + dealName + "']/ancestor::th[@data-label='Name']/following-sibling::td/ancestor::div//span[@title='Role']/ancestor::div//*[text()='" + role + "']";
+		String xpath = "//a[text()='" + dealName
+				+ "']/ancestor::th[@data-label='Name']/following-sibling::td/ancestor::div//span[@title='Role']/ancestor::div//*[text()='"
+				+ role + "']";
 		try {
 			return FindElement(driver, xpath, "Header: " + role, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7246,10 +7261,12 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
-	
+
 	public WebElement dealTeamAcuityUserTitle(String dealName, String title, int timeOut) {
 
-		String xpath = "//button[text()='" + dealName + "']/ancestor::th[@data-label='Name']/following-sibling::td/ancestor::div//span[@title='Title']/ancestor::div//lightning-base-formatted-text[text()='" + title + "']";
+		String xpath = "//button[text()='" + dealName
+				+ "']/ancestor::th[@data-label='Name']/following-sibling::td/ancestor::div//span[@title='Title']/ancestor::div//lightning-base-formatted-text[text()='"
+				+ title + "']";
 		try {
 			return FindElement(driver, xpath, "Header: " + title, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7257,11 +7274,12 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
-	
-	
+
 	public WebElement dealTeamAcuityRoleForInternal(String dealName, String role, int timeOut) {
 
-		String xpath = "//button[text()='" + dealName + "']/ancestor::th[@data-label='Name']/following-sibling::td/ancestor::div//span[@title='Role']/ancestor::div//span[text()='" + role + "']";
+		String xpath = "//button[text()='" + dealName
+				+ "']/ancestor::th[@data-label='Name']/following-sibling::td/ancestor::div//span[@title='Role']/ancestor::div//span[text()='"
+				+ role + "']";
 		try {
 			return FindElement(driver, xpath, "Header: " + role, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7269,10 +7287,12 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
-	
+
 	public WebElement dealTeamAcuityDeals(String dealName, String dealCount, int timeOut) {
 
-		String xpath = "//a[text()='" + dealName + "']/ancestor::th[@data-label='Name']/following-sibling::td/ancestor::div//*[@title='Deals']/ancestor::div//button[text()='" + dealCount + "' and @name='dealRef']";
+		String xpath = "//a[text()='" + dealName
+				+ "']/ancestor::th[@data-label='Name']/following-sibling::td/ancestor::div//*[@title='Deals']/ancestor::div//button[text()='"
+				+ dealCount + "' and @name='dealRef']";
 		try {
 			return FindElement(driver, xpath, "Header: " + dealCount, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7280,10 +7300,12 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
-	
+
 	public WebElement dealTeamAcuityMeetingsAndCalls(String dealName, String meetingCount, int timeOut) {
 
-		String xpath = "//a[text()='" + dealName + "']/ancestor::th[@data-label='Name']/following-sibling::td/ancestor::div//span[@title='Meetings and Calls']/ancestor::div//lightning-base-formatted-text[text()='" + meetingCount +  " ' and @name=' meetCallRef']";
+		String xpath = "//a[text()='" + dealName
+				+ "']/ancestor::th[@data-label='Name']/following-sibling::td/ancestor::div//span[@title='Meetings and Calls']/ancestor::div//lightning-base-formatted-text[text()='"
+				+ meetingCount + " ' and @name=' meetCallRef']";
 		try {
 			return FindElement(driver, xpath, "Header: " + meetingCount, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7294,7 +7316,9 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement dealTeamAcuityEmail(String dealName, String emailsCount, int timeOut) {
 
-		String xpath = "//a[text()='" + dealName + "']/ancestor::th[@data-label='Name']/following-sibling::td/ancestor::div//span[@title='Emails']/ancestor::div//lightning-base-formatted-text[text()='" + emailsCount +  " 'and @name=' emailRef']";
+		String xpath = "//a[text()='" + dealName
+				+ "']/ancestor::th[@data-label='Name']/following-sibling::td/ancestor::div//span[@title='Emails']/ancestor::div//lightning-base-formatted-text[text()='"
+				+ emailsCount + " 'and @name=' emailRef']";
 		try {
 			return FindElement(driver, xpath, "Header: " + emailsCount, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7302,7 +7326,7 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
-	
+
 	public WebElement dealAcuityHSRName(String dealName, String hsr, int timeOut) {
 
 		String xpath = "//a[text()='" + dealName
@@ -7344,7 +7368,9 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement dealTeamAcuityAccountName(String dealName, String accountName, int timeOut) {
 
-		String xpath = "//a[text()='"+ dealName +"']/ancestor::th[@data-label='Name']/ancestor::div//th[@aria-label='Firm']/ancestor::div//span//*[text()='"+ accountName +"']";
+		String xpath = "//a[text()='" + dealName
+				+ "']/ancestor::th[@data-label='Name']/ancestor::div//th[@aria-label='Firm']/ancestor::div//span//*[text()='"
+				+ accountName + "']";
 		try {
 			return FindElement(driver, xpath, "Header: " + accountName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7352,7 +7378,7 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
-	
+
 	public WebElement dealAcuityDateReceived2(String dealName, int timeOut) {
 
 		String xpath = "//a[text()='" + dealName + "']/ancestor::tr//td[@data-label='Date Received']//div/*";
@@ -7918,8 +7944,6 @@ public abstract class BasePage extends BaseLib {
 			return isDisplayed(driver, ele, "Visibility", timeOut, "] Header Found: " + subjectName);
 		}
 	}
-	
-	
 
 	public WebElement suggestedTagHeading(int timeOut) {
 		String xpath = "//header//h2[text()='Suggested Tags']";
@@ -8638,7 +8662,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement Username(String UserName, int timeOut) {
 
-		String xpath = "//a[text()='" + UserName + "']";
+		String xpath = "(//button[text()='" + UserName + "'])[1]";
 		try {
 			return FindElement(driver, xpath, "Contact Header: " + UserName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -8817,7 +8841,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement sortingorder(String order, int timeOut) {
 		WebElement ele;
-		String xpath = "//li[@class='sortby_css']//*[@data-value='" + order + "']";
+		String xpath = "//li[@class='sortby_css']//*[text()='" + order + "']";
 		return ele = isDisplayed(driver, FindElement(driver, xpath,
 				"Date Recivied Sorting Icon: " + "DateReciviedSortingIcon", action.SCROLLANDBOOLEAN, timeOut),
 				"Visibility", 10, "Date Recivied Sorting Icon");
@@ -8850,7 +8874,7 @@ public abstract class BasePage extends BaseLib {
 				FindElement(driver, xpath, "External Tab: " + "ExternalTab", action.SCROLLANDBOOLEAN, timeOut),
 				"Visibility", 10, "External Tab");
 	}
-	
+
 	public WebElement InternalTab(int timeOut, action action) {
 		WebElement ele;
 		String xpath = "//input[@name='radioGroups']/..//span[text()='Internal']";
@@ -9966,18 +9990,17 @@ public abstract class BasePage extends BaseLib {
 				+ "']/ancestor::tr//td[@data-label='Tags']//button";
 		return FindElement(driver, path, "record name: " + subjectName, action.BOOLEAN, timeOut);
 	}
-	
 
 	public List<WebElement> listOfemailCategory(int timeout) {
-		return FindElements(driver,
-				"//table//th[@data-label='Category']//button");
+		return FindElements(driver, "//table//th[@data-label='Category']//button");
 	}
-	public WebElement getEmailDetail(String subject,int timeOut) {
 
-		String path = "//*[text()='"+ subject + "']/ancestor::tr";
-		return FindElement(driver, path, "subject name: "+subject, action.BOOLEAN, timeOut);
+	public WebElement getEmailDetail(String subject, int timeOut) {
+
+		String path = "//*[text()='" + subject + "']/ancestor::tr";
+		return FindElement(driver, path, "subject name: " + subject, action.BOOLEAN, timeOut);
 	}
-	
+
 	public WebElement getContactNameFromContactSection(String contactName, int timeOut) {
 
 		String path = "//span[text()='Contacts']/ancestor::div//td[@data-label='Name']//a[text()='" + contactName
@@ -9990,7 +10013,6 @@ public abstract class BasePage extends BaseLib {
 		String path = "//div[text()='Event']/ancestor::div//div[text()='Edit']";
 		return FindElement(driver, path, "Edit button", action.BOOLEAN, timeOut);
 	}
-
 
 	public WebElement plusIconButtonInThemeOfAccount(String accountName, int timeOut) {
 
@@ -10024,35 +10046,34 @@ public abstract class BasePage extends BaseLib {
 		String path = "//a[text()=\"" + accountName + "\"]/ancestor::tr//td//button[@title=\"Log Note\"]";
 		return FindElement(driver, path, "addToThemeLogNoteButton", action.BOOLEAN, timeOut);
 	}
-	
-	
 
 	public WebElement getMeetingAndCallCountOfDealteam(String dealName, int timeOut) {
 
-		String path = "//a[text()='"+dealName+"']/ancestor::td[@data-label='Name']/../td[@data-label='Meetings and Calls']//button";
+		String path = "//a[text()='" + dealName
+				+ "']/ancestor::td[@data-label='Name']/../td[@data-label='Meetings and Calls']//button";
 		return FindElement(driver, path, "Meeting and call count", action.BOOLEAN, timeOut);
 	}
-	
-	
 
 	public WebElement getCOnnectionIconOfDealteam(String dealName, int timeOut) {
 
-		String path = "//a[text()='"+dealName+"']/ancestor::td[@data-label='Name']/../th//button";
+		String path = "//a[text()='" + dealName + "']/ancestor::td[@data-label='Name']/../th//button";
 		return FindElement(driver, path, "Meeting and call count", action.BOOLEAN, timeOut);
 	}
-	
+
 	public WebElement getMeetingAndCallCountOnConnectionIconOfDealteam(String userName, int timeOut) {
 
-		String path = "//lightning-base-formatted-text[text()='"+userName+"']/ancestor::th[@data-label='Name']/../td[@data-label='Meetings and Calls']//button";
+		String path = "//lightning-base-formatted-text[text()='" + userName
+				+ "']/ancestor::th[@data-label='Name']/../td[@data-label='Meetings and Calls']//button";
 		return FindElement(driver, path, "Meeting and call count", action.BOOLEAN, timeOut);
 	}
-	
+
 	public WebElement getConnectionIconOfFundraisingContactRecord(String contactName, int timeOut) {
 
-		String path = "//a[text()='"+contactName+"']/ancestor::td[@data-label='Name']/../td//button[@title='Connections']";
+		String path = "//a[text()='" + contactName
+				+ "']/ancestor::td[@data-label='Name']/../td//button[@title='Connections']";
 		return FindElement(driver, path, "Meeting and call count", action.BOOLEAN, timeOut);
 	}
-	
+
 	public WebElement recordNameOnActivityPopupofInteraction(String recordName, int timeOut) {
 
 		String xpath = "//span[@class=\"slds-pill__label\" and text()='" + recordName + "']";
@@ -10064,5 +10085,4 @@ public abstract class BasePage extends BaseLib {
 
 	}
 
-	
 }

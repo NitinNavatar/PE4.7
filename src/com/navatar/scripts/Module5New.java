@@ -391,7 +391,7 @@ public class Module5New extends BaseLib {
 				if (hp.clickOnEditPageLinkOnSetUpLink()) {	
 					log(LogStatus.INFO,"click on Edit Page SetUp Link", YesNo.No);
 					ThreadSleep(5000);
-
+					switchToFrame(driver, 60, edit.getEditPageFrame(projectName,120));
 					if(edit.addRelatedTabOnEditPage_Lighting(projectName, relatedtabs[i], "Custom", 30).isEmpty()) {
 						log(LogStatus.ERROR,"able to add related tab :"+relatedtabs[i], YesNo.Yes);
 						
@@ -571,7 +571,6 @@ public class Module5New extends BaseLib {
 		String fileLocation[] = {".\\AutoIT\\EditPage\\EventTab.PNG",".\\AutoIT\\EditPage\\Q&ATab.PNG",".\\AutoIT\\EditPage\\MECreatedBy.PNG"};
 
 		String EnhanceLightningGridImg = ".\\AutoIT\\EditPage\\NavatarSDG.PNG";
-
 		for (int i = 0; i < tabNames.length; i++) {
 			tabName = tabNames[i];
 			if (lp.clickOnTab(projectName, tabName)) {
@@ -585,6 +584,7 @@ public class Module5New extends BaseLib {
 						ThreadSleep(1000);	
 						// scn.nextLine();
 						switchToDefaultContent(driver);
+						ThreadSleep(2000);
 						switchToFrame(driver, 60, edit.getEditPageFrame(projectName,120));
 						relatedTab=relatedTabs[i];
 						if (clickUsingJavaScript(driver, ip.getRelatedTab(projectName, relatedTab, 120), relatedTab.toString(), action.BOOLEAN)) {
@@ -824,7 +824,7 @@ public class Module5New extends BaseLib {
 							ThreadSleep(10000);
 								for (int j = 0; j < toggles.length; j++) {
 									toggleButton=toggles[j];
-									ele=ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 30);
+									ele=ip.toggleSDGButtons1(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 30);
 									if (clickUsingJavaScript(driver, ele, toggleButton+" SDG", action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.PASS,"Click on "+toggleButton,YesNo.No);
 										ThreadSleep(200);
@@ -1882,6 +1882,7 @@ public class Module5New extends BaseLib {
 
 		String customSDGFileLocation= ".\\AutoIT\\EditPage\\CustomSDG.PNG";
 		String outSideContainerLocation = ".\\AutoIT\\EditPage\\AddComponent.PNG";	
+	String	ActiveDealToggleButton = "Active Deals with All Stages !@#$%^&*() @#$%^&*Deals";
 		
 		if (lp.CRMLogin(superAdminUserName, adminPassword, appName)) {
 			log(LogStatus.INFO,"login with Admin user so going to dragNdrop custom Sdg outside container with Admin",YesNo.No);
@@ -1907,8 +1908,8 @@ public class Module5New extends BaseLib {
 								if (i==2) {
 									//outSideContainerLocation = ".\\AutoIT\\EditPage\\DropdownIcon.PNG";
 								}
-								if (edit.dragNDropUsingScreen(projectName, customSDGFileLocation, outSideContainerLocation, 20)) {
-									log(LogStatus.INFO,"Able to DragNDrop Custom SDG to Outside container",YesNo.No);
+								if (edit.dragNDropSDG(ActiveDealToggleButton)) {
+								log(LogStatus.INFO,"Able to DragNDrop Custom SDG to Outside container",YesNo.No);
 									switchToDefaultContent(driver);
 									ThreadSleep(5000);
 									if (click(driver, edit.getEditPageSaveButton(projectName, 10),"Edit Page Save Button", action.BOOLEAN)) {
@@ -2024,7 +2025,7 @@ public class Module5New extends BaseLib {
 							log(LogStatus.SKIP,"Toggle should be present : "+toggleButton,YesNo.Yes);
 						}
 
-						ele = ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, false, 10);
+						ele = ip.toggleSDGButtons2(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, false, 10);
 						if (ele!=null) {
 							log(LogStatus.PASS,"After Moving Custom SDG  "+toggleButton+" is present outside container",YesNo.No);
 						} else {
@@ -2032,12 +2033,12 @@ public class Module5New extends BaseLib {
 							log(LogStatus.FAIL,"After Moving Custom SDG  "+toggleButton+" should be present outside container",YesNo.Yes);
 						}
 						
-						ele = ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 10);
+						ele = ip.toggleSDGButtons2(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 10);
 						if (ele==null) {
 							log(LogStatus.PASS,"After Moving Custom SDG  "+toggleButton+" is not present inside container",YesNo.No);
 						} else {
-							sa.assertTrue(false,"After Moving Custom SDG  "+toggleButton+" should not be present inside container");
-							log(LogStatus.FAIL,"After Moving Custom SDG  "+toggleButton+" should not be present inside container",YesNo.Yes);
+							sa.assertTrue(false,"After Moving Custom SDG  "+toggleButton+" is present inside container");
+							log(LogStatus.FAIL,"After Moving Custom SDG  "+toggleButton+" is be present inside container",YesNo.Yes);
 						}
 						
 

@@ -291,7 +291,7 @@ public class FundsPage extends BasePageBusinessLayer {
 		}
 
 	}
-	@FindBy(xpath = "//label[text()='Company']/following-sibling::div//button")
+	@FindBy(xpath = "//label[text()='Company']/following-sibling::div//button/lightning-primitive-icon")
 	private WebElement CompanyCrossIcon;
 
 	public WebElement getCompanyCrossIcon(String projectName, int timeOut) {

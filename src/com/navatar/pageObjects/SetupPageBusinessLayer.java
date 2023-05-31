@@ -1964,7 +1964,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 	 */
 	public WebElement clickOnEditInFrontOfFieldValues(String projectName, String status) {
 		status = status.replace("_", " ");
-		String xpath = "//th[text()='" + status + "']/preceding-sibling::td//a[contains(@title,'Edit')]";
+		String xpath = "//*[text()='" + status + "']/preceding-sibling::td//a[contains(@title,'Edit')]";
 		WebElement ele = isDisplayed(driver, FindElement(driver, xpath, "edit", action.SCROLLANDBOOLEAN, 10),
 				"visibility", 10, "edit");
 		return ele;
@@ -6828,6 +6828,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 							if (click(driver, getViewAccessbilityDropDownSaveButton(20), "save button",
 									action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.PASS, "clicked on save button", YesNo.No);
+								ThreadSleep(2000);
 								flag = true;
 							} else {
 								log(LogStatus.PASS, "not able to clicked on save button ", YesNo.No);
