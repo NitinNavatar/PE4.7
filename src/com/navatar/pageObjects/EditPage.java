@@ -25,7 +25,8 @@ public class EditPage extends BasePageBusinessLayer {
 		// TODO Auto-generated constructor stub
 	}
 
-	@FindBy(xpath = "//iframe[@name='surfaceFrame']")
+	@FindBy(xpath = "//iframe[@class=' surfaceFrame' or @name='surfaceFrame']")
+
 	private WebElement editPageFrame;
 
 	/**

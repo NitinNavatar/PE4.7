@@ -496,28 +496,29 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage {
 					}
 				}
 	}
-			try {
-				if (!"".equals(Role) && Role != null) {
-					if (click(driver, FindElement(driver, "//*[text()='Role']/..//button", "Role input",
-							action.THROWEXCEPTION, 30), "Role input", action.BOOLEAN)) {
-						appLog.info("Click on stage input");
-						ThreadSleep(2000);
-						click(driver, FindElement(driver,
-								"//*[text()='" + Role + "']/../ancestor::lightning-base-combobox-item",
-								"Role list", action.THROWEXCEPTION, 30), "Role list", action.BOOLEAN);
-						appLog.info("Click on stage list item:" + Role);
-
-					} else {
-						appLog.info("Not able to Click on Role input");
-					}
-
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			try {
+//				if (!"".equals(Role) && Role != null) {
+//					if (click(driver, FindElement(driver, "//h2[text()='New Fundraising Contact']/../..//*[text()='Role']/..//..//a", "Role input",
+//							action.THROWEXCEPTION, 30), "Role input", action.BOOLEAN)) {
+//						appLog.info("Click on stage input");
+//						ThreadSleep(2000);
+//						click(driver, FindElement(driver,
+//								"//h2[text()='New Fundraising Contact']/../..//*[text()='Role']/../ancestor::lightning-base-combobox-item",
+//								"Role list", action.THROWEXCEPTION, 30), "Role list", action.BOOLEAN);
+//						appLog.info("Click on stage list item:" + Role);
+//
+//					} else {
+//						appLog.info("Not able to Click on Role input");
+//					}
+//
+//				}
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			if (click(driver, getNewFinancingPopupSaveIcon(60), "Save Button", action.SCROLLANDBOOLEAN)) {
 				ThreadSleep(500);
+				flag=true;
 			} else {
 				appLog.error("Not able to click on save button");
 			}
@@ -688,7 +689,7 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage {
 
 						if (click(driver, fundRaisingpupupSaveButton("", 60), "Save Button", action.SCROLLANDBOOLEAN)) {
 							ThreadSleep(500);
-
+flag =true;
 							ThreadSleep(2000);
 //							String fundraising = null;
 //							WebElement ele;
