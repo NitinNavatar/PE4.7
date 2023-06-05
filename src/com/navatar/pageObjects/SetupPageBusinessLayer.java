@@ -2271,7 +2271,14 @@ public class SetupPageBusinessLayer extends SetupPage {
 				"visibility", 10, recordTypeLabel);
 		return ele;
 	}
-
+	//*[text()='Active']/..//following-sibling::td//img[@alt='Not Checked']
+	public WebElement getRecordTypeLabel(String projectName, String recordTypeLabel, String recordTypeValue, int timeOut) {
+		String xpath = "//*[text()='" + recordTypeLabel + "']/..//following-sibling::td//img[@alt='"+ recordTypeValue+"']";
+		WebElement ele = isDisplayed(driver, FindElement(driver, xpath, recordTypeLabel, action.BOOLEAN, 10),
+				"visibility", 10, recordTypeLabel);
+		return ele;
+	}
+	
 	public WebElement getRecordTypeLabelWithoutEditMode(String projectName, String recordTypeLabel, String checkedValue,
 			int timeOut) {
 		String xpath = "//*[text()='" + recordTypeLabel + "']/..//following-sibling::td//img[@title='" + checkedValue
@@ -2472,11 +2479,15 @@ public class SetupPageBusinessLayer extends SetupPage {
 				// }
 				/* driver.switchTo().alert().accept(); */
 				if (label.equals(recordTypeLabel.Active.toString())) {
+				 if(isDisplayed(driver, getRecordTypeLabel(projectName, label, value, 20), "visibility", timeOut, label) == null) {
 					if (click(driver, ele, "Active CheckBox", action.BOOLEAN)) {
 						log(LogStatus.INFO, "Click on Active CheckBox", YesNo.No);
 					} else {
 						log(LogStatus.ERROR, "Not Able to Click on Active CheckBox", YesNo.Yes);
 						sa.assertTrue(false, "Not Able to Click on Active CheckBox");
+					}
+				  } else {
+						log(LogStatus.ERROR, "Already selcted, no need to Click on Active CheckBox", YesNo.Yes);
 					}
 				} else {
 
