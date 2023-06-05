@@ -1996,7 +1996,7 @@ public class Module7New extends BaseLib {
 		WebElement ele = null;
 		String primaryContact = M7NContact8FName + " " + M7NContact8LName;
 		M7NEvent1EndDate = previousOrForwardDate(0, "M/d/YYYY");
-		
+
 		String task = M7NEvent1Subject;
 		if (home.globalSearchAndEditTaskorCall(task, "Events", false)) {
 
@@ -2072,10 +2072,11 @@ public class Module7New extends BaseLib {
 				sa.assertTrue(false, "Not Able to Click on Tab : " + tabObj2 + " For : " + primaryContact);
 				log(LogStatus.SKIP, "Not Able to Click on Tab : " + tabObj2 + " For : " + primaryContact, YesNo.Yes);
 			}
-			switchToDefaultContent(driver);
-			lp.CRMlogout();
-			sa.assertAll();
+
 		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
 	}
 
 	@Parameters({ "projectName" })
@@ -3314,10 +3315,11 @@ public class Module7New extends BaseLib {
 				sa.assertTrue(false, "Not Able to Click on Tab : " + tabObj2);
 				log(LogStatus.SKIP, "Not Able to Click on Tab : " + tabObj2, YesNo.Yes);
 			}
-			switchToDefaultContent(driver);
-			lp.CRMlogout();
-			sa.assertAll();
+
 		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
 	}
 
 	@Parameters({ "projectName" })
@@ -3973,11 +3975,12 @@ public class Module7New extends BaseLib {
 					log(LogStatus.SKIP, "Next touch point value is not matched As after " + days
 							+ " days from created date  in contact :" + contactName, YesNo.Yes);
 				}
-				switchToDefaultContent(driver);
-				lp.CRMlogout();
-				sa.assertAll();
+
 			}
 		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
 	}
 
 	@Parameters({ "projectName" })

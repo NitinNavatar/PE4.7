@@ -5936,12 +5936,6 @@ public class HomePageBusineesLayer extends HomePage {
 						}
 					} else {
 
-						for (int i = 0; i <= 4; i++) {
-							if (globalSearchRecord(recordName, 7) != null) {
-								break;
-							}
-							CommonLib.refresh(driver);
-						}
 						if (globalSearchRecord(recordName, 7) != null) {
 							log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
 							if (click(driver, globalSearchRecord(recordName, 7), "globalSearchRecord: " + recordName,
@@ -6038,12 +6032,6 @@ public class HomePageBusineesLayer extends HomePage {
 									}
 								} else {
 
-									for (int i = 0; i <= 4; i++) {
-										if (globalSearchRecord(recordName, 7) != null) {
-											break;
-										}
-										CommonLib.refresh(driver);
-									}
 									if (globalSearchRecord(recordName, 7) != null) {
 										log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
 										if (click(driver, globalSearchRecord(recordName, 7),
@@ -6179,12 +6167,6 @@ public class HomePageBusineesLayer extends HomePage {
 						}
 					} else {
 
-						for (int i = 0; i <= 4; i++) {
-							if (globalSearchRecord(recordName, 7) != null) {
-								break;
-							}
-							CommonLib.refresh(driver);
-						}
 						if (globalSearchRecord(recordName, 7) != null) {
 							log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
 //							if (click(driver, globalSearchRecord(recordName, 7), "globalSearchRecord: " + recordName,
@@ -6254,12 +6236,6 @@ public class HomePageBusineesLayer extends HomePage {
 									}
 								} else {
 
-									for (int i = 0; i <= 4; i++) {
-										if (globalSearchRecord(recordName, 7) != null) {
-											break;
-										}
-										CommonLib.refresh(driver);
-									}
 									if (globalSearchRecord(recordName, 7) != null) {
 										log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
 //										if (click(driver, globalSearchRecord(recordName, 7),
@@ -6402,13 +6378,6 @@ public class HomePageBusineesLayer extends HomePage {
 						}
 					} else {
 
-						for (int i = 0; i <= 4; i++) {
-							if (globalSearchRecord(recordName, 7) != null) {
-								break;
-							}
-							CommonLib.refresh(driver);
-						}
-
 						if (globalSearchRecord(recordName, 7) != null) {
 							log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
 //							if (click(driver, globalSearchRecord(recordName, 7), "globalSearchRecord: " + recordName,
@@ -6478,12 +6447,6 @@ public class HomePageBusineesLayer extends HomePage {
 									}
 								} else {
 
-									for (int i = 0; i <= 4; i++) {
-										if (globalSearchRecord(recordName, 7) != null) {
-											break;
-										}
-										CommonLib.refresh(driver);
-									}
 									if (globalSearchRecord(recordName, 7) != null) {
 										log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
 //										if (click(driver, globalSearchRecord(recordName, 7),
