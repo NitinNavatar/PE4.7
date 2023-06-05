@@ -225,6 +225,22 @@ public class ResearchPage extends BasePageBusinessLayer {
 
 		}
 		
+		@FindBy(xpath = "//a[@title='Advanced']")
+		private WebElement advancedResearch;
+
+		public WebElement getAdvancedResearch(int timeOut) {
+			return isDisplayed(driver, advancedResearch, "Visibility", timeOut, "Advanced Research");
+
+		}
+		
+		@FindBy(xpath = "//span[@title='Advanced']")
+		private WebElement advancedOnResearchPage;
+
+		public WebElement getAdvancedOnResearchPage(int timeOut) {
+			return isDisplayed(driver, advancedOnResearchPage, "Visibility", timeOut, "Advanced On Research Page");
+
+		}
+		
 //	@FindBy()
 //	protected WebElement NavigationSideBar;
 //

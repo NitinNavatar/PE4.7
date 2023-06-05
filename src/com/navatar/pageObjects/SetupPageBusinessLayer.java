@@ -2272,6 +2272,13 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return ele;
 	}
 
+	public WebElement getRecordTypeLabel(String projectName, String recordTypeLabel, String recordTypeValue, int timeOut) {
+		String xpath = "//*[text()='" + recordTypeLabel + "']/..//following-sibling::td//img[@alt='"+ recordTypeValue+"']";
+		WebElement ele = isDisplayed(driver, FindElement(driver, xpath, recordTypeLabel, action.BOOLEAN, 10),
+				"visibility", 10, recordTypeLabel);
+		return ele;
+	}
+	
 	public WebElement getRecordTypeLabelWithoutEditMode(String projectName, String recordTypeLabel, String checkedValue,
 			int timeOut) {
 		String xpath = "//*[text()='" + recordTypeLabel + "']/..//following-sibling::td//img[@title='" + checkedValue
@@ -2429,12 +2436,16 @@ public class SetupPageBusinessLayer extends SetupPage {
 		WebElement ele;
 		String label;
 		String value;
+		String label1 = labelWithValue[0][0];
+		String value1 = labelWithValue[0][1];
 		boolean flag = false;
 		switchToDefaultContent(driver);
 		ThreadSleep(5000);
 		CommonLib.refresh(driver);
 		ThreadSleep(5000);
 		switchToFrame(driver, 60, getSetUpPageIframe(120));
+		if(isDisplayed(driver, getRecordTypeLabel(projectName, label1, value1, 10), "visibility", timeOut, label1) == null) {
+			log(LogStatus.INFO, "Going to click on edit Button", YesNo.No);
 		if (click(driver, getEditButton(environment, "Classic", 10), "edit", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Click on edit Button", YesNo.No);
 			try {
@@ -2472,11 +2483,15 @@ public class SetupPageBusinessLayer extends SetupPage {
 				// }
 				/* driver.switchTo().alert().accept(); */
 				if (label.equals(recordTypeLabel.Active.toString())) {
+				 if(isDisplayed(driver, getRecordTypeLabel(projectName, label, value, 20), "visibility", timeOut, label) == null) {
 					if (click(driver, ele, "Active CheckBox", action.BOOLEAN)) {
 						log(LogStatus.INFO, "Click on Active CheckBox", YesNo.No);
 					} else {
 						log(LogStatus.ERROR, "Not Able to Click on Active CheckBox", YesNo.Yes);
 						sa.assertTrue(false, "Not Able to Click on Active CheckBox");
+					}
+				  } else {
+						log(LogStatus.ERROR, "Already selcted, no need to Click on Active CheckBox", YesNo.Yes);
 					}
 				} else {
 
@@ -2501,6 +2516,10 @@ public class SetupPageBusinessLayer extends SetupPage {
 		} else {
 			log(LogStatus.ERROR, "Not Able to Click on Edit Button", YesNo.Yes);
 			sa.assertTrue(false, "Not Able to Click on Edit Button");
+		}
+		} else {
+			log(LogStatus.ERROR, "Already selcted, no need to Click on Active CheckBox", YesNo.Yes);
+			flag = true;
 		}
 		return flag;
 	}
@@ -6542,6 +6561,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 							xpath = "//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='"
 									+ objects[i] + "s']/..//input[contains(@title,'" + permissionTypes[j] + " "
 									+ objects[i] + "s')]";
+							//xpath = "(//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='"+ objects[i] + "s']/following-sibling::td)[1]//img[@alt='"+ permissionTypes[j] +"')]";
 							ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, 10);
 							ele = isDisplayed(driver, ele, "visibility", 10, "Edit Button");
 							// if(ele.getAttribute(status) != null) {
