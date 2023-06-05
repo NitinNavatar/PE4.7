@@ -10990,7 +10990,7 @@ public class Module9 extends BaseLib {
 						"Location Preferences field Permission is not given from the Firm Object Manager for Intermediary Record Type");
 
 			}
-
+		}
 			CommonLib.switchToDefaultContent(driver);
 			ThreadSleep(2000);
 			driver.close();
@@ -11575,7 +11575,7 @@ public class Module9 extends BaseLib {
 				sa.assertTrue(false, "One of the Permission not Given, SO not able to Continue further");
 			}
 
-		}
+		
 
 		lp.CRMlogout();
 		sa.assertAll();

@@ -133,96 +133,89 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 	 */
 	public boolean CRMLogin(String username, String password, String appName) {
 
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		driver.get("https://" + URL);
+        BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
+        driver.get("https://"+URL);
+        sendKeys(driver, getUserNameTextBox(20), username, "Username Text Box", action.SCROLLANDBOOLEAN);
+        sendKeys(driver, getPasswordTextBox(20), password, "Password Text Box", action.SCROLLANDBOOLEAN);
+        click(driver, getLoginButton(20), "Login Button", action.SCROLLANDBOOLEAN);
+        click(driver, getLightingCloseButton(10), "Lighting Pop-Up Close Button.", action.BOOLEAN);
+        ThreadSleep(1000);
+        
+        String mode=ExcelUtils.readDataFromPropertyFile("Mode");
+        
+        if (mode.contains("Light") || mode.contains("light") ) {
+            appLog.info("Going for Lighting");
+            if (switchToLighting()) {
+                appLog.info("Successfully Switched to Lighting");
+                if(getAppNameXpathInLightning(appName, 5)!=null) {
+                    appLog.info(appName+" app is open successfully in lightning ");
+                    if(notificationPopup(10) != null)
+                    {
+                    	 click(driver, notificationPopup(10), "notificationPopup", action.BOOLEAN);
+                    }
+                    return true;
+                }else {
+                    if(click(driver, getAppLuncherXpath(30), "app luncher xpath", action.SCROLLANDBOOLEAN)) {
+                        appLog.info("Clicked on App Luncher Icon");
+                        ThreadSleep(2000);
+                        if(sendKeys(driver, getSearchAppTextBoxInAppLuncher(30), appName, "search text box in app luncher", action.SCROLLANDBOOLEAN)) {
+                            appLog.info("Enter value in search app text box : "+appName);
+                            ThreadSleep(4000);
+                            if(clickUsingJavaScript(driver, getAppNameLabelTextInAppLuncher(appName, 30), "app name label text in app luncher")) {
+                                appLog.info("clicked on app Name "+appName);
+                                ThreadSleep(4000);
+                                if(getAppNameXpathInLightning(appName, 60)!=null) {
+                                    appLog.info(appName+" App is open successfully in lightning ");
+                                    return true;
+                                }else {
+                                    appLog.error(appName+" App is not open after select app from app luncher");
+                                }
+                                
+                            }else {
+                                appLog.error("Not able to click on app Name "+appName+" so cannot select app "+appName+" from app luncher");
+                            }
+                        }else {
+                            appLog.error("Not able to enter app name "+appName+" in search text box so cannot select "+appName);
+                        }
+                    }else {
+                        appLog.error("Not able to click on app luncher icon so cannot select "+appName);
+                    }
+                }
+            } else{
+                appLog.error("Not Able to Switched to Lighting");
+            }
+        } else {
 
-		sendKeys(driver, getUserNameTextBox(20), username, "Username Text Box", action.BOOLEAN);
-		sendKeys(driver, getPasswordTextBox(20), password, "Password Text Box", action.BOOLEAN);
-		click(driver, getLoginButton(20), "Login Button", action.BOOLEAN);
-		click(driver, getLightingCloseButton(10), "Lighting Pop-Up Close Button.", action.BOOLEAN);
-		ThreadSleep(1000);
+ 
 
-		String mode = ExcelUtils.readDataFromPropertyFile("Mode");
-
-		if (mode.contains("Light") || mode.contains("light")) {
-			appLog.info("Going for Lighting");
-			if (switchToLighting()) {
-				appLog.info("Successfully Switched to Lighting");
-				if (getAppNameXpathInLightning(appName, 5) != null) {
-					appLog.info(appName + " app is open successfully in lightning ");
-					if (notificationPopup(10) != null) {
-						click(driver, notificationPopup(10), "notificationPopup", action.BOOLEAN);
-					}
-					return true;
-				} else {
-					if (click(driver, getAppLuncherXpath(30), "app luncher xpath", action.SCROLLANDBOOLEAN)) {
-						appLog.info("Clicked on App Luncher Icon");
-						ThreadSleep(2000);
-						if (sendKeys(driver, getSearchAppTextBoxInAppLuncher(30), appName,
-								"search text box in app luncher", action.SCROLLANDBOOLEAN)) {
-							appLog.info("Enter value in search app text box : " + appName);
-							ThreadSleep(4000);
-							if (clickUsingJavaScript(driver, getAppNameLabelTextInAppLuncher(appName, 30),
-									"app name label text in app luncher")) {
-								appLog.info("clicked on app Name " + appName);
-								ThreadSleep(4000);
-								if (getAppNameXpathInLightning(appName, 60) != null) {
-									appLog.info(appName + " App is open successfully in lightning ");
-									return true;
-								} else {
-									appLog.error(appName + " App is not open after select app from app luncher");
-								}
-
-							} else {
-								appLog.error("Not able to click on app Name " + appName + " so cannot select app "
-										+ appName + " from app luncher");
-							}
-						} else {
-							appLog.error("Not able to enter app name " + appName
-									+ " in search text box so cannot select " + appName);
-						}
-					} else {
-						appLog.error("Not able to click on app luncher icon so cannot select " + appName);
-					}
-				}
-			} else {
-				appLog.error("Not Able to Switched to Lighting");
-			}
-		} else {
-
-			appLog.info("Going for Classic");
-			if (switchToClassic()) {
-				appLog.info("Successfully Switched to Classic");
-				return true;
-			} else {
-				appLog.error("Not Able to Switched to Classic");
-			}
-
-		}
-		if (bp.getSalesForceLightingIcon(20) != null) {
-			ThreadSleep(2000);
-			click(driver, bp.getSalesForceLightingIcon(60), "sales force lighting icon", action.THROWEXCEPTION);
-			ThreadSleep(1000);
-			click(driver, bp.getSwitchToClassic(60), "sales force switch to classic link", action.THROWEXCEPTION);
-			appLog.info("Sales Force is switched in classic mode successfully.");
-		} else {
-			appLog.info("Sales Force is open in classic mode.");
-		}
-		if (matchTitle(driver, "Salesforce - Enterprise Edition", 20)
-				|| matchTitle(driver, "Salesforce - Developer Edition", 20)
-				|| matchTitle(driver, "My Tasks | Salesforce", 20)) {
-			appLog.info("User Successfully Logged In.");
-			return true;
-		} else {
-			appLog.info("Kindly Check Username and Password.");
-			exit("User is not able to log in.");
-			return false;
-		}
-	}
-
-	/*******************************
-	 * Activity Association
-	 ****************************/
+            appLog.info("Going for Classic");
+            if (switchToClassic()) {
+                appLog.info("Successfully Switched to Classic");
+                return true;
+            } else{
+                appLog.error("Not Able to Switched to Classic");
+            }
+            
+        }
+        if (bp.getSalesForceLightingIcon(20) != null) {
+            ThreadSleep(2000);
+            click(driver, bp.getSalesForceLightingIcon(60), "sales force lighting icon", action.THROWEXCEPTION);
+            ThreadSleep(1000);
+            click(driver, bp.getSwitchToClassic(60), "sales force switch to classic link", action.THROWEXCEPTION);
+            appLog.info("Sales Force is switched in classic mode successfully.");
+        } else {
+            appLog.info("Sales Force is open in classic mode.");
+        }
+        if (matchTitle(driver, "Salesforce - Enterprise Edition", 20) || matchTitle(driver, "Salesforce - Developer Edition", 20) || matchTitle(driver, "My Tasks | Salesforce", 20)) {
+            appLog.info("User Successfully Logged In.");
+            return true;
+        } else {
+            appLog.info("Kindly Check Username and Password.");
+            exit("User is not able to log in.");
+            return false;
+        }
+    }
+/*******************************Activity Association****************************/
 
 	/**
 	 * @author Akul Bhutani

@@ -2872,6 +2872,46 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	}
 
 	/**
+	 * @param projectName
+	 * @param tabObj
+	 * @param timeOut
+	 * @return true/false
+	 * @description this method is used to add list view to page if automation all
+	 *              is not present
+	 */
+	public boolean f(String projectName, String tabObj, int timeOut) {
+		String viewList = "All", xpath = "";
+		if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(3000);
+			xpath = "//div[@class='listContent']//li/a/span[text()='" + viewList + "']";
+			WebElement selectListView = FindElement(driver, xpath, "Select List View : " + viewList,
+					action.SCROLLANDBOOLEAN, 5);
+			ThreadSleep(3000);
+			if (selectListView != null) {
+				log(LogStatus.INFO, "automation all is already present", YesNo.No);
+				return true;
+			} else {
+				log(LogStatus.ERROR, "not found automation all.. now creating", YesNo.No);
+
+			}
+		} else {
+			log(LogStatus.ERROR, "list dropdown is not clickable, so cannot check presence of Automation All",
+					YesNo.Yes);
+
+		}
+
+		if (createListView(projectName, tabObj, timeOut)) {
+			if (changeFilterInListView(projectName, tabObj, timeOut)) {
+				return true;
+			} else {
+				log(LogStatus.ERROR, "could not change filter to all", YesNo.Yes);
+			}
+		} else {
+			log(LogStatus.ERROR, "could not create new list", YesNo.Yes);
+		}
+		return false;
+	}
+	/**
 	 * @author Akul Bhutani
 	 * @param projectName
 	 * @param obj
@@ -2917,6 +2957,51 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return false;
 	}
 
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param obj
+	 * @param timeOut
+	 * @return true/false
+	 * @description this method is used to only create new view names Automation All
+	 */
+	public boolean createListViewAll(String projectName, String obj, int timeOut) {
+		refresh(driver);
+		ThreadSleep(2000);
+		if (click(driver, getlistViewControlsButton(projectName, timeOut), "list view", action.BOOLEAN)) {
+			log(LogStatus.INFO, "successfully click on list view", YesNo.No);
+			if (click(driver, getnewButtonListView(projectName, timeOut), "new ", action.BOOLEAN)) {
+				log(LogStatus.INFO, "successfully click on new buton", YesNo.No);
+				if (sendKeys(driver, getlistNameTextBox(projectName, "List Name", timeOut), "All",
+						"list name", action.SCROLLANDBOOLEAN)) {
+					if (sendKeysWithoutClearingTextBox(driver,
+							getlistNameTextBox(projectName, "List API Name", timeOut), "", "list name",
+							action.SCROLLANDBOOLEAN)) {
+						if (click(driver, getallUsersRB(projectName, timeOut), "all users", action.BOOLEAN)) {
+							log(LogStatus.INFO, "successfully click on all users", YesNo.No);
+							if (click(driver, getlistViewSaveButton(projectName, timeOut), "save", action.BOOLEAN)) {
+								log(LogStatus.INFO, "successfully click on save buton", YesNo.No);
+								return true;
+							} else {
+								log(LogStatus.ERROR, "list view save button is not clickable", YesNo.No);
+							}
+						} else {
+							log(LogStatus.ERROR, "all users radio button is not clickable", YesNo.No);
+						}
+					} else {
+						log(LogStatus.ERROR, "list api textbox is not visible", YesNo.No);
+					}
+				} else {
+					log(LogStatus.ERROR, "list name textbox is not visible", YesNo.No);
+				}
+			} else {
+				log(LogStatus.ERROR, "new button is not clickable", YesNo.No);
+			}
+		} else {
+			log(LogStatus.ERROR, "list view controls button is not clickable", YesNo.No);
+		}
+		return false;
+	}
 	/**
 	 * @author Akul Bhutani
 	 * @param projectName
@@ -3534,7 +3619,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		WebElement ele;
 		String related = relatedTab.toString().replace("_", " ");
 		if (projectName.contains(ProjectName.PE.toString()))
-			xpath = "//ul[@role='presentation']//span[text()='"+related+"']/ancestor::a";
+	xpath = "//ul[@role='presentation']//span[text()='"+related+"']/ancestor::a";
 		else
 			xpath = "//li//*[@title='" + related + "' or text()='" + related + "']";
 
@@ -3588,6 +3673,35 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			xpath = "//button[@title='" + toggleTab + "']";
 
 		}
+		
+//		xpath = "//div[@class='slds-tabs_card']//div[@class='navpeIISdgBase navpeIISdg']//a[@title='" + toggleTab + "'or text()='" + toggleTab + "']";
+//	} else {
+//		xpath = "//*[@name='subheader']//div[@class='navpeIISdgBase navpeIISdg']//a[@title='" + toggleTab + "'or text()='" + toggleTab + "']";
+//
+//	}
+		WebElement ele = FindElement(driver, xpath, toggleTab + " >> " + btname, action, timeOut);
+		scrollDownThroughWebelement(driver, ele, "Toggle Button : " + btname);
+		ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : " + btname);
+		return ele;
+	}
+	
+	public WebElement toggleSDGButtons2(String projectName, String toggleTab, ToggleButtonGroup btnName, action action,
+			boolean isInside, int timeOut) {
+		String btname = btnName.toString();
+		String xpath = "";
+		if (isInside) {
+
+//			xpath = "//button[@title='" + toggleTab + "']";
+//		} else {
+//			xpath = "//button[@title='" + toggleTab + "']";
+//
+//		}
+		
+		xpath = "//div[@class='slds-tabs_card']//div[@class='navpeIISdgBase navpeIISdg']//a[@title='" + toggleTab + "'or text()='" + toggleTab + "']";
+	} else {
+		xpath = "//*[@name='subheader']//div[@class='navpeIISdgBase navpeIISdg']//a[@title='" + toggleTab + "'or text()='" + toggleTab + "']";
+
+	}
 		WebElement ele = FindElement(driver, xpath, toggleTab + " >> " + btname, action, timeOut);
 		scrollDownThroughWebelement(driver, ele, "Toggle Button : " + btname);
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : " + btname);
@@ -4352,6 +4466,51 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			e.printStackTrace();
 		}
 		return flag;
+	}
+	
+	public boolean dragNDropSDG(String ActiveDealToggleButton) {
+		boolean flag = false;
+
+		WebElement sourceElement = null;
+		WebElement targetElement = null;
+		String xPath;
+
+		sourceElement = sdgHeaderElement(ActiveDealToggleButton, 40);
+		// String xPath="//div[@class='flexipageEditorContainerPlaceholderContainer']";
+
+		targetElement = sdgHeaderElement("Add Component(s) Here", 40);
+
+		if (CommonLib.clickUsingJavaScript(driver, sourceElement, ActiveDealToggleButton + " header")) {
+			log(LogStatus.INFO, "Click on " + ActiveDealToggleButton + " SDG", YesNo.No);
+			ThreadSleep(2000);
+			// xPath="//a[text()='"+ActiveDealToggleButton+"']/ancestor::div[@class='sdgdesignplaceholder
+			// navmnaISdgBase navmnaISdg']//a";
+			// WebElement ele=CommonLib.FindElement(driver, xPath, xPath, action.BOOLEAN,
+			// 30);
+
+			try {
+				Robot rb = new Robot();
+				rb.keyPress(KeyEvent.VK_CONTROL);
+				rb.keyPress(KeyEvent.VK_X);
+				ThreadSleep(2000);
+				CommonLib.clickUsingJavaScript(driver, targetElement, ActiveDealToggleButton + " header");
+				ThreadSleep(2000);
+				rb.keyPress(KeyEvent.VK_CONTROL);
+				rb.keyPress(KeyEvent.VK_V);
+				CommonLib.ThreadSleep(5000);
+				flag = true;
+
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.err.println(e.toString());
+
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + ActiveDealToggleButton + " SDG", YesNo.No);
+		}
+		return flag;
+
 	}
 
 	/**
@@ -15336,6 +15495,247 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return result;
 	}
+	
+	public ArrayList<String> verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection1(
+			String InteractionSectionmessage, List<String> contactsSectionHeaderName,
+			String contactsSectionHeaderMessage, List<String> dealsSectionHeaderName, String dealsSectionHeaderMessage,
+			List<String> connectionsSectionHeaderName, String connectionsSectionHeaderMessage,
+			List<String> externalConnectionsSectionHeaderName, String externalConnectionsSectionHeaderMessage) {
+		String xPath;
+		WebElement ele;
+		List<WebElement> elements;
+		ArrayList<String> result = new ArrayList<String>();
+
+		if (InteractionSectionmessage != null && !"".equals(InteractionSectionmessage)) {
+
+			String text = getText(driver, getMessageOnInteractionSection(15), "Interaction section message",
+					action.SCROLLANDBOOLEAN);
+			if (text.equals(InteractionSectionmessage)) {
+				log(LogStatus.INFO, InteractionSectionmessage + " message has been verified on Interaction section",
+						YesNo.No);
+			} else {
+				log(LogStatus.ERROR, InteractionSectionmessage + " message is not verified on Interaction section",
+						YesNo.No);
+				result.add(InteractionSectionmessage + " message is not verified on Interaction section");
+			}
+		}
+		if (!contactsSectionHeaderName.isEmpty()) {
+			ArrayList<String> actualContactsSectionHeaderName = new ArrayList<String>();
+			xPath = "//span[@title='Contacts']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//span[@class='slds-truncate' and @title!='']";
+			elements = FindElements(driver, xPath, "Contact section headers");
+			for (WebElement el : elements) {
+				actualContactsSectionHeaderName
+						.add(getText(driver, el, "Contact section headers", action.SCROLLANDBOOLEAN));
+			}
+
+			xPath = "//span[@title='Contacts']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//lightning-icon";
+			elements = FindElements(driver, xPath, "Contact section headers");
+			for (WebElement el : elements) {
+				actualContactsSectionHeaderName.add(getAttribute(driver, el, "Contact section headers", "title"));
+			}
+
+			for (int i = 0; i < contactsSectionHeaderName.size(); i++) {
+				int k = 0;
+				for (int j = 0; j < actualContactsSectionHeaderName.size(); j++) {
+					if (contactsSectionHeaderName.get(i).equalsIgnoreCase(actualContactsSectionHeaderName.get(j))) {
+						log(LogStatus.INFO,
+								"Expected header name: " + contactsSectionHeaderName.get(i)
+										+ " has been matched with Actual header name: "
+										+ actualContactsSectionHeaderName.get(j) + " on contact section",
+								YesNo.No);
+						k++;
+					}
+				}
+				if (k == 0) {
+					log(LogStatus.ERROR, "Expected header name: " + contactsSectionHeaderName.get(i)
+							+ " is not matched with Actual header name on contact section", YesNo.No);
+					result.add("Expected header name: " + contactsSectionHeaderName.get(i)
+							+ " is not matched with Actual header name on contact section");
+				}
+
+			}
+
+		}
+		if (contactsSectionHeaderMessage != null && !"".equals(contactsSectionHeaderMessage)) {
+			xPath = "//span[@title='Contacts']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//div[text()='"
+					+ contactsSectionHeaderMessage + "']";
+			ele = FindElement(driver, xPath, "Message on Contact section", action.SCROLLANDBOOLEAN, 15);
+			if (ele != null) {
+				log(LogStatus.INFO,
+						"The meessage : " + contactsSectionHeaderMessage + " has been verified on Contect section",
+						YesNo.No);
+			} else {
+				log(LogStatus.ERROR,
+						"The meessage : " + contactsSectionHeaderMessage + " is not verified on Contect section",
+						YesNo.No);
+				result.add("The meessage : " + contactsSectionHeaderMessage + " is not verified on Contect section");
+			}
+		}
+
+		if (!dealsSectionHeaderName.isEmpty()) {
+			ArrayList<String> actualDealsSectionHeaderName = new ArrayList<String>();
+			xPath = "//span[@title='Deals']/../../../..//span[text()=@title]";
+			//
+			elements = FindElements(driver, xPath, "Deal section headers");
+			for (WebElement el : elements) {
+				actualDealsSectionHeaderName.add(getText(driver, el, "deal section headers", action.SCROLLANDBOOLEAN));
+			}
+
+			for (int i = 0; i < dealsSectionHeaderName.size(); i++) {
+				int k = 0;
+				for (int j = 0; j < actualDealsSectionHeaderName.size(); j++) {
+					if (dealsSectionHeaderName.get(i).equalsIgnoreCase(actualDealsSectionHeaderName.get(j))) {
+						log(LogStatus.INFO,
+								"Expected header name: " + dealsSectionHeaderName.get(i)
+										+ " has been matched with Actual header name: "
+										+ actualDealsSectionHeaderName.get(j) + " on deal section",
+								YesNo.No);
+						k++;
+					}
+				}
+				if (k == 0) {
+					log(LogStatus.ERROR, "Expected header name: " + dealsSectionHeaderName.get(i)
+							+ " is not matched with Actual header name on deal section", YesNo.No);
+					result.add("Expected header name: " + dealsSectionHeaderName.get(i)
+							+ " is not matched with Actual header name on deal section");
+				}
+
+			}
+		}
+
+		if (dealsSectionHeaderMessage != null && !"".equals(dealsSectionHeaderMessage)) {
+			xPath = "//span[@title='Deals']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//div[text()='"
+					+ dealsSectionHeaderMessage + "']";
+			ele = FindElement(driver, xPath, "Message on deal section", action.SCROLLANDBOOLEAN, 15);
+			if (ele != null) {
+				log(LogStatus.INFO, "The meessage : " + dealsSectionHeaderMessage + " has been verified on deal secton",
+						YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "The meessage : " + dealsSectionHeaderMessage + " is not verified on deal secton",
+						YesNo.No);
+				result.add("The meessage : " + dealsSectionHeaderMessage + " is not verified on deal secton");
+			}
+		}
+		if (!connectionsSectionHeaderName.isEmpty()) {
+				ArrayList<String> actualConnectionsSectionHeaderName = new ArrayList<String>();
+				xPath = "(//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//tr)[1]//span[@class='slds-truncate' and @title!='']";
+				elements = FindElements(driver, xPath, "Connections section headers");
+				for (WebElement el : elements) {
+					actualConnectionsSectionHeaderName
+							.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
+				}
+				xPath = "(//span[contains(@title,'Connection')]/ancestor::div[@class='slds-m-bottom_xx-small']//tr)[1]//lightning-icon";
+				elements = FindElements(driver, xPath, "Connections section headers");
+				for (WebElement el : elements) {
+					actualConnectionsSectionHeaderName
+							.add(getAttribute(driver, el, "Connections section headers", "title"));
+				}
+
+				for (int i = 0; i < connectionsSectionHeaderName.size(); i++) {
+					int k = 0;
+					for (int j = 0; j < actualConnectionsSectionHeaderName.size(); j++) {
+						if (connectionsSectionHeaderName.get(i)
+								.equalsIgnoreCase(actualConnectionsSectionHeaderName.get(j))) {
+							log(LogStatus.INFO,
+									"Expected header name: " + connectionsSectionHeaderName.get(i)
+											+ " has been matched with Actual header name: "
+											+ actualConnectionsSectionHeaderName.get(j) + " on connection section",
+									YesNo.No);
+							k++;
+						}
+					}
+					if (k == 0) {
+						log(LogStatus.ERROR, "Expected header name: " + connectionsSectionHeaderName.get(i)
+								+ " is not matched with Actual header name on connection section", YesNo.No);
+						result.add("Expected header name: " + connectionsSectionHeaderName.get(i)
+								+ " is not matched with Actual header name on connection section");
+					}
+
+				}
+		}
+
+		if (connectionsSectionHeaderMessage != null && !"".equals(connectionsSectionHeaderMessage)) {
+//			xPat = "//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//p[text()='"
+//					+ connectionsSectionHeaderMessage + "']";
+			xPath = "//*[contains(@title,'Connections')]/ancestor::div/following-sibling::div//span[@class='slds-th__action']//*[@title !='']";
+			ele = FindElement(driver, xPath, "Message on Connections section", action.SCROLLANDBOOLEAN, 15);
+			if (ele != null) {
+				log(LogStatus.INFO, "The meessage : " + connectionsSectionHeaderMessage
+						+ " has been verified on Connection section", YesNo.No);
+			} else {
+				log(LogStatus.ERROR,
+						"The meessage : " + connectionsSectionHeaderMessage + " is not verified on Connection section",
+						YesNo.No);
+				result.add(
+						"The meessage : " + connectionsSectionHeaderMessage + " is not verified on Connection section");
+			}
+		}
+
+		if (!externalConnectionsSectionHeaderName.isEmpty()) {
+
+			if (click(driver, getExternalTabOnConnectionSection(20), "external tab on connection section",
+					action.SCROLLANDBOOLEAN)) {
+
+				log(LogStatus.INFO, "Clicked on external button", YesNo.No);
+
+				ArrayList<String> actualExternalConnectionsSectionHeaderName = new ArrayList<String>();
+				xPath = "(//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//tr)[1]//span[@class='slds-truncate' and @title!='']";
+				elements = FindElements(driver, xPath, "Connections section headers");
+				for (WebElement el : elements) {
+					actualExternalConnectionsSectionHeaderName
+							.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
+				}
+				xPath = "(//span[contains(@title,'Connection')]/ancestor::div[@class='slds-m-bottom_xx-small']//tr)[1]//lightning-icon";
+				elements = FindElements(driver, xPath, "Connections section headers");
+				for (WebElement el : elements) {
+					actualExternalConnectionsSectionHeaderName
+							.add(getAttribute(driver, el, "Connections section headers", "title"));
+				}
+
+				for (int i = 0; i < externalConnectionsSectionHeaderName.size(); i++) {
+					int k = 0;
+					for (int j = 0; j < actualExternalConnectionsSectionHeaderName.size(); j++) {
+						if (externalConnectionsSectionHeaderName.get(i)
+								.equalsIgnoreCase(actualExternalConnectionsSectionHeaderName.get(j))) {
+							log(LogStatus.INFO, "Expected header name: " + externalConnectionsSectionHeaderName.get(i)
+									+ " has been matched with Actual header name: "
+									+ actualExternalConnectionsSectionHeaderName.get(j) + " on connection section",
+									YesNo.No);
+							k++;
+						}
+					}
+					if (k == 0) {
+						log(LogStatus.ERROR, "Expected header name: " + externalConnectionsSectionHeaderName.get(i)
+								+ " is not matched with Actual header name on connection section", YesNo.No);
+						result.add("Expected header name: " + externalConnectionsSectionHeaderName.get(i)
+								+ " is not matched with Actual header name on connection section");
+					}
+
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on external tab", YesNo.No);
+				result.add("Not able to click on external tab");
+			}
+		}
+
+		if (externalConnectionsSectionHeaderMessage != null && !"".equals(externalConnectionsSectionHeaderMessage)) {
+//			xPath = "//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//p[text()='"
+//					+ externalConnectionsSectionHeaderMessage + "']";
+			xPath = "//*[contains(@title,'Connections')]/ancestor::div/following-sibling::div//span[@class='slds-th__action']//*[@title !='']";
+			ele = FindElement(driver, xPath, "Message on Connections section", action.SCROLLANDBOOLEAN, 15);
+			if (ele != null) {
+				log(LogStatus.INFO, "The meessage : " + externalConnectionsSectionHeaderMessage
+						+ " has been verified on Connection section", YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "The meessage : " + externalConnectionsSectionHeaderMessage
+						+ " is not verified on Connection section", YesNo.No);
+				result.add("The meessage : " + externalConnectionsSectionHeaderMessage
+						+ " is not verified on Connection section");
+			}
+		}
+
+		return result;
+	}
 
 	public ArrayList<String> verifyHeaderNameAndMessageOnFundraisigContactsConnectionsAndDealsSection(
 			List<String> FundraisingSectionHeaderName, String FundraisngSectionHeaderMessage) {
@@ -15454,9 +15854,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 		if (!connectionsSectionHeaderTooltip.isEmpty()) {
-			if (click(driver, getInternalTabOnConnectionSection(20), "Internal tab on connection section",
-					action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on internal button", YesNo.No);
+//			if (click(driver, getInternalTabOnConnectionSection(20), "Internal tab on connection section",
+//					action.SCROLLANDBOOLEAN)) {
+//				log(LogStatus.INFO, "Clicked on internal button", YesNo.No);
 
 				ArrayList<String> actualTooltip = new ArrayList<String>();
 
@@ -15491,11 +15891,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								+ " is not matched with the acutual tooltip");
 					}
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to click on internal tab", YesNo.No);
-				result.add("Not able to click on internal tab");
-
-			}
+//			} else {
+//				log(LogStatus.ERROR, "Not able to click on internal tab", YesNo.No);
+//				result.add("Not able to click on internal tab");
+//
+//			}
 
 		}
 		if (!externalConnectionsSectionHeaderTooltip.isEmpty()) {

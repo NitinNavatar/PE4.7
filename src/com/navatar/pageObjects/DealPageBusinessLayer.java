@@ -785,8 +785,10 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 			int loopCount = 0;
 			int status = 0;
 			if (labelNames != null && labelValue != null) {
+
 				for (int i = 0; i < labelNames.length; i++) {
 
+					labelNames[i] = labelNames[i].replace("_", " ");
 					if (labelNames[i].equalsIgnoreCase("Our Role")
 							|| labelNames[i].equalsIgnoreCase("Reason for Decline")
 							|| labelNames[i].equalsIgnoreCase("Reason to Park")
@@ -1072,6 +1074,128 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 
 	}
 
+	
+	public boolean UpdateOtherLabel(String projectName, String otherLabels, String otherLabelValues, int timeOut) {
+		boolean flag = true;
+		WebElement ele;
+		String[] labelNames = null;
+		String[] labelValue = null;
+		if (otherLabels != null && !"".equalsIgnoreCase(otherLabels)) {
+			labelNames = otherLabels.replaceAll("_", " ").split("<Break>", -1);
+			labelValue = otherLabelValues.split("<Break>", -1);
+		}
+		ThreadSleep(2000);
+		if (clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Edit, 10)) {
+			ThreadSleep(2000);
+//			if (click(driver, getSourceFirmCrossIcon(projectName, 60), "Company Cross Icon", action.SCROLLANDBOOLEAN)) {
+//				appLog.info("Clicked on Legal Cross icon");
+//				ThreadSleep(3000);
+//			} else {
+//				appLog.info("Not able to click on Cross Icon button");
+//				log(LogStatus.INFO, "Not able to clicked on edit button so cannot Account Name ", YesNo.Yes);
+//				BaseLib.sa.assertTrue(false, "Not able to clicked on edit button so cannot Account Name ");
+//			}
+			int loopCount = 0;
+			int status = 0;
+			if (labelNames != null && labelValue != null) {
+				for (int i = 0; i < labelNames.length; i++) {
+					if (labelNames[i].equalsIgnoreCase("Platform Company")
+							|| labelNames[i].equalsIgnoreCase("Source Firm")
+							|| labelNames[i].equalsIgnoreCase("Source Contact")) {
+						if (click(driver, FindElement(driver, "//*[text()='" + labelNames[i]
+								+ "']/following-sibling::div[@class='slds-form-element__control']//input[@type='text']",
+								"picklist " + labelNames[i], action.SCROLLANDBOOLEAN, 10), "picklist " + labelNames[i],
+								action.SCROLLANDBOOLEAN)) {
+
+							if (click(driver, FindElement(driver,
+//												"//span[text()='" + labelValue[i]
+//														+ "']/ancestor::lightning-base-combobox-item",
+									"//*[text()='" + labelNames[i] + "']/..//*[@title='" + labelValue[i] + "']",
+									"Legal Name List", action.THROWEXCEPTION, 30),
+									labelNames[i] + "   :   labelNames[i]", action.BOOLEAN)) {
+								appLog.info(labelNames[i] + "  is present in list.");
+								status++;
+
+							} else {
+								appLog.error("Not able to select " + labelValue[i] + " in " + labelNames[i] + " field");
+								BaseLib.sa.assertTrue(false,
+										"Not able to select " + labelValue[i] + " in " + labelNames[i] + " field");
+
+							}
+						} else {
+							appLog.error("Not able to select " + labelValue[i] + " in " + labelNames[i] + " field");
+							BaseLib.sa.assertTrue(false,
+									"Not able to select " + labelValue[i] + " in " + labelNames[i] + " field");
+
+						}
+					}
+
+					else if (labelNames[i].equalsIgnoreCase("Date Received")
+							|| labelNames[i].equalsIgnoreCase("LOI Due Date")
+							|| labelNames[i].equalsIgnoreCase("NDA Signed Date")
+							|| labelNames[i].equalsIgnoreCase("Management Meeting Date")
+							|| labelNames[i].equalsIgnoreCase("Pipeline Data Date")
+							|| labelNames[i].equalsIgnoreCase("Last Stage Change Date")) {
+
+						String[] date = CommonLib
+								.convertDateFromOneFormatToAnother(labelValue[i], "MM/dd/yyyy", "dd/MMM/yyyy")
+								.split("/");
+
+						if (click(driver, calendarInputBox(labelNames[i], 30), labelNames[i] + " Input Box",
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Click on " + labelNames[i] + " Calendar Input Box", YesNo.No);
+							if (CommonLib.datePickerHandle(driver, monthInDatePicker(30),
+									previousMonthButtonInDatePicker(30), labelNames[i] + " Picker", date[2], date[1],
+									date[0])) {
+								log(LogStatus.INFO, "Date has been Selected  " + labelValue[i], YesNo.No);
+								status++;
+							} else {
+								sa.assertTrue(false, "Date has not been Selected  " + labelValue[i]);
+								log(LogStatus.ERROR, "Date has not been Selected  " + labelValue[i], YesNo.Yes);
+							}
+						} else {
+							sa.assertTrue(false, "Not Able to Click on " + labelNames[i] + " Calendar input Box");
+							log(LogStatus.ERROR, "Not Able to Click on " + labelNames[i] + " Calendar input Box",
+									YesNo.Yes);
+						}
+
+					} else {
+
+						if (CommonLib.sendKeys(driver, textBoxBasedOnLabelName(labelNames[i], 10), labelValue[i],
+								"textBoxBasedOnLabelName: " + labelNames[i], action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, labelValue[i] + " value has been passed in " + labelNames[i], YesNo.No);
+							status++;
+						} else {
+							log(LogStatus.ERROR, labelValue[i] + " value is not passed in " + labelNames[i], YesNo.No);
+							sa.assertTrue(false, labelValue[i] + " value is not passed in " + labelNames[i]);
+
+						}
+					}
+
+					loopCount++;
+				}
+
+			}
+
+			if (status == loopCount) {
+				if (CommonLib.click(driver, getSaveButton(30), tabObj4 + " save button", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on save button", YesNo.No);
+
+				} else {
+					log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
+
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on the new button", YesNo.No);
+			}
+
+			return flag;
+
+		}
+		return flag;
+
+	}
+
 	/**
 	 * @author sahil bansal
 	 * @param projectName
@@ -1098,6 +1222,8 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		int status = 0;
 		if (labelNames != null && labelValue != null) {
 			for (int i = 0; i < labelNames.length; i++) {
+				labelNames[i] = labelNames[i].replace("_", " ");
+
 				if (labelNames[i].equalsIgnoreCase("Date Received") || labelNames[i].equalsIgnoreCase("LOI Due Date")
 						|| labelNames[i].equalsIgnoreCase("NDA Signed Date")
 						|| labelNames[i].equalsIgnoreCase("Management Meeting Date")
@@ -1403,6 +1529,8 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		if (status == loopCount) {
 			if (CommonLib.click(driver, getpopupsaveButton(30), tabObj4 + " save button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on save button", YesNo.No);
+
+				flag=true;
 //
 //					String xPath = "//lightning-formatted-text[contains(text(),'" + dealName + "')]";
 //					ele = CommonLib.FindElement(driver, xPath, dealName, action.SCROLLANDBOOLEAN, 40);
@@ -1433,6 +1561,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return flag;
 
 	}
+
 
 	
 	public boolean createDealFromNavigation(String dealName, String companyName)
