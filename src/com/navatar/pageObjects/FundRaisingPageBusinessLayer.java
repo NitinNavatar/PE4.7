@@ -1367,7 +1367,7 @@ flag =true;
 		ThreadSleep(2000);
 		if (bp.clickOnShowMoreActionDownArrow(projectName, PageName.FundraisingPage, ShowMoreActionDropDownList.Edit, 10)) {
 			ThreadSleep(2000);
-			ele = bp.getLabelTextBox(projectName, PageName.FundraisingPage.toString(), PageLabel.Fundraising_Name.toString(), timeOut);
+			ele = bp.getLabelTextBox(projectName, PageName.FundraisingPage.toString(), PageLabel.Fundraising_Name.toString().replace("_", " "), timeOut);
 			if (sendKeys(driver, ele, fundraisingName, "Fundraising Name", action.BOOLEAN)) {
 				appLog.info("Successfully Entered value on Fundraising Name TextBox : " + fundraisingName);
 			} else {
