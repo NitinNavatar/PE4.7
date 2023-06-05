@@ -242,6 +242,13 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, overrideSetupFieldNextBtn, "Visibility", timeOut, "override field next button");
 	}
 
+	@FindBy(xpath = "//table[@id='firstBtn']//button")
+	private WebElement overrideSetupFieldFirstBtn;
+
+	public WebElement getOverrideSetupFieldFirstBtn(int timeOut) {
+		return isDisplayed(driver, overrideSetupFieldFirstBtn, "Visibility", timeOut, "override field first button");
+	}
+	
 	@FindBy(xpath = "//input[@id='quickfind']")
 	private WebElement quickFindSearchBox;
 

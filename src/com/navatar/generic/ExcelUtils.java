@@ -1298,6 +1298,51 @@ public class ExcelUtils {
 				
 			}
 			
+			headerList.remove("Status");
+			
+			System.out.println("List1:"+String.valueOf(headerList));
+			System.out.println("List2:"+headervalue);
+			map.put("headers", headerList);
+			map.put("value", headervalue);
+			//return getValueBasedOnCellType();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		} finally {
+			try {
+				wb.close();
+				fis.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+//				e.printStackTrace();
+			}
+		}
+		return map;
+	}
+
+
+	public static HashMap<String, ArrayList<String>> dataReadForCurrentRecord(String filePath, String sheetName, excelLabel basedOnLabel, String basedOnValue) {
+		HashMap<String, ArrayList<String>> map=	new HashMap<String,ArrayList<String>>();
+		ArrayList<String> headerList= new ArrayList<>();
+		ArrayList<String> headervalue= new ArrayList<>();
+		try {
+			fis = new FileInputStream(new File(filePath));
+			wb = WorkbookFactory.create(fis);
+			Sheet sheet = wb.getSheet(sheetName);
+			int row=ExcelUtils.getRowNumberBasedOnLabelAndValue(filePath, sheetName, basedOnLabel, basedOnValue);
+			int lastColumnNumber = sheet.getRow(0).getLastCellNum();
+			for(int i=4;i<lastColumnNumber;i++) {
+				
+				headerList.add(ExcelUtils.getValueBasedOnCellType(sheet.getRow(0).getCell(i)).replaceAll("_", " "));
+			}
+			
+			for(String header:headerList) {
+				headervalue.add(ExcelUtils.getValueBasedOnCellType(sheet.getRow(row).getCell(ExcelUtils.getColumnNumberBasedOnLabel(filePath, sheetName, header))));
+
+				
+			}
+			
+			headerList.remove("Status");
 			
 			System.out.println("List1:"+String.valueOf(headerList));
 			System.out.println("List2:"+headervalue);
@@ -1320,13 +1365,6 @@ public class ExcelUtils {
 	}
 	
 	
-	 /* @author Ravi kumar
-	  * @param filepath
-	 * @param sheetName
-	 * @param columnName
-	 * @return String
-	 * @description This method read the cell data according to column Name passed.
-	 */
 	public static String readDataForResearch(String filepath, String sheetName, String columnName) {
 		String value = "";
 		String testCaseName;

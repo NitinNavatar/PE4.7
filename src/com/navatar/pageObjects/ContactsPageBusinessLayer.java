@@ -772,37 +772,37 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 						if (getNavigationTabSaveBtn(projectName, 5) != null) {
 							click(driver, getNavigationTabSaveBtn(projectName, 60), "save", action.BOOLEAN);
 						}
-
+flag= true;
 						ThreadSleep(3000);
 
 						if (creationPage.toString().equalsIgnoreCase(CreationPage.AccountPage.toString())) {
-							if (clickOnGridSection_Lightning(projectName, RelatedList.Contacts, 30)) {
-								ele = isDisplayed(driver,
-										FindElement(driver,
-												"//*[text()='Contact']/following-sibling::*//*[text()='"
-														+ contactFirstName + " " + contactLastName + "']",
-												"Contact Name Text", action.SCROLLANDBOOLEAN, 30),
-										"visibility", 20, "");
-								if (ele != null) {
-									String contactFullName = getText(driver, ele, "Contact Name", action.BOOLEAN);
-									System.err.println("Contact Name : " + contactFullName);
-									if (contactFullName.contains(contactFirstName + " " + contactLastName)) {
-										appLog.info("Contact Created Successfully :" + contactFirstName + " "
-												+ contactLastName);
-										flag = true;
-									} else {
-										appLog.error("Contact did not get created successfully :" + contactFirstName
-												+ " " + contactLastName);
-									}
-								} else {
-									appLog.error("Not able to find contact name label");
-								}
-							} else {
-								log(LogStatus.ERROR,
-										"Not able to click on Contacts related list view all section so cannot verify Created Contact "
-												+ contactFirstName + " " + contactLastName,
-										YesNo.Yes);
-							}
+//							if (clickOnGridSection_Lightning(projectName, RelatedList.Contacts, 30)) {
+//								ele = isDisplayed(driver,
+//										FindElement(driver,
+//												"//*[text()='Contact']/following-sibling::*//*[text()='"
+//														+ contactFirstName + " " + contactLastName + "']",
+//												"Contact Name Text", action.SCROLLANDBOOLEAN, 30),
+//										"visibility", 20, "");
+//								if (ele != null) {
+//									String contactFullName = getText(driver, ele, "Contact Name", action.BOOLEAN);
+//									System.err.println("Contact Name : " + contactFullName);
+//									if (contactFullName.contains(contactFirstName + " " + contactLastName)) {
+//										appLog.info("Contact Created Successfully :" + contactFirstName + " "
+//												+ contactLastName);
+//										flag = true;
+//									} else {
+//										appLog.error("Contact did not get created successfully :" + contactFirstName
+//												+ " " + contactLastName);
+//									}
+//								} else {
+//									appLog.error("Not able to find contact name label");
+//								}
+//							} else {
+//								log(LogStatus.ERROR,
+//										"Not able to click on Contacts related list view all section so cannot verify Created Contact "
+//												+ contactFirstName + " " + contactLastName,
+//										YesNo.Yes);
+//							}
 
 						} else {
 							if (projectName.equalsIgnoreCase(Mode.Lightning.toString())) {

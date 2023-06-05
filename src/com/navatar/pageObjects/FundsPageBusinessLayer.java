@@ -190,7 +190,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 					"//h3[text()='" + relatedList + "']/../../../../../following-sibling::div//th//a",
 					"related list all elements");
 		} else
-			ele = FindElements(driver, "//table//*[@data-label]//a//span", "list of all elements");
+			ele = FindElements(driver, "//table//tbody//tr/*[2]//a", "list of all elements");
 
 		if (ele.size() > 0) {
 			for (int i = 0; i < ele.size(); i++) {

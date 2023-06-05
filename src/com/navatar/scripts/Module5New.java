@@ -380,24 +380,36 @@ public class Module5New extends BaseLib {
 	public void M5Tc001_5_AddTabInRecordPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
-		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		EditPageBusinessLayer edit=new EditPageBusinessLayer(driver);
+		
+		lp.CRMLogin(superAdminUserName,adminPassword);
+		TabName[] tabs= {TabName.InstituitonsTab,TabName.Deals};
+		String[] relatedtabs = {TabName.Events.toString(),TabName.QandA.toString()};
+		String[] data = {ToggleIns1,ToggleDeal1};
 
-		lp.CRMLogin(superAdminUserName, adminPassword);
-		TabName[] tabs = { TabName.InstituitonsTab, TabName.Deals };
-		String[] relatedtabs = { TabName.Events.toString(), TabName.QandA.toString() };
-		String[] data = { ToggleIns1, ToggleDeal1 };
+		for(int i=0;i<tabs.length;i++) {
+		if(lp.clickOnTab(projectName, tabs[i])) {
+			log(LogStatus.INFO,"Click on Tab : "+tabs[i],YesNo.No);
 
-		for (int i = 0; i < tabs.length; i++) {
-			CommonLib.refresh(driver);
-			if (lp.clickOnTab(projectName, tabs[i])) {
-				log(LogStatus.INFO, "Click on Tab : " + tabs[i], YesNo.No);
-
-				if (lp.clickOnAlreadyCreatedItem(projectName, data[i], tabs[i], 30)) {
-
-					log(LogStatus.INFO, "Click on Tab : " + tabs[i], YesNo.No);
-
-					if (edit.addTabInEditPage(projectName, "Details", "Custom", relatedtabs[i], "Details").isEmpty()) {
-						log(LogStatus.INFO, "able to add related tab :" + relatedtabs[i], YesNo.Yes);
+			if(lp.clickOnAlreadyCreatedItem(projectName, data[i], 30)) {
+				
+				log(LogStatus.INFO,"Click on Tab : "+tabs[i],YesNo.No);
+				
+				if (hp.clickOnEditPageLinkOnSetUpLink()) {	
+					log(LogStatus.INFO,"click on Edit Page SetUp Link", YesNo.No);
+					ThreadSleep(5000);
+					switchToFrame(driver, 60, edit.getEditPageFrame(projectName,120));
+					if(edit.addRelatedTabOnEditPage_Lighting(projectName, relatedtabs[i], "Custom", 30).isEmpty()) {
+						log(LogStatus.ERROR,"able to add related tab :"+relatedtabs[i], YesNo.Yes);
+						
+					}else {
+						log(LogStatus.ERROR,"Not able to add related tab :"+relatedtabs[i], YesNo.Yes);
+						sa.assertTrue(false,"Not able to add related tab :"+relatedtabs[i]);
+					}
+					ThreadSleep(5000);
+					if (clickUsingJavaScript(driver, edit.getEditPageBackButton(projectName, 10),"Edit Page Back Button", action.BOOLEAN)) {
+						log(LogStatus.INFO,"Click on Edit Page Back Button",YesNo.No);
+						ThreadSleep(5000);
 
 					} else {
 						log(LogStatus.ERROR, "Not able to add related tab :" + relatedtabs[i], YesNo.Yes);
@@ -415,6 +427,11 @@ public class Module5New extends BaseLib {
 				sa.assertTrue(false, "Not Able to click on tab:" + tabs[i]);
 
 			}
+		} else {
+			log(LogStatus.SKIP, "Not Able to click on tab:" + tabs[i], YesNo.Yes);
+			sa.assertTrue(false, "Not Able to click on tab:" + tabs[i]);
+
+		}
 		}
 		lp.CRMlogout();
 		sa.assertAll();
@@ -549,7 +566,8 @@ public class Module5New extends BaseLib {
 		String fileLocation[] = { ".\\AutoIT\\EditPage\\EventTab.PNG", ".\\AutoIT\\EditPage\\Q&ATab.PNG",
 				".\\AutoIT\\EditPage\\MECreatedBy.PNG" };
 
-		String EnhanceLightningGridImg = "C:\\Users\\Navatar\\git\\PE4.7Automation\\AutoIT\\EditPage\\NavatarSDG.PNG";
+
+		String EnhanceLightningGridImg = ".\\AutoIT\\EditPage\\NavatarSDG.PNG";
 
 		for (int i = 0; i < tabNames.length; i++) {
 			tabName = tabNames[i];
@@ -564,11 +582,12 @@ public class Module5New extends BaseLib {
 						ThreadSleep(1000);
 						// scn.nextLine();
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 60, edit.getEditPageFrame(projectName, 120));
-						relatedTab = relatedTabs[i];
-						if (clickUsingJavaScript(driver, ip.getRelatedTab(projectName, relatedTab, 120),
-								relatedTab.toString(), action.BOOLEAN)) {
-							log(LogStatus.INFO, "Click on Sub Tab : " + relatedTab, YesNo.No);
+						ThreadSleep(2000);
+						switchToFrame(driver, 60, edit.getEditPageFrame(projectName,120));
+						relatedTab=relatedTabs[i];
+						if (clickUsingJavaScript(driver, ip.getRelatedTab(projectName, relatedTab, 120), relatedTab.toString(), action.BOOLEAN)) {
+							log(LogStatus.INFO,"Click on Sub Tab : "+relatedTab,YesNo.No);
+
 							ThreadSleep(2000);
 							String[] toggles = toggleButtons[i].split(breakSP);
 							String toggleBtn = "";
@@ -845,6 +864,7 @@ public class Module5New extends BaseLib {
 							System.err.println(">>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 							// scn.nextLine();
 							ThreadSleep(10000);
+
 							for (int j = 0; j < toggles.length; j++) {
 								toggleButton = toggles[j];
 								ele = ip.toggleSDGButtons1(projectName, toggleButton, ToggleButtonGroup.SDGButton,
@@ -2033,8 +2053,10 @@ public class Module5New extends BaseLib {
 		String[] relatedTabs = { ToggleCheck1RelatedTab, ToggleCheck2RelatedTab, ToggleCheck3RelatedTab };
 		String relatedTab;
 
-		String customSDGFileLocation = ".\\AutoIT\\EditPage\\CustomSDG.PNG";
-		String outSideContainerLocation = ".\\AutoIT\\EditPage\\AddComponent.PNG";
+		String customSDGFileLocation= ".\\AutoIT\\EditPage\\CustomSDG.PNG";
+		String outSideContainerLocation = ".\\AutoIT\\EditPage\\AddComponent.PNG";	
+	String	ActiveDealToggleButton = "Active Deals with All Stages !@#$%^&*() @#$%^&*Deals";
+		
 
 		if (lp.CRMLogin(superAdminUserName, adminPassword, appName)) {
 			log(LogStatus.INFO, "login with Admin user so going to dragNdrop custom Sdg outside container with Admin",
@@ -2062,9 +2084,9 @@ public class Module5New extends BaseLib {
 								if (i == 2) {
 									// outSideContainerLocation = ".\\AutoIT\\EditPage\\DropdownIcon.PNG";
 								}
-								if (edit.dragNDropUsingScreen(projectName, customSDGFileLocation,
-										outSideContainerLocation, 20)) {
-									log(LogStatus.INFO, "Able to DragNDrop Custom SDG to Outside container", YesNo.No);
+								if (edit.dragNDropSDG(ActiveDealToggleButton)) {
+								log(LogStatus.INFO,"Able to DragNDrop Custom SDG to Outside container",YesNo.No);
+
 									switchToDefaultContent(driver);
 									ThreadSleep(5000);
 									if (click(driver, edit.getEditPageSaveButton(projectName, 10),
@@ -2187,6 +2209,9 @@ public class Module5New extends BaseLib {
 							log(LogStatus.SKIP, "Toggle should be present : " + toggleButton, YesNo.Yes);
 						}
 
+//						ele = ip.toggleSDGButtons2(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, false, 10);
+//						if (ele!=null) {
+//							log(LogStatus.PASS,"After Moving Custom SDG  "+toggleButton+" is present outside container",YesNo.No);
 						ele = ip.toggleSDGButtons(projectName, toggleButton, ToggleButtonGroup.SDGButton,
 								action.BOOLEAN, false, 10);
 						if (ele != null) {
@@ -2200,6 +2225,13 @@ public class Module5New extends BaseLib {
 									"After Moving Custom SDG  " + toggleButton + " should be present outside container",
 									YesNo.Yes);
 						}
+						
+//						ele = ip.toggleSDGButtons2(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 10);
+//						if (ele==null) {
+//							log(LogStatus.PASS,"After Moving Custom SDG  "+toggleButton+" is not present inside container",YesNo.No);
+//						} else {
+//							sa.assertTrue(false,"After Moving Custom SDG  "+toggleButton+" is present inside container");
+//							log(LogStatus.FAIL,"After Moving Custom SDG  "+toggleButton+" is be present inside container",YesNo.Yes);
 
 						ele = ip.toggleSDGButtons(projectName, toggleButton, ToggleButtonGroup.SDGButton,
 								action.BOOLEAN, true, 10);

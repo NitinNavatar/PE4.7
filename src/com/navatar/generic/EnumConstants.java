@@ -83,11 +83,15 @@ public class EnumConstants {
 			public String toString() {
 				return "1st Closing Date";
 			}
-		},
-		Pipeline_Name, Company_Name
+		}
+		, Pipeline_Name, Company_Name
+			
+		, Stage, Source, Source_Firm, Source_Contact {@Override
+			public String toString() {
+			return "Source Contact";
+		}
+	}, Deal_Type, Employees, Website, Email, Legal_Name,Target_Close_Date, Name, Investment_Size,Updated_Investment_Size, Log_In_Date{
 
-		, Stage, Source, Source_Firm, Source_Contact, Deal_Type, Employees, Website, Email, Legal_Name,
-		Target_Close_Date, Name, Investment_Size, Updated_Investment_Size, Log_In_Date {
 			@Override
 			public String toString() {
 				return "Date Received";
@@ -216,7 +220,7 @@ public class EnumConstants {
 		ReportsTab, Correspondence_Lists, LimitedPartner, CompaniesTab, TaskRayTab, TaskRay, TestCustomObjectTab,
 		TaskTab, Other, Object1Tab, Object2Tab, Object3Tab, Object4Tab, RecycleBinTab, SDGTab, DealTab, Object5Tab,
 		Object6Tab, AttendeeTab, Object7Tab, Entities, Deals, Marketing_Events, Events, Deal_Team, Financing,
-		Object8Tab, ContactTab, Deal, Acuity, ThemesTab, ClipsTab,Interaction;
+		Object8Tab, ContactTab, Deal, Acuity, ThemesTab, ClipsTab,Interaction, ContactsTab;
 	}
 
 	public static enum Mode {
@@ -1202,24 +1206,28 @@ public class EnumConstants {
 	public static enum RequiredFieldListForSection {
 		Fundraising_Information, Additional_Information, Fields_for_New_Limited_Partner, Fields_for_New_Partnership
 	};
-
-
-public static enum RevertToDefaultPopUpButton {
-	YesButton, NoButton, CrossIcon
-};
-
-public static enum ShowMoreActionDropDownList {
-	New_Task, New_Call, Edit, Delete, DS, New_Meeting, LogCaLLWithMultiple {
-		@Override
-		public String toString() {
-			return "Log a Call with Multiple Associations";
-		}
-	},
-	NewTaskWithMultiple {
-		@Override
-		public String toString() {
-			return "New Task with Multiple Associations";
-		}
+	
+	public static enum RevertToDefaultPopUpButton{
+		YesButton,NoButton,CrossIcon
+		};
+	
+	public static enum ShowMoreActionDropDownList{
+		 New_Task,New_Call,Edit, Delete,DS, New_Meeting,Convert_to_Portfolio{
+			 @Override
+				public String toString() {
+					return "Convert to Portfolio";
+				} 
+		 
+		 }, LogCaLLWithMultiple{
+				@Override
+				public String toString() {
+					return "Log a Call with Multiple Associations";
+				}
+			},NewTaskWithMultiple{
+				@Override
+				public String toString() {
+					return "New Task with Multiple Associations";
+				}
 
 	}, Contact_Transfer,Change_Date,Change_Record_Type,Change_Priority,Change_Status,Edit_Comments,New_Attendee
 	,New, New_Referral,New_Financing,Create_Distribution, Create_Drawdown, New_Partnership, New_Fundraising, Bulk_Fundraising, New_Fundraising_Contact, 

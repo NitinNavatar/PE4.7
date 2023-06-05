@@ -258,7 +258,7 @@ public abstract class BasePage extends BaseLib {
 //	private WebElement recordPageSettingSave;
 
 	@FindBy(xpath = "//button[@name='SaveEdit']")
-	private WebElement recordPageSettingSave;
+	 private WebElement recordPageSettingSave;
 
 	/**
 	 * @return the recordPageSettingSave
@@ -588,7 +588,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement getCustomTabSaveBtn(String projectName, int timeOut) {
 
-		List<WebElement> eleList = FindElements(driver, "//input[@title='Save' or text()='Save'or @name='SaveEdit']",
+		List<WebElement> eleList = FindElements(driver, "//button[@title='Save' or text()='Save'or @name='SaveEdit']",
 				"Save Button");
 
 		for (WebElement webElement : eleList) {
@@ -611,6 +611,15 @@ public abstract class BasePage extends BaseLib {
 
 	}
 
+	public WebElement sdgHeaderElement(String HeaderSDG, int timeOut) {
+		String xpath = "//a[text()='" + HeaderSDG + "']";
+		try {return FindElement(driver, xpath, "sdgHeaderElement", action.SCROLLANDBOOLEAN, timeOut);
+		}
+		catch (Exception e) {
+			return FindElement(driver, xpath, "sdgHeaderElement", action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+	  
 	@FindBy(xpath = "//button[@name=\"SaveEdit\"]")
 	private WebElement fundRaisingSaveButton;
 
@@ -7124,11 +7133,13 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement dealAcuityDealName(String dealName, int timeOut) {
 
-		String xpath = "//a[text()='" + dealName + "']/ancestor::th[@data-label='Deal Name']";
-		try {
-			return FindElement(driver, xpath, "Header: " + dealName, action.SCROLLANDBOOLEAN, timeOut);
-		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, xpath, "Header: " + dealName, action.SCROLLANDBOOLEAN, timeOut);
+		List<WebElement> ele = FindElements(driver,
+				"5//a[text()='" + dealName + "']/ancestor::th[@data-label='Deal Name']").stream()
+				.filter(x -> x.isDisplayed()).collect(Collectors.toList());
+		if (ele.size() > 0) {
+			return ele.get(0);
+		} else {
+			return null;
 		}
 
 	}
@@ -8655,7 +8666,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement Username(String UserName, int timeOut) {
 
-		String xpath = "//a[text()='" + UserName + "']";
+		String xpath = "(//button[text()='" + UserName + "'])[1]";
 		try {
 			return FindElement(driver, xpath, "Contact Header: " + UserName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -8834,7 +8845,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement sortingorder(String order, int timeOut) {
 		WebElement ele;
-		String xpath = "//li[@class='sortby_css']//*[@data-value='" + order + "']";
+		String xpath = "//li[@class='sortby_css']//*[text()='" + order + "']";
 		return ele = isDisplayed(driver, FindElement(driver, xpath,
 				"Date Recivied Sorting Icon: " + "DateReciviedSortingIcon", action.SCROLLANDBOOLEAN, timeOut),
 				"Visibility", 10, "Date Recivied Sorting Icon");
@@ -10091,6 +10102,7 @@ public abstract class BasePage extends BaseLib {
 		return FindElement(driver, path, "Meeting and call count", action.BOOLEAN, timeOut);
 	}
 
+
 	public WebElement getTabNameLightning(String tabName, int timeOut) {
 
 		String xpath = "//a[contains(@href,'lightning') and contains(@title,'" + tabName + "')]/span/..";
@@ -10150,6 +10162,7 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
+
 
 	@FindBy(xpath = "//li//lightning-icon[@icon-name='utility:copy_to_clipboard']")
 	private WebElement clipIconOnNavigation;

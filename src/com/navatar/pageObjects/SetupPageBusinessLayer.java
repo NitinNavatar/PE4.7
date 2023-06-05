@@ -1357,6 +1357,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 								if (click(driver, getPageLayoutSaveBtn(object.Global_Actions, 10),
 										"page layouts save button", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "Clicked on Save button", YesNo.No);
+									ThreadSleep(15000);
 
 								} else {
 									log(LogStatus.ERROR,
@@ -1995,7 +1996,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 	 */
 	public WebElement clickOnEditInFrontOfFieldValues(String projectName, String status) {
 		status = status.replace("_", " ");
-		String xpath = "//th[text()='" + status + "']/preceding-sibling::td//a[contains(@title,'Edit')]";
+		String xpath = "//*[text()='" + status + "']/preceding-sibling::td//a[contains(@title,'Edit')]";
 		WebElement ele = isDisplayed(driver, FindElement(driver, xpath, "edit", action.SCROLLANDBOOLEAN, 10),
 				"visibility", 10, "edit");
 		return ele;
@@ -2445,8 +2446,6 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 			} catch (Exception e1) {
 			}
-			ThreadSleep(5000);
-			CommonLib.refresh(driver);
 			ThreadSleep(5000);
 
 			switchToFrame(driver, 60, getSetUpPageIframe(120));
@@ -3563,7 +3562,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 					action.SCROLLANDBOOLEAN);
 			log(LogStatus.INFO, "Successfully click on override next button going to find field label:" + fieldName
 					+ " on next page", YesNo.No);
-			ThreadSleep(2000);
+			ThreadSleep(5000);
 			ele2 = FindElement(driver, masterFieldLabel, "", action.SCROLLANDBOOLEAN, 10);
 			count++;
 		} while (!setup.getOverrideSetupFieldNextBtn(20).getAttribute("class").contains("disabled") && ele2 == null
@@ -3571,7 +3570,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 		if (ele2 != null) {
 			ele = FindElement(driver, fieldLabelOverride, fieldName, action.SCROLLANDBOOLEAN, 10);
-			ThreadSleep(2000);
+			ThreadSleep(5000);
 
 			if (doubleClickUsingAction(driver, ele)) {
 				log(LogStatus.INFO, "going for edit override field label of field:" + fieldName, YesNo.No);
@@ -3581,6 +3580,9 @@ public class SetupPageBusinessLayer extends SetupPage {
 				// js.executeScript("arguments[0].setAttribute(arguments[1],arguments[2])",
 				// ele,"Value","");
 				doubleClickUsingAction(driver, ele);
+				ThreadSleep(2000);
+				ac.keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).sendKeys(Keys.BACK_SPACE).build().perform();
+				ThreadSleep(2000);
 				ac.moveToElement(ele).sendKeys(UpdatedfieldName).sendKeys(Keys.ENTER).build().perform();
 				log(LogStatus.INFO, "Pass value:" + UpdatedfieldName + " to override field label of field:" + fieldName,
 						YesNo.No);
@@ -3589,15 +3591,19 @@ public class SetupPageBusinessLayer extends SetupPage {
 						action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Successfully click on override save button", YesNo.No);
 					status = true;
+					ThreadSleep(5000);
+					clickUsingJavaScript(driver, setup.getOverrideSetupFieldFirstBtn(20), "override field next button",
+							action.SCROLLANDBOOLEAN);
+					ThreadSleep(5000);
 					return true;
 				} else {
 					log(LogStatus.FAIL,
 							"Not able to  click on save button name so cannot update field name" + fieldName,
 							YesNo.Yes);
-					sa.assertTrue(false, "Not able to  click on fsave button so cannot update field name" + fieldName);
+					sa.assertTrue(false, "Not able to  click on save button so cannot update field name" + fieldName);
 
 				}
-
+				
 			} else {
 				log(LogStatus.FAIL, "Not able to double click on field name so cannot update field name" + fieldName,
 						YesNo.Yes);
@@ -3609,7 +3615,6 @@ public class SetupPageBusinessLayer extends SetupPage {
 					+ " on next page", YesNo.No);
 
 		}
-
 		switchToDefaultContent(driver);
 		return false;
 
@@ -6877,6 +6882,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 							if (click(driver, getViewAccessbilityDropDownSaveButton(20), "save button",
 									action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.PASS, "clicked on save button", YesNo.No);
+								ThreadSleep(2000);
 								flag = true;
 							} else {
 								log(LogStatus.PASS, "not able to clicked on save button ", YesNo.No);

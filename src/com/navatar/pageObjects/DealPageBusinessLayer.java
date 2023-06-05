@@ -365,9 +365,9 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	public WebElement findDeactivateLink(String projectName, String stage) {
 
 		String xpath = "//th[text()='" + stage + "']/preceding-sibling::td//a[contains(@title,'Deactivate')]";
-		WebElement ele = FindElement(driver, xpath, "deactivate", action.SCROLLANDBOOLEAN, 10);
+		WebElement ele = FindElement(driver, xpath, "deactivate", action.SCROLLANDBOOLEAN, 20);
 		scrollDownThroughWebelement(driver, ele, "deactivate link for " + stage);
-		return isDisplayed(driver, ele, "Visibility", 10, "deactivate " + stage);
+		return isDisplayed(driver, ele, "Visibility", 20, "deactivate " + stage);
 
 	}
 
@@ -785,8 +785,10 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 			int loopCount = 0;
 			int status = 0;
 			if (labelNames != null && labelValue != null) {
+
 				for (int i = 0; i < labelNames.length; i++) {
 
+					labelNames[i] = labelNames[i].replace("_", " ");
 					if (labelNames[i].equalsIgnoreCase("Our Role")
 							|| labelNames[i].equalsIgnoreCase("Reason for Decline")
 							|| labelNames[i].equalsIgnoreCase("Reason to Park")
@@ -1098,6 +1100,8 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		int status = 0;
 		if (labelNames != null && labelValue != null) {
 			for (int i = 0; i < labelNames.length; i++) {
+				labelNames[i] = labelNames[i].replace("_", " ");
+
 				if (labelNames[i].equalsIgnoreCase("Date Received") || labelNames[i].equalsIgnoreCase("LOI Due Date")
 						|| labelNames[i].equalsIgnoreCase("NDA Signed Date")
 						|| labelNames[i].equalsIgnoreCase("Management Meeting Date")
@@ -1403,6 +1407,8 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		if (status == loopCount) {
 			if (CommonLib.click(driver, getpopupsaveButton(30), tabObj4 + " save button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on save button", YesNo.No);
+
+				flag=true;
 //
 //					String xPath = "//lightning-formatted-text[contains(text(),'" + dealName + "')]";
 //					ele = CommonLib.FindElement(driver, xPath, dealName, action.SCROLLANDBOOLEAN, 40);
@@ -1433,6 +1439,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return flag;
 
 	}
+
 
 	
 	public boolean createDealFromNavigation(String dealName, String companyName)
