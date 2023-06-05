@@ -41,7 +41,6 @@ import org.sikuli.script.Screen;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import com.android.dx.gen.Local;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
@@ -381,24 +380,36 @@ public class Module5New extends BaseLib {
 	public void M5Tc001_5_AddTabInRecordPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
-		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		EditPageBusinessLayer edit=new EditPageBusinessLayer(driver);
+		
+		lp.CRMLogin(superAdminUserName,adminPassword);
+		TabName[] tabs= {TabName.InstituitonsTab,TabName.Deals};
+		String[] relatedtabs = {TabName.Events.toString(),TabName.QandA.toString()};
+		String[] data = {ToggleIns1,ToggleDeal1};
 
-		lp.CRMLogin(superAdminUserName, adminPassword);
-		TabName[] tabs = { TabName.InstituitonsTab, TabName.Deals };
-		String[] relatedtabs = { TabName.Events.toString(), TabName.QandA.toString() };
-		String[] data = { ToggleIns1, ToggleDeal1 };
+		for(int i=0;i<tabs.length;i++) {
+		if(lp.clickOnTab(projectName, tabs[i])) {
+			log(LogStatus.INFO,"Click on Tab : "+tabs[i],YesNo.No);
 
-		for (int i = 0; i < tabs.length; i++) {
-			CommonLib.refresh(driver);
-			if (lp.clickOnTab(projectName, tabs[i])) {
-				log(LogStatus.INFO, "Click on Tab : " + tabs[i], YesNo.No);
-
-				if (lp.clickOnAlreadyCreatedItem(projectName, data[i], tabs[i], 30)) {
-
-					log(LogStatus.INFO, "Click on Tab : " + tabs[i], YesNo.No);
-
-					if (edit.addTabInEditPage(projectName, "Details", "Custom", relatedtabs[i], "Details").isEmpty()) {
-						log(LogStatus.INFO, "able to add related tab :" + relatedtabs[i], YesNo.Yes);
+			if(lp.clickOnAlreadyCreatedItem(projectName, data[i], 30)) {
+				
+				log(LogStatus.INFO,"Click on Tab : "+tabs[i],YesNo.No);
+				
+				if (hp.clickOnEditPageLinkOnSetUpLink()) {	
+					log(LogStatus.INFO,"click on Edit Page SetUp Link", YesNo.No);
+					ThreadSleep(5000);
+					switchToFrame(driver, 60, edit.getEditPageFrame(projectName,120));
+					if(edit.addRelatedTabOnEditPage_Lighting(projectName, relatedtabs[i], "Custom", 30).isEmpty()) {
+						log(LogStatus.ERROR,"able to add related tab :"+relatedtabs[i], YesNo.Yes);
+						
+					}else {
+						log(LogStatus.ERROR,"Not able to add related tab :"+relatedtabs[i], YesNo.Yes);
+						sa.assertTrue(false,"Not able to add related tab :"+relatedtabs[i]);
+					}
+					ThreadSleep(5000);
+					if (clickUsingJavaScript(driver, edit.getEditPageBackButton(projectName, 10),"Edit Page Back Button", action.BOOLEAN)) {
+						log(LogStatus.INFO,"Click on Edit Page Back Button",YesNo.No);
+						ThreadSleep(5000);
 
 					} else {
 						log(LogStatus.ERROR, "Not able to add related tab :" + relatedtabs[i], YesNo.Yes);
@@ -416,6 +427,11 @@ public class Module5New extends BaseLib {
 				sa.assertTrue(false, "Not Able to click on tab:" + tabs[i]);
 
 			}
+		} else {
+			log(LogStatus.SKIP, "Not Able to click on tab:" + tabs[i], YesNo.Yes);
+			sa.assertTrue(false, "Not Able to click on tab:" + tabs[i]);
+
+		}
 		}
 		lp.CRMlogout();
 		sa.assertAll();
@@ -432,109 +448,91 @@ public class Module5New extends BaseLib {
 		String values = "";
 		lp.searchAndClickOnApp(SDG, 30);
 
-		if (lp.clickOnTab(projectName, TabName.SDGTab)) {
-			log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
+		log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
 
-			String[][] sdgLabels = { { SDGCreationLabel.SDG_Name.toString(), Sdg1Name },
-					{ SDGCreationLabel.SDG_Tag.toString(), Sdg1TagName },
-					{ SDGCreationLabel.sObjectName.toString(), Sdg1ObjectName } };
+		String[][] sdgLabels1 = { { SDGCreationLabel.SDG_Name.toString(), Sdg1Name },
+				{ SDGCreationLabel.SDG_Tag.toString(), Sdg1TagName },
+				{ SDGCreationLabel.sObjectName.toString(), Sdg1ObjectName } };
 
-			if (sdg.createCustomSDG(projectName, Sdg1Name, sdgLabels, action.BOOLEAN, 20)) {
-				log(LogStatus.PASS, "create/verify created SDG : " + Sdg1Name, YesNo.No);
+		if (sdg.createCustomSDG(projectName, Sdg1Name, sdgLabels1, action.BOOLEAN, 20)) {
+			log(LogStatus.PASS, "create/verify created SDG : " + Sdg1Name, YesNo.No);
 
-				for (int i = 0; i < 1; i++) {
-					String api = ExcelUtils.readData(phase1DataSheetFilePath, "Fields", excelLabel.Variable_Name,
-							"CField" + (i + 1), excelLabel.APIName);
-					values = api;
-					if (sdg.addFieldOnSDG(projectName, fields, values)) {
-						log(LogStatus.INFO, "Successfully added fields on " + Sdg1Name, YesNo.Yes);
+			for (int i = 0; i < 1; i++) {
+				String api = ExcelUtils.readData(phase1DataSheetFilePath, "Fields", excelLabel.Variable_Name,
+						"CField" + (i + 1), excelLabel.APIName);
+				values = api;
+				if (sdg.addFieldOnSDG(projectName, fields, values)) {
+					log(LogStatus.INFO, "Successfully added fields on " + Sdg1Name, YesNo.Yes);
 
-					} else {
-						sa.assertTrue(false, "Not Able to add fields on SDG : " + Sdg1Name);
-						log(LogStatus.SKIP, "Not Able to add fields on SDG : " + Sdg1Name, YesNo.Yes);
-					}
+				} else {
+					sa.assertTrue(false, "Not Able to add fields on SDG : " + Sdg1Name);
+					log(LogStatus.SKIP, "Not Able to add fields on SDG : " + Sdg1Name, YesNo.Yes);
 				}
-
-			} else {
-				sa.assertTrue(false, "Not Able to create/verify created SDG : " + Sdg1Name);
-				log(LogStatus.SKIP, "Not Able to create/verify created SDG : " + Sdg1Name, YesNo.Yes);
 			}
 
 		} else {
-			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.SDGTab);
-			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.SDGTab, YesNo.Yes);
+			sa.assertTrue(false, "Not Able to create/verify created SDG : " + Sdg1Name);
+			log(LogStatus.SKIP, "Not Able to create/verify created SDG : " + Sdg1Name, YesNo.Yes);
 		}
 
 		lp.searchAndClickOnApp(SDG, 30);
 
-		if (lp.clickOnTab(projectName, TabName.SDGTab)) {
-			log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
+		log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
 
-			String[][] sdgLabels = { { SDGCreationLabel.SDG_Name.toString(), M5Sdg2Name },
-					{ SDGCreationLabel.SDG_Tag.toString(), M5Sdg2TagName },
-					{ SDGCreationLabel.sObjectName.toString(), M5Sdg2ObjectName },
-					{ SDGCreationLabel.Parent_Field_Name.toString(), M5Sdg2ParentName } };
+		String[][] sdgLabels2 = { { SDGCreationLabel.SDG_Name.toString(), M5Sdg2Name },
+				{ SDGCreationLabel.SDG_Tag.toString(), M5Sdg2TagName },
+				{ SDGCreationLabel.sObjectName.toString(), M5Sdg2ObjectName },
+				{ SDGCreationLabel.Parent_Field_Name.toString(), M5Sdg2ParentName } };
 
-			if (sdg.createCustomSDG(projectName, M5Sdg2Name, sdgLabels, action.BOOLEAN, 20)) {
-				log(LogStatus.PASS, "create/verify created SDG : " + M5Sdg2Name, YesNo.No);
-				for (int i = 0; i < 3; i++) {
-					String api = ExcelUtils.readData(phase1DataSheetFilePath, "Fields", excelLabel.Variable_Name,
-							"SDGField" + (i + 1), excelLabel.APIName);
+		if (sdg.createCustomSDG(projectName, M5Sdg2Name, sdgLabels2, action.BOOLEAN, 20)) {
+			log(LogStatus.PASS, "create/verify created SDG : " + M5Sdg2Name, YesNo.No);
+			for (int i = 0; i < 3; i++) {
+				String api = ExcelUtils.readData(phase1DataSheetFilePath, "Fields", excelLabel.Variable_Name,
+						"SDGField" + (i + 1), excelLabel.APIName);
 
-					values = api;
-					if (sdg.addFieldOnSDG(projectName, fields, values)) {
-						log(LogStatus.INFO, "Successfully added fields on " + M5Sdg2Name, YesNo.Yes);
+				values = api;
+				if (sdg.addFieldOnSDG(projectName, fields, values)) {
+					log(LogStatus.INFO, "Successfully added fields on " + M5Sdg2Name, YesNo.Yes);
 
-					} else {
-						sa.assertTrue(false, "Not Able to add fields on SDG : " + M5Sdg2Name);
-						log(LogStatus.SKIP, "Not Able to add fields on SDG : " + M5Sdg2Name, YesNo.Yes);
-					}
+				} else {
+					sa.assertTrue(false, "Not Able to add fields on SDG : " + M5Sdg2Name);
+					log(LogStatus.SKIP, "Not Able to add fields on SDG : " + M5Sdg2Name, YesNo.Yes);
 				}
-			} else {
-				sa.assertTrue(false, "Not Able to create/verify created SDG : " + M5Sdg2Name);
-				log(LogStatus.SKIP, "Not Able to create/verify created SDG : " + M5Sdg2Name, YesNo.Yes);
 			}
-
 		} else {
-			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.SDGTab);
-			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.SDGTab, YesNo.Yes);
+			sa.assertTrue(false, "Not Able to create/verify created SDG : " + M5Sdg2Name);
+			log(LogStatus.SKIP, "Not Able to create/verify created SDG : " + M5Sdg2Name, YesNo.Yes);
 		}
 
 		ThreadSleep(3000);
 
 		lp.searchAndClickOnApp(SDG, 30);
 
-		if (lp.clickOnTab(projectName, TabName.SDGTab)) {
-			log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
+		log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
 
-			String[][] sdgLabels = { { SDGCreationLabel.SDG_Name.toString(), M5Sdg3Name },
-					{ SDGCreationLabel.SDG_Tag.toString(), M5Sdg3TagName },
-					{ SDGCreationLabel.sObjectName.toString(), M5Sdg3ObjectName },
-					{ SDGCreationLabel.Parent_Field_Name.toString(), M5Sdg3ParentName } };
+		String[][] sdgLabels3 = { { SDGCreationLabel.SDG_Name.toString(), M5Sdg3Name },
+				{ SDGCreationLabel.SDG_Tag.toString(), M5Sdg3TagName },
+				{ SDGCreationLabel.sObjectName.toString(), M5Sdg3ObjectName },
+				{ SDGCreationLabel.Parent_Field_Name.toString(), M5Sdg3ParentName } };
 
-			if (sdg.createCustomSDG(projectName, M5Sdg3Name, sdgLabels, action.BOOLEAN, 20)) {
-				log(LogStatus.PASS, "create/verify created SDG : " + M5Sdg3Name, YesNo.No);
-				for (int i = 3; i < 6; i++) {
-					String api = ExcelUtils.readData(phase1DataSheetFilePath, "Fields", excelLabel.Variable_Name,
-							"SDGField" + (i + 1), excelLabel.APIName);
+		if (sdg.createCustomSDG(projectName, M5Sdg3Name, sdgLabels3, action.BOOLEAN, 20)) {
+			log(LogStatus.PASS, "create/verify created SDG : " + M5Sdg3Name, YesNo.No);
+			for (int i = 3; i < 6; i++) {
+				String api = ExcelUtils.readData(phase1DataSheetFilePath, "Fields", excelLabel.Variable_Name,
+						"SDGField" + (i + 1), excelLabel.APIName);
 
-					values = api;
-					if (sdg.addFieldOnSDG(projectName, fields, values)) {
-						log(LogStatus.INFO, "Successfully added fields on " + M5Sdg3Name, YesNo.Yes);
+				values = api;
+				if (sdg.addFieldOnSDG(projectName, fields, values)) {
+					log(LogStatus.INFO, "Successfully added fields on " + M5Sdg3Name, YesNo.Yes);
 
-					} else {
-						sa.assertTrue(false, "Not Able to add fields on SDG : " + M5Sdg3Name);
-						log(LogStatus.SKIP, "Not Able to add fields on SDG : " + M5Sdg3Name, YesNo.Yes);
-					}
+				} else {
+					sa.assertTrue(false, "Not Able to add fields on SDG : " + M5Sdg3Name);
+					log(LogStatus.SKIP, "Not Able to add fields on SDG : " + M5Sdg3Name, YesNo.Yes);
 				}
-			} else {
-				sa.assertTrue(false, "Not Able to create/verify created SDG : " + M5Sdg3Name);
-				log(LogStatus.SKIP, "Not Able to create/verify created SDG : " + M5Sdg3Name, YesNo.Yes);
 			}
-
 		} else {
-			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.SDGTab);
-			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.SDGTab, YesNo.Yes);
+			sa.assertTrue(false, "Not Able to create/verify created SDG : " + M5Sdg3Name);
+			log(LogStatus.SKIP, "Not Able to create/verify created SDG : " + M5Sdg3Name, YesNo.Yes);
 		}
 
 		lp.CRMlogout();
@@ -568,6 +566,7 @@ public class Module5New extends BaseLib {
 		String fileLocation[] = { ".\\AutoIT\\EditPage\\EventTab.PNG", ".\\AutoIT\\EditPage\\Q&ATab.PNG",
 				".\\AutoIT\\EditPage\\MECreatedBy.PNG" };
 
+
 		String EnhanceLightningGridImg = ".\\AutoIT\\EditPage\\NavatarSDG.PNG";
 
 		for (int i = 0; i < tabNames.length; i++) {
@@ -583,11 +582,12 @@ public class Module5New extends BaseLib {
 						ThreadSleep(1000);
 						// scn.nextLine();
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 60, edit.getEditPageFrame(projectName, 120));
-						relatedTab = relatedTabs[i];
-						if (clickUsingJavaScript(driver, ip.getRelatedTab(projectName, relatedTab, 120),
-								relatedTab.toString(), action.BOOLEAN)) {
-							log(LogStatus.INFO, "Click on Sub Tab : " + relatedTab, YesNo.No);
+						ThreadSleep(2000);
+						switchToFrame(driver, 60, edit.getEditPageFrame(projectName,120));
+						relatedTab=relatedTabs[i];
+						if (clickUsingJavaScript(driver, ip.getRelatedTab(projectName, relatedTab, 120), relatedTab.toString(), action.BOOLEAN)) {
+							log(LogStatus.INFO,"Click on Sub Tab : "+relatedTab,YesNo.No);
+
 							ThreadSleep(2000);
 							String[] toggles = toggleButtons[i].split(breakSP);
 							String toggleBtn = "";
@@ -864,9 +864,10 @@ public class Module5New extends BaseLib {
 							System.err.println(">>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 							// scn.nextLine();
 							ThreadSleep(10000);
+
 							for (int j = 0; j < toggles.length; j++) {
 								toggleButton = toggles[j];
-								ele = ip.toggleSDGButtons(projectName, toggleButton, ToggleButtonGroup.SDGButton,
+								ele = ip.toggleSDGButtons1(projectName, toggleButton, ToggleButtonGroup.SDGButton,
 										action.BOOLEAN, true, 30);
 								if (clickUsingJavaScript(driver, ele, toggleButton + " SDG", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.PASS, "Click on " + toggleButton, YesNo.No);
@@ -2052,8 +2053,10 @@ public class Module5New extends BaseLib {
 		String[] relatedTabs = { ToggleCheck1RelatedTab, ToggleCheck2RelatedTab, ToggleCheck3RelatedTab };
 		String relatedTab;
 
-		String customSDGFileLocation = ".\\AutoIT\\EditPage\\CustomSDG.PNG";
-		String outSideContainerLocation = ".\\AutoIT\\EditPage\\AddComponent.PNG";
+		String customSDGFileLocation= ".\\AutoIT\\EditPage\\CustomSDG.PNG";
+		String outSideContainerLocation = ".\\AutoIT\\EditPage\\AddComponent.PNG";	
+	String	ActiveDealToggleButton = "Active Deals with All Stages !@#$%^&*() @#$%^&*Deals";
+		
 
 		if (lp.CRMLogin(superAdminUserName, adminPassword, appName)) {
 			log(LogStatus.INFO, "login with Admin user so going to dragNdrop custom Sdg outside container with Admin",
@@ -2081,9 +2084,9 @@ public class Module5New extends BaseLib {
 								if (i == 2) {
 									// outSideContainerLocation = ".\\AutoIT\\EditPage\\DropdownIcon.PNG";
 								}
-								if (edit.dragNDropUsingScreen(projectName, customSDGFileLocation,
-										outSideContainerLocation, 20)) {
-									log(LogStatus.INFO, "Able to DragNDrop Custom SDG to Outside container", YesNo.No);
+								if (edit.dragNDropSDG(ActiveDealToggleButton)) {
+								log(LogStatus.INFO,"Able to DragNDrop Custom SDG to Outside container",YesNo.No);
+
 									switchToDefaultContent(driver);
 									ThreadSleep(5000);
 									if (click(driver, edit.getEditPageSaveButton(projectName, 10),
@@ -2206,6 +2209,9 @@ public class Module5New extends BaseLib {
 							log(LogStatus.SKIP, "Toggle should be present : " + toggleButton, YesNo.Yes);
 						}
 
+//						ele = ip.toggleSDGButtons2(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, false, 10);
+//						if (ele!=null) {
+//							log(LogStatus.PASS,"After Moving Custom SDG  "+toggleButton+" is present outside container",YesNo.No);
 						ele = ip.toggleSDGButtons(projectName, toggleButton, ToggleButtonGroup.SDGButton,
 								action.BOOLEAN, false, 10);
 						if (ele != null) {
@@ -2219,6 +2225,13 @@ public class Module5New extends BaseLib {
 									"After Moving Custom SDG  " + toggleButton + " should be present outside container",
 									YesNo.Yes);
 						}
+						
+//						ele = ip.toggleSDGButtons2(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 10);
+//						if (ele==null) {
+//							log(LogStatus.PASS,"After Moving Custom SDG  "+toggleButton+" is not present inside container",YesNo.No);
+//						} else {
+//							sa.assertTrue(false,"After Moving Custom SDG  "+toggleButton+" is present inside container");
+//							log(LogStatus.FAIL,"After Moving Custom SDG  "+toggleButton+" is be present inside container",YesNo.Yes);
 
 						ele = ip.toggleSDGButtons(projectName, toggleButton, ToggleButtonGroup.SDGButton,
 								action.BOOLEAN, true, 10);

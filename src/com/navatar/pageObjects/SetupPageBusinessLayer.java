@@ -269,6 +269,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 		if (searchStandardOrCustomObject(environment, mode, obj)) {
 			if (clickOnObjectFeature(environment, mode, obj, objectFeatureName)) {
 				for (int i = 0; i < layoutName.size(); i++) {
+					flag = false;
 					if (obj == object.Global_Actions) {
 						switchToFrame(driver, 10, getEditPageLayoutFrame_Lighting(20));
 						ele = isDisplayed(driver,
@@ -323,6 +324,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 								// trgt=trgt.replace("_", " ");
 
 								WebElement targetElement = null;
+								String searchBasedOn = src.split("<break>")[0];
 								if (src.split("<break>")[0].contains("Related List")) {
 									if (click(driver, FindElement(driver, "//div[text()='Related Lists']", "",
 											action.SCROLLANDBOOLEAN, 30), "", action.SCROLLANDBOOLEAN)) {
@@ -364,15 +366,16 @@ public class SetupPageBusinessLayer extends SetupPage {
 											20);
 
 								}
-								ele = isDisplayed(driver,
-										FindElement(driver, " //span[text()='" + src + "']", "", action.BOOLEAN, 20),
-										"visibility", 20, src + " field");
+								ele = isDisplayed(driver, FindElement(driver, "//table//span[text()='" + src + "']", "",
+										action.BOOLEAN, 20), "visibility", 20, src + " field");
 								if (ele != null) {
 								}
 
 								else
-									ele = isDisplayed(driver, FindElement(driver,
-											"(//table[@class='troughItems ']//div/div)[3]", "", action.BOOLEAN, 20),
+									ele = isDisplayed(driver,
+											FindElement(driver,
+													"//div[@class='section-body']//tr//div[@class='itemLabel']", "",
+													action.BOOLEAN, 20),
 											"visibility", 20, src + " field");
 
 								if (ele != null) {
@@ -389,6 +392,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 														"//div[contains(@id,'QuickAction')][text()='" + src + "']", "",
 														action.BOOLEAN, 20) != null) {
 													appLog.info("successfully verified drag and drop of " + src);
+													flag = true;
 												} else {
 													appLog.error("Not able to dragNDrop " + src + " at " + trgt
 															+ " location");
@@ -397,16 +401,34 @@ public class SetupPageBusinessLayer extends SetupPage {
 												}
 
 											} else {
-												if (FindElement(driver,
-														"//span[@class='labelText'][text()='" + src + "']", "",
-														action.BOOLEAN, 20) != null) {
-													appLog.info("successfully verified drag and drop of " + src);
+
+												if (searchBasedOn.contains("Related List")) {
+													if (FindElement(driver, "//tbody//h3[text()='" + src + "']", "",
+															action.BOOLEAN, 20) != null) {
+														appLog.info("successfully verified drag and drop of " + src);
+														flag = true;
+													} else {
+														appLog.error("Not able to dragNDrop " + src + " at " + trgt
+																+ " location");
+														result.add("Not able to dragNDrop " + src + " at " + trgt
+																+ " location");
+													}
 												} else {
-													appLog.error("Not able to dragNDrop " + src + " at " + trgt
-															+ " location");
-													result.add("Not able to dragNDrop " + src + " at " + trgt
-															+ " location");
+
+													if (FindElement(driver,
+															"//span[@class='labelText'][text()='" + src + "']", "",
+															action.BOOLEAN, 20) != null) {
+														appLog.info("successfully verified drag and drop of " + src);
+														flag = true;
+													} else {
+														appLog.error("Not able to dragNDrop " + src + " at " + trgt
+																+ " location");
+														result.add("Not able to dragNDrop " + src + " at " + trgt
+
+																+ " location");
+													}
 												}
+
 											}
 											appLog.info("Successfully dragNDrop " + src + " at " + trgt + " location");
 										} else {
@@ -432,8 +454,16 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 								if (flag && obj != object.Global_Actions) {
 									ThreadSleep(5000);
-									click(driver, FindElement(driver, "//button[text()='Yes']", "Yes Button",
-											action.BOOLEAN, 30), "", action.SCROLLANDBOOLEAN);
+									String yesXpath = "//button[text()='Yes']";
+									clickUsingJavaScript(driver,
+											FindElement(driver, yesXpath, "Yes Button", action.BOOLEAN, 30), "",
+											action.SCROLLANDBOOLEAN);
+									ThreadSleep(5000);
+									if (FindElement(driver, yesXpath, "Yes Button", action.BOOLEAN, 7) != null) {
+										clickUsingJavaScript(driver,
+												FindElement(driver, yesXpath, "Yes Button", action.BOOLEAN, 30), "",
+												action.SCROLLANDBOOLEAN);
+									}
 
 								}
 							} else {
@@ -1327,6 +1357,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 								if (click(driver, getPageLayoutSaveBtn(object.Global_Actions, 10),
 										"page layouts save button", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "Clicked on Save button", YesNo.No);
+									ThreadSleep(15000);
 
 								} else {
 									log(LogStatus.ERROR,
@@ -1965,7 +1996,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 	 */
 	public WebElement clickOnEditInFrontOfFieldValues(String projectName, String status) {
 		status = status.replace("_", " ");
-		String xpath = "//th[text()='" + status + "']/preceding-sibling::td//a[contains(@title,'Edit')]";
+		String xpath = "//*[text()='" + status + "']/preceding-sibling::td//a[contains(@title,'Edit')]";
 		WebElement ele = isDisplayed(driver, FindElement(driver, xpath, "edit", action.SCROLLANDBOOLEAN, 10),
 				"visibility", 10, "edit");
 		return ele;
@@ -2241,6 +2272,13 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return ele;
 	}
 
+	public WebElement getRecordTypeLabel(String projectName, String recordTypeLabel, String recordTypeValue, int timeOut) {
+		String xpath = "//*[text()='" + recordTypeLabel + "']/..//following-sibling::td//img[@alt='"+ recordTypeValue+"']";
+		WebElement ele = isDisplayed(driver, FindElement(driver, xpath, recordTypeLabel, action.BOOLEAN, 10),
+				"visibility", 10, recordTypeLabel);
+		return ele;
+	}
+	
 	public WebElement getRecordTypeLabelWithoutEditMode(String projectName, String recordTypeLabel, String checkedValue,
 			int timeOut) {
 		String xpath = "//*[text()='" + recordTypeLabel + "']/..//following-sibling::td//img[@title='" + checkedValue
@@ -2398,12 +2436,16 @@ public class SetupPageBusinessLayer extends SetupPage {
 		WebElement ele;
 		String label;
 		String value;
+		String label1 = labelWithValue[0][0];
+		String value1 = labelWithValue[0][1];
 		boolean flag = false;
 		switchToDefaultContent(driver);
 		ThreadSleep(5000);
 		CommonLib.refresh(driver);
 		ThreadSleep(5000);
 		switchToFrame(driver, 60, getSetUpPageIframe(120));
+		if(isDisplayed(driver, getRecordTypeLabel(projectName, label1, value1, 10), "visibility", timeOut, label1) == null) {
+			log(LogStatus.INFO, "Going to click on edit Button", YesNo.No);
 		if (click(driver, getEditButton(environment, "Classic", 10), "edit", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Click on edit Button", YesNo.No);
 			try {
@@ -2415,8 +2457,6 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 			} catch (Exception e1) {
 			}
-			ThreadSleep(5000);
-			CommonLib.refresh(driver);
 			ThreadSleep(5000);
 
 			switchToFrame(driver, 60, getSetUpPageIframe(120));
@@ -2443,11 +2483,15 @@ public class SetupPageBusinessLayer extends SetupPage {
 				// }
 				/* driver.switchTo().alert().accept(); */
 				if (label.equals(recordTypeLabel.Active.toString())) {
+				 if(isDisplayed(driver, getRecordTypeLabel(projectName, label, value, 20), "visibility", timeOut, label) == null) {
 					if (click(driver, ele, "Active CheckBox", action.BOOLEAN)) {
 						log(LogStatus.INFO, "Click on Active CheckBox", YesNo.No);
 					} else {
 						log(LogStatus.ERROR, "Not Able to Click on Active CheckBox", YesNo.Yes);
 						sa.assertTrue(false, "Not Able to Click on Active CheckBox");
+					}
+				  } else {
+						log(LogStatus.ERROR, "Already selcted, no need to Click on Active CheckBox", YesNo.Yes);
 					}
 				} else {
 
@@ -2472,6 +2516,10 @@ public class SetupPageBusinessLayer extends SetupPage {
 		} else {
 			log(LogStatus.ERROR, "Not Able to Click on Edit Button", YesNo.Yes);
 			sa.assertTrue(false, "Not Able to Click on Edit Button");
+		}
+		} else {
+			log(LogStatus.ERROR, "Already selcted, no need to Click on Active CheckBox", YesNo.Yes);
+			flag = true;
 		}
 		return flag;
 	}
@@ -3533,7 +3581,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 					action.SCROLLANDBOOLEAN);
 			log(LogStatus.INFO, "Successfully click on override next button going to find field label:" + fieldName
 					+ " on next page", YesNo.No);
-			ThreadSleep(2000);
+			ThreadSleep(5000);
 			ele2 = FindElement(driver, masterFieldLabel, "", action.SCROLLANDBOOLEAN, 10);
 			count++;
 		} while (!setup.getOverrideSetupFieldNextBtn(20).getAttribute("class").contains("disabled") && ele2 == null
@@ -3541,7 +3589,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 		if (ele2 != null) {
 			ele = FindElement(driver, fieldLabelOverride, fieldName, action.SCROLLANDBOOLEAN, 10);
-			ThreadSleep(2000);
+			ThreadSleep(5000);
 
 			if (doubleClickUsingAction(driver, ele)) {
 				log(LogStatus.INFO, "going for edit override field label of field:" + fieldName, YesNo.No);
@@ -3551,6 +3599,9 @@ public class SetupPageBusinessLayer extends SetupPage {
 				// js.executeScript("arguments[0].setAttribute(arguments[1],arguments[2])",
 				// ele,"Value","");
 				doubleClickUsingAction(driver, ele);
+				ThreadSleep(2000);
+				ac.keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).sendKeys(Keys.BACK_SPACE).build().perform();
+				ThreadSleep(2000);
 				ac.moveToElement(ele).sendKeys(UpdatedfieldName).sendKeys(Keys.ENTER).build().perform();
 				log(LogStatus.INFO, "Pass value:" + UpdatedfieldName + " to override field label of field:" + fieldName,
 						YesNo.No);
@@ -3559,15 +3610,19 @@ public class SetupPageBusinessLayer extends SetupPage {
 						action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Successfully click on override save button", YesNo.No);
 					status = true;
+					ThreadSleep(5000);
+					clickUsingJavaScript(driver, setup.getOverrideSetupFieldFirstBtn(20), "override field next button",
+							action.SCROLLANDBOOLEAN);
+					ThreadSleep(5000);
 					return true;
 				} else {
 					log(LogStatus.FAIL,
 							"Not able to  click on save button name so cannot update field name" + fieldName,
 							YesNo.Yes);
-					sa.assertTrue(false, "Not able to  click on fsave button so cannot update field name" + fieldName);
+					sa.assertTrue(false, "Not able to  click on save button so cannot update field name" + fieldName);
 
 				}
-
+				
 			} else {
 				log(LogStatus.FAIL, "Not able to double click on field name so cannot update field name" + fieldName,
 						YesNo.Yes);
@@ -3579,7 +3634,6 @@ public class SetupPageBusinessLayer extends SetupPage {
 					+ " on next page", YesNo.No);
 
 		}
-
 		switchToDefaultContent(driver);
 		return false;
 
@@ -6507,6 +6561,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 							xpath = "//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='"
 									+ objects[i] + "s']/..//input[contains(@title,'" + permissionTypes[j] + " "
 									+ objects[i] + "s')]";
+							//xpath = "(//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='"+ objects[i] + "s']/following-sibling::td)[1]//img[@alt='"+ permissionTypes[j] +"')]";
 							ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, 10);
 							ele = isDisplayed(driver, ele, "visibility", 10, "Edit Button");
 							// if(ele.getAttribute(status) != null) {
@@ -6847,6 +6902,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 							if (click(driver, getViewAccessbilityDropDownSaveButton(20), "save button",
 									action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.PASS, "clicked on save button", YesNo.No);
+								ThreadSleep(2000);
 								flag = true;
 							} else {
 								log(LogStatus.PASS, "not able to clicked on save button ", YesNo.No);
@@ -7498,280 +7554,353 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return flag;
 	}
 
-	
-	public boolean verifyHieghtandWidthOfClip(String width, String height)
-	{
-		if(clickUsingJavaScript(driver, getPECouldShowMoreIcon(20), "Show more icon"))
-		{
-			log(LogStatus.INFO, "Clicked on show more icon", YesNo.No);	
-			if(clickUsingJavaScript(driver, getEditBtn(20), "Edit button icon"))
-			{
-				log(LogStatus.INFO, "Clicked on edit button", YesNo.No);	
-				if(clickUsingJavaScript(driver, getUtilityItems(20), "Utility items"))
-				{
-					log(LogStatus.INFO, "Clicked on utility items", YesNo.No);	
-					if(clickUsingJavaScript(driver, getClipUtility(20), "clip utility items"))
-					{
-						log(LogStatus.INFO, "Clicked on clip utility items", YesNo.No);	
+	public boolean verifyHieghtandWidthOfClip(String width, String height) {
+		if (clickUsingJavaScript(driver, getPECouldShowMoreIcon(20), "Show more icon")) {
+			log(LogStatus.INFO, "Clicked on show more icon", YesNo.No);
+			if (clickUsingJavaScript(driver, getEditBtn(20), "Edit button icon")) {
+				log(LogStatus.INFO, "Clicked on edit button", YesNo.No);
+				if (clickUsingJavaScript(driver, getUtilityItems(20), "Utility items")) {
+					log(LogStatus.INFO, "Clicked on utility items", YesNo.No);
+					if (clickUsingJavaScript(driver, getClipUtility(20), "clip utility items")) {
+						log(LogStatus.INFO, "Clicked on clip utility items", YesNo.No);
 						ThreadSleep(4000);
-						String panelWidth=getAttribute(driver, getPanelWidthValue(20), "panel width", "value");
-						String panelHeight=getAttribute(driver, getpanelHeightValue(20), "panel width", "value");
-						
-						if(panelWidth.equals(width) && panelHeight.equals(height))
-						{
-							log(LogStatus.INFO, "Actual panel width and panel height has been matched with expected panel width and panel height", YesNo.No);
+						String panelWidth = getAttribute(driver, getPanelWidthValue(20), "panel width", "value");
+						String panelHeight = getAttribute(driver, getpanelHeightValue(20), "panel width", "value");
+
+						if (panelWidth.equals(width) && panelHeight.equals(height)) {
+							log(LogStatus.INFO,
+									"Actual panel width and panel height has been matched with expected panel width and panel height",
+									YesNo.No);
 							return true;
+						} else {
+							log(LogStatus.ERROR,
+									"Actual panel width and panel height is not matched with expected panel width and panel height",
+									YesNo.No);
 						}
-						else
-						{
-							log(LogStatus.ERROR, "Actual panel width and panel height is not matched with expected panel width and panel height", YesNo.No);	
-						}
-						
+
+					} else {
+						log(LogStatus.ERROR, "Clicked on clip utility items", YesNo.No);
 					}
-					else
-					{
-						log(LogStatus.ERROR,"Clicked on clip utility items", YesNo.No);	
-					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on utility items", YesNo.No);
 				}
-				else
-				{
-					log(LogStatus.ERROR, "Not able to click on utility items", YesNo.No);	
-				}
-					
+
+			} else {
+				log(LogStatus.ERROR, "Not able to click on edit button", YesNo.No);
 			}
-			else
-			{
-				log(LogStatus.ERROR, "Not able to click on edit button", YesNo.No);	
-			}
-		}
-		else
-		{
-			log(LogStatus.ERROR, "Not able to click on show more icon", YesNo.No);	
+		} else {
+			log(LogStatus.ERROR, "Not able to click on show more icon", YesNo.No);
 		}
 		return false;
 	}
-	
-	public ArrayList<String> verifyAcceddPermissionOfObject(UserProfile userProfile,ObjectType object, boolean read, boolean create, boolean edit, boolean delete)
-	{
+
+	public ArrayList<String> verifyAcceddPermissionOfObject(UserProfile userProfile, ObjectType object, boolean read,
+			boolean create, boolean edit, boolean delete) {
 		ThreadSleep(5000);
-		ArrayList<String> result=new ArrayList<String>();
-		String userProfileName=userProfile.toString().replace("_", " ");
+		ArrayList<String> result = new ArrayList<String>();
+		String userProfileName = userProfile.toString().replace("_", " ");
 		if (CommonLib.switchToFrame(driver, 50, getuserProfileIframe(50))) {
 			ThreadSleep(5000);
 			log(LogStatus.INFO, "Successfully switched to User Profile Iframe", YesNo.No);
-			
-			if (CommonLib.clickUsingJavaScript(driver, getEditButtonOfProfileUser(userProfileName,20), userProfileName + " profile name", action.BOOLEAN)) {
-				log(LogStatus.INFO, "Successfully clicked on edit button of " + userProfileName + " profile name", YesNo.No);
+
+			if (CommonLib.clickUsingJavaScript(driver, getEditButtonOfProfileUser(userProfileName, 20),
+					userProfileName + " profile name", action.BOOLEAN)) {
+				log(LogStatus.INFO, "Successfully clicked on edit button of " + userProfileName + " profile name",
+						YesNo.No);
 				ThreadSleep(8000);
 				CommonLib.switchToDefaultContent(driver);
-				
+
 				if (CommonLib.switchToFrame(driver, 50, getProfileEditPageIframe(40))) {
 					ThreadSleep(5000);
 					log(LogStatus.INFO, "Successfully switched to Edit Profile Iframe", YesNo.No);
-					int k=0;
-					scrollDownThroughWebelementInCenter(driver, getReadcheckbox(object.toString(),20), object.toString());
-					if(read)
-					{
-						if(!isSelected(driver, getReadcheckbox(object.toString(),20), "read checkbox"))
-						{
-							if(clickUsingJavaScript(driver, getReadcheckbox(object.toString(),20), "read checkbox"))
-							{
+					int k = 0;
+					scrollDownThroughWebelementInCenter(driver, getReadcheckbox(object.toString(), 20),
+							object.toString());
+					if (read) {
+						if (!isSelected(driver, getReadcheckbox(object.toString(), 20), "read checkbox")) {
+							if (clickUsingJavaScript(driver, getReadcheckbox(object.toString(), 20), "read checkbox")) {
 								log(LogStatus.INFO, "read checkbox has been selected", YesNo.No);
 								k++;
-							}
-							else
-							{
+							} else {
 								log(LogStatus.ERROR, "read checkbox is not selected", YesNo.No);
 								result.add("read checkbox is not selected");
 							}
-						}
-						else
-						{
+						} else {
 							log(LogStatus.INFO, "read checkbox is already selected", YesNo.No);
 						}
-					}
-					else
-					{
-						if(isSelected(driver, getReadcheckbox(object.toString(),20), "read checkbox"))
-						{
-							if(clickUsingJavaScript(driver, getReadcheckbox(object.toString(),20), "read checkbox"))
-							{
+					} else {
+						if (isSelected(driver, getReadcheckbox(object.toString(), 20), "read checkbox")) {
+							if (clickUsingJavaScript(driver, getReadcheckbox(object.toString(), 20), "read checkbox")) {
 								log(LogStatus.INFO, "read checkbox has been unchecked", YesNo.No);
 								k++;
-							}
-							else
-							{
+							} else {
 								log(LogStatus.ERROR, "read checkbox is not unchecked", YesNo.No);
 								result.add("read checkbox is not unchecked");
 							}
-						}
-						else
-						{
+						} else {
 							log(LogStatus.INFO, "read checkbox is already unchecked", YesNo.No);
 						}
 					}
-					
-					if(create)
-					{
-						if(!isSelected(driver, getCreatecheckbox(object.toString(),20), "Create checkbox"))
-						{
-							if(clickUsingJavaScript(driver, getCreatecheckbox(object.toString(),20), "Create checkbox"))
-							{
+
+					if (create) {
+						if (!isSelected(driver, getCreatecheckbox(object.toString(), 20), "Create checkbox")) {
+							if (clickUsingJavaScript(driver, getCreatecheckbox(object.toString(), 20),
+									"Create checkbox")) {
 								log(LogStatus.INFO, "Create checkbox has been selected", YesNo.No);
 								k++;
-							}
-							else
-							{
+							} else {
 								log(LogStatus.ERROR, "Create checkbox is not selected", YesNo.No);
 								result.add("Create checkbox is not selected");
 							}
-						}
-						else
-						{
+						} else {
 							log(LogStatus.INFO, "Create checkbox is already selected", YesNo.No);
 						}
-					}
-					else
-					{
-						if(isSelected(driver, getCreatecheckbox(object.toString(),20), "Create checkbox"))
-						{
-							if(clickUsingJavaScript(driver, getCreatecheckbox(object.toString(),20), "Create checkbox"))
-							{
+					} else {
+						if (isSelected(driver, getCreatecheckbox(object.toString(), 20), "Create checkbox")) {
+							if (clickUsingJavaScript(driver, getCreatecheckbox(object.toString(), 20),
+									"Create checkbox")) {
 								log(LogStatus.INFO, "Create checkbox has been unchecked", YesNo.No);
 								k++;
-							}
-							else
-							{
+							} else {
 								log(LogStatus.ERROR, "Create checkbox is not unchecked", YesNo.No);
 								result.add("Create checkbox is not unchecked");
 							}
+						} else {
+							log(LogStatus.INFO, "Create checkbox is already unchecked", YesNo.No);
 						}
-						else
-						{
-						log(LogStatus.INFO, "Create checkbox is already unchecked", YesNo.No);
-					    }
 					}
-					
-					if(edit)
-					{
-						if(!isSelected(driver, getEditcheckbox(object.toString(),20), "Edit checkbox"))
-						{
-							if(clickUsingJavaScript(driver, getEditcheckbox(object.toString(),20), "Edit checkbox"))
-							{
+
+					if (edit) {
+						if (!isSelected(driver, getEditcheckbox(object.toString(), 20), "Edit checkbox")) {
+							if (clickUsingJavaScript(driver, getEditcheckbox(object.toString(), 20), "Edit checkbox")) {
 								log(LogStatus.INFO, "Edit checkbox has been selected", YesNo.No);
 								k++;
-							}
-							else
-							{
+							} else {
 								log(LogStatus.ERROR, "Edit checkbox is not selected", YesNo.No);
 								result.add("Edit checkbox is not selected");
 							}
-						}
-						else
-						{
+						} else {
 							log(LogStatus.INFO, "Edit checkbox is already selected", YesNo.No);
 						}
-					}
-					else
-					{
-						if(isSelected(driver, getEditcheckbox(object.toString(),20), "Edit checkbox"))
-						{
-							if(clickUsingJavaScript(driver, getEditcheckbox(object.toString(),20), "Edit checkbox"))
-							{
+					} else {
+						if (isSelected(driver, getEditcheckbox(object.toString(), 20), "Edit checkbox")) {
+							if (clickUsingJavaScript(driver, getEditcheckbox(object.toString(), 20), "Edit checkbox")) {
 								log(LogStatus.INFO, "Edit checkbox has been unchecked", YesNo.No);
 								k++;
-							}
-							else
-							{
+							} else {
 								log(LogStatus.ERROR, "Edit checkbox is not unchecked", YesNo.No);
 								result.add("Edit checkbox is not unchecked");
 							}
-						}
-						else
-						{
+						} else {
 							log(LogStatus.INFO, "Edit checkbox is already unchecked", YesNo.No);
 						}
 					}
-					
-					if(delete)
-					{
-						if(!isSelected(driver, getDeleteCheckbox(object.toString(),20), "Delete checkbox"))
-						{
-							if(clickUsingJavaScript(driver, getDeleteCheckbox(object.toString(),20), "Delete checkbox"))
-							{
+
+					if (delete) {
+						if (!isSelected(driver, getDeleteCheckbox(object.toString(), 20), "Delete checkbox")) {
+							if (clickUsingJavaScript(driver, getDeleteCheckbox(object.toString(), 20),
+									"Delete checkbox")) {
 								log(LogStatus.INFO, "Delete checkbox has been selected", YesNo.No);
 								k++;
-							}
-							else
-							{
+							} else {
 								log(LogStatus.ERROR, "Delete checkbox is not selected", YesNo.No);
 								result.add("Delete checkbox is not selected");
 							}
-						}
-						else
-						{
+						} else {
 							log(LogStatus.INFO, "Delete checkbox is already selected", YesNo.No);
 						}
-					}
-					else
-					{
-						if(isSelected(driver, getDeleteCheckbox(object.toString(),20), "Delete checkbox"))
-						{
-							if(clickUsingJavaScript(driver, getDeleteCheckbox(object.toString(),20), "Delete checkbox"))
-							{
+					} else {
+						if (isSelected(driver, getDeleteCheckbox(object.toString(), 20), "Delete checkbox")) {
+							if (clickUsingJavaScript(driver, getDeleteCheckbox(object.toString(), 20),
+									"Delete checkbox")) {
 								log(LogStatus.INFO, "Delete checkbox has been unchecked", YesNo.No);
 								k++;
-							}
-							else
-							{
+							} else {
 								log(LogStatus.ERROR, "Delete checkbox is not unchecked", YesNo.No);
 								result.add("Delete checkbox is not unchecked");
 							}
-						}
-						else
-						{
+						} else {
 							log(LogStatus.INFO, "Delete checkbox is already unchecked", YesNo.No);
 						}
-					}	
-					if(k!=0)
-					{
-						if(clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(20), "Save button"))
-						{
+					}
+					if (k != 0) {
+						if (clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(20), "Save button")) {
 							log(LogStatus.INFO, "Clicked on Save button", YesNo.No);
 							ThreadSleep(7000);
 							switchToDefaultContent(driver);
-						}
-						else
-						{
+						} else {
 							log(LogStatus.ERROR, "Not able to click on Save button", YesNo.No);
 							result.add("Not able to click on Save button");
 						}
-						
+
 					}
-					
-				}
-				else
-				{
+
+				} else {
 					log(LogStatus.ERROR, "Not able to switched to Edit Profile Iframe", YesNo.No);
 					result.add("Not able to switched to Edit Profile Iframe");
 				}
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Not able to click on edit button of " + userProfileName + " profile name", YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Not able to click on edit button of " + userProfileName + " profile name",
+						YesNo.No);
 				result.add("Not able to click on edit button of " + userProfileName + " profile name");
-				
+
 			}
-		}
-		else
-		{
+		} else {
 			log(LogStatus.ERROR, "Not able to switched to User Profile Iframe", YesNo.No);
 			result.add("Not able to switched to User Profile Iframe");
 		}
-			
-			
+
 		return result;
-		
+
 	}
-	
+
+	/**
+	 * @author Ankur Huria
+	 * @param driver
+	 * @param userName
+	 * @param LabelswithCheck
+	 * @param timeOut
+	 * @return true if able to change permission for particular object for
+	 *         particular type for particular user
+	 */
+	public boolean reOrderOfPickListValues(String projectName, object Object, String fieldName, Condition condition) {
+
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		FieldAndRelationshipPageBusinessLayer frp = new FieldAndRelationshipPageBusinessLayer(driver);
+		boolean flag = false;
+		if (home.clickOnSetUpLink()) {
+
+			String parentWindowID = switchOnWindow(driver);
+			if (parentWindowID == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create App Page");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create App Page",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create App Page");
+			}
+			if (searchStandardOrCustomObject(projectName, mode, Object.toString())) {
+				if (clickOnObjectFeature(projectName, mode, Object, ObjectFeatureName.FieldAndRelationShip)) {
+
+					if (CommonLib.sendKeysAndPressEnter(driver, frp.getQucikSearchInFieldAndRelationshipPage(50),
+							fieldName, "Field", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Field value has been passed in " + fieldName, YesNo.No);
+						CommonLib.ThreadSleep(6000);
+
+						if (CommonLib.click(driver, getFieldName(fieldName, 20), fieldName + " field",
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on Field" + fieldName, YesNo.No);
+							CommonLib.ThreadSleep(7000);
+							CommonLib.switchToFrame(driver, 40, frp.getfieldsAndRelationshipsIframe(30));
+
+							if (CommonLib.click(driver, reorderButtonOfPickListValues(20), "Reorder Button",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "clicked on Reorder Button", YesNo.No);
+
+								CommonLib.switchToFrame(driver, 40, frp.getfieldsAndRelationshipsIframe(30));
+								if (condition.equals(Condition.SelectCheckbox)) {
+
+									if (!displayValueAlphabaticallyCheckbox(20).isSelected()) {
+										log(LogStatus.INFO,
+												"CHeckBox not Selected, Going to Check for Display Value Alphabetically",
+												YesNo.No);
+
+										if (CommonLib.click(driver, displayValueAlphabaticallyCheckbox(20),
+												"Display Value Alphabetically CheckBox", action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "clicked on Display Value Alphabetically CheckBox",
+													YesNo.No);
+
+										} else {
+											log(LogStatus.ERROR,
+													"Could not click on Display Value Alphabetically CheckBox",
+													YesNo.Yes);
+
+										}
+
+									} else {
+										log(LogStatus.ERROR,
+												"CHeckBox already Selected, So not Going to Check for Display Value Alphabetically",
+												YesNo.Yes);
+
+									}
+								} else {
+									if (displayValueAlphabaticallyCheckbox(20).isSelected()) {
+										log(LogStatus.INFO,
+												"CHeckBox Selected, Going to UnCheck for Display Value Alphabetically",
+												YesNo.No);
+
+										if (CommonLib.click(driver, displayValueAlphabaticallyCheckbox(20),
+												"Display Value Alphabetically CheckBox", action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "clicked on Display Value Alphabetically CheckBox",
+													YesNo.No);
+
+										} else {
+											log(LogStatus.ERROR,
+													"Could not click on Display Value Alphabetically CheckBox",
+													YesNo.Yes);
+
+										}
+
+									} else {
+										log(LogStatus.ERROR,
+												"CHeckBox already Selected, So not Going to Check for Display Value Alphabetically",
+												YesNo.Yes);
+
+									}
+								}
+
+								if (CommonLib.click(driver, reorderSaveButton(20), "Reorder Save Button",
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on Save Button of Reorder", YesNo.No);
+									CommonLib.switchToDefaultContent(driver);
+									CommonLib.switchToFrame(driver, 40, frp.getfieldsAndRelationshipsIframe(30));
+									if (reorderButtonOfPickListValues(30) != null) {
+										log(LogStatus.INFO, "-----Checkbox has been : " + condition
+												+ " for Display Input Value Alphabetically------", YesNo.No);
+										CommonLib.switchToDefaultContent(driver);
+										flag = true;
+									} else {
+										log(LogStatus.ERROR, "-----Checkbox has been : " + condition
+												+ " for Display Input Value Alphabetically------", YesNo.Yes);
+
+									}
+
+								} else {
+									log(LogStatus.ERROR, "Could not click on Save Button of Reorder", YesNo.Yes);
+
+								}
+
+							} else {
+								log(LogStatus.ERROR, "Could not click on Reorder Button", YesNo.Yes);
+
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Could not click on the " + fieldName, YesNo.Yes);
+
+						}
+					} else {
+						log(LogStatus.ERROR, "Could not pass the Field value " + fieldName, YesNo.Yes);
+
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on Object and Feature name", YesNo.Yes);
+
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to Search the Object", YesNo.Yes);
+
+			}
+
+			driver.close();
+			driver.switchTo().window(parentWindowID);
+		} else {
+			log(LogStatus.ERROR, "Not Able to open the setup page", YesNo.Yes);
+
+		}
+
+		return flag;
+	}
+
 }

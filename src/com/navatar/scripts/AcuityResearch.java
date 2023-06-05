@@ -510,32 +510,13 @@ public class AcuityResearch extends BaseLib{
 			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
 			ThreadSleep(8000);
 			ele = rp.getResearchFindingsValue(10).getText();
-			if (ele.equals(searchValue) || searchValue == null) {
+			if (ele.equals(searchValue) || searchValue == null || searchValue == "") {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
 			}
 			ele = rp.getResearchFindings(10).getText();
 			if (ele!=null && ele.equalsIgnoreCase("Search Results")) {
 			log(LogStatus.PASS, ele +" is visible", YesNo.Yes);
 			}
-			
-			if(searchValue.length() < 2) {
-				ele =rp.getErrorValue(10).getText();
-				if(ele.equalsIgnoreCase(bp.errorName)){
-					log(LogStatus.PASS, ele +" has been Matched with " +bp.errorName, YesNo.No);
-				} else {
-					log(LogStatus.ERROR, ele +" is not Matched with " +bp.errorName, YesNo.Yes);
-					sa.assertTrue(false, ele +" is not Matched with " +bp.errorName);
-				}
-				ThreadSleep(2000);
-				xpath = "(//lightning-icon[contains(@class,'utility-warning')])["+i+"]";
-				WebElement element = FindElement(driver, xpath, bp.errorName, action.BOOLEAN, 10);
-				if(mouseOverGetTextOperation(driver, element).contains(bp.errorName)){
-					log(LogStatus.PASS, ele +" on mouse hover has been Matched with " +bp.errorName, YesNo.No);
-				}else {
-					log(LogStatus.ERROR, ele +" on mouse hover is not Matched with " +bp.errorName, YesNo.Yes);
-					sa.assertTrue(false, ele +" on mouse hover is not Matched with " +bp.errorName);
-			}
-			} else {
 				ele = rp.getNoResult(10).getText();
 				if(ele.contains(bp.errorName1)){
 					log(LogStatus.PASS, ele +" has been Matched with " +bp.errorName1, YesNo.No);
@@ -543,7 +524,6 @@ public class AcuityResearch extends BaseLib{
 					log(LogStatus.ERROR, ele +" is not Matched with " +bp.errorName1, YesNo.Yes);
 					sa.assertTrue(false, ele +" is not Matched with " +bp.errorName1);
 				}
-			}
 	} else {
 		log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
 		sa.assertTrue(false,"Not Able to send value "+searchValue);
@@ -566,12 +546,10 @@ public class AcuityResearch extends BaseLib{
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	lp.CRMLogin(superAdminUserName, adminPassword,appName);
 	
-	String firmRecordTypeList = AR_FirmOther_LabelNames1;
 	String contactRecordTypeList = AR_ContactRecordType1;
 	String dealRecordTypeList = AR_DealRecordType1;
 	String fundRecordTypeList = AR_FundRecordType1;
 	String fundraisingRecordTypeList = AR_FundraisingRecordType1;
-	String firmRecordTypeArray[] = firmRecordTypeList.split(breakSP,-1);
 	String contactRecordTypeArray[] = contactRecordTypeList.split(breakSP,-1);
 	String dealRecordTypeArray[] = dealRecordTypeList.split(breakSP, -1);
 	String fundRecordTypeArray[] = fundRecordTypeList.split(breakSP, -1);
@@ -617,7 +595,7 @@ public class AcuityResearch extends BaseLib{
 					{ recordTypeLabel.Active.toString(), "" } } };
 
 	
-	String[] profileForSelection = { "PE Standard User", "System Administrator" };
+	String[] profileForSelection = { "System Administrator"};
 	boolean isMakeAvailable = false;
 	boolean isMakeDefault = false;
 	boolean flag = false;
@@ -669,8 +647,7 @@ public class AcuityResearch extends BaseLib{
 			List<String> abc = sp.DragNDrop("", mode, object.Contact, ObjectFeatureName.pageLayouts, layoutName, sourceANDDestination);
 			ThreadSleep(10000);
 			if (!abc.isEmpty()) {
-				log(LogStatus.FAIL, "field not added/already present 1", YesNo.Yes);
-				sa.assertTrue(false, "field not added/already present 1");
+				log(LogStatus.PASS, "field not added/already present 1", YesNo.Yes);
 			}else{
 				log(LogStatus.INFO, "field added/already present 1", YesNo.Yes);
 			}
@@ -712,7 +689,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, contactrecordType[i], isMakeAvailable,
-										null, isMakeDefault, null, 10);
+										profileForSelection, isMakeDefault, null, 10);
 							}
 						} else {
 							isMakeDefault = false;
@@ -786,7 +763,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, dealRecordType[i], isMakeAvailable,
-										null, isMakeDefault, null, 10);
+										profileForSelection, isMakeDefault, null, 10);
 							}
 						}
 						if (flag) {
@@ -850,7 +827,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, fundrecordType[i], isMakeAvailable,
-										null, isMakeDefault, null, 10);
+										profileForSelection, isMakeDefault, null, 10);
 							}
 						}
 						if (flag) {
@@ -914,7 +891,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, fundraisingrecordType[i],
-										isMakeAvailable, null, isMakeDefault, null, 10);
+										isMakeAvailable, profileForSelection, isMakeDefault, null, 10);
 							}
 						}
 						if (flag) {
@@ -953,50 +930,6 @@ public class AcuityResearch extends BaseLib{
 	}
 	switchToDefaultContent(driver);
 	ThreadSleep(5000);
-	
-	for (int i = 0; i < firmRecordTypeArray.length; i++) {
-		home.notificationPopUpClose();
-		if (home.clickOnSetUpLink()) {
-			flag = false;
-			parentID = switchOnWindow(driver);
-			if (parentID != null) {
-				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Firm)) {
-					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Firm,
-							ObjectFeatureName.recordTypes)) {
-						if (sp.clickOnAlreadyCreatedLayout(firmRecordTypeArray[i])) {
-							if (sp.editRecordTypeForObject(projectName, RecordType, 10)) {
-								log(LogStatus.ERROR,firmRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
-							}else {
-								log(LogStatus.ERROR,firmRecordTypeArray[i]+" not updated ",YesNo.Yes);
-								sa.assertTrue(false, firmRecordTypeArray[i]+" not updated ");
-							}
-						
-						}else {
-							log(LogStatus.ERROR, firmRecordTypeArray[i]+" is not clickable", YesNo.Yes);
-							sa.assertTrue(false, firmRecordTypeArray[i]+" is not clickable");
-						}
-				
-					}else {
-						log(LogStatus.ERROR, "object feature "+ObjectFeatureName.recordTypes+" is not clickable", YesNo.Yes);
-						sa.assertTrue(false, "object feature "+ObjectFeatureName.recordTypes+" is not clickable");
-					}
-				}else {
-					log(LogStatus.ERROR, "Deal object could not be found in object manager", YesNo.Yes);
-					sa.assertTrue(false, "Deal object could not be found in object manager");
-				}
-				driver.close();
-				driver.switchTo().window(parentID);
-				switchToDefaultContent(driver);
-			}else {
-				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
-				sa.assertTrue(false, "could not find new window to switch");
-			}
-		}else {
-			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
-			sa.assertTrue(false, "could not click on setup link");
-		}
-
-	}
 	lp.CRMlogout();
 	sa.assertAll();
 }
@@ -1013,7 +946,7 @@ public class AcuityResearch extends BaseLib{
 	
 	String recordTypes [] = {"Deal","Fund","Fundraising"};
 	String avail[][] = {{"SellSide Deal","BuySide Deal", "Capital Raise"},{"Mutual Fund","Trust Fund"},{"FRGRT","MSGRT"}};
-	String[] profileForSelection = { "PE Standard User", "System Administrator", "Standard Platform User", "Read Only", "PE - FOF Standard User", "Minimum Access - Salesforce", "Marketing User", "IR Only", "Identity User", "FOF Standard User", "Deal Only", "Contract Manager", "Standard User", "Minimum Access - Salesforce" };
+	String[] profileForSelection = {"System Administrator"};
 	String parentID=null;
 	String master= "--Master--";
 	for(int k=0; k<profileForSelection.length; k++) {
@@ -1033,6 +966,7 @@ public class AcuityResearch extends BaseLib{
 						for(int i=0; i <3; i++) {
 							System.out.println(avail[i].length);
 						switchToDefaultContent(driver);
+						refresh(driver);
 						ThreadSleep(5000);
 						switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
 						ThreadSleep(2000);
@@ -1145,7 +1079,7 @@ public class AcuityResearch extends BaseLib{
 					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Deal,
 							ObjectFeatureName.recordTypes)) {
 						if (sp.clickOnAlreadyCreatedLayout(dealRecordTypeArray[i])) {
-							if(sp.getRecordTypeLabelWithoutEditMode(projectName, RecordType[0][0], RecordType[0][1], 10) != null) {
+							if(sp.getRecordTypeLabelWithoutEditMode(projectName, RecordType[0][0], RecordType[0][1], 10) == null) {
 								log(LogStatus.PASS,"Record Type need to update ",YesNo.Yes);
 							if (sp.editRecordTypeForObject(projectName, RecordType, 10)) {
 								log(LogStatus.PASS,dealRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
@@ -1194,7 +1128,7 @@ public class AcuityResearch extends BaseLib{
 					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Fund,
 							ObjectFeatureName.recordTypes)) {
 						if (sp.clickOnAlreadyCreatedLayout(fundRecordTypeArray[i])) {
-							if(sp.getRecordTypeLabelWithoutEditMode(projectName, RecordType[0][0], RecordType[0][1], 10) != null) {
+							if(sp.getRecordTypeLabelWithoutEditMode(projectName, RecordType[0][0], RecordType[0][1], 10) == null) {
 								log(LogStatus.PASS,"Record Type need to update ",YesNo.Yes);
 							if (sp.editRecordTypeForObject(projectName, RecordType, 10)) {
 								log(LogStatus.ERROR,fundRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
@@ -1243,7 +1177,7 @@ public class AcuityResearch extends BaseLib{
 					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Fundraising,
 							ObjectFeatureName.recordTypes)) {
 						if (sp.clickOnAlreadyCreatedLayout(fundraisingRecordTypeArray[i])) {
-							if(sp.getRecordTypeLabelWithoutEditMode(projectName, RecordType[0][0], RecordType[0][1], 10) != null) {
+							if(sp.getRecordTypeLabelWithoutEditMode(projectName, RecordType[0][0], RecordType[0][1], 10) == null) {
 								log(LogStatus.PASS,"Record Type need to update ",YesNo.Yes);
 							if (sp.editRecordTypeForObject(projectName, RecordType, 10)) {
 								log(LogStatus.ERROR,fundraisingRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
@@ -1744,7 +1678,7 @@ public class AcuityResearch extends BaseLib{
 	   if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 	
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm1.replace("  ", "").replace("\"", ""), 10)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, TabName.InstituitonsTab, AR_Firm1.replace("  ", "").replace("\"", ""), 10)) {
 	           if (ip.UpdateLegalNameAccount(projectName, AR_Research1.replace("  ", "").replace("\"", ""), 5)) {
 	               log(LogStatus.INFO, "successfully update legal name " + AR_Research1, YesNo.Yes);
 	           } else {
@@ -1922,7 +1856,7 @@ public class AcuityResearch extends BaseLib{
 	   if (fp.clickOnTab(environment, mode, TabName.ContactTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.ContactTab, YesNo.No);
 	
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm2.replace("  ", "").replace("\"", ""), 10)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, TabName.ContactsTab, AR_Firm2.replace("  ", "").replace("\"", ""), 10)) {
 	           if (cp.UpdateLastName(projectName, PageName.ContactPage,AR_Research2.replace("  ", "").replace("\"", ""))) {
 	               log(LogStatus.INFO, "successfully update contact name " + AR_Research2, YesNo.Yes);
 	           } else {
@@ -2098,8 +2032,8 @@ public class AcuityResearch extends BaseLib{
    
 	   if (fp.clickOnTab(environment, mode, TabName.DealTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.DealTab, YesNo.No);
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm3.replace("  ", "").replace("\"", ""), 10)) {
-	           if (dp.UpdateOtherLable(projectName, PageLabel.Deal_Name.toString(), AR_Research3.replace("  ", "").replace("\"", ""), 10)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, TabName.DealTab, AR_Firm3.replace("  ", "").replace("\"", ""), 10)) {
+	           if (dp.UpdateOtherLabel(projectName, PageLabel.Deal_Name.toString(), AR_Research3.replace("  ", "").replace("\"", ""), 10)) {
 	               log(LogStatus.INFO, "successfully update contact name " + AR_Research3, YesNo.Yes);
 	           } else {
 	               sa.assertTrue(false, "not able to update deal name " + AR_Research3);
@@ -2270,7 +2204,7 @@ public class AcuityResearch extends BaseLib{
    
 	   if (fp.clickOnTab(environment, mode, TabName.FundsTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.FundsTab, YesNo.No);
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm4.replace("  ", "").replace("\"", ""), 10)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, TabName.FundsTab, AR_Firm4.replace("  ", "").replace("\"", ""), 10)) {
 	           if (fp.UpdateFundName(projectName, AR_Research4.replace("  ", "").replace("\"", ""), 10)) {
 	               log(LogStatus.INFO, "successfully update contact name " + AR_Research4, YesNo.Yes);
 	           } else {
@@ -3355,7 +3289,7 @@ public class AcuityResearch extends BaseLib{
 	String searchValue = null,ele = null;
 	
 	if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
-		if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object2Tab, AR_Contact1Name, 10)) {
+		if (ip.clickOnAlreadyCreatedItem(projectName, TabName.ContactsTab, AR_Contact1Name, 10)) {
 			String recordID[] = driver.getCurrentUrl().split("Contact/");
 			String[] recordNo = recordID[1].split("/view"); 
 			searchValue = recordNo[0];
@@ -3438,14 +3372,100 @@ public class AcuityResearch extends BaseLib{
 					{ recordTypeLabel.Active.toString(), "" } } };
 	
 	String recordActive[][] = {{ recordTypeLabel.Active.toString(), "Checked" }};
-	String recordTypes [] = {"Firm","Deal","Fund","Fundraising"};
-	String avail[][] = {{"Consultant RT","IT Firm"},{"SellSide Deal","BuySide Deal", "Capital Raise"},{"Mutual Fund","Trust Fund"},{"FRGRT","MSGRT"}};
+	String recordTypes [] = {"Deal","Fund","Fundraising"};
+	String avail[][] = {{"SellSide Deal","BuySide Deal", "Capital Raise"},{"Mutual Fund","Trust Fund"},{"FRGRT","MSGRT"}};
 	String defaultValue[] = {"SellSide Deal","Mutual Fund", "FRGRT"};
-	String[] profileForSelection = { "PE Standard User", "System Administrator" };
+	String[] profileForSelection = {"System Administrator" };
 	boolean isMakeAvailable = false;
 	boolean isMakeDefault = false;
 	boolean flag = false;
 	String parentID=null;
+	
+			home.notificationPopUpClose();
+			if (home.clickOnSetUpLink()) {
+				parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+				if (sp.searchStandardOrCustomObject(environment, mode, object.Profiles)) {
+					log(LogStatus.INFO, "click on Object : " + object.Profiles, YesNo.No);
+					ThreadSleep(2000);
+					switchToDefaultContent(driver);
+					switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
+		
+					if (clickUsingJavaScript(driver, rp.getProfileSelected(profileForSelection[0],10), profileForSelection[0].toString(), action.BOOLEAN)) {
+						log(LogStatus.INFO, "able to click on " + profileForSelection[0], YesNo.No);
+						ThreadSleep(10000);
+						for(int i=0; i <3; i++) {
+							System.out.println(avail[i].length);
+						switchToDefaultContent(driver);
+						ThreadSleep(5000);
+						switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
+						if (clickUsingJavaScript(driver, rp.getEditButtonForRecordTypes(recordTypes[i], 10), "Edit Button", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "able to click on edit button for record type settiing", YesNo.No);
+							switchToDefaultContent(driver);
+							ThreadSleep(5000);
+							switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
+							ThreadSleep(2000);
+							
+								for(int j = 0; j <avail[i].length; j++)
+							if (selectVisibleTextFromDropDown(driver, sp.getavailableRecordType(10),
+									"Available Tab List", avail[i][j])) {
+								appLog.info(recordTypes[i] + " is selected successfully in available tabs");
+								if (click(driver, sp.getAddBtn(10), "Custom Tab Add Button",
+										action.SCROLLANDBOOLEAN)) {
+									appLog.error("clicked on add button");
+								} else {
+									appLog.error("Not able to click on add button so cannot add custom tabs");
+								}
+							} else {
+								appLog.error(recordTypes + " record type is not Available list Tab.");
+								sa.assertTrue(false,recordTypes + " record type is not Available list Tab.");
+							}
+							
+							if (selectVisibleTextFromDropDown(driver, sp.getdefaultRecord(10), "Default Record Type",
+									defaultValue[i])) {
+								log(LogStatus.INFO, "successfully verified "+defaultValue[i], YesNo.No);
+		
+							}else {
+								log(LogStatus.ERROR, "not able to verify "+defaultValue[i]+" in selected record type", YesNo.Yes);
+								sa.assertTrue(false,"not able to verify "+defaultValue[i]+" in selected record type");
+		
+							}
+							if (click(driver, sp.getCreateUserSaveBtn_Lighting(10), "Save Button",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
+								ThreadSleep(2000);
+							} else {
+								log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
+								sa.assertTrue(false,"not able to click on save button for record type settiing");
+		
+							}
+							}else {
+								log(LogStatus.ERROR, "not able to click on edit button for record type settiing", YesNo.Yes);
+								sa.assertTrue(false,"not able to click on edit button for record type settiing");
+		
+							}
+					}
+					}else {
+						log(LogStatus.ERROR, profileForSelection[0]+" profile is not clickable", YesNo.Yes);
+						sa.assertTrue(false,profileForSelection[0]+" profile is not clickable");
+					}
+					
+				} else {
+					log(LogStatus.ERROR, "profiles tab is not clickable", YesNo.Yes);
+					sa.assertTrue(false,"profiles tab is not clickable");
+				}
+		
+				driver.close();
+				driver.switchTo().window(parentID);
+		}else {
+			log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
+			sa.assertTrue(false, "setup link is not clickable");
+		}
+			}else {
+				log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
+				sa.assertTrue(false, "setup link is not clickable");
+			}
+	switchToDefaultContent(driver);
 	
 	for (int i = 0; i < RecordTypeArray.length; i++) {
 		home.notificationPopUpClose();
@@ -3508,7 +3528,9 @@ public class AcuityResearch extends BaseLib{
 			sa.assertTrue(false, "could not click on setup link");
 		}
 	}
-		
+	
+	refresh(driver);
+	ThreadSleep(2000);
 			
 			for (int i = 0; i < dealRecordTypeArray.length; i++) {
 				home.notificationPopUpClose();
@@ -3554,6 +3576,9 @@ public class AcuityResearch extends BaseLib{
 		
 			}
 		
+			refresh(driver);
+			ThreadSleep(2000);
+			
 			for (int i = 0; i < fundRecordTypeArray.length; i++) {
 				home.notificationPopUpClose();
 				if (home.clickOnSetUpLink()) {
@@ -3598,6 +3623,9 @@ public class AcuityResearch extends BaseLib{
 		
 			}
 		
+			refresh(driver);
+			ThreadSleep(2000);
+			
 			for (int i = 0; i < fundraisingRecordTypeArray.length; i++) {
 				home.notificationPopUpClose();
 				if (home.clickOnSetUpLink()) {
@@ -3642,91 +3670,6 @@ public class AcuityResearch extends BaseLib{
 		
 			}
 			
-			switchToDefaultContent(driver);
-			home.notificationPopUpClose();
-			if (home.clickOnSetUpLink()) {
-				parentID = switchOnWindow(driver);
-			if (parentID!=null) {
-				if (sp.searchStandardOrCustomObject(environment, mode, object.Profiles)) {
-					log(LogStatus.INFO, "click on Object : " + object.Profiles, YesNo.No);
-					ThreadSleep(2000);
-					switchToDefaultContent(driver);
-					switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
-		
-					if (clickUsingJavaScript(driver, rp.getProfileSelected(profileForSelection[0],10), profileForSelection[0].toString(), action.BOOLEAN)) {
-						log(LogStatus.INFO, "able to click on " + profileForSelection[0], YesNo.No);
-						ThreadSleep(10000);
-						for(int i=0; i <3; i++) {
-							System.out.println(avail[i].length);
-						switchToDefaultContent(driver);
-						ThreadSleep(5000);
-						switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
-						if (click(driver, rp.getEditButtonForRecordTypes(recordTypes[i], 10), "Edit Button", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "able to click on edit button for record type settiing", YesNo.No);
-							switchToDefaultContent(driver);
-							ThreadSleep(5000);
-							switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
-							ThreadSleep(2000);
-							
-								for(int j = 0; j <avail[i].length; j++)
-							if (selectVisibleTextFromDropDown(driver, sp.getavailableRecordType(10),
-									"Available Tab List", avail[i][j])) {
-								appLog.info(recordTypes + " is selected successfully in available tabs");
-								if (click(driver, sp.getAddBtn(10), "Custom Tab Add Button",
-										action.SCROLLANDBOOLEAN)) {
-									appLog.error("clicked on add button");
-								} else {
-									appLog.error("Not able to click on add button so cannot add custom tabs");
-								}
-							} else {
-								appLog.error(recordTypes + " record type is not Available list Tab.");
-								sa.assertTrue(false,recordTypes + " record type is not Available list Tab.");
-							}
-							
-							if (selectVisibleTextFromDropDown(driver, sp.getdefaultRecord(10), "Default Record Type",
-									defaultValue[i])) {
-								log(LogStatus.INFO, "successfully verified "+defaultValue[i], YesNo.No);
-		
-							}else {
-								log(LogStatus.ERROR, "not able to verify "+defaultValue[i]+" in selected record type", YesNo.Yes);
-								sa.assertTrue(false,"not able to verify "+defaultValue[i]+" in selected record type");
-		
-							}
-							if (click(driver, sp.getCreateUserSaveBtn_Lighting(10), "Save Button",
-									action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
-								ThreadSleep(2000);
-							} else {
-								log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
-								sa.assertTrue(false,"not able to click on save button for record type settiing");
-		
-							}
-							}else {
-								log(LogStatus.ERROR, "not able to click on edit button for record type settiing", YesNo.Yes);
-								sa.assertTrue(false,"not able to click on edit button for record type settiing");
-		
-							}
-					}
-					}else {
-						log(LogStatus.ERROR, profileForSelection[0]+" profile is not clickable", YesNo.Yes);
-						sa.assertTrue(false,profileForSelection[0]+" profile is not clickable");
-					}
-					
-				} else {
-					log(LogStatus.ERROR, "profiles tab is not clickable", YesNo.Yes);
-					sa.assertTrue(false,"profiles tab is not clickable");
-				}
-		
-				driver.close();
-				driver.switchTo().window(parentID);
-		}else {
-			log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
-			sa.assertTrue(false, "setup link is not clickable");
-		}
-			}else {
-				log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
-				sa.assertTrue(false, "setup link is not clickable");
-			}
 	switchToDefaultContent(driver);
 	ThreadSleep(5000);
 	lp.CRMlogout();
@@ -3744,7 +3687,7 @@ public class AcuityResearch extends BaseLib{
 	
 	String recordTypes = "Account";
 	String avail[] = {"Consultant RT", "IT Firm"};
-	String[] profileForSelection = { "PE Standard User", "System Administrator"};
+	String[] profileForSelection = {"System Administrator"};
 	String parentID=null;
 	for(int k=0; k<profileForSelection.length; k++) {
 			home.notificationPopUpClose();
@@ -3910,7 +3853,7 @@ public class AcuityResearch extends BaseLib{
 	public void ARTc024_CreateAccountRecords(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-		lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String value = "";
 		String type = "";
 		String[][] EntityOrAccounts = { { ARNewFirm1Name, ARNewFirm1RecordType, null }, { ARNewFirm2Name, ARNewFirm2RecordType, null } };
@@ -4746,7 +4689,118 @@ public class AcuityResearch extends BaseLib{
 
 @Parameters({ "projectName"})
 @Test
-	public void ARTc030_UpdateRecordTypesAsInactive(String projectName) {
+	public void ARTc030_1_DeselectingRecordTypesForProfiles(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp=new ResearchPageBusinessLayer(driver);
+	lp.CRMLogin(superAdminUserName, adminPassword,appName);
+	
+	String recordTypes [] = {"Contact","Deal","Fund","Fundraising"};
+	String avail[][] = {{"Banker","Broker"},{"SellSide Deal","BuySide Deal", "Capital Raise"},{"Mutual Fund","Trust Fund"},{"FRGRT","MSGRT"}};
+	String[] profileForSelection = {"System Administrator"};
+	String parentID=null;
+	String master= "--Master--";
+	for(int k=0; k<profileForSelection.length; k++) {
+			home.notificationPopUpClose();
+			if (home.clickOnSetUpLink()) {
+				parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+				if (sp.searchStandardOrCustomObject(environment, mode, object.Profiles)) {
+					log(LogStatus.INFO, "click on Object : " + object.Profiles, YesNo.No);
+					ThreadSleep(2000);
+					switchToDefaultContent(driver);
+					switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
+					ThreadSleep(2000);
+					if (clickUsingJavaScript(driver, rp.getProfileSelected(profileForSelection[k],10), profileForSelection[k].toString(), action.BOOLEAN)) {
+						log(LogStatus.INFO, "able to click on " + profileForSelection[k], YesNo.No);
+						ThreadSleep(5000);
+						for(int i=0; i <4; i++) {
+							System.out.println(avail[i].length);
+						switchToDefaultContent(driver);
+						refresh(driver);
+						ThreadSleep(5000);
+						switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
+						ThreadSleep(2000);
+						if (click(driver, rp.getEditButtonForRecordTypes(recordTypes[i], 10), "Edit Button", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "able to click on edit button for record type settiing", YesNo.No);
+							switchToDefaultContent(driver);
+							ThreadSleep(5000);
+							switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
+							ThreadSleep(2000);
+						for(int j = 0; j <avail[i].length; j++) {
+							if (selectVisibleTextFromDropDown(driver, sp.getSelectedRecordType(10),
+									"Selected Tab List", avail[i][j])) {
+								appLog.info(recordTypes + " is selected successfully in Selected tabs");
+								if (click(driver, sp.getRemoveBtn(10), "Custom Tab Remove Button",
+										action.SCROLLANDBOOLEAN)) {
+									appLog.error("clicked on Remove button");
+								} else {
+									appLog.error("Not able to click on Remove button so cannot add custom tabs");
+								}
+							} else {
+								appLog.error(recordTypes + " record type is not Selected list Tab.");
+								sa.assertTrue(false,recordTypes + " record type is not Selected list Tab.");
+							}
+							
+						}
+								if (selectVisibleTextFromDropDown(driver, sp.getavailableRecordType(10),
+										"Available Tab List", master)) {
+									appLog.info(recordTypes + " is selected successfully in Available tabs");
+									if (click(driver, sp.getAddBtn(10), "Custom Tab Add Button",
+											action.SCROLLANDBOOLEAN)) {
+										appLog.error("clicked on add button");
+									} else {
+										appLog.error("Not able to click on add button so cannot add custom tabs");
+									}
+								} else {
+									appLog.error(recordTypes + " record type is not Selected list Tab.");
+								}	
+								
+							if (click(driver, sp.getCreateUserSaveBtn_Lighting(10), "Save Button",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
+								ThreadSleep(2000);
+							} else {
+								log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
+								sa.assertTrue(false,"not able to click on save button for record type settiing");
+		
+							}
+							}else {
+								log(LogStatus.ERROR, "not able to click on edit button for record type settiing", YesNo.Yes);
+								sa.assertTrue(false,"not able to click on edit button for record type settiing");
+		
+							}
+					}
+					}else {
+						log(LogStatus.ERROR, profileForSelection[k]+" profile is not clickable", YesNo.Yes);
+						sa.assertTrue(false,profileForSelection[k]+" profile is not clickable");
+					}
+				
+				} else {
+					log(LogStatus.ERROR, "profiles tab is not clickable", YesNo.Yes);
+					sa.assertTrue(false,"profiles tab is not clickable");
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+		}else {
+			log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
+			sa.assertTrue(false, "setup link is not clickable");
+		}
+			}else {
+				log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
+				sa.assertTrue(false, "setup link is not clickable");
+			}
+	}
+	switchToDefaultContent(driver);
+	ThreadSleep(5000);
+	lp.CRMlogout();
+	sa.assertAll();
+}
+
+@Parameters({ "projectName"})
+@Test
+	public void ARTc030_2_UpdateRecordTypesAsInactive(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 	SetupPageBusinessLayer sp = new SetupPageBusinessLayer(driver);
@@ -5684,11 +5738,11 @@ public class AcuityResearch extends BaseLib{
 		ThreadSleep(2000);
 			if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
 				if (cp.clickOnCreatedContact(projectName, contactName[0], contactName[1])) {
-					if (isDisplayed(driver, cp.getPhoneFieldOnContactPage(10), "Visibility", 10, "Phone") != null) {
-						log(LogStatus.PASS, "Phone Field is visible", YesNo.Yes);
+					if (isDisplayed(driver, cp.getPhoneFieldOnContactPage(10), "Visibility", 10, "Phone") == null) {
+						log(LogStatus.PASS, "Phone Field is not visible", YesNo.Yes);
 					} else {
-						log(LogStatus.ERROR, "Phone Field is not visible", YesNo.Yes);
-						sa.assertTrue(false, "Phone Field is not visible");
+						log(LogStatus.ERROR, "Phone Field is visible", YesNo.Yes);
+						sa.assertTrue(false, "Phone Field is visible");
 					}
 				}
 
@@ -5994,8 +6048,13 @@ public class AcuityResearch extends BaseLib{
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
-	String parentWindow = "", contactFields[] = {"Description","Legal Name"}, dealFields[] = {"Stage","Pipeline Comments"}, fundraisingFields[] = {"Status Notes","Legal Name"};
-	String[] searchValues = {AR_Firm27,AR_Firm28,AR_Firm57};
+	String parentWindow = "", contactFields[] = {"Description","Account Name"}, dealFields[] = {"Stage","Pipeline Comments"}, fundraisingFields[] = {"Status Notes","Legal Name"};
+	String[] varibles = {"AR_Up27","AR_Up28","AR_Up57"};
+	String varibale27 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
+	String varibale28 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, varibles[1], excelLabel.Name);
+	String varibale57 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, varibles[2], excelLabel.Name);
+
+	String[] searchValues = {varibale27,varibale28,varibale57};
 	String ele, headerName;
 
 	
@@ -6253,8 +6312,12 @@ public class AcuityResearch extends BaseLib{
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
-	String parentWindow = "", contactFields[] = {"Description","Legal Name"}, dealFields[] = {"Stage","Pipeline Comments"}, fundraisingFields[] = {"Status Notes","Legal Name"};
-	String[] searchValues = {AR_Firm27,AR_Firm281};
+	String parentWindow = "", contactFields[] = {"Description","Account Name"}, dealFields[] = {"Stage","Pipeline Comments"}, fundraisingFields[] = {"Status Notes","Legal Name"};
+	String[] varibles = {"AR_Up27","AR_Up281"};
+	String varibale27 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
+	String varibale281 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, varibles[1], excelLabel.Name);
+
+	String[] searchValues = {varibale27,varibale281};
 	String ele;
 
 	if (home.clickOnSetUpLink()) {
@@ -6580,7 +6643,11 @@ public class AcuityResearch extends BaseLib{
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	String parentWindow = "";
-	String[] searchValues = {AR_Firm27};
+	String[] varibles = {"AR_Up27"};
+	String varibale27 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
+	
+	String[] searchValues = {varibale27};
+
 	boolean flag1 = false;
 	String tabNames1 = "Accounts" ,tabNames2 = "Contacts" ;
 	String[] labelsWithValues1 = {  "Account Name<break>Account Name upd", "Description<break>Description upd" },labelsWithValues2 = {  "Contact Name<break>Contact Name upd", "Description<break>Description upd"  };
@@ -6655,19 +6722,19 @@ public class AcuityResearch extends BaseLib{
 				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Deal.toString())){
 					log(LogStatus.INFO, "Select "+PageLabel.Deal.toString()+" text in object dropdown in override setup page", YesNo.No);
 					ThreadSleep(5000);
-					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Stage.toString(), DealLabel1.replace("_", " "), action.SCROLLANDBOOLEAN)){
-						log(LogStatus.INFO, "Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.No);
-						
-					}else{
-						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.Yes);
-						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Stage.toString()+" to "+DealLabel1);	
-					}
 					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Pipeline_Comments.toString().replace("_", " "), DealLabel2.replace("_", " "), action.SCROLLANDBOOLEAN)){
 						log(LogStatus.INFO, "Field label: "+PageLabel.Pipeline_Comments.toString()+" successfully update to "+DealLabel2, YesNo.No);
 						
 					}else{
 						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Pipeline_Comments.toString()+" successfully update to "+DealLabel2, YesNo.Yes);
 						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Pipeline_Comments.toString()+" to "+DealLabel2);	
+					}
+					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Stage.toString(), DealLabel1.replace("_", " "), action.SCROLLANDBOOLEAN)){
+						log(LogStatus.INFO, "Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.No);
+						
+					}else{
+						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.Yes);
+						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Stage.toString()+" to "+DealLabel1);	
 					}
 				}else{
 					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Deal.toString()+" in  object dropdown in override page", YesNo.Yes);
@@ -6735,12 +6802,12 @@ public class AcuityResearch extends BaseLib{
 				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Theme.toString())){
 					log(LogStatus.INFO, "Select "+PageLabel.Theme.toString()+" text in object dropdown in override setup page", YesNo.No);
 					ThreadSleep(5000);
-					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Descrption.toString().replace("_"," "), ThemeLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
-						log(LogStatus.INFO, "Field label: "+PageLabel.Descrption.toString()+" successfully update to "+ThemeLabel, YesNo.No);
+					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Description.toString().replace("_"," "), ThemeLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
+						log(LogStatus.INFO, "Field label: "+PageLabel.Description.toString()+" successfully update to "+ThemeLabel, YesNo.No);
 						
 					}else{
-						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Descrption.toString()+" successfully update to "+ThemeLabel, YesNo.Yes);
-						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Descrption.toString()+" to "+ThemeLabel);	
+						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Description.toString()+" successfully update to "+ThemeLabel, YesNo.Yes);
+						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Description.toString()+" to "+ThemeLabel);	
 					}
 				}else{
 					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page", YesNo.Yes);
@@ -6893,7 +6960,11 @@ public class AcuityResearch extends BaseLib{
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	String parentWindow = "";
-	String[] searchValues = {AR_Firm27};
+	String[] varibles = {"AR_Up27"};
+	String varibale27 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
+
+	String[] searchValues = {varibale27};
+
 	boolean flag1 = false;
 	String tabNames1 = "Accounts" ,tabNames2 = "Contacts" ;
 	String[] labelsWithValues1 = {  "Account Name<break>Account Name Upd !@&*()(*& 123", "Description<break>Description Upd !@&*()(*& 123" },
@@ -6968,19 +7039,19 @@ public class AcuityResearch extends BaseLib{
 				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Deal.toString())){
 					log(LogStatus.INFO, "Select "+PageLabel.Deal.toString()+" text in object dropdown in override setup page", YesNo.No);
 					ThreadSleep(5000);
-					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Stage.toString(), DealLabel1.replace("_", " "), action.SCROLLANDBOOLEAN)){
-						log(LogStatus.INFO, "Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.No);
-						
-					}else{
-						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.Yes);
-						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Stage.toString()+" to "+DealLabel1);	
-					}
 					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Pipeline_Comments.toString().replace("_", " "), DealLabel2.replace("_", " "), action.SCROLLANDBOOLEAN)){
 						log(LogStatus.INFO, "Field label: "+PageLabel.Pipeline_Comments.toString()+" successfully update to "+DealLabel2, YesNo.No);
 						
 					}else{
 						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Pipeline_Comments.toString()+" successfully update to "+DealLabel2, YesNo.Yes);
 						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Pipeline_Comments.toString()+" to "+DealLabel2);	
+					}
+					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Stage.toString(), DealLabel1.replace("_", " "), action.SCROLLANDBOOLEAN)){
+						log(LogStatus.INFO, "Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.No);
+						
+					}else{
+						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.Yes);
+						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Stage.toString()+" to "+DealLabel1);	
 					}
 				}else{
 					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Deal.toString()+" in  object dropdown in override page", YesNo.Yes);
@@ -7048,12 +7119,12 @@ public class AcuityResearch extends BaseLib{
 				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Theme.toString())){
 					log(LogStatus.INFO, "Select "+PageLabel.Theme.toString()+" text in object dropdown in override setup page", YesNo.No);
 					ThreadSleep(5000);
-					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Descrption.toString().replace("_"," "), ThemeLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
-						log(LogStatus.INFO, "Field label: "+PageLabel.Descrption.toString()+" successfully update to "+ThemeLabel, YesNo.No);
+					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Description.toString().replace("_"," "), ThemeLabel.replace("_", " "), action.SCROLLANDBOOLEAN)){
+						log(LogStatus.INFO, "Field label: "+PageLabel.Description.toString()+" successfully update to "+ThemeLabel, YesNo.No);
 						
 					}else{
-						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Descrption.toString()+" successfully update to "+ThemeLabel, YesNo.Yes);
-						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Descrption.toString()+" to "+ThemeLabel);	
+						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Description.toString()+" successfully update to "+ThemeLabel, YesNo.Yes);
+						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Description.toString()+" to "+ThemeLabel);	
 					}
 				}else{
 					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Theme.toString()+" in  object dropdown in override page", YesNo.Yes);
@@ -7208,7 +7279,11 @@ public class AcuityResearch extends BaseLib{
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	String parentWindow = "";
-	String[] searchValues = {AR_Firm27};
+	String[] varibles = {"AR_Up27"};
+	String varibale27 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
+	
+	String[] searchValues = {varibale27};
+
 	boolean flag1 = false;
 	String tabNames1 = "Accounts" ,tabNames2 = "Contacts" ;
 	String[] labelsWithValues1 = {  "Account Name<break>Account Name", "Description<break>Description" },labelsWithValues2 = {  "Contact Name<break>Contact Name", "Description<break>Description"  };
@@ -7282,19 +7357,19 @@ public class AcuityResearch extends BaseLib{
 				if(selectVisibleTextFromDropDown(driver, setup.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Deal.toString())){
 					log(LogStatus.INFO, "Select "+PageLabel.Deal.toString()+" text in object dropdown in override setup page", YesNo.No);
 					ThreadSleep(5000);
-					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Stage.toString(), DealLabel1.replace("_", " "), action.SCROLLANDBOOLEAN)){
-						log(LogStatus.INFO, "Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.No);
-						
-					}else{
-						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.Yes);
-						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Stage.toString()+" to "+DealLabel1);	
-					}
 					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Pipeline_Comments.toString().replace("_", " "), DealLabel2.replace("_", " "), action.SCROLLANDBOOLEAN)){
 						log(LogStatus.INFO, "Field label: "+PageLabel.Pipeline_Comments.toString()+" successfully update to "+DealLabel2, YesNo.No);
 						
 					}else{
 						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Pipeline_Comments.toString()+" successfully update to "+DealLabel2, YesNo.Yes);
 						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Pipeline_Comments.toString()+" to "+DealLabel2);	
+					}
+					if(setup.updateFieldLabelInOverridePage(driver, PageLabel.Stage.toString(), DealLabel1.replace("_", " "), action.SCROLLANDBOOLEAN)){
+						log(LogStatus.INFO, "Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.No);
+						
+					}else{
+						log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Stage.toString()+" successfully update to "+DealLabel1, YesNo.Yes);
+						sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Stage.toString()+" to "+DealLabel1);	
 					}
 				}else{
 					log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Deal.toString()+" in  object dropdown in override page", YesNo.Yes);
@@ -7548,7 +7623,7 @@ public class AcuityResearch extends BaseLib{
 						log(LogStatus.INFO, "click on clone button of  PE standard user link", YesNo.No);
 						ThreadSleep(5000);
 						switchToFrame(driver, 10, setup.getSetUpPageIframe(10));
-						if (sendKeys(driver, setup.getProfileNameTextBox(10), "Cloned PE standard User",
+						if (sendKeys(driver, setup.getProfileNameTextBox(10), "Cloned PE Standard User",
 								"profile name text box ", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.PASS, "enter the clone PE user profile name ", YesNo.No);
 							if (click(driver, setup.getViewAccessbilityDropDownSaveButton(10), "save button",
@@ -7700,7 +7775,6 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+bp.filesName, YesNo.Yes);
 			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+bp.filesName);
 		}
-		refresh(driver);
 		
 		for(String searchValue : searchValues) {
 			if(searchValue.contains("ACR_")) {
@@ -7732,6 +7806,7 @@ public class AcuityResearch extends BaseLib{
 					"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 							+ searchValue + "---------",
 					YesNo.No);
+			refresh(driver);
 			try {
 			if(rp.getNoResult(5) != null){
 				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);

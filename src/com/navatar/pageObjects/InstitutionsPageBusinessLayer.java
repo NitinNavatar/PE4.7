@@ -310,7 +310,8 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 			for (String[] commitmentRowData : commitmentRowRecord) {
 				for (int i = 0; i < fundNamelist.size(); i++) {
 					String fund = fundNamelist.get(i).getText().trim();
-					String amount = commitmentAmountList.get(i).getText().trim();
+					String amount = Integer
+							.toString(Integer.parseInt(commitmentAmountList.get(i).getText().trim()) / 1000000);
 					String lp = LPList.get(i).getText().trim();
 
 					String CommitAmount = convertNumberAccordingToFormatWithCurrencySymbol(commitmentRowData[1],
@@ -1265,7 +1266,8 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 
 				if (finalLabelName.contains("Street") || finalLabelName.contains("City")
 						|| finalLabelName.contains("State") || finalLabelName.contains("Postal")
-						|| finalLabelName.contains("Zip") || finalLabelName.contains("Country")) {
+						|| finalLabelName.contains("Zip") || finalLabelName.contains("Country")
+						|| finalLabelName.contains("Postal Code")) {
 
 					if (finalLabelName.contains("Shipping") || finalLabelName.contains("Other Street")
 							|| finalLabelName.contains("Other City") || finalLabelName.contains("Other State")
@@ -1273,7 +1275,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 						xpath = "//span[text()='Shipping Address']/../following-sibling::div//a[contains(@title,'"
 								+ labelValue + "')]";
 					} else {
-						xpath = "//span[text()='Address']/../following-sibling::div//a[contains(@title,'" + labelValue
+						xpath = "//span[text()='Address']/parent::div/following-sibling::*//a/div[contains(text(),'" + labelValue
 								+ "')]";
 					}
 
@@ -1353,7 +1355,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 
 		if (finalLabelName.contains("Street") || finalLabelName.contains("City") || finalLabelName.contains("State")
 				|| finalLabelName.contains("Postal") || finalLabelName.contains("Zip")
-				|| finalLabelName.contains("Country")) {
+				|| finalLabelName.contains("Country") || finalLabelName.contains("Postal Code")) {
 
 			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 				CommonLib.refresh(driver);

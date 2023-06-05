@@ -225,7 +225,7 @@ public class FundsPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, roleDropDownList, "Visibility", timeOut, "Role DropDown List ");
 
 	}
-	
+
 	@FindBy(xpath = "//*[text()='Stage']/..//div//button")
 	private WebElement dealStageDropDownList;
 
@@ -291,33 +291,41 @@ public class FundsPage extends BasePageBusinessLayer {
 		}
 
 	}
-	@FindBy(xpath = "//label[text()='Company']/following-sibling::div//button")
+	@FindBy(xpath = "//label[text()='Company']/following-sibling::div//button/lightning-primitive-icon")
+
 	private WebElement CompanyCrossIcon;
 
 	public WebElement getCompanyCrossIcon(String projectName, int timeOut) {
 		return isDisplayed(driver, CompanyCrossIcon, "Visibility", timeOut, "CompanyCrossIcon");
 	}
+
 	@FindBy(xpath = "//label[text()='Platform Company']/following-sibling::div//button")
 	private WebElement PlatformCompanyCrossIcon;
 
 	public WebElement getPlatformCompanyCrossIcon(String projectName, int timeOut) {
 		return isDisplayed(driver, PlatformCompanyCrossIcon, "Visibility", timeOut, "Platform Company Cross Icon");
 	}
-	
+
 	@FindBy(xpath = "//label[text()='Legal Name']/following-sibling::div//button")
 	private WebElement LegalNameCrossIcon;
 
 	public WebElement getLegalNameCrossIcon(String projectName, int timeOut) {
 		return isDisplayed(driver, LegalNameCrossIcon, "Visibility", timeOut, "LegalNameCrossIcon");
 	}
-	
 
 	@FindBy(xpath = "//h2[text()='Delete Fund']/../..//button[@title='Delete']")
 	private WebElement deleteFundConfirmationMsg;
 
 	public WebElement getDeleteFundConfirmationMsg(int timeOut) {
-		return isDisplayed(driver, deleteFundConfirmationMsg, "Visibility", timeOut, "fund delete confirmation message");
+		return isDisplayed(driver, deleteFundConfirmationMsg, "Visibility", timeOut,
+				"fund delete confirmation message");
 	}
-	
-	
+
+	@FindBy(xpath = "//span[text()='Next']/parent::button")
+	private WebElement fundPageRecordTypeNextButton;
+
+	public WebElement fundPageRecordTypeNextButton(int timeOut) {
+		return isDisplayed(driver, fundPageRecordTypeNextButton, "Visibility", timeOut, "fundPageRecordTypeNextButton");
+	}
+
 }

@@ -958,20 +958,42 @@ public class Module9 extends BaseLib {
 							"------------Component Already Added to Home Page " + TitleOfSDG + "---------------");
 
 					CommonLib.ThreadSleep(8000);
-					if (home.verifySDGExpandByDefault(TitleOfSDG)) {
-						log(LogStatus.PASS, "-----------SDG: " + TitleOfSDG + " is Expanded By Default in case of "
-								+ Email + "--------------", YesNo.No);
-						sa.assertTrue(true, "-----------SDG: " + TitleOfSDG + " is Expanded By Default in case of "
-								+ Email + "--------------");
 
-					}
+					if (Email.equalsIgnoreCase(superAdminUserName)) {
+						if (!home.verifySDGExpandByDefault(TitleOfSDG)) {
+							log(LogStatus.PASS, "-----------Verified SDG: " + TitleOfSDG
+									+ " is not Expanded By Default in case of " + Email + "--------------", YesNo.No);
+							sa.assertTrue(true, "-----------Verified SDG: " + TitleOfSDG
+									+ " is not Expanded By Default in case of " + Email + "--------------");
 
-					else {
-						log(LogStatus.FAIL, "-----------SDG: " + TitleOfSDG + " is not Expanded By Default in case of "
-								+ Email + "--------------", YesNo.No);
-						sa.assertTrue(false, "-----------SDG: " + TitleOfSDG + " is not Expanded By Default in case of "
-								+ Email + "--------------");
+						}
 
+						else {
+							log(LogStatus.FAIL, "-----------SDG: " + TitleOfSDG + " is Expanded By Default in case of "
+									+ Email + "--------------", YesNo.No);
+							sa.assertTrue(false, "-----------SDG: " + TitleOfSDG + " is Expanded By Default in case of "
+									+ Email + "--------------");
+
+						}
+
+						home.sdgGridExpandedByDefaultIfNotThenExpand(TitleOfSDG);
+
+					} else {
+						if (home.verifySDGExpandByDefault(TitleOfSDG)) {
+							log(LogStatus.PASS, "-----------SDG: " + TitleOfSDG + " is Expanded By Default in case of "
+									+ Email + "--------------", YesNo.No);
+							sa.assertTrue(true, "-----------SDG: " + TitleOfSDG + " is Expanded By Default in case of "
+									+ Email + "--------------");
+
+						}
+
+						else {
+							log(LogStatus.FAIL, "-----------SDG: " + TitleOfSDG
+									+ " is not Expanded By Default in case of " + Email + "--------------", YesNo.No);
+							sa.assertTrue(false, "-----------SDG: " + TitleOfSDG
+									+ " is not Expanded By Default in case of " + Email + "--------------");
+
+						}
 					}
 
 					if (home.verifyGearIconPresentAndVerifyTooltip(TitleOfSDG)) {
@@ -1025,10 +1047,13 @@ public class Module9 extends BaseLib {
 				M9_TC005_SDGField5, M9_TC005_SDGField6, M9_TC005_SDGField7, M9_TC005_SDGField9 };
 		String[] datefieldsInSDG = { M9_TC005_SDGField5 };
 		String[] amountfieldsInSDG = { M9_TC005_SDGField9 };
+		String[] pickListFieldsAndValues = { M9_TC005_SDGField7
+				+ "<Section>North America<break><break>South America<break>Europe<break>Africa<break>Asia Pacific" };
 
 		List<String> columnInSDG = Arrays.asList(fieldsInSDG);
 		List<String> dateColumnInSDG = Arrays.asList(datefieldsInSDG);
 		List<String> amountColumnInSDG = Arrays.asList(amountfieldsInSDG);
+		List<String> pickListColumnAndValues = Arrays.asList(pickListFieldsAndValues);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
@@ -1089,7 +1114,7 @@ public class Module9 extends BaseLib {
 				}
 
 				home.verifyColumnAscendingDescendingOrder(TitleOfSDG, columnInSDG, dateColumnInSDG, amountColumnInSDG,
-						"No");
+						pickListColumnAndValues, "No");
 
 			} else {
 				log(LogStatus.ERROR, "-----------Component Not Added to Home Page: " + TitleOfSDG + " -------------",
@@ -6886,7 +6911,7 @@ public class Module9 extends BaseLib {
 																			appLog.info(
 																					tablename + " View All Clicked");
 																			CommonLib.ThreadSleep(5000);
-
+																			CommonLib.refresh(driver);
 																			int index = hp.getClonnedSDGColumns(30)
 																					.size() - 1;
 
@@ -7098,13 +7123,16 @@ public class Module9 extends BaseLib {
 		String pageSize = "100";
 		int expectedDefaultRecordsInUserCase = Integer.parseInt(numberOfRecords[1]);
 		String[] fieldsInSDG = { M9_TC005_SDGField1, M9_TC005_SDGField2, M9_TC005_SDGField3, M9_TC005_SDGField4,
-				M9_TC005_SDGField5, M9_TC005_SDGField6, M9_TC005_SDGField7 };
+				M9_TC005_SDGField5, M9_TC005_SDGField6, M9_TC005_SDGField7, M9_TC005_SDGField9 };
 		String[] datefieldsInSDG = { M9_TC005_SDGField5 };
 		String[] amountfieldsInSDG = { M9_TC005_SDGField9 };
-		List<String> amountColumnInSDG = Arrays.asList(amountfieldsInSDG);
+		String[] pickListFieldsAndValues = { M9_TC005_SDGField7
+				+ "<Section>North America<break><break>South America<break>Europe<break>Africa<break>Asia Pacific" };
 
 		List<String> columnInSDG = Arrays.asList(fieldsInSDG);
 		List<String> dateColumnInSDG = Arrays.asList(datefieldsInSDG);
+		List<String> amountColumnInSDG = Arrays.asList(amountfieldsInSDG);
+		List<String> pickListColumnAndValues = Arrays.asList(pickListFieldsAndValues);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
@@ -7186,7 +7214,7 @@ public class Module9 extends BaseLib {
 							YesNo.No);
 					CommonLib.ThreadSleep(25000);
 					home.verifyColumnAscendingDescendingOrder(TitleOfSDG, columnInSDG, dateColumnInSDG,
-							amountColumnInSDG, "No");
+							amountColumnInSDG, pickListColumnAndValues, "No");
 				} else {
 					log(LogStatus.FAIL, "-----------Not able to Select Page Size: " + pageSize + "--------------",
 							YesNo.No);
@@ -8035,6 +8063,16 @@ public class Module9 extends BaseLib {
 						driver.close();
 						driver.switchTo().window(parentWindowID);
 						CommonLib.refresh(driver);
+						if (setup.reOrderOfPickListValues(projectName, object.Firm, "Industry",
+								Condition.SelectCheckbox)) {
+							log(LogStatus.PASS, "Display Record Alphabetically for: " + "Industry"
+									+ " Field has Selected as: " + Condition.SelectCheckbox, YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "Display Record Alphabetically for: " + "Industry"
+									+ " Field not able to Select as: " + Condition.SelectCheckbox, YesNo.Yes);
+							sa.assertTrue(false, "Display Record Alphabetically for: " + "Industry"
+									+ " Field not able to Select as: " + Condition.SelectCheckbox);
+						}
 						lp.CRMlogout();
 						CommonLib.ThreadSleep(14000);
 
@@ -8815,9 +8853,85 @@ public class Module9 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		DataLoaderWizardPageBusinessLayer dataload = new DataLoaderWizardPageBusinessLayer(driver);
+		FieldAndRelationshipPageBusinessLayer frp = new FieldAndRelationshipPageBusinessLayer(driver);
 		String parentWindow = "";
 
 		String data;
+
+		String[][] labelAndValues = {
+
+				{ M9FC_13_FieldType, M9FC_13_FieldLabel, excelLabel.Length.toString(), M9FC_13_FieldValues,
+						M9FC_13_ObjectName }, };
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object Marketing Event");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object Marketing Event",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object Marketing Event");
+			}
+
+			WebElement ele = null;
+			String xPath = "";
+			if (setup.searchStandardOrCustomObject(environment, mode, object.User)) {
+				log(LogStatus.INFO, "User Object has been search", YesNo.No);
+
+				if (setup.clickOnObjectFeature(environment, mode, object.User,
+						ObjectFeatureName.FieldAndRelationShip)) {
+					log(LogStatus.INFO, "Field and relationship Feature has been open", YesNo.No);
+
+					if (CommonLib.sendKeysAndPressEnter(driver, frp.getQucikSearchInFieldAndRelationshipPage(50),
+							M9FC_13_FieldLabel, M9FC_13_FieldLabel + " field", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Field value has been passed in " + M9FC_13_FieldLabel, YesNo.No);
+						CommonLib.ThreadSleep(6000);
+						xPath = "//span[text()='" + M9FC_13_FieldLabel + "']";
+						ele = FindElement(driver, xPath, M9FC_13_FieldLabel + " xpath", action.SCROLLANDBOOLEAN, 30);
+
+						if (ele != null) {
+							log(LogStatus.INFO, "Field Already added, So not able to Add Field: " + M9FC_13_FieldLabel,
+									YesNo.No);
+							ThreadSleep(3000);
+							switchToDefaultContent(driver);
+							driver.close();
+							driver.switchTo().window(parentWindow);
+							lp.CRMlogout();
+						} else {
+							ThreadSleep(3000);
+							switchToDefaultContent(driver);
+							driver.close();
+							driver.switchTo().window(parentWindow);
+							lp.CRMlogout();
+
+							setup.createFieldsForCustomObject(projectName, labelAndValues);
+
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not able to pass the " + M9FC_13_FieldLabel + " in the searchbox",
+								YesNo.Yes);
+						sa.assertTrue(false, "Not able to pass the " + M9FC_13_FieldLabel + " in the searchbox");
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able click on the field and relationship Feature Name", YesNo.Yes);
+					sa.assertTrue(false, "Not able click on the field and relationship Feature Name");
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to search the object", YesNo.Yes);
+				sa.assertTrue(false, "Not able to search the object");
+			}
+
+		} else {
+			log(LogStatus.ERROR,
+					"Not able to click on setup link so cannot create Fields Objects for custom object Marketing Event",
+					YesNo.Yes);
+			sa.assertTrue(false,
+					"Not able to click on setup link so cannot create Fields Objects for custom object Marketing Event");
+		}
+
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (home.clickOnSetUpLink()) {
 			parentWindow = switchOnWindow(driver);
@@ -10876,7 +10990,7 @@ public class Module9 extends BaseLib {
 						"Location Preferences field Permission is not given from the Firm Object Manager for Intermediary Record Type");
 
 			}
-
+		}
 			CommonLib.switchToDefaultContent(driver);
 			ThreadSleep(2000);
 			driver.close();
@@ -11456,9 +11570,12 @@ public class Module9 extends BaseLib {
 						sa.assertTrue(false, "\"Website\" record is not updated to www.google.com");
 					}
 				}
+			} else {
+				log(LogStatus.FAIL, "One of the Permission not Given, SO not able to Continue further", YesNo.No);
+				sa.assertTrue(false, "One of the Permission not Given, SO not able to Continue further");
 			}
 
-		}
+		
 
 		lp.CRMlogout();
 		sa.assertAll();
@@ -12084,7 +12201,7 @@ public class Module9 extends BaseLib {
 				if (setup.addCustomFieldforFormula(environment, mode, objects[4],
 						ObjectFeatureName.FieldAndRelationShip, objects[0], objects[1], valuesandLabel, null, null)) {
 					log(LogStatus.PASS, "Field Object is created for :" + objects[1], YesNo.No);
-					sa.assertTrue(true, "Field Object is created for :" + objects[1]);
+
 				} else {
 					log(LogStatus.ERROR, "Field Object is not created for :" + objects[1], YesNo.Yes);
 					sa.assertTrue(false, "Field Object is not created for :" + objects[1]);

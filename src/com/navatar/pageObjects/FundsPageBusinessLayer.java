@@ -59,6 +59,11 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			return false;
 		}
 
+		if (fundPageRecordTypeNextButton(7) != null) {
+			if (click(driver, fundPageRecordTypeNextButton(7), "Fund Record Type Next Button", action.SCROLLANDBOOLEAN))
+				appLog.info("Clicked on Record Type Next Button");
+		}
+
 //		if (click(driver, getNewButton(environment, mode, 60), "New Button", action.BOOLEAN)) {
 		ThreadSleep(500);
 		if (sendKeys(driver, getFundName(projectName, 60), fundName, "Fund Name", action.BOOLEAN)) {
@@ -185,7 +190,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 					"//h3[text()='" + relatedList + "']/../../../../../following-sibling::div//th//a",
 					"related list all elements");
 		} else
-			ele = FindElements(driver, "//table//*[@data-label]//a//span", "list of all elements");
+			ele = FindElements(driver, "//table//tbody//tr/*[2]//a", "list of all elements");
 
 		if (ele.size() > 0) {
 			for (int i = 0; i < ele.size(); i++) {

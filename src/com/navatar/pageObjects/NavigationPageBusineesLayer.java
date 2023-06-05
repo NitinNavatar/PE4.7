@@ -277,7 +277,8 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 				String parentLabel = (String) iterator.next();
 				System.err.println("parentLabel>>>>>>>>> : " + parentLabel);
 				if (k == 0) {
-					xpath = "//div[contains(@id,'treeview')]//*//*[text()='" + parentLabel + "']";
+					
+					xpath =  "//div[@id=\"edgemenue\"]//*[text()=\"" + parentLabel + "\"]";
 					ele = FindElement(driver, xpath, parentLabel, action, timeOut);
 					if (ele != null) {
 						log(LogStatus.INFO, "1st Navigation Link Find " + parentLabel, YesNo.No);
@@ -290,7 +291,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 					}
 
 				} else {
-					xpath = xpath + "/ancestor::ul//*[text()='" + parentLabel + "']";
+					xpath = xpath + "//div[@id=\"edgemenue\"]//*[text()=\"" + parentLabel + "\"]";
 					ele = FindElement(driver, xpath, parentLabel, action, timeOut);
 					if (ele != null) {
 						log(LogStatus.INFO, "Navigation Link Find " + parentLabel, YesNo.No);
@@ -332,7 +333,11 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 //				if (click(driver, ele, parent, action)) {
 //					log(LogStatus.INFO, "Able to Click on Navigation Label : "+parent+" so going to check child label : "+parentwithChild.get(parent), YesNo.No);
 //					ThreadSleep(2000);
+				
 				for (int i = 0; i < childs.length; i++) {
+					
+					
+					//li[text()='Firm']/following-sibling::li//span[@class='indent']/ancestor::li[text()='Intermediary']
 					xpath = "//div[@id=\"edgemenue\"]//*[text()=\"" + parent + "\"]";
 					xpath = xpath + "/following-sibling::li//span[contains(@class,\"indent\")]/parent::li[text()=\""
 							+ childs[i] + "\"]";
@@ -579,9 +584,11 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		String navigationField;
 		String navigationvalue;
 		WebElement ele;
+		clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Edit, 20);
 		for (String[] navigationFieldAndvalue : navigationFieldWithValues) {
 			navigationField = navigationFieldAndvalue[0];
 			navigationvalue = navigationFieldAndvalue[1];
+			
 			ele = getNavigationField(projectName, navigationField, action, 20);
 
 			if (navigationField.equalsIgnoreCase(CSVLabel.Navigation_Type.toString())) {
