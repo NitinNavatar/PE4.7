@@ -1765,7 +1765,7 @@ public class Module7New extends BaseLib {
 						click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
 						ThreadSleep(3000);
 						if (j == 0) {
-							expectedValue = M7NEvent3EndDate;
+							expectedValue = M7NEvent2EndDate;
 						} else {
 							expectedValue = M7NEvent2EndDate;
 						}
@@ -3359,16 +3359,18 @@ public class Module7New extends BaseLib {
 		}
 
 		M7NEvent9EndDate = previousOrForwardDate(+1, "M/d/YYYY");
+		CommonLib.ThreadSleep(40000);
 		if (home.globalSearchAndEditTaskorCall(task, "Events", false)) {
 
 			log(LogStatus.INFO, "-----Verified Event named: " + task + " found and Edit in Event Object-----",
 					YesNo.No);
 
-			sendKeys(driver, gp.getLabelTextBoxForGobalAction(projectName, GlobalActionItem.New_Event,
-					PageLabel.End_Time.toString(), 20), "11:30 PM", "End Time", action.BOOLEAN);
 			if (sendKeys(driver, gp.getLabelTextBoxForGobalAction(projectName, GlobalActionItem.New_Event,
 					PageLabel.End_Date.toString(), 20), M7NEvent9EndDate, "End Date", action.BOOLEAN)) {
 				log(LogStatus.INFO, "Value Entered to Due Date " + M7NEvent9EndDate, YesNo.No);
+				ThreadSleep(4000);
+				sendKeys(driver, gp.getLabelTextBoxForGobalAction(projectName, GlobalActionItem.New_Event,
+						PageLabel.End_Time.toString(), 20), "11:30 PM", "End Time", action.BOOLEAN);
 				ele = gp.getLabelTextBoxForGobalAction(projectName, GlobalActionItem.New_Event,
 						PageLabel.Subject.toString(), 20);
 				click(driver, ele, "", action.BOOLEAN);
@@ -3985,7 +3987,7 @@ public class Module7New extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void M7NTc041_EllinaBingContactWithTier1andVerifyLastTouchPointandNextTouchPointDate(String projectName) {
+	public void M7NTc041_1_EllinaBingContactWithTier1andVerifyLastTouchPointandNextTouchPointDate(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4051,7 +4053,7 @@ public class Module7New extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void M7NTc041_1_EllinaBingContactWithCallandVerifyLastTouchPointandNextTouchPointDate(String projectName) {
+	public void M7NTc041_2_EllinaBingContactWithCallandVerifyLastTouchPointandNextTouchPointDate(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4255,7 +4257,8 @@ public class Module7New extends BaseLib {
 		M7NEvent10EndDate = previousOrForwardDate(+3, "M/d/YYYY");
 		String task = M7NEvent10Subject;
 		String[][] Event4 = { { PageLabel.Start_Date.toString(), M7NEvent10StartDate },
-				{ PageLabel.End_Date.toString(), M7NEvent10EndDate }, { PageLabel.Subject.toString(), task } };
+				{ PageLabel.End_Date.toString(), M7NEvent10EndDate }, { PageLabel.Subject.toString(), task },
+				{ PageLabel.Name.toString(), contactName } };
 
 		if (lp.clickAnyCellonCalender(projectName)) {
 			log(LogStatus.INFO, "Able to click on Calendar/Event Link", YesNo.No);
@@ -4349,7 +4352,8 @@ public class Module7New extends BaseLib {
 		M7NEvent11EndDate = previousOrForwardDate(+2, "M/d/YYYY");
 		String task = M7NEvent11Subject;
 		String[][] Event4 = { { PageLabel.Start_Date.toString(), M7NEvent11StartDate },
-				{ PageLabel.End_Date.toString(), M7NEvent11EndDate }, { PageLabel.Subject.toString(), task } };
+				{ PageLabel.End_Date.toString(), M7NEvent11EndDate }, { PageLabel.Subject.toString(), task },
+				{ PageLabel.Name.toString(), contactName } };
 
 		if (lp.clickAnyCellonCalender(projectName)) {
 			log(LogStatus.INFO, "Able to click on Calendar/Event Link", YesNo.No);
@@ -4756,7 +4760,7 @@ public class Module7New extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void M7NTc049_Update4contactswithtier123andnoneAndVerifyVerifyLastTouchPointandNextTouchPointDate(
+	public void M7NTc049_1_Update4contactswithtier123andnoneAndVerifyVerifyLastTouchPointandNextTouchPointDate(
 			String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -4975,7 +4979,7 @@ public class Module7New extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void M7NTc049_1_Update4contactswithEventAndVerifyVerifyLastTouchPointandNextTouchPointDate(
+	public void M7NTc049_2_Update4contactswithEventAndVerifyVerifyLastTouchPointandNextTouchPointDate(
 			String projectName) {
 		GlobalActionPageBusinessLayer gp = new GlobalActionPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -5398,7 +5402,7 @@ public class Module7New extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void M7NTc052_UpdateJamesContactswithtier1andAndVerifyVerifyLastTouchPointandNextTouchPointDate(
+	public void M7NTc052_1_UpdateJamesContactswithtier1andAndVerifyVerifyLastTouchPointandNextTouchPointDate(
 			String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -5465,7 +5469,7 @@ public class Module7New extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void M7NTc052_1_UpdateJamesContactswithEventandAndVerifyVerifyLastTouchPointandNextTouchPointDate(
+	public void M7NTc052_2_UpdateJamesContactswithEventandAndVerifyVerifyLastTouchPointandNextTouchPointDate(
 			String projectName) {
 		GlobalActionPageBusinessLayer gp = new GlobalActionPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -5552,7 +5556,7 @@ public class Module7New extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void M7NTc053_UpdateTerryContactswithtier1andAndVerifyVerifyLastTouchPointandNextTouchPointDate(
+	public void M7NTc053_1_UpdateTerryContactswithtier1andAndVerifyVerifyLastTouchPointandNextTouchPointDate(
 			String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -5619,7 +5623,7 @@ public class Module7New extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void M7NTc053_1_UpdateTerryContactswithEventandAndVerifyVerifyLastTouchPointandNextTouchPointDate(
+	public void M7NTc053_2_UpdateTerryContactswithEventandAndVerifyVerifyLastTouchPointandNextTouchPointDate(
 			String projectName) {
 		GlobalActionPageBusinessLayer gp = new GlobalActionPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);

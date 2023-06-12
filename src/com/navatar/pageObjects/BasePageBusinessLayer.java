@@ -2728,9 +2728,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		} else if (projectName.contains(ProjectName.PEEdge.toString()) && PageLabel.Account_Name.equals(pageLabel)) {
 			label = "Firm";
 		}
-		
 
-		WebElement ele1 = getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+		CommonLib.refresh(driver);
+		WebElement ele1 = getRelatedTab(projectName, RelatedTab.Details.toString(), 20);
 		click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
 		ThreadSleep(5000);
 		xpath = "//span[text()='" + label + "']/../following-sibling::div//*[text()='" + labelValue + "']";
@@ -2756,7 +2756,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 *              on page and passed
 	 */
 	public boolean verifyDate(String dateToCheck, String valueOnPage) {
-		
+
 		String[] splittedDate = dateToCheck.split("/");
 		char dayMonth = splittedDate[0].charAt(0);
 		char day = splittedDate[1].charAt(0);
@@ -2774,7 +2774,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 		dateToCheck = month + "/" + finalDay + "/" + splittedDate[2];
-		
+
 		int size1 = valueOnPage.split("/").length;
 		int size2 = 0;
 		if (dateToCheck.contains(".")) {
@@ -2792,7 +2792,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				values = dateToCheck.split("/");
 
 			}
-			
 
 			appLog.info("Excel Date : " + dateToCheck);
 			appLog.info("Page Date : " + valueOnPage);
@@ -2911,6 +2910,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return false;
 	}
+
 	/**
 	 * @author Akul Bhutani
 	 * @param projectName
@@ -2972,8 +2972,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			log(LogStatus.INFO, "successfully click on list view", YesNo.No);
 			if (click(driver, getnewButtonListView(projectName, timeOut), "new ", action.BOOLEAN)) {
 				log(LogStatus.INFO, "successfully click on new buton", YesNo.No);
-				if (sendKeys(driver, getlistNameTextBox(projectName, "List Name", timeOut), "All",
-						"list name", action.SCROLLANDBOOLEAN)) {
+				if (sendKeys(driver, getlistNameTextBox(projectName, "List Name", timeOut), "All", "list name",
+						action.SCROLLANDBOOLEAN)) {
 					if (sendKeysWithoutClearingTextBox(driver,
 							getlistNameTextBox(projectName, "List API Name", timeOut), "", "list name",
 							action.SCROLLANDBOOLEAN)) {
@@ -3002,6 +3002,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return false;
 	}
+
 	/**
 	 * @author Akul Bhutani
 	 * @param projectName
@@ -3619,7 +3620,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		WebElement ele;
 		String related = relatedTab.toString().replace("_", " ");
 		if (projectName.contains(ProjectName.PE.toString()))
-	xpath = "//ul[@role='presentation']//span[text()='"+related+"']/ancestor::a";
+			xpath = "//ul[@role='presentation']//span[text()='" + related + "']/ancestor::a";
 		else
 			xpath = "//li//*[@title='" + related + "' or text()='" + related + "']";
 
@@ -3673,7 +3674,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			xpath = "//button[@title='" + toggleTab + "']";
 
 		}
-		
+
 //		xpath = "//div[@class='slds-tabs_card']//div[@class='navpeIISdgBase navpeIISdg']//a[@title='" + toggleTab + "'or text()='" + toggleTab + "']";
 //	} else {
 //		xpath = "//*[@name='subheader']//div[@class='navpeIISdgBase navpeIISdg']//a[@title='" + toggleTab + "'or text()='" + toggleTab + "']";
@@ -3684,7 +3685,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : " + btname);
 		return ele;
 	}
-	
+
 	public WebElement toggleSDGButtons2(String projectName, String toggleTab, ToggleButtonGroup btnName, action action,
 			boolean isInside, int timeOut) {
 		String btname = btnName.toString();
@@ -3696,20 +3697,20 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 //			xpath = "//button[@title='" + toggleTab + "']";
 //
 //		}
-		
-		xpath = "//div[@class='slds-tabs_card']//div[@class='navpeIISdgBase navpeIISdg']//a[@title='" + toggleTab + "'or text()='" + toggleTab + "']";
-	} else {
-		xpath = "//*[@name='subheader']//div[@class='navpeIISdgBase navpeIISdg']//a[@title='" + toggleTab + "'or text()='" + toggleTab + "']";
 
-	}
+			xpath = "//div[@class='slds-tabs_card']//div[@class='navpeIISdgBase navpeIISdg']//a[@title='" + toggleTab
+					+ "'or text()='" + toggleTab + "']";
+		} else {
+			xpath = "//*[@name='subheader']//div[@class='navpeIISdgBase navpeIISdg']//a[@title='" + toggleTab
+					+ "'or text()='" + toggleTab + "']";
+
+		}
 		WebElement ele = FindElement(driver, xpath, toggleTab + " >> " + btname, action, timeOut);
 		scrollDownThroughWebelement(driver, ele, "Toggle Button : " + btname);
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : " + btname);
 		return ele;
 	}
-	
-	
-	
+
 	public WebElement toggleSDGButtons1(String projectName, String toggleTab, ToggleButtonGroup btnName, action action,
 			boolean isInside, int timeOut) {
 		String btname = btnName.toString();
@@ -3726,7 +3727,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : " + btname);
 		return ele;
 	}
-
 
 	/**
 	 * @author Azhar Alam
@@ -4467,7 +4467,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return flag;
 	}
-	
+
 	public boolean dragNDropSDG(String ActiveDealToggleButton) {
 		boolean flag = false;
 
@@ -15495,7 +15495,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return result;
 	}
-	
+
 	public ArrayList<String> verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection1(
 			String InteractionSectionmessage, List<String> contactsSectionHeaderName,
 			String contactsSectionHeaderMessage, List<String> dealsSectionHeaderName, String dealsSectionHeaderMessage,
@@ -15617,41 +15617,41 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		}
 		if (!connectionsSectionHeaderName.isEmpty()) {
-				ArrayList<String> actualConnectionsSectionHeaderName = new ArrayList<String>();
-				xPath = "(//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//tr)[1]//span[@class='slds-truncate' and @title!='']";
-				elements = FindElements(driver, xPath, "Connections section headers");
-				for (WebElement el : elements) {
-					actualConnectionsSectionHeaderName
-							.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
+			ArrayList<String> actualConnectionsSectionHeaderName = new ArrayList<String>();
+			xPath = "(//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//tr)[1]//span[@class='slds-truncate' and @title!='']";
+			elements = FindElements(driver, xPath, "Connections section headers");
+			for (WebElement el : elements) {
+				actualConnectionsSectionHeaderName
+						.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
+			}
+			xPath = "(//span[contains(@title,'Connection')]/ancestor::div[@class='slds-m-bottom_xx-small']//tr)[1]//lightning-icon";
+			elements = FindElements(driver, xPath, "Connections section headers");
+			for (WebElement el : elements) {
+				actualConnectionsSectionHeaderName
+						.add(getAttribute(driver, el, "Connections section headers", "title"));
+			}
+
+			for (int i = 0; i < connectionsSectionHeaderName.size(); i++) {
+				int k = 0;
+				for (int j = 0; j < actualConnectionsSectionHeaderName.size(); j++) {
+					if (connectionsSectionHeaderName.get(i)
+							.equalsIgnoreCase(actualConnectionsSectionHeaderName.get(j))) {
+						log(LogStatus.INFO,
+								"Expected header name: " + connectionsSectionHeaderName.get(i)
+										+ " has been matched with Actual header name: "
+										+ actualConnectionsSectionHeaderName.get(j) + " on connection section",
+								YesNo.No);
+						k++;
+					}
 				}
-				xPath = "(//span[contains(@title,'Connection')]/ancestor::div[@class='slds-m-bottom_xx-small']//tr)[1]//lightning-icon";
-				elements = FindElements(driver, xPath, "Connections section headers");
-				for (WebElement el : elements) {
-					actualConnectionsSectionHeaderName
-							.add(getAttribute(driver, el, "Connections section headers", "title"));
+				if (k == 0) {
+					log(LogStatus.ERROR, "Expected header name: " + connectionsSectionHeaderName.get(i)
+							+ " is not matched with Actual header name on connection section", YesNo.No);
+					result.add("Expected header name: " + connectionsSectionHeaderName.get(i)
+							+ " is not matched with Actual header name on connection section");
 				}
 
-				for (int i = 0; i < connectionsSectionHeaderName.size(); i++) {
-					int k = 0;
-					for (int j = 0; j < actualConnectionsSectionHeaderName.size(); j++) {
-						if (connectionsSectionHeaderName.get(i)
-								.equalsIgnoreCase(actualConnectionsSectionHeaderName.get(j))) {
-							log(LogStatus.INFO,
-									"Expected header name: " + connectionsSectionHeaderName.get(i)
-											+ " has been matched with Actual header name: "
-											+ actualConnectionsSectionHeaderName.get(j) + " on connection section",
-									YesNo.No);
-							k++;
-						}
-					}
-					if (k == 0) {
-						log(LogStatus.ERROR, "Expected header name: " + connectionsSectionHeaderName.get(i)
-								+ " is not matched with Actual header name on connection section", YesNo.No);
-						result.add("Expected header name: " + connectionsSectionHeaderName.get(i)
-								+ " is not matched with Actual header name on connection section");
-					}
-
-				}
+			}
 		}
 
 		if (connectionsSectionHeaderMessage != null && !"".equals(connectionsSectionHeaderMessage)) {
@@ -15858,39 +15858,39 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 //					action.SCROLLANDBOOLEAN)) {
 //				log(LogStatus.INFO, "Clicked on internal button", YesNo.No);
 
-				ArrayList<String> actualTooltip = new ArrayList<String>();
+			ArrayList<String> actualTooltip = new ArrayList<String>();
 
-				xPath = "(//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//tr)[1]//span[@class='slds-truncate' and @title!='']";
-				elements = FindElements(driver, xPath, "Connections section headers");
+			xPath = "(//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//tr)[1]//span[@class='slds-truncate' and @title!='']";
+			elements = FindElements(driver, xPath, "Connections section headers");
 
-				for (WebElement el : elements) {
-					actualTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
-				}
+			for (WebElement el : elements) {
+				actualTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
+			}
 
-				xPath = "(//span[contains(@title,'Connection')]/ancestor::div[@class='slds-m-bottom_xx-small']//tr)[1]//lightning-icon";
-				elements = FindElements(driver, xPath, "Connections section headers");
-				for (WebElement el : elements) {
-					actualTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
-				}
+			xPath = "(//span[contains(@title,'Connection')]/ancestor::div[@class='slds-m-bottom_xx-small']//tr)[1]//lightning-icon";
+			elements = FindElements(driver, xPath, "Connections section headers");
+			for (WebElement el : elements) {
+				actualTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
+			}
 
-				for (int i = 0; i < connectionsSectionHeaderTooltip.size(); i++) {
-					int k = 0;
-					for (int j = 0; j < actualTooltip.size(); j++) {
-						if (connectionsSectionHeaderTooltip.get(i).equals(actualTooltip.get(j))) {
-							log(LogStatus.INFO,
-									"Expected header tooltip " + connectionsSectionHeaderTooltip.get(i)
-											+ " have been verified with actual header tooltip " + actualTooltip.get(j),
-									YesNo.No);
-							k++;
-						}
-					}
-					if (k == 0) {
-						log(LogStatus.ERROR, "Expected header tooltip " + connectionsSectionHeaderTooltip.get(i)
-								+ " is not matched with the acutual tooltip", YesNo.No);
-						result.add("Expected header tooltip " + connectionsSectionHeaderTooltip.get(i)
-								+ " is not matched with the acutual tooltip");
+			for (int i = 0; i < connectionsSectionHeaderTooltip.size(); i++) {
+				int k = 0;
+				for (int j = 0; j < actualTooltip.size(); j++) {
+					if (connectionsSectionHeaderTooltip.get(i).equals(actualTooltip.get(j))) {
+						log(LogStatus.INFO,
+								"Expected header tooltip " + connectionsSectionHeaderTooltip.get(i)
+										+ " have been verified with actual header tooltip " + actualTooltip.get(j),
+								YesNo.No);
+						k++;
 					}
 				}
+				if (k == 0) {
+					log(LogStatus.ERROR, "Expected header tooltip " + connectionsSectionHeaderTooltip.get(i)
+							+ " is not matched with the acutual tooltip", YesNo.No);
+					result.add("Expected header tooltip " + connectionsSectionHeaderTooltip.get(i)
+							+ " is not matched with the acutual tooltip");
+				}
+			}
 //			} else {
 //				log(LogStatus.ERROR, "Not able to click on internal tab", YesNo.No);
 //				result.add("Not able to click on internal tab");
@@ -25019,7 +25019,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (temp.length() > 0) {
 			tempList.add(temp);
 		}
-		
 
 		for (String splittedNote : tempList) {
 
