@@ -156,7 +156,7 @@ public class ThemePageBusinessLayer extends ThemePage {
 		ele = null;
 
 		refresh(driver);
-		ThreadSleep(5000);
+		ThreadSleep(8000);
 
 		if (sendKeys(driver, getSearchIcon(10), alreadyCreated + "\n", "Search Icon Text", action.SCROLLANDBOOLEAN)) {
 			ThreadSleep(5000);

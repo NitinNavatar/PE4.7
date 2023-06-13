@@ -1418,10 +1418,16 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case TestCustomObjectTab:
 			viewList = "Automation All";
 			break;
+		case ThemesTab:
+			viewList = "All";
+			break;
 		case CompaniesTab:
 			viewList = "All Companies";
 			break;
 		case Navigation:
+			viewList = "All";
+			break;
+		case FundraisingsTab:
 			viewList = "All";
 			break;
 		case ContactTab:

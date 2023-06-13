@@ -6537,7 +6537,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 			xpath = "//th//a[text()='" + profileForSelection + "']";
 			ele = FindElement(driver, xpath, profileForSelection, action.SCROLLANDBOOLEAN, 10);
 			ele = isDisplayed(driver, ele, "visibility", 10, profileForSelection);
-			if (click(driver, ele, profileForSelection.toString(), action.BOOLEAN)) {
+			if (clickUsingJavaScript(driver, ele, profileForSelection.toString(), action.BOOLEAN)) {
 				log(LogStatus.INFO, "able to click on " + profileForSelection, YesNo.No);
 				ThreadSleep(2000);
 				switchToDefaultContent(driver);
@@ -6547,7 +6547,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 				xpath = "//td[@id='topButtonRow']//input[@title='Edit']";
 				ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, 10);
 				// ele = isDisplayed(driver, ele, "visibility", 10, "Edit Button");
-				if (click(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
+				if (clickUsingJavaScript(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO,
 							"able to click on edit button for " + profileForSelection + " Profiles settiing", YesNo.No);
 					switchToDefaultContent(driver);
@@ -6569,13 +6569,13 @@ public class SetupPageBusinessLayer extends SetupPage {
 								if (isSelected(driver, ele, "")) {
 									// alreday checked
 								} else {
-									if (click(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
+									if (clickUsingJavaScript(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.INFO, "able to click on checkbox for edit ", YesNo.No);
 										switchToDefaultContent(driver);
 										ThreadSleep(5000);
 										switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
 										switchToFrame(driver, 60, getSetUpPageIframe(60));
-										ThreadSleep(2000);
+										ThreadSleep(5000);
 									} else {
 										log(LogStatus.ERROR,
 												"not able to click on edit button for record : " + objects[i],
@@ -6609,9 +6609,13 @@ public class SetupPageBusinessLayer extends SetupPage {
 						}
 
 					}
+					ThreadSleep(5000);
+					switchToFrame(driver, 60, getSetUpPageIframe(60));
 					if (click(driver, getViewAccessbilityDropDownSaveButton(10), "save button", action.BOOLEAN)) {
 						log(LogStatus.INFO, "save button", YesNo.No);
-						recordTypeVerificationForProfiles(objects, status);
+						for (int k = 0; k < permissionTypes.length; k++) {
+						recordTypeVerificationForProfiles(objects, status, permissionTypes[k]);
+						}
 						return true;
 
 					} else {
@@ -6634,7 +6638,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return flag;
 	}
 
-	public boolean recordTypeVerificationForProfiles(String[] labels, String status) {
+	public boolean recordTypeVerificationForProfiles(String[] labels, String status, String permissionTypes) {
 		String xpath = "";
 		WebElement ele;
 		boolean flag = false;
@@ -6644,8 +6648,10 @@ public class SetupPageBusinessLayer extends SetupPage {
 		for (String labelValue : labels) {
 			// xpath = "//*[text()='" + labelValue[0] +
 			// "']/..//following-sibling::td[text()='" + labelValue[1] + "']";
-			xpath = "//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='" + labelValue
-					+ "s']/..//img[contains(@id,'" + labelValue + "') and (@alt ='" + status + "')]";
+//			xpath = "//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='" + labelValue
+//					+ "s']/..//img[contains(@id,'" + labelValue + "') and (@alt ='" + status + "')]";
+			xpath = "(//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='"
+					+ labelValue + "s']/../td)[1]//img[@alt='"+ status +"' and contains(@id,'"+ permissionTypes +"')]";
 			ele = FindElement(driver, xpath, labelValue + " with Value " + status, action.BOOLEAN, 10);
 			if (ele != null) {
 				log(LogStatus.PASS, labelValue + " with Value " + status + " verified", YesNo.No);
