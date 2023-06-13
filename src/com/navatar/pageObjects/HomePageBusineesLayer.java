@@ -1373,7 +1373,7 @@ public class HomePageBusineesLayer extends HomePage {
 		switchToFrame(driver, 30, getCreateFundraisingsFrame_Lighting(20));
 		String SmokeReportFolderName = reportName;
 		String SmokeReportName = templateName;
-		if (hp.clickOnTemplateForReportOnBulkEmail(environment, mode, SmokeReportName,SmokeReportFolderName)) {
+		if (hp.clickOnTemplateForReportOnBulkEmail(environment, mode, SmokeReportName, SmokeReportFolderName)) {
 			log(LogStatus.INFO, "Clicked On " + SmokeReportFolderName + " : " + SmokeReportName, YesNo.No);
 			List<String> result = hp.selectContactAndVerifyInBulkEmail(environment, mode, fname, lname,
 					contactSearchValue, searchContactInEmailProspectGrid, 10);
@@ -5915,6 +5915,10 @@ public class HomePageBusineesLayer extends HomePage {
 		if (click(driver, globalSearchButton(20), "globalSearchButton", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on globalSearchButton", YesNo.No);
 			CommonLib.ThreadSleep(1000);
+			if (globalSearchInput(7) == null) {
+				click(driver, globalSearchButton(20), "globalSearchButton", action.SCROLLANDBOOLEAN);
+				CommonLib.ThreadSleep(1000);
+			}
 			if (sendKeysAndPressEnter(driver, globalSearchInput(20), recordName, "globalSearchInput",
 					action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Pass the Value to Input Box: " + recordName, YesNo.No);
@@ -6146,6 +6150,10 @@ public class HomePageBusineesLayer extends HomePage {
 		if (click(driver, globalSearchButton(20), "globalSearchButton", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on globalSearchButton", YesNo.No);
 			CommonLib.ThreadSleep(1000);
+			if (globalSearchInput(7) == null) {
+				click(driver, globalSearchButton(20), "globalSearchButton", action.SCROLLANDBOOLEAN);
+				CommonLib.ThreadSleep(1000);
+			}
 			if (sendKeysAndPressEnter(driver, globalSearchInput(20), recordName, "globalSearchInput",
 					action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Pass the Value to Input Box: " + recordName, YesNo.No);
@@ -6357,6 +6365,12 @@ public class HomePageBusineesLayer extends HomePage {
 		if (click(driver, globalSearchButton(20), "globalSearchButton", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on globalSearchButton", YesNo.No);
 			CommonLib.ThreadSleep(1000);
+
+			if (globalSearchInput(7) == null) {
+				click(driver, globalSearchButton(20), "globalSearchButton", action.SCROLLANDBOOLEAN);
+				CommonLib.ThreadSleep(1000);
+			}
+
 			if (sendKeysAndPressEnter(driver, globalSearchInput(20), recordName, "globalSearchInput",
 					action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Pass the Value to Input Box: " + recordName, YesNo.No);

@@ -605,8 +605,6 @@ public class HomePage extends BasePageBusinessLayer {
 		return isDisplayed(driver, placementFeeTextBox, "Visibility", timeOut, "placement fee text box");
 	}
 
-
-
 	@FindBy(xpath = "//div[contains(@class,'windowViewMode-normal')]//iframe[@title='accessibility title']")
 
 	private WebElement createCommitmentFrame_Lightning;
@@ -2536,9 +2534,7 @@ public class HomePage extends BasePageBusinessLayer {
 
 		String xpath = "//*/span/a[text()=\"" + recordName + "\"][not(contains(@data-aura-class,\"uiOutputURL\"))]";
 		try {
-			return isDisplayed(driver,
-					FindElement(driver, xpath, "Text Found: " + recordName, action.SCROLLANDBOOLEAN, timeOut),
-					"Visibility", timeOut, "textToSearch");
+			return FindElement(driver, xpath, "Text Found: " + recordName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
 			return isDisplayed(driver,
 					FindElement(driver, xpath, "Text Found: " + recordName, action.SCROLLANDBOOLEAN, timeOut),
