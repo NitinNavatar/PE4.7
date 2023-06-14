@@ -5321,7 +5321,7 @@ public class AcuityResearch extends BaseLib{
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	
 	String profileForSelection = "PE Standard User";
-	String parentID=null, objects[] ={"Fund","Contact","Theme","Clip"}, permissionTypes[] = {"Read","Create","Edit","Delete"}, status = "Not Checked";
+	String parentID=null, objects[] ={"Fund","Contact","Theme","Clip"}, permissionTypes[] = {"Read","Create","Update","Delete"}, status = "Not Checked";
 	boolean flag = false;
 	
 	switchToDefaultContent(driver);
@@ -5458,7 +5458,7 @@ public class AcuityResearch extends BaseLib{
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	
 	String profileForSelection = "PE Standard User";
-	String parentID=null, objects[] ={"Fund","Contact","Theme","Clip"}, permissionTypes[] = {"Read","Create","Edit","Delete"}, status = "Checked";
+	String parentID=null, objects[] ={"Fund","Contact","Theme","Clip"}, permissionTypes[] = {"Read","Create","Update","Delete"}, status = "Checked";
 	boolean flag = false;
 	
 	switchToDefaultContent(driver);
@@ -5468,11 +5468,11 @@ public class AcuityResearch extends BaseLib{
 		if (parentID!=null) {
 			ThreadSleep(2000);
 			if(sp.giveAndRemoveObjectPermissionFromProfiles(profileForSelection,objects,permissionTypes,status)) {
-				log(LogStatus.PASS,"Remove Permission from Contact Object", YesNo.No);
+				log(LogStatus.PASS,"Add Permission from Contact Object", YesNo.No);
 				flag=true;
 			}else {
-				log(LogStatus.ERROR,"Not able to remove permission from" + objects + "Object", YesNo.Yes);
-				sa.assertTrue(false, "Not able to remove permission from" + objects + "Object");
+				log(LogStatus.ERROR,"Not able to add permission from" + objects + "Object", YesNo.Yes);
+				sa.assertTrue(false, "Not able to add permission from" + objects + "Object");
 			}
 	
 			driver.close();
@@ -5926,11 +5926,11 @@ public class AcuityResearch extends BaseLib{
 		ThreadSleep(2000);
 			if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
 				if (cp.clickOnCreatedContact(projectName, contactName[0], contactName[1])) {
-					if (isDisplayed(driver, cp.getPhoneFieldOnContactPage(10), "Visibility", 10, "Phone") != null) {
-						log(LogStatus.PASS, "Phone Field is visible", YesNo.Yes);
+					if (isDisplayed(driver, cp.getPhoneFieldOnContactPage(10), "Visibility", 10, "Phone") == null) {
+						log(LogStatus.PASS, "Phone Field is not visible", YesNo.Yes);
 					} else {
-						log(LogStatus.ERROR, "Phone Field is not visible", YesNo.Yes);
-						sa.assertTrue(false, "Phone Field is not visible");
+						log(LogStatus.ERROR, "Phone Field is visible", YesNo.Yes);
+						sa.assertTrue(false, "Phone Field is visible");
 					}
 				}
 
@@ -6050,13 +6050,13 @@ public class AcuityResearch extends BaseLib{
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	String parentWindow = "", contactFields[] = {"Description","Account Name"}, dealFields[] = {"Stage","Pipeline Comments"}, fundraisingFields[] = {"Status Notes","Legal Name"};
-	String[] varibles = {"AR_Up27","AR_Up28","AR_Up57"};
+	String[] varibles = {"AR_Up57","AR_Up28","AR_Up27"};
 	String varibale27 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
 	String varibale28 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, varibles[1], excelLabel.Name);
 	String varibale57 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, varibles[2], excelLabel.Name);
 
-	String[] searchValues = {varibale27,varibale28,varibale57};
-	String ele, headerName;
+	String[] searchValues = {varibale57,varibale28,varibale27};
+	String ele;
 
 	
 	if (home.clickOnSetUpLink()) {
@@ -6314,7 +6314,7 @@ public class AcuityResearch extends BaseLib{
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	String parentWindow = "", contactFields[] = {"Description","Account Name"}, dealFields[] = {"Stage","Pipeline Comments"}, fundraisingFields[] = {"Status Notes","Legal Name"};
-	String[] varibles = {"AR_Up27","AR_Up281"};
+	String[] varibles = {"AR_Up27","AR_Up28"};
 	String varibale27 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
 	String varibale281 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, varibles[1], excelLabel.Name);
 

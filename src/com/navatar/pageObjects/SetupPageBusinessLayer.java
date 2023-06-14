@@ -6559,7 +6559,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 							// xpath = "(//h3[contains(text(),'Object
 							// Permissions')]/..//following-sibling::div//th[text()='"+objects[i]+"']/..//input)[1]";
 							xpath = "//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='"
-									+ objects[i] + "s']/..//input[contains(@title,'" + permissionTypes[j] + " "
+									+ objects[i] + "s']/..//input[contains(@name,'" + permissionTypes[j] + "') and contains(@title,'"
 									+ objects[i] + "s')]";
 							//xpath = "(//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='"+ objects[i] + "s']/following-sibling::td)[1]//img[@alt='"+ permissionTypes[j] +"')]";
 							ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, 10);
@@ -6611,12 +6611,14 @@ public class SetupPageBusinessLayer extends SetupPage {
 					}
 					ThreadSleep(5000);
 					switchToFrame(driver, 60, getSetUpPageIframe(60));
+					ThreadSleep(5000);
 					if (click(driver, getViewAccessbilityDropDownSaveButton(10), "save button", action.BOOLEAN)) {
 						log(LogStatus.INFO, "save button", YesNo.No);
+						flag = true;
 						for (int k = 0; k < permissionTypes.length; k++) {
 						recordTypeVerificationForProfiles(objects, status, permissionTypes[k]);
 						}
-						return true;
+						flag = true;
 
 					} else {
 						log(LogStatus.ERROR, "Not able to click on save button", YesNo.Yes);
@@ -6651,7 +6653,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 //			xpath = "//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='" + labelValue
 //					+ "s']/..//img[contains(@id,'" + labelValue + "') and (@alt ='" + status + "')]";
 			xpath = "(//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='"
-					+ labelValue + "s']/../td)[1]//img[@alt='"+ status +"' and contains(@id,'"+ permissionTypes +"')]";
+					+ labelValue + "s']/following-sibling::td)[1]//img[@alt='"+ status +"' and contains(@id,'"+ permissionTypes +"')]";
 			ele = FindElement(driver, xpath, labelValue + " with Value " + status, action.BOOLEAN, 10);
 			if (ele != null) {
 				log(LogStatus.PASS, labelValue + " with Value " + status + " verified", YesNo.No);
