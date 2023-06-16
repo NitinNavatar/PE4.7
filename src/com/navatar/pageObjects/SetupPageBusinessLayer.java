@@ -6558,10 +6558,11 @@ public class SetupPageBusinessLayer extends SetupPage {
 						for (int j = 0; j < permissionTypes.length; j++) {
 							// xpath = "(//h3[contains(text(),'Object
 							// Permissions')]/..//following-sibling::div//th[text()='"+objects[i]+"']/..//input)[1]";
-							xpath = "//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='"
-									+ objects[i] + "s']/..//input[contains(@title,'" + permissionTypes[j] + " "
-									+ objects[i] + "s')]";
-							//xpath = "(//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='"+ objects[i] + "s']/following-sibling::td)[1]//img[@alt='"+ permissionTypes[j] +"')]";
+//							xpath = "//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='"
+//									+ objects[i] + "s']/..//input[contains(@title,'" + permissionTypes[j] + " "
+//									+ objects[i] + "s')]";
+							xpath = "(//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='"+ objects[i] +
+									"s']/following-sibling::td)[1]//img[@alt='"+ status +"' and contains(@id,'"+ permissionTypes[j] +"')]";
 							ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, 10);
 							ele = isDisplayed(driver, ele, "visibility", 10, "Edit Button");
 							// if(ele.getAttribute(status) != null) {
@@ -6644,8 +6645,10 @@ public class SetupPageBusinessLayer extends SetupPage {
 		for (String labelValue : labels) {
 			// xpath = "//*[text()='" + labelValue[0] +
 			// "']/..//following-sibling::td[text()='" + labelValue[1] + "']";
-			xpath = "//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='" + labelValue
-					+ "s']/..//img[contains(@id,'" + labelValue + "') and (@alt ='" + status + "')]";
+//			xpath = "//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='" + labelValue
+//					+ "s']/..//img[contains(@id,'" + labelValue + "') and (@alt ='" + status + "')]";
+			xpath = "(//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='"+ objects[i] +
+					"s']/following-sibling::td)[1]//img[@alt='"+ status +"' and contains(@id,'"+ permissionTypes[j] +"')]";
 			ele = FindElement(driver, xpath, labelValue + " with Value " + status, action.BOOLEAN, 10);
 			if (ele != null) {
 				log(LogStatus.PASS, labelValue + " with Value " + status + " verified", YesNo.No);

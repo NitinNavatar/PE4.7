@@ -6435,7 +6435,7 @@ public class AcuityResearch extends BaseLib{
 		ThreadSleep(2000);
 			
 		for(String searchValue : searchValues) {
-			String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
+//			String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
 			log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
@@ -6469,7 +6469,7 @@ public class AcuityResearch extends BaseLib{
 							"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
 									+ searchValue + "---------",
 							YesNo.No);
-				ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+				ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(searchValue, action.SCROLLANDBOOLEAN, 10);
 					if(list.isEmpty()) {
 						
 						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
