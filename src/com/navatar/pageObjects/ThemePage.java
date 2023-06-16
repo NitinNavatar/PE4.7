@@ -73,7 +73,7 @@ public class ThemePage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "//input[contains(@name,'Search')]")
+	@FindBy(xpath = "//div[contains(@class,'slds-theme_shade')]//input[contains(@name,'Search')]")
 	private WebElement searchIcon;
 
 	/**

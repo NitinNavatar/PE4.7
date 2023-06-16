@@ -126,7 +126,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 						if (click(driver, fp.getDealStatus(projectName, timeOut), "Status : " + strings[1],
 								action.SCROLLANDBOOLEAN)) {
 							ThreadSleep(2000);
-							appLog.error("Clicked on Deal Status");
+							appLog.info("Clicked on Deal Status");
 
 							String xpath = "//span[@title='" + strings[1] + "']";
 							WebElement dealStatusEle = FindElement(driver, xpath, strings[1], action.SCROLLANDBOOLEAN,

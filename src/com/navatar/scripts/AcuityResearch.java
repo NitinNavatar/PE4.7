@@ -3223,7 +3223,7 @@ public class AcuityResearch extends BaseLib{
 	String xpath,ele,headerName,searchValue = null;
 	
 	if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
-		if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, AR_Firm1Name, 10)) {
+		if (ip.clickOnAlreadyCreatedItem(projectName, TabName.InstituitonsTab, AR_Firm1Name, 10)) {
 			String recordID[] = driver.getCurrentUrl().split("Account/");
 			String[] recordNo = recordID[1].split("/view"); 
 			searchValue = recordNo[0];
@@ -3390,7 +3390,7 @@ public class AcuityResearch extends BaseLib{
 					ThreadSleep(2000);
 					switchToDefaultContent(driver);
 					switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
-		
+					ThreadSleep(5000);
 					if (clickUsingJavaScript(driver, rp.getProfileSelected(profileForSelection[0],10), profileForSelection[0].toString(), action.BOOLEAN)) {
 						log(LogStatus.INFO, "able to click on " + profileForSelection[0], YesNo.No);
 						ThreadSleep(10000);
@@ -3399,6 +3399,7 @@ public class AcuityResearch extends BaseLib{
 						switchToDefaultContent(driver);
 						ThreadSleep(5000);
 						switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
+						ThreadSleep(5000);
 						if (clickUsingJavaScript(driver, rp.getEditButtonForRecordTypes(recordTypes[i], 10), "Edit Button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "able to click on edit button for record type settiing", YesNo.No);
 							switchToDefaultContent(driver);
@@ -3467,211 +3468,211 @@ public class AcuityResearch extends BaseLib{
 			}
 	switchToDefaultContent(driver);
 	
-	for (int i = 0; i < RecordTypeArray.length; i++) {
-		home.notificationPopUpClose();
-		if (home.clickOnSetUpLink()) {
-			flag = false;
-			parentID = switchOnWindow(driver);
-			if (parentID != null) {
-				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(), object.Firm)) {
-					if (sp.clickOnObjectFeature("", Mode.Lightning.toString(), object.Firm,
-							ObjectFeatureName.recordTypes)) {
-						if (i == 0) {
-							if (sp.listOfRecordTypes().contains(RecordType[i][0][1])) {
-								log(LogStatus.INFO, "Record Type: " + RecordType[i][0][1]
-										+ " is already created, So not going to Create", YesNo.No);
-								flag = true;
-							} else {
-								flag = sp.createRecordTypeForObject(projectName, RecordType[i], isMakeAvailable,
-										profileForSelection, isMakeDefault, PageLayout.Institution.toString(), 10);
-							}
-						} else {
-							isMakeDefault = false;
-
-							if (sp.listOfRecordTypes().contains(RecordType[i][0][1])) {
-								log(LogStatus.INFO, "Record Type: " + RecordType[i][0][1]
-										+ " is already created, So not going to Create", YesNo.No);
-								flag = true;
-							} else {
-								flag = sp.createRecordTypeForObject(projectName, RecordType[i], isMakeAvailable,
-										profileForSelection, isMakeDefault, PageLayout.Institution.toString(), 10);
-							}
-						}
-						if (flag) {
-							log(LogStatus.INFO, "Created Record Type : " + RecordTypeArray[i], YesNo.No);
-						} else {
-							log(LogStatus.ERROR, "Not Able to Create Record Type : " + RecordTypeArray[i],
-									YesNo.Yes);
-							sa.assertTrue(false, "Not Able to Create Record Type : " + RecordTypeArray[i]);
-						}
-
-					} else {
-						log(LogStatus.ERROR,
-								"object feature " + ObjectFeatureName.recordTypes + " is not clickable", YesNo.Yes);
-						sa.assertTrue(false,
-								"object feature " + ObjectFeatureName.recordTypes + " is not clickable");
-					}
-				} else {
-					log(LogStatus.ERROR, object.Contact + " object could not be found in object manager", YesNo.Yes);
-					sa.assertTrue(false, object.Contact + " object could not be found in object manager");
-				}
-				driver.close();
-				driver.switchTo().window(parentID);
-				switchToDefaultContent(driver);
-				refresh(driver);
-			} else {
-				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
-				sa.assertTrue(false, "could not find new window to switch");
-			}
-		} else {
-			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
-			sa.assertTrue(false, "could not click on setup link");
-		}
-	}
-	
-	refresh(driver);
-	ThreadSleep(2000);
-			
-			for (int i = 0; i < dealRecordTypeArray.length; i++) {
-				home.notificationPopUpClose();
-				if (home.clickOnSetUpLink()) {
-					flag = false;
-					parentID = switchOnWindow(driver);
-					if (parentID != null) {
-						if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Deal)) {
-							if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Deal,
-									ObjectFeatureName.recordTypes)) {
-								if (sp.clickOnAlreadyCreatedLayout(dealRecordTypeArray[i])) {
-									if (sp.editRecordTypeForObject(projectName, recordActive, 10)) {
-										log(LogStatus.ERROR,dealRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
-									}else {
-										log(LogStatus.ERROR,dealRecordTypeArray[i]+" not updated ",YesNo.Yes);
-										sa.assertTrue(false, dealRecordTypeArray[i]+" not updated ");
-									}
-								
-								}else {
-									log(LogStatus.ERROR, dealRecordTypeArray[i]+" is not clickable", YesNo.Yes);
-									sa.assertTrue(false, dealRecordTypeArray[i]+" is not clickable");
-								}
-						
-							}else {
-								log(LogStatus.ERROR, "object feature "+ObjectFeatureName.recordTypes+" is not clickable", YesNo.Yes);
-								sa.assertTrue(false, "object feature "+ObjectFeatureName.recordTypes+" is not clickable");
-							}
-						}else {
-							log(LogStatus.ERROR, "Deal object could not be found in object manager", YesNo.Yes);
-							sa.assertTrue(false, "Deal object could not be found in object manager");
-						}
-						driver.close();
-						driver.switchTo().window(parentID);
-						switchToDefaultContent(driver);
-					}else {
-						log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
-						sa.assertTrue(false, "could not find new window to switch");
-					}
-				}else {
-					log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
-					sa.assertTrue(false, "could not click on setup link");
-				}
-		
-			}
-		
-			refresh(driver);
-			ThreadSleep(2000);
-			
-			for (int i = 0; i < fundRecordTypeArray.length; i++) {
-				home.notificationPopUpClose();
-				if (home.clickOnSetUpLink()) {
-					flag = false;
-					parentID = switchOnWindow(driver);
-					if (parentID != null) {
-						if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Fund)) {
-							if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Fund,
-									ObjectFeatureName.recordTypes)) {
-								if (sp.clickOnAlreadyCreatedLayout(fundRecordTypeArray[i])) {
-									if (sp.editRecordTypeForObject(projectName, recordActive, 10)) {
-										log(LogStatus.ERROR,fundRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
-									}else {
-										log(LogStatus.ERROR,fundRecordTypeArray[i]+" not updated ",YesNo.Yes);
-										sa.assertTrue(false, fundRecordTypeArray[i]+" not updated ");
-									}
-								
-								}else {
-									log(LogStatus.ERROR, fundRecordTypeArray[i]+" is not clickable", YesNo.Yes);
-									sa.assertTrue(false, fundRecordTypeArray[i]+" is not clickable");
-								}
-						
-							}else {
-								log(LogStatus.ERROR, "object feature "+ObjectFeatureName.recordTypes+" is not clickable", YesNo.Yes);
-								sa.assertTrue(false, "object feature "+ObjectFeatureName.recordTypes+" is not clickable");
-							}
-						}else {
-							log(LogStatus.ERROR, "Fund object could not be found in object manager", YesNo.Yes);
-							sa.assertTrue(false, "Fund object could not be found in object manager");
-						}
-						driver.close();
-						driver.switchTo().window(parentID);
-						switchToDefaultContent(driver);
-					}else {
-						log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
-						sa.assertTrue(false, "could not find new window to switch");
-					}
-				}else {
-					log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
-					sa.assertTrue(false, "could not click on setup link");
-				}
-		
-			}
-		
-			refresh(driver);
-			ThreadSleep(2000);
-			
-			for (int i = 0; i < fundraisingRecordTypeArray.length; i++) {
-				home.notificationPopUpClose();
-				if (home.clickOnSetUpLink()) {
-					flag = false;
-					parentID = switchOnWindow(driver);
-					if (parentID != null) {
-						if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Fundraising)) {
-							if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Fundraising,
-									ObjectFeatureName.recordTypes)) {
-								if (sp.clickOnAlreadyCreatedLayout(fundraisingRecordTypeArray[i])) {
-									if (sp.editRecordTypeForObject(projectName, recordActive, 10)) {
-										log(LogStatus.ERROR,fundraisingRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
-									}else {
-										log(LogStatus.ERROR,fundraisingRecordTypeArray[i]+" not updated ",YesNo.Yes);
-										sa.assertTrue(false, fundraisingRecordTypeArray[i]+" not updated ");
-									}
-								
-								}else {
-									log(LogStatus.ERROR, fundraisingRecordTypeArray[i]+" is not clickable", YesNo.Yes);
-									sa.assertTrue(false, fundraisingRecordTypeArray[i]+" is not clickable");
-								}
-						
-							}else {
-								log(LogStatus.ERROR, "object feature "+ObjectFeatureName.recordTypes+" is not clickable", YesNo.Yes);
-								sa.assertTrue(false, "object feature "+ObjectFeatureName.recordTypes+" is not clickable");
-							}
-						}else {
-							log(LogStatus.ERROR, "Fundraising object could not be found in object manager", YesNo.Yes);
-							sa.assertTrue(false, "Fundraising object could not be found in object manager");
-						}
-						driver.close();
-						driver.switchTo().window(parentID);
-						switchToDefaultContent(driver);
-					}else {
-						log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
-						sa.assertTrue(false, "could not find new window to switch");
-					}
-				}else {
-					log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
-					sa.assertTrue(false, "could not click on setup link");
-				}
-		
-			}
-			
-	switchToDefaultContent(driver);
-	ThreadSleep(5000);
+//	for (int i = 0; i < RecordTypeArray.length; i++) {
+//		home.notificationPopUpClose();
+//		if (home.clickOnSetUpLink()) {
+//			flag = false;
+//			parentID = switchOnWindow(driver);
+//			if (parentID != null) {
+//				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(), object.Firm)) {
+//					if (sp.clickOnObjectFeature("", Mode.Lightning.toString(), object.Firm,
+//							ObjectFeatureName.recordTypes)) {
+//						if (i == 0) {
+//							if (sp.listOfRecordTypes().contains(RecordType[i][0][1])) {
+//								log(LogStatus.INFO, "Record Type: " + RecordType[i][0][1]
+//										+ " is already created, So not going to Create", YesNo.No);
+//								flag = true;
+//							} else {
+//								flag = sp.createRecordTypeForObject(projectName, RecordType[i], isMakeAvailable,
+//										profileForSelection, isMakeDefault, PageLayout.Institution.toString(), 10);
+//							}
+//						} else {
+//							isMakeDefault = false;
+//
+//							if (sp.listOfRecordTypes().contains(RecordType[i][0][1])) {
+//								log(LogStatus.INFO, "Record Type: " + RecordType[i][0][1]
+//										+ " is already created, So not going to Create", YesNo.No);
+//								flag = true;
+//							} else {
+//								flag = sp.createRecordTypeForObject(projectName, RecordType[i], isMakeAvailable,
+//										profileForSelection, isMakeDefault, PageLayout.Institution.toString(), 10);
+//							}
+//						}
+//						if (flag) {
+//							log(LogStatus.INFO, "Created Record Type : " + RecordTypeArray[i], YesNo.No);
+//						} else {
+//							log(LogStatus.ERROR, "Not Able to Create Record Type : " + RecordTypeArray[i],
+//									YesNo.Yes);
+//							sa.assertTrue(false, "Not Able to Create Record Type : " + RecordTypeArray[i]);
+//						}
+//
+//					} else {
+//						log(LogStatus.ERROR,
+//								"object feature " + ObjectFeatureName.recordTypes + " is not clickable", YesNo.Yes);
+//						sa.assertTrue(false,
+//								"object feature " + ObjectFeatureName.recordTypes + " is not clickable");
+//					}
+//				} else {
+//					log(LogStatus.ERROR, object.Contact + " object could not be found in object manager", YesNo.Yes);
+//					sa.assertTrue(false, object.Contact + " object could not be found in object manager");
+//				}
+//				driver.close();
+//				driver.switchTo().window(parentID);
+//				switchToDefaultContent(driver);
+//				refresh(driver);
+//			} else {
+//				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+//				sa.assertTrue(false, "could not find new window to switch");
+//			}
+//		} else {
+//			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
+//			sa.assertTrue(false, "could not click on setup link");
+//		}
+//	}
+//	
+//	refresh(driver);
+//	ThreadSleep(2000);
+//			
+//			for (int i = 0; i < dealRecordTypeArray.length; i++) {
+//				home.notificationPopUpClose();
+//				if (home.clickOnSetUpLink()) {
+//					flag = false;
+//					parentID = switchOnWindow(driver);
+//					if (parentID != null) {
+//						if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Deal)) {
+//							if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Deal,
+//									ObjectFeatureName.recordTypes)) {
+//								if (sp.clickOnAlreadyCreatedLayout(dealRecordTypeArray[i])) {
+//									if (sp.editRecordTypeForObject(projectName, recordActive, 10)) {
+//										log(LogStatus.ERROR,dealRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
+//									}else {
+//										log(LogStatus.ERROR,dealRecordTypeArray[i]+" not updated ",YesNo.Yes);
+//										sa.assertTrue(false, dealRecordTypeArray[i]+" not updated ");
+//									}
+//								
+//								}else {
+//									log(LogStatus.ERROR, dealRecordTypeArray[i]+" is not clickable", YesNo.Yes);
+//									sa.assertTrue(false, dealRecordTypeArray[i]+" is not clickable");
+//								}
+//						
+//							}else {
+//								log(LogStatus.ERROR, "object feature "+ObjectFeatureName.recordTypes+" is not clickable", YesNo.Yes);
+//								sa.assertTrue(false, "object feature "+ObjectFeatureName.recordTypes+" is not clickable");
+//							}
+//						}else {
+//							log(LogStatus.ERROR, "Deal object could not be found in object manager", YesNo.Yes);
+//							sa.assertTrue(false, "Deal object could not be found in object manager");
+//						}
+//						driver.close();
+//						driver.switchTo().window(parentID);
+//						switchToDefaultContent(driver);
+//					}else {
+//						log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+//						sa.assertTrue(false, "could not find new window to switch");
+//					}
+//				}else {
+//					log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
+//					sa.assertTrue(false, "could not click on setup link");
+//				}
+//		
+//			}
+//		
+//			refresh(driver);
+//			ThreadSleep(2000);
+//			
+//			for (int i = 0; i < fundRecordTypeArray.length; i++) {
+//				home.notificationPopUpClose();
+//				if (home.clickOnSetUpLink()) {
+//					flag = false;
+//					parentID = switchOnWindow(driver);
+//					if (parentID != null) {
+//						if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Fund)) {
+//							if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Fund,
+//									ObjectFeatureName.recordTypes)) {
+//								if (sp.clickOnAlreadyCreatedLayout(fundRecordTypeArray[i])) {
+//									if (sp.editRecordTypeForObject(projectName, recordActive, 10)) {
+//										log(LogStatus.ERROR,fundRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
+//									}else {
+//										log(LogStatus.ERROR,fundRecordTypeArray[i]+" not updated ",YesNo.Yes);
+//										sa.assertTrue(false, fundRecordTypeArray[i]+" not updated ");
+//									}
+//								
+//								}else {
+//									log(LogStatus.ERROR, fundRecordTypeArray[i]+" is not clickable", YesNo.Yes);
+//									sa.assertTrue(false, fundRecordTypeArray[i]+" is not clickable");
+//								}
+//						
+//							}else {
+//								log(LogStatus.ERROR, "object feature "+ObjectFeatureName.recordTypes+" is not clickable", YesNo.Yes);
+//								sa.assertTrue(false, "object feature "+ObjectFeatureName.recordTypes+" is not clickable");
+//							}
+//						}else {
+//							log(LogStatus.ERROR, "Fund object could not be found in object manager", YesNo.Yes);
+//							sa.assertTrue(false, "Fund object could not be found in object manager");
+//						}
+//						driver.close();
+//						driver.switchTo().window(parentID);
+//						switchToDefaultContent(driver);
+//					}else {
+//						log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+//						sa.assertTrue(false, "could not find new window to switch");
+//					}
+//				}else {
+//					log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
+//					sa.assertTrue(false, "could not click on setup link");
+//				}
+//		
+//			}
+//		
+//			refresh(driver);
+//			ThreadSleep(2000);
+//			
+//			for (int i = 0; i < fundraisingRecordTypeArray.length; i++) {
+//				home.notificationPopUpClose();
+//				if (home.clickOnSetUpLink()) {
+//					flag = false;
+//					parentID = switchOnWindow(driver);
+//					if (parentID != null) {
+//						if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Fundraising)) {
+//							if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Fundraising,
+//									ObjectFeatureName.recordTypes)) {
+//								if (sp.clickOnAlreadyCreatedLayout(fundraisingRecordTypeArray[i])) {
+//									if (sp.editRecordTypeForObject(projectName, recordActive, 10)) {
+//										log(LogStatus.ERROR,fundraisingRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
+//									}else {
+//										log(LogStatus.ERROR,fundraisingRecordTypeArray[i]+" not updated ",YesNo.Yes);
+//										sa.assertTrue(false, fundraisingRecordTypeArray[i]+" not updated ");
+//									}
+//								
+//								}else {
+//									log(LogStatus.ERROR, fundraisingRecordTypeArray[i]+" is not clickable", YesNo.Yes);
+//									sa.assertTrue(false, fundraisingRecordTypeArray[i]+" is not clickable");
+//								}
+//						
+//							}else {
+//								log(LogStatus.ERROR, "object feature "+ObjectFeatureName.recordTypes+" is not clickable", YesNo.Yes);
+//								sa.assertTrue(false, "object feature "+ObjectFeatureName.recordTypes+" is not clickable");
+//							}
+//						}else {
+//							log(LogStatus.ERROR, "Fundraising object could not be found in object manager", YesNo.Yes);
+//							sa.assertTrue(false, "Fundraising object could not be found in object manager");
+//						}
+//						driver.close();
+//						driver.switchTo().window(parentID);
+//						switchToDefaultContent(driver);
+//					}else {
+//						log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+//						sa.assertTrue(false, "could not find new window to switch");
+//					}
+//				}else {
+//					log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
+//					sa.assertTrue(false, "could not click on setup link");
+//				}
+//		
+//			}
+//			
+//	switchToDefaultContent(driver);
+//	ThreadSleep(5000);
 	lp.CRMlogout();
 	sa.assertAll();
 }
@@ -5320,7 +5321,7 @@ public class AcuityResearch extends BaseLib{
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	
 	String profileForSelection = "PE Standard User";
-	String parentID=null, objects[] ={"Fund","Contact","Theme","Clip"}, permissionTypes[] = {"Read","Create","Edit","Delete"}, status = "Not Checked";
+	String parentID=null, objects[] ={"Fund","Contact","Theme","Clip"}, permissionTypes[] = {"Read","Create","Update","Delete"}, status = "Not Checked";
 	boolean flag = false;
 	
 	switchToDefaultContent(driver);
@@ -5457,7 +5458,7 @@ public class AcuityResearch extends BaseLib{
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	
 	String profileForSelection = "PE Standard User";
-	String parentID=null, objects[] ={"Fund","Contact","Theme","Clip"}, permissionTypes[] = {"Read","Create","Edit","Delete"}, status = "Checked";
+	String parentID=null, objects[] ={"Fund","Contact","Theme","Clip"}, permissionTypes[] = {"Read","Create","Update","Delete"}, status = "Checked";
 	boolean flag = false;
 	
 	switchToDefaultContent(driver);
@@ -5467,11 +5468,11 @@ public class AcuityResearch extends BaseLib{
 		if (parentID!=null) {
 			ThreadSleep(2000);
 			if(sp.giveAndRemoveObjectPermissionFromProfiles(profileForSelection,objects,permissionTypes,status)) {
-				log(LogStatus.PASS,"Remove Permission from Contact Object", YesNo.No);
+				log(LogStatus.PASS,"Add Permission from Contact Object", YesNo.No);
 				flag=true;
 			}else {
-				log(LogStatus.ERROR,"Not able to remove permission from" + objects + "Object", YesNo.Yes);
-				sa.assertTrue(false, "Not able to remove permission from" + objects + "Object");
+				log(LogStatus.ERROR,"Not able to add permission from" + objects + "Object", YesNo.Yes);
+				sa.assertTrue(false, "Not able to add permission from" + objects + "Object");
 			}
 	
 			driver.close();
@@ -5925,11 +5926,11 @@ public class AcuityResearch extends BaseLib{
 		ThreadSleep(2000);
 			if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
 				if (cp.clickOnCreatedContact(projectName, contactName[0], contactName[1])) {
-					if (isDisplayed(driver, cp.getPhoneFieldOnContactPage(10), "Visibility", 10, "Phone") != null) {
-						log(LogStatus.PASS, "Phone Field is visible", YesNo.Yes);
+					if (isDisplayed(driver, cp.getPhoneFieldOnContactPage(10), "Visibility", 10, "Phone") == null) {
+						log(LogStatus.PASS, "Phone Field is not visible", YesNo.Yes);
 					} else {
-						log(LogStatus.ERROR, "Phone Field is not visible", YesNo.Yes);
-						sa.assertTrue(false, "Phone Field is not visible");
+						log(LogStatus.ERROR, "Phone Field is visible", YesNo.Yes);
+						sa.assertTrue(false, "Phone Field is visible");
 					}
 				}
 
@@ -6049,13 +6050,13 @@ public class AcuityResearch extends BaseLib{
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	String parentWindow = "", contactFields[] = {"Description","Account Name"}, dealFields[] = {"Stage","Pipeline Comments"}, fundraisingFields[] = {"Status Notes","Legal Name"};
-	String[] varibles = {"AR_Up27","AR_Up28","AR_Up57"};
+	String[] varibles = {"AR_Up57","AR_Up28","AR_Up27"};
 	String varibale27 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
 	String varibale28 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, varibles[1], excelLabel.Name);
 	String varibale57 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, varibles[2], excelLabel.Name);
 
-	String[] searchValues = {varibale27,varibale28,varibale57};
-	String ele, headerName;
+	String[] searchValues = {varibale57,varibale28,varibale27};
+	String ele;
 
 	
 	if (home.clickOnSetUpLink()) {
@@ -6313,7 +6314,7 @@ public class AcuityResearch extends BaseLib{
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	String parentWindow = "", contactFields[] = {"Description","Account Name"}, dealFields[] = {"Stage","Pipeline Comments"}, fundraisingFields[] = {"Status Notes","Legal Name"};
-	String[] varibles = {"AR_Up27","AR_Up281"};
+	String[] varibles = {"AR_Up27","AR_Up28"};
 	String varibale27 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name,varibles[0], excelLabel.Name);
 	String varibale281 =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, varibles[1], excelLabel.Name);
 
@@ -8831,11 +8832,11 @@ public class AcuityResearch extends BaseLib{
 		String variable =ExcelUtils.readData(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, searchValue, excelLabel.ResearchFindings);
 		String tabName =ExcelUtils.readData(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, searchValue, excelLabel.Tab_Name);
 		String recordName =ExcelUtils.readData(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, searchValue, excelLabel.Record_Name);
-		if(!tabName.equals("Themes"))
+		if(!tabName.equals("ThemesTab"))
 		{
 		if (fp.clickOnTab(environment, mode, TabName.valueOf(tabName))) {
 		       log(LogStatus.INFO, "Click on Tab : " + TabName.valueOf(tabName), YesNo.No);
-		      if (fp.clickOnAlreadyCreatedItem(projectName, recordName.replace("  ", "").replace("\"", "").trim(), 10)) {
+		      if (fp.clickOnAlreadyCreatedItem(projectName, TabName.valueOf(tabName),recordName.replace("  ", "").replace("\"", "").trim(), 10)) {
 		    	  if(rp.openResearchForCurrentRecord(projectName,ProgressType.Current_Record.toString(),variable,10)) {
 			   		   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(searchValue, action.SCROLLANDBOOLEAN, 10);
 			   			if(list.isEmpty()) {
@@ -8872,9 +8873,9 @@ public class AcuityResearch extends BaseLib{
 			if (lp.clickOnTab(projectName, TabName.Themes.toString())) {
 
 				log(LogStatus.INFO, "Clicked on Tab : "+TabName.Themes.toString(), YesNo.No);
-
+				ThreadSleep(2000);
 				String parentWindowID=bp.clickOnThemeRecord(recordName.replace("  ", "").replace("\"", "").trim());
-
+				ThreadSleep(2000);
 				if (parentWindowID!=null) {
 					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 					if(rp.openResearchForCurrentRecord(projectName,ProgressType.Current_Record.toString(),variable,10)) {
