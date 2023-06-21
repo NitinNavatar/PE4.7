@@ -1,0 +1,6 @@
+"ID","DEAL NAME","COMPANY","COMPANY ID","STAGE","DATE RECEIVED","STATUS"
+"a0F3C000002eAX8UAM","Connection Deal 1","Test Account 1_COMPANY","0013C00000qQ2wkQAC","Closed","08/31/2022","Item Created"
+"a0F3C000002eAX9UAM","Connection Deal 2","Test Account 2_COMPANY","0013C00000qQ2wlQAC","Deal Received","05/25/2022","Item Created"
+"a0F3C000002eAXAUA2","Connection Deal 3","Test Account 2_INSTITUTION","0013C00000qQ2wnQAC","NDA Signed","08/31/2022","Item Created"
+"a0F3C000002eAXBUA2","Connection Deal 4","Test Account 1_INTERMEDIARY","0013C00000qQ2wsQAC","NDA Signed","12/08/2022","Item Created"
+"a0F3C000002eAXCUA2","Connection Deal 5","Test Account 1_INSTITUTION","0013C00000qQ2wmQAC","NDA Signed","01/02/2023","Item Created"
