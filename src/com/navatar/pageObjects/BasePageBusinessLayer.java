@@ -15991,8 +15991,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		if (peopleTagName != null && peopleTimesReferenced != null) {
 			if (peopleTagName.length == peopleTimesReferenced.length) {
-				if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+				if (click(driver, getTaggedRecordName("Contacts", 30), "Conacts tab", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Contact tab name", YesNo.No);
 					for (int i = 0; i < peopleTagName.length; i++) {
 						if (getTaggedRecordName("People", peopleTagName[i], 30) != null) {
 							log(LogStatus.INFO, peopleTagName[i] + " record is available on people tab of Tagged",
@@ -17785,7 +17785,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		if (peopleTagName != null && peopleTimesReferenced != null) {
 			if (peopleTagName.length == peopleTimesReferenced.length) {
-				if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+				if (click(driver, getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 
 					for (int i = 0; i < peopleTagName.length; i++) {
@@ -21323,7 +21323,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			result.add("Not able to click on Firms tab name");
 		}
 
-		if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+		if (click(driver, getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 			xPath = "//span[text()='People']/ancestor::table//button[@name='timesRef']";
 			elements = FindElements(driver, xPath, "Time Reference Count");
@@ -21336,8 +21336,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				result.add("Default Decending order of Time Referenced count are not verified on People tag");
 			}
 		} else {
-			log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
-			result.add("Not able to click on People tab name");
+			log(LogStatus.ERROR, "Not able to click on Contact tab name", YesNo.No);
+			result.add("Not able to click on Contact tab name");
 		}
 		if (isInstitutionRecord == false) {
 			if (click(driver, getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
@@ -21406,7 +21406,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			result.add("Not able to click on Firms tab name");
 		}
 
-		if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+		if (click(driver, getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 			xPath = "//span[text()='People']/ancestor::table//button[@name='timesRef']";
 			elements = FindElements(driver, xPath, "Time Reference Count");
@@ -22165,7 +22165,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		if (peopleTag != null) {
 
-			if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+			if (click(driver, getTaggedRecordName("Contacts", 30), "Contact tab", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 
 				for (int i = 0; i < peopleTag.length; i++) {
@@ -22245,8 +22245,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		if (peopleTag != null) {
 
-			if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+			if (click(driver, getTaggedRecordName("Contacts", 30), "Contact tab", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on COntact tab name", YesNo.No);
 
 				for (int i = 0; i < peopleTag.length; i++) {
 					if (getTaggedRecordName("People", peopleTag[i], 10) == null) {

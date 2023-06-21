@@ -17159,7 +17159,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -17492,7 +17492,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -17824,7 +17824,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -18156,7 +18156,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -18485,11 +18485,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on Firms tab name");
 						}
-			
 						
-						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Contacts tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
 
@@ -18820,8 +18818,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Contacts tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
 
@@ -19151,8 +19149,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Contacts tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
 
@@ -19479,8 +19477,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Contacts tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
 
@@ -19783,8 +19781,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Contacts tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
 
@@ -20055,8 +20053,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Contacts tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
 
@@ -20333,8 +20331,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Contacts tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
 
@@ -20740,7 +20738,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Tasks", false, projectName)) {
 
 			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectNameNavigation + " found in Tasks Object-----",YesNo.No);
-			String parentID=switchOnWindow(driver);
+			
 			if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(task1SubjectNameNavigation, 20), "Edit button of popup of subject name "+task1SubjectNameNavigation))
 			{
 				log(LogStatus.INFO,"Clicked on edit button of subject "+task1SubjectNameNavigation,YesNo.No);
@@ -20764,8 +20762,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 				BaseLib.sa.assertTrue(false,"Not able to click on edit button of subject "+task1SubjectNameNavigation);
 				
 			}
-			driver.close();
-			driver.switchTo().window(parentID);
+			
 			
 		}
 		 else {
@@ -22825,6 +22822,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			driver.close();
 			driver.switchTo().window(parentWindow);
 			lp.CRMlogout();	
+			sa.assertAll();
 		}
 	}
 	
@@ -25057,16 +25055,15 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		String[][] advanceSection1 = { { "Due Date", taskDueDate1 }};
 	
 
-					lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Tasks", false, projectName)) {
 
 			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectNameNavigation + " found in Tasks Object-----",YesNo.No);
-			String parentID=switchOnWindow(driver);
+		
 			if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(task1SubjectNameNavigation, 20), "Edit button of popup of subject name "+task1SubjectNameNavigation))
 			{
 				log(LogStatus.INFO,"Clicked on edit button of subject "+task1SubjectNameNavigation,YesNo.No);
-				
 
 				if (bp.updateActivityTimelineRecordForMultipleFollowUpTasks(projectName, basicSection,advanceSection, null, null, null,false,false)) {
 					log(LogStatus.PASS, "Activity timeline record has been updated, Subject name : "+taskSubject, YesNo.No);
@@ -25085,25 +25082,20 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 				log(LogStatus.ERROR,"Not able to click on edit button of subject "+task1SubjectNameNavigation,YesNo.No);
 				BaseLib.sa.assertTrue(false,"Not able to click on edit button of subject "+task1SubjectNameNavigation);
 				
-			}
-			driver.close();
-			driver.switchTo().window(parentID);
-			
+			}			
 		}
 		 else {
 
 				log(LogStatus.ERROR, "-----Task named: " + task1SubjectNameNavigation + " not found in Tasks Object-----",YesNo.Yes);
 				BaseLib.sa.assertTrue(false,"-----Task named: " + task1SubjectNameNavigation + " not found in Tasks Object-----");
-
 			}
-		
 		
 		refresh(driver);
 
 		if (home.globalSearchAndNavigate(task1SubjectNameNavigation1, "Tasks", false, projectName)) {
 
 			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectNameNavigation1 + " found in Tasks Object-----",YesNo.No);
-			String parentID=switchOnWindow(driver);
+			
 			if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(task1SubjectNameNavigation1, 20), "Edit button of popup of subject name "+task1SubjectNameNavigation1))
 			{
 				log(LogStatus.INFO,"Clicked on edit button of subject "+task1SubjectNameNavigation1,YesNo.No);
@@ -25127,8 +25119,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 				BaseLib.sa.assertTrue(false,"Not able to click on edit button of subject "+task1SubjectNameNavigation1);
 				
 			}
-			driver.close();
-			driver.switchTo().window(parentID);
+			
 			
 		}
 		 else {
@@ -25287,7 +25278,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contact", 30), "Contact tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -25599,7 +25590,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -25808,7 +25799,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -26017,7 +26008,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -26226,7 +26217,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -26403,7 +26394,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -26612,7 +26603,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -26821,8 +26812,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Contacts tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
 
@@ -27031,7 +27022,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -27239,7 +27230,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -27417,7 +27408,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -27961,8 +27952,6 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
 				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
 			}
-			
-			
 
 		lp.CRMlogout();	
 		sa.assertAll();	
@@ -28941,7 +28930,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -29253,7 +29242,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -29462,7 +29451,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -29671,7 +29660,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -29880,7 +29869,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -30057,7 +30046,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -30266,7 +30255,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -30475,7 +30464,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -30685,7 +30674,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -30893,7 +30882,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -31071,7 +31060,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 						
 						
-						if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Contacts", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -34250,7 +34239,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					}
 
 
-					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -34486,7 +34475,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					}
 
 
-					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -34722,7 +34711,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					}
 
 
-					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -34959,7 +34948,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					}
 
 
-					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -35196,7 +35185,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					}
 
 
-					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -35430,7 +35419,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					}
 
 
-					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -35665,7 +35654,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					}
 
 
-					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -35896,7 +35885,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					}
 
 
-					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -36086,7 +36075,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					}
 
 
-					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -36252,7 +36241,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					}
 
 
-					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -36392,7 +36381,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					}
 
 
-					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
@@ -36503,7 +36492,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 
-		String recordName=ATCE_ContactFullName13;
+		String recordName=ATCE_Theme1;
 
 		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
 		String[] recordIconType= {"email","event","call","task"};
@@ -37412,8 +37401,6 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}	
-
-
 	
 	@Parameters({ "projectName" })
 	@Test
@@ -37474,8 +37461,6 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		sa.assertAll();
 	}
 
-	
-	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATCETc222_VerifyMetaDataOnAccuntRecord(String projectName) {
@@ -37590,7 +37575,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc223_VerifyTheResultsOnContactsAcuityTab(String projectName) {
+	public void ATCETc223_VerifyTheResultsOnContactsAcuityTab(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
