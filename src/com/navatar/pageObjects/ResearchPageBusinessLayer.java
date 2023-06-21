@@ -208,6 +208,9 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 		else if(variableName.contains("ARCR_")) {
 			headersAndValues = ExcelUtils.dataReadForCurrentRecord(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, variableName);
 		}
+		else if(variableName.contains("ARA_")) {
+			headersAndValues = ExcelUtils.dataReadForCurrentRecord(ResearchDataSheetFilePath,"AdvancedData",excelLabel.Variable_Name, variableName);
+		}
 		else {
 			headersAndValues = ExcelUtils.dataRead(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, variableName);
 		}

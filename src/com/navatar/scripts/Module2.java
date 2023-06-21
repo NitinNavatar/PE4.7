@@ -2531,7 +2531,7 @@ public class Module2 extends BaseLib{
 									sa.assertTrue(false,"edit link is not clickable for watchlist" );
 								}
 								switchToDefaultContent(driver);
-								ThreadSleep(4000);
+								CommonLib.refresh(driver);								ThreadSleep(4000);
 								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
 								ele=sp.clickOnEditInFrontOfFieldValues(projectName, PageLabel.RenameUnder_Evaluation.toString());
 								if (click(driver, ele, "watchlist", action.BOOLEAN)) {

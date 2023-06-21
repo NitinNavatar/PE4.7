@@ -1784,7 +1784,7 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 		for (int i = 0; i < len; i++) {
 			char character = xpath.charAt(i);
 			if (String.valueOf(character).equalsIgnoreCase("'")) {
-				if (xpath.charAt(i - 1) == '=' || xpath.charAt(i - 1) == ',' || xpath.charAt(i + 1) == ')'
+				if (xpath.charAt(i - 1) == '=' ||xpath.charAt(i + 1) == ' '|| xpath.charAt(i - 1) == ',' || xpath.charAt(i + 1) == ')'
 						|| (xpath.charAt(i + 1) == ' ' && xpath.charAt(i + 2) == ' ') || xpath.charAt(i + 1) == ']'
 						|| (xpath.charAt(i + 1) == ' ' && xpath.charAt(i + 2) == 'o')) {
 					str.setCharAt(i, '\"');
@@ -1796,6 +1796,7 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 		return String.valueOf(str);
 	}
 
+	
 	public static String getText(WebDriver driver, WebElement element, String elementName, action action) {
 		try {
 			if (element != null) {

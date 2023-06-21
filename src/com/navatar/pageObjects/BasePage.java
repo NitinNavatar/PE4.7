@@ -588,7 +588,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement getCustomTabSaveBtn(String projectName, int timeOut) {
 
-		List<WebElement> eleList = FindElements(driver, "//button[@title='Save' or text()='Save'or @name='SaveEdit']",
+		List<WebElement> eleList = FindElements(driver, "//*[@title='Save' or text()='Save'or @name='SaveEdit']",
 				"Save Button");
 
 		for (WebElement webElement : eleList) {
@@ -4781,7 +4781,8 @@ public abstract class BasePage extends BaseLib {
 		if (ele != null) {
 			return ele;
 		} else {
-			xpath = "//fieldset//span[contains(text(),'" + recordType + "')]/preceding-sibling::span";
+			xpath = "//fieldset//span[contains(text(),'" + recordType + "')]/ancestor::label//span";
+			//xpath = "//fieldset//span[contains(text(),'" + recordType + "')]/preceding-sibling::span";
 			ele = FindElement(driver, xpath, "radio button of record type " + recordType, action.SCROLLANDBOOLEAN,
 					timeOut);
 			return isDisplayed(driver, ele, "visibility", timeOut, "radio button of record type " + recordType);
@@ -9481,7 +9482,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement getThemeNameOnDetailsPage(String themeName, int timeOut) {
 
-		String xpath = "//lightning-formatted-text[text()='PE Theme 1']";
+		String xpath = "//lightning-formatted-text[text()='"+themeName +"']";
 		WebElement type = FindElement(driver, xpath, "Theme name", action.SCROLLANDBOOLEAN, timeOut);
 
 		return type;

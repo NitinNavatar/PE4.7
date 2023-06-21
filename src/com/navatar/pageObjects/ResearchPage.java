@@ -225,6 +225,13 @@ public class ResearchPage extends BasePageBusinessLayer {
 
 		}
 		
+		public WebElement getResearchButtonOnAdvanced(int timeOut) {
+			String xpath = "//button[@title='Close']";
+			return isDisplayed(driver, FindElement(driver, xpath, " user profile link", action.BOOLEAN, timeOut),
+					"visibility", timeOut, " app name xpath in App luncher Name ");
+
+		}
+		
 		@FindBy(xpath = "//a[@title='Advanced']")
 		private WebElement advancedResearch;
 
