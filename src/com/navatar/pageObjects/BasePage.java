@@ -7135,7 +7135,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement dealAcuityDealName(String dealName, int timeOut) {
 
 		List<WebElement> ele = FindElements(driver,
-				"5//a[text()='" + dealName + "']/ancestor::th[@data-label='Deal Name']").stream()
+				"//a[text()='" + dealName + "']/ancestor::th[@data-label='Deal Name']").stream()
 				.filter(x -> x.isDisplayed()).collect(Collectors.toList());
 		if (ele.size() > 0) {
 			return ele.get(0);

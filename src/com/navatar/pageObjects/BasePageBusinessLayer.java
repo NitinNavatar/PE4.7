@@ -24493,6 +24493,69 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return flag;
 	}
 
+	public ArrayList<String> verifyHeaderNameAndMessageOnContactsSection(
+			 List<String> contactsSectionHeaderName,String contactsSectionHeaderMessage) {
+		String xPath;
+		WebElement ele;
+		List<WebElement> elements;
+		ArrayList<String> result = new ArrayList<String>();
+
+		
+		if (!contactsSectionHeaderName.isEmpty()) {
+			ArrayList<String> actualContactsSectionHeaderName = new ArrayList<String>();
+			xPath = "//span[@title='Contacts']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//span[@class='slds-truncate' and @title!='']";
+			elements = FindElements(driver, xPath, "Contact section headers");
+			for (WebElement el : elements) {
+				actualContactsSectionHeaderName
+						.add(getText(driver, el, "Contact section headers", action.SCROLLANDBOOLEAN));
+			}
+
+			xPath = "//span[@title='Contacts']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//lightning-icon";
+			elements = FindElements(driver, xPath, "Contact section headers");
+			for (WebElement el : elements) {
+				actualContactsSectionHeaderName.add(getAttribute(driver, el, "Contact section headers", "title"));
+			}
+
+			for (int i = 0; i < contactsSectionHeaderName.size(); i++) {
+				int k = 0;
+				for (int j = 0; j < actualContactsSectionHeaderName.size(); j++) {
+					if (contactsSectionHeaderName.get(i).equalsIgnoreCase(actualContactsSectionHeaderName.get(j))) {
+						log(LogStatus.INFO,
+								"Expected header name: " + contactsSectionHeaderName.get(i)
+										+ " has been matched with Actual header name: "
+										+ actualContactsSectionHeaderName.get(j) + " on contact section",
+								YesNo.No);
+						k++;
+					}
+				}
+				if (k == 0) {
+					log(LogStatus.ERROR, "Expected header name: " + contactsSectionHeaderName.get(i)
+							+ " is not matched with Actual header name on contact section", YesNo.No);
+					result.add("Expected header name: " + contactsSectionHeaderName.get(i)
+							+ " is not matched with Actual header name on contact section");
+				}
+
+			}
+
+		}
+		if (contactsSectionHeaderMessage != null && !"".equals(contactsSectionHeaderMessage)) {
+			xPath = "//span[@title='Contacts']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//div[text()='"
+					+ contactsSectionHeaderMessage + "']";
+			ele = FindElement(driver, xPath, "Message on Contact section", action.SCROLLANDBOOLEAN, 15);
+			if (ele != null) {
+				log(LogStatus.INFO,
+						"The meessage : " + contactsSectionHeaderMessage + " has been verified on Contect section",
+						YesNo.No);
+			} else {
+				log(LogStatus.ERROR,
+						"The meessage : " + contactsSectionHeaderMessage + " is not verified on Contect section",
+						YesNo.No);
+				result.add("The meessage : " + contactsSectionHeaderMessage + " is not verified on Contect section");
+			}
+		}
+		return result;
+	}
+	
 	/**
 	 * @author Ankur Huria
 	 * @param projectName
