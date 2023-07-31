@@ -1,8 +1,8 @@
-"ID","FIRST NAME","LAST NAME","EMAIL","TITLE","LEGAL NAME","LEGAL NAME ID","STATUS"
-"0033C00000erlt1QAA","Test ","Contact 2_COMPANY","1investorportal+testcontact2company@gmail.com","Board Member","Test Account 2_COMPANY","0013C00000qQ2wlQAC","Item Created"
-"0033C00000erlt2QAA","Test ","Contact 2_INSTITUTION","1investorportal+testcontact2institution@gmail.com","Board Member","Test Account 2_INSTITUTION","0013C00000qQ2wnQAC","Item Created"
-"0033C00000erlt3QAA","Test ","Contact 2_INTERMEDIARY","1investorportal+testcontact2intermediary@gmail.com","Board Member","Test Account 2_INTERMEDIARY","0013C00000qQ2wtQAC","Item Created"
-"0033C00000erlt4QAA","Test ","Contact 2_LENDER","1investorportal+testcontact2lender@gmail.com","Board Member","Test Account 2_LENDER","0013C00000qQ2wrQAC","Item Created"
-"0033C00000erlt5QAA","Test ","Contact 2_ADVISOR","1investorportal+testcontact2advisor@gmail.com","Board Member","Test Account 2_ADVISOR","0013C00000qQ2wpQAC","Item Created"
-"0033C00000erlt6QAA","Test ","Contact 2_PORTFOLIOCOMPANY","1investorportal+testcontact2pcompany@gmail.com","Board Member","Test Account 2_PORTFOLIOCOMPANY","0013C00000qQ2wvQAC","Item Created"
-"0033C00000erlt7QAA","Test ","Contact 2_PRIVATEEQUITY","1investorportal+testcontact2pequity@gmail.com","Board Member","Test Account 2_PRIVATEEQUITY","0013C00000qQ2wxQAC","Item Created"
+ID,FIRST NAME,LAST NAME,EMAIL,TITLE,LEGAL NAME,LEGAL NAME ID,STATUS
+0033C00000erlt1QAA,Test ,Contact 2_COMPANY,1investorportal+testcontact2company@yahoo.com,Board Member,Test Account 2_COMPANY,0013C00000qQ2wlQAC,Item Created
+0033C00000erlt2QAA,Test ,Contact 2_INSTITUTION,1investorportal+testcontact2institution@yahoo.com,Board Member,Test Account 2_INSTITUTION,0013C00000qQ2wnQAC,Item Created
+0033C00000erlt3QAA,Test ,Contact 2_INTERMEDIARY,1investorportal+testcontact2intermediary@yahoo.com,Board Member,Test Account 2_INTERMEDIARY,0013C00000qQ2wtQAC,Item Created
+0033C00000erlt4QAA,Test ,Contact 2_LENDER,1investorportal+testcontact2lender@yahoo.com,Board Member,Test Account 2_LENDER,0013C00000qQ2wrQAC,Item Created
+0033C00000erlt5QAA,Test ,Contact 2_ADVISOR,1investorportal+testcontact2advisor@yahoo.com,Board Member,Test Account 2_ADVISOR,0013C00000qQ2wpQAC,Item Created
+0033C00000erlt6QAA,Test ,Contact 2_PORTFOLIOCOMPANY,1investorportal+testcontact2pcompany@yahoo.com,Board Member,Test Account 2_PORTFOLIOCOMPANY,0013C00000qQ2wvQAC,Item Created
+0033C00000erlt7QAA,Test ,Contact 2_PRIVATEEQUITY,1investorportal+testcontact2pequity@yahoo.com,Board Member,Test Account 2_PRIVATEEQUITY,0013C00000qQ2wxQAC,Item Created

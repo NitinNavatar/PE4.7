@@ -134,7 +134,7 @@ public class EnumConstants {
 		Task_Subject, Task_Status, User_Name, OrgPassword, Password, Participants, Tags, MeetingAndCallsHeader,
 		ValidationRuleErrorMsg, ValidationRuleErrorMsgLocation, CreateNewRecordPopUp, AddContactsToDealTeamPopUp,
 		AddContactsToFundraisingPopup, Classification, ValidationRuleFormula, ParticipantRecord,
-		ParticipantRecordObject, TagsRecord, TagsObject, Tab_Name, Record_Name, RecordName, ObjectName,NextTouchPointDay,NextTouchPointDate;
+		ParticipantRecordObject, TagsRecord, TagsObject, Tab_Name, Record_Name, RecordName, ObjectName,NextTouchPointDay,NextTouchPointDate,External_ContactName,External_FirmName,External_Title,External_MeetingAndCallCount;
 
 	};
 

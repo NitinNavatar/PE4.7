@@ -3733,6 +3733,302 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void RGATETc028_CreateEventsForExternalTab(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
+
+		String username1=RGcrmUser1EmailID;
+		String username2=RGcrmUser2EmailID;
+		String username3=RGcrmUser3EmailID;
+
+		lp.CRMLogin(RGcrmUser1EmailID, adminPassword);
+
+		ThreadSleep(20000);
+
+		String eventTitle6= RGATE_Subject11;
+		String[] userAndContact6=RGATE_RelatedTo11.split("<userBreak>");
+		String [] user6=userAndContact6[1].split("<b>");
+		String eventAttendees6=userAndContact6[0];
+		for(int i=0; i<user6.length; i++)
+		{
+			if(user6[i].equalsIgnoreCase("user 1"))
+			{
+				eventAttendees6=eventAttendees6+","+username1;
+			}
+			else if(user6[i].equalsIgnoreCase("user 2"))
+			{
+				eventAttendees6=eventAttendees6+","+username2;
+			}
+			else if(user6[i].equalsIgnoreCase("user 3"))
+			{
+				eventAttendees6=eventAttendees6+","+username3;
+			}
+			else
+			{
+				Assertion hardAssert = new Assertion();
+				log(LogStatus.ERROR, "user data is not correct on ecxel", YesNo.No);
+				hardAssert.assertTrue(true == false);
+			}		
+		}
+		String startDate6 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt(RGATE_StartDay11));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, startDate6, "Activity Timeline", excelLabel.Variable_Name,
+				"RGATE_011", excelLabel.Advance_Start_Date);
+
+		String endDate6 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt(RGATE_EndDay11));
+		ExcelUtils.writeData(AcuityDataSheetFilePath, endDate6, "Activity Timeline", excelLabel.Variable_Name,
+				"RGATE_011", excelLabel.Advance_End_Date);
+
+		String startTime6 = null;
+		String endTime6 = null;
+		String descriptionBox6 = RGATE_Notes11;
+
+		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle6 + " through Outlook---------",
+				YesNo.No);
+		if (op.loginAndCreateEventThroughOutLook(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle6,
+				eventAttendees6, startDate6, endDate6, startTime6, endTime6, descriptionBox6, true)) {
+			log(LogStatus.INFO,
+					"-----Event Created Msg is showing, So Event of Title: " + eventTitle6 + " has been created-----",
+					YesNo.No);
+		}
+
+		else {
+			log(LogStatus.ERROR, "-----Event Created Msg is not showing, So Event of Title: " + eventTitle6
+					+ " has not been created-----", YesNo.Yes);
+			BaseLib.sa.assertTrue(false, "-----Event Created Msg is not showing, So Event of Title: " + eventTitle6
+					+ " has not been created-----");
+		}
+
+		ThreadSleep(5000);
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void RGATETc029_VerifyRecordOfExternalTabForFirmObject(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		
+		String recordName=RGATE_FirmLegalName1;
+		String contactName=RGATE_ContactSectionName1;
+		
+		String[] Name= {RGATE_ContactSectionName1,RGATE_ContactSectionName2};
+		String[] firmName= {RGATE_FirmLegalName2,RGATE_FirmLegalName3};
+		String[] title= {null,null};
+		String[] meetingAndCallCount= {RGATE_ContactSectionNameMeetingAndCall1,RGATE_ContactSectionNameMeetingAndCall2};
+ 		
+		String taskDueDate1=RGATE_StartDay8;
+		String taskSubject1=RGATE_Subject8;
+		String taskNotes1=RGATE_Notes8;
+		String[] participants=RGATE_Participant7.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword);
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					
+					
+					if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactName, 30), "Contact Name: " + contactName,
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactName, YesNo.No);
+						String parentID=switchOnWindow(driver);
+						if(parentID!=null)
+						{				
+				     		ArrayList<String> result=	bp.verifyRecordOnExternalTab(Name, firmName, title, meetingAndCallCount);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "Ther records are verified on External tab.", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The records are not verified on External tab. "+result, YesNo.No);
+								sa.assertTrue(false, "The records are not verified on External tab. "+result);
+							}
+							
+							
+							if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(ATCE_ExternalName1, 20),"Count of "+ATCE_ExternalName1+" on contact name" , action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "clicked on count of "+ATCE_ExternalName1,YesNo.No);
+								ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate1, taskSubject1, taskNotes1, participants, null);
+								if(result6.isEmpty())
+								{
+									log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+									sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on count of "+ATCE_ExternalName1,YesNo.No);
+								sa.assertTrue(false,  "Not able to click on count of "+ATCE_ExternalName1);
+							}		
+							
+							ArrayList<String> result1=bp.verifyRedirectionOnExternalTab(ATCE_ExternalName1, ATCE_ExternalFirm1);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "Contact name and Firm are redirecting to new tab", YesNo.No);	
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Contact name and Firm are not redirecting to new tab", YesNo.No);	
+								sa.assertTrue(false, "Contact name and Firm are not redirecting to new tab");
+							}
+							
+							driver.close();
+							driver.switchTo().window(parentID);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to switched to new window", YesNo.No);
+							sa.assertTrue(false, "Not able to switched to new window");
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on connection icon of contact : " + contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on connection icon of contact : " + contactName);
+					}
+					
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+		
+		lp.CRMlogout();	
+		sa.assertAll();	
+
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void RGATETc030_VerifyRecordOfExternalTabForContactObject(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName=ATCE_ContactFullName1;
+
+		String[] Name= {RGATE_ContactSectionName1,RGATE_ContactSectionName2};
+		String[] firmName= {RGATE_FirmLegalName2,RGATE_FirmLegalName3};
+		String[] title= {null,null};
+		String[] meetingAndCallCount= {RGATE_ContactSectionNameMeetingAndCall1,RGATE_ContactSectionNameMeetingAndCall2};
+		String taskDueDate1=RGATE_StartDay8;
+		String taskSubject1=RGATE_Subject8;
+		String taskNotes1=RGATE_Notes8;
+		String[] participants=RGATE_Participant7.split("<break>");
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword);
+		if (lp.clickOnTab(projectName, tabObj2)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+
+
+					ArrayList<String> result=	bp.verifyRecordOnExternalTab(Name, firmName, title, meetingAndCallCount);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "Ther records are verified on External tab.", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The records are not verified on External tab. "+result, YesNo.No);
+						sa.assertTrue(false, "The records are not verified on External tab. "+result);
+					}
+
+
+					if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(ATCE_ExternalName1, 20),"Count of "+ATCE_ExternalName1+" on contact name" , action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on count of "+ATCE_ExternalName1,YesNo.No);
+						ArrayList<String> result6=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call", taskDueDate1, taskSubject1, taskNotes1, participants, null);
+						if(result6.isEmpty())
+						{
+							log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+recordName+". "+result6, YesNo.No);
+							sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+recordName+". "+result6);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on count of "+ATCE_ExternalName1,YesNo.No);
+						sa.assertTrue(false,  "Not able to click on count of "+ATCE_ExternalName1);
+					}		
+
+					ArrayList<String> result1=bp.verifyRedirectionOnExternalTab(ATCE_ExternalName1, ATCE_ExternalFirm1);
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "Contact name and Firm are redirecting to new tab", YesNo.No);	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Contact name and Firm are not redirecting to new tab", YesNo.No);	
+						sa.assertTrue(false, "Contact name and Firm are not redirecting to new tab");
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+
+	
+	
+	
 
 	//Below functionality covored in Acuity Task Call and Event File
 	/*

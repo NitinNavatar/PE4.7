@@ -1418,16 +1418,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case TestCustomObjectTab:
 			viewList = "Automation All";
 			break;
-		case ThemesTab:
-			viewList = "All";
-			break;
 		case CompaniesTab:
 			viewList = "All Companies";
 			break;
 		case Navigation:
-			viewList = "All";
-			break;
-		case FundraisingsTab:
 			viewList = "All";
 			break;
 		case ContactTab:
@@ -2734,9 +2728,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		} else if (projectName.contains(ProjectName.PEEdge.toString()) && PageLabel.Account_Name.equals(pageLabel)) {
 			label = "Firm";
 		}
+		
 
-		CommonLib.refresh(driver);
-		WebElement ele1 = getRelatedTab(projectName, RelatedTab.Details.toString(), 20);
+		WebElement ele1 = getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 		click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
 		ThreadSleep(5000);
 		xpath = "//span[text()='" + label + "']/../following-sibling::div//*[text()='" + labelValue + "']";
@@ -2762,7 +2756,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 *              on page and passed
 	 */
 	public boolean verifyDate(String dateToCheck, String valueOnPage) {
-
+		
 		String[] splittedDate = dateToCheck.split("/");
 		char dayMonth = splittedDate[0].charAt(0);
 		char day = splittedDate[1].charAt(0);
@@ -2780,7 +2774,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 		dateToCheck = month + "/" + finalDay + "/" + splittedDate[2];
-
+		
 		int size1 = valueOnPage.split("/").length;
 		int size2 = 0;
 		if (dateToCheck.contains(".")) {
@@ -2798,6 +2792,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				values = dateToCheck.split("/");
 
 			}
+			
 
 			appLog.info("Excel Date : " + dateToCheck);
 			appLog.info("Page Date : " + valueOnPage);
@@ -2916,7 +2911,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return false;
 	}
-
 	/**
 	 * @author Akul Bhutani
 	 * @param projectName
@@ -2978,8 +2972,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			log(LogStatus.INFO, "successfully click on list view", YesNo.No);
 			if (click(driver, getnewButtonListView(projectName, timeOut), "new ", action.BOOLEAN)) {
 				log(LogStatus.INFO, "successfully click on new buton", YesNo.No);
-				if (sendKeys(driver, getlistNameTextBox(projectName, "List Name", timeOut), "All", "list name",
-						action.SCROLLANDBOOLEAN)) {
+				if (sendKeys(driver, getlistNameTextBox(projectName, "List Name", timeOut), "All",
+						"list name", action.SCROLLANDBOOLEAN)) {
 					if (sendKeysWithoutClearingTextBox(driver,
 							getlistNameTextBox(projectName, "List API Name", timeOut), "", "list name",
 							action.SCROLLANDBOOLEAN)) {
@@ -3008,7 +3002,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return false;
 	}
-
 	/**
 	 * @author Akul Bhutani
 	 * @param projectName
@@ -3626,7 +3619,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		WebElement ele;
 		String related = relatedTab.toString().replace("_", " ");
 		if (projectName.contains(ProjectName.PE.toString()))
-			xpath = "//ul[@role='presentation']//span[text()='" + related + "']/ancestor::a";
+	xpath = "//ul[@role='presentation']//span[text()='"+related+"']/ancestor::a";
 		else
 			xpath = "//li//*[@title='" + related + "' or text()='" + related + "']";
 
@@ -3680,7 +3673,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			xpath = "//button[@title='" + toggleTab + "']";
 
 		}
-
+		
 //		xpath = "//div[@class='slds-tabs_card']//div[@class='navpeIISdgBase navpeIISdg']//a[@title='" + toggleTab + "'or text()='" + toggleTab + "']";
 //	} else {
 //		xpath = "//*[@name='subheader']//div[@class='navpeIISdgBase navpeIISdg']//a[@title='" + toggleTab + "'or text()='" + toggleTab + "']";
@@ -3691,7 +3684,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : " + btname);
 		return ele;
 	}
-
+	
 	public WebElement toggleSDGButtons2(String projectName, String toggleTab, ToggleButtonGroup btnName, action action,
 			boolean isInside, int timeOut) {
 		String btname = btnName.toString();
@@ -3703,20 +3696,20 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 //			xpath = "//button[@title='" + toggleTab + "']";
 //
 //		}
+		
+		xpath = "//div[@class='slds-tabs_card']//div[@class='navpeIISdgBase navpeIISdg']//a[@title='" + toggleTab + "'or text()='" + toggleTab + "']";
+	} else {
+		xpath = "//*[@name='subheader']//div[@class='navpeIISdgBase navpeIISdg']//a[@title='" + toggleTab + "'or text()='" + toggleTab + "']";
 
-			xpath = "//div[@class='slds-tabs_card']//div[@class='navpeIISdgBase navpeIISdg']//a[@title='" + toggleTab
-					+ "'or text()='" + toggleTab + "']";
-		} else {
-			xpath = "//*[@name='subheader']//div[@class='navpeIISdgBase navpeIISdg']//a[@title='" + toggleTab
-					+ "'or text()='" + toggleTab + "']";
-
-		}
+	}
 		WebElement ele = FindElement(driver, xpath, toggleTab + " >> " + btname, action, timeOut);
 		scrollDownThroughWebelement(driver, ele, "Toggle Button : " + btname);
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : " + btname);
 		return ele;
 	}
-
+	
+	
+	
 	public WebElement toggleSDGButtons1(String projectName, String toggleTab, ToggleButtonGroup btnName, action action,
 			boolean isInside, int timeOut) {
 		String btname = btnName.toString();
@@ -3733,6 +3726,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : " + btname);
 		return ele;
 	}
+
 
 	/**
 	 * @author Azhar Alam
@@ -4473,7 +4467,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return flag;
 	}
-
+	
 	public boolean dragNDropSDG(String ActiveDealToggleButton) {
 		boolean flag = false;
 
@@ -15501,7 +15495,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return result;
 	}
-
+	
 	public ArrayList<String> verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection1(
 			String InteractionSectionmessage, List<String> contactsSectionHeaderName,
 			String contactsSectionHeaderMessage, List<String> dealsSectionHeaderName, String dealsSectionHeaderMessage,
@@ -15623,41 +15617,41 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		}
 		if (!connectionsSectionHeaderName.isEmpty()) {
-			ArrayList<String> actualConnectionsSectionHeaderName = new ArrayList<String>();
-			xPath = "(//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//tr)[1]//span[@class='slds-truncate' and @title!='']";
-			elements = FindElements(driver, xPath, "Connections section headers");
-			for (WebElement el : elements) {
-				actualConnectionsSectionHeaderName
-						.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
-			}
-			xPath = "(//span[contains(@title,'Connection')]/ancestor::div[@class='slds-m-bottom_xx-small']//tr)[1]//lightning-icon";
-			elements = FindElements(driver, xPath, "Connections section headers");
-			for (WebElement el : elements) {
-				actualConnectionsSectionHeaderName
-						.add(getAttribute(driver, el, "Connections section headers", "title"));
-			}
+				ArrayList<String> actualConnectionsSectionHeaderName = new ArrayList<String>();
+				xPath = "(//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//tr)[1]//span[@class='slds-truncate' and @title!='']";
+				elements = FindElements(driver, xPath, "Connections section headers");
+				for (WebElement el : elements) {
+					actualConnectionsSectionHeaderName
+							.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
+				}
+				xPath = "(//span[contains(@title,'Connection')]/ancestor::div[@class='slds-m-bottom_xx-small']//tr)[1]//lightning-icon";
+				elements = FindElements(driver, xPath, "Connections section headers");
+				for (WebElement el : elements) {
+					actualConnectionsSectionHeaderName
+							.add(getAttribute(driver, el, "Connections section headers", "title"));
+				}
 
-			for (int i = 0; i < connectionsSectionHeaderName.size(); i++) {
-				int k = 0;
-				for (int j = 0; j < actualConnectionsSectionHeaderName.size(); j++) {
-					if (connectionsSectionHeaderName.get(i)
-							.equalsIgnoreCase(actualConnectionsSectionHeaderName.get(j))) {
-						log(LogStatus.INFO,
-								"Expected header name: " + connectionsSectionHeaderName.get(i)
-										+ " has been matched with Actual header name: "
-										+ actualConnectionsSectionHeaderName.get(j) + " on connection section",
-								YesNo.No);
-						k++;
+				for (int i = 0; i < connectionsSectionHeaderName.size(); i++) {
+					int k = 0;
+					for (int j = 0; j < actualConnectionsSectionHeaderName.size(); j++) {
+						if (connectionsSectionHeaderName.get(i)
+								.equalsIgnoreCase(actualConnectionsSectionHeaderName.get(j))) {
+							log(LogStatus.INFO,
+									"Expected header name: " + connectionsSectionHeaderName.get(i)
+											+ " has been matched with Actual header name: "
+											+ actualConnectionsSectionHeaderName.get(j) + " on connection section",
+									YesNo.No);
+							k++;
+						}
 					}
-				}
-				if (k == 0) {
-					log(LogStatus.ERROR, "Expected header name: " + connectionsSectionHeaderName.get(i)
-							+ " is not matched with Actual header name on connection section", YesNo.No);
-					result.add("Expected header name: " + connectionsSectionHeaderName.get(i)
-							+ " is not matched with Actual header name on connection section");
-				}
+					if (k == 0) {
+						log(LogStatus.ERROR, "Expected header name: " + connectionsSectionHeaderName.get(i)
+								+ " is not matched with Actual header name on connection section", YesNo.No);
+						result.add("Expected header name: " + connectionsSectionHeaderName.get(i)
+								+ " is not matched with Actual header name on connection section");
+					}
 
-			}
+				}
 		}
 
 		if (connectionsSectionHeaderMessage != null && !"".equals(connectionsSectionHeaderMessage)) {
@@ -15864,39 +15858,39 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 //					action.SCROLLANDBOOLEAN)) {
 //				log(LogStatus.INFO, "Clicked on internal button", YesNo.No);
 
-			ArrayList<String> actualTooltip = new ArrayList<String>();
+				ArrayList<String> actualTooltip = new ArrayList<String>();
 
-			xPath = "(//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//tr)[1]//span[@class='slds-truncate' and @title!='']";
-			elements = FindElements(driver, xPath, "Connections section headers");
+				xPath = "(//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//tr)[1]//span[@class='slds-truncate' and @title!='']";
+				elements = FindElements(driver, xPath, "Connections section headers");
 
-			for (WebElement el : elements) {
-				actualTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
-			}
+				for (WebElement el : elements) {
+					actualTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
+				}
 
-			xPath = "(//span[contains(@title,'Connection')]/ancestor::div[@class='slds-m-bottom_xx-small']//tr)[1]//lightning-icon";
-			elements = FindElements(driver, xPath, "Connections section headers");
-			for (WebElement el : elements) {
-				actualTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
-			}
+				xPath = "(//span[contains(@title,'Connection')]/ancestor::div[@class='slds-m-bottom_xx-small']//tr)[1]//lightning-icon";
+				elements = FindElements(driver, xPath, "Connections section headers");
+				for (WebElement el : elements) {
+					actualTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
+				}
 
-			for (int i = 0; i < connectionsSectionHeaderTooltip.size(); i++) {
-				int k = 0;
-				for (int j = 0; j < actualTooltip.size(); j++) {
-					if (connectionsSectionHeaderTooltip.get(i).equals(actualTooltip.get(j))) {
-						log(LogStatus.INFO,
-								"Expected header tooltip " + connectionsSectionHeaderTooltip.get(i)
-										+ " have been verified with actual header tooltip " + actualTooltip.get(j),
-								YesNo.No);
-						k++;
+				for (int i = 0; i < connectionsSectionHeaderTooltip.size(); i++) {
+					int k = 0;
+					for (int j = 0; j < actualTooltip.size(); j++) {
+						if (connectionsSectionHeaderTooltip.get(i).equals(actualTooltip.get(j))) {
+							log(LogStatus.INFO,
+									"Expected header tooltip " + connectionsSectionHeaderTooltip.get(i)
+											+ " have been verified with actual header tooltip " + actualTooltip.get(j),
+									YesNo.No);
+							k++;
+						}
+					}
+					if (k == 0) {
+						log(LogStatus.ERROR, "Expected header tooltip " + connectionsSectionHeaderTooltip.get(i)
+								+ " is not matched with the acutual tooltip", YesNo.No);
+						result.add("Expected header tooltip " + connectionsSectionHeaderTooltip.get(i)
+								+ " is not matched with the acutual tooltip");
 					}
 				}
-				if (k == 0) {
-					log(LogStatus.ERROR, "Expected header tooltip " + connectionsSectionHeaderTooltip.get(i)
-							+ " is not matched with the acutual tooltip", YesNo.No);
-					result.add("Expected header tooltip " + connectionsSectionHeaderTooltip.get(i)
-							+ " is not matched with the acutual tooltip");
-				}
-			}
 //			} else {
 //				log(LogStatus.ERROR, "Not able to click on internal tab", YesNo.No);
 //				result.add("Not able to click on internal tab");
@@ -15997,8 +15991,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		if (peopleTagName != null && peopleTimesReferenced != null) {
 			if (peopleTagName.length == peopleTimesReferenced.length) {
-				if (click(driver, getTaggedRecordName("Contacts", 30), "Conacts tab", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on Contact tab name", YesNo.No);
+				if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 					for (int i = 0; i < peopleTagName.length; i++) {
 						if (getTaggedRecordName("People", peopleTagName[i], 30) != null) {
 							log(LogStatus.INFO, peopleTagName[i] + " record is available on people tab of Tagged",
@@ -17791,7 +17785,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		if (peopleTagName != null && peopleTimesReferenced != null) {
 			if (peopleTagName.length == peopleTimesReferenced.length) {
-				if (click(driver, getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
+				if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 
 					for (int i = 0; i < peopleTagName.length; i++) {
@@ -21329,7 +21323,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			result.add("Not able to click on Firms tab name");
 		}
 
-		if (click(driver, getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
+		if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 			xPath = "//span[text()='People']/ancestor::table//button[@name='timesRef']";
 			elements = FindElements(driver, xPath, "Time Reference Count");
@@ -21342,8 +21336,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				result.add("Default Decending order of Time Referenced count are not verified on People tag");
 			}
 		} else {
-			log(LogStatus.ERROR, "Not able to click on Contact tab name", YesNo.No);
-			result.add("Not able to click on Contact tab name");
+			log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+			result.add("Not able to click on People tab name");
 		}
 		if (isInstitutionRecord == false) {
 			if (click(driver, getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
@@ -21412,7 +21406,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			result.add("Not able to click on Firms tab name");
 		}
 
-		if (click(driver, getTaggedRecordName("Contacts", 30), "Contacts tab", action.SCROLLANDBOOLEAN)) {
+		if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 			xPath = "//span[text()='People']/ancestor::table//button[@name='timesRef']";
 			elements = FindElements(driver, xPath, "Time Reference Count");
@@ -22171,7 +22165,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		if (peopleTag != null) {
 
-			if (click(driver, getTaggedRecordName("Contacts", 30), "Contact tab", action.SCROLLANDBOOLEAN)) {
+			if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 
 				for (int i = 0; i < peopleTag.length; i++) {
@@ -22251,8 +22245,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		if (peopleTag != null) {
 
-			if (click(driver, getTaggedRecordName("Contacts", 30), "Contact tab", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on COntact tab name", YesNo.No);
+			if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 
 				for (int i = 0; i < peopleTag.length; i++) {
 					if (getTaggedRecordName("People", peopleTag[i], 10) == null) {
@@ -25025,6 +25019,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (temp.length() > 0) {
 			tempList.add(temp);
 		}
+		
 
 		for (String splittedNote : tempList) {
 
@@ -25671,5 +25666,240 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 
 	}
+	
+	public ArrayList<String> verifyRecordOnExternalTab(String[] name, String[] firm, String[] title, String[] meetingAndCallCount )
+	{
+		ArrayList<String> result=new ArrayList<String>();
+		
+		if(name!=null)
+		{
+			if(clickUsingJavaScript(driver, getExtrnalTabBtn(20), "external tab"))
+			{
+				log(LogStatus.INFO, "Clicked on external button.", YesNo.No);
+
+				for(int i=0; i<name.length; i++)
+				{
+					if(getContactNameFromExternalTab(name[i],20)!=null)
+					{
+						log(LogStatus.INFO, "Contact name "+name[i]+" is available on external tab.", YesNo.No);
+
+						if(firm!=null)
+						{
+							if(getFirmNameFromExternalTab(name[i],firm[i],20)!=null)
+							{
+								log(LogStatus.INFO, "The firm name "+firm[i]+" has been verified on external tab of Contact name "+name[i]+".", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The firm name "+firm[i]+" is not verified on external tab of Contact name "+name[i]+".", YesNo.No);
+								result.add("The firm name "+firm[i]+" is not verified on external tab of Contact name "+name[i]+".");
+							}
+						}
+
+						if(title!=null)
+						{
+							if(getTitleFromExternalTab(name[i],title[i],20)!=null)
+							{
+								log(LogStatus.INFO, "The title "+title[i]+" has been verified on external tab of Contact name "+name[i]+".", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The title "+title[i]+" is not verified on external tab of Contact name "+name[i]+".", YesNo.No);
+								result.add("The title "+title[i]+" is not verified on external tab of Contact name "+name[i]+".");
+							}
+						}
+
+						if(meetingAndCallCount!=null)
+						{
+							if(getMeetingAndCallCountFromExternalTab(name[i],meetingAndCallCount[i],20)!=null)
+							{
+								log(LogStatus.INFO, "The meeting and call count "+meetingAndCallCount[i]+" has been verified on external tab of Contact name "+name[i]+".", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The meeting and call count "+meetingAndCallCount[i]+" has been verified on external tab of Contact name "+name[i]+".", YesNo.No);
+								result.add("The meeting and call count "+meetingAndCallCount[i]+" has been verified on external tab of Contact name "+name[i]+".");
+							}
+						}
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Contact name "+name[i]+" is not available on external tab.", YesNo.No);
+						result.add("Contact name "+name[i]+" is not available on external tab.");
+					}
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to clicked on external button.", YesNo.No);
+				result.add("Not able to clicked on external button.");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Contact name is null. so cannot verify the record on External tab.", YesNo.No);
+			result.add("Contact name is null. so cannot verify the record on External tab.");
+		}
+		return result;	
+	}
+	
+	
+	
+	public ArrayList<String> verifyRedirectionOnExternalTab(String contactName, String firmName)
+	{
+		ArrayList<String> result=new ArrayList<String>();
+		if(contactName!=null)
+		{
+			if(clickUsingJavaScript(driver, getContactNameFromExternalTab(contactName,20), "Contact name"))
+			{
+				log(LogStatus.INFO, "Clicked on contact name "+contactName, YesNo.No);
+				String parentID=switchToWindowOpenNextToParentWindow(driver);
+				if(parentID!=null)
+				{
+					log(LogStatus.INFO, "Switched to new window", YesNo.No);
+					
+					if(getRecordOnObject("Contact",contactName,20)!=null)
+					{
+						log(LogStatus.INFO, "Contact name "+contactName+" has been redirected to new tab", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Contact name "+contactName+" is not redirected to new tab", YesNo.No);
+						result.add("Contact name "+contactName+" is not redirected to new tab");
+					}
+					driver.close();
+					driver.switchTo().window(parentID);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to switch to new window.", YesNo.No);
+					result.add("Not able to switch to new window.");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to clicked on contact name "+contactName, YesNo.No);
+				result.add("Not able to clicked on contact name "+contactName);
+			}
+		}
+		
+		if(firmName!=null)
+		{
+			if(clickUsingJavaScript(driver, getFirmNameFromExternalTab(contactName,firmName,20), "firm name"))
+			{
+				log(LogStatus.INFO, "Clicked on firm name "+firmName, YesNo.No);
+				String parentID=switchToWindowOpenNextToParentWindow(driver);
+				if(parentID!=null)
+				{
+					log(LogStatus.INFO, "Switched to new window", YesNo.No);
+					
+					if(getRecordOnObject("Firm",firmName,20)!=null)
+					{
+						log(LogStatus.INFO, "Firm name "+firmName+" has been redirected to new tab", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Firm name "+firmName+" is not redirected to new tab", YesNo.No);
+						result.add("Firm name "+firmName+" is not redirected to new tab");
+					}
+					driver.close();
+					driver.switchTo().window(parentID);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to switch to new window.", YesNo.No);
+					result.add("Not able to switch to new window.");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to clicked on firm name "+firmName, YesNo.No);
+				result.add("Not able to clicked on firm name "+firmName);
+			}
+		}
+		return result;
+		
+	}
+	
+	
+	
+	public ArrayList<String> verifyRecordOnExternalTabOnContactSection(String[] name,String[] firm, String[] title, String[] meetingAndCallCount )
+	{
+		ArrayList<String> result=new ArrayList<String>();
+		
+		if(name!=null)
+		{
+			if(clickUsingJavaScript(driver, getExtrnalTabBtn(20), "external tab"))
+			{
+				log(LogStatus.INFO, "Clicked on external button.", YesNo.No);
+
+				for(int i=0; i<name.length; i++)
+				{
+					if(getContactNameFromExternalTab(name[i],20)!=null)
+					{
+						log(LogStatus.INFO, "Contact name "+name[i]+" is available on external tab.", YesNo.No);
+
+						if(firm!=null)
+						{
+							if(getFirmNameFromExternalTab(name[i],firm[i],20)!=null)
+							{
+								log(LogStatus.INFO, "The firm name "+firm[i]+" has been verified on external tab of Contact name "+name[i]+".", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The firm name "+firm[i]+" is not verified on external tab of Contact name "+name[i]+".", YesNo.No);
+								result.add("The firm name "+firm[i]+" is not verified on external tab of Contact name "+name[i]+".");
+							}
+						}
+
+						if(title!=null)
+						{
+							if(getTitleFromExternalTab(name[i],title[i],20)!=null)
+							{
+								log(LogStatus.INFO, "The title "+title[i]+" has been verified on external tab of Contact name "+name[i]+".", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The title "+title[i]+" is not verified on external tab of Contact name "+name[i]+".", YesNo.No);
+								result.add("The title "+title[i]+" is not verified on external tab of Contact name "+name[i]+".");
+							}
+						}
+
+						if(meetingAndCallCount!=null)
+						{
+							if(getMeetingAndCallCountFromExternalTab(name[i],meetingAndCallCount[i],20)!=null)
+							{
+								log(LogStatus.INFO, "The meeting and call count "+meetingAndCallCount[i]+" has been verified on external tab of Contact name "+name[i]+".", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The meeting and call count "+meetingAndCallCount[i]+" has been verified on external tab of Contact name "+name[i]+".", YesNo.No);
+								result.add("The meeting and call count "+meetingAndCallCount[i]+" has been verified on external tab of Contact name "+name[i]+".");
+							}
+						}
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Contact name "+name[i]+" is not available on external tab.", YesNo.No);
+						result.add("Contact name "+name[i]+" is not available on external tab.");
+					}
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to clicked on external button.", YesNo.No);
+				result.add("Not able to clicked on external button.");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Contact name is null. so cannot verify the record on External tab.", YesNo.No);
+			result.add("Contact name is null. so cannot verify the record on External tab.");
+		}
+		return result;	
+	}
+
 
 }

@@ -10308,5 +10308,65 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
+	
+	@FindBy(xpath = "//label[@class='slds-radio_button__label']/span[text()='External']")
+	private WebElement extrnalTabBtn;
+
+	public WebElement getExtrnalTabBtn(int timeOut) {
+		return isDisplayed(driver, extrnalTabBtn, "Visibility", timeOut, "external tab");
+	}
+	
+	public WebElement getRecordOnObject(String objectName,String recordName,int timeOut) {
+		String xpath = "//div[text()='"+objectName+"']/..//*[text()='"+recordName+"']";
+		try {
+			return FindElement(driver, xpath, "record name " + recordName, action.BOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "record name " + recordName, action.BOOLEAN, timeOut);
+		}
+	}
+	
+	@FindBy(xpath = "//h1[text()='Send Email']/../..//button[text()='Cancel']")
+	private WebElement cancelBtnOnEmailPopup;
+
+	public WebElement getCancelBtnOnEmailPopup(int timeOut) {
+		return isDisplayed(driver, cancelBtnOnEmailPopup, "Visibility", timeOut, "cancel button");
+	}
+	
+	public WebElement getContactNameFromExternalTab(String contactName,int timeOut) {
+		String xpath = "//td[@data-label='Name']//a[text()='"+contactName+"']";
+		try {
+			return FindElement(driver, xpath, "contact name " + contactName, action.BOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "contact name " + contactName, action.BOOLEAN, timeOut);
+		}
+	}
+	
+	public WebElement getFirmNameFromExternalTab(String contactName,String firmName,int timeOut) {
+		String xpath = "//a[text()='"+contactName+"' and @title='"+contactName+"']/ancestor::tr/td[@data-label='Firm']//a[text()='"+firmName+"' and @title='"+firmName+"']";
+		try {
+			return FindElement(driver, xpath, "firm name " + firmName, action.BOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "firm name " + firmName, action.BOOLEAN, timeOut);
+		}
+	}
+	
+	public WebElement getTitleFromExternalTab(String contactName,String title,int timeOut) {
+		String xpath = "//a[text()='"+contactName+"' and @title='"+contactName+"']/ancestor::tr/td[@data-label='Title']//*[text()='"+title+"']";
+		try {
+			return FindElement(driver, xpath, "title " + title, action.BOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "title " + title, action.BOOLEAN, timeOut);
+		}
+	}
+	
+	public WebElement getMeetingAndCallCountFromExternalTab(String contactName,String meetingAndCallCount,int timeOut) {
+		String xpath = "//a[text()='"+contactName+"' and @title='"+contactName+"']/ancestor::tr/td[@data-label='Meetings and Calls']//button[text()='"+meetingAndCallCount+"']";
+		try {
+			return FindElement(driver, xpath, "meeting and call count " + meetingAndCallCount, action.BOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "meeting and call count " + meetingAndCallCount, action.BOOLEAN, timeOut);
+		}
+	}
+	
 
 }
