@@ -47,7 +47,6 @@ import com.navatar.generic.EnumConstants.excelLabel;
 import com.relevantcodes.extentreports.LogStatus;
 
 import static com.navatar.generic.CommonLib.*;
-import static com.navatar.generic.CommonVariables.M4Ins1;
 
 public class ContactsPageBusinessLayer extends ContactsPage implements ContactPageErrorMessage {
 

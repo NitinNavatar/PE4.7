@@ -29,7 +29,6 @@ import com.navatar.generic.EnumConstants.excelLabel;
 import com.relevantcodes.extentreports.LogStatus;
 
 import static com.navatar.generic.CommonLib.*;
-import static com.navatar.generic.CommonVariables.M4Ins1;
 import static com.navatar.generic.SmokeCommonVariables.Smoke_DealClosureMeetingSubject;
 
 public class CoveragePageBusinessLayer extends CoveragePage  {

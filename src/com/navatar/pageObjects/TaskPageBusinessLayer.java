@@ -1,7 +1,6 @@
 package com.navatar.pageObjects;
 
 import static com.navatar.generic.CommonLib.*;
-import static com.navatar.generic.CommonVariables.M7Task1dueDate;
 import static com.navatar.generic.SmokeCommonVariables.Smoke_STDTask1Subject;
 
 import java.util.List;
