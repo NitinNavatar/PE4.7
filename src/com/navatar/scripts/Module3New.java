@@ -966,7 +966,7 @@ lp.CRMlogout();
 	
 				SmokeReportName = "R2" + SmokeReportName;
 				if (report.createCustomReportForFolder(environment, mode, SmokeReportFolderName, ReportFormatName.Null,
-						SmokeReportName, SmokeReportName, SmokeReportType, null, SmokeReportShow, null,
+						 "R2" + SmokeReportName, SmokeReportName, SmokeReportType, null, SmokeReportShow, null,
 						SmokeReportRange, null, null)) {
 					appLog.info("Custom Report is created succesdfully : R2" + SmokeReportName);
 				} else {
