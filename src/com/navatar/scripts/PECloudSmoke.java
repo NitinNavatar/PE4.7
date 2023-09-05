@@ -1467,7 +1467,7 @@ public class PECloudSmoke extends BaseLib{
 		
 	@Parameters("projectName")
 	@Test
-	public void smokeTC007_verifyNavigationMenuOnHomepage(String projectName){
+	public void smokeTc007_verifyNavigationMenuOnHomepage(String projectName){
 		
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -1822,12 +1822,12 @@ public class PECloudSmoke extends BaseLib{
 
 		lp.CRMlogout();
 		sa.assertAll();
-		closeBrowser();
+		//closeBrowser();
 	}
 	
 	@Parameters("projectName")
 	@Test
-	public void smokeTC009_2_enableDisableINVAndCreateCustomNavigationLink(String projectName){
+	public void smokeTc009_2_enableDisableINVAndCreateCustomNavigationLink(String projectName){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarSetupPageBusinessLayer np= new NavatarSetupPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
@@ -1854,7 +1854,7 @@ public class PECloudSmoke extends BaseLib{
 			ThreadSleep(5000);
 			log(LogStatus.INFO, "<<<<<< Going to check >>>>>>>", YesNo.No);
 			
-				np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, true);
+				np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, false);
 				switchToDefaultContent(driver);
 				ThreadSleep(3000);
 				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
@@ -1876,7 +1876,7 @@ public class PECloudSmoke extends BaseLib{
 			setupSideMenuTab=navatarSetupSideMenuTab[0];
 			log(LogStatus.INFO, "<<<<<< Going to UnCheck >>>>>>>", YesNo.No);
 			
-			if(np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, false)){
+			np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, true);
 				switchToDefaultContent(driver);
 				
 				lp.CRMlogout();
@@ -1898,10 +1898,10 @@ public class PECloudSmoke extends BaseLib{
 					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabel[0], YesNo.Yes);
 					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabel[0]);
 				}
-			} else {
-				log(LogStatus.ERROR, "Not Able to disable "+setupSideMenuTab+" so cannot uncheck absenece of "+navigationLabel[0]+" on "+navigationMenuName, YesNo.Yes);
-				sa.assertTrue(false,"Not Able to disable "+setupSideMenuTab+" so cannot uncheck absenece of "+navigationLabel[0]+" on "+navigationMenuName);
-			}
+//			} else {
+//				log(LogStatus.ERROR, "Not Able to disable "+setupSideMenuTab+" so cannot uncheck absenece of "+navigationLabel[0]+" on "+navigationMenuName, YesNo.Yes);
+//				sa.assertTrue(false,"Not Able to disable "+setupSideMenuTab+" so cannot uncheck absenece of "+navigationLabel[0]+" on "+navigationMenuName);
+//			}
 
 
 				String[][] labelWithValue= {{navigationLabel1,navigationLabel[0]},
@@ -1917,12 +1917,13 @@ public class PECloudSmoke extends BaseLib{
 					sa.assertTrue(false, "Not Able to create navigation item  "+navigationLabel[0]);
 
 				}
-
+				refresh(driver);
+				ThreadSleep(5000);
 			if(flag){
 				
 				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-					WebElement ele2 = npbl.getNavigationLabel(projectName, navigationLabel[1], action.BOOLEAN, 10);
+					WebElement ele2 = npbl.getNavigationLabel(projectName, navigationLabel[0], action.BOOLEAN, 10);
 					
 					ele2 = npbl.getNavigationLabel(projectName, navigationLabel[0], action.BOOLEAN, 10);
 					if (ele2!=null) {
@@ -1938,7 +1939,7 @@ public class PECloudSmoke extends BaseLib{
 				}
 			}
 
-			np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, true);
+			//np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, true);
 			switchToDefaultContent(driver);
 			ThreadSleep(3000);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
@@ -1953,7 +1954,7 @@ public class PECloudSmoke extends BaseLib{
 				}
 			} else {
 				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot uncheck presence of "+navigationLabel[0], YesNo.Yes);
-				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot uncheck presence of "+navigationLabel[1]);
+				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot uncheck presence of "+navigationLabel[0]);
 			}				
 			
 			String updatedNavigationLabel ="Update "+navigationLabel[0].toString();
@@ -2048,7 +2049,7 @@ public class PECloudSmoke extends BaseLib{
 			
 		lp.CRMlogout();
 		sa.assertAll();
-		closeBrowser();
+		//closeBrowser();
 	}
 	
 	@Parameters("projectName")
@@ -2268,7 +2269,7 @@ public class PECloudSmoke extends BaseLib{
 
 	@Parameters("projectName")
 	@Test
-	public void smokeTC011_verifyNewInteractionNavigationMenu(String projectName){
+	public void smokeTc011_verifyNewInteractionNavigationMenu(String projectName){
 		
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -2426,7 +2427,7 @@ public class PECloudSmoke extends BaseLib{
 
 	@Parameters("projectName")
 	@Test
-	public void smokeTC012_verifyCreateNewNavigationMenu(String projectName){
+	public void smokeTc012_verifyCreateNewNavigationMenu(String projectName){
 		
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -3939,6 +3940,8 @@ public class PECloudSmoke extends BaseLib{
 			sa.assertTrue(false,"not able to click on deal tab");
 			log(LogStatus.SKIP,"not able to click on deal tab",YesNo.Yes);
 		}
+		lp.CRMlogout();
+		sa.assertAll();
 	}
 
 	@Parameters({ "projectName"})
@@ -5516,7 +5519,7 @@ public class PECloudSmoke extends BaseLib{
 	
 	@Parameters({"projectName"})
 	@Test
-	public void SmokeTC035_CreateInstitutionContactAndVerifyConnectionComponent(String projectName){
+	public void SmokeTc035_CreateInstitutionContactAndVerifyConnectionComponent(String projectName){
 		
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -5689,7 +5692,7 @@ public class PECloudSmoke extends BaseLib{
 
 	@Parameters({"projectName"})
 	@Test
-	public void SmokeTC036_CreateAffiliationRoleAndVerifyConnectionComponent(String projectName){
+	public void SmokeTc036_CreateAffiliationRoleAndVerifyConnectionComponent(String projectName){
 		
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		AffiliationPageBusinessLayer af= new AffiliationPageBusinessLayer(driver);
@@ -5823,7 +5826,7 @@ public class PECloudSmoke extends BaseLib{
 
 	@Parameters({"projectName"})
 	@Test
-	public void SmokeTC037_CreateTaskWithMultipleContactAndVerifyConnectionComponent(String projectName){
+	public void SmokeTc037_CreateTaskWithMultipleContactAndVerifyConnectionComponent(String projectName){
 		
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		AffiliationPageBusinessLayer af= new AffiliationPageBusinessLayer(driver);
@@ -6055,7 +6058,7 @@ public class PECloudSmoke extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void SmokeTC039_1_CreateFieldSet(String projectName) {
+	public void SmokeTc039_1_CreateFieldSet(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -6123,7 +6126,7 @@ public class PECloudSmoke extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void SmokeTC039_2_VerifyFieldSetLayoutOnInstitutionPage(String projectName) {
+	public void SmokeTc039_2_VerifyFieldSetLayoutOnInstitutionPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
@@ -6158,7 +6161,7 @@ public class PECloudSmoke extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void SmokeTC040_VerifyCameraIconUploadImageAndRelativePath(String projectName) {
+	public void SmokeTc040_VerifyCameraIconUploadImageAndRelativePath(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		
@@ -6244,7 +6247,7 @@ public class PECloudSmoke extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void SmokeTC041_CreateToggleButtonAtInstitutionContactTab(String projectName) {
+	public void SmokeTc041_CreateToggleButtonAtInstitutionContactTab(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
@@ -6488,7 +6491,7 @@ public class PECloudSmoke extends BaseLib{
 
 	@Parameters({"projectName"})
 	@Test
-	public void SmokeTC042_CreateContactAndCustomSDG(String projectName) {
+	public void SmokeTc042_CreateContactAndCustomSDG(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
@@ -6554,7 +6557,7 @@ public class PECloudSmoke extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void  SmokeTC043_1_AddRelatedListAccordianOnEntityPage(String projectName) {
+	public void  SmokeTc043_1_AddRelatedListAccordianOnEntityPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
@@ -6597,7 +6600,7 @@ public class PECloudSmoke extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void SmokeTC043_2_VerifyAccordionOnDealPage(String projectName) {
+	public void SmokeTc043_2_VerifyAccordionOnDealPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
  

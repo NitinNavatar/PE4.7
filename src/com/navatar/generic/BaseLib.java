@@ -102,9 +102,9 @@ public class BaseLib extends AppListeners {
 	@BeforeClass
 	public void config(String browserName){
 		if (browserName.equalsIgnoreCase("Chrome")) {
-//			System.setProperty("webdriver.chrome.driver",
-//					System.getProperty("user.dir") + "\\exefiles\\chromedriver.exe");
-			WebDriverManager.chromedriver().setup();
+			System.setProperty("webdriver.chrome.driver",
+					System.getProperty("user.dir") + "\\exefiles\\chromedriver.exe");
+//			WebDriverManager.chromedriver().setup();
 			ChromeOptions options = new ChromeOptions();
 			String OsName= System.getProperty("os.name");
 			//options.setBinary("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe");
