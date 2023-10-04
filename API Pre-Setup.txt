@@ -1,0 +1,44 @@
+Org Configuration :-
+1.Login Admin >Setup>App Manager
+2. Click on New Connected Apps button
+3. Enter Name = 'API Automation App'
+4. Enter Any Email id e.g. navatariptesting@gmail.com
+5. Check 'Enable OAuth Settings' checkbox
+6. Enter Call Back Url 
+	a. Sandbox 	:- "https://test.salesforce.com/services/oauth2/token" 
+	b. production 	:- "https://login.salesforce.com/services/oauth2/token"
+	
+7. Select 'Full Access' Option in "Selected OAuth Scopes" and click on add button
+8. Click On save button
+9. Click on Continue button
+10. Go to setup> My Domain
+11. Copy Bold Part of the "Current My Domain URL". make sure only bold value is copied.
+
+Fetch Consumer Details
+
+1. Open Above Created App From APP Manager
+2. Open connected app In view mode 
+3. click on manage consumer detail button in (API (Enable OAuth Settings)) section
+4. Fill verification code if ask
+5. Copy & paste "Consumer Key" value in your credential file
+6. Copy & paste "Consumer Secret" value in your credential file
+
+
+-----
+Go to setup 
+Search "OAuth and OpenID Connect Settings"
+Enable password-credential flow checkbox
+
+
+
+Eclipse Script COnfiguration
+
+1. Open Credential.properties file
+2. Paste copied "Current My Domain URL" value in "URL" Field
+3. Update "ApiUser":- email id of user which you want to upload/create data
+4. Update "ApiPassword":- password of above user which you want to upload/create data
+5. Paste Copied "Consumer Key" value to "ConsumerKey" field
+6. Paste Copied "Consumer Secret" value to "ConsumerSecretKey" field
+
+
+Note: All User should be inactive and All User first Name should start as per 'CRM' keyword
