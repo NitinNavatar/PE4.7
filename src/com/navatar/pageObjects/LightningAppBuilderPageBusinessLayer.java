@@ -5,6 +5,7 @@ import static com.navatar.generic.CommonLib.FindElements;
 import static com.navatar.generic.CommonLib.click;
 import static com.navatar.generic.CommonLib.log;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,7 +77,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 							} else {
 								JavascriptExecutor js = (JavascriptExecutor) driver;
 								CommonLib.clickUsingJavaScript(driver, getsldHeader(50), "Deal Element");
-								WebElement addComp = new WebDriverWait(driver, 25)
+								WebElement addComp = new WebDriverWait(driver, Duration.ofSeconds(25))
 										.until(ExpectedConditions.presenceOfElementLocated(By.xpath(
 												"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));
 								js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
@@ -346,7 +347,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 									JavascriptExecutor js = (JavascriptExecutor) driver;
 									CommonLib.clickUsingJavaScript(driver, getsldHeader(50), "SDG Header Element",
 											action.SCROLLANDBOOLEAN);
-									WebElement addComp = new WebDriverWait(driver, 25)
+									WebElement addComp = new WebDriverWait(driver, Duration.ofSeconds(25))
 											.until(ExpectedConditions.presenceOfElementLocated(By.xpath(
 													"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));
 									js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
@@ -476,7 +477,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		for (int i = 0; i < fieldLabel.size(); i++) {
 
 			try {
-				ele = new WebDriverWait(driver, 25)
+				ele = new WebDriverWait(driver,Duration.ofSeconds(25))
 						.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='"
 								+ fieldLabel.get(i) + "']/parent::lightning-combobox//button/span[text()='All']")));
 				log(LogStatus.INFO, "Element has been found for the " + fieldLabel.get(i), YesNo.No);
@@ -662,7 +663,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 
 		try {
 
-			ele = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(
+			ele = new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.presenceOfElementLocated(
 					By.xpath("//label[text()='" + fieldLabel + "']/parent::lightning-combobox//button")));
 			log(LogStatus.INFO, "Element has been found for the " + fieldLabel, YesNo.No);
 		} catch (Exception ex) {
@@ -730,7 +731,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 
 		CommonLib.ThreadSleep(5000);
 		try {
-			ele = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(
+			ele = new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.presenceOfElementLocated(
 					By.xpath("//label[text()='" + fieldLabel + "']/parent::lightning-combobox//button")));
 			log(LogStatus.INFO, "Element has been found for the " + fieldLabel, YesNo.No);
 		} catch (Exception ex) {

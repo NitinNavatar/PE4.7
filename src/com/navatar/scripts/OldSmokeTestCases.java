@@ -25,8 +25,7 @@ import java.util.regex.Pattern;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.server.handler.SendKeys;
-import org.openqa.selenium.remote.server.handler.SwitchToWindow;
+
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 

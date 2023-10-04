@@ -8,7 +8,7 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.interactions.DoubleClickAction;
+
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -43,6 +43,7 @@ import static com.navatar.generic.CommonVariables.*;
 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -539,9 +540,9 @@ public class SetupPageBusinessLayer extends SetupPage {
 									if (selectVisibleTextFromDropDown(driver, getUserProfileDropDownList(60),
 											"User profile drop down list", userProfile)) {
 										appLog.info("select user profile from drop downlist: " + userProfile);
-										if (click(driver, getSalesforceCRMContentUserCheckBox(60),
-												"Salesforce CRM Content User check Box", action.SCROLLANDBOOLEAN)) {
-											ThreadSleep(2000);
+//										if (click(driver, getSalesforceCRMContentUserCheckBox(60),
+//												"Salesforce CRM Content User check Box", action.SCROLLANDBOOLEAN)) {
+//											ThreadSleep(2000);
 
 											if (title != null && title != "") {
 												if (sendKeys(driver, getUserTitle(20), title, "User title",
@@ -564,9 +565,9 @@ public class SetupPageBusinessLayer extends SetupPage {
 														+ userfirstname + " " + userlastname);
 											}
 
-										} else {
-											appLog.info("Not able to click on content user checkbox");
-										}
+//										} else {
+//											appLog.info("Not able to click on content user checkbox");
+//										}
 									} else {
 										appLog.error("Not able to select profile from drop downlist: " + userProfile
 												+ " so cannot create user: " + userfirstname + " " + userlastname);
@@ -4279,7 +4280,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 					if (tag.toString().equals("select")) {
 						try {
-							ele = new WebDriverWait(driver, 50)
+							ele = new WebDriverWait(driver, Duration.ofSeconds(50))
 									.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='"
 											+ labelName + "']/parent::td//following-sibling::td//select")));
 						} catch (Exception ex) {
@@ -4298,7 +4299,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 					} else if (tag.toString().equals("input")) {
 
 						try {
-							ele = new WebDriverWait(driver, 50)
+							ele = new WebDriverWait(driver,Duration.ofSeconds(50))
 									.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='"
 											+ labelName + "']/parent::td//following-sibling::td//input")));
 						} catch (Exception ex) {
@@ -6061,7 +6062,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 				switchToFrame(driver, 20, getSetUpPageIframe(20));
 				CommonLib.ThreadSleep(3000);
 				try {
-					ele = new WebDriverWait(driver, 50)
+					ele = new WebDriverWait(driver, Duration.ofSeconds(50))
 							.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[text()='" + email
 									+ "']/parent::td//preceding-sibling::td[@class='actionColumn']//a[text()='Edit']")));
 				} catch (Exception ex) {
@@ -6683,7 +6684,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 				try {
 					CommonLib.selectVisibleTextFromDropDown(driver, viewUsers(20), "View Label DropDown", "All Users");
-					ele = new WebDriverWait(driver, 50)
+					ele = new WebDriverWait(driver, Duration.ofSeconds(50))
 							.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[text()='" + email
 									+ "']/parent::td//preceding-sibling::td[@class='actionColumn']//a[text()='Edit']")));
 				} catch (Exception ex) {
@@ -6801,7 +6802,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 				switchToFrame(driver, 20, getSetUpPageIframe(20));
 				CommonLib.ThreadSleep(3000);
 				try {
-					ele = new WebDriverWait(driver, 50)
+					ele = new WebDriverWait(driver, Duration.ofSeconds(50))
 							.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[text()='" + email
 									+ "']/parent::td//preceding-sibling::td[@class='actionColumn']//a[text()='Edit']")));
 				} catch (Exception ex) {

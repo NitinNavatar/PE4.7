@@ -16,6 +16,7 @@ import com.navatar.generic.EnumConstants.excelLabel;
 import com.relevantcodes.extentreports.LogStatus;
 import static com.navatar.generic.CommonLib.*;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -360,7 +361,7 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 				act.moveToElement(getResearchButton(timeout)).perform();
 //				ThreadSleep(2000);
 				try {
-					wait = new WebDriverWait(driver, 60).until(ExpectedConditions.presenceOfElementLocated(
+					wait = new WebDriverWait(driver, Duration.ofSeconds(40)).until(ExpectedConditions.presenceOfElementLocated(
 							By.xpath("//div[contains(@class,'slds-combobox_object-switcher')]//button[contains(@class,'slds-input_faux')]")));
 					log(LogStatus.INFO, "Progress Dropdown in Research Popup has been found", YesNo.No);
 				} catch (Exception ex) {

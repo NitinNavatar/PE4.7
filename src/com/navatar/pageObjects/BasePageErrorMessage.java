@@ -69,6 +69,7 @@ public interface BasePageErrorMessage {
 	public String filesName = "Enter one or more research terms";
 	public String recordTypeDescription = "Description Record Type";
 	public String errorName1 = "No results for All Categories";
+	public static String SearchBox = "Search this list...";
 	
 	public static String defaultPhotoText="standard";
 

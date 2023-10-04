@@ -4,7 +4,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.internal.MouseAction.Button;
+
 import org.openqa.selenium.support.FindBy;
 
 import com.navatar.generic.EnumConstants.PageName;
