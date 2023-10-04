@@ -5,6 +5,7 @@ import static com.navatar.generic.BaseLib.testCasesFilePath;
 import static com.navatar.generic.BaseLib.phase1DataSheetFilePath;
 import static com.navatar.generic.BaseLib.ResearchDataSheetFilePath;
 import static com.navatar.generic.BaseLib.smokeFilePath;
+import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.BaseLib.AcuityDataSheetFilePath;
 import static com.navatar.generic.CommonLib.getDateAccToTimeZone;
 import static com.navatar.generic.CommonLib.previousOrForwardDate;
@@ -13,13 +14,24 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import com.navatar.generic.EnumConstants.ActivityRelatedLabel;
+import com.navatar.generic.EnumConstants.SortOrder;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.scripts.Module5New;
@@ -1957,6 +1969,36 @@ public class CommonVariables {
 		 	public static String AC_FieldLabelName1,AC_FieldLabelName2;
 		 	public static String AC_FieldLength1;
 		 	
+			/********************************* All INTACTION ***********************************************/
+	 		
+	 		  //Activity type
+		    public static String AI_ATActivityType1,AI_ATActivityType2,AI_ATActivityType3,AI_ATActivityType4,AI_ATActivityType5,AI_ATActivityType6,AI_ATActivityType7,AI_ATActivityType8;
+		  
+		    public static String AI_ATSubject1,AI_ATSubject2,AI_ATSubject3,AI_ATSubject4,AI_ATSubject5,AI_ATSubject6,AI_ATSubject7,AI_ATSubject8;
+		    
+		    public static String AI_ATNote1,AI_ATNote2,AI_ATNote3,AI_ATNote4,AI_ATNote5,AI_ATNote6,AI_ATNote7,AI_ATNote8;
+		    
+		    public static String AI_ATDueDate1,AI_ATDueDate2,AI_ATDueDate3,AI_ATDueDate4,AI_ATDueDate5,AI_ATDueDate6,AI_ATDueDate7,AI_ATDueDate8;
+		    
+		    public static String AI_ATRelatedTo1,AI_ATRelatedTo2,AI_ATRelatedTo3,AI_ATRelatedTo4,AI_ATRelatedTo5,AI_ATRelatedTo6,AI_ATRelatedTo7,AI_ATRelatedTo8;
+		    
+		    public static String AI_AdvanceStatus1,AI_AdvanceStatus2,AI_AdvanceStatus3,AI_AdvanceStatus4,AI_AdvanceStatus5,AI_AdvanceStatus6,AI_AdvanceStatus7,AI_AdvanceStatus8;
+		   
+		    public static String AI_AdvancePriority1,AI_AdvancePriority2,AI_AdvancePriority3,AI_AdvancePriority4,AI_AdvancePriority5,AI_AdvancePriority6,AI_AdvancePriority7,AI_AdvancePriority8;	    
+		    
+		    public static String AI_ATDay1,AI_ATDay2,AI_ATDay3,AI_ATDay4,AI_ATDay5,AI_ATDay6,AI_ATDay7,AI_ATDay8;
+		    
+		    public static String AI_EndDay1;
+		    
+		    public static String AI_ATParticipants1,AI_ATParticipants2,AI_ATParticipants3,AI_ATParticipants4,AI_ATParticipants5,AI_ATParticipants6,AI_ATParticipants7,AI_ATParticipants8;
+		    
+		    public static String AI_ATTags1,AI_ATTags2,AI_ATTags3,AI_ATTags4,AI_ATTags5,AI_ATTags6,AI_ATTags7,AI_ATTags8;
+		    
+		    public static String AI_AUser1,AI_AUser2,AI_AUser3,AI_AUser4,AI_AUser5,AI_AUser6,AI_AUser7,AI_AUser8;
+		    
+		    public static String AI_ATAssignTo1,AI_ATAssignTo2,AI_ATAssignTo3,AI_ATAssignTo4,AI_ATAssignTo5,AI_ATAssignTo6,AI_ATAssignTo7,AI_ATAssignTo8;
+		    
+		    public static String Ai_search1;
 		 	
 	public CommonVariables(Object obj) {
 		//TODO Auto-generated constructor stub
@@ -10317,6 +10359,137 @@ public class CommonVariables {
  					
  					break;
  					
+            	 case "AllInteraction" :
+						
+						try {
+							dataFile=new FileInputStream(new File(AcuityDataSheetFilePath));
+						} catch (FileNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+//						try {
+//							dataFile=new FileInputStream(new File(ResearchDataSheetFilePath));
+//						} catch (FileNotFoundException e1) {
+//							// TODO Auto-generated catch block
+//							e1.printStackTrace();
+//						}
+						
+						try {
+							dataWb=WorkbookFactory.create(dataFile);
+						} catch (EncryptedDocumentException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (InvalidFormatException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						AI_ATActivityType1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_001", excelLabel.Action_Type);		
+						 AI_ATActivityType2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_002", excelLabel.Action_Type);
+						 AI_ATActivityType3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_003", excelLabel.Action_Type);
+						 AI_ATActivityType4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_004", excelLabel.Action_Type);
+						 AI_ATActivityType5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_005", excelLabel.Action_Type);
+						 AI_ATActivityType6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_006", excelLabel.Action_Type);
+						 AI_ATActivityType7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_007", excelLabel.Action_Type);
+						 AI_ATActivityType8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_008", excelLabel.Action_Type);
+					 		
+						 
+						 AI_ATSubject1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_001", excelLabel.Subject);		
+						 AI_ATSubject2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_002", excelLabel.Subject);
+						 AI_ATSubject3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_003", excelLabel.Subject);
+						 AI_ATSubject4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_004", excelLabel.Subject);
+						 AI_ATSubject5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_005", excelLabel.Subject);
+						 AI_ATSubject6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_006", excelLabel.Subject);
+						 AI_ATSubject7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_007", excelLabel.Subject);
+						 AI_ATSubject8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_008", excelLabel.Subject);
+						 
+						 AI_ATNote1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_001", excelLabel.Notes);		
+						 AI_ATNote2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_002", excelLabel.Notes);
+						 AI_ATNote3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_003", excelLabel.Notes);
+						 AI_ATNote4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_004", excelLabel.Notes);
+						 AI_ATNote5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_005", excelLabel.Notes);
+						 AI_ATNote6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_006", excelLabel.Notes);
+						 AI_ATNote7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_007", excelLabel.Notes);
+						 AI_ATNote8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_008", excelLabel.Notes);
+						 
+						 
+						 AI_ATRelatedTo1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_001", excelLabel.Related_To);		
+						 AI_ATRelatedTo2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_002", excelLabel.Related_To);
+						 AI_ATRelatedTo3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_003", excelLabel.Related_To);
+						 AI_ATRelatedTo4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_004", excelLabel.Related_To);
+						 AI_ATRelatedTo5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_005", excelLabel.Related_To);
+						 AI_ATRelatedTo6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_006", excelLabel.Related_To);
+						 AI_ATRelatedTo7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_007", excelLabel.Related_To);
+						 AI_ATRelatedTo8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_008", excelLabel.Related_To);
+						 
+						 AI_AdvanceStatus1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_001", excelLabel.Advance_Status);		
+						 AI_AdvanceStatus2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_002", excelLabel.Advance_Status);		
+						 AI_AdvanceStatus3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_003", excelLabel.Advance_Status);		
+						 AI_AdvanceStatus4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_004", excelLabel.Advance_Status);		
+						 AI_AdvanceStatus5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_005", excelLabel.Advance_Status);		
+						 AI_AdvanceStatus6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_006", excelLabel.Advance_Status);
+						 AI_AdvanceStatus7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_007", excelLabel.Advance_Status);
+						 AI_AdvanceStatus8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_008", excelLabel.Advance_Status);
+						 
+						 AI_AdvancePriority1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_001", excelLabel.Advance_Priority);		
+						 AI_AdvancePriority2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_002", excelLabel.Advance_Priority);		
+						 AI_AdvancePriority3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_003", excelLabel.Advance_Priority);		
+						 AI_AdvancePriority4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_004", excelLabel.Advance_Priority);		
+						 AI_AdvancePriority5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_005", excelLabel.Advance_Priority);		
+						 AI_AdvancePriority6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_006", excelLabel.Advance_Priority);
+						 AI_AdvancePriority7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_007", excelLabel.Advance_Priority);
+						 AI_AdvancePriority8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_008", excelLabel.Advance_Priority);
+						 
+						 AI_ATDay1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_001", excelLabel.Day);		
+						 AI_ATDay2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_002", excelLabel.Day);
+						 AI_ATDay3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_003", excelLabel.Day);
+						 AI_ATDay4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_004", excelLabel.Day);
+						 AI_ATDay5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_005", excelLabel.Day);
+						 AI_ATDay6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_006", excelLabel.Day);
+						 AI_ATDay7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_007", excelLabel.Day);
+						 AI_ATDay8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_008", excelLabel.Day);
+						 
+						 AI_ATAssignTo1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_001", excelLabel.Assigned_To);		
+						 AI_ATAssignTo2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_002", excelLabel.Assigned_To);
+						 AI_ATAssignTo3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_003", excelLabel.Assigned_To);
+						 AI_ATAssignTo4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_004", excelLabel.Assigned_To);
+						 AI_ATAssignTo5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_005", excelLabel.Assigned_To);
+						 AI_ATAssignTo6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_006", excelLabel.Assigned_To);
+						 AI_ATAssignTo7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_007", excelLabel.Assigned_To);
+						 AI_ATAssignTo8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_008", excelLabel.Assigned_To);
+						 
+						 
+						 AI_ATTags1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_001", excelLabel.Tags);
+						 AI_ATTags2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_002", excelLabel.Tags);
+						 AI_ATTags3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_003", excelLabel.Tags);
+						 AI_ATTags4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_004", excelLabel.Tags);
+						 AI_ATTags5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_005", excelLabel.Tags);
+						 AI_ATTags6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_006", excelLabel.Tags);
+						 AI_ATTags7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_007", excelLabel.Tags);
+						 AI_ATTags8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AI_008", excelLabel.Tags);
+						 
+						 
+						 Ai_search1=ExcelUtils.readData(dataWb,ResearchDataSheetFilePath,"Others",excelLabel.Variable_Name, "AI_search1", excelLabel.Legal_Name);
+						 	try {
+								dataFile.close();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							try {
+								dataWb.close();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+
+							}
+							
+							
+							break;
+ 					
 
             	 case "AcuityClip" :
  					
@@ -10379,5 +10552,7 @@ public class CommonVariables {
 		
 	
 		}
+		
+		
 
 }

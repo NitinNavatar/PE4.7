@@ -5,6 +5,7 @@ import static com.navatar.generic.AppListeners.appLog;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -17,7 +18,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.server.handler.SwitchToFrame;
+
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -691,7 +692,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 			e.printStackTrace();
 		}
-		WebElement addComp = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By.xpath(
+		WebElement addComp = new WebDriverWait(driver,Duration.ofSeconds(25)).until(ExpectedConditions.presenceOfElementLocated(By.xpath(
 				"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));
 		js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
 		CommonLib.clickUsingJavaScript(driver, driver.findElement(By.xpath(
@@ -1164,7 +1165,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			} else {
 				JavascriptExecutor js = (JavascriptExecutor) driver;
 				CommonLib.clickUsingJavaScript(driver, getsldHeader(50), "Deal Element");
-				WebElement addComp = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By
+				WebElement addComp = new WebDriverWait(driver,Duration.ofSeconds(25)).until(ExpectedConditions.presenceOfElementLocated(By
 						.xpath("//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));
 
 				js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
@@ -1199,7 +1200,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 										log(LogStatus.INFO, "Back icon has been clicked", YesNo.No);
 										CommonLib.ThreadSleep(9000);
 										try {
-											ele = new WebDriverWait(driver, 50)
+											ele = new WebDriverWait(driver, Duration.ofSeconds(50))
 													.until(ExpectedConditions.presenceOfElementLocated(
 															By.xpath("//a[text()='" + tableName + "']")));
 										} catch (Exception ex) {
@@ -1391,7 +1392,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			CommonLib.clickUsingJavaScript(driver, sdgHeaderElement(referencedComponentHeading, 40),
 					referencedComponentHeading);
 			CommonLib.ThreadSleep(2000);
-			WebElement addComp = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By
+			WebElement addComp = new WebDriverWait(driver, Duration.ofSeconds(25)).until(ExpectedConditions.presenceOfElementLocated(By
 					.xpath("//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));
 			js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
 			CommonLib.clickUsingJavaScript(driver, driver.findElement(By.xpath(
@@ -1771,7 +1772,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 			JavascriptExecutor js = (JavascriptExecutor) driver;
 			CommonLib.clickUsingJavaScript(driver, getsldHeader(50), "SDG Header Element", action.SCROLLANDBOOLEAN);
-			WebElement addComp = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By
+			WebElement addComp = new WebDriverWait(driver, Duration.ofSeconds(25)).until(ExpectedConditions.presenceOfElementLocated(By
 					.xpath("//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));
 			js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
 			if (CommonLib.clickUsingJavaScript(driver, driver.findElement(By.xpath(

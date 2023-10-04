@@ -8,7 +8,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.server.handler.FindElements;
+
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
@@ -10368,5 +10368,76 @@ public abstract class BasePage extends BaseLib {
 		}
 	}
 	
+	public List<WebElement> listOfIntrectionHeaderDetail(int timeout) {
+		return FindElements(driver, "//*[contains(@class,'for_desk')]//span[@class='slds-truncate' or @class='c']");
+	}
 
+	@FindBy(xpath = "//input[@name='Search']")
+	private WebElement searchbox;
+	
+
+	/**
+	 * @return the searchbox
+	 */
+	public WebElement getsearchbox(int timeOut) {
+		return isDisplayed(driver, searchbox, "Visibility", timeOut, "search box");
+	}
+	
+	@FindBy(xpath = "//span[text()='Your search term must have 2 or more characters.']")
+	private WebElement AllInteractionErrorMsg;
+
+	/**
+	 * @return the AllInteractionErrorMsg
+	 */
+	public WebElement getAllInteractionErrorMsg(int timeOut) {
+		return isDisplayed(driver, AllInteractionErrorMsg, "Visibility", timeOut, "All Interaction Error Msg");
+	}
+	
+	public List<WebElement> listOfIntrectionDetail(int timeout) {
+		return FindElements(driver, "//td[@data-label='Subject']//button");
+	}
+	
+	@FindBy(xpath = "//input[contains(@name,'Search')]")
+	private WebElement searchIcon_Interaction;
+
+	/**
+	 * @return the searchIcon_Lighting
+	 */
+	public WebElement getsearchIcon_Interaction(int timeOut) {
+		return isDisplayed(driver, searchIcon_Interaction, "Visibility", timeOut, "search Icon Interaction");
+	}
+	
+	@FindBy(xpath = "//p[text()='No items to display.']")
+	private WebElement Notext;
+
+	public WebElement getNotext(int timeOut) {
+		return isDisplayed(driver, Notext, "Visibility", timeOut, "No text");
+
+	}
+	
+	@FindBy(xpath = "//button[@title='Edit']")
+	private WebElement PopUpEditbutton;
+
+	/**
+	 * @return the PopUpEditbutton
+	 */
+	public WebElement getPopUpEditbutton(int timeOut) {
+		return isDisplayed(driver, PopUpEditbutton, "Visibility", timeOut, "Pop Up Edit button");
+	}
+	
+	public List<WebElement> getDateAllInteraction(int timeOut) {
+
+		String xpath = "//td[@data-label='Date']";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath, "sorting Date");
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "sorting Date");
+		} else
+			return listOfNameElements;
+	}
+	
+	public WebElement headingOfInteractionPage1(String recordName, int timeOut) {
+
+		String path = "//span[@class='slds-page-header__title slds-truncate' and text()='"+ recordName + "']";
+		return FindElement(driver, path, "info popup message", action.BOOLEAN, timeOut);
+	}
 }

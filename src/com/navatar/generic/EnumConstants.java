@@ -216,7 +216,7 @@ public class EnumConstants {
 		NavatarSetup, Pipelines, FundDrawdowns, FundInvestments, CapitalCalls, FundraisingContacts, LimitedPartne,
 		ReportsTab, Correspondence_Lists, LimitedPartner, CompaniesTab, TaskRayTab, TaskRay, TestCustomObjectTab,
 		TaskTab, Other, Object1Tab, Object2Tab, Object3Tab, Object4Tab, RecycleBinTab, SDGTab, DealTab, Object5Tab,
-		Object6Tab, AttendeeTab, Object7Tab, Entities, Deals, Marketing_Events, Events, Deal_Team, Financing,
+		Object6Tab, AttendeeTab, Object7Tab, Entities, Deals, Marketing_Events,Interactions, Events, Deal_Team, Financing,
 		Object8Tab, ContactTab, Deal, Acuity, ThemesTab, ClipsTab,Interaction, ContactsTab;
 	}
 
@@ -2160,5 +2160,8 @@ public class EnumConstants {
 
 	public static enum TaggedName {
 		Companies, People, Deals, Firms, Funds;
+	}
+	public static enum Interactionslabel {
+		Type,Date,Subject,Details,Participants,Tags;
 	}
 }

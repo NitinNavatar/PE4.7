@@ -1469,4 +1469,20 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, reorderSaveButton, "Visibility", timeOut, "reorderSaveButton");
 	}
 
+	@FindBy(xpath = "//input[@name='edit']")
+	private WebElement editbutton;
+
+	public WebElement geteditbutton(int timeOut) {
+		return isDisplayed(driver, editbutton, "Visibility", timeOut, "edit button");
+	}
+	
+	@FindBy(xpath = "//select[contains(@title,'Activity : Default Access')]")
+	private WebElement activityComponentDropdown;
+
+	public WebElement getactivityComponentDropdown(int timeOut) {
+
+		scrollDownThroughWebelement(driver, activityComponentDropdown, "activity component dropdown ");
+		return isDisplayed(driver, activityComponentDropdown, "Visibility", timeOut, "activity component dropdown ");
+
+	}
 }

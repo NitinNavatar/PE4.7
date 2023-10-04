@@ -8,6 +8,7 @@ import java.util.Date;
 import java.sql.DriverAction;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -324,7 +325,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 					}
 				}
 
-				WebDriverWait wait = new WebDriverWait(driver, 40);
+				WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 				if (wait.until(ExpectedConditions.titleContains("Mail"))) {
 
 					log(LogStatus.INFO, "-----Successfully Logged in to Outlook for Email: " + userName + "------",
@@ -2194,7 +2195,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 		CommonLib.refresh(driver);
 
-		WebDriverWait wait = new WebDriverWait(driver, 40);
+		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(40));
 		wait.until(ExpectedConditions.elementToBeClickable(topCornerAccountButton(30)));
 		if (clickUsingJavaScript(driver, topCornerAccountButton(30), "topCornerAccountButton",
 				action.SCROLLANDBOOLEAN)) {

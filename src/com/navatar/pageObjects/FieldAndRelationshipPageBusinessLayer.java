@@ -4,6 +4,7 @@ import static com.navatar.generic.CommonLib.FindElement;
 import static com.navatar.generic.CommonLib.click;
 import static com.navatar.generic.CommonLib.log;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 				CommonLib.ThreadSleep(2000);
 				try
 				{
-					ele=new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//th[@scope='row' and text()='"+value+"']/preceding-sibling::td//a[contains(@title,'ctivate')]")));
+					ele=new WebDriverWait(driver,Duration.ofSeconds(30)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//th[@scope='row' and text()='"+value+"']/preceding-sibling::td//a[contains(@title,'ctivate')]")));
 				}
 				catch(Exception ex)
 				{
@@ -150,7 +151,7 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 				CommonLib.switchToFrame(driver, 40, getfieldsAndRelationshipsIframe(30));
 				try
 				{
-					ele=new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[text()='"+apiName+"']/preceding-sibling::td//a[contains(@title,'Edit')]")));
+					ele=new WebDriverWait(driver,Duration.ofSeconds(30)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[text()='"+apiName+"']/preceding-sibling::td//a[contains(@title,'Edit')]")));
 				}
 				catch(Exception ex)
 				{
@@ -173,7 +174,7 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 							CommonLib.ThreadSleep(15000);
 							try
 							{
-								ele=new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[text()='"+apiName+"']/preceding-sibling::th")));
+								ele=new WebDriverWait(driver,Duration.ofSeconds(30)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[text()='"+apiName+"']/preceding-sibling::th")));
 							}
 							catch(Exception ex)
 							{
@@ -249,7 +250,7 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 				CommonLib.switchToFrame(driver, 40, getfieldsAndRelationshipsIframe(30));
 				try
 				{
-					ele=new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[text()='"+apiName+"']/preceding-sibling::td//a[contains(@title,'Del')]")));
+					ele=new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[text()='"+apiName+"']/preceding-sibling::td//a[contains(@title,'Del')]")));
 				}
 				catch(Exception ex)
 				{
@@ -381,7 +382,7 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 							CommonLib.switchToFrame(driver, 40, getfieldsAndRelationshipsIframe(30));
 							try
 							{
-								ele=new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[text()='"+optionValueName+"']")));
+								ele=new WebDriverWait(driver,Duration.ofSeconds(30)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[text()='"+optionValueName+"']")));
 							}
 							catch(Exception ex)
 							{
