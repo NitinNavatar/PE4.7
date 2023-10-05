@@ -15,6 +15,7 @@ import static com.navatar.generic.CommonLib.switchToDefaultContent;
 import static com.navatar.generic.CommonLib.switchToWindowOpenNextToParentWindow;
 import static com.navatar.generic.CommonVariables.*;
 import static com.navatar.generic.SmokeCommonVariables.adminPassword;
+import static com.navatar.generic.SmokeCommonVariables.crmUser1EmailID;
 import static com.navatar.generic.SmokeCommonVariables.superAdminUserName;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import com.navatar.generic.APIUtils;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
@@ -177,6 +179,72 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 	}
 
 	/**  Upload the CSV files from CRM User 1.  Path ".......PE4.7Automation\UploadFiles\Acuity Task and Event" **/
+	
+	@Test
+	public void ATCETc00CSV_1_CreateAccountByApi() {
+
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity(call task and event)\\Account.xlsx";
+		String sheetName="Account";
+		new APIUtils(crmUser1EmailID).AccountObjectDataUpload(filePath, sheetName);
+
+	}
+
+	@Test
+	public void ATCETc00CSV_2_CreateContactByApi() {
+
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity(call task and event)\\Contact.xlsx";
+		String sheetName="Contact";
+		new APIUtils(crmUser1EmailID).ContactObjectDataUpload(filePath, sheetName);
+
+	}
+
+ 
+
+	@Test
+	public void ATCETc00CSV_3_CreateDealByApi() {
+
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity(call task and event)\\Deal.xlsx";
+		String sheetName="Deal";
+		new APIUtils(crmUser1EmailID).DealObjectDataUpload(filePath, sheetName);
+
+	}
+	
+	@Test
+	public void ATCETc00CSV_4_CreateFundByApi() {
+
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity(call task and event)\\Fund.xlsx";
+		String sheetName="Fund";
+		new APIUtils(crmUser1EmailID).FundObjectDataUpload(filePath, sheetName);
+
+	}
+	
+	@Test
+	public void ATCETc00CSV_5_CreateFundraisingByApi() {
+
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity(call task and event)\\Fundraising.xlsx";
+		String sheetName="Fundraising";
+		new APIUtils(crmUser1EmailID).FundraisingObjectDataUpload(filePath, sheetName);
+
+	}
+	
+	@Test
+	public void ATCETc00CSV_6_CreateThemeByApi() {
+
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity(call task and event)\\Theme.xlsx";
+		String sheetName="Theme";
+		new APIUtils(crmUser1EmailID).ThemeObjectDataUpload(filePath, sheetName);
+
+	}
+	
+	@Test
+	public void ATCETc00CSV_7_CreateEventByApi() {
+
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity(call task and event)\\Event.xlsx";
+		String sheetName="Event";
+		new APIUtils(crmUser1EmailID).EventObjectDataUpload(filePath, sheetName);
+
+	}
+	
 	
 	@Parameters({ "projectName" })
 	@Test
