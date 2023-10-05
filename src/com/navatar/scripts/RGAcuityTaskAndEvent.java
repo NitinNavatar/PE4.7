@@ -21,7 +21,6 @@ import java.util.List;
 import javax.xml.transform.Result;
 
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.server.handler.SwitchToWindow;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.asserts.Assertion;
