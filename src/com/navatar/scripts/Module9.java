@@ -40,6 +40,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import com.navatar.generic.APIUtils;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
@@ -567,6 +568,180 @@ public class Module9 extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 
+	}
+
+	//Admin
+	@Test
+	public void M9Tc002_1_CreateAccountByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG - Account Admin.xlsx";
+		String sheetName="SDG - Account Admin";
+		new APIUtils().AccountObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void M9Tc002_2_CreateContactByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG- Contacts Admin.xlsx";
+		String sheetName="SDG- Contacts Admin";
+		new APIUtils().ContactObjectDataUpload(filePath, sheetName);
+		
+	}
+
+	@Test
+	public void M9Tc002_3_CreateFundByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG - Fund Admin.xlsx";
+		String sheetName="SDG - Fund Admin";
+		new APIUtils().FundObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void M9Tc002_4_CreateFundTeamByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG - Fund Team.xlsx";
+		String sheetName="SDG - Fund Team";
+		new APIUtils().FundTeamObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void M9Tc002_5_CreateFundraisingByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG - Fundraising Admin.xlsx";
+		String sheetName="SDG - Fundraising Admin";
+		new APIUtils().TargetObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void M9Tc002_6_CreateEventworkAroundByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG - Eventwork Around.xlsx";
+		String sheetName="SDG - Eventwork Around";
+		new APIUtils().EventWorkAroundObjectDataUpload(filePath, sheetName);
+		
+	}
+
+	@Test
+	public void M9Tc002_7_CreateSDGByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\PE SDG.xlsx";
+		String sheetName="PE SDG";
+		new APIUtils().SDGObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void M9Tc002_8_CreateFieldsByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG_Fields.xlsx";
+		String sheetName="SDG_Fields";
+		new APIUtils().FieldObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void M9Tc002_9_CreateActionsByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG_Actions.xlsx";
+		String sheetName="SDG_Actions";
+		new APIUtils().ActionObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	//User1
+	@Test
+	public void M9Tc002_10_CreateAccountByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\User1\\SDG - Account User12.xlsx";
+		String sheetName="SDG - Account User1";
+		new APIUtils(crmUser1EmailID).AccountObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void M9Tc002_11_CreateContactByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\User1\\SDG- Contacts User1.xlsx";
+		String sheetName="SDG- Contacts User1";
+		new APIUtils(crmUser1EmailID).ContactObjectDataUpload(filePath, sheetName);
+		
+	}
+
+	@Test
+	public void M9Tc002_12_CreateFundByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\User1\\SDG - Fund User1.xlsx";
+		String sheetName="SDG - Fund User1";
+		new APIUtils(crmUser1EmailID).FundObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void M9Tc002_13_CreateFundTeamByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\User1\\SDG - Fund Team User1.xlsx";
+		String sheetName="SDG - Fund Team User1";
+		new APIUtils(crmUser1EmailID).FundTeamObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void M9Tc002_14_CreateFundraisingByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\User1\\SDG - Fundraising USer1.xlsx";
+		String sheetName="SDG - Fundraising User1";
+		new APIUtils(crmUser1EmailID).TargetObjectDataUpload(filePath, sheetName);
+		
+	}
+
+	//User2
+	@Test
+	public void M9Tc002_15_CreateAccountByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\User2\\SDG - Account User2.xlsx";
+		String sheetName="SDG - Account User2";
+		new APIUtils(crmUser2EmailID).AccountObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void M9Tc002_16_CreateContactByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\User2\\SDG- Contacts User2.xlsx";
+		String sheetName="SDG- Contacts User2";
+		new APIUtils(crmUser2EmailID).ContactObjectDataUpload(filePath, sheetName);
+		
+	}
+
+	@Test
+	public void M9Tc002_17_CreateFundByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\User2\\SDG - Fund User2.xlsx";
+		String sheetName="SDG - Fund User2";
+		new APIUtils(crmUser2EmailID).FundObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void M9Tc002_18_CreateFundTeamByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\User2\\SDG - Fund Team User2.xlsx";
+		String sheetName="SDG - Fund Team User2";
+		new APIUtils(crmUser2EmailID).FundTeamObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void M9Tc002_19_CreateFundraisingByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\User2\\SDG - Fundraising USer2.xlsx";
+		String sheetName="SDG - Fundraising User2";
+		new APIUtils(crmUser2EmailID).TargetObjectDataUpload(filePath, sheetName);
+		
 	}
 
 	@Parameters({ "projectName" })

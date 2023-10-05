@@ -1447,4 +1447,19 @@ public class ExcelUtils {
 		return value;
 
 	}
+	
+
+	public static int getLastRow(String path,String sheetName) {
+//		return wb.getSheet(sheetName).getPhysicalNumberOfRows();
+		try {
+			fis = new FileInputStream(new File(path));
+			wb = WorkbookFactory.create(fis);
+			return wb.getSheet(sheetName).getLastRowNum();
+		} catch (EncryptedDocumentException | InvalidFormatException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+
+	}
 }
