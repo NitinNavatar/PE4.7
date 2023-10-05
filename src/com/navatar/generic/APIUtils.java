@@ -23,10 +23,13 @@ public class APIUtils {
 	
 	public  String instanceUrl ="https://"+ExcelUtils.readDataFromPropertyFile("URL");;
 	public  String accessToken="";
-	public APIUtils() {
-		accessToken = connection();
+	public APIUtils(String connectedUser) {
+		accessToken = connection(connectedUser);
 	}
-    public  String connection()
+	public APIUtils() {
+		accessToken = connection(ExcelUtils.readDataFromPropertyFile("SuperAdminUsername"));
+	}
+    public  String connection(String connectedUser)
     {
     	String postUrl ="https://test.salesforce.com/services/oauth2/token";
         if(!ExcelUtils.readDataFromPropertyFile("Environment").equalsIgnoreCase(Environment.Sandbox.toString())) {
@@ -34,8 +37,8 @@ public class APIUtils {
 
         }
     	return given().urlEncodingEnabled(true)
-        .param("username", ExcelUtils.readDataFromPropertyFile("ApiUser"))
-        .param("password", ExcelUtils.readDataFromPropertyFile("ApiPassword"))
+        .param("username", connectedUser)
+        .param("password", ExcelUtils.readDataFromPropertyFile("password"))
         .param("client_id", ExcelUtils.readDataFromPropertyFile("ConsumerKey").trim())
         .param("client_secret", ExcelUtils.readDataFromPropertyFile("ConsumerSecretKey").trim())
         .param("grant_type", "password")

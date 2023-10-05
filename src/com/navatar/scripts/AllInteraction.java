@@ -537,7 +537,7 @@ public class AllInteraction extends BaseLib {
 
 		String filePath =System.getProperty("user.dir")+"\\API Files\\All Intractions\\Account.xlsx";
 		String sheetName="Account";
-		new APIUtils().AccountObjectDataUpload(filePath, sheetName);
+		new APIUtils(crmUser1EmailID).AccountObjectDataUpload(filePath, sheetName);
 
 	}
 
@@ -546,7 +546,7 @@ public class AllInteraction extends BaseLib {
 
 		String filePath =System.getProperty("user.dir")+"\\API Files\\All Intractions\\Contact.xlsx";
 		String sheetName="Contact";
-		new APIUtils().ContactObjectDataUpload(filePath, sheetName);
+		new APIUtils(crmUser1EmailID).ContactObjectDataUpload(filePath, sheetName);
 
 	}
 
@@ -557,7 +557,7 @@ public class AllInteraction extends BaseLib {
 
 		String filePath =System.getProperty("user.dir")+"\\API Files\\All Intractions\\Deal.xlsx";
 		String sheetName="Deal";
-		new APIUtils().DealObjectDataUpload(filePath, sheetName);
+		new APIUtils(crmUser1EmailID).DealObjectDataUpload(filePath, sheetName);
 
 	}
 	
@@ -566,7 +566,7 @@ public class AllInteraction extends BaseLib {
 
 		String filePath =System.getProperty("user.dir")+"\\API Files\\All Intractions\\Fund.xlsx";
 		String sheetName="Fund";
-		new APIUtils().FundObjectDataUpload(filePath, sheetName);
+		new APIUtils(crmUser1EmailID).FundObjectDataUpload(filePath, sheetName);
 
 	}
 	
@@ -575,7 +575,7 @@ public class AllInteraction extends BaseLib {
 
 		String filePath =System.getProperty("user.dir")+"\\API Files\\All Intractions\\Fundraising.xlsx";
 		String sheetName="Fundraising";
-		new APIUtils().FundraisingObjectDataUpload(filePath, sheetName);
+		new APIUtils(crmUser1EmailID).FundraisingObjectDataUpload(filePath, sheetName);
 
 	}
 	
@@ -584,7 +584,7 @@ public class AllInteraction extends BaseLib {
 
 		String filePath =System.getProperty("user.dir")+"\\API Files\\All Intractions\\Theme.xlsx";
 		String sheetName="Theme";
-		new APIUtils().ThemeObjectDataUpload(filePath, sheetName);
+		new APIUtils(crmUser1EmailID).ThemeObjectDataUpload(filePath, sheetName);
 
 	}
 	
@@ -593,7 +593,7 @@ public class AllInteraction extends BaseLib {
 
 		String filePath =System.getProperty("user.dir")+"\\API Files\\All Intractions\\Event.xlsx";
 		String sheetName="Event";
-		new APIUtils().EventObjectDataUpload(filePath, sheetName);
+		new APIUtils(crmUser1EmailID).EventObjectDataUpload(filePath, sheetName);
 
 	}
 	
