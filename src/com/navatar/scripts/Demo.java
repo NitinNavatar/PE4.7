@@ -62,7 +62,6 @@ import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
 import com.relevantcodes.extentreports.LogStatus;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class Demo extends BaseLib {
 	Scanner scn = new Scanner(System.in);
@@ -76,56 +75,7 @@ public class Demo extends BaseLib {
 	public static  String NavigationMenuTestData_PESheet = "asd";
 	public static Scanner x;
 
-	
-	public static void test(String[] args) {
-		
-		WebDriverManager.chromedriver().setup();
-		WebDriver driver= new ChromeDriver();
-		driver.get("https://outlook.office365.com/");
-			ThreadSleep(5000);		//marksmith@blackfordcapital-ng.com
-		  //driver.findElement(By.xpath("//input[@name='loginfmt']")).sendKeys("atyaginavatar123@outlook.com");
-		  driver.findElement(By.xpath("//input[@name='loginfmt']")).sendKeys("christinewilkinson@blackfordcapital-ng.com");
 
-//		  driver.findElement(By.xpath("//input[@id='username']")).sendKeys("jaugust@railworks-ng.com");
-
-		  ThreadSleep(2000);
-		  WebElement submitButton= driver.findElement(By.xpath("//input[@id='idSIButton9']"));
-				  submitButton .click();
-			ThreadSleep(5000); //navatar@123
-		 // driver.findElement(By.xpath("//input[@id='password']")).sendKeys("1Navatar11");
-		  
-		  driver.findElement(By.xpath("//input[@name='passwd']")).sendKeys("Navatar008");
-		 // driver.findElement(By.xpath("//input[@name='passwd']")).sendKeys("Navatar@098");
-
-		  ThreadSleep(2000);
-		  //driver.findElement(By.xpath("//button[@id='submitBtn']")).click();
-		  driver.findElement(By.xpath("//input[@id='idSIButton9']")).click();
-		  ThreadSleep(2000);
-		  submitButton= driver.findElement(By.xpath("//input[@id='idSIButton9']"));
-		  if(submitButton.isDisplayed()) {
-			  submitButton .click();
-		  }
-		  ThreadSleep(2000);
-		  driver.findElement(By.xpath("//button[@aria-label='Calendar']")).click();
-
-		  ThreadSleep(5000);
-		  driver.findElement(By.xpath("//button[@id='NewEventButtonAnchor']")).click();
-		  driver.findElement(By.xpath("//button[@id='NewEventButtonAnchor']")).click();
-		  ThreadSleep(2000);
-		  
-		  // revenue grid button CRM : //button[contains(@aria-label,'Revenue Grid for Salesforce CRM')]
-		  // open revenue grid : //button[@name='Open Revenue Grid']
-		  // three line setting menu : //button[@title='Open the main menu'][@data-name='setting-button']
-		  // Sync setting menu option : //div[@title='Open sync settings in browser']
-		  //force sync button : //button[@title='Force Sync']
-		  
-		  // error/success message : //div[@class='ajs-message ajs-error ajs-visible']  need to check text with contains (Retry in 5 Minutes.)
-		  //last session time :    //h3[@title='Last Session']/..//span
-		  
-		  
-		  							
-	}
-	
 	public static void main(String[] args) {
 		String time=todaysDate;
 		System.out.println("Date:"+new Date().toLocaleString());
