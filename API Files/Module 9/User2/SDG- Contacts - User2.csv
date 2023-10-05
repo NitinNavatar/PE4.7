@@ -1,0 +1,3 @@
+Status,FirstName,LastName,AccountId,navpeII__Sector__c,navpeII__Region__c,MailingStreet,MailingZip,MailingCountry,Email,Birthdate
+,Mary,Roy-1,"Applied Systems, Inc.",Energy,South America,74 S Westgate St,12204,Brazil,MaryannRoyster@gmail.com,08/18/1988
+,Ali,Slus-1,Warburg Pincus,Healthcare,Asia Pacific,3273 State St,8846,Hongkong ,AlishaSlusarski@gmail.com,09/18/1988

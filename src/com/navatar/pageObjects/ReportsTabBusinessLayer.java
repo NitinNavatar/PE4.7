@@ -943,10 +943,13 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 							CommonLib.ThreadSleep(2000);
 							appLog.info("Clicked on Add Filter Search Box");
 
+							sendKeys(driver, addFilterSearchBox(20), customFieldDrpDwnVal, "Filter text box",
+									action.SCROLLANDBOOLEAN);
+							ThreadSleep(2000);
 							WebElement cusomFilterValueEle = FindElement(driver,
 
-									"//div[@id=\"report-main\"]/following-sibling::*//span[@title=\""
-											+ customFieldDrpDwnVal + "\"]/ancestor::li/span",
+									"//div[@id='report-main']//span[@title='"
+											+ customFieldDrpDwnVal + "']/ancestor::li/span[contains(@class,'listbox')]",
 									"Range Filter value : " + customFieldDrpDwnVal, action.SCROLLANDBOOLEAN, 15);
 							CommonLib.ThreadSleep(2000);
 							if (click(driver, cusomFilterValueEle, "Custom Field Filter Drop Down Value",
