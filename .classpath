@@ -8,6 +8,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
+			<attribute name="module" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
@@ -35,7 +36,6 @@
 	<classpathentry kind="lib" path="jarfiles/sikulixapi.jar"/>
 	<classpathentry kind="lib" path="jarfiles/snakeyaml.jar"/>
 	<classpathentry kind="lib" path="jarfiles/xmlbeans-2.6.0.jar"/>
-	<classpathentry kind="lib" path="jarfiles/selenium-server-standalone-3.141.59.jar"/>
 	<classpathentry kind="lib" path="jarfiles/testng-7.0.0.jar"/>
 	<classpathentry kind="lib" path="jarfiles/extentreports-2.41.2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
