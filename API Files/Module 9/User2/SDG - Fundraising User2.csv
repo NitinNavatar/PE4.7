@@ -1,0 +1,12 @@
+Status,Name,navpeII__Legal_Name__c,navpeII__Fund_Name__c,navpeII__Investment_Low_Amount_USD_mn__c,navpeII__Investment_High_Amount_USD_mn__c,navpeII__Target_Close_Date__c,navpeII__Closing__c,navpeII__Stage__c,navpeII__Potential_Management_Fee__c
+,Fundraising20,Allsec Technologies Limited,Centrient Pharmaceuticals -2018,1000,9000,08/21/2019,1st Closing ,Interested,10
+,Fundraising21,Anyday.com,Centrient Pharmaceuticals -2018,2000,10000,08/22/2019,2nd Closing ,Interested,20
+,Fundraising22,"Appfluent Technology, Inc.",Centrient Pharmaceuticals -2018,3000,11000,08/23/2019,3rd Closing ,Interested,15
+,Fundraising23,CyberArk Software,Centrient Pharmaceuticals -2018,4000,12000,08/24/2019,1st Closing ,Interested,25
+,Fundraising24,Stuart Turner,Centrient Pharmaceuticals -2018,5000,13000,08/25/2019,2nd Closing ,Interested,30
+,Fundraising25,CyberArk Software,Intermountain Healthcare - Sell Side 2017,,90000,,3rd Closing ,Interested,33.5
+,Fundraising26,Stuart Turner,Coinbase - Sell Side 2018,,78000,,1st Closing ,Legal Closed,38
+,Fundraising27,Allsec Technologies Limited,Kestra Medical -2018,1.23E+12,8.23E+14,,2nd Closing ,Legal Closed,42.5
+,Fundraising28,Anyday.com,VMWare- Capital Raise 2018,2124.89,3222.1234,08/23/2019,3rd Closing ,Legal Closed,47
+,Fundraising29,"Appfluent Technology, Inc.",Brillio 2019,3000,4500,08/24/2019,1st Closing ,Legal Closed,51.5
+,Fundraising30,CyberArk Software,Central Square Technologies - 2018,4000,9500,08/25/2019,2nd Closing ,Legal Closed,56

@@ -1,0 +1,10 @@
+Name,RecordTypeId,Sector,navpeII__Region__c,Website,NumberOfEmployees,navpeII__Institution_Type__c,navpeII__Fund_Types__c,navpeII__Locations__c,navpeII__Public_Filer__c,BillingAddress,navpeII__Target_Co_investment_USD_mn__c,navpeII__LTM_Revenue__c,navpeII__Investment_Date__c,navpeII__Pipeline_Region__c
+CyberArk Software,Institution,Manufacturing,Asia Pacific,www.allsec.com,1000,Advisors,Co-investment;Secondaries,Europe,TRUE,USA,10000,500,05/15/2018,
+Stuart Turner,Institution,Manufacturing,North America,www.anyday.com,2000,Advisors,Co-investment;Secondaries,Europe,TRUE,USA,50000,600,05/15/2018,
+Account 6,Intermediary,Retail,Europe,,,,Fund of Funds,,,,,,,Europe
+Account 7,Intermediary,Technology,Europe,,,,Early Stage; Mezzanine,,,,,,,Europe
+Account 8,Intermediary,Business Services,Europe,www.doryass.com,790,,Early Stage;Buyout,,,,,,,Europe
+Account 9,Intermediary,Energy,Europe,,,,Early Stage,,,,,,,USA
+Portfolio Company 4,Company,Healthcare,Asia Pacific,www.livedata.com,1005,,Co-investment; Growth,,,,,,,Europe
+Portfolio Company 5,Company,Manufacturing,North America,,,,,,,,,,,USA
+Portfolio Company 6,Company,Manufacturing,Europe,,200,,,,,,,,,

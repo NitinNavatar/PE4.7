@@ -378,6 +378,13 @@ public class ReportsTab extends BasePageBusinessLayer {
 		return isDisplayed(driver, addColumnSearchBoxLightning, "Visibility", timeOut, "Report Type Search Box");
 	}
 	
+	@FindBy(xpath="//input[@placeholder='Add filter...']")
+	private WebElement addFilterSearchBox;
+
+	public WebElement addFilterSearchBox(int timeOut) {
+		return isDisplayed(driver, addFilterSearchBox, "Visibility", timeOut, "Filter Search Box");
+	}
+	
 	@FindBy(xpath="//input[@id='reportName']")
 	private WebElement reportNameInputBoxLightning;
 
