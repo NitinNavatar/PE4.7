@@ -501,7 +501,12 @@ public class EnumConstants {
 				return "Lightning App Builder";
 			}
 		},
-		Profiles, Custom_Object, Tabs, Create, Flows, Override, Users, Sharing_Settings, Institution, Firm,
+		Profiles, Custom_Object, Tabs, Create, Flows, Override, Users, Sharing_Settings, Institution, Firm {
+			@Override
+			public String toString() {
+				return "Institution";
+			}
+		},
 		CommunicationTemplates {
 			@Override
 			public String toString() {
@@ -1524,7 +1529,7 @@ public class EnumConstants {
 		},
 		Deal_Contact, Stage_Upd, Pipeline_Comments, Pipeline_Comments_Upd, Legal_Name, Status_Notes, Legal_Name_Upd,
 		Status_Notes_Upd, Vintage_Year_Upd, Description_Upd, Summary_Upd, Fund, Vintage_Year, Theme, Descrption, Clip,
-		Summary, Theme_Name, Clip_Name, FundraisingContacts, Contact
+		Summary, Theme_Name, Clip_Name, FundraisingContacts, Contact, Pipeline_Name
 	};
 
 	public static enum Links {

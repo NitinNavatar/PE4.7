@@ -9464,7 +9464,7 @@ public abstract class BasePage extends BaseLib {
 				"Internal tab on connection section");
 	}
 
-	@FindBy(xpath = "//input[@class='slds-input' and @type='search']")
+	@FindBy(xpath = "//div[@class='main-Container-alltheme']//input[@class='slds-input' and @type='search']")
 	private WebElement searchBoxOnTheme;
 
 	public WebElement getSearchBoxOnTheme(int timeOut) {

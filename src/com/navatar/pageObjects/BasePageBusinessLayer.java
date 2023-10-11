@@ -1411,7 +1411,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			if (ProjectName.MNA.toString().equals(projectName)) {
 				viewList = "All Accounts";
 			} else {
-				viewList = "All Firms";
+				viewList = "All Institutions";
 			}
 			break;
 
@@ -1425,6 +1425,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			viewList = "All";
 			break;
 		case ContactTab:
+			viewList = "All";
+			break;
+		case FundraisingsTab:
 			viewList = "All";
 			break;
 		case ContactsTab:
@@ -4641,7 +4644,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			tabName = "Contacts";
 			break;
 		case InstituitonsTab:
-			tabName = "Firms";
+			tabName = "Institutions";
 			break;
 		case FundraisingsTab:
 			tabName = "Fundraisings";
