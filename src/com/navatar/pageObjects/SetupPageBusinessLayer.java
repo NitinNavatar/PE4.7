@@ -2027,7 +2027,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 		;
 		String xpath = "";
 		xpath = "//*[text()='" + appName + "']/../../following-sibling::*//*[text()='" + developerName
-				+ "']/../../following-sibling::*//*[text()='Show Actions']/..";
+				+ "']/../../following-sibling::*//div[text()='Lightning']/../../..//*[text()='Show Actions']/..";
 		WebElement scrollEle = FindElement(driver,
 				"//div[@class='uiScroller scroller-wrapper scroll-bidirectional native']", "Widget scroll",
 				action.SCROLLANDBOOLEAN, 60);
@@ -6535,7 +6535,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 			switchToFrame(driver, 60, getSetUpPageIframe(60));
 
 			String xpath = "";
-			xpath = "//th//a[text()='" + profileForSelection + "']";
+			xpath = "//td//span[text()='" + profileForSelection + "']/..";
 			ele = FindElement(driver, xpath, profileForSelection, action.SCROLLANDBOOLEAN, 10);
 			ele = isDisplayed(driver, ele, "visibility", 10, profileForSelection);
 			if (clickUsingJavaScript(driver, ele, profileForSelection.toString(), action.BOOLEAN)) {

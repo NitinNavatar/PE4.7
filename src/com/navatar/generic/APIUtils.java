@@ -259,6 +259,63 @@ public class APIUtils {
 	}
 	
 	
+	public void TargetObjectDataUpload(String filePath,String sheetName) {
+		
+		Map<String, Object> data = new HashMap<String, Object>();
+		APIUtils api = new APIUtils();
+		int lastcol = ExcelUtils.getLastColumn(filePath, sheetName, 0);
+
+		int row = ExcelUtils.getLastRow(filePath, sheetName);
+		for (int i = 1; i < row + 1; i++) {
+			String status = ExcelUtils.readData(filePath, sheetName, i, 0);
+			if (!status.equalsIgnoreCase("Created")) {
+				for (int j = 1; j < lastcol; j++) {
+
+					String label = ExcelUtils.readData(filePath, sheetName, 0, j).trim();
+					String value = ExcelUtils.readData(filePath, sheetName, i, j).trim();
+					if (label.equals("RecordTypeId")) {
+						String RT = api.getObjectActiveRecordTypeId("navmnaI__Target__c", value);
+						data.put(label, RT);
+						System.out.println(
+								"Added Data for Target :" + i + " Label :" + label + " with value :" + value);
+					} else if (label.equals("AccountId") || label.equals("navmnaI__Account__c")
+							|| label.equals("navmnaI__Account_Name__c")) {
+						String accoundId = api.getObjectRecordId("Account", value);
+						data.put(label, accoundId);
+						System.out.println(
+								"Added Data for Target :" + i + " Label :" + label + " with value :" + value);
+					} else if (label.equals("navmnaI__Deal__c")) {
+						String dealId = api.getObjectRecordId("navmnaI__Deal__c", value);
+						data.put(label, dealId);
+						System.out.println(
+								"Added Data for Target :" + i + " Label :" + label + " with value :" + value);
+					}else if (label.contains("Date")) {
+						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+
+							String date = api.convertDate(value);
+							data.put(label, date);
+							System.out.println(
+									"Added Data for Target :" + i + " Label :" + label + " with value :" + value);
+						}
+					} else {
+						data.put(label, value);
+						System.out.println(
+								"Added Data for Target :" + i + " Label :" + label + " with value :" + value);
+					}
+
+
+				}
+
+				api.createObejectRecordByAPI("navmnaI__Target__c", data);
+				ExcelUtils.writeDataInExcel(filePath, "Created", sheetName, i, 0);
+			} else {
+				System.out.println("Data already created for Target :" + i);
+			}
+		}
+
+	}
+	
+	
 	public void DealObjectDataUpload(String filePath,String sheetName) {
 		
 		Map<String, Object> data = new HashMap<String, Object>();
