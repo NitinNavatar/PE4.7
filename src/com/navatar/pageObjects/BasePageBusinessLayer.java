@@ -4708,7 +4708,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			break;
 
 		case Object1Tab:
-			tabName = "Firms";
+			tabName = "Institutions";
 			break;
 		case Object2Tab:
 			tabName = "Contacts";
@@ -15328,7 +15328,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		if (!dealsSectionHeaderName.isEmpty()) {
 			ArrayList<String> actualDealsSectionHeaderName = new ArrayList<String>();
-			xPath = "//span[@title='Deals']/../../../..//span[text()=@title]";
+			xPath = "//span[@title='Pipelines']/../../../..//span[text()=@title]";
 			//
 			elements = FindElements(driver, xPath, "Deal section headers");
 			for (WebElement el : elements) {
@@ -15358,7 +15358,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 		if (dealsSectionHeaderMessage != null && !"".equals(dealsSectionHeaderMessage)) {
-			xPath = "//span[@title='Deals']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//div[text()='"
+			xPath = "//span[@title='Pipelines']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//div[text()='"
 					+ dealsSectionHeaderMessage + "']";
 			ele = FindElement(driver, xPath, "Message on deal section", action.SCROLLANDBOOLEAN, 15);
 			if (ele != null) {

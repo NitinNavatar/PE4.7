@@ -13,6 +13,7 @@ import com.navatar.generic.EnumConstants.CSVLabel;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
+import com.navatar.generic.EnumConstants.excelLabel;
 import com.relevantcodes.extentreports.LogStatus;
 
 import static com.navatar.generic.AppListeners.*;
@@ -181,7 +182,7 @@ public class FinancingPageBusinessLayer extends FinancingPage  {
 				label=reuestData[0].replace("_", " ");
 				value=reuestData[1];
 
-				if(PageLabel.Company.toString().equals(reuestData[0]) || PageLabel.Deal.toString().equals(reuestData[0]) ||PageLabel.Firm.toString().equals(reuestData[0])){
+				if(PageLabel.Company.toString().equals(reuestData[0]) || EditPageLabel.Deal.toString().equals(reuestData[0]) ||excelLabel.Institution.toString().equals(reuestData[0])){
 					if (sendKeys(driver, getListTextbox(projectName,label, timeOut), value, label+" : "+value,action)) {
 						ThreadSleep(3000);
 						log(LogStatus.INFO,"Able to send "+value+" to label : "+label,YesNo.Yes);
@@ -306,7 +307,7 @@ public class FinancingPageBusinessLayer extends FinancingPage  {
 				label=reuestData[0].replace("_", " ");
 				value=reuestData[1];
 
-				if(PageLabel.Company.toString().equals(reuestData[0]) || PageLabel.Deal.toString().equals(reuestData[0]) ||PageLabel.Firm.toString().equals(reuestData[0])){
+				if(PageLabel.Company.toString().equals(reuestData[0]) || EditPageLabel.Deal.toString().equals(reuestData[0]) ||excelLabel.Institution.toString().equals(reuestData[0])){
 					if (sendKeys(driver, getListTextbox(projectName,label, timeOut), value, label+" : "+value,action)) {
 						ThreadSleep(3000);
 						log(LogStatus.INFO,"Able to send "+value+" to label : "+label,YesNo.Yes);

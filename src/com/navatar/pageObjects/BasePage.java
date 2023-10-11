@@ -6997,7 +6997,7 @@ public abstract class BasePage extends BaseLib {
 
 		try {
 			return FindElement(driver,
-					"//div[text()='Deal']/parent::h1//lightning-formatted-text[text()='" + dealName + "']",
+					"//div[text()='Pipeline']/parent::h1//lightning-formatted-text[text()='" + dealName + "']",
 					"Deal Header: " + dealName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
 			return FindElement(driver,
@@ -7040,11 +7040,11 @@ public abstract class BasePage extends BaseLib {
 
 		try {
 			return FindElement(driver,
-					"//div[text()='Firm']/parent::h1//lightning-formatted-text[text()='" + companyname + "']",
+					"//div[text()='Institution']/parent::h1//lightning-formatted-text[text()='" + companyname + "']",
 					"Company header: " + companyname, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
 			return FindElement(driver,
-					"//div[text()='Firm']/parent::h1//lightning-formatted-text[text()='\"+dealName+\"']",
+					"//div[text()='Institution']/parent::h1//lightning-formatted-text[text()='\"+dealName+\"']",
 					"Company header: " + companyname, action.SCROLLANDBOOLEAN, timeOut);
 		}
 
@@ -7135,7 +7135,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement dealAcuityDealName(String dealName, int timeOut) {
 
 		List<WebElement> ele = FindElements(driver,
-				"//a[text()='" + dealName + "']/ancestor::th[@data-label='Deal Name']").stream()
+				"//a[text()='" + dealName + "']/ancestor::th[@data-label='Pipeline Name']").stream()
 				.filter(x -> x.isDisplayed()).collect(Collectors.toList());
 		if (ele.size() > 0) {
 			return ele.get(0);
@@ -7227,7 +7227,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement dealAcuityStageName(String dealName, String stage, int timeOut) {
 
 		String xpath = "//a[text()='" + dealName
-				+ "']/ancestor::th[@data-label='Deal Name']/following-sibling::td[@data-label='Stage']//span//*[text()='"
+				+ "']/ancestor::th[@data-label='Pipeline Name']/following-sibling::td[@data-label='Stage']//span//*[text()='"
 				+ stage + "']";
 		try {
 			return FindElement(driver, xpath, "Header: " + stage, action.SCROLLANDBOOLEAN, timeOut);
@@ -7331,7 +7331,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement dealAcuityHSRName(String dealName, String hsr, int timeOut) {
 
 		String xpath = "//a[text()='" + dealName
-				+ "']/ancestor::th[@data-label='Deal Name']/following-sibling::td[@data-label='Highest Stage Reached']//span//*[text()='"
+				+ "']/ancestor::th[@data-label='Pipeline Name']/following-sibling::td[@data-label='Highest Stage Reached']//span//*[text()='"
 				+ hsr + "']";
 		try {
 			return FindElement(driver, xpath, "Header: " + hsr, action.SCROLLANDBOOLEAN, timeOut);
@@ -7382,7 +7382,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement dealAcuityDateReceived2(String dealName, int timeOut) {
 
-		String xpath = "//a[text()='" + dealName + "']/ancestor::tr//td[@data-label='Date Received']//div/*";
+		String xpath = "//a[text()='" + dealName + "']/ancestor::tr//td[@data-label='Log In Date']//div/*";
 		try {
 			return FindElement(driver, xpath, "Header: " + "dateReceived", action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -9545,7 +9545,7 @@ public abstract class BasePage extends BaseLib {
 
 	public List<WebElement> getsortingDateRecived(int timeOut) {
 
-		String xpath = "//*[@class='for_desk dealDataTable tabcont shadowremovedatatable']//td[@data-label='Date Received']//lightning-formatted-date-time";
+		String xpath = "//*[@class='for_desk dealDataTable tabcont shadowremovedatatable']//td[@data-label='Log In Date']//lightning-formatted-date-time";
 		List<WebElement> listOfNameElements = FindElements(driver, xpath, "sorting Date Recived");
 		if (listOfNameElements.size() == 0) {
 			return listOfNameElements = FindElements(driver, xpath, "sorting Date Recived");
