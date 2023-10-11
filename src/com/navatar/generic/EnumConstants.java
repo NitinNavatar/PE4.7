@@ -292,7 +292,12 @@ public class EnumConstants {
 				return "Indication of Interest";
 			}
 		},
-		LOI, Due_Diligence, Parked, Closed, Closed_Updated, DD, NonDisclosureAgreement {
+		LOI,  Parked, Closed, Closed_Updated, DD,Due_Diligence{
+			@Override
+			public String toString() {
+				return "Idea Generation";
+			}
+		}, NonDisclosureAgreement {
 			@Override
 			public String toString() {
 				return "Non-Disclosure Agreement";
@@ -401,7 +406,12 @@ public class EnumConstants {
 				return "Time Log";
 			}
 		},
-		Valuation, Deal, Deal_Expert {
+		Valuation, Deal{
+			@Override
+			public String toString() {
+				return "Pipeline";
+			}
+		}, Deal_Expert {
 			@Override
 			public String toString() {
 				return "Deal Expert";
@@ -1451,7 +1461,12 @@ public class EnumConstants {
 	};
 
 	public static enum PageLabel {
-		First_Name, Last_Name, Email, Fund_Name, Fundraising_Name, Deal_Name, Status, Investment_Type, Meeting_Type {
+		First_Name, Last_Name, Email, Fund_Name, Fundraising_Name, Status, Investment_Type,Deal_Name{
+			@Override
+			public String toString() {
+				return "Pipeline Name";
+			}
+		}, Meeting_Type {
 			@Override
 			public String toString() {
 				return "Meeting Type";
@@ -1470,9 +1485,14 @@ public class EnumConstants {
 
 			}
 		},
-		Watchlist, Stage, Highest_Stage_Reached, Deal_Quality_Score, Average_Deal_Quality_Score, Date_Received,
+		Watchlist, Stage, Highest_Stage_Reached, Deal_Quality_Score, Average_Deal_Quality_Score,
 		Total_Deals_Shown, Profile_Image, Industry, Watch_list, Deal_Conversion_Date, Portfolio_Company,
-		Related_Associations, Name, Subject, Subject_updated, Due_Date, New_Task, Related_To, Comments, Edit,
+		Related_Associations, Name, Subject, Subject_updated, Due_Date, New_Task, Related_To, Comments, Edit,Date_Received{
+			@Override
+			public String toString() {
+				return "Log In Date";
+			}
+		},
 		Assigned_To {
 			@Override
 			public String toString() {
@@ -1490,8 +1510,13 @@ public class EnumConstants {
 		},
 		Contact_Name, Tax_Forms, Partner_Type, Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places,
 		Values, Is_Touchpoint, Description, Request, Date_Requested, Attendee_Staff, Label, Panel_Width, Panel_Height,
-		Deal, Company, Firm, Fundraising, Team_Member_Role, Type_of_dept, Member, Page_Layout_Name, Organizer,
-		Convert_to_Portfolio, Deal_Contact_Type, Team_Member, Location, End, All_Day_Event, Role, Lender_Status {
+		 Company, Firm, Fundraising, Team_Member_Role, Type_of_dept, Member, Page_Layout_Name, Organizer,
+		Convert_to_Portfolio, Deal_Contact_Type, Team_Member, Location, End, All_Day_Event, Role,Deal{
+			@Override
+			public String toString() {
+				return "Pipeline";
+			}
+		}, Lender_Status {
 			@Override
 			public String toString() {
 				return "Lender Status";
