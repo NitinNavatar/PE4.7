@@ -1,4 +1,4 @@
-
+//
 package com.navatar.pageObjects;
 
 import org.apache.poi.hssf.view.brush.PendingPaintings;
@@ -1166,13 +1166,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			viewList = "All Contacts";
 			break;
 		case InstituitonsTab:
-			viewList = "All Firms";
+			viewList = "All Institutions";
 			break;
 		case DealTab:
 			viewList = "All";
 			break;
 		case CompaniesTab:
-			viewList = "All Companies";
+			viewList = "All Institutions";
 			break;
 		case LimitedPartner:
 			viewList = "All Limited Partners";
@@ -13873,7 +13873,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 					}
 
-					else if (labelName.contains("User")) {
+					else if (labelName.contains("Assigned To")) {
 						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
 								+ labelName + "']/..//button";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
@@ -15156,7 +15156,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		}
 
-		xPath = "//span[@class=\"slds-truncate\" and @title='" + defaultSelectedTab + "']";
+		xPath = "//span[@class='slds-radio_faux' and text()='" + defaultSelectedTab + "']";
 		ele = FindElement(driver, xPath, "header of selected tag", action.SCROLLANDBOOLEAN, 15);
 		if (ele != null) {
 			log(LogStatus.INFO, defaultSelectedTab + " tab is default selected on Tagged section", YesNo.No);
@@ -15955,7 +15955,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ArrayList<String> result = new ArrayList<String>();
 		if (firmsTagName != null && firmTimesReferenced != null) {
 			if (firmsTagName.length == firmTimesReferenced.length) {
-				if (click(driver, getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+				if (click(driver, getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 
 					for (int i = 0; i < firmsTagName.length; i++) {
@@ -15997,7 +15997,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		if (peopleTagName != null && peopleTimesReferenced != null) {
 			if (peopleTagName.length == peopleTimesReferenced.length) {
-				if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+				if (click(driver, getTaggedRecordName("Contacts", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 					for (int i = 0; i < peopleTagName.length; i++) {
 						if (getTaggedRecordName("People", peopleTagName[i], 30) != null) {
@@ -16040,7 +16040,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (isInstitutionRecordType == false) {
 			if (dealTagName != null && dealTimesReferenced != null) {
 				if (dealTagName.length == dealTimesReferenced.length) {
-					if (click(driver, getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 
 						for (int i = 0; i < dealTagName.length; i++) {
@@ -17723,7 +17723,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ArrayList<String> result = new ArrayList<String>();
 		if (firmTagName != null && firmTimesReferenced != null) {
 			if (firmTagName.length == firmTimesReferenced.length) {
-				if (click(driver, getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+				if (click(driver, getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 
 					for (int i = 0; i < firmTagName.length; i++) {
@@ -17791,7 +17791,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		if (peopleTagName != null && peopleTimesReferenced != null) {
 			if (peopleTagName.length == peopleTimesReferenced.length) {
-				if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+				if (click(driver, getTaggedRecordName("Contacts", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 
 					for (int i = 0; i < peopleTagName.length; i++) {
@@ -17858,7 +17858,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (isInstitutionRecordType == false) {
 			if (dealTagName != null && dealTimesReferenced != null) {
 				if (dealTagName.length == dealTimesReferenced.length) {
-					if (click(driver, getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 
 						for (int i = 0; i < dealTagName.length; i++) {
@@ -20536,9 +20536,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		WebElement ele;
 
 		ArrayList<String> result = new ArrayList<String>();
-		String parentId = switchToWindowOpenNextToParentWindow(driver);
-		if (parentId != null) {
-
+//		String parentId = switchToWindowOpenNextToParentWindow(driver);
+//		if (parentId != null) {
+         refresh(driver);
 			if (headingOfInteractionPage(recordName, 20) != null) {
 				log(LogStatus.INFO, recordName + " interaction page has been open ", YesNo.No);
 				if (correspondenceHeader != null && correspondenceHeader.length != 0) {
@@ -20811,12 +20811,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				log(LogStatus.ERROR, recordName + " interaction page is not open ", YesNo.No);
 				result.add(recordName + " interaction page is not open ");
 			}
-			driver.close();
-			driver.switchTo().window(parentId);
-		} else {
-			log(LogStatus.ERROR, "New tab did not open after click", YesNo.No);
-			result.add("New tab did not open after click");
-		}
+//			driver.close();
+//			driver.switchTo().window(parentId);
+//		} else {
+//			log(LogStatus.ERROR, "New tab did not open after click", YesNo.No);
+//			result.add("New tab did not open after click");
+//		}
 		return result;
 	}
 
@@ -21311,7 +21311,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String xPath;
 		List<WebElement> elements;
 		ArrayList<String> result = new ArrayList<String>();
-		if (click(driver, getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+		if (click(driver, getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 			xPath = "//span[text()='Firms']/ancestor::table//button[@name='timesRef']";
 			elements = FindElements(driver, xPath, "Time Reference Count");
@@ -21329,7 +21329,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			result.add("Not able to click on Firms tab name");
 		}
 
-		if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+		if (click(driver, getTaggedRecordName("Contacts", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 			xPath = "//span[text()='People']/ancestor::table//button[@name='timesRef']";
 			elements = FindElements(driver, xPath, "Time Reference Count");
@@ -21346,7 +21346,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			result.add("Not able to click on People tab name");
 		}
 		if (isInstitutionRecord == false) {
-			if (click(driver, getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+			if (click(driver, getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 				xPath = "//span[text()='Deals']/ancestor::table//button[@name='timesRef']";
 				elements = FindElements(driver, xPath, "Time Reference Count");
@@ -21394,7 +21394,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String xPath;
 		List<WebElement> elements;
 		ArrayList<String> result = new ArrayList<String>();
-		if (click(driver, getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+		if (click(driver, getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 			xPath = "//span[text()='Firms']/ancestor::table//button[@name='timesRef']";
 			elements = FindElements(driver, xPath, "Time Reference Count");
@@ -21412,7 +21412,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			result.add("Not able to click on Firms tab name");
 		}
 
-		if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+		if (click(driver, getTaggedRecordName("Contacts", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 			xPath = "//span[text()='People']/ancestor::table//button[@name='timesRef']";
 			elements = FindElements(driver, xPath, "Time Reference Count");
@@ -21719,7 +21719,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String xPath;
 		WebElement ele;
 		List<WebElement> elements;
-		String parentId = switchToWindowOpenNextToParentWindow(driver);
+//		String parentId = switchToWindowOpenNextToParentWindow(driver);
 
 		ArrayList<String> result = new ArrayList<String>();
 		if (getFilterIconOnInteractionPopup(20) != null) {
@@ -21919,8 +21919,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							YesNo.No);
 					result.add("Not able to click on checkbox of " + filterValue[filterValueLength - 1]);
 				}
-				driver.close();
-				driver.switchTo().window(parentId);
+//				driver.close();
+//				driver.switchTo().window(parentId);
 
 			} else {
 				log(LogStatus.ERROR, "Not able to click on filter icon", YesNo.No);
@@ -22154,7 +22154,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ArrayList<String> result = new ArrayList<String>();
 		if (companyTag != null) {
 
-			if (click(driver, getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+			if (click(driver, getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 				for (int i = 0; i < companyTag.length; i++) {
 					if (getTaggedRecordName("Firms", companyTag[i], 10) == null) {
@@ -22171,7 +22171,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		if (peopleTag != null) {
 
-			if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+			if (click(driver, getTaggedRecordName("Contacts", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 
 				for (int i = 0; i < peopleTag.length; i++) {
@@ -22190,7 +22190,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (isInstitutionRecord == false) {
 			if (dealTag != null) {
 
-				if (click(driver, getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+				if (click(driver, getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 
 					for (int i = 0; i < dealTag.length; i++) {
@@ -22234,7 +22234,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ArrayList<String> result = new ArrayList<String>();
 		if (companyTag != null) {
 
-			if (click(driver, getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+			if (click(driver, getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 				for (int i = 0; i < companyTag.length; i++) {
 					if (getTaggedRecordName("Firms", companyTag[i], 10) == null) {
@@ -22251,7 +22251,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		if (peopleTag != null) {
 
-			if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+			if (click(driver, getTaggedRecordName("Contact", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 
 				for (int i = 0; i < peopleTag.length; i++) {
@@ -22420,13 +22420,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 			ThreadSleep(5000);
-			if (CommonLib.clickUsingJavaScript(driver, recordsNameOnTaggedSection(TaggedName.Firms.toString(), 30),
+			if (CommonLib.clickUsingJavaScript(driver, recordsNameOnTaggedSection(excelLabel.Firms.toString(), 30),
 					"Records on firm Tagged", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on record on firm tab", YesNo.No);
 
 				String id = switchOnWindow(driver);
 				if (id != null) {
-					if (getTabName("Firm", 20) != null) {
+					if (getTabName("Institution", 20) != null) {
 						log(LogStatus.INFO, "The page is redirecting to firm tab after click on Entity type of firm",
 								YesNo.No);
 					} else {
@@ -22451,7 +22451,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			result.add("Not able to click on firm tab name");
 		}
 
-		if (click(driver, getTaggedRecordName(TaggedName.People.toString(), 30), TaggedName.People.toString() + " tab",
+		if (click(driver, getTaggedRecordName(excelLabel.Contacts.toString(), 30), excelLabel.Contacts.toString() + " tab",
 				action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 			ThreadSleep(5000);
@@ -22660,7 +22660,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			String[][] basicSectionVerificationData, String[][] advancedSectionVerificationData, IconType icon,
 			PageName pageName) {
 		ArrayList<String> negativeResult = new ArrayList<String>();
-
+        refresh(driver);
 		if (pageName.toString().equals("AcuityDetails")) {
 			if (CommonLib.clickUsingJavaScript(driver, subjectOfInteractionCard(subjectName, 15),
 					"Subject Name on Intraction", action.BOOLEAN)) {

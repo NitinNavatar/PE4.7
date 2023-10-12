@@ -193,7 +193,7 @@ public class EnumConstants {
 
 			@Override
 			public String toString() {
-				return "Firms";
+				return "Institution";
 			}
 
 		},
@@ -263,7 +263,12 @@ public class EnumConstants {
 	}
 
 	public static enum IconType {
-		updatePhoto, DeletePhoto, Edit, Locked, Task, Call, Meeting, Event, Email;
+		updatePhoto, DeletePhoto, Edit, Locked, Task,  Meeting, Event, Email,Call{
+			@Override
+			public String toString() {
+				return "Call";
+			}
+		};
 	}
 
 	public static enum NavatarSetupSideMenuTab {
@@ -2189,7 +2194,12 @@ public class EnumConstants {
 	}
 
 	public static enum TaggedName {
-		Companies, People, Deals, Firms, Funds;
+		Companies, People, Deals, Funds,Firms{
+			@Override
+			public String toString() {
+				return "Institutions";
+			}
+		};
 	}
 	public static enum Interactionslabel {
 		Type,Date,Subject,Details,Participants,Tags;

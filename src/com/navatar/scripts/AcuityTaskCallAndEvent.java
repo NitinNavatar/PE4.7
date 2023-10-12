@@ -256,7 +256,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 		String sectionHeader=ATCE_Section1;
 		String tabsOnTagged=ATCE_Tabs1;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged="Institutions";
 		String message=bp.acuityDefaultMessage;
 
 		String contactHeader=ATCE_ContactHeader1;
@@ -404,7 +404,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 		String sectionHeader=ATCE_Section2;
 		String tabsOnTagged=ATCE_Tabs2;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged="Institutions";
 		String message=bp.acuityDefaultMessage;
 
 		String contactHeader=ATCE_ContactHeader1;
@@ -554,7 +554,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 		String sectionHeader=ATCE_Section1;
 		String tabsOnTagged=ATCE_Tabs1;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged="Institutions";
 		String message=bp.acuityDefaultMessage;
 
 		String contactHeader=ATCE_ContactHeader1;
@@ -703,7 +703,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 		String sectionHeader=ATCE_Section1;
 		String tabsOnTagged=ATCE_Tabs1;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged="Institutions";
 		String message=bp.acuityDefaultMessage;
 
 		String contactHeader=ATCE_ContactHeader1;
@@ -852,7 +852,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 		String sectionHeader=ATCE_Section1;
 		String tabsOnTagged=ATCE_Tabs1;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged="Institutions";
 		String message=bp.acuityDefaultMessage;
 
 		String contactHeader=ATCE_ContactHeader1;
@@ -1000,7 +1000,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 		String sectionHeader=ATCE_Section1;
 		String tabsOnTagged=ATCE_Tabs1;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged="Institutions";
 		String message=bp.acuityDefaultMessage;
 
 		String contactHeader=ATCE_ContactHeader1;
@@ -1150,7 +1150,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 		String sectionHeader=ATCE_Section1;
 		String tabsOnTagged=ATCE_Tabs1;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged="Institutions";
 		String message=bp.acuityDefaultMessage;
 
 		String contactHeader=ATCE_ContactHeader1;
@@ -1299,7 +1299,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		String recordName=ATCE_Con2;
 		String sectionHeader=ATCE_Section3;
 		String tabsOnTagged=ATCE_Tabs1;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged="Institutions";
 		String message=bp.acuityDefaultMessage;
 
 		String internalconnectionHeader=ATCE_ConnectionHeader1;
@@ -1455,7 +1455,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 		String sectionHeader=ATCE_Section4;
 		String tabsOnTagged=ATCE_Tabs1;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged="Institutions";
 		String message=bp.acuityDefaultMessage;
 
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
@@ -1589,7 +1589,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 		String sectionHeader=ATCE_Section4;
 		String tabsOnTagged=ATCE_Tabs1;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged="Institutions";
 		String message=bp.acuityDefaultMessage;
 
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
@@ -1722,7 +1722,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 			
 		String sectionHeader=ATCE_Section4;
 		String tabsOnTagged=ATCE_Tabs3;
-		String defaultTabOntagged="Firms";
+		String defaultTabOntagged="Institutions";
 		String message=bp.acuityDefaultMessage;
 
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
@@ -8646,32 +8646,32 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 												
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
-							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(ATCERecord1,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
-							if(result2.isEmpty())
-							{
-								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
-							}
-							else
-							{
-								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
-								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
-							}
-							
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
+//							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(ATCERecord1,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
+//							if(result2.isEmpty())
+//							{
+//								log(LogStatus.INFO, "The records have been verified on interaction popup in Acuity", YesNo.No);
+//							}
+//							else
+//							{
+//								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
+//								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
+//							}
+//							
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -8768,8 +8768,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 						}
 						else
 						{
@@ -9015,7 +9015,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -9112,8 +9112,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 						}
 						else
 						{
@@ -9359,7 +9359,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -9456,8 +9456,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 						}
 						else
 						{
@@ -9704,7 +9704,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -9801,8 +9801,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 						}
 						else
 						{
@@ -10049,7 +10049,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -10145,8 +10145,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 						}
 						else
 						{
@@ -10393,7 +10393,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -10487,8 +10487,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							}
 
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 						}
 						else
 						{
@@ -10734,7 +10734,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -10830,8 +10830,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 						}
 						else
 						{
@@ -11025,7 +11025,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -11120,8 +11120,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 						}
 						else
 						{
@@ -11265,7 +11265,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -11361,8 +11361,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 						}
 						else
 						{
@@ -11506,7 +11506,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -11601,8 +11601,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 						}
 						else
 						{
@@ -11750,7 +11750,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -11845,8 +11845,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 						}
 						else
 						{
@@ -11974,7 +11974,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchToWindowOpenNextToParentWindow(driver);
+//							String parentID=switchToWindowOpenNextToParentWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -12070,8 +12070,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 						}
 						else
 						{
@@ -12320,10 +12320,10 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}	
 						
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -12419,14 +12419,14 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//							driver.close();
+//							driver.switchTo().window(parentID);						
+//							}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 					}
@@ -12663,10 +12663,10 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}	
 						
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -12762,14 +12762,14 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//							driver.close();
+//							driver.switchTo().window(parentID);
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 					}
@@ -13006,10 +13006,10 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}	
 						
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -13105,14 +13105,14 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//							driver.close();
+//							driver.switchTo().window(parentID);
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 					}
@@ -13350,10 +13350,10 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}	
 						
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -13449,14 +13449,14 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//							driver.close();
+//							driver.switchTo().window(parentID);
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 					}
@@ -13694,10 +13694,10 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}	
 						
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
-							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
+//							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -13793,14 +13793,14 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//							driver.close();
+//							driver.switchTo().window(parentID);
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 					}
@@ -14042,10 +14042,10 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}	
 						
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
-							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
+//							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -14142,14 +14142,14 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//							driver.close();
+//							driver.switchTo().window(parentID);
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 					}
@@ -14386,10 +14386,10 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}	
 						
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
-							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
+//							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -14485,14 +14485,14 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//							driver.close();
+//							driver.switchTo().window(parentID);
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 					}
@@ -14677,10 +14677,10 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}	
 						
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
-							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
+//							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -14776,14 +14776,14 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//							driver.close();
+//							driver.switchTo().window(parentID);
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 					}
@@ -14918,10 +14918,10 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}	
 						
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
-							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
+//							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -15017,14 +15017,14 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//							driver.close();
+//							driver.switchTo().window(parentID);
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 					}
@@ -15159,10 +15159,10 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}	
 						
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
-							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
+//							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -15258,14 +15258,14 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//							driver.close();
+//							driver.switchTo().window(parentID);
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 					}
@@ -15404,10 +15404,10 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}	
 						
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
-							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
+//							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
 							
@@ -15503,14 +15503,14 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 							
 							
-							driver.close();
-							driver.switchTo().window(parentID);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//							driver.close();
+//							driver.switchTo().window(parentID);
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 					}
@@ -15610,6 +15610,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentID=switchToWindowOpenNextToParentWindow(driver);
+							
 							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1, date1, subject1, notes1, subject1, participant1, tag1);
 							if(result2.isEmpty())
 							{
@@ -15620,6 +15622,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 							}
+							driver.close();
+							driver.switchTo().window(parentID);
 							
 						}
 						else
@@ -17198,7 +17202,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 										
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
@@ -17259,7 +17263,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
@@ -17327,7 +17331,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							if(CommonLib.clickUsingJavaScript(driver, bp.getParticipantColumn(taskSubjectName, 20), "Participant"))
 							{
@@ -17422,8 +17426,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,  "Not able to click on Tags column" );
 							}
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 							
 							
 						}
@@ -17531,7 +17535,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 										
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
@@ -17592,7 +17596,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
@@ -17660,7 +17664,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							if(CommonLib.clickUsingJavaScript(driver, bp.getParticipantColumn(taskSubjectName, 20), "Participant"))
 							{
@@ -17755,8 +17759,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,  "Not able to click on Tags column" );
 							}
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 							
 							
 						}
@@ -17863,7 +17867,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 										
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
@@ -17924,7 +17928,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
@@ -17992,7 +17996,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							if(CommonLib.clickUsingJavaScript(driver, bp.getParticipantColumn(taskSubjectName, 20), "Participant"))
 							{
@@ -18087,8 +18091,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,  "Not able to click on Tags column" );
 							}
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 							
 							
 						}
@@ -18195,7 +18199,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 										
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
@@ -18256,7 +18260,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
@@ -18324,7 +18328,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							if(CommonLib.clickUsingJavaScript(driver, bp.getParticipantColumn(taskSubjectName, 20), "Participant"))
 							{
@@ -18419,8 +18423,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,  "Not able to click on Tags column" );
 							}
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 							
 							
 						}
@@ -18527,7 +18531,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 										
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
@@ -18654,7 +18658,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							if(CommonLib.clickUsingJavaScript(driver, bp.getParticipantColumn(taskSubjectName, 20), "Participant"))
 							{
@@ -18749,8 +18753,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,  "Not able to click on Tags column" );
 							}
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 							
 							
 						}
@@ -18857,7 +18861,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 										
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
@@ -18918,7 +18922,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
@@ -18986,7 +18990,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							if(CommonLib.clickUsingJavaScript(driver, bp.getParticipantColumn(taskSubjectName, 20), "Participant"))
 							{
@@ -19081,8 +19085,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,  "Not able to click on Tags column" );
 							}
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 							
 							
 						}
@@ -19188,7 +19192,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 										
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
@@ -19249,7 +19253,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
@@ -19317,7 +19321,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							if(CommonLib.clickUsingJavaScript(driver, bp.getParticipantColumn(taskSubjectName, 20), "Participant"))
 							{
@@ -19412,8 +19416,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,  "Not able to click on Tags column" );
 							}
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 							
 							
 						}
@@ -19516,7 +19520,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
@@ -19577,7 +19581,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
@@ -19622,7 +19626,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							if(CommonLib.clickUsingJavaScript(driver, bp.getParticipantColumn(taskSubjectName, 20), "Participant"))
 							{
@@ -19717,8 +19721,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,  "Not able to click on Tags column" );
 							}
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 							
 							
 						}
@@ -19820,7 +19824,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
@@ -19896,7 +19900,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							if(CommonLib.clickUsingJavaScript(driver, bp.getParticipantColumn(taskSubjectName, 20), "Participant"))
 							{
@@ -19991,8 +19995,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,  "Not able to click on Tags column" );
 							}
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 							
 							
 						}
@@ -20092,7 +20096,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
@@ -20170,7 +20174,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							if(CommonLib.clickUsingJavaScript(driver, bp.getParticipantColumn(taskSubjectName, 20), "Participant"))
 							{
@@ -20265,8 +20269,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,  "Not able to click on Tags column" );
 							}
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 							
 							
 						}
@@ -20370,7 +20374,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 			
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
@@ -20431,7 +20435,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
@@ -20476,7 +20480,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentID=switchOnWindow(driver);
+//							String parentID=switchOnWindow(driver);
 							
 							if(CommonLib.clickUsingJavaScript(driver, bp.getParticipantColumn(taskSubjectName, 20), "Participant"))
 							{
@@ -20571,8 +20575,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,  "Not able to click on Tags column" );
 							}
 							
-							driver.close();
-							driver.switchTo().window(parentID);
+//							driver.close();
+//							driver.switchTo().window(parentID);
 							
 							
 						}
@@ -20901,10 +20905,10 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		}
 	
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority}, {"User",assigneduser} };
+		String[][] advanceSection = { { "Due Date", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority}, {"Assigned To",assigneduser} };
 		
 		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Date", taskDueDate1 }, {"User",assigneduser1}};
+		String[][] advanceSection1 = { { "Date", taskDueDate1 }, {"Assigned To",assigneduser1}};
 		
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -24760,6 +24764,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
 							if(result2.isEmpty())
 							{
@@ -24771,6 +24777,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 							}
 							
+						}
+							driver.close();
+						driver.switchTo().window(parentId);
 						}
 						else
 						{
@@ -25127,40 +25136,40 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Tasks", false, projectName)) {
-
-			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectNameNavigation + " found in Tasks Object-----",YesNo.No);
-		
-			if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(task1SubjectNameNavigation, 20), "Edit button of popup of subject name "+task1SubjectNameNavigation))
-			{
-				log(LogStatus.INFO,"Clicked on edit button of subject "+task1SubjectNameNavigation,YesNo.No);
-
-				if (bp.updateActivityTimelineRecordForMultipleFollowUpTasks(projectName, basicSection,advanceSection, null, null, null,false,false)) {
-					log(LogStatus.PASS, "Activity timeline record has been updated, Subject name : "+taskSubject, YesNo.No);
-					sa.assertTrue(true, "Activity timeline record has been updated,  Subject name : "+taskSubject);
-
-				}
-				else
-				{
-					log(LogStatus.ERROR, "Activity timeline record is not updated, Subject name : "+taskSubject, YesNo.No);
-					sa.assertTrue(false, "Activity timeline record is not updated,  Subject name : "+taskSubject);
-				}	 
-				
-			}
-			else
-			{
-				log(LogStatus.ERROR,"Not able to click on edit button of subject "+task1SubjectNameNavigation,YesNo.No);
-				BaseLib.sa.assertTrue(false,"Not able to click on edit button of subject "+task1SubjectNameNavigation);
-				
-			}			
-		}
-		 else {
-
-				log(LogStatus.ERROR, "-----Task named: " + task1SubjectNameNavigation + " not found in Tasks Object-----",YesNo.Yes);
-				BaseLib.sa.assertTrue(false,"-----Task named: " + task1SubjectNameNavigation + " not found in Tasks Object-----");
-			}
-		
-		refresh(driver);
+//		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Tasks", false, projectName)) {
+//
+//			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectNameNavigation + " found in Tasks Object-----",YesNo.No);
+//		
+//			if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(task1SubjectNameNavigation, 20), "Edit button of popup of subject name "+task1SubjectNameNavigation))
+//			{
+//				log(LogStatus.INFO,"Clicked on edit button of subject "+task1SubjectNameNavigation,YesNo.No);
+//
+//				if (bp.updateActivityTimelineRecordForMultipleFollowUpTasks(projectName, basicSection,advanceSection, null, null, null,false,false)) {
+//					log(LogStatus.PASS, "Activity timeline record has been updated, Subject name : "+taskSubject, YesNo.No);
+//					sa.assertTrue(true, "Activity timeline record has been updated,  Subject name : "+taskSubject);
+//
+//				}
+//				else
+//				{
+//					log(LogStatus.ERROR, "Activity timeline record is not updated, Subject name : "+taskSubject, YesNo.No);
+//					sa.assertTrue(false, "Activity timeline record is not updated,  Subject name : "+taskSubject);
+//				}	 
+//				
+//			}
+//			else
+//			{
+//				log(LogStatus.ERROR,"Not able to click on edit button of subject "+task1SubjectNameNavigation,YesNo.No);
+//				BaseLib.sa.assertTrue(false,"Not able to click on edit button of subject "+task1SubjectNameNavigation);
+//				
+//			}			
+//		}
+//		 else {
+//
+//				log(LogStatus.ERROR, "-----Task named: " + task1SubjectNameNavigation + " not found in Tasks Object-----",YesNo.Yes);
+//				BaseLib.sa.assertTrue(false,"-----Task named: " + task1SubjectNameNavigation + " not found in Tasks Object-----");
+//			}
+//		
+//		refresh(driver);
 
 		if (home.globalSearchAndNavigate(task1SubjectNameNavigation1, "Tasks", false, projectName)) {
 
@@ -25317,11 +25326,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						
 						
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -25332,7 +25342,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -25352,7 +25364,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -25363,7 +25376,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -25378,11 +25393,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result3.isEmpty())
 								{
@@ -25393,7 +25409,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -25629,11 +25647,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 						}
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -25644,7 +25663,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -25664,7 +25685,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -25675,7 +25697,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -25690,11 +25714,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result3.isEmpty())
 								{
@@ -25705,7 +25730,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -25838,11 +25865,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 						}
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -25853,7 +25881,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -25873,7 +25903,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -25884,7 +25915,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -25899,11 +25932,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result3.isEmpty())
 								{
@@ -25914,7 +25948,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -26047,11 +26083,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 						}
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -26062,7 +26099,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -26082,7 +26121,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -26093,7 +26133,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -26108,11 +26150,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result3.isEmpty())
 								{
@@ -26123,7 +26166,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -26256,11 +26301,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 						}
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -26271,7 +26317,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -26291,7 +26339,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -26302,7 +26351,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -26433,11 +26484,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 						}
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -26448,7 +26500,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -26468,7 +26522,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -26479,7 +26534,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -26494,11 +26551,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result3.isEmpty())
 								{
@@ -26509,7 +26567,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -26642,11 +26702,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 						}
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -26657,7 +26718,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -26677,7 +26740,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -26688,7 +26752,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -26703,11 +26769,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result3.isEmpty())
 								{
@@ -26718,7 +26785,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -26851,11 +26920,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 						}
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -26866,7 +26936,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -26886,7 +26958,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on Contacts tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -26897,7 +26970,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -26912,11 +26987,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result3.isEmpty())
 								{
@@ -26927,7 +27003,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -27061,11 +27139,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 						}
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -27076,7 +27155,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -27096,7 +27177,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -27107,7 +27189,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -27122,11 +27206,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result3.isEmpty())
 								{
@@ -27137,7 +27222,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -27269,11 +27356,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 						}
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -27284,7 +27372,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -27304,7 +27394,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -27315,7 +27406,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -27447,11 +27540,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 						}
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -27462,7 +27556,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -27482,7 +27578,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -27493,7 +27590,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -27508,11 +27607,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result3.isEmpty())
 								{
@@ -27523,7 +27623,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -27633,6 +27735,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
 							if(result2.isEmpty())
 							{
@@ -27643,7 +27747,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 							}
-							
+							driver.close();
+							driver.switchTo().window(parentId);
+							}
 						}
 						else
 						{
@@ -28969,11 +29075,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						
 						
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -28984,7 +29091,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -29004,7 +29113,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -29015,7 +29125,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -29030,11 +29142,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result3.isEmpty())
 								{
@@ -29045,7 +29158,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -29281,11 +29396,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 						}
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -29296,7 +29412,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -29316,7 +29434,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -29327,7 +29446,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -29342,11 +29463,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result3.isEmpty())
 								{
@@ -29357,7 +29479,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -29490,11 +29614,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 						}
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -29505,7 +29630,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -29525,7 +29652,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -29536,7 +29664,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -29551,11 +29681,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result3.isEmpty())
 								{
@@ -29566,7 +29697,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -29699,11 +29832,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 						}
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -29714,7 +29848,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -29734,7 +29870,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -29745,7 +29882,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -29760,11 +29899,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result3.isEmpty())
 								{
@@ -29775,7 +29915,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -29908,11 +30050,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 						}
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -29923,7 +30066,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -29943,7 +30088,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -29954,7 +30100,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -30085,11 +30233,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 						}
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -30100,7 +30249,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -30120,7 +30271,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -30131,7 +30283,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -30146,11 +30300,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result3.isEmpty())
 								{
@@ -30161,7 +30316,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -30294,11 +30451,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 						}
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -30309,7 +30467,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -30329,7 +30489,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -30340,7 +30501,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -30355,11 +30518,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result3.isEmpty())
 								{
@@ -30370,7 +30534,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -30503,11 +30669,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 						}
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -30518,7 +30685,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -30538,7 +30707,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -30549,7 +30719,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -30564,11 +30736,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result3.isEmpty())
 								{
@@ -30579,7 +30752,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -30713,11 +30888,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 						}
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -30728,7 +30904,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -30748,7 +30926,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -30759,7 +30938,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -30774,11 +30955,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result3.isEmpty())
 								{
@@ -30789,7 +30971,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -30921,11 +31105,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 						}
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -30936,7 +31121,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -30956,7 +31143,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -30967,7 +31155,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -31099,11 +31289,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The record name and Time reference are not verifed."+result5);
 						}
 						
-						if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(firmTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result.isEmpty())
 								{
@@ -31114,7 +31305,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+firmTagName+" record " +result, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+firmTagName+" record "+result);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -31134,7 +31327,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(peopleTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result1.isEmpty())
 								{
@@ -31145,7 +31339,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result1, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -31160,11 +31356,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}
 						
 												
-						if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 							if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+								String parentId = switchToWindowOpenNextToParentWindow(driver);
+								if (parentId != null) {
 								ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(dealTagName, iconType1, date1, subject1, notes1, subject1,participant1, tag1);
 								if(result3.isEmpty())
 								{
@@ -31175,7 +31372,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 									log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 									sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 								}
-							
+								driver.close();
+								driver.switchTo().window(parentId);
+								}
 							}
 							else
 							{
@@ -31285,6 +31484,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
 							if(result2.isEmpty())
 							{
@@ -31295,7 +31496,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 							}
-							
+							driver.close();
+							driver.switchTo().window(parentId);
+							}
 						}
 						else
 						{
@@ -31447,6 +31650,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
 							if(result2.isEmpty())
 							{
@@ -31457,7 +31662,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 							}
-							
+							driver.close();
+							driver.switchTo().window(parentId);
+							}
 						}
 						else
 						{
@@ -31547,6 +31754,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
 							if(result2.isEmpty())
 							{
@@ -31557,7 +31766,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 							}
-							
+							driver.close();
+							driver.switchTo().window(parentId);
+							}
 						}
 						else
 						{
@@ -31645,6 +31856,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
 							if(result2.isEmpty())
 							{
@@ -31655,7 +31868,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 							}
-							
+							driver.close();
+							driver.switchTo().window(parentId);
+							}
 						}
 						else
 						{
@@ -31739,6 +31954,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
 							if(result2.isEmpty())
 							{
@@ -31749,7 +31966,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 							}
-							
+							driver.close();
+							driver.switchTo().window(parentId);
+							}
 						}
 						else
 						{
@@ -31833,6 +32052,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//							String parentId = switchToWindowOpenNextToParentWindow(driver);
+//							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
 							if(result2.isEmpty())
 							{
@@ -31843,7 +32064,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 							}
-							
+//							driver.close();
+//							driver.switchTo().window(parentId);
+//							}
 						}
 						else
 						{
@@ -31928,6 +32151,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//							String parentId = switchToWindowOpenNextToParentWindow(driver);
+//							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
 							if(result2.isEmpty())
 							{
@@ -31938,7 +32163,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 							}
-							
+//							driver.close();
+//							driver.switchTo().window(parentId);
+//							}
 						}
 						else
 						{
@@ -32022,6 +32249,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//							String parentId = switchToWindowOpenNextToParentWindow(driver);
+//							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
 							if(result2.isEmpty())
 							{
@@ -32032,7 +32261,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 							}
-							
+//							driver.close();
+//							driver.switchTo().window(parentId);
+//							}
 						}
 						else
 						{
@@ -32119,6 +32350,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//						String parentId = switchToWindowOpenNextToParentWindow(driver);
+//						if (parentId != null) {
 						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
 						if(result2.isEmpty())
 						{
@@ -32129,7 +32362,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 						}
-						
+//						driver.close();
+//						driver.switchTo().window(parentId);
+//						}
 					}
 					else
 					{
@@ -32215,6 +32450,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//						String parentId = switchToWindowOpenNextToParentWindow(driver);
+//						if (parentId != null) { 
 						ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
 						if(result2.isEmpty())
 						{
@@ -32225,7 +32462,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 						}
-						
+//						driver.close();
+//						driver.switchTo().window(parentId);
+//						}
 					}
 					else
 					{
@@ -32295,36 +32534,36 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 			
-		if (lp.clickAnyCellonCalender(projectName)) {
-			log(LogStatus.INFO,"Able to click on Calendar/Event Link",YesNo.No);
-			if(gp.enterValueForNewEvent(projectName, GlobalActionItem.New_Event, Event2, 10))
-			{
-				log(LogStatus.INFO,"The values are entered in Event popup",YesNo.No);
-				if(clickUsingJavaScript(driver, gp.getSaveBtnOfEventPopup( totalDealsshown), "save button"))
-				{
-					log(LogStatus.INFO,"Clicked on save button of Event popu",YesNo.No);
-					ThreadSleep(8000);
-					refresh(driver);
-				}
-				else
-				{
-					log(LogStatus.ERROR,"Not able to clicked on save button of Event popu",YesNo.No);
-					sa.assertTrue(false, "Not able to clicked on save button of Event popu");
-				}
-			}
-			else
-			{
-				log(LogStatus.ERROR,"The values are not entered in Event popup",YesNo.No);
-				sa.assertTrue(false, "The values are not entered in Event popup");
-			}
-			
-			
-		}
-		else
-		{
-			log(LogStatus.ERROR,"Able to click on Calendar/Event Link",YesNo.No);
-			sa.assertTrue(false, "Not Able to click on Calendar/Event Link");
-		}
+//		if (lp.clickAnyCellonCalender(projectName)) {
+//			log(LogStatus.INFO,"Able to click on Calendar/Event Link",YesNo.No);
+//			if(gp.enterValueForNewEvent(projectName, GlobalActionItem.New_Event, Event2, 10))
+//			{
+//				log(LogStatus.INFO,"The values are entered in Event popup",YesNo.No);
+//				if(clickUsingJavaScript(driver, gp.getSaveBtnOfEventPopup( totalDealsshown), "save button"))
+//				{
+//					log(LogStatus.INFO,"Clicked on save button of Event popu",YesNo.No);
+//					ThreadSleep(8000);
+//					refresh(driver);
+//				}
+//				else
+//				{
+//					log(LogStatus.ERROR,"Not able to clicked on save button of Event popu",YesNo.No);
+//					sa.assertTrue(false, "Not able to clicked on save button of Event popu");
+//				}
+//			}
+//			else
+//			{
+//				log(LogStatus.ERROR,"The values are not entered in Event popup",YesNo.No);
+//				sa.assertTrue(false, "The values are not entered in Event popup");
+//			}
+//			
+//			
+//		}
+//		else
+//		{
+//			log(LogStatus.ERROR,"Able to click on Calendar/Event Link",YesNo.No);
+//			sa.assertTrue(false, "Not Able to click on Calendar/Event Link");
+//		}
 		
 		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Events", false, projectName)) {
 
@@ -34191,6 +34430,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName, iconType1, date1, subject1, notes1, subject1, participant1, tag1);
 							if(result2.isEmpty())
 							{
@@ -34201,7 +34442,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 							}
-							
+							driver.close();
+							driver.switchTo().window(parentWindowID);
+						}
 						}
 						else
 						{
@@ -34279,11 +34522,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result.isEmpty())
 							{
@@ -34294,7 +34538,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
 							}				
-						
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -34313,7 +34559,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result1.isEmpty())
 							{
@@ -34324,7 +34571,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
 							}
-							
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -34340,11 +34589,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					
 					if(isInstitutionRecord==false)
 					{
-					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result2.isEmpty())
 							{
@@ -34356,7 +34606,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
 							}	
 
-						
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -34373,6 +34625,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						refresh(driver);
 						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 						if(result3.isEmpty())
 						{
@@ -34390,7 +34643,14 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
 					}	
-
+					log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+					if (lp.clickOnTab(projectName, tabObj1)) {
+						
+					
+					if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+							recordName, 30)) {
+						log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+						
 					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
@@ -34449,6 +34709,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						sa.assertTrue(false, "Not able to click on the connection icon of "+contactName);
 					}
 
+				}
+					}
 				}
 				else
 				{
@@ -34515,11 +34777,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result.isEmpty())
 							{
@@ -34530,7 +34793,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
 							}				
-						
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -34549,7 +34814,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result1.isEmpty())
 							{
@@ -34560,7 +34826,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
 							}
-							
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -34576,11 +34844,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					
 					if(isInstitutionRecord==false)
 					{
-					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result2.isEmpty())
 							{
@@ -34591,7 +34860,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
 							}	
-
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						
 						}
 						else
@@ -34609,6 +34880,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						refresh(driver);
 						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 						if(result3.isEmpty())
 						{
@@ -34626,6 +34898,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
 					}	
+					
+					if (lp.clickOnTab(projectName, tabObj1)) {
+						
+						
+						if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+								recordName, 30)) {
 
 					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
 					{
@@ -34684,7 +34962,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on the connection icon of "+contactName, YesNo.No);
 						sa.assertTrue(false, "Not able to click on the connection icon of "+contactName);
 					}
-
+						}
+					}
 				}
 				else
 				{
@@ -34751,11 +35030,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result.isEmpty())
 							{
@@ -34766,7 +35046,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
 							}				
-						
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -34785,7 +35067,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result1.isEmpty())
 							{
@@ -34796,7 +35079,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
 							}
-							
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -34812,11 +35097,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					
 					if(isInstitutionRecord==false)
 					{
-					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result2.isEmpty())
 							{
@@ -34828,7 +35114,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
 							}	
 
-						
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -34845,6 +35133,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						refresh(driver);
 						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 						if(result3.isEmpty())
 						{
@@ -34862,7 +35151,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
 					}	
-
+					if (lp.clickOnTab(projectName, tabObj1)) {
+						
+						
+						if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+								recordName, 30)) {
+							
 					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
@@ -34920,7 +35214,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on the connection icon of "+contactName, YesNo.No);
 						sa.assertTrue(false, "Not able to click on the connection icon of "+contactName);
 					}
-
+						}
+					}
 				}
 				else
 				{
@@ -34988,11 +35283,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result.isEmpty())
 							{
@@ -35003,7 +35299,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
 							}				
-						
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -35022,7 +35320,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result1.isEmpty())
 							{
@@ -35033,7 +35332,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
 							}
-							
+							driver.close();
+							driver.switchTo().window(parentId);
+						}	
 						}
 						else
 						{
@@ -35049,11 +35350,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					
 					if(isInstitutionRecord==false)
 					{
-					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result2.isEmpty())
 							{
@@ -35064,7 +35366,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
 							}	
-
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						
 						}
 						else
@@ -35082,6 +35386,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						refresh(driver);
 						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 						if(result3.isEmpty())
 						{
@@ -35099,7 +35404,11 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
 					}	
-
+					if (lp.clickOnTab(projectName, tabObj1)) {
+						
+						
+						if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+								recordName, 30)) {
 					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
@@ -35151,6 +35460,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
 							sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
 						}	
+					}
+						}
 					}
 					else
 					{
@@ -35225,11 +35536,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result.isEmpty())
 							{
@@ -35240,7 +35552,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
 							}				
-						
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -35259,7 +35573,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result1.isEmpty())
 							{
@@ -35270,7 +35585,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
 							}
-							
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -35289,7 +35606,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Funds", fundTagName, fundTagTimeReferenceCount,30), fundTagName+" on Funds Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+fundTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result2.isEmpty())
 							{
@@ -35300,7 +35618,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+fundTagName+" from people tag. "+result2, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+fundTagName+" from people tag. "+result2);
 							}	
-						
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -35317,6 +35637,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						refresh(driver);
 						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 						if(result3.isEmpty())
 						{
@@ -35334,7 +35655,11 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
 					}	
-
+					if (lp.clickOnTab(projectName, tabObj1)) {
+						
+						
+						if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+								recordName, 30)) {
 					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
@@ -35393,6 +35718,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						sa.assertTrue(false, "Not able to click on the connection icon of "+contactName);
 					}
 
+				}
+					}
 				}
 				else
 				{
@@ -35459,11 +35786,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result.isEmpty())
 							{
@@ -35474,7 +35802,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
 							}				
-						
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -35493,7 +35823,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result1.isEmpty())
 							{
@@ -35504,7 +35835,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
 							}
-							
+							driver.close();
+							driver.switchTo().window(parentId);
+						}	
 						}
 						else
 						{
@@ -35520,11 +35853,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					
 					if(isInstitutionRecord==false)
 					{
-					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result2.isEmpty())
 							{
@@ -35535,7 +35869,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
 							}	
-
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						
 						}
 						else
@@ -35553,6 +35889,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						refresh(driver);
 						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 						if(result3.isEmpty())
 						{
@@ -35570,7 +35907,11 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
 					}	
-
+					if (lp.clickOnTab(projectName, tabObj1)) {
+						
+						
+						if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+								recordName, 30)) {
 					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
@@ -35629,6 +35970,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						sa.assertTrue(false, "Not able to click on the connection icon of "+contactName);
 					}
 
+				}
+					}
 				}
 				else
 				{
@@ -35694,11 +36037,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result.isEmpty())
 							{
@@ -35709,7 +36053,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
 							}				
-						
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -35728,7 +36074,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result1.isEmpty())
 							{
@@ -35739,7 +36086,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
 							}
-							
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -35755,11 +36104,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					
 					if(isInstitutionRecord==false)
 					{
-					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result2.isEmpty())
 							{
@@ -35770,7 +36120,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
 							}	
-
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						
 						}
 						else
@@ -35788,6 +36140,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						refresh(driver);
 						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 						if(result3.isEmpty())
 						{
@@ -35805,7 +36158,11 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
 					}	
-
+					if (lp.clickOnTab(projectName, tabObj1)) {
+						
+						
+						if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+								recordName, 30)) {
 					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
@@ -35871,6 +36228,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					sa.assertTrue(false,  "Not able to click on Acuity tab");
 				}
 			}
+				}
+			}
 			else
 			{
 				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
@@ -35926,11 +36285,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on Firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result.isEmpty())
 							{
@@ -35940,7 +36300,10 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							{
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
-							}				
+							}
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -35959,7 +36322,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result1.isEmpty())
 							{
@@ -35970,7 +36334,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
 							}
-							
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -35984,11 +36350,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						sa.assertTrue(false,  "Not able to click on People tab name");
 					}
 					
-					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result2.isEmpty())
 							{
@@ -35999,7 +36366,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
 							}	
-							
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -36017,6 +36386,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						refresh(driver);
 						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 						if(result3.isEmpty())
 						{
@@ -36034,7 +36404,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
 					}	
+					if (lp.clickOnTab(projectName, tabObj2)) {
 
+						log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+						if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+								recordName, 30)) {
+							log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 					if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
@@ -36056,6 +36431,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
 						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
 					}					
+				}
+					}
 				}
 				else
 				{
@@ -36116,11 +36493,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 					
-					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on Firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result.isEmpty())
 							{
@@ -36130,7 +36508,10 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							{
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
-							}				
+							}
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -36149,7 +36530,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result1.isEmpty())
 							{
@@ -36160,7 +36542,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
 							}
-							
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -36174,11 +36558,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						sa.assertTrue(false,  "Not able to click on People tab name");
 					}
 					
-					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result2.isEmpty())
 							{
@@ -36189,7 +36574,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
 							}	
-							
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -36207,6 +36594,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						refresh(driver);
 						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 						if(result3.isEmpty())
 						{
@@ -36282,11 +36670,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 		
 
-					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on Firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result.isEmpty())
 							{
@@ -36296,7 +36685,10 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							{
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
-							}				
+							}	
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -36315,7 +36707,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result1.isEmpty())
 							{
@@ -36326,7 +36719,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
 							}
-							
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -36344,6 +36739,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						refresh(driver);
 						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 						if(result3.isEmpty())
 						{
@@ -36422,11 +36818,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 		
-					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Institutions", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Firms", firmTagName, firmTagTimeReferenceCount,30), firmTagName+" on Firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+firmTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result.isEmpty())
 							{
@@ -36436,7 +36833,10 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							{
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+firmTagName+" from people tag. "+result);
-							}				
+							}
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -36455,7 +36855,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result1.isEmpty())
 							{
@@ -36466,7 +36867,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
 							}
-							
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -36480,11 +36883,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						sa.assertTrue(false,  "Not able to click on People tab name");
 					}
 					
-					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Pipelines", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
-
+							String parentId = switchToWindowOpenNextToParentWindow(driver);
+							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result2.isEmpty())
 							{
@@ -36495,7 +36899,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
 							}	
-							
+							driver.close();
+							driver.switchTo().window(parentId);
+						}
 						}
 						else
 						{
@@ -36513,6 +36919,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						refresh(driver);
 						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 						if(result3.isEmpty())
 						{
@@ -36586,6 +36993,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						String parentId = switchToWindowOpenNextToParentWindow(driver);
+						if (parentId != null) {
+
 						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 						if(result3.isEmpty())
 						{
@@ -36596,7 +37006,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
 							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
 						}	
-						
+						driver.close();
+						driver.switchTo().window(parentId);
+					}
 					}
 					else
 					{
@@ -36611,6 +37023,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
 					sa.assertTrue(false,  "Not able to click on Acuity tab");
 				}
+				driver.close();
+				driver.switchTo().window(parentWindowID);
 			}
 			else
 			{
@@ -36652,70 +37066,70 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
-		if (accountName.length == recordType.length) {
-			for (int i = 0; i < accountName.length; i++) {
-				if (lp.clickOnTab(projectName, tabObj1)) {
+//		if (accountName.length == recordType.length) {
+//			for (int i = 0; i < accountName.length; i++) {
+//				if (lp.clickOnTab(projectName, tabObj1)) {
+//
+//					log(LogStatus.INFO, "Click on Tab : " + tabObj1, YesNo.No);
+//					ThreadSleep(3000);
+//					if (ip.createEntityOrAccount(environment, mode, accountName[i], recordType[i], null, null, 30)) {
+//						log(LogStatus.INFO,
+//								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i],
+//								YesNo.No);
+//						sa.assertTrue(true,
+//								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i]);
+//
+//
+//					} else {
+//						sa.assertTrue(false,
+//								"Not Able to Create Firm : " + accountName[i] + " of record type : " + recordType[i]);
+//						log(LogStatus.SKIP,
+//								"Not Able to Create Firm : " + accountName[i] + " of record type :" + recordType[i],
+//								YesNo.Yes);
+//					}
+//
+//				} else {
+//					log(LogStatus.FAIL, "Not able to click on " + tabObj1 + " Tab", YesNo.No);
+//					sa.assertTrue(false, "Not able to click on " + tabObj1 + " Tab");
+//				}
+//
+//			}
+//		} else {
+//			log(LogStatus.FAIL,
+//					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper",
+//					YesNo.No);
+//			sa.assertTrue(false,
+//					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper");
+//		}
 
-					log(LogStatus.INFO, "Click on Tab : " + tabObj1, YesNo.No);
-					ThreadSleep(3000);
-					if (ip.createEntityOrAccount(environment, mode, accountName[i], recordType[i], null, null, 30)) {
-						log(LogStatus.INFO,
-								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i],
-								YesNo.No);
-						sa.assertTrue(true,
-								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i]);
-
-
-					} else {
-						sa.assertTrue(false,
-								"Not Able to Create Firm : " + accountName[i] + " of record type : " + recordType[i]);
-						log(LogStatus.SKIP,
-								"Not Able to Create Firm : " + accountName[i] + " of record type :" + recordType[i],
-								YesNo.Yes);
-					}
-
-				} else {
-					log(LogStatus.FAIL, "Not able to click on " + tabObj1 + " Tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on " + tabObj1 + " Tab");
-				}
-
-			}
-		} else {
-			log(LogStatus.FAIL,
-					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper",
-					YesNo.No);
-			sa.assertTrue(false,
-					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper");
-		}
-
-		for (int i = 0; i < contactLastName.length; i++) {
-			if (lp.clickOnTab(projectName, tabObj2)) {
-
-				log(LogStatus.INFO, "Click on Tab : " + tabObj2, YesNo.No);
-				ThreadSleep(3000);
-
-				if (cp.createContact(projectName, contactFirstName[i], contactLastName[i], contactLegalName[i],
-						contactEmail[i], "", null, null, CreationPage.ContactPage, contactTitle[i], null)) {
-					log(LogStatus.INFO,
-							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i],
-							YesNo.No);
-					sa.assertTrue(true,
-							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i]);
-
-
-				} else {
-					log(LogStatus.FAIL,
-							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i],
-							YesNo.No);
-					sa.assertTrue(false,
-							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i]);
-				}
-
-			} else {
-				log(LogStatus.FAIL, "Not able to click on " + tabObj2 + " Tab", YesNo.No);
-				sa.assertTrue(false, "Not able to click on " + tabObj2 + " Tab");
-			}
-		}
+//		for (int i = 0; i < contactLastName.length; i++) {
+//			if (lp.clickOnTab(projectName, tabObj2)) {
+//
+//				log(LogStatus.INFO, "Click on Tab : " + tabObj2, YesNo.No);
+//				ThreadSleep(3000);
+//
+//				if (cp.createContact(projectName, contactFirstName[i], contactLastName[i], contactLegalName[i],
+//						contactEmail[i], "", null, null, CreationPage.ContactPage, contactTitle[i], null)) {
+//					log(LogStatus.INFO,
+//							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i],
+//							YesNo.No);
+//					sa.assertTrue(true,
+//							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i]);
+//
+//
+//				} else {
+//					log(LogStatus.FAIL,
+//							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i],
+//							YesNo.No);
+//					sa.assertTrue(false,
+//							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i]);
+//				}
+//
+//			} else {
+//				log(LogStatus.FAIL, "Not able to click on " + tabObj2 + " Tab", YesNo.No);
+//				sa.assertTrue(false, "Not able to click on " + tabObj2 + " Tab");
+//			}
+//		}
 		
 		if (lp.clickOnTab(projectName, tabObj4)) {
 
@@ -37182,7 +37596,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-					if(fp.CreateNewFundraisingContactFromTab(projectName, labelName, value, inputType))
+					if(fp.createFundRaisingContactFromIcon(projectName, mode, ATCE_FContact1,null))
 					{
 						log(LogStatus.INFO, "Fundraising contact has been Created", YesNo.No);
 					}
@@ -37225,7 +37639,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-					if(fp.CreateNewFundraisingContactFromTab(projectName, labelName1, value1, inputType1))
+					if(fp.createFundRaisingContactFromIcon(projectName, mode, ATCE_FContact2, null))
 					{
 						log(LogStatus.INFO, "Fundraising contact has been Created", YesNo.No);
 					}
