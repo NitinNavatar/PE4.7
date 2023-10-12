@@ -9033,8 +9033,17 @@ public abstract class BasePage extends BaseLib {
 	}
 
 	public WebElement getHeadingNameOfTabOnTaggedSection(String headingName, int timeOut) {
-
-		String xpath = "//span[@class=\"slds-truncate\" and @title='" + headingName + "']";
+		String xpath = "";
+		if(headingName.equalsIgnoreCase("Institutions")) {
+			 xpath = "//span[@class='slds-truncate' and @title='Firms']";
+		}else if(headingName.equalsIgnoreCase("Contacts")) {
+			 xpath = "//span[@class='slds-truncate' and @title='People']";
+		}else if(headingName.equalsIgnoreCase("Pipelines")) {
+			 xpath = "//span[@class='slds-truncate' and @title='Deals']";
+		}else {
+			xpath = "//span[@class='slds-truncate' and @title='" +headingName +"']";
+		}
+		
 		try {
 			return FindElement(driver, xpath, "Tab name: " + headingName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -9059,9 +9068,22 @@ public abstract class BasePage extends BaseLib {
 	}
 
 	public WebElement getMessageOnTaggedSection(String tabName, String message, int timeOut) {
+		String xpath ="";
+		if(tabName.equalsIgnoreCase("Institutions")) {
+			 xpath ="//input[@value='Firms']/ancestor::div[@class=\"slds-p-right_small\"]//div[text()='"
+						+ message + "']";
+		}else if(tabName.equalsIgnoreCase("Contacts")) {
+			 xpath ="//input[@value='People']/ancestor::div[@class=\"slds-p-right_small\"]//div[text()='"
+						+ message + "']";
+		}else if(tabName.equalsIgnoreCase("Pipelines")) {
+			 xpath ="//input[@value='Deals']/ancestor::div[@class=\"slds-p-right_small\"]//div[text()='"
+						+ message + "']";
+		}else {
+			xpath ="//input[@value='" + tabName + "']/ancestor::div[@class=\"slds-p-right_small\"]//div[text()='"
+					+ message + "']";
+		}
 
-		String xpath = "//input[@value='" + tabName + "']/ancestor::div[@class=\"slds-p-right_small\"]//div[text()='"
-				+ message + "']";
+	
 		try {
 			return FindElement(driver, xpath, "message on tab : " + tabName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {

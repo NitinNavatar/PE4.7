@@ -284,7 +284,7 @@ public class APIUtils {
 							// :"+value, YesNo.No);
 
 						}
-					} else if (label.equals("AccountId") || label.equals("navpeII__Company_Name__c")) {
+					} else if (label.equals("AccountId") || label.equals("navpeII__Company__c")) {
 						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
 							String accoundId = getObjectRecordId("Account", value);
 							data.put(label, accoundId);
