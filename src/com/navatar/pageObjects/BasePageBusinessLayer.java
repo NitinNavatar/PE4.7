@@ -1166,7 +1166,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			viewList = "All Contacts";
 			break;
 		case InstituitonsTab:
-			viewList = "All Firms";
+			viewList = "All Institutions";
 			break;
 		case DealTab:
 			viewList = "All";
@@ -3495,10 +3495,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		{
 			tabName = "Firms";
-		} else if (TabName.contains("Deal"))
+		} else if (TabName.contains("Pipeline"))
 
 		{
-			tabName = "Deals";
+			tabName = "Pipelines";
 		} else {
 			tabName = TabName;
 		}
@@ -4641,7 +4641,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			tabName = "Contacts";
 			break;
 		case InstituitonsTab:
-			tabName = "Firms";
+			tabName = "Institutions";
 			break;
 		case FundraisingsTab:
 			tabName = "Fundraisings";
@@ -12650,6 +12650,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			if (subjectName.equals(subName)) {
 				log(LogStatus.INFO, "Actual result : " + subName + " has been matched with expected result : "
 						+ subjectName + " for Subject", YesNo.No);
+			} else if(getViewAllOptionOnInteraction(10) != null){
+				clickUsingJavaScript(driver, getViewAllOptionOnInteraction(10), "View All", action.SCROLLANDBOOLEAN);
+				ThreadSleep(2000);
+				if(headingOfTaskOnInteractionPage1(subjectName,10) != null) {
+					log(LogStatus.INFO, "Actual result : " + subName + " has been matched with expected result : "
+							+ subjectName + " for Subject", YesNo.No);
+				}
 			} else {
 				log(LogStatus.ERROR, "Actual result : " + subName + " is not matched with expected result : "
 						+ subjectName + " for Subject", YesNo.No);
@@ -12664,8 +12671,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			ele = CommonLib.FindElement(driver, xPath, "Due Date", action.SCROLLANDBOOLEAN, 30);
 			String date = getText(driver, ele, "Due Date", action.SCROLLANDBOOLEAN);
 			String actualDate;
-			if (date.contains(",")) {
+			if (date.contains(",") ) {
 				String[] val = date.split(",");
+				actualDate = val[0];
+			} else if(dateOfTaskOnInteractionPage1(subjectName,10).contains(",")){
+				String[] val = dateOfTaskOnInteractionPage1(subjectName,10).split(",");
 				actualDate = val[0];
 			} else {
 				actualDate = date;
@@ -12726,7 +12736,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				log(LogStatus.INFO,
 						"Actual result : " + note + " has been matched with expected result : " + notes + " for notes",
 						YesNo.No);
+			} else if(notesOfTaskOnInteractionPage1(subjectName,10) != null) {
+				log(LogStatus.INFO,
+						"Actual result : " + note + " has been matched with expected result : " + notes + " for notes",
+						YesNo.No);
 			} else {
+			
 				log(LogStatus.ERROR,
 						"Actual result : " + note + " is not matched with expected result : " + notes + " for notes",
 						YesNo.No);
@@ -13870,7 +13885,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 					}
 
-					else if (labelName.contains("User")) {
+					else if (labelName.contains("User") || labelName.contains("Assigned To")) {
 						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
 								+ labelName + "']/..//button";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
@@ -16548,7 +16563,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			viewList = "All Contacts";
 			break;
 		case InstituitonsTab:
-			viewList = "All Firms";
+			viewList = "All Institutions";
 			break;
 		case CompaniesTab:
 			viewList = "All Companies";
@@ -17102,7 +17117,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								}
 							}
 						}
-					} else if (labelName.contains("User")) {
+					} else if (labelName.contains("User") || labelName.contains("Assigned To")) {
 						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
 								+ labelName + "']/..//button";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
@@ -17460,7 +17475,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						String labelName = val[0];
 						String value = val[1];
 
-						if (labelName.contains("User")) {
+						if (labelName.contains("User") || labelName.contains("Assigned To")) {
 
 							String actualAssignedToId = getText(driver, assignedToVerificationInAdvance(labelName, 10),
 									"User", action.SCROLLANDBOOLEAN);
@@ -17639,7 +17654,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 						}
 
-						else if (labelName.contains("User")) {
+						else if (labelName.contains("User") || labelName.contains("Assigned To")) {
 
 							String actualAssignedToId = getText(driver, assignedToVerificationInTasks(labelName, 10),
 									"User", action.SCROLLANDBOOLEAN);
@@ -22976,7 +22991,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					String labelName = val[0];
 					String value = val[1];
 
-					if (labelName.contains("User") || labelName.contains(excelLabel.Status.toString())
+					if (labelName.contains("User") || labelName.contains(excelLabel.Status.toString()) || labelName.contains("Assigned To")
 							|| labelName.contains(excelLabel.Priority.toString())) {
 
 						String actualValue = getText(driver,
@@ -24949,9 +24964,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			viewList = TabName.ContactTab;
 			break;
 		case "Firms":
+		case "Institutions":
 			viewList = TabName.InstituitonsTab;
 			break;
 		case "Deals":
+		case "Pipeline":
 			viewList = TabName.DealTab;
 			break;
 

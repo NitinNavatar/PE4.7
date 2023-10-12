@@ -167,7 +167,7 @@ public class DealPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "//span[text()='Deal Name']/../..//input[@type='text']")
+	@FindBy(xpath = "//span[text()='Pipeline Name']/../..//input[@type='text']")
 	private WebElement PopupdealNameInput;
 
 	public WebElement getPopupdealNameInput(int timeOut) {
