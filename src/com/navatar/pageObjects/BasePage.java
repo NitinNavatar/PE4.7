@@ -6277,7 +6277,7 @@ public abstract class BasePage extends BaseLib {
 				"listOfButtons");
 	}
 
-	@FindBy(xpath = "//div[@class='forceVirtualActionMarker forceVirtualAction']//a")
+	@FindBy(xpath = "//*[@class='menu-button-item slds-dropdown-trigger slds-dropdown-trigger_click']//button")
 	private WebElement downArrowButton;
 
 	public WebElement downArrowButton(int timeOut) {
@@ -9197,13 +9197,18 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement valueOfLabelInSubjectLinkPopUpInInteractionSection(String labelName, int timeOut) {
 
-		String xpath = "//section//div[@class=\"slds-carousel\"]/lightning-layout//label[text()=\"" + labelName
-				+ "\"]/following-sibling::*";
-		String xpath2 = "//section//div[@class=\"slds-carousel\"]/lightning-layout//label[text()=\"" + labelName
-				+ "\"]/following-sibling::lightning-textarea";
+		String xpath = "//section//div[@class='slds-carousel']/lightning-layout//label[text()='" + labelName
+				+ "']/following-sibling::*";
+		String xpath2 = "//section//div[@class='slds-carousel']/lightning-layout//label[text()='" + labelName
+				+ "']/following-sibling::lightning-textarea";
+		String xpath3 = "//section//div[@class='slds-carousel']/lightning-layout//label[text()='" + labelName
+				+ "']/following-sibling::*//span[@title]";
 		if (labelName.contains(excelLabel.Notes.toString())) {
 			return FindElement(driver, xpath2, "Label name: " + labelName, action.SCROLLANDBOOLEAN, timeOut);
-		}
+		} 
+//		else if (labelName.contains(excelLabel.Assigned.toString())) {
+//			return FindElement(driver, xpath3, "Label name: " + labelName, action.SCROLLANDBOOLEAN, timeOut);
+//		}
 
 		// section//div[@class="slds-carousel"]/lightning-layout//label[text()="Notes"]/following-sibling::lightning-textarea
 		try {
@@ -9245,7 +9250,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement iconOfTagsInSubjectLinkPopUpInInteractionSection(String labelName, String relatedAssociationName,
 			String recordType, int timeOut) {
 
-		if (recordType.equalsIgnoreCase("Firm") || recordType.equalsIgnoreCase("Account")) {
+		if (recordType.equalsIgnoreCase("Firm") || recordType.equalsIgnoreCase("Account") || recordType.equalsIgnoreCase("Institution")) {
 
 			String xpath = "//section//div[@class=\"slds-carousel\"]/lightning-layout//label[text()=\"" + labelName
 					+ "\"]/following-sibling::*//lightning-pill/span/span/following-sibling::span[text()=\""
@@ -9257,7 +9262,7 @@ public abstract class BasePage extends BaseLib {
 				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
 						action.SCROLLANDBOOLEAN, timeOut);
 			}
-		} else if (recordType.equalsIgnoreCase("Deal")) {
+		} else if (recordType.equalsIgnoreCase("Deal") || recordType.equalsIgnoreCase("Pipeline")) {
 
 			String xpath = "//section//div[@class=\"slds-carousel\"]/lightning-layout//label[text()=\"" + labelName
 					+ "\"]/following-sibling::*//lightning-pill/span/span/following-sibling::span[text()=\""
@@ -10462,4 +10467,32 @@ public abstract class BasePage extends BaseLib {
 		String path = "//span[@class='slds-page-header__title slds-truncate' and text()='"+ recordName + "']";
 		return FindElement(driver, path, "info popup message", action.BOOLEAN, timeOut);
 	}
+
+	@FindBy(xpath = "//span[@title='Interactions']/ancestor::div//a[@title='View All']")
+	private WebElement viewAllOptionOnInteraction;
+	/**
+	 * @return the View All Option On Interaction
+	 */
+	public WebElement getViewAllOptionOnInteraction(int timeOut) {
+		return isDisplayed(driver, viewAllOptionOnInteraction, "Visibility", timeOut, "View All Option On Interaction");
+	}
+
+	public WebElement headingOfTaskOnInteractionPage1(String recordName, int timeOut) {
+
+		String path = "//div[@class='windowViewMode-normal oneContent active lafPageHost']//button[@name='subject' and text()='"+  recordName +"']";
+		return FindElement(driver, path, "info popup message", action.BOOLEAN, timeOut);
+	}
+	
+	public WebElement notesOfTaskOnInteractionPage1(String details, int timeOut) {
+
+		String path = "//div[@class='windowViewMode-normal oneContent active lafPageHost']//button[@title='"+  details +"']";
+		return FindElement(driver, path, "info popup message", action.BOOLEAN, timeOut);
+	}
+	
+	public String dateOfTaskOnInteractionPage1(String recordName, int timeOut) {
+
+		String path = "//div[@class='windowViewMode-normal oneContent active lafPageHost']//button[text()='"+ recordName +"']/ancestor::td/..//td//lightning-base-formatted-text";
+		return FindElement(driver, path, "info popup message", action.BOOLEAN, timeOut).getText();
+	}
+
 }

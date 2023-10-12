@@ -4985,7 +4985,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 		boolean flag = false;
 		;
 		String xpath = "";
-		xpath = "//th//a[text()='" + userName + "']";
+		xpath = "//td//span[text()='" + userName + "']/..";
 		ThreadSleep(2000);
 		WebElement ele = FindElement(driver, xpath, userName, action.SCROLLANDBOOLEAN, timeOut);
 		ele = isDisplayed(driver, ele, "visibility", timeOut, userName);
@@ -5762,7 +5762,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 		if (CommonLib.switchToFrame(driver, 50, getuserProfileIframe(50))) {
 			ThreadSleep(5000);
 			log(LogStatus.INFO, "Successfully switched to User Profile Iframe", YesNo.No);
-			xPath = "//div[@class='bRelatedList']//a[text()='" + profileName + "']";
+			xPath = "//span[text()='" + profileName + "']";
 			ele = CommonLib.FindElement(driver, xPath, profileName + " profile name", action.SCROLLANDBOOLEAN, 50);
 			if (CommonLib.clickUsingJavaScript(driver, ele, profileName + " profile name", action.BOOLEAN)) {
 				log(LogStatus.INFO, "Successfully clicked on the " + profileName + " profile name", YesNo.No);
@@ -6341,7 +6341,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 		boolean flag = false;
 		;
 		String xpath = "";
-		xpath = "//th//a[text()='" + userName + "']";
+		xpath = "//td//span[text()='" + userName + "']/..";
 		ThreadSleep(2000);
 		WebElement ele = FindElement(driver, xpath, userName, action.SCROLLANDBOOLEAN, timeOut);
 		ele = isDisplayed(driver, ele, "visibility", timeOut, userName);
@@ -7476,7 +7476,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 		if (CommonLib.switchToFrame(driver, 50, getuserProfileIframe(50))) {
 			ThreadSleep(5000);
 			log(LogStatus.INFO, "Successfully switched to User Profile Iframe", YesNo.No);
-			xPath = "//div[@class='bRelatedList']//a[text()='" + profileName + "']";
+			xPath = "//span[text()='" + profileName + "']/..";
 			ele = CommonLib.FindElement(driver, xPath, profileName + " profile name", action.SCROLLANDBOOLEAN, 50);
 			if (CommonLib.clickUsingJavaScript(driver, ele, profileName + " profile name", action.BOOLEAN)) {
 				log(LogStatus.INFO, "Successfully clicked on the " + profileName + " profile name", YesNo.No);

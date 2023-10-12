@@ -37,6 +37,7 @@ import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.PermissionType;
 import com.navatar.generic.EnumConstants.TabName;
+import com.navatar.generic.EnumConstants.TaskPageFields;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
@@ -1055,6 +1056,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		log(LogStatus.INFO,
 				"---------Now Going to Verify Task: " + task1SubjectName + " in Interaction Section---------",
 				YesNo.No);
+		refresh(driver);
+		ThreadSleep(5000);
 		if (lp.clickOnTab(projectName, tabObj1)) {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
@@ -7021,12 +7024,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[] userTypesToGivePermissions = { "PE Standard User" };
 		String[][] objectAndPermissionAndGivenOrGivenNot = {
-				{ "Deals", "Read", PermissionType.removePermission.toString() },
+				{ "Pipelines", "Read", PermissionType.removePermission.toString() },
 				{ "Accounts", "Read", PermissionType.removePermission.toString() },
 				{ "Contacts", "Read", PermissionType.removePermission.toString() } };
 
 		String[][] objectAndPermissionAndGivenOrGivenNotRevertBack = {
-				{ "Deals", "Create<break>Delete",
+				{ "Pipelines", "Create<break>Delete",
 						PermissionType.givePermission.toString() + "<break>"
 								+ PermissionType.givePermission.toString() },
 				{ "Accounts", "Create<break>Delete",
@@ -13864,13 +13867,14 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String relatedTo = AMNNR_RelatedTo65;
 		String priority = AMNNR_AdvancePriority65;
 		String status = AMNNR_AdvanceStatus65;
-		String classification = AMNNR_Classification65;
+//		String classification = AMNNR_Classification65;
 
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
 				{ AMNNR_TaskLabel3, relatedTo } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, classification } };
+//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, classification } };
+				{ AMNNR_TaskLabel6, priority }};
 
 		String task1ButtonName = AMNNR_ActivityType59;
 		String recordName = AMNNR_FirmLegalName1;
@@ -13994,7 +13998,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String relatedTo = AMNNR_RelatedTo66;
 		String priority = AMNNR_AdvancePriority66;
 		String status = AMNNR_AdvanceStatus66;
-		String classification = AMNNR_Classification66;
+//		String classification = AMNNR_Classification66;
 
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp66.split("<break>") };
 
@@ -14013,7 +14017,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, classification } };
+//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, classification } };
+				{ AMNNR_TaskLabel6, priority } };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
@@ -14140,7 +14145,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String relatedTo = AMNNR_RelatedTo68;
 		String priority = AMNNR_AdvancePriority68;
 		String status = AMNNR_AdvanceStatus68;
-		String classification = AMNNR_Classification68;
+//		String classification = AMNNR_Classification68;
 
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp68.split("<break>") };
 
@@ -14160,14 +14165,19 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel3, relatedTo } };
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
-
-		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_TaskLabel1, task1SubjectName },
-				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyBeforeTagging } };
-
+				
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, classification } };
+//				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, classification } };
+				{ AMNNR_TaskLabel6, priority } };
+		
+		String updatedRelatedToVerifyBeforeTaggingForDetailsSection = relatedTo + "<break>" + recordName ;
+		
+		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_TaskLabel1, task1SubjectName },
+				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyBeforeTaggingForDetailsSection } };
+		
+		String[][] task1AdvancedSectionForDetails = { { TaskPageFields.Date.toString(), getAdvanceDueDate }};
 		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
-				task1BasicSectionVerificationForDetailsSection, task1AdvancedSection };
+				task1BasicSectionVerificationForDetailsSection, task1AdvancedSectionForDetails };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
@@ -14330,7 +14340,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				CommonLib.refresh(driver);
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false, projectName)) {
+				if (home.globalSearchAndNavigate(firmRecord1, "Institutions", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord1 + " found in Firm Object-----",
 							YesNo.No);
@@ -14397,7 +14407,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				}
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord2, "Firms", false, projectName)) {
+				if (home.globalSearchAndNavigate(firmRecord2, "Institutions", false, projectName)) {
 					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord2 + " found in Firm Object-----",
 							YesNo.No);
 					CommonLib.refresh(driver);
@@ -14463,7 +14473,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord3ShouldNotThere, "Firms", true, projectName)) {
+				if (home.globalSearchAndNavigate(firmRecord3ShouldNotThere, "Institutions", true, projectName)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Firm named: " + firmRecord3ShouldNotThere + " not found in Firm Object-----",
@@ -14690,7 +14700,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false, projectName)) {
+				if (home.globalSearchAndNavigate(firmRecord1, "Institutions", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord1 + " found in Firm Object-----",
 							YesNo.No);
@@ -15047,7 +15057,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false, projectName)) {
+				if (home.globalSearchAndNavigate(firmRecord1, "Institutions", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord1 + " found in Firm Object-----",
 							YesNo.No);
@@ -15310,7 +15320,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false, projectName)) {
+				if (home.globalSearchAndNavigate(firmRecord1, "Institutions", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord1 + " found in Firm Object-----",
 							YesNo.No);
@@ -15509,7 +15519,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				CommonLib.refresh(driver);
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(record1, "Firms", true, projectName)) {
+				if (home.globalSearchAndNavigate(record1, "Institutions", true, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + record1 + " not found in Firm Object-----",
 							YesNo.No);
@@ -15524,7 +15534,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				CommonLib.refresh(driver);
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(record2, "Firms", true, projectName)) {
+				if (home.globalSearchAndNavigate(record2, "Institutions", true, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + record2 + " not found in Firm Object-----",
 							YesNo.No);
@@ -15738,7 +15748,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					}
 
 					lp.clickOnTab(projectName, TabName.HomeTab);
-					if (home.globalSearchAndNavigate(firmRecord1, "Firms", false, projectName)) {
+					if (home.globalSearchAndNavigate(firmRecord1, "Institutions", false, projectName)) {
 
 						log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord1 + " found in Firm Object-----",
 								YesNo.No);
@@ -15753,7 +15763,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					}
 
 					lp.clickOnTab(projectName, TabName.HomeTab);
-					if (home.globalSearchAndNavigate(firmRecord2, "Firms", false, projectName)) {
+					if (home.globalSearchAndNavigate(firmRecord2, "Institutions", false, projectName)) {
 
 						log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord2 + " found in Firm Object-----",
 								YesNo.No);
@@ -16647,9 +16657,16 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerificationAfterUpdate = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyAfterUpdate } };
 
+		String updatedRelatedToVerifyBeforeTaggingForDetailsSection = relatedTo + "<break>" + recordName ;
+		
+		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_TaskLabel1, task1SubjectName },
+				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyBeforeTaggingForDetailsSection } };
+		
+		String[][] task1AdvancedSectionForDetails = { { TaskPageFields.Date.toString(), getAdvanceDueDate }};
+		
 		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
-				task1BasicSectionVerification, task1AdvancedSection };
-
+				task1BasicSectionVerificationForDetailsSection, task1AdvancedSectionForDetails };
+		
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
@@ -16893,8 +16910,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				AMNNR_AddContactsToFundraisingPopup111.split("<break>", -1),
 				AMNNR_AddContactsToFundraisingPopup112.split("<break>", -1) };
 
+		String updatedRelatedToVerifyBeforeTaggingForDetailsSection = relatedTo + "<break>" + recordName ;
+		
+		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_TaskLabel1, task1SubjectName },
+				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyBeforeTaggingForDetailsSection } };
+		
+		String[][] task1AdvancedSectionForDetails = { { TaskPageFields.Date.toString(), getAdvanceDueDate }};
+		
 		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
-				task1BasicSectionVerification, task1AdvancedSection };
+				task1BasicSectionVerificationForDetailsSection, task1AdvancedSectionForDetails };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -17376,7 +17400,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
-		if (BP.navigateToRecordAndClickOnSubTab(projectName, "Deals", recordName, null)) {
+		if (BP.navigateToRecordAndClickOnSubTab(projectName, TabName.Pipelines.toString(), recordName, null)) {
 			log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
 
 			if (BP.createActivityTimeline(projectName, false, task1ButtonName, task1BasicSection, task1AdvancedSection,
@@ -17490,7 +17514,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		log(LogStatus.INFO, "Before Fundraising Contacts Records Size: " + beforeCreateFundraisingContactList.size(),
 				YesNo.No);
 
-		if (BP.navigateToRecordAndClickOnSubTab(projectName, "Deals", recordName, null)) {
+		if (BP.navigateToRecordAndClickOnSubTab(projectName, TabName.Pipelines.toString(), recordName, null)) {
 			log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
 
 			if (BP.createActivityTimeline(projectName, false, task1ButtonName, task1BasicSection, task1AdvancedSection,
@@ -18063,7 +18087,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
 
-					if (BP.navigateToRecordAndClickOnSubTab(projectName, "Deals", dealRecordName, null)) {
+					if (BP.navigateToRecordAndClickOnSubTab(projectName, TabName.Pipelines.toString(), dealRecordName, null)) {
 						log(LogStatus.INFO, "Able to Open the Record: " + dealRecordName, YesNo.No);
 
 						ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(getAdvanceDueDate,
@@ -18341,7 +18365,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
 
-					if (BP.navigateToRecordAndClickOnSubTab(projectName, "Deals", dealRecordName, null)) {
+					if (BP.navigateToRecordAndClickOnSubTab(projectName, TabName.Pipelines.toString(), dealRecordName, null)) {
 						log(LogStatus.INFO, "Able to Open the Record: " + dealRecordName, YesNo.No);
 
 						if (BP.taskSubjectOfInteractionCard(task1SubjectName, 6) == null) {
@@ -18681,8 +18705,17 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp140.split("<break>") };
 		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup140.split("<break>") };
 
+		String updatedRelatedToVerifyBeforeTaggingForDetailsSection = relatedTo + "<break>" + recordName ;
+		
+		String[][] task1BasicSectionVerificationForDetailsSection1 = { { AMNNR_TaskLabel1, task1SubjectName },
+				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyBeforeTaggingForDetailsSection } };
+		
+		String[][] task1AdvancedSectionForDetails = { { TaskPageFields.Date.toString(), getAdvanceDueDate }};
+		
 		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
-				task1BasicSectionVerificationForDetailsSection, task1AdvancedSection };
+				task1BasicSectionVerificationForDetailsSection1, task1AdvancedSectionForDetails };
+		
+		
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -18924,8 +18957,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				"allRecords<break>jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdg<break><break>Add"
 						.split("<break>") };
 
+		String updatedRelatedToVerifyBeforeTaggingForDetailsSection = relatedTo + "<break>" + recordName ;
+		
+		String[][] task1BasicSectionVerificationForDetailsSection1 = { { AMNNR_TaskLabel1, task1SubjectName },
+				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyBeforeTaggingForDetailsSection } };
+		
+		String[][] task1AdvancedSectionForDetails = { { TaskPageFields.Date.toString(), getAdvanceDueDate }};
+		
 		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
-				task1BasicSectionVerificationForDetailsSection, task1AdvancedSection };
+				task1BasicSectionVerificationForDetailsSection1, task1AdvancedSectionForDetails };
 
 		String value = "";
 		String type = "";
@@ -19605,6 +19645,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String updatedRelatedToVerifyBeforeTagging = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
+		
+		String updatedRelatedToVerifyBeforeTaggingForDetailsSection = relatedTo + "<break>" + recordName;
 
 		String updatedRelatedToVerify = updatedRelatedToVerifyBeforeTagging + "<break>" + AMNNR_RelatedTo69;
 
@@ -19618,13 +19660,17 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
-		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_CallLabel1, task1SubjectName },
-				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerifyBeforeTagging } };
+//		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_CallLabel1, task1SubjectName },
+//				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerifyBeforeTagging } };
+		
+		String[][] task1BasicSectionVerificationForDetailsSectionForDetailsSection = { { AMNNR_CallLabel1, task1SubjectName },
+				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerifyBeforeTaggingForDetailsSection } };
 
 		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate },
 				{ AMNNR_CallLabel8, classification } };
 		String[][][] detailSectionVerifcation = { { { AMNNR_CallLabel1, task1SubjectName } },
-				task1BasicSectionVerificationForDetailsSection, task1AdvancedSection };
+				task1BasicSectionVerificationForDetailsSectionForDetailsSection, task1AdvancedSection };
+		
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
@@ -19786,7 +19832,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				CommonLib.refresh(driver);
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false, projectName)) {
+				if (home.globalSearchAndNavigate(firmRecord1, "Institutions", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord1 + " found in Firm Object-----",
 							YesNo.No);
@@ -19853,7 +19899,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				}
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord2, "Firms", false, projectName)) {
+				if (home.globalSearchAndNavigate(firmRecord2, "Institutions", false, projectName)) {
 					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord2 + " found in Firm Object-----",
 							YesNo.No);
 					CommonLib.refresh(driver);
@@ -19919,7 +19965,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord3ShouldNotThere, "Firms", true, projectName)) {
+				if (home.globalSearchAndNavigate(firmRecord3ShouldNotThere, "Institutions", true, projectName)) {
 
 					log(LogStatus.INFO,
 							"-----Verified Firm named: " + firmRecord3ShouldNotThere + " not found in Firm Object-----",
@@ -20144,7 +20190,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				}
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false, projectName)) {
+				if (home.globalSearchAndNavigate(firmRecord1, "Institutions", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord1 + " found in Firm Object-----",
 							YesNo.No);
@@ -20488,7 +20534,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false, projectName)) {
+				if (home.globalSearchAndNavigate(firmRecord1, "Institutions", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord1 + " found in Firm Object-----",
 							YesNo.No);
@@ -20750,7 +20796,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				CommonLib.refresh(driver);
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(firmRecord1, "Firms", false, projectName)) {
+				if (home.globalSearchAndNavigate(firmRecord1, "Institutions", false, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord1 + " found in Firm Object-----",
 							YesNo.No);
@@ -20948,7 +20994,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				CommonLib.refresh(driver);
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(record1, "Firms", true, projectName)) {
+				if (home.globalSearchAndNavigate(record1, "Institutions", true, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + record1 + " not found in Firm Object-----",
 							YesNo.No);
@@ -20963,7 +21009,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				CommonLib.refresh(driver);
 
 				lp.clickOnTab(projectName, TabName.HomeTab);
-				if (home.globalSearchAndNavigate(record2, "Firms", true, projectName)) {
+				if (home.globalSearchAndNavigate(record2, "Institutions", true, projectName)) {
 
 					log(LogStatus.INFO, "-----Verified Firm named: " + record2 + " not found in Firm Object-----",
 							YesNo.No);
@@ -21172,7 +21218,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					}
 
 					lp.clickOnTab(projectName, TabName.HomeTab);
-					if (home.globalSearchAndNavigate(firmRecord1, "Firms", false, projectName)) {
+					if (home.globalSearchAndNavigate(firmRecord1, "Institutions", false, projectName)) {
 
 						log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord1 + " found in Firm Object-----",
 								YesNo.No);
@@ -21187,7 +21233,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					}
 
 					lp.clickOnTab(projectName, TabName.HomeTab);
-					if (home.globalSearchAndNavigate(firmRecord2, "Firms", false, projectName)) {
+					if (home.globalSearchAndNavigate(firmRecord2, "Institutions", false, projectName)) {
 
 						log(LogStatus.INFO, "-----Verified Firm named: " + firmRecord2 + " found in Firm Object-----",
 								YesNo.No);
@@ -22795,7 +22841,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
-		if (BP.navigateToRecordAndClickOnSubTab(projectName, "Deals", recordName, null)) {
+		if (BP.navigateToRecordAndClickOnSubTab(projectName, TabName.Pipelines.toString(), recordName, null)) {
 			log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
 
 			if (BP.createActivityTimeline(projectName, false, task1ButtonName, task1BasicSection, task1AdvancedSection,
@@ -22907,7 +22953,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		log(LogStatus.INFO, "Before Fundraising Contacts Records Size: " + beforeCreateFundraisingContactList.size(),
 				YesNo.No);
 
-		if (BP.navigateToRecordAndClickOnSubTab(projectName, "Deals", recordName, null)) {
+		if (BP.navigateToRecordAndClickOnSubTab(projectName, TabName.Pipelines.toString(), recordName, null)) {
 			log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
 
 			if (BP.createActivityTimeline(projectName, false, task1ButtonName, task1BasicSection, task1AdvancedSection,
@@ -23477,7 +23523,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
 
-					if (BP.navigateToRecordAndClickOnSubTab(projectName, "Deals", dealRecordName, null)) {
+					if (BP.navigateToRecordAndClickOnSubTab(projectName, TabName.Pipelines.toString(), dealRecordName, null)) {
 						log(LogStatus.INFO, "Able to Open the Record: " + dealRecordName, YesNo.No);
 
 						ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(getAdvanceDueDate,
@@ -23754,7 +23800,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
 
-					if (BP.navigateToRecordAndClickOnSubTab(projectName, "Deals", dealRecordName, null)) {
+					if (BP.navigateToRecordAndClickOnSubTab(projectName, TabName.Pipelines.toString(), dealRecordName, null)) {
 						log(LogStatus.INFO, "Able to Open the Record: " + dealRecordName, YesNo.No);
 
 						if (BP.taskSubjectOfInteractionCard(task1SubjectName, 6) == null) {
@@ -24299,7 +24345,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String task1SubjectName = "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated"
 				+ " " + AMNNR_ActivityType54;
-		String task1Notes = "Jasbinder singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdgg nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated  nsuser firm record 1608 updated @Jasbinder";
+		String task1Notes = "Jasbinder singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdgg nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated @Jasbinder";
 		String relatedTo = "Vitara Deal<break>FCR 1";
 
 		String task1NotesVerify = task1Notes;
@@ -24681,7 +24727,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String updateTask1SubjectName = "theme call";
 		String updateTask1Notes = "Sumo Logic";
-		String updatedRelatedTo = "Max<break>Sumo Kind";
+		String updatedRelatedTo = "Maxx<break>Sumo Kind";
 
 		String updatedGetAdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy",
 				Integer.parseInt("10"));
