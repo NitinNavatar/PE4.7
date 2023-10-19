@@ -21653,8 +21653,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		WebElement ele;
 
 		ArrayList<String> result = new ArrayList<String>();
-//		String parentId = switchToWindowOpenNextToParentWindow(driver);
-//		if (parentId != null) {
+		String parentId = switchToWindowOpenNextToParentWindow(driver);
+		if (parentId != null) {
          refresh(driver);
 			if (headingOfInteractionPage(recordName, 20) != null) {
 				log(LogStatus.INFO, recordName + " interaction page has been open ", YesNo.No);
@@ -21928,12 +21928,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				log(LogStatus.ERROR, recordName + " interaction page is not open ", YesNo.No);
 				result.add(recordName + " interaction page is not open ");
 			}
-//			driver.close();
-//			driver.switchTo().window(parentId);
-//		} else {
-//			log(LogStatus.ERROR, "New tab did not open after click", YesNo.No);
-//			result.add("New tab did not open after click");
-//		}
+			driver.close();
+			driver.switchTo().window(parentId);
+		} else {
+			log(LogStatus.ERROR, "New tab did not open after click", YesNo.No);
+			result.add("New tab did not open after click");
+		}
 		return result;
 	}
 
@@ -25881,7 +25881,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				{
 					log(LogStatus.INFO, "Switched to new window", YesNo.No);
 					
-					if(getRecordOnObject("Firm",firmName,20)!=null)
+					if(getRecordOnObject("Institution",firmName,20)!=null)
 					{
 						log(LogStatus.INFO, "Firm name "+firmName+" has been redirected to new tab", YesNo.No);
 					}

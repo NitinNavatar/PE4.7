@@ -46,7 +46,7 @@ public class DealTeamPageBusinessLayer extends DealTeamPage{
 				label=reuestData[0].replace("_", " ");
 				value=reuestData[1];
 
-				if(PageLabel.Team_Member.toString().equals(reuestData[0]) || PageLabel.Deal.toString().equals(reuestData[0]) ||PageLabel.Deal_Contact.toString().equals(reuestData[0])){
+				if(PageLabel.Team_Member.toString().equals(reuestData[0]) || EditPageLabel.Deal.toString().equals(reuestData[0]) ||PageLabel.Deal_Contact.toString().equals(reuestData[0])){
 					if (sendKeys(driver, getListTextbox(projectName,label, timeOut), value, label+" : "+value,action)) {
 						ThreadSleep(3000);
 						log(LogStatus.INFO,"Able to send "+value+" to label : "+label,YesNo.Yes);
