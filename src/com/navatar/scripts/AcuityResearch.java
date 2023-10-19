@@ -985,7 +985,7 @@ public class AcuityResearch extends BaseLib{
 	public void ARTc004_5_CreateTargetByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity Research\\Fundraising.xlsx";
-		String sheetName="Target";
+		String sheetName="Fundraising";
 		new APIUtils().TargetObjectDataUpload(filePath, sheetName);
 		
 	}
@@ -994,7 +994,7 @@ public class AcuityResearch extends BaseLib{
 	public void ARTc004_6_CreateTargetContactRoleByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity Research\\Fundraising Contact.xlsx";
-		String sheetName="Contact Role (Target)";
+		String sheetName="Fundraising Contact";
 		new APIUtils().TargetContactRoleObjectDataUpload(filePath, sheetName);
 		
 	}
@@ -1009,25 +1009,7 @@ public class AcuityResearch extends BaseLib{
 	}
 	
 	@Test
-	public void ARTc004_7_CreateClipByApi() {
-		
-		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity Research\\Clip.xlsx";
-		String sheetName="Clip";
-		new APIUtils().ClipObjectDataUpload(filePath, sheetName);
-		
-	}
-	
-	@Test
-	public void ARTc004_8_CreateClipRelationByApi() {
-		
-		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity Research\\Clip Relation.xlsx";
-		String sheetName="Clip Relation";
-		new APIUtils().ClipRelationObjectDataUpload(filePath, sheetName);
-		
-	}
-	
-	@Test
-	public void ARTc004_9_CreateThemeByApi() {
+	public void ARTc004_8_CreateThemeByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity Research\\Theme.xlsx";
 		String sheetName="Theme";
@@ -1036,7 +1018,7 @@ public class AcuityResearch extends BaseLib{
 	}
 	
 	@Test
-	public void ARTc004_a1_CreateThemeRelationByApi() {
+	public void ARTc004_9_CreateThemeRelationByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity Research\\Theme Relation.xlsx";
 		String sheetName="Theme Relation";
@@ -1045,7 +1027,25 @@ public class AcuityResearch extends BaseLib{
 	}
 	
 	@Test
-	public void ARTc004_a2_CreateTaskByApi() {
+	public void ARTc004_a1_CreateClipByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity Research\\Clip.xlsx";
+		String sheetName="Clip";
+		new APIUtils().ClipObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void ARTc004_a2_CreateClipRelationByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity Research\\Clip Relation.xlsx";
+		String sheetName="Clip Relation";
+		new APIUtils().ClipRelationObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void ARTc004_a3_CreateTaskByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity Research\\Task.xlsx";
 		String sheetName="Task";
@@ -1054,7 +1054,7 @@ public class AcuityResearch extends BaseLib{
 	}
 	
 	@Test
-	public void ARTc004_a3_CreateTaskRelationByApi() {
+	public void ARTc004_a4_CreateTaskRelationByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity Research\\Task Relationship.xlsx";
 		String sheetName="Task Relationship";
@@ -1063,7 +1063,7 @@ public class AcuityResearch extends BaseLib{
 	}
 	
 	@Test
-	public void ARTc004_a4_CreateEventByApi() {
+	public void ARTc004_a5_CreateEventByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity Research\\Event.xlsx";
 		String sheetName="Event";
@@ -1072,10 +1072,10 @@ public class AcuityResearch extends BaseLib{
 	}
 	
 	@Test
-	public void ARTc004_a5_CreateEventRelationByApi() {
+	public void ARTc004_a6_CreateEventRelationByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity Research\\Event Relationship Contact.xlsx";
-		String sheetName="Event Relationship";
+		String sheetName="Event Relationship Contact";
 		new APIUtils().EventRelationshipObjectDataUpload(filePath, sheetName);
 		
 	}
@@ -1416,7 +1416,7 @@ public class AcuityResearch extends BaseLib{
 				if(list.isEmpty()) {
 					
 					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
-					ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValue + "||" + "list : "+list, "SearchData", excelLabel.Variable_Name,
+					ExcelUtils.writeData(ResearchDataSheetFilePath, "Pass", "SearchData", excelLabel.Variable_Name,
 	   						searchValue, excelLabel.Status);
 				} else {
 					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
@@ -1534,7 +1534,7 @@ public class AcuityResearch extends BaseLib{
 		if(list.isEmpty()) {
 			
 			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
-			ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValues[i] + "||" + "list : "+list, "SearchData", excelLabel.Variable_Name,
+			ExcelUtils.writeData(ResearchDataSheetFilePath, "Pass", "SearchData", excelLabel.Variable_Name,
 						searchValues[i], excelLabel.Status);
 		} else {
 			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
@@ -1619,7 +1619,7 @@ public class AcuityResearch extends BaseLib{
 		if(list.isEmpty()) {
 			
 			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
-			ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValues[i] + "||" + "list : "+list, "SearchData", excelLabel.Variable_Name,
+			ExcelUtils.writeData(ResearchDataSheetFilePath, "Pass", "SearchData", excelLabel.Variable_Name,
 						searchValues[i], excelLabel.Status);
 		} else {
 			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
@@ -1703,7 +1703,7 @@ public class AcuityResearch extends BaseLib{
 		if(list.isEmpty()) {
 			
 			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
-			ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValues[i] + "||" + "list : "+list, "SearchData", excelLabel.Variable_Name,
+			ExcelUtils.writeData(ResearchDataSheetFilePath, "Pass", "SearchData", excelLabel.Variable_Name,
 						searchValues[i], excelLabel.Status);
 		} else {
 			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
@@ -1787,7 +1787,7 @@ public class AcuityResearch extends BaseLib{
 		if(list.isEmpty()) {
 			
 			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
-			ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValues[i] + "||" + "list : "+list, "SearchData", excelLabel.Variable_Name,
+			ExcelUtils.writeData(ResearchDataSheetFilePath, "Pass", "SearchData", excelLabel.Variable_Name,
 						searchValues[i], excelLabel.Status);
 		} else {
 			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValues[i] + "||" + "list : "+list, YesNo.No);
