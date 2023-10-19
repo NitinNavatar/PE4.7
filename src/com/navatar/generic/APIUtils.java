@@ -1201,7 +1201,10 @@ public class APIUtils {
 								newId = getObjectRecordId("Account", value);
 
 								break;
+							case "Contact":
+								newId = getObjectRecordId("Contact", value);
 
+								break;
 							case "Deal":
 								newId = getObjectRecordId("navpeII__Pipeline__c", value);
 
