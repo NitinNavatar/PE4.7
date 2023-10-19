@@ -208,7 +208,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		boolean flag = false;
 		String xpath = "";
 		if (mode.toString().equalsIgnoreCase(Mode.Lightning.toString())) {
-			xpath = "//*[text()='Partnership']/../../../../following-sibling::tbody/tr//td//*[@title='"
+			xpath = "//*[text()='Partnerships']//ancestor::article//tbody/tr//*[@title='"
 					+ partnershipName + "' or text()='" + partnershipName + "']";
 		} else {
 			xpath = "//h3[text()='Partnerships']/../../../../../following-sibling::div//tr/th/a[text()='"

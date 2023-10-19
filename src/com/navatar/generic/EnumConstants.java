@@ -1421,7 +1421,7 @@ public class EnumConstants {
 			}
 		},
 		Overview, Events, Fund_Management, Fund_Investments, Fundraising_Contacts, Fundraising_Contact, Communications,
-		SDG_Tab, Team;
+		SDG_Tab, Team, Acuity;
 	};
 
 	public static enum Header {

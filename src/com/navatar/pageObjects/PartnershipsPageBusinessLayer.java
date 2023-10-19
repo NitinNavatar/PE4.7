@@ -87,7 +87,7 @@ public class PartnershipsPageBusinessLayer extends PartnershipsPage {
 		String id = "";
 		String xpath = "";
 		if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-			xpath = "//td//*[text()='" + LPName + "']/ancestor::td/preceding-sibling::th//a[@data-refid='recordId']";
+			xpath="//div[contains(@class,'Mode-normal')]//a[@title='"+LPName+"']//ancestor::td/preceding-sibling::th//a//span";
 		} else {
 			xpath = "//th[text()='Commitment ID']/../../tr//td/a[text()='" + LPName + "']/../preceding-sibling::th/a";
 		}

@@ -2083,7 +2083,7 @@ public class OldSmokeTestCases extends BaseLib {
 
 								if (parenTiD != null) {
 									log(LogStatus.INFO, "New Window is open", YesNo.No);
-									Xpath = "//h1//*[text()='Add Filter Logic']";
+									Xpath = "//*[text()='Add Filter Logic']";
 									ele = isDisplayed(driver,
 											FindElement(driver, Xpath, "Add filter logic Window", action.BOOLEAN, 10),
 											"Visibility", 10, "Add filter logic text box");
@@ -2903,8 +2903,8 @@ public class OldSmokeTestCases extends BaseLib {
 			log(LogStatus.INFO, "Clicked on Contact Tab", YesNo.No);
 			if (contact.clickOnCreatedContact(environment, SmokeC2_FName, SmokeC2_LName)) {
 				log(LogStatus.INFO, "Clicked on Created Contact : " + SmokeC2_FName + " " + SmokeC2_LName, YesNo.No);
-				WebElement ele2 = lp.getRelatedTab("", RelatedTab.Communications.toString(), 10);
-				click(driver, ele2, RelatedTab.Communications.toString(), action.SCROLLANDBOOLEAN);
+				WebElement ele2 = lp.getRelatedTab("", RelatedTab.Related.toString(), 10);
+				click(driver, ele2, RelatedTab.Related.toString(), action.SCROLLANDBOOLEAN);
 				if (contact.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Activity_History,
 						null)) {
 					log(LogStatus.INFO, "Clicked on Activity History", YesNo.No);
@@ -3241,7 +3241,7 @@ public class OldSmokeTestCases extends BaseLib {
 
 							if (parenTiD != null) {
 								log(LogStatus.INFO, "New Window is open", YesNo.No);
-								Xpath = "//h1//*[text()='Add Filter Logic']";
+								Xpath = "//*[text()='Add Filter Logic']";
 								ele = isDisplayed(driver,
 										FindElement(driver, Xpath, "Add filter logic Window", action.BOOLEAN, 10),
 										"Visibility", 10, "Add filter logic text box");
@@ -3436,7 +3436,7 @@ public class OldSmokeTestCases extends BaseLib {
 						appLog.info("clicked on Fund : " + Smoke_Fund1);
 						if (mode.toString().equalsIgnoreCase(Mode.Lightning.toString())) {
 							if (fund.ClickonRelatedTab_Lighting(environment, RecordType.Fund,
-									RelatedTab.Fundraising.toString())) {
+									RelatedTab.Related.toString())) {
 								log(LogStatus.INFO, "Sucessfully clicked on related tab", YesNo.No);
 							} else {
 								log(LogStatus.ERROR, "Not able to click on related tab", YesNo.Yes);
@@ -3459,7 +3459,7 @@ public class OldSmokeTestCases extends BaseLib {
 						appLog.info("clicked on Fund : " + Smoke_Fund2);
 						if (mode.toString().equalsIgnoreCase(Mode.Lightning.toString())) {
 							if (fund.ClickonRelatedTab_Lighting(environment, RecordType.Fund,
-									RelatedTab.Fundraising.toString())) {
+									RelatedTab.Related.toString())) {
 								log(LogStatus.INFO, "Sucessfully clicked on related tab", YesNo.No);
 							} else {
 								log(LogStatus.ERROR, "Not able to click on related tab", YesNo.Yes);
@@ -3818,7 +3818,7 @@ public class OldSmokeTestCases extends BaseLib {
 				if (home.clickOnTab(environment, mode, TabName.FundraisingsTab)) {
 					if (frpg.clickOnCreatedFundRaising(environment, mode, ss[i])) {
 						if (frpg.clickOnRelatedList(environment, mode, RecordType.Fundraising,
-								RelatedList.Fundraising_Contacts, RelatedTab.Fundraising_Contacts.toString())) {
+								RelatedList.Fundraising_Contacts, RelatedTab.Related.toString())) {
 							if (i == 0) {
 								if (frpg.verifyfundraisingContacts("", SmokeC1_FName + " " + SmokeC1_LName, SmokeINS1,
 										SmokeFRC1_Role, SmokeFRC1_Email)) {
@@ -3953,7 +3953,7 @@ public class OldSmokeTestCases extends BaseLib {
 			if (fund.clickOnCreatedFund(environment, mode, Smoke_Fund2)) {
 				log(LogStatus.INFO, "clicked on fund " + Smoke_Fund2, YesNo.No);
 				if (fund.clickOnRelatedList(environment, mode, RecordType.Fundraising, RelatedList.Fundraisings,
-						RelatedTab.Fundraising.toString())) {
+						RelatedTab.Related.toString())) {
 					if (click(driver, fund.getCreateFundRaisingBtn(environment, mode, PageName.FundsPage, 30),
 							"create fundraising button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "click on fundraising button", YesNo.No);
@@ -4650,7 +4650,7 @@ public class OldSmokeTestCases extends BaseLib {
 				if (home.clickOnTab(environment, mode, TabName.FundraisingsTab)) {
 					if (frpg.clickOnCreatedFundRaising(environment, mode, FR[i])) {
 						if (frpg.clickOnRelatedList(environment, mode, RecordType.Fundraising,
-								RelatedList.Fundraising_Contacts, RelatedTab.Fundraising_Contacts.toString())) {
+								RelatedList.Fundraising_Contacts, RelatedTab.Related.toString())) {
 							if (i == 0) {
 								try {
 									if (home.verifyGridErrorMessage1(environment, mode,
@@ -4865,7 +4865,7 @@ public class OldSmokeTestCases extends BaseLib {
 
 								if (parenTiD != null) {
 									log(LogStatus.INFO, "New Window is open", YesNo.No);
-									Xpath = "//h1//*[text()='Add Filter Logic']";
+									Xpath = "//h1[text()='Add Filter Logic']";
 									ele = isDisplayed(driver,
 											FindElement(driver, Xpath, "Add filter logic Window", action.BOOLEAN, 10),
 											"Visibility", 10, "Add filter logic text box");
@@ -5537,7 +5537,7 @@ public class OldSmokeTestCases extends BaseLib {
 			if (home.clickOnTab(environment, mode, TabName.FundraisingsTab)) {
 				if (frpg.clickOnCreatedFundRaising(environment, mode, FR[i])) {
 					if (frpg.clickOnRelatedList(environment, mode, RecordType.Fundraising,
-							RelatedList.Fundraising_Contacts, RelatedTab.Fundraising_Contacts.toString())) {
+							RelatedList.Fundraising_Contacts, RelatedTab.Related.toString())) {
 						if (i == 0) {
 
 							if (frpg.verifyfundraisingContacts("", SmokeC1_FName + " " + SmokeC1_LName, SmokeINS1,
@@ -5635,7 +5635,7 @@ public class OldSmokeTestCases extends BaseLib {
 				if (fund.clickOnCreatedFund(environment, mode, Smoke_Fund1)) {
 					log(LogStatus.INFO, j + " : clicked on Fund : : " + Smoke_Fund1, YesNo.No);
 					if (fund.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.Fundraising_Contacts,
-							RelatedTab.Fundraising_Contact.toString())) {
+							RelatedTab.Related.toString())) {
 						log(LogStatus.INFO, j + " : clicked on Fundraisings", YesNo.No);
 						ThreadSleep(2000);
 						windowScrollYAxis(driver, 0, 500);
@@ -6128,7 +6128,7 @@ public class OldSmokeTestCases extends BaseLib {
 		if (fund.clickOnTab(environment, mode, TabName.FundsTab)) {
 			if (fund.clickOnCreatedFund(environment, mode, Smoke_Fund1)) {
 				if (fund.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.Fundraisings,
-						RelatedTab.Fundraising_Contact.toString())) {
+						RelatedTab.Related.toString())) {
 					ThreadSleep(2000);
 					windowScrollYAxis(driver, 0, 500);
 					if (click(driver, fund.getEmailFundraisingContactsBtn(environment, mode, 30),
@@ -6193,8 +6193,8 @@ public class OldSmokeTestCases extends BaseLib {
 			log(LogStatus.INFO, "Clicked on Contact Tab", YesNo.No);
 			if (contact.clickOnCreatedContact(environment, SmokeC1_FName, SmokeC1_LName)) {
 				log(LogStatus.INFO, "Clicked on Created Contact : " + SmokeC1_FName + " " + SmokeC1_LName, YesNo.No);
-				WebElement ele2 = lp.getRelatedTab("", RelatedTab.Communications.toString(), 10);
-				click(driver, ele2, RelatedTab.Communications.toString(), action.SCROLLANDBOOLEAN);
+				WebElement ele2 = lp.getRelatedTab("", RelatedTab.Related.toString(), 10);
+				click(driver, ele2, RelatedTab.Related.toString(), action.SCROLLANDBOOLEAN);
 				if (contact.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Activity_History,
 						null)) {
 					log(LogStatus.INFO, "Clicked on Activity History", YesNo.No);
@@ -6303,7 +6303,7 @@ public class OldSmokeTestCases extends BaseLib {
 			if (fund.clickOnCreatedFund(environment, mode, Smoke_Fund1)) {
 				appLog.info("clicked on Fund : " + Smoke_Fund1);
 				if (fund.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.Fundraising_Contacts,
-						RelatedTab.Fundraising_Contact.toString())) {
+						RelatedTab.Related.toString())) {
 					if (click(driver, fund.getEmailFundraisingContactsBtn(environment, mode, 30),
 							"email fundraising contact button", action.SCROLLANDBOOLEAN)) {
 						if (mode.toString().equalsIgnoreCase(Mode.Lightning.toString())) {
@@ -6387,7 +6387,7 @@ public class OldSmokeTestCases extends BaseLib {
 		if (fund.clickOnTab(environment, mode, TabName.FundsTab)) {
 			if (fund.clickOnCreatedFund(environment, mode, Smoke_Fund3)) {
 				if (fund.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.Fundraisings,
-						RelatedTab.Fundraising_Contact.toString())) {
+						RelatedTab.Related.toString())) {
 					if (click(driver, fund.getEmailFundraisingContactsBtn(environment, mode, 30),
 							"email fundraising contact button", action.SCROLLANDBOOLEAN)) {
 						if (market.EmailProspects(environment, mode, PageName.emailFundraisingContact,
@@ -6451,8 +6451,8 @@ public class OldSmokeTestCases extends BaseLib {
 			log(LogStatus.INFO, "Clicked on Contact Tab", YesNo.No);
 			if (contact.clickOnCreatedContact(environment, SmokeC3_FName, SmokeC3_LName)) {
 				log(LogStatus.INFO, "Clicked on Created Contact : " + SmokeC3_FName + " " + SmokeC3_LName, YesNo.No);
-				WebElement ele2 = lp.getRelatedTab("", RelatedTab.Communications.toString(), 10);
-				click(driver, ele2, RelatedTab.Communications.toString(), action.SCROLLANDBOOLEAN);
+				WebElement ele2 = lp.getRelatedTab("", RelatedTab.Related.toString(), 10);
+				click(driver, ele2, RelatedTab.Related.toString(), action.SCROLLANDBOOLEAN);
 				if (contact.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Activity_History,
 						null)) {
 					log(LogStatus.INFO, "Clicked on Activity History", YesNo.No);
@@ -6511,7 +6511,7 @@ public class OldSmokeTestCases extends BaseLib {
 			if (fund.clickOnCreatedFund(environment, mode, Smoke_Fund3)) {
 				appLog.info("clicked on Fund : " + Smoke_Fund3);
 				if (fund.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.Fundraising_Contacts,
-						RelatedTab.Fundraising_Contact.toString())) {
+						RelatedTab.Related.toString())) {
 					if (click(driver, fund.getEmailFundraisingContactsBtn(environment, mode, 30),
 							"email fundraising contact button", action.SCROLLANDBOOLEAN)) {
 						if (mode.toString().equalsIgnoreCase(Mode.Lightning.toString())) {
@@ -6601,7 +6601,7 @@ public class OldSmokeTestCases extends BaseLib {
 		if (fund.clickOnTab(environment, mode, TabName.FundsTab)) {
 			if (fund.clickOnCreatedFund(environment, mode, Smoke_Fund1)) {
 				if (fund.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.Fundraisings,
-						RelatedTab.Fundraising_Contact.toString())) {
+						RelatedTab.Related.toString())) {
 					ThreadSleep(2000);
 					windowScrollYAxis(driver, 0, 500);
 					if (click(driver, fund.getEmailFundraisingContactsBtn(environment, mode, 30),
@@ -6718,7 +6718,7 @@ public class OldSmokeTestCases extends BaseLib {
 
 								if (parenTiD != null) {
 									log(LogStatus.INFO, "New Window is open", YesNo.No);
-									Xpath = "//h1//*[text()='Add Filter Logic']";
+									Xpath = "//h1[text()='Add Filter Logic']";
 									ele = isDisplayed(driver,
 											FindElement(driver, Xpath, "Add filter logic Window", action.BOOLEAN, 10),
 											"Visibility", 10, "Add filter logic text box");
@@ -7163,15 +7163,15 @@ public class OldSmokeTestCases extends BaseLib {
 			if (fund.clickOnCreatedFund(environment, mode, Smoke_Fund1)) {
 				log(LogStatus.INFO, "clicked on fund tab", YesNo.No);
 				if (fund.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.Partnerships,
-						RelatedTab.Fund_Management.toString())) {
+						RelatedTab.Related.toString())) {
 					log(LogStatus.INFO, "Clicked on Partnerships related list", YesNo.No);
 					if (fund.clickOncreatedPartnershipFromRelatedList(environment, mode, Smoke_P1)) {
 						log(LogStatus.INFO, "clicked on partnership " + Smoke_P1, YesNo.No);
-						String parentId = switchOnWindow(driver);
-						if (parentId != null) {
-							log(LogStatus.INFO, "New window is open after click on partnership " + Smoke_P1, YesNo.Yes);
+	//					String parentId = switchOnWindow(driver);
+//						if (parentId != null) {
+//							log(LogStatus.INFO, "New window is open after click on partnership " + Smoke_P1, YesNo.Yes);
 							if (partnership.clickOnRelatedList(environment, mode, RecordType.Partnerships,
-									RelatedList.Commitments, null)) {
+									RelatedList.Commitments, "Related Lists")) {
 								log(LogStatus.INFO, "clicked on related list " + RelatedList.Partnerships.toString(),
 										YesNo.No);
 								if (partnership.clickOnViewAllRelatedList(environment, mode, RelatedList.Commitments)) {
@@ -7240,12 +7240,12 @@ public class OldSmokeTestCases extends BaseLib {
 								sa.assertTrue(false,
 										"Not able to click on related list " + RelatedList.Partnerships.toString());
 							}
-							driver.close();
-							driver.switchTo().window(parentId);
-						} else {
-							log(LogStatus.ERROR, "No New is open after click on partnership " + Smoke_P1, YesNo.Yes);
-							sa.assertTrue(false, "No New is open after click on partnership " + Smoke_P1);
-						}
+//							driver.close();
+//							driver.switchTo().window(parentId);
+//					} else {
+//							log(LogStatus.ERROR, "No New is open after click on partnership " + Smoke_P1, YesNo.Yes);
+//							sa.assertTrue(false, "No New is open after click on partnership " + Smoke_P1);
+//						}
 
 					} else {
 						log(LogStatus.ERROR, "Not able to click on partnership " + Smoke_P1, YesNo.Yes);
@@ -7337,7 +7337,7 @@ public class OldSmokeTestCases extends BaseLib {
 				// totalAmount1=String.valueOf((Integer.parseInt(SmokeCOMM1_CommitmentAmount)+Integer.parseInt(SmokeCOMM2_CommitmentAmount)));
 
 				if (fund.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Commitments,
-						RelatedTab.Fundraising.toString())) {
+						RelatedTab.Related.toString())) {
 					ThreadSleep(3000);
 					log(LogStatus.INFO, "Clicked on related list fundraising tab on institution page" + SmokeINS1,
 							YesNo.No);
@@ -7378,7 +7378,7 @@ public class OldSmokeTestCases extends BaseLib {
 					}
 
 					if (partnership.clickOnRelatedList(environment, mode, RecordType.Institution,
-							RelatedList.Commitments, RelatedTab.Fundraising.toString())) {
+							RelatedList.Commitments, RelatedTab.Related.toString())) {
 						log(LogStatus.INFO, "clicked on related list " + RelatedList.Commitments.toString(), YesNo.No);
 						ThreadSleep(2000);
 
@@ -7460,7 +7460,7 @@ public class OldSmokeTestCases extends BaseLib {
 					}
 
 					if (partnership.clickOnRelatedList(environment, mode, RecordType.Institution,
-							RelatedList.Commitments, RelatedTab.Fundraising.toString())) {
+							RelatedList.Commitments, RelatedTab.Related.toString())) {
 						log(LogStatus.INFO, "clicked on related list " + RelatedList.Commitments.toString(), YesNo.No);
 						ThreadSleep(2000);
 
@@ -7996,14 +7996,14 @@ public class OldSmokeTestCases extends BaseLib {
 			if (fund.clickOnCreatedFund(environment, mode, Smoke_Fund1)) {
 				log(LogStatus.INFO, "clicked on fund tab", YesNo.No);
 				if (fund.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.Partnerships,
-						RelatedTab.Fund_Management.toString())) {
+						RelatedTab.Related.toString())) {
 					log(LogStatus.INFO, "Clicked on Partnerships related list", YesNo.No);
 					if (fund.clickOncreatedPartnershipFromRelatedList(environment, mode, Smoke_P1)) {
 						log(LogStatus.INFO, "clicked on partnership " + Smoke_P1, YesNo.No);
-						String parentId = switchOnWindow(driver);
-						if (parentId != null) {
-							log(LogStatus.ERROR, "New window is open after click on partnership " + Smoke_P1,
-									YesNo.Yes);
+//						String parentId = switchOnWindow(driver);
+//						if (parentId != null) {
+//							log(LogStatus.ERROR, "New window is open after click on partnership " + Smoke_P1,
+//									YesNo.Yes);
 							if (partnership.clickOnRelatedList(environment, mode, RecordType.Partnerships,
 									RelatedList.Commitments, null)) {
 								log(LogStatus.INFO, "clicked on related list " + RelatedList.Partnerships.toString(),
@@ -8048,12 +8048,12 @@ public class OldSmokeTestCases extends BaseLib {
 								sa.assertTrue(false,
 										"Not able to click on related list " + RelatedList.Partnerships.toString());
 							}
-							driver.close();
-							driver.switchTo().window(parentId);
-						} else {
-							log(LogStatus.ERROR, "No New is open after click on partnership " + Smoke_P1, YesNo.Yes);
-							sa.assertTrue(false, "No New is open after click on partnership " + Smoke_P1);
-						}
+//							driver.close();
+//							driver.switchTo().window(parentId);
+//						} else {
+//							log(LogStatus.ERROR, "No New is open after click on partnership " + Smoke_P1, YesNo.Yes);
+//							sa.assertTrue(false, "No New is open after click on partnership " + Smoke_P1);
+//						}
 					} else {
 						log(LogStatus.ERROR, "Not able to click on partnership " + Smoke_P1, YesNo.Yes);
 						sa.assertTrue(false, "Not able to click on partnership " + Smoke_P1);
@@ -8171,7 +8171,7 @@ public class OldSmokeTestCases extends BaseLib {
 				// String
 				// totalAmount=String.valueOf((Integer.parseInt(SmokeCOMM1_CommitmentAmount)+Integer.parseInt(SmokeCOMM2_CommitmentAmount)+Integer.parseInt(SmokeCOMM3_CommitmentAmount)+Integer.parseInt(SmokeCOMM4_CommitmentAmount)));
 				if (ins.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Commitments,
-						RelatedTab.Fundraising.toString())) {
+						RelatedTab.Related.toString())) {
 					log(LogStatus.INFO, "Clicked on related tab fundraising on institution page" + SmokeINS1, YesNo.No);
 
 					if (ins.verifyCommitmentDetails(environment, mode, commitmentRowRecord, Smoke_Fund1, "")
@@ -8391,7 +8391,7 @@ public class OldSmokeTestCases extends BaseLib {
 		if (partnership.clickOnTab(environment, mode, TabName.PartnershipsTab)) {
 			if (partnership.clickOnCreatedPartnership(environment, mode, Smoke_P2)) {
 				if (partnership.clickOnRelatedList(environment, mode, RecordType.Partnerships, RelatedList.Commitments,
-						null)) {
+						"Related Lists")) {
 					log(LogStatus.INFO, "clicked on related list " + RelatedList.Partnerships.toString(), YesNo.No);
 					if (partnership.clickOnViewAllRelatedList(environment, mode, RelatedList.Commitments)) {
 						log(LogStatus.INFO, "clicked on commitments view all ", YesNo.No);
@@ -8461,7 +8461,7 @@ public class OldSmokeTestCases extends BaseLib {
 				settingsBeforeTests();
 
 				if (partnership.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Commitments,
-						RelatedTab.Fundraising.toString())) {
+						RelatedTab.Related.toString())) {
 					log(LogStatus.INFO, "clicked on related list " + RelatedTab.Fundraising.toString(), YesNo.No);
 					ThreadSleep(2000);
 
@@ -9111,15 +9111,15 @@ public class OldSmokeTestCases extends BaseLib {
 			if (fund.clickOnCreatedFund(environment, mode, Smoke_Fund3)) {
 				log(LogStatus.INFO, "clicked on fund tab", YesNo.No);
 				if (fund.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.Partnerships,
-						RelatedTab.Fund_Management.toString())) {
+						RelatedTab.Related.toString())) {
 					log(LogStatus.INFO, "Clicked on Partnerships related list", YesNo.No);
 					;
 					if (fund.clickOncreatedPartnershipFromRelatedList(environment, mode, Smoke_P3)) {
 						log(LogStatus.INFO, "clicked on partnership " + Smoke_P3, YesNo.No);
-						parentId = switchOnWindow(driver);
-						if (parentId != null) {
-							log(LogStatus.ERROR, "New window is open after click on partnership " + Smoke_P3,
-									YesNo.Yes);
+//						parentId = switchOnWindow(driver);
+//						if (parentId != null) {
+//							log(LogStatus.ERROR, "New window is open after click on partnership " + Smoke_P3,
+//									YesNo.Yes);
 							if (partnership.clickOnRelatedList(environment, mode, RecordType.Partnerships,
 									RelatedList.Commitments, null)) {
 								log(LogStatus.INFO, "clicked on related list " + RelatedList.Partnerships.toString(),
@@ -9167,10 +9167,10 @@ public class OldSmokeTestCases extends BaseLib {
 
 							driver.close();
 							driver.switchTo().window(parentId);
-						} else {
-							log(LogStatus.ERROR, "No New is open after click on partnership " + Smoke_P3, YesNo.Yes);
-							sa.assertTrue(false, "No New is open after click on partnership " + Smoke_P3);
-						}
+//						} else {
+//							log(LogStatus.ERROR, "No New is open after click on partnership " + Smoke_P3, YesNo.Yes);
+//							sa.assertTrue(false, "No New is open after click on partnership " + Smoke_P3);
+//						}
 					} else {
 						log(LogStatus.ERROR, "Not able to click on partnership " + Smoke_P3, YesNo.Yes);
 						sa.assertTrue(false, "Not able to click on partnership " + Smoke_P3);
@@ -9485,7 +9485,7 @@ public class OldSmokeTestCases extends BaseLib {
 			if (fund.clickOnCreatedFund(environment, mode, Smoke_Fund3)) {
 				log(LogStatus.INFO, "clicked on fund tab", YesNo.No);
 				if (fund.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.Partnerships,
-						RelatedTab.Fund_Management.toString())) {
+						RelatedTab.Related.toString())) {
 					log(LogStatus.INFO, "Clicked on Partnerships related list", YesNo.No);
 					if (fund.clickOncreatedPartnershipFromRelatedList(environment, mode, Smoke_P4)) {
 						log(LogStatus.INFO, "clicked on partnership " + Smoke_P4, YesNo.No);
@@ -10947,6 +10947,7 @@ public class OldSmokeTestCases extends BaseLib {
 	@Test
 	public void PESmokeTc048_VerifyCommitmentPage(String environment, String mode) {
 
+
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		CommitmentsPageBusinessLayer comm = new CommitmentsPageBusinessLayer(driver);
@@ -11158,7 +11159,7 @@ public class OldSmokeTestCases extends BaseLib {
 			if (cp.clickOnCreatedContact(environment, SmokeC1_FName, SmokeC1_LName)) {
 				ThreadSleep(5000);
 				if (bp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Correspondence_Lists,
-						RelatedTab.Investor_Relations.toString())) {
+						RelatedTab.Related.toString())) {
 					log(LogStatus.INFO, "clicked on Investor Relations Tab", YesNo.No);
 					ThreadSleep(3000);
 					if (click(driver, crp.getNewCorrespondenceListButton(30), "New Correspondence List Button",
@@ -11204,7 +11205,7 @@ public class OldSmokeTestCases extends BaseLib {
 			if (cp.clickOnCreatedContact(environment, SmokeC2_FName, SmokeC2_LName)) {
 				ThreadSleep(5000);
 				if (bp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Correspondence_Lists,
-						RelatedTab.Investor_Relations.toString())) {
+						RelatedTab.Related.toString())) {
 					log(LogStatus.INFO, "clicked on Investor Relations Tab", YesNo.No);
 					if (click(driver, crp.getNewCorrespondenceListButton(30), "New Correspondence List Button",
 							action.SCROLLANDBOOLEAN)) {
@@ -11249,7 +11250,7 @@ public class OldSmokeTestCases extends BaseLib {
 			if (cp.clickOnCreatedContact(environment, SmokeC4_FName, SmokeC4_LName)) {
 				ThreadSleep(5000);
 				if (bp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Correspondence_Lists,
-						RelatedTab.Investor_Relations.toString())) {
+						RelatedTab.Related.toString())) {
 					log(LogStatus.INFO, "clicked on Investor Relations Tab", YesNo.No);
 					if (click(driver, crp.getNewCorrespondenceListButton(30), "New Correspondence List Button",
 							action.SCROLLANDBOOLEAN)) {
