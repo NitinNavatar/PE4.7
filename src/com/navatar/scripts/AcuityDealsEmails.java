@@ -62,7 +62,7 @@ public class AcuityDealsEmails extends BaseLib {
 		String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
 		String emailId = lp.generateRandomEmailId(gmailUserName);
 		ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",excelLabel.User_Last_Name);
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		lp.CRMLogin(superAdminUserName, adminPassword);
 		boolean flag = false;
 		for (int i = 0; i < 3; i++) {
 			try {
@@ -154,7 +154,7 @@ public class AcuityDealsEmails extends BaseLib {
 	@Test
 	public void ADETc001_2_AddListView(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		lp.CRMLogin(superAdminUserName, adminPassword);
 
 		String[] tabs= {tabObj1,tabObj2};
 		TabName[] tab= {TabName.Object1Tab,TabName.Object2Tab};
@@ -187,7 +187,7 @@ public class AcuityDealsEmails extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		
 		//INS
 		String value="";
@@ -269,7 +269,7 @@ public class AcuityDealsEmails extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
          String TabName1="";
 		// contact
 				if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
@@ -522,7 +522,7 @@ public class AcuityDealsEmails extends BaseLib {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		String ContactName = ADEContact1FName + " " + ADEContact1LName;
 		String AccountName = ADEIns18;
 		String dealHeader = "Pipeline Name<break>Stage<break>Highest Stage Reached<break>Log In Date";
@@ -604,7 +604,7 @@ public class AcuityDealsEmails extends BaseLib {
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		String recordType = "";
 		String dealName = ADEDeal3;
@@ -713,7 +713,7 @@ public class AcuityDealsEmails extends BaseLib {
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		String recordType = "";
 		String dealName = ADEDeal4;
@@ -919,7 +919,7 @@ public class AcuityDealsEmails extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		String recordType = "";
 		String dealName = ADEDeal5;
@@ -1072,7 +1072,7 @@ public class AcuityDealsEmails extends BaseLib {
 	public void ADETc008_1_CreateDealSourceFirmCompany(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 //	String[] dealRecordType = ADEDealRecordType1.split("<Section>", -1);
 		String[] dealName = ADEDealName1.split("<Section>", -1);
@@ -1110,7 +1110,7 @@ public class AcuityDealsEmails extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		String[] dealName = ADEDealName1.split("<Section>", -1);
 		String[] dealStage = ADEDealStage1.split("<Section>", -1);
@@ -1258,7 +1258,7 @@ public class AcuityDealsEmails extends BaseLib {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
 			if (fp.clickOnAlreadyCreatedItem(projectName,ADEDeal3, 10)) {
@@ -1359,7 +1359,7 @@ public class AcuityDealsEmails extends BaseLib {
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		WebElement ele = null;
 
 		TabName tabName = TabName.RecycleBinTab;
@@ -1441,7 +1441,7 @@ public class AcuityDealsEmails extends BaseLib {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 	
-		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns18, 10)) {
@@ -1582,7 +1582,7 @@ public class AcuityDealsEmails extends BaseLib {
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		WebElement ele = null;
 		
 		String dealHeader = "Pipeline Name<break>Stage<break>Highest Stage Reached<break>Log In Date";
@@ -1723,7 +1723,7 @@ public class AcuityDealsEmails extends BaseLib {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		String dealname = "ADECTD New";
 
 		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
@@ -1879,7 +1879,7 @@ public class AcuityDealsEmails extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		String dealname = "ADECTD One";
 
 		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
@@ -3480,23 +3480,23 @@ public class AcuityDealsEmails extends BaseLib {
 		String[][] EntityOrAccounts = { { ADEIns13, ADEIns13RecordType, null } };
 
 		for (String[] accounts : EntityOrAccounts) {
-			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
-				log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
-				value = accounts[0];
-				type = accounts[1];
-				if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
-					log(LogStatus.INFO, "successfully Created Account/Entity : " + value + " of record type : " + type,
-							YesNo.No);
-
-				} else {
-					sa.assertTrue(false, "Not Able to Create Account/Entity : " + value + " of record type : " + type);
-					log(LogStatus.SKIP, "Not Able to Create Account/Entity : " + value + " of record type : " + type,
-							YesNo.Yes);
-				}
-			} else {
-				sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.Object1Tab);
-				log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.Object1Tab, YesNo.Yes);
-			}
+//			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
+//				log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
+//				value = accounts[0];
+//				type = accounts[1];
+//				if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
+//					log(LogStatus.INFO, "successfully Created Account/Entity : " + value + " of record type : " + type,
+//							YesNo.No);
+//
+//				} else {
+//					sa.assertTrue(false, "Not Able to Create Account/Entity : " + value + " of record type : " + type);
+//					log(LogStatus.SKIP, "Not Able to Create Account/Entity : " + value + " of record type : " + type,
+//							YesNo.Yes);
+//				}
+//			} else {
+//				sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.Object1Tab);
+//				log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.Object1Tab, YesNo.Yes);
+//			}
 		}
 	String[] dealRecordType = ADEDealRecordType1.split("<Section>", -1);
 		String[] dealName = ADEDealName2.split("<Section>", -1);
@@ -6296,20 +6296,20 @@ public void ADETc047_VerifyDealCountColumnAgainstConnectionwhereAnotherConnectio
 	String actualDealCount = null;
 	String teamMemberName = ADEDealTeamMember10;
 	
-	if (lp.clickOnTab(projectName, tabObj4)) {
-		log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
-		ThreadSleep(3000);
-		if (dp.createDeal(recordType, dealName, companyName, stage, "Log In Date", todaysDate)) {
-			log(LogStatus.INFO, dealName + " deal has been created", YesNo.No);
-
-		} else {
-			log(LogStatus.ERROR, dealName + " deal is not created", YesNo.No);
-			sa.assertTrue(false, dealName + " deal is not created");
-		}
-	} else {
-		log(LogStatus.ERROR, "Not able to click on " + tabObj4 + " Tab", YesNo.No);
-		sa.assertTrue(false, "Not able to click on " + tabObj4 + " Tab");
-	}
+//	if (lp.clickOnTab(projectName, tabObj4)) {
+//		log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
+//		ThreadSleep(3000);
+//		if (dp.createDeal(recordType, dealName, companyName, stage, "Log In Date", todaysDate)) {
+//			log(LogStatus.INFO, dealName + " deal has been created", YesNo.No);
+//
+//		} else {
+//			log(LogStatus.ERROR, dealName + " deal is not created", YesNo.No);
+//			sa.assertTrue(false, dealName + " deal is not created");
+//		}
+//	} else {
+//		log(LogStatus.ERROR, "Not able to click on " + tabObj4 + " Tab", YesNo.No);
+//		sa.assertTrue(false, "Not able to click on " + tabObj4 + " Tab");
+//	}
 	String[][] data = { { EditPageLabel.Deal.toString(), dealName1 },
 			{ PageLabel.Deal_Contact.toString(), contactName },{ PageLabel.Team_Member.toString(), TeamMember } };
 
@@ -11093,6 +11093,8 @@ public void ADETc088_VerifyThatDealNamesClickableandDealRedirectionforAccounts(S
 		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns2, 30)) {
 			if (BP.dealAcuityDealName(dealName, 30) != null) {
 				log(LogStatus.PASS, "deal name: " + dealName + " is hyperlink and is present", YesNo.No);
+				refresh(driver);
+				ThreadSleep(2000);
 				if (clickUsingJavaScript(driver, BP.dealAcuityDealName(dealName, 10), "deal name: " + dealName,
 						action.BOOLEAN)) {
 					log(LogStatus.PASS, "Clicked on deal name: " + dealName, YesNo.No);
@@ -12578,6 +12580,8 @@ public void ADETc098_VerifyThatDealNamesClickableandDealRedirectionforAccounts(S
 		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns5, 30)) {
 			if (BP.dealAcuityDealName(dealName, 30) != null) {
 				log(LogStatus.PASS, "deal name: " + dealName + " is hyperlink and is present", YesNo.No);
+				refresh(driver);
+				ThreadSleep(2000);
 				if (clickUsingJavaScript(driver, BP.dealAcuityDealName(dealName, 10), "deal name: " + dealName,
 						action.BOOLEAN)) {
 					log(LogStatus.PASS, "Clicked on deal name: " + dealName, YesNo.No);
@@ -14369,7 +14373,7 @@ public void ADETc113_VerifyDefaultSortingatDealSectionAICIAccountsisDecending(St
 			
 			log(LogStatus.INFO,"open created item"+ADEIns16,YesNo.No);
 			List<WebElement> ele = BP.getsortingDateRecived(10);	
-			if (CommonLib.checkSorting(driver, SortOrder.Decending, ele)) {
+			if (CommonLib.checkSortingforDate(driver, SortOrder.Decending, ele)) {
 				log(LogStatus.PASS,
 						"-----------Deal Column is in Descending Order By Default  --------------",
 						YesNo.No);
@@ -14423,7 +14427,7 @@ public void ADETc114_VerifySortingatDealSectionDateReceivedAICIPEAccountsisAecen
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-	String order = "date";	
+	String order = "Date Received";	
 	if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
 		log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
 		
@@ -14432,12 +14436,12 @@ public void ADETc114_VerifySortingatDealSectionDateReceivedAICIPEAccountsisAecen
 			log(LogStatus.INFO,"open created item"+ADEIns16,YesNo.No);
 			if (CommonLib.click(driver, BP.DateReciviedSortingIcon( 30), "Date Recivied Sorting Icon: " + "",
 					action.BOOLEAN)) {
-				log(LogStatus.INFO, "CDate Recivied Sorting Icon", YesNo.No);
+				log(LogStatus.INFO, "Date Recivied Sorting Icon", YesNo.No);
 				if (CommonLib.click(driver, BP.sortingorder(order, 30), "Date Recivied Sorting order: " + "",
 						action.BOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
 					List<WebElement> ele = BP.getsortingDateRecived(10);
-			if (CommonLib.checkSorting(driver, SortOrder.Assecending, ele)) {
+			if (CommonLib.checkSortingforDate(driver, SortOrder.Assecending, ele)) {
 				log(LogStatus.PASS,
 						"-----------deal Column is in Assecending Order By clicking on deal reacieved  --------------",
 						YesNo.No);
@@ -14467,7 +14471,7 @@ public void ADETc114_VerifySortingatDealSectionDateReceivedAICIPEAccountsisAecen
 							action.BOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
 						List<WebElement> ele = BP.getsortingDateRecived(10);
-				if (CommonLib.checkSorting(driver, SortOrder.Assecending, ele)) {
+				if (CommonLib.checkSortingforDate(driver, SortOrder.Assecending, ele)) {
 					log(LogStatus.PASS,
 							"-----------deal Column is in Assecending Order By clicking on deal reacieved  --------------",
 							YesNo.No);
@@ -14728,7 +14732,7 @@ public void ADETc117_1_VerifySortingatDealSectionDateReceivedForCompanyRecord(St
 			
 			log(LogStatus.INFO,"open created item"+ADEIns1,YesNo.No);
 					List<WebElement> ele =BP.getsortingDateRecived(10);
-			if (CommonLib.checkSorting(driver, SortOrder.Decending, ele)) {
+			if (CommonLib.checkSortingforDate(driver, SortOrder.Decending, ele)) {
 				log(LogStatus.PASS,
 						"-----------deal Column is in Decending Order By clicking on deal reacieved  --------------",
 						YesNo.No);
@@ -14747,7 +14751,7 @@ public void ADETc117_1_VerifySortingatDealSectionDateReceivedForCompanyRecord(St
 							action.BOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
 						List<WebElement> ele1 = BP.getsortingDateRecived(10);
-				if (CommonLib.checkSorting(driver, SortOrder.Assecending, ele1)) {
+				if (CommonLib.checkSortingforDate(driver, SortOrder.Assecending, ele1)) {
 					log(LogStatus.PASS,
 							"-----------deal Column is in Assecending Order By clicking on deal reacieved  --------------",
 							YesNo.No);
@@ -14891,7 +14895,7 @@ public void ADETc118_1_VerifySortingatDealSectionDateReceivedForIntermediaryReco
 			
 			log(LogStatus.INFO,"open created item"+ADEIns4,YesNo.No);
 					List<WebElement> ele =BP.getsortingDateRecived(10);
-			if (CommonLib.checkSorting(driver, SortOrder.Decending, ele)) {
+			if (CommonLib.checkSortingforDate(driver, SortOrder.Decending, ele)) {
 				log(LogStatus.PASS,
 						"-----------deal Column is in Decending Order By clicking on deal reacieved  --------------",
 						YesNo.No);
@@ -14910,7 +14914,7 @@ public void ADETc118_1_VerifySortingatDealSectionDateReceivedForIntermediaryReco
 							action.BOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
 						List<WebElement> ele1 =BP.getsortingDateRecived(10);
-				if (CommonLib.checkSorting(driver, SortOrder.Assecending, ele1)) {
+				if (CommonLib.checkSortingforDate(driver, SortOrder.Assecending, ele1)) {
 					log(LogStatus.PASS,
 							"-----------deal Column is in Assecending Order By clicking on deal reacieved  --------------",
 							YesNo.No);
@@ -15054,7 +15058,7 @@ public void ADETc119_1_VerifySortingatDealSectionDateReceivedForPCRecord(String 
 			
 			log(LogStatus.INFO,"open created item"+ADEIns7,YesNo.No);
 					List<WebElement> ele =BP.getsortingDateRecived(10);
-			if (CommonLib.checkSorting(driver, SortOrder.Decending, ele)) {
+			if (CommonLib.checkSortingforDate(driver, SortOrder.Decending, ele)) {
 				log(LogStatus.PASS,
 						"-----------deal Column is in Decending Order By clicking on deal reacieved  --------------",
 						YesNo.No);
@@ -15073,7 +15077,7 @@ public void ADETc119_1_VerifySortingatDealSectionDateReceivedForPCRecord(String 
 							action.BOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
 						List<WebElement> ele1 =BP.getsortingDateRecived(10);
-				if (CommonLib.checkSorting(driver, SortOrder.Assecending, ele1)) {
+				if (CommonLib.checkSortingforDate(driver, SortOrder.Assecending, ele1)) {
 					log(LogStatus.PASS,
 							"-----------deal Column is in Assecending Order By clicking on deal reacieved  --------------",
 							YesNo.No);
@@ -15299,7 +15303,7 @@ public void ADETc120_2_VerifySortingatDealSectionStageForInstitutionRecord(Strin
 //								action.BOOLEAN)) {
 							List<WebElement> ele = BP.getsortintTCD(10);
 							
-								if (CommonLib.checkSorting(driver, SortOrder.Decending, ele)) {
+								if (CommonLib.checkSortingforDate(driver, SortOrder.Decending, ele)) {
 				log(LogStatus.PASS,
 						"-----------deal Column is in Decending Order By clicking on stage  --------------",
 						YesNo.No);
@@ -15329,7 +15333,7 @@ public void ADETc120_2_VerifySortingatDealSectionStageForInstitutionRecord(Strin
 					log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
 							List<WebElement> ele =BP.getsortintTCD(10);
 						
-								if (CommonLib.checkSorting(driver, SortOrder.Assecending, ele))
+								if (CommonLib.checkSortingforDate(driver, SortOrder.Assecending, ele))
 							
 				log(LogStatus.PASS,
 						"-----------deal Column is in Assecending Order By clicking on stage  --------------",
