@@ -6277,7 +6277,8 @@ public abstract class BasePage extends BaseLib {
 				"listOfButtons");
 	}
 
-	@FindBy(xpath = "//div[@class='forceVirtualActionMarker forceVirtualAction']//a")
+//	@FindBy(xpath = "//div[@class='forceVirtualActionMarker forceVirtualAction']//a")
+	@FindBy(xpath = "//li[contains(@class,'slds-button_last overflow')]//button")
 	private WebElement downArrowButton;
 
 	public WebElement downArrowButton(int timeOut) {
@@ -8211,7 +8212,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement relatedAssocitionWithIcon(String relatedAssociationName, String recordType, int timeOut) {
 
-		if (recordType.equalsIgnoreCase("Firm") || recordType.equalsIgnoreCase("Account")) {
+		if (recordType.equalsIgnoreCase("Firm") || recordType.equalsIgnoreCase("Account") || recordType.equalsIgnoreCase("Institution")) {
 			String xpath = "//div/lightning-pill[not(contains(@class,'d_flex'))]/span/span[2][text()='"
 					+ relatedAssociationName + "']/preceding-sibling::span//*[@data-key='account']";
 			try {
@@ -8221,7 +8222,7 @@ public abstract class BasePage extends BaseLib {
 				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
 						action.SCROLLANDBOOLEAN, timeOut);
 			}
-		} else if (recordType.equalsIgnoreCase("Deal")) {
+		} else if (recordType.equalsIgnoreCase("Deal") || recordType.equalsIgnoreCase("Pipeline")) {
 			String xpath = "//div/lightning-pill[not(contains(@class,'d_flex'))]/span/span[2][text()='"
 					+ relatedAssociationName + "']/preceding-sibling::span//*[@data-key='custom47']";
 			try {
@@ -9175,6 +9176,9 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement valueOfLabelInSubjectLinkPopUpInInteractionSection(String labelName, int timeOut) {
 
+		if(labelName.equalsIgnoreCase("Assigned To")) {
+			labelName = "User";
+		}
 		String xpath = "//section//div[@class=\"slds-carousel\"]/lightning-layout//label[text()=\"" + labelName
 				+ "\"]/following-sibling::*";
 		String xpath2 = "//section//div[@class=\"slds-carousel\"]/lightning-layout//label[text()=\"" + labelName
@@ -9182,7 +9186,8 @@ public abstract class BasePage extends BaseLib {
 		if (labelName.contains(excelLabel.Notes.toString())) {
 			return FindElement(driver, xpath2, "Label name: " + labelName, action.SCROLLANDBOOLEAN, timeOut);
 		}
-
+		
+			
 		// section//div[@class="slds-carousel"]/lightning-layout//label[text()="Notes"]/following-sibling::lightning-textarea
 		try {
 			return FindElement(driver, xpath, "Label name: " + labelName, action.SCROLLANDBOOLEAN, timeOut);
@@ -9223,7 +9228,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement iconOfTagsInSubjectLinkPopUpInInteractionSection(String labelName, String relatedAssociationName,
 			String recordType, int timeOut) {
 
-		if (recordType.equalsIgnoreCase("Firm") || recordType.equalsIgnoreCase("Account")) {
+		if (recordType.equalsIgnoreCase("Firm") || recordType.equalsIgnoreCase("Account") || recordType.equalsIgnoreCase("Institution")) {
 
 			String xpath = "//section//div[@class=\"slds-carousel\"]/lightning-layout//label[text()=\"" + labelName
 					+ "\"]/following-sibling::*//lightning-pill/span/span/following-sibling::span[text()=\""
@@ -9235,7 +9240,7 @@ public abstract class BasePage extends BaseLib {
 				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
 						action.SCROLLANDBOOLEAN, timeOut);
 			}
-		} else if (recordType.equalsIgnoreCase("Deal")) {
+		} else if (recordType.equalsIgnoreCase("Deal") || recordType.equalsIgnoreCase("Pipeline")) {
 
 			String xpath = "//section//div[@class=\"slds-carousel\"]/lightning-layout//label[text()=\"" + labelName
 					+ "\"]/following-sibling::*//lightning-pill/span/span/following-sibling::span[text()=\""
@@ -9933,7 +9938,8 @@ public abstract class BasePage extends BaseLib {
 		String xpath = "//section//div[contains(@id,\"lgt-accordion-section\")]//label[text()=\"" + labelName
 				+ "\"]/following-sibling::*//lightning-pill//span/span/following-sibling::span";
 		return FindElements(driver, xpath).stream().map(x -> x.getText()).collect(Collectors.toList());
-
+		//section//div[contains(@id,\"lgt-accordion-section\")]//label[text()=\"" + labelName
+//		+ "\"]/following-sibling::*//lightning-pill//span/span/following-sibling::span
 	}
 
 	public WebElement detailsButtonUnderSuggestedTag(int timeOut) {

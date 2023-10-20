@@ -1166,7 +1166,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			viewList = "All Contacts";
 			break;
 		case InstituitonsTab:
-			viewList = "All Firms";
+			viewList = "All Institutions";
 			break;
 		case DealTab:
 			viewList = "All";
@@ -1202,6 +1202,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			viewList = "Marketing Prospects";
 			break;
 		case Pipelines:
+			viewList = "All";
+			break;
+		case Deals:
 			viewList = "All";
 			break;
 		case CapitalCalls:
@@ -4641,7 +4644,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			tabName = "Contacts";
 			break;
 		case InstituitonsTab:
-			tabName = "Firms";
+			tabName = "Institutions";
 			break;
 		case FundraisingsTab:
 			tabName = "Fundraisings";
@@ -13870,7 +13873,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 					}
 
-					else if (labelName.contains("User")) {
+					else if (labelName.contains("User") || labelName.contains("Assigned To")) {
 						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
 								+ labelName + "']/..//button";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
@@ -16548,7 +16551,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			viewList = "All Contacts";
 			break;
 		case InstituitonsTab:
-			viewList = "All Firms";
+			viewList = "All Institutions";
 			break;
 		case CompaniesTab:
 			viewList = "All Companies";
@@ -17460,7 +17463,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						String labelName = val[0];
 						String value = val[1];
 
-						if (labelName.contains("User")) {
+						if (labelName.contains("User") || labelName.equalsIgnoreCase(excelLabel.Assigned_To.toString().replace("_", " "))) {
 
 							String actualAssignedToId = getText(driver, assignedToVerificationInAdvance(labelName, 10),
 									"User", action.SCROLLANDBOOLEAN);
@@ -17639,7 +17642,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 						}
 
-						else if (labelName.contains("User")) {
+						else if (labelName.contains("User") || labelName.contains("Assigned To")) {
 
 							String actualAssignedToId = getText(driver, assignedToVerificationInTasks(labelName, 10),
 									"User", action.SCROLLANDBOOLEAN);
@@ -22976,7 +22979,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					String labelName = val[0];
 					String value = val[1];
 
-					if (labelName.contains("User") || labelName.contains(excelLabel.Status.toString())
+					if (labelName.contains("User") || labelName.contains("Assigned To") || labelName.contains(excelLabel.Status.toString())
 							|| labelName.contains(excelLabel.Priority.toString())) {
 
 						String actualValue = getText(driver,
@@ -23582,7 +23585,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					}
 
-					if (firmOrContactRadio.equalsIgnoreCase("Firm")) {
+					if (firmOrContactRadio.equalsIgnoreCase("Firm") || firmOrContactRadio.equalsIgnoreCase("Account") || firmOrContactRadio.equalsIgnoreCase("Institution")) {
 
 						if (clickUsingJavaScript(driver, createRecordPopUpAccountRadioButtons().get(index),
 								firmOrContactRadio, action.SCROLLANDBOOLEAN)) {
@@ -24948,7 +24951,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case "Contacts":
 			viewList = TabName.ContactTab;
 			break;
-		case "Firms":
+		case "Institutions":
 			viewList = TabName.InstituitonsTab;
 			break;
 		case "Deals":
