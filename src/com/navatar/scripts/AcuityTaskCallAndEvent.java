@@ -236,14 +236,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 	}
 	
-	@Test
-	public void ATCETc00CSV_7_CreateEventByApi() {
-
-		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity(call task and event)\\Event.xlsx";
-		String sheetName="Event";
-		new APIUtils(crmUser1EmailID).EventObjectDataUpload(filePath, sheetName);
-
-	}
+	
 	
 	
 	@Parameters({ "projectName" })
@@ -6731,7 +6724,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-
+					String parentID=switchOnWindow(driver);
 					ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Task,taskSubject, taskNotes, true, false,null,null);
 					if (result.isEmpty()) {
 						log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
@@ -6826,7 +6819,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						log(LogStatus.ERROR,"Not able to click on subject name on interaction section of subject name "+taskSubject1,YesNo.No);
 						sa.assertTrue(false, "Not able to click on subject name on interaction section of subject name "+taskSubject1);
 					}
-
+					driver.close();
+					driver.switchTo().window(parentID);
 					refresh(driver);
 					if(CommonLib.clickUsingJavaScript(driver, bp.editButtonOnInteractionCard(taskSubject1,20), "Edit button of "+taskSubject1))
 					{
@@ -9012,8 +9006,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}	
 						
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
 //							String parentID=switchOnWindow(driver);
 							
@@ -9114,12 +9108,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							
 //							driver.close();
 //							driver.switchTo().window(parentID);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 					}
@@ -9356,9 +9350,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}	
 						
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
-							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
+//							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
 //							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
@@ -9458,12 +9452,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							
 //							driver.close();
 //							driver.switchTo().window(parentID);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 					}
@@ -9701,9 +9695,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}	
 						
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
-							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
+//							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
 //							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
@@ -9803,12 +9797,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							
 //							driver.close();
 //							driver.switchTo().window(parentID);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 					}
@@ -10046,9 +10040,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}	
 						
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
-							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
+//							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
 //							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
@@ -10147,12 +10141,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							
 //							driver.close();
 //							driver.switchTo().window(parentID);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 					}
@@ -10390,9 +10384,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}	
 						
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
-							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
+//							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
 //							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
@@ -10489,12 +10483,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							
 //							driver.close();
 //							driver.switchTo().window(parentID);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 					}
@@ -10731,9 +10725,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}	
 						
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
-							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
+//							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
 //							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
@@ -10832,12 +10826,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							
 //							driver.close();
 //							driver.switchTo().window(parentID);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 					}
@@ -11022,9 +11016,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}	
 						
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
-							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
+//							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
 //							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
@@ -11122,12 +11116,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							
 //							driver.close();
 //							driver.switchTo().window(parentID);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 					}
@@ -11262,9 +11256,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}	
 						
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
-							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
+//							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
 //							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
@@ -11363,12 +11357,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							
 //							driver.close();
 //							driver.switchTo().window(parentID);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 					}
@@ -11503,9 +11497,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}	
 						
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
-							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
+//							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
 //							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
@@ -11603,12 +11597,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							
 //							driver.close();
 //							driver.switchTo().window(parentID);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 					}
@@ -11747,9 +11741,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						}	
 						
 						
-						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
-						{
-							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+//						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+//						{
+//							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
 //							String parentID=switchOnWindow(driver);
 							
 							ArrayList<String> result2=bp.verifySubjectLinkPopUpOnIntraction(driver, taskSubject, basicsection, advanceSection, IconType.Task, PageName.Interaction);
@@ -11847,12 +11841,12 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 							
 //							driver.close();
 //							driver.switchTo().window(parentID);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
-							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
-						}	
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+//							sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+//						}	
 						
 						
 					}
@@ -25136,40 +25130,40 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-//		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Tasks", false, projectName)) {
-//
-//			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectNameNavigation + " found in Tasks Object-----",YesNo.No);
-//		
-//			if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(task1SubjectNameNavigation, 20), "Edit button of popup of subject name "+task1SubjectNameNavigation))
-//			{
-//				log(LogStatus.INFO,"Clicked on edit button of subject "+task1SubjectNameNavigation,YesNo.No);
-//
-//				if (bp.updateActivityTimelineRecordForMultipleFollowUpTasks(projectName, basicSection,advanceSection, null, null, null,false,false)) {
-//					log(LogStatus.PASS, "Activity timeline record has been updated, Subject name : "+taskSubject, YesNo.No);
-//					sa.assertTrue(true, "Activity timeline record has been updated,  Subject name : "+taskSubject);
-//
-//				}
-//				else
-//				{
-//					log(LogStatus.ERROR, "Activity timeline record is not updated, Subject name : "+taskSubject, YesNo.No);
-//					sa.assertTrue(false, "Activity timeline record is not updated,  Subject name : "+taskSubject);
-//				}	 
-//				
-//			}
-//			else
-//			{
-//				log(LogStatus.ERROR,"Not able to click on edit button of subject "+task1SubjectNameNavigation,YesNo.No);
-//				BaseLib.sa.assertTrue(false,"Not able to click on edit button of subject "+task1SubjectNameNavigation);
-//				
-//			}			
-//		}
-//		 else {
-//
-//				log(LogStatus.ERROR, "-----Task named: " + task1SubjectNameNavigation + " not found in Tasks Object-----",YesNo.Yes);
-//				BaseLib.sa.assertTrue(false,"-----Task named: " + task1SubjectNameNavigation + " not found in Tasks Object-----");
-//			}
-//		
-//		refresh(driver);
+		if (home.globalSearchAndNavigate(task1SubjectNameNavigation, "Tasks", false, projectName)) {
+
+			log(LogStatus.INFO, "-----Verified Task named: " + task1SubjectNameNavigation + " found in Tasks Object-----",YesNo.No);
+		
+			if(CommonLib.clickUsingJavaScript(driver, bp.getEditButtonOnPopup(task1SubjectNameNavigation, 20), "Edit button of popup of subject name "+task1SubjectNameNavigation))
+			{
+				log(LogStatus.INFO,"Clicked on edit button of subject "+task1SubjectNameNavigation,YesNo.No);
+
+				if (bp.updateActivityTimelineRecordForMultipleFollowUpTasks(projectName, basicSection,advanceSection, null, null, null,false,false)) {
+					log(LogStatus.PASS, "Activity timeline record has been updated, Subject name : "+taskSubject, YesNo.No);
+					sa.assertTrue(true, "Activity timeline record has been updated,  Subject name : "+taskSubject);
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Activity timeline record is not updated, Subject name : "+taskSubject, YesNo.No);
+					sa.assertTrue(false, "Activity timeline record is not updated,  Subject name : "+taskSubject);
+				}	 
+				
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Not able to click on edit button of subject "+task1SubjectNameNavigation,YesNo.No);
+				BaseLib.sa.assertTrue(false,"Not able to click on edit button of subject "+task1SubjectNameNavigation);
+				
+			}			
+		}
+		 else {
+
+				log(LogStatus.ERROR, "-----Task named: " + task1SubjectNameNavigation + " not found in Tasks Object-----",YesNo.Yes);
+				BaseLib.sa.assertTrue(false,"-----Task named: " + task1SubjectNameNavigation + " not found in Tasks Object-----");
+			}
+		
+		refresh(driver);
 
 		if (home.globalSearchAndNavigate(task1SubjectNameNavigation1, "Tasks", false, projectName)) {
 
@@ -31650,8 +31644,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentId = switchToWindowOpenNextToParentWindow(driver);
-							if (parentId != null) {
+//							String parentId = switchToWindowOpenNextToParentWindow(driver);
+//							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
 							if(result2.isEmpty())
 							{
@@ -31662,9 +31656,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 							}
-							driver.close();
-							driver.switchTo().window(parentId);
-							}
+//							driver.close();
+//							driver.switchTo().window(parentId);
+//							}
 						}
 						else
 						{
@@ -31754,8 +31748,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentId = switchToWindowOpenNextToParentWindow(driver);
-							if (parentId != null) {
+//							String parentId = switchToWindowOpenNextToParentWindow(driver);
+//							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
 							if(result2.isEmpty())
 							{
@@ -31766,9 +31760,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 							}
-							driver.close();
-							driver.switchTo().window(parentId);
-							}
+//							driver.close();
+//							driver.switchTo().window(parentId);
+//							}
 						}
 						else
 						{
@@ -31856,8 +31850,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentId = switchToWindowOpenNextToParentWindow(driver);
-							if (parentId != null) {
+//							String parentId = switchToWindowOpenNextToParentWindow(driver);
+//							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
 							if(result2.isEmpty())
 							{
@@ -31868,9 +31862,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 							}
-							driver.close();
-							driver.switchTo().window(parentId);
-							}
+//							driver.close();
+//							driver.switchTo().window(parentId);
+//							}
 						}
 						else
 						{
@@ -31954,8 +31948,8 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 						if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 						{
 							log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
-							String parentId = switchToWindowOpenNextToParentWindow(driver);
-							if (parentId != null) {
+//							String parentId = switchToWindowOpenNextToParentWindow(driver);
+//							if (parentId != null) {
 							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(recordName,iconType1,date1, subject1, notes1, subject1, participant1, tag1);
 							if(result2.isEmpty())
 							{
@@ -31966,9 +31960,9 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 								sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 							}
-							driver.close();
-							driver.switchTo().window(parentId);
-							}
+//							driver.close();
+//							driver.switchTo().window(parentId);
+//							}
 						}
 						else
 						{
@@ -32496,6 +32490,14 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		sa.assertAll();	
 	}	
 	
+	@Test
+	public void ATCETc00CSV_7_CreateEventByApi() {
+
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity(call task and event)\\Event.xlsx";
+		String sheetName="Event";
+		new APIUtils(crmUser1EmailID).EventObjectDataUpload(filePath, sheetName);
+
+	}
 	
 	@Parameters({ "projectName" })
 	@Test
@@ -37066,70 +37068,70 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
-//		if (accountName.length == recordType.length) {
-//			for (int i = 0; i < accountName.length; i++) {
-//				if (lp.clickOnTab(projectName, tabObj1)) {
-//
-//					log(LogStatus.INFO, "Click on Tab : " + tabObj1, YesNo.No);
-//					ThreadSleep(3000);
-//					if (ip.createEntityOrAccount(environment, mode, accountName[i], recordType[i], null, null, 30)) {
-//						log(LogStatus.INFO,
-//								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i],
-//								YesNo.No);
-//						sa.assertTrue(true,
-//								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i]);
-//
-//
-//					} else {
-//						sa.assertTrue(false,
-//								"Not Able to Create Firm : " + accountName[i] + " of record type : " + recordType[i]);
-//						log(LogStatus.SKIP,
-//								"Not Able to Create Firm : " + accountName[i] + " of record type :" + recordType[i],
-//								YesNo.Yes);
-//					}
-//
-//				} else {
-//					log(LogStatus.FAIL, "Not able to click on " + tabObj1 + " Tab", YesNo.No);
-//					sa.assertTrue(false, "Not able to click on " + tabObj1 + " Tab");
-//				}
-//
-//			}
-//		} else {
-//			log(LogStatus.FAIL,
-//					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper",
-//					YesNo.No);
-//			sa.assertTrue(false,
-//					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper");
-//		}
+		if (accountName.length == recordType.length) {
+			for (int i = 0; i < accountName.length; i++) {
+				if (lp.clickOnTab(projectName, tabObj1)) {
 
-//		for (int i = 0; i < contactLastName.length; i++) {
-//			if (lp.clickOnTab(projectName, tabObj2)) {
-//
-//				log(LogStatus.INFO, "Click on Tab : " + tabObj2, YesNo.No);
-//				ThreadSleep(3000);
-//
-//				if (cp.createContact(projectName, contactFirstName[i], contactLastName[i], contactLegalName[i],
-//						contactEmail[i], "", null, null, CreationPage.ContactPage, contactTitle[i], null)) {
-//					log(LogStatus.INFO,
-//							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i],
-//							YesNo.No);
-//					sa.assertTrue(true,
-//							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i]);
-//
-//
-//				} else {
-//					log(LogStatus.FAIL,
-//							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i],
-//							YesNo.No);
-//					sa.assertTrue(false,
-//							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i]);
-//				}
-//
-//			} else {
-//				log(LogStatus.FAIL, "Not able to click on " + tabObj2 + " Tab", YesNo.No);
-//				sa.assertTrue(false, "Not able to click on " + tabObj2 + " Tab");
-//			}
-//		}
+					log(LogStatus.INFO, "Click on Tab : " + tabObj1, YesNo.No);
+					ThreadSleep(3000);
+					if (ip.createEntityOrAccount(environment, mode, accountName[i], recordType[i], null, null, 30)) {
+						log(LogStatus.INFO,
+								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i],
+								YesNo.No);
+						sa.assertTrue(true,
+								"successfully Created Firm : " + accountName[i] + " of record type : " + recordType[i]);
+
+
+					} else {
+						sa.assertTrue(false,
+								"Not Able to Create Firm : " + accountName[i] + " of record type : " + recordType[i]);
+						log(LogStatus.SKIP,
+								"Not Able to Create Firm : " + accountName[i] + " of record type :" + recordType[i],
+								YesNo.Yes);
+					}
+
+				} else {
+					log(LogStatus.FAIL, "Not able to click on " + tabObj1 + " Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on " + tabObj1 + " Tab");
+				}
+
+			}
+		} else {
+			log(LogStatus.FAIL,
+					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper",
+					YesNo.No);
+			sa.assertTrue(false,
+					"The count of Legal name and Record Type are not equal. Either Legal Name or Record type value are not proper");
+		}
+
+		for (int i = 0; i < contactLastName.length; i++) {
+			if (lp.clickOnTab(projectName, tabObj2)) {
+
+				log(LogStatus.INFO, "Click on Tab : " + tabObj2, YesNo.No);
+				ThreadSleep(3000);
+
+				if (cp.createContact(projectName, contactFirstName[i], contactLastName[i], contactLegalName[i],
+						contactEmail[i], "", null, null, CreationPage.ContactPage, contactTitle[i], null)) {
+					log(LogStatus.INFO,
+							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i],
+							YesNo.No);
+					sa.assertTrue(true,
+							"successfully Created Contact : " + contactFirstName[i] + " " + contactLastName[i]);
+
+
+				} else {
+					log(LogStatus.FAIL,
+							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i],
+							YesNo.No);
+					sa.assertTrue(false,
+							"Not able to create the Contact : " + contactFirstName[i] + " " + contactLastName[i]);
+				}
+
+			} else {
+				log(LogStatus.FAIL, "Not able to click on " + tabObj2 + " Tab", YesNo.No);
+				sa.assertTrue(false, "Not able to click on " + tabObj2 + " Tab");
+			}
+		}
 		
 		if (lp.clickOnTab(projectName, tabObj4)) {
 
@@ -38055,7 +38057,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		String[] Name= {ATCE_ExternalName1,ATCE_ExternalName2,ATCE_ExternalName3,ATCE_ExternalName4};
 		String[] firmName= {ATCE_ExternalFirm1,ATCE_ExternalFirm2,ATCE_ExternalFirm3,ATCE_ExternalFirm4};
 		String[] title= {ATCE_ExternalTitle1,ATCE_ExternalTitle2,ATCE_ExternalTitle3,ATCE_ExternalTitle4};
-		String[] meetingAndCallCount= {ATCE_ExternalMeetingAndCallCount1,ATCE_ExternalMeetingAndCallCount2,ATCE_ExternalMeetingAndCallCount3,ATCE_ExternalMeetingAndCallCount4};
+		String[] meetingAndCallCount= {ATCE_ExternalMeetingAndCallCount6,ATCE_ExternalMeetingAndCallCount6,ATCE_ExternalMeetingAndCallCount6,ATCE_ExternalMeetingAndCallCount6};
  		
 		String taskDueDate1=ATCE_ATDueDate41;
 		String taskSubject1=ATCE_ATSubject41;
@@ -38175,7 +38177,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		String[] Name= {ATCE_ExternalName1,ATCE_ExternalName2,ATCE_ExternalName3,ATCE_ExternalName4};
 		String[] firmName= {ATCE_ExternalFirm1,ATCE_ExternalFirm2,ATCE_ExternalFirm3,ATCE_ExternalFirm4};
 		String[] title= {ATCE_ExternalTitle1,ATCE_ExternalTitle2,ATCE_ExternalTitle3,ATCE_ExternalTitle4};
-		String[] meetingAndCallCount= {ATCE_ExternalMeetingAndCallCount1,ATCE_ExternalMeetingAndCallCount2,ATCE_ExternalMeetingAndCallCount3,ATCE_ExternalMeetingAndCallCount4};
+		String[] meetingAndCallCount= {ATCE_ExternalMeetingAndCallCount2,ATCE_ExternalMeetingAndCallCount2,ATCE_ExternalMeetingAndCallCount3,ATCE_ExternalMeetingAndCallCount4};
  		
 		String taskDueDate1=ATCE_ATDueDate41;
 		String taskSubject1=ATCE_ATSubject41;
@@ -38295,7 +38297,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		String[] Name= {ATCE_ExternalName1,ATCE_ExternalName2,ATCE_ExternalName3,ATCE_ExternalName4};
 		String[] firmName= {ATCE_ExternalFirm1,ATCE_ExternalFirm2,ATCE_ExternalFirm3,ATCE_ExternalFirm4};
 		String[] title= {ATCE_ExternalTitle1,ATCE_ExternalTitle2,ATCE_ExternalTitle3,ATCE_ExternalTitle4};
-		String[] meetingAndCallCount= {ATCE_ExternalMeetingAndCallCount1,ATCE_ExternalMeetingAndCallCount2,ATCE_ExternalMeetingAndCallCount3,ATCE_ExternalMeetingAndCallCount4};
+		String[] meetingAndCallCount= {ATCE_ExternalMeetingAndCallCount6,ATCE_ExternalMeetingAndCallCount6,ATCE_ExternalMeetingAndCallCount6,ATCE_ExternalMeetingAndCallCount6};
  		
 		String taskDueDate1=ATCE_ATDueDate41;
 		String taskSubject1=ATCE_ATSubject41;
@@ -38415,7 +38417,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		String[] Name= {ATCE_ExternalName1,ATCE_ExternalName2,ATCE_ExternalName3,ATCE_ExternalName4};
 		String[] firmName= {ATCE_ExternalFirm1,ATCE_ExternalFirm2,ATCE_ExternalFirm3,ATCE_ExternalFirm4};
 		String[] title= {ATCE_ExternalTitle1,ATCE_ExternalTitle2,ATCE_ExternalTitle3,ATCE_ExternalTitle4};
-		String[] meetingAndCallCount= {ATCE_ExternalMeetingAndCallCount1,ATCE_ExternalMeetingAndCallCount2,ATCE_ExternalMeetingAndCallCount3,ATCE_ExternalMeetingAndCallCount4};
+		String[] meetingAndCallCount= {ATCE_ExternalMeetingAndCallCount6,ATCE_ExternalMeetingAndCallCount6,ATCE_ExternalMeetingAndCallCount6,ATCE_ExternalMeetingAndCallCount6};
  		
 		String taskDueDate1=ATCE_ATDueDate41;
 		String taskSubject1=ATCE_ATSubject41;
@@ -38535,7 +38537,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		String[] Name= {ATCE_ExternalName1,ATCE_ExternalName2,ATCE_ExternalName3,ATCE_ExternalName4};
 		String[] firmName= {ATCE_ExternalFirm1,ATCE_ExternalFirm2,ATCE_ExternalFirm3,ATCE_ExternalFirm4};
 		String[] title= {ATCE_ExternalTitle1,ATCE_ExternalTitle2,ATCE_ExternalTitle3,ATCE_ExternalTitle4};
-		String[] meetingAndCallCount= {ATCE_ExternalMeetingAndCallCount1,ATCE_ExternalMeetingAndCallCount2,ATCE_ExternalMeetingAndCallCount3,ATCE_ExternalMeetingAndCallCount4};
+		String[] meetingAndCallCount= {ATCE_ExternalMeetingAndCallCount2,ATCE_ExternalMeetingAndCallCount2,ATCE_ExternalMeetingAndCallCount3,ATCE_ExternalMeetingAndCallCount4};
  		
 		String taskDueDate1=ATCE_ATDueDate41;
 		String taskSubject1=ATCE_ATSubject41;
@@ -38655,7 +38657,7 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		String[] Name= {ATCE_ExternalName1,ATCE_ExternalName2,ATCE_ExternalName3,ATCE_ExternalName4};
 		String[] firmName= {ATCE_ExternalFirm1,ATCE_ExternalFirm2,ATCE_ExternalFirm3,ATCE_ExternalFirm4};
 		String[] title= {ATCE_ExternalTitle1,ATCE_ExternalTitle2,ATCE_ExternalTitle3,ATCE_ExternalTitle4};
-		String[] meetingAndCallCount= {ATCE_ExternalMeetingAndCallCount1,ATCE_ExternalMeetingAndCallCount2,ATCE_ExternalMeetingAndCallCount3,ATCE_ExternalMeetingAndCallCount4};
+		String[] meetingAndCallCount= {ATCE_ExternalMeetingAndCallCount2,ATCE_ExternalMeetingAndCallCount2,ATCE_ExternalMeetingAndCallCount3,ATCE_ExternalMeetingAndCallCount4};
  		
 		String taskDueDate1=ATCE_ATDueDate41;
 		String taskSubject1=ATCE_ATSubject41;
@@ -38776,10 +38778,10 @@ public class AcuityTaskCallAndEvent extends BaseLib {
 		String[] title= {ATCE_ExternalTitle5,ATCE_ExternalTitle2,ATCE_ExternalTitle3,ATCE_ExternalTitle4};
 		String[] meetingAndCallCount= {ATCE_ExternalMeetingAndCallCount5,ATCE_ExternalMeetingAndCallCount2,ATCE_ExternalMeetingAndCallCount3,ATCE_ExternalMeetingAndCallCount4};
 
-		String taskDueDate1=ATCE_ATDueDate37;
-		String taskSubject1=ATCE_ATSubject37;
-		String taskNotes1=ATCE_ATNote37;
-		String[] participants=ATCE_ATParticipants37.split("<break>");
+		String taskDueDate1=ATCE_ATDueDate41;
+		String taskSubject1=ATCE_ATSubject41;
+		String taskNotes1=ATCE_ATNote41;
+		String[] participants=ATCE_ATParticipants41.split("<break>");
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword);
 		if (lp.clickOnTab(projectName, tabObj2)) {
