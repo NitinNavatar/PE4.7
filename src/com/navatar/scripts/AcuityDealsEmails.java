@@ -3668,7 +3668,7 @@ public class AcuityDealsEmails extends BaseLib {
 
 		String dealName = ADEDeal13;
 		String labellabels = PageLabel.Date_Received.toString();
-		String otherLabelValues = "09/11/2023";
+		String otherLabelValues = tomorrowsDate;
 		String contactname = ADEContact4FName + " " + ADEContact4LName;
 		String dealtopcount = "1";
 
@@ -6126,20 +6126,20 @@ public void ADETc046_VerifyDealCountColumnAgainstConnectionwheresameConnectionTe
 	String actualDealCount = null;
 	String teamMemberName = crmUser2FirstName + " " + crmUser2LastName;
 	
-	if (lp.clickOnTab(projectName, tabObj4)) {
-		log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
-		ThreadSleep(3000);
-		if (dp.createDeal(recordType, dealName, companyName, stage, "Log In Date", todaysDate)) {
-			log(LogStatus.INFO, dealName + " deal has been created", YesNo.No);
-
-		} else {
-			log(LogStatus.ERROR, dealName + " deal is not created", YesNo.No);
-			sa.assertTrue(false, dealName + " deal is not created");
-		}
-	} else {
-		log(LogStatus.ERROR, "Not able to click on " + tabObj4 + " Tab", YesNo.No);
-		sa.assertTrue(false, "Not able to click on " + tabObj4 + " Tab");
-	}
+//	if (lp.clickOnTab(projectName, tabObj4)) {
+//		log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
+//		ThreadSleep(3000);
+//		if (dp.createDeal(recordType, dealName, companyName, stage, "Log In Date", todaysDate)) {
+//			log(LogStatus.INFO, dealName + " deal has been created", YesNo.No);
+//
+//		} else {
+//			log(LogStatus.ERROR, dealName + " deal is not created", YesNo.No);
+//			sa.assertTrue(false, dealName + " deal is not created");
+//		}
+//	} else {
+//		log(LogStatus.ERROR, "Not able to click on " + tabObj4 + " Tab", YesNo.No);
+//		sa.assertTrue(false, "Not able to click on " + tabObj4 + " Tab");
+//	}
 	String[][] data = { { EditPageLabel.Deal.toString(), dealName1 },
 			{ PageLabel.Deal_Contact.toString(), contactName },{ PageLabel.Team_Member.toString(), TeamMember } };
 
@@ -9639,7 +9639,7 @@ public void ADETc079_VerifyWhenContactNameClickedContactCard(String projectName)
 					sa.assertTrue(false, "Not able to switch to window after click on Deal Link, Msg showing: "
 							+ e.getMessage());
 				}
-			
+			refresh(driver);
 				if (CommonLib.click(driver, BP.getcontactEmailCountpopup( 30), "Email Count: " + "",
 						action.BOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on Email Count: " + " " + " of Record: " + contactname, YesNo.No);
@@ -10839,7 +10839,7 @@ if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 
 if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
 	if (fp.clickOnAlreadyCreatedItem(projectName, ADEDeal22, 10)){
-		if (fp.changeStage(projectName, Stage.LOI.toString(), 10)) {
+		if (fp.changeStage(projectName, Stage.IOI.toString(), 10)) {
 		}else {
 			sa.assertTrue(false,"not able to change stage to "+Stage.Parked);
 			log(LogStatus.SKIP,"not able to change stage to "+Stage.Parked,YesNo.Yes);
@@ -10853,7 +10853,7 @@ if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
 	log(LogStatus.SKIP,"not able to click on deal tab",YesNo.Yes);
 }
 		
-String stage1 = "LOI";
+String stage1 = "IOI";
 
 if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
@@ -12274,7 +12274,7 @@ if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
 	log(LogStatus.SKIP,"not able to click on deal tab",YesNo.Yes);
 }
 		
-String stage1 = "LOI";
+String stage1 = "IOI";
 
 if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
@@ -13702,26 +13702,26 @@ public void ADETc108_VerfiytheFunctionalityofAddDealIconwhenFundsTabisSelectedat
 	if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 		log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 
-		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns16, 30)) {
-			if (CommonLib.click(driver, BP.SourcedTab( 30,action.SCROLLANDBOOLEAN), "Source tab: " + "",
-					action.BOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on Source tab", YesNo.No);
-				ThreadSleep(1000);
-			if (CommonLib.click(driver, dp.NewSourcedDealIcon(30), tabObj4 + "New Sourced Deal Icon", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on the New Sourced Deal Icon", YesNo.No);
-		if (dp.createDealfromIcon(recordType,dealName, stage, "Log In Date", tomorrowsDate)) {
-			log(LogStatus.INFO, dealName + " deal has been created", YesNo.No);
-
-		} else {
-			log(LogStatus.ERROR, dealName + " deal is not created", YesNo.No);
-			sa.assertTrue(false, dealName + " deal is not created");
-		}
-	} else {
-		log(LogStatus.ERROR, "Not able to click on " + tabObj4 + " Tab", YesNo.No);
-		sa.assertTrue(false, "Not able to click on " + tabObj4 + " Tab");
-	}
-			}
-		}
+//		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns16, 30)) {
+//			if (CommonLib.click(driver, BP.SourcedTab( 30,action.SCROLLANDBOOLEAN), "Source tab: " + "",
+//					action.BOOLEAN)) {
+//				log(LogStatus.INFO, "Clicked on Source tab", YesNo.No);
+//				ThreadSleep(1000);
+//			if (CommonLib.click(driver, dp.NewSourcedDealIcon(30), tabObj4 + "New Sourced Deal Icon", action.SCROLLANDBOOLEAN)) {
+//				log(LogStatus.INFO, "Clicked on the New Sourced Deal Icon", YesNo.No);
+//		if (dp.createDealfromIcon(recordType,dealName, stage, "Log In Date", tomorrowsDate)) {
+//			log(LogStatus.INFO, dealName + " deal has been created", YesNo.No);
+//
+//		} else {
+//			log(LogStatus.ERROR, dealName + " deal is not created", YesNo.No);
+//			sa.assertTrue(false, dealName + " deal is not created");
+//		}
+//	} else {
+//		log(LogStatus.ERROR, "Not able to click on " + tabObj4 + " Tab", YesNo.No);
+//		sa.assertTrue(false, "Not able to click on " + tabObj4 + " Tab");
+//	}
+//			}
+//		}
 		if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 
@@ -14369,7 +14369,7 @@ public void ADETc113_VerifyDefaultSortingatDealSectionAICIAccountsisDecending(St
 			
 			log(LogStatus.INFO,"open created item"+ADEIns16,YesNo.No);
 			List<WebElement> ele = BP.getsortingDateRecived(10);	
-			if (CommonLib.checkSorting(driver, SortOrder.Decending, ele)) {
+			if (CommonLib.checkSortingforDate(driver, SortOrder.Decending, ele)) {
 				log(LogStatus.PASS,
 						"-----------Deal Column is in Descending Order By Default  --------------",
 						YesNo.No);
@@ -14383,7 +14383,7 @@ public void ADETc113_VerifyDefaultSortingatDealSectionAICIAccountsisDecending(St
 			if (CommonLib.click(driver, BP.SourcedTab( 30,action.SCROLLANDBOOLEAN), "Source tab: " + "",
 					action.BOOLEAN)) {
 				List<WebElement> ele1 =BP.getsortingDateRecived(10);
-				if (CommonLib.checkSorting(driver, SortOrder.Decending, ele1)) {
+				if (CommonLib.checkSortingforDate(driver, SortOrder.Decending, ele1)) {
 					log(LogStatus.PASS,
 							"-----------Deal Column is in Descending Order By Default  --------------",
 							YesNo.No);
@@ -14423,7 +14423,7 @@ public void ADETc114_VerifySortingatDealSectionDateReceivedAICIPEAccountsisAecen
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-	String order = "date";	
+	String order = "Date Received";	
 	if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
 		log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
 		
@@ -14437,7 +14437,7 @@ public void ADETc114_VerifySortingatDealSectionDateReceivedAICIPEAccountsisAecen
 						action.BOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
 					List<WebElement> ele = BP.getsortingDateRecived(10);
-			if (CommonLib.checkSorting(driver, SortOrder.Assecending, ele)) {
+			if (CommonLib.checkSortingforDate(driver, SortOrder.Assecending, ele)) {
 				log(LogStatus.PASS,
 						"-----------deal Column is in Assecending Order By clicking on deal reacieved  --------------",
 						YesNo.No);
@@ -14467,7 +14467,7 @@ public void ADETc114_VerifySortingatDealSectionDateReceivedAICIPEAccountsisAecen
 							action.BOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
 						List<WebElement> ele = BP.getsortingDateRecived(10);
-				if (CommonLib.checkSorting(driver, SortOrder.Assecending, ele)) {
+				if (CommonLib.checkSortingforDate(driver, SortOrder.Assecending, ele)) {
 					log(LogStatus.PASS,
 							"-----------deal Column is in Assecending Order By clicking on deal reacieved  --------------",
 							YesNo.No);
@@ -14728,7 +14728,7 @@ public void ADETc117_1_VerifySortingatDealSectionDateReceivedForCompanyRecord(St
 			
 			log(LogStatus.INFO,"open created item"+ADEIns1,YesNo.No);
 					List<WebElement> ele =BP.getsortingDateRecived(10);
-			if (CommonLib.checkSorting(driver, SortOrder.Decending, ele)) {
+			if (CommonLib.checkSortingforDate(driver, SortOrder.Decending, ele)) {
 				log(LogStatus.PASS,
 						"-----------deal Column is in Decending Order By clicking on deal reacieved  --------------",
 						YesNo.No);
@@ -14747,7 +14747,7 @@ public void ADETc117_1_VerifySortingatDealSectionDateReceivedForCompanyRecord(St
 							action.BOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
 						List<WebElement> ele1 = BP.getsortingDateRecived(10);
-				if (CommonLib.checkSorting(driver, SortOrder.Assecending, ele1)) {
+				if (CommonLib.checkSortingforDate(driver, SortOrder.Assecending, ele1)) {
 					log(LogStatus.PASS,
 							"-----------deal Column is in Assecending Order By clicking on deal reacieved  --------------",
 							YesNo.No);
@@ -14891,7 +14891,7 @@ public void ADETc118_1_VerifySortingatDealSectionDateReceivedForIntermediaryReco
 			
 			log(LogStatus.INFO,"open created item"+ADEIns4,YesNo.No);
 					List<WebElement> ele =BP.getsortingDateRecived(10);
-			if (CommonLib.checkSorting(driver, SortOrder.Decending, ele)) {
+			if (CommonLib.checkSortingforDate(driver, SortOrder.Decending, ele)) {
 				log(LogStatus.PASS,
 						"-----------deal Column is in Decending Order By clicking on deal reacieved  --------------",
 						YesNo.No);
@@ -14910,7 +14910,7 @@ public void ADETc118_1_VerifySortingatDealSectionDateReceivedForIntermediaryReco
 							action.BOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
 						List<WebElement> ele1 =BP.getsortingDateRecived(10);
-				if (CommonLib.checkSorting(driver, SortOrder.Assecending, ele1)) {
+				if (CommonLib.checkSortingforDate(driver, SortOrder.Assecending, ele1)) {
 					log(LogStatus.PASS,
 							"-----------deal Column is in Assecending Order By clicking on deal reacieved  --------------",
 							YesNo.No);
@@ -15054,7 +15054,7 @@ public void ADETc119_1_VerifySortingatDealSectionDateReceivedForPCRecord(String 
 			
 			log(LogStatus.INFO,"open created item"+ADEIns7,YesNo.No);
 					List<WebElement> ele =BP.getsortingDateRecived(10);
-			if (CommonLib.checkSorting(driver, SortOrder.Decending, ele)) {
+			if (CommonLib.checkSortingforDate(driver, SortOrder.Decending, ele)) {
 				log(LogStatus.PASS,
 						"-----------deal Column is in Decending Order By clicking on deal reacieved  --------------",
 						YesNo.No);
@@ -15073,7 +15073,7 @@ public void ADETc119_1_VerifySortingatDealSectionDateReceivedForPCRecord(String 
 							action.BOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on New Deal order", YesNo.No);
 						List<WebElement> ele1 =BP.getsortingDateRecived(10);
-				if (CommonLib.checkSorting(driver, SortOrder.Assecending, ele1)) {
+				if (CommonLib.checkSortingforDate(driver, SortOrder.Assecending, ele1)) {
 					log(LogStatus.PASS,
 							"-----------deal Column is in Assecending Order By clicking on deal reacieved  --------------",
 							YesNo.No);

@@ -6981,12 +6981,12 @@ public abstract class BasePage extends BaseLib {
 
 		try {
 			return FindElement(driver,
-					"//span[text()='Deals']/ancestor::div[@class='slds-m-bottom_xx-small']//lightning-datatable[contains(@class,'dealDataTable')]//tbody/tr/th//a[text()='"
+					"//span[text()='Pipelines']/ancestor::div[@class='slds-m-bottom_xx-small']//lightning-datatable[contains(@class,'dealDataTable')]//tbody/tr/th//a[text()='"
 							+ dealName + "']",
 					"Deal Name: " + dealName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
 			return FindElement(driver,
-					"//span[text()='Deals']/ancestor::div[@class='slds-m-bottom_xx-small']//lightning-datatable[contains(@class,'dealDataTable')]//tbody/tr/th//a[text()='"
+					"//span[text()='Pipelines']/ancestor::div[@class='slds-m-bottom_xx-small']//lightning-datatable[contains(@class,'dealDataTable')]//tbody/tr/th//a[text()='"
 							+ dealName + "']",
 					"Deal Name: " + dealName, action.SCROLLANDBOOLEAN, timeOut);
 		}
@@ -7132,7 +7132,7 @@ public abstract class BasePage extends BaseLib {
 
 	}
 
-	public WebElement dealAcuityDealName(String dealName, int timeOut) {
+	public WebElement dealAcuityDealName1(String dealName, int timeOut) {
 
 		List<WebElement> ele = FindElements(driver,
 				"//a[text()='" + dealName + "']/ancestor::th[@data-label='Pipeline Name']").stream()
@@ -7145,6 +7145,17 @@ public abstract class BasePage extends BaseLib {
 
 	}
 
+	public WebElement dealAcuityDealName(String dealName, int timeOut) {
+
+		String xpath = "//a[text()='" + dealName + "']/ancestor::th[@data-label='Pipeline Name']";
+		try {
+			return FindElement(driver, xpath, "Header: " + dealName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Header: " + dealName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+	
 	public WebElement dealTeamAcuityDealName(String dealName, int timeOut) {
 
 		String xpath = "//a[text()='" + dealName + "']/ancestor::th[@data-label='Name']";
