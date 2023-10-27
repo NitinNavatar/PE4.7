@@ -25881,7 +25881,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				{
 					log(LogStatus.INFO, "Switched to new window", YesNo.No);
 					
-					if(getRecordOnObject("Firm",firmName,20)!=null)
+					if(getRecordOnObject("Institution",firmName,20)!=null)
 					{
 						log(LogStatus.INFO, "Firm name "+firmName+" has been redirected to new tab", YesNo.No);
 					}
