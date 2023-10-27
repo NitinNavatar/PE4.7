@@ -14154,6 +14154,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedRelatedToVerifyBeforeTagging = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 
+		String updatedRelatedToVerifyBeforeTaggingOnDetails = relatedTo + "<break>" + recordName;
+		
 		String updatedRelatedToVerify = updatedRelatedToVerifyBeforeTagging + "<break>" + AMNNR_RelatedTo69;
 
 		String[] SuggestedTags = AMNNR_SuggestedTag68.split("<break>", -1);
@@ -14165,6 +14167,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel3, relatedTo } };
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
+
 				
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
 //				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, classification } };
@@ -16634,6 +16637,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String status = AMNNR_AdvanceStatus104;
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
+		
+		String updatedRelatedToVerifyOnDetailsSection = relatedTo + "<break>" + recordName;
 
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp104.split("<break>") };
 		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
@@ -16645,8 +16650,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
 				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, AMNNR_Classification104 } };
 
+		String[][] task1AdvancedSectionOnDetailSection = { { AMNNR_CallLabel4, getAdvanceDueDate }};
+		
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
+				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyOnDetailsSection } };
 
 		String updatedRelatedToNotContainsVerify = AMNNR_SuggestedTag104;
 		String[][] relatedAssociationNotContains = { { AMNNR_TaskLabel3, updatedRelatedToNotContainsVerify } };
@@ -16665,8 +16672,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1AdvancedSectionForDetails = { { TaskPageFields.Date.toString(), getAdvanceDueDate }};
 		
 		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
-				task1BasicSectionVerificationForDetailsSection, task1AdvancedSectionForDetails };
-		
+				task1BasicSectionVerification, task1AdvancedSectionOnDetailSection };
+
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
@@ -16877,8 +16884,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String relatedTo = AMNNR_RelatedTo106;
 		String priority = AMNNR_AdvancePriority106;
 		String status = AMNNR_AdvanceStatus106;
-		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
-				+ (crmUser1FirstName + " " + crmUser1LastName);
+//		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
+//				+ (crmUser1FirstName + " " + crmUser1LastName);
 
 		String task1NotesVerify = task1Notes;
 		String[] SuggestedTags = AMNNR_SuggestedTag106.split("<break>", -1);
@@ -16888,9 +16895,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
 				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, AMNNR_Classification106 } };
-
-		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
-				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
 		String[][] createNewRecordPopUp = null;
 
@@ -16910,15 +16914,16 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				AMNNR_AddContactsToFundraisingPopup111.split("<break>", -1),
 				AMNNR_AddContactsToFundraisingPopup112.split("<break>", -1) };
 
-		String updatedRelatedToVerifyBeforeTaggingForDetailsSection = relatedTo + "<break>" + recordName ;
+		String updatedRelatedToVerifyOnDetailSection = relatedTo + "<break>" + recordName;
 		
-		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_TaskLabel1, task1SubjectName },
-				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyBeforeTaggingForDetailsSection } };
+		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
+				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyOnDetailSection } };
 		
-		String[][] task1AdvancedSectionForDetails = { { TaskPageFields.Date.toString(), getAdvanceDueDate }};
+		String[][] task1AdvancedSectionOnDetailSection = { { AMNNR_CallLabel4, getAdvanceDueDate } };
 		
 		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
-				task1BasicSectionVerificationForDetailsSection, task1AdvancedSectionForDetails };
+				task1BasicSectionVerification, task1AdvancedSectionOnDetailSection };
+
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -17400,6 +17405,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
+
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, TabName.Pipelines.toString(), recordName, null)) {
 			log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
 
@@ -17513,6 +17519,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		log(LogStatus.INFO, "Before Fundraising Contacts Records: " + beforeCreateFundraisingContactList, YesNo.No);
 		log(LogStatus.INFO, "Before Fundraising Contacts Records Size: " + beforeCreateFundraisingContactList.size(),
 				YesNo.No);
+
 
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, TabName.Pipelines.toString(), recordName, null)) {
 			log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
@@ -18087,6 +18094,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
 
+
 					if (BP.navigateToRecordAndClickOnSubTab(projectName, TabName.Pipelines.toString(), dealRecordName, null)) {
 						log(LogStatus.INFO, "Able to Open the Record: " + dealRecordName, YesNo.No);
 
@@ -18188,7 +18196,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String task1SubjectName = AMNNR_Subject134;
 		String task1Notes = AMNNR_Notes134;
-		String relatedTo = AMNNR_RelatedTo134;
+		String relatedTo = AMNNR_RelatedTo134  ;
 		String priority = AMNNR_AdvancePriority134;
 		String status = AMNNR_AdvanceStatus134;
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp134.split("<break>") };
@@ -18364,6 +18372,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.ERROR, "not able to click on " + task1SubjectName, YesNo.No);
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
+
 
 					if (BP.navigateToRecordAndClickOnSubTab(projectName, TabName.Pipelines.toString(), dealRecordName, null)) {
 						log(LogStatus.INFO, "Able to Open the Record: " + dealRecordName, YesNo.No);
@@ -18671,6 +18680,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 		String updatedRelatedToVerifyForDetails = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
+		String updatedRelatedToVerifyForDetailsSection = relatedTo + "<break>" + recordName;
 		String updatedRelatedToVerify = updatedRelatedToVerifyForDetails + "<break>" + AMNNR_RelatedTo141;
 
 		String followUptask1SubjectName = AMNNR_Subject141;
@@ -18683,13 +18693,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_TaskLabel3, relatedTo } };
 
 		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_TaskLabel1, task1SubjectName },
-				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyForDetails } };
+				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyForDetailsSection } };
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
 				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, AMNNR_Classification140 } };
 
+		String[][] task1AdvancedSectionOnDeatailSection = { { excelLabel.Date.toString(),getAdvanceDueDate }};
+		
 		String[][] followUptask1 = { { AMNNR_TaskLabel1, followUptask1SubjectName },
 				{ AMNNR_TaskLabel5, followUpStatus }, { AMNNR_TaskLabel4, followUpgetAdvanceDueDate } };
 
@@ -18713,9 +18725,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1AdvancedSectionForDetails = { { TaskPageFields.Date.toString(), getAdvanceDueDate }};
 		
 		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
-				task1BasicSectionVerificationForDetailsSection1, task1AdvancedSectionForDetails };
-		
-		
+				task1BasicSectionVerificationForDetailsSection, task1AdvancedSectionOnDeatailSection };
+
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -18932,18 +18943,21 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedRelatedToVerify = updatedRelatedToVerifyForDetails + "<break>"
 				+ "jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djh sdg" + "<break>"
 				+ "nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated";
-
+		String updatedRelatedToVerifyForDetailSection = relatedTo + "<break>" + recordName;
+		
 		String[][] task1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
 				{ AMNNR_TaskLabel3, relatedTo } };
 
 		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_TaskLabel1, task1SubjectName },
-				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyForDetails } };
+				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerifyForDetailSection } };
 		String[][] task1BasicSectionVerification = { { AMNNR_TaskLabel1, task1SubjectName },
 				{ AMNNR_TaskLabel2, task1NotesVerify }, { AMNNR_TaskLabel3, updatedRelatedToVerify } };
 
 		String[][] task1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
 				{ AMNNR_TaskLabel6, priority }, { AMNNR_TaskLabel8, "C" } };
 
+		String[][] task1AdvancedSectionOnDetailSection = { { excelLabel.Date.toString(), getAdvanceDueDate }};
+		
 		String[][] followUptask1 = null;
 
 		String[] SuggestedTags = "All Records Select".split("<break>", -1);
@@ -18965,7 +18979,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1AdvancedSectionForDetails = { { TaskPageFields.Date.toString(), getAdvanceDueDate }};
 		
 		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
-				task1BasicSectionVerificationForDetailsSection1, task1AdvancedSectionForDetails };
+				task1BasicSectionVerificationForDetailsSection, task1AdvancedSectionOnDetailSection };
+
 
 		String value = "";
 		String type = "";
@@ -19655,22 +19670,23 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] addContactsToDealTeamPopUp = { AMNNR_AddContactsToDealTeamPopUp68.split("<break>") };
 		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup68.split("<break>") };
 
+		String updatedRelatedToVerifyOnDetailSection = relatedTo + "<break>" + recordName;
+		
 		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
 				{ AMNNR_CallLabel3, relatedTo } };
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
-//		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_CallLabel1, task1SubjectName },
-//				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerifyBeforeTagging } };
-		
-		String[][] task1BasicSectionVerificationForDetailsSectionForDetailsSection = { { AMNNR_CallLabel1, task1SubjectName },
-				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerifyBeforeTaggingForDetailsSection } };
+		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_CallLabel1, task1SubjectName },
+				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerifyOnDetailSection } };
+
 
 		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate },
 				{ AMNNR_CallLabel8, classification } };
+		String[][] task1AdvancedSectionOnDetails = { { AMNNR_CallLabel4, getAdvanceDueDate } };
 		String[][][] detailSectionVerifcation = { { { AMNNR_CallLabel1, task1SubjectName } },
-				task1BasicSectionVerificationForDetailsSectionForDetailsSection, task1AdvancedSection };
-		
+				task1BasicSectionVerificationForDetailsSection, task1AdvancedSectionOnDetails };
+
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
@@ -22101,6 +22117,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 
+		String updatedRelatedToVerifyOnDetails = relatedTo + "<break>" + recordName;
+		
 		String[][] createNewRecordPopUp = { AMNNR_CreateNewRecordPopUp104.split("<break>") };
 		String task1NotesVerify = BP.convertRequiredNotes(createNewRecordPopUp, task1Notes);
 		String[] SuggestedTags = AMNNR_SuggestedTag104.split("<break>", -1);
@@ -22110,9 +22128,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate },
 				{ AMNNR_CallLabel8, AMNNR_Classification104 } };
-
+		
+		String[][] task1AdvancedSectionOnDetails = { { AMNNR_CallLabel4, getAdvanceDueDate } };
+			
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
-				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
+				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerifyOnDetails } };
 
 		String updatedRelatedToNotContainsVerify = AMNNR_SuggestedTag104;
 		String[][] relatedAssociationNotContains = { { AMNNR_CallLabel3, updatedRelatedToNotContainsVerify } };
@@ -22124,7 +22144,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerifyAfterUpdate } };
 
 		String[][][] detailSectionVerifcation = { { { AMNNR_CallLabel1, task1SubjectName } },
-				task1BasicSectionVerification, task1AdvancedSection };
+				task1BasicSectionVerification, task1AdvancedSectionOnDetails };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -22338,6 +22358,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String updatedRelatedToVerify = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 
+		String updatedRelatedToVerifyOnDetails = relatedTo + "<break>" + recordName;
+		
 		String task1NotesVerify = task1Notes;
 		String[] SuggestedTags = AMNNR_SuggestedTag176.split("<break>", -1);
 
@@ -22346,9 +22368,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate },
 				{ AMNNR_CallLabel8, AMNNR_Classification106 } };
+		
+		String[][] task1AdvancedSectionOnDetails = { { AMNNR_CallLabel4, getAdvanceDueDate } };
 
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
-				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
+				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerifyOnDetails } };
 
 		String[][] createNewRecordPopUp = null;
 
@@ -22369,7 +22393,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				AMNNR_AddContactsToFundraisingPopup182.split("<break>", -1) };
 
 		String[][][] detailSectionVerifcation = { { { AMNNR_CallLabel1, task1SubjectName } },
-				task1BasicSectionVerification, task1AdvancedSection };
+				task1BasicSectionVerification, task1AdvancedSectionOnDetails };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -22841,6 +22865,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
+
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, TabName.Pipelines.toString(), recordName, null)) {
 			log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
 
@@ -22952,6 +22977,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		log(LogStatus.INFO, "Before Fundraising Contacts Records: " + beforeCreateFundraisingContactList, YesNo.No);
 		log(LogStatus.INFO, "Before Fundraising Contacts Records Size: " + beforeCreateFundraisingContactList.size(),
 				YesNo.No);
+
 
 		if (BP.navigateToRecordAndClickOnSubTab(projectName, TabName.Pipelines.toString(), recordName, null)) {
 			log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
@@ -23523,6 +23549,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
 
+
 					if (BP.navigateToRecordAndClickOnSubTab(projectName, TabName.Pipelines.toString(), dealRecordName, null)) {
 						log(LogStatus.INFO, "Able to Open the Record: " + dealRecordName, YesNo.No);
 
@@ -23799,6 +23826,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.ERROR, "not able to click on " + task1SubjectName, YesNo.No);
 						sa.assertTrue(false, "not able to click on " + task1SubjectName);
 					}
+
 
 					if (BP.navigateToRecordAndClickOnSubTab(projectName, TabName.Pipelines.toString(), dealRecordName, null)) {
 						log(LogStatus.INFO, "Able to Open the Record: " + dealRecordName, YesNo.No);
@@ -24104,6 +24132,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				+ (crmUser1FirstName + " " + crmUser1LastName);
 		String updatedRelatedToVerify = updatedRelatedToVerifyForDetails + "<break>" + AMNNR_RelatedTo141;
 
+		String updatedRelatedToVerifyForDetailSection = relatedTo + "<break>" + recordName;
+		
 		String followUptask1SubjectName = AMNNR_Subject141;
 		String followUpAdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy",
 				Integer.parseInt("0"));
@@ -24114,13 +24144,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_CallLabel3, relatedTo } };
 
 		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_CallLabel1, task1SubjectName },
-				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerifyForDetails } };
+				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerifyForDetailSection } };
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
 		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate },
 				{ AMNNR_CallLabel8, AMNNR_Classification140 } };
 
+		String[][] task1AdvancedSectionOnDetails = { { AMNNR_CallLabel4, getAdvanceDueDate } };
+		
 		String[][] followUptask1 = { { AMNNR_TaskLabel1, followUptask1SubjectName },
 				{ AMNNR_TaskLabel5, followUpStatus }, { AMNNR_TaskLabel4, followUpgetAdvanceDueDate } };
 
@@ -24137,7 +24169,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] addContactsToFundraisingObjectPopup = { AMNNR_AddContactsToFundraisingPopup201.split("<break>") };
 
 		String[][][] detailSectionVerifcation = { { { AMNNR_CallLabel1, task1SubjectName } },
-				task1BasicSectionVerificationForDetailsSection, task1AdvancedSection };
+				task1BasicSectionVerificationForDetailsSection, task1AdvancedSectionOnDetails };
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -24351,6 +24383,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1NotesVerify = task1Notes;
 		String updatedRelatedToVerifyForDetails = relatedTo + "<break>" + recordName + "<break>"
 				+ (crmUser1FirstName + " " + crmUser1LastName);
+	
+		String updatedRelatedToVerifyForDetailSection = relatedTo + "<break>" + recordName;
+		
 		String updatedRelatedToVerify = updatedRelatedToVerifyForDetails + "<break>"
 				+ "jaspreet singh krupal hsdghg sdhjhj twerty sdv sdvbv svdh hvv rwqtyrtqy djhCall" + "<break>"
 				+ "CallUs firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated nsuser firm record 1608 updated";
@@ -24359,11 +24394,12 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ AMNNR_CallLabel3, relatedTo } };
 
 		String[][] task1BasicSectionVerificationForDetailsSection = { { AMNNR_CallLabel1, task1SubjectName },
-				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerifyForDetails } };
+				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerifyForDetailSection } };
 		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
 				{ AMNNR_CallLabel2, task1NotesVerify }, { AMNNR_CallLabel3, updatedRelatedToVerify } };
 
 		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvanceDueDate }, { AMNNR_CallLabel8, "C" } };
+		String[][] task1AdvancedSectionOnDetails = { { AMNNR_CallLabel4, getAdvanceDueDate }};
 
 		String[][] followUptask1 = null;
 
@@ -24379,7 +24415,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						.split("<break>") };
 
 		String[][][] detailSectionVerifcation = { { { AMNNR_TaskLabel1, task1SubjectName } },
-				task1BasicSectionVerificationForDetailsSection, task1AdvancedSection };
+				task1BasicSectionVerificationForDetailsSection, task1AdvancedSectionOnDetails };
 
 		String value = "";
 		String type = "";
