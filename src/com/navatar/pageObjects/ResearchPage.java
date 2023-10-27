@@ -115,7 +115,7 @@ public class ResearchPage extends BasePageBusinessLayer {
 	}
 	
 	public WebElement getProfileSelected(String ProfileName,int timeout ) {
-		return isDisplayed(driver,  FindElement(driver, "//th//a[text()='" + ProfileName + "']",
+		return isDisplayed(driver,  FindElement(driver, "//td//span[text()='" + ProfileName + "']/..",
 				"getProfileSelected",action.SCROLLANDBOOLEAN,timeout),"Visibility", timeout, "Profile");
 	}
 	

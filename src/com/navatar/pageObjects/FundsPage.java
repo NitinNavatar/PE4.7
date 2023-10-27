@@ -238,15 +238,15 @@ public class FundsPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "//*[text()='Company']/following-sibling::div//input[contains(@placeholder,'Search Firms')]")
-	private WebElement firmName;
+	@FindBy(xpath = "//*[text()='Company']/following-sibling::div//input[contains(@placeholder,'Search Institutions')]")
+	private WebElement CompanyName;
 
 	/**
 	 * @return the legalName
 	 */
 	public WebElement getCompanyName(String projectName, int timeOut) {
 
-		return isDisplayed(driver, firmName, "Visibility", timeOut, "Company Name");
+		return isDisplayed(driver, CompanyName, "Visibility", timeOut, "Company Name");
 
 	}
 

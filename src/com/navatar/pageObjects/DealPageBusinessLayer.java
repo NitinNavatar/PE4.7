@@ -849,7 +849,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 						}
 					}
 
-					else if (labelNames[i].equalsIgnoreCase("Date Received")
+					else if (labelNames[i].equalsIgnoreCase("Log In Date")
 							|| labelNames[i].equalsIgnoreCase("LOI Due Date")
 							|| labelNames[i].equalsIgnoreCase("NDA Signed Date")
 							|| labelNames[i].equalsIgnoreCase("Management Meeting Date")
@@ -1224,7 +1224,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 			for (int i = 0; i < labelNames.length; i++) {
 				labelNames[i] = labelNames[i].replace("_", " ");
 
-				if (labelNames[i].equalsIgnoreCase("Date Received") || labelNames[i].equalsIgnoreCase("LOI Due Date")
+				if (labelNames[i].equalsIgnoreCase("Log In Date") || labelNames[i].equalsIgnoreCase("LOI Due Date")
 						|| labelNames[i].equalsIgnoreCase("NDA Signed Date")
 						|| labelNames[i].equalsIgnoreCase("Management Meeting Date")
 						|| labelNames[i].equalsIgnoreCase("Pipeline Data Date")
@@ -1291,20 +1291,20 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	 * @return WebElement
 	 */
 	public String dealbottomcount(int timeOut) {
-		String xpath = "//span[@title='Deals']/ancestor::div[contains(@class,'left_x-small')]//table";
+		String xpath = "//span[@title='Pipelines']/ancestor::div[contains(@class,'left_x-small')]//table";
 		WebElement dealElement = FindElement(driver, xpath, "dealbottomcount", action.BOOLEAN, 10);
 		return isDisplayed(driver, dealElement, xpath, 10, "").getAttribute("data-num-rows");
 	}
 
 	public String dealbottomname(String dealbottomcount, int timeOut) {
-		String xpath = "//span[@title='Deals']/ancestor::div[contains(@class,'left_x-small')]//table//tr[@data-row-number='"
+		String xpath = "//span[@title='Pipelines']/ancestor::div[contains(@class,'left_x-small')]//table//tr[@data-row-number='"
 				+ dealbottomcount + "']//a";
 		WebElement dealElement = FindElement(driver, xpath, "dealbottomname", action.BOOLEAN, 10);
 		return isDisplayed(driver, dealElement, xpath, 10, "").getAttribute("title");
 	}
 
 	public String dealtopname(String dealbottomcount, int timeOut) {
-		String xpath = "//span[@title='Deals']/ancestor::div[contains(@class,'left_x-small')]//table//tr[@data-row-number='1']//a";
+		String xpath = "//span[@title='Pipelines']/ancestor::div[contains(@class,'left_x-small')]//table//tr[@data-row-number='1']//a";
 		WebElement dealElement = FindElement(driver, xpath, "dealtopname", action.BOOLEAN, 10);
 		return isDisplayed(driver, dealElement, xpath, 10, "").getAttribute("title");
 	}
@@ -1317,7 +1317,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 
 	public List<WebElement> listOfDealNames(int timeout) {
 		return FindElements(driver,
-				"//span[@title='Deals']/ancestor::div[@class='slds-col slds-size_6-of-12 slds-p-left_x-small']//table[contains(@class,'slds-table slds-table_header-fixed')]");
+				"//span[@title='Pipelines']/ancestor::div[@class='slds-col slds-size_6-of-12 slds-p-left_x-small']//table[contains(@class,'slds-table slds-table_header-fixed')]");
 	}
 
 	public String EmailcountonPopup(int timeOut) {
@@ -1373,7 +1373,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 
 //			if (!companyName.isEmpty() && companyName != null) {
 //
-//				if (sendKeys(driver, getCompanyName(60), companyName, "Company Name", action.SCROLLANDBOOLEAN)) {
+//				if (sendKeys(driver, getCompanyName1(60), companyName, "Company Name1", action.SCROLLANDBOOLEAN)) {
 //					ThreadSleep(3000);
 //					if (click(driver,
 //							FindElement(driver, "//*[text()='Company']/..//*[@title='" + companyName + "']",
@@ -1475,7 +1475,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 					}
 				}
 
-				else if (labelNames[i].equalsIgnoreCase("Date Received")
+				else if (labelNames[i].equalsIgnoreCase("Log In Date")
 						|| labelNames[i].equalsIgnoreCase("LOI Due Date")
 						|| labelNames[i].equalsIgnoreCase("NDA Signed Date")
 						|| labelNames[i].equalsIgnoreCase("Management Meeting Date")

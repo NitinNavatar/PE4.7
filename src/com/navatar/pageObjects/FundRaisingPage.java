@@ -424,7 +424,7 @@ public class FundRaisingPage extends BasePage {
 		return isDisplayed(driver, PopUpfundraisingContact, "Visibility", timeOut, "PopUp fundraising Contact");
 	}
 	
-	@FindBy(xpath = "(//*[@title='New Fundraising Contact'])[2]")
+	@FindBy(xpath = "//*[@title='New Fundraising Contact']")
 	private WebElement FundraisingContactIcon;
 
 	public WebElement getFundraisingContactIcon(int timeOut) {
