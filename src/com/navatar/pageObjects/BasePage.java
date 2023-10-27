@@ -3451,7 +3451,7 @@ public abstract class BasePage extends BaseLib {
 			xpath = "input";
 		}
 		return isDisplayed(driver,
-				FindElement(driver, "//" + xpath + "[text()='Bulk Fundraising' or @title='Bulk Fundraising']",
+				FindElement(driver, "//" + xpath + "[text()='Create Fundraisings' or @title='Create Fundraisings']",
 						"Create Fundraising button on " + pageName, action.SCROLLANDBOOLEAN, timeOut),
 				"Visibility", timeOut, "Create Fundraising button on " + pageName);
 	}
