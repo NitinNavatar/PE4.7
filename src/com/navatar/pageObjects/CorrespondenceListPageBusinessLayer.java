@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.server.handler.SendKeys;
 
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.YesNo;

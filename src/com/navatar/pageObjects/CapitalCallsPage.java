@@ -3,7 +3,6 @@ package com.navatar.pageObjects;
 import static com.navatar.generic.CommonLib.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.server.handler.FindElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.navatar.generic.EnumConstants.EditViewMode;

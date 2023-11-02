@@ -24,7 +24,6 @@ import com.relevantcodes.extentreports.model.Test;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.internal.FindsByXPath;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.sikuli.guide.ClickableWindow;
 
@@ -35,7 +34,7 @@ import org.sikuli.guide.ClickableWindow;
  */
 
 public class AppListeners extends By implements ITestListener, IInvokedMethodListener, WebDriverEventListener, ExceptionListener,
-		ITestNGListener, IExecutionListener,SearchContext,FindsByXPath {
+		ITestNGListener, IExecutionListener,SearchContext {
 
 	public static int iPassCount;
 	public static int iFailCount;
@@ -377,17 +376,7 @@ public class AppListeners extends By implements ITestListener, IInvokedMethodLis
 		return null;
 	}
 
-	@Override
-	public WebElement findElementByXPath(String using) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<WebElement> findElementsByXPath(String using) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public <X> void afterGetScreenshotAs(OutputType<X> arg0, X arg1) {

@@ -8,7 +8,6 @@ import static com.navatar.generic.CommonLib.isDisplayed;
 import static com.navatar.generic.CommonLib.scrollDownThroughWebelement;
 import static com.navatar.generic.CommonLib.selectVisibleTextFromDropDown;
 
-import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
