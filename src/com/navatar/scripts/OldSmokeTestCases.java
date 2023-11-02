@@ -25,8 +25,6 @@ import java.util.regex.Pattern;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.server.handler.SendKeys;
-import org.openqa.selenium.remote.server.handler.SwitchToWindow;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -6211,7 +6209,7 @@ public class OldSmokeTestCases extends BaseLib {
 						ThreadSleep(2000);
 
 						// Deal Information 2nd
-						String expectedResult = "Company" + "," + "Fund Manager" + "," + "Fund Manager’s Fund" + ","
+						String expectedResult = "Company" + "," + "Fund Manager" + "," + "Fund Managerï¿½s Fund" + ","
 								+ "Individual Investor" + "," + "Institution" + "," + "Limited Partner";
 						checkBox = nspbl.getEnableCheckBoxforNavatarSetUpSideMenuTab(environment, mode,
 								NavatarSetupSideMenuTab.CommitmentCreation, EditViewMode.Edit, ClickOrCheckEnableDisableCheckBox.EnableOrDisable, 10);
@@ -6314,7 +6312,7 @@ public class OldSmokeTestCases extends BaseLib {
 									log(LogStatus.INFO, "click on Limited Partner required field link", YesNo.No);
 									ThreadSleep(5000);
 									List<WebElement> options = allOptionsInDropDrop(driver, nspbl.getNewLP_CommitmentTab_DropDownList(environment, mode, 10), "limited partner drop down list");
-									if(compareMultipleList(driver, "Company,Fund Manager,Fund Manager’s Fund,Individual Investor,Institution,Limited Partner", options).isEmpty()) {
+									if(compareMultipleList(driver, "Company,Fund Manager,Fund Managerï¿½s Fund,Individual Investor,Institution,Limited Partner", options).isEmpty()) {
 										log(LogStatus.INFO, "Limited partner drop down list is verified ", YesNo.No);
 									}else {
 										log(LogStatus.FAIL, "Limited partner drop down list is not verified ", YesNo.No);

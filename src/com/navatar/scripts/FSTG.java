@@ -10,7 +10,6 @@ import static com.navatar.generic.SmokeCommonVariables.crmUser1EmailID;
 
 import java.util.List;
 
-import org.openqa.selenium.remote.server.handler.SwitchToWindow;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
