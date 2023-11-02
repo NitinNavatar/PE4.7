@@ -695,7 +695,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 				"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));
 		js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
 		CommonLib.clickUsingJavaScript(driver, driver.findElement(By.xpath(
-				"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']/a")),
+				"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']/*[contains(@title,'Insert a component')]")),
 				"Add Link");
 
 		CommonLib.switchToDefaultContent(driver);

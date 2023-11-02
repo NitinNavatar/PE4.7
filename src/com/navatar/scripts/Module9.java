@@ -570,6 +570,67 @@ public class Module9 extends BaseLib {
 
 	}
 
+	@Parameters("projectName")
+
+	@Test
+	public void M9Tc002_0_WriteStatusBlankInfile() {
+		
+		String filePath[] = {System.getProperty("user.dir")+"\\API Files\\Module 9\\User2\\SDG - Fundraising USer2.xlsx",
+				System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG - Account Admin.xlsx",
+				System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG- Contacts Admin.xlsx",
+				System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG - Fund Admin.xlsx",
+				System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG - Fund Team.xlsx",
+				System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG - Fundraising Admin.xlsx",
+				System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG - Eventwork Around.xlsx",
+				System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\PE SDG.xlsx",
+				System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG_Fields.xlsx",
+				System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG_Actions.xlsx",
+				System.getProperty("user.dir")+"\\API Files\\Module 9\\User1\\SDG - Account User12.xlsx",
+				System.getProperty("user.dir")+"\\API Files\\Module 9\\User1\\SDG- Contacts User1.xlsx",
+				System.getProperty("user.dir")+"\\API Files\\Module 9\\User1\\SDG - Fund User1.xlsx",
+				System.getProperty("user.dir")+"\\API Files\\Module 9\\User1\\SDG - Fund Team User1.xlsx",
+				System.getProperty("user.dir")+"\\API Files\\Module 9\\User1\\SDG - Fundraising USer1.xlsx",
+				System.getProperty("user.dir")+"\\API Files\\Module 9\\User2\\SDG - Account User2.xlsx",
+				System.getProperty("user.dir")+"\\API Files\\Module 9\\User2\\SDG- Contacts User2.xlsx",
+				System.getProperty("user.dir")+"\\API Files\\Module 9\\User2\\SDG - Fund User2.xlsx",
+				System.getProperty("user.dir")+"\\API Files\\Module 9\\User2\\SDG - Fund Team User2.xlsx",
+				System.getProperty("user.dir")+"\\API Files\\Module 9\\User2\\SDG - Fundraising USer2.xlsx"};
+		String sheetName[]= {"SDG - Fundraising User2",
+				"SDG - Account Admin",
+				"SDG- Contacts Admin",
+				"SDG - Fund Admin",
+				"SDG - Fund Team",
+				"SDG - Fundraising Admin",
+				"SDG - Eventwork Around",
+				"PE SDG",
+				"SDG_Fields",
+				"SDG_Actions",
+				"SDG - Account User1",
+				"SDG- Contacts User1",
+				"SDG - Fund User1",
+				"SDG - Fund Team User1",
+				"SDG - Fundraising User1",
+				"SDG - Account User2",
+				"SDG- Contacts User2",
+				"SDG - Fund User2",
+				"SDG - Fund Team User2",
+				"SDG - Fundraising User2"};
+		
+		
+		
+		
+		for(int j=0;j<filePath.length;j++) {
+			
+			int row = ExcelUtils.getLastRow(filePath[j], sheetName[j]);
+			for(int i=1;i<=row;i++) {
+				ExcelUtils.writeDataInExcel(filePath[j], "", sheetName[j],i,0);
+			}
+		}
+		
+		
+	}
+
+	
 	//Admin
 	@Test
 	public void M9Tc002_1_CreateAccountByApi() {
@@ -744,6 +805,8 @@ public class Module9 extends BaseLib {
 		
 	}
 
+	
+	
 	@Parameters({ "projectName" })
 
 	@Test
