@@ -10440,4 +10440,61 @@ public abstract class BasePage extends BaseLib {
 		String path = "//span[@class='slds-page-header__title slds-truncate' and text()='"+ recordName + "']";
 		return FindElement(driver, path, "info popup message", action.BOOLEAN, timeOut);
 	}
+	
+	@FindBy(xpath = "//span[text()='New Connected App']")
+	private WebElement New_Connected_app;
+
+	/**
+	 * @return the New_Connected_app
+	 */
+	public WebElement getNew_Connected_app(int timeOut) {
+		return isDisplayed(driver, New_Connected_app, "Visibility", timeOut, "New Connected app");
+	}
+	
+	@FindBy(xpath = "//*[contains(text(),'Connected App Name')]/..//following-sibling::td//input")
+	private WebElement Connected_App_Name;
+
+	/**
+	 * @return the New_Connected_app
+	 */
+	public WebElement getConnected_App_Name(int timeOut) {
+		return isDisplayed(driver, Connected_App_Name, "Visibility", timeOut, "Connected App Name");
+	}
+	
+	@FindBy(xpath = "//*[contains(text(),'Contact Email')]/..//following-sibling::td//input")
+	private WebElement Contact_email;
+
+	/**
+	 * @return the New_Connected_app
+	 */
+	public WebElement getContact_email(int timeOut) {
+		return isDisplayed(driver, Contact_email, "Visibility", timeOut, "Contact email");
+	}
+	
+	@FindBy(xpath = "//*[contains(@for,'isOauth')]/..//following-sibling::td//input")
+	private WebElement EnableOAuthSettings;
+
+	/**
+	 * @return the New_Connected_app
+	 */
+	public WebElement getEnableOAuthSettings(int timeOut) {
+		return isDisplayed(driver, EnableOAuthSettings, "Visibility", timeOut, "Enable OAuth Settings");
+	}
+	
+	@FindBy(xpath = "//*[contains(text(),'Callback URL')]/..//..//following-sibling::td//textarea")
+	private WebElement callbackURL;
+
+	/**
+	 * @return the New_Connected_app
+	 */
+	public WebElement getcallbackURL(int timeOut) {
+		return isDisplayed(driver, callbackURL, "Visibility", timeOut, "call back URL");
+	}
+	
+	@FindBy(xpath = "//label[text()='Available OAuth Scopes']/..//following-sibling::select")
+	private WebElement AvailableOAuthScopes;
+
+	public WebElement getAvailableOAuthScopes(int timeOut) {
+		return isDisplayed(driver, AvailableOAuthScopes, "Visibility", timeOut, "Available OAuth Scopes");
+	}
 }
