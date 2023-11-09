@@ -712,7 +712,7 @@ public class CommonVariables {
 
 	public static String SmokeMI1;
 
-	  public static String AQFirm1,AQFirm2,AQFirm3,AQFirm4,AQFirm5,AQFirm6,AQFirm7,AQRecordType1,AQRecordType2,AQRecordType3,AQRecordType4,AQRecordType5,AQRecordType6,AQRecordType7,AQRecordType8,
+	  public static String AQFirm1,AQFirm2,AQFirm3,AQFirm4,AQFirm41,AQFirm42,AQFirm43,AQFirm5,AQFirm6,AQFirm7,AQRecordType1,AQRecordType2,AQRecordType3,AQRecordType4,AQRecordType41,AQRecordType42,AQRecordType43,AQRecordType5,AQRecordType6,AQRecordType7,AQRecordType8,
 	    AQConFN1,AQConFN2,AQConFN3,AQConFN4,AQConFN5,AQConFN6,AQConFN7,AQConFN8,AQConFN9,AQConLN1,AQConLN2,AQConLN3,AQConLN4,AQConLN5,AQConLN6,AQConLN7,AQConLN8,AQConLN9,AQConFirm1,AQConFirm2,AQConFirm3,AQConFirm4,
 	    AQConFirm5,AQConFirm6,AQConFirm7,AQConFirm8,AQConEmail1,AQConEmail2,AQConEmail3,AQConEmail4,AQConEmail5,AQConEmail6,AQConEmail7,AQConEmail8,AQConPhone1,AQConPhone2,AQConPhone3,AQConPhone4,
 	    AQConPhone5,AQConPhone6,AQConPhone7,AQConPhone8,AQConPhone9,AQConName1,AQLabel1,AQLabel2,AQLabel3,AQLabel4,AQLabel5;
@@ -10571,6 +10571,9 @@ public class CommonVariables {
  					AQFirm2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns2", excelLabel.Legal_Name);
  					AQFirm3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns3", excelLabel.Legal_Name);
  					AQFirm4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns4", excelLabel.Legal_Name);
+ 					AQFirm41=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns41", excelLabel.Legal_Name);
+ 					AQFirm42=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns42", excelLabel.Legal_Name);
+ 					AQFirm43=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns43", excelLabel.Legal_Name);
  					AQFirm5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns5", excelLabel.Legal_Name);
  					AQFirm6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns6", excelLabel.Legal_Name);
  					AQFirm7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns7", excelLabel.Legal_Name);
@@ -10579,6 +10582,9 @@ public class CommonVariables {
  					AQRecordType2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns2", excelLabel.Record_Type);
  					AQRecordType3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns3", excelLabel.Record_Type);
  					AQRecordType4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns4", excelLabel.Record_Type);
+ 					AQRecordType41=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns41", excelLabel.Record_Type);
+ 					AQRecordType42=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns42", excelLabel.Record_Type);
+ 					AQRecordType43=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns43", excelLabel.Record_Type);
  					AQRecordType5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns5", excelLabel.Record_Type);
  					AQRecordType6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns6", excelLabel.Record_Type);
  					AQRecordType7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns7", excelLabel.Record_Type);
