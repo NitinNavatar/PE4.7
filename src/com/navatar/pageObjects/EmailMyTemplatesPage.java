@@ -2,12 +2,14 @@ package com.navatar.pageObjects;
 
 import static com.navatar.generic.CommonLib.isDisplayed;
 
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
+import static com.navatar.generic.CommonLib.FindElement;
 import com.navatar.generic.EnumConstants.Mode;
+import com.navatar.generic.EnumConstants.action;
 
 public class EmailMyTemplatesPage extends SetupPageBusinessLayer {
 
@@ -139,4 +141,84 @@ public class EmailMyTemplatesPage extends SetupPageBusinessLayer {
 	public WebElement getEmailBodyTextArea(String environment,String mode,int timeOut) {
 		return isDisplayed(driver, emailBodyTextArea, "Visibility", timeOut, "Email Body Text Area");
 	}
-}
+	
+	@FindBy(xpath="//input[@title='New Letterhead']")
+	private WebElement createNewLetterheadButton;
+
+	/**
+	 * @return the createNewLetterheadButton
+	 */
+	public WebElement getCreateNewLetterheadButton(String environment,String mode,int timeOut) {
+		return isDisplayed(driver, createNewLetterheadButton, "Visibility", timeOut, "createNewLetterheadButton");
+	}
+	
+	@FindBy(xpath="//a[text()='Go to Letterhead']")
+	private WebElement GotoLetterheadButton;
+	/**
+	 * @return the nextButton
+	 */
+	public WebElement getGotoLetterheadButton(String environment,String mode,int timeOut) {
+		return isDisplayed(driver, GotoLetterheadButton, "Visibility", timeOut, "Go to Letterhead Button");
+	}
+	
+	@FindBy(xpath="//label[text()='Letterhead Label']/../following-sibling::td//input")
+	private WebElement LetterheadLabelTextBox;
+
+	/**
+	 * @return the emailTemplateNameTextBox
+	 */
+	public WebElement getLetterheadLabelTextBox(String environment,String mode,int timeOut) {
+		return isDisplayed(driver, LetterheadLabelTextBox, "Visibility", timeOut, "Letterhead Label Text Box");
+	}
+	
+	@FindBy(xpath="//label[text()='Description']/../following-sibling::td//textarea")
+	private WebElement DescriptionTextArea;
+
+	/**
+	 * @return the DescriptionTextArea
+	 */
+	public WebElement getDescriptionTextArea(String environment,String mode,int timeOut) {
+		return isDisplayed(driver, DescriptionTextArea, "Visibility", timeOut, "Description Text Area");
+	}
+	
+	@FindBy(xpath="//label[text()='HTML Body']/../following-sibling::td//textarea")
+	private WebElement HTMLBodyTextArea;
+
+	/**
+	 * @return the emailHTMLTextArea
+	 */
+	public WebElement getHTMLBodyTextArea(String environment,String mode,int timeOut) {
+		return isDisplayed(driver, HTMLBodyTextArea, "Visibility", timeOut, "HTML Body Text Area");
+	}
+	
+	@FindBy(xpath="//label[text()='Email Subject']/../following-sibling::td//input")
+	private WebElement emailsubjectTextBox;
+
+	/**
+	 * @return the emailsubjectTextBox
+	 */
+	public WebElement getemailSubjectTextBox(String environment,String mode,int timeOut) {
+		return isDisplayed(driver, emailsubjectTextBox, "Visibility", timeOut, "email Subject TextBox");
+	}
+	
+	@FindBy(xpath = "//select[@name='recipient_type']")
+	private WebElement recipienttypeDropdown;
+
+	/**
+	 * @return the viewDropdown
+	 */
+	public WebElement getrecipienttypeDropdown(int timeOut) {
+		return isDisplayed(driver, recipienttypeDropdown, "Visibility", timeOut, "recipienttype cDropdown");
+	}
+	
+	public WebElement EmailTemplateEditButton(String emailTemplateName, int timeOut) {
+		String xpath = "//a[text()='" + emailTemplateName + "']/ancestor::th/preceding-sibling::td/a[text()='Edit']";
+		WebElement ele= null;
+		try {
+			return ele =FindElement(driver, xpath, "EmailTemplateEditButton",  action.SCROLLANDBOOLEAN, timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return ele =FindElement(driver, xpath, "EmailTemplateEditButton", action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+	}

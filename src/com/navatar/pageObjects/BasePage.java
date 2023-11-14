@@ -720,6 +720,16 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getSalesForceLightingIcon(int timeOut) {
 		return isDisplayed(driver, salesForceLightingIcon, "Visibility", timeOut, "Sales Force Lighting Icon");
 	}
+	
+	@FindBy(xpath = "(//a[text()='Switch to Lightning Experience'])[1]")
+	private WebElement salesForceLightingIconnew;
+
+	/**
+	 * @return the salesForceLightingIcon
+	 */
+	public WebElement getSalesForceLightingIconnew(int timeOut) {
+		return isDisplayed(driver, salesForceLightingIconnew, "Visibility", timeOut, "Sales Force Lighting Icon new");
+	}
 
 	@FindBy(xpath = "//div[contains(@class,'userProfilePanel')]//a[contains(@class,'switch-to-aloha')]")
 	private WebElement switchToClassic;
@@ -5605,6 +5615,27 @@ public abstract class BasePage extends BaseLib {
 
 	}
 
+	public WebElement getThemeSubject(String subjectName, int timeOut) {
+		String xPath = "//a[@title='" + subjectName + "']";
+		return FindElement(driver, xPath, subjectName, action.SCROLLANDBOOLEAN, timeOut);
+
+	}
+	
+	public List<WebElement> listOfThemeEmailHeaderDetail(int timeout) {
+		return FindElements(driver, "//*[@class='mainAccordion slds-theme_default slds-p-vertical_small']//span[@class='slds-cell-fixed slds-has-button-menu']/a//span[@class='slds-truncate']");
+	}
+	
+	@FindBy(xpath = "(//div[text()='No items to display'])[2]")
+	private WebElement ClipErrorMsg;
+
+	/**
+	 * @return the navigationPopUpHeader
+	 */
+	public WebElement getClipErrorMsg(int timeOut) {
+		WebElement ele = isDisplayed(driver, ClipErrorMsg, "Visibility", timeOut, "Clip Error Msg");
+		return ele;
+	}
+	
 	@FindBy(xpath = "//*[text()='View Calendar']")
 	private WebElement calenderIcon;
 
@@ -10496,5 +10527,9 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement getAvailableOAuthScopes(int timeOut) {
 		return isDisplayed(driver, AvailableOAuthScopes, "Visibility", timeOut, "Available OAuth Scopes");
+	}
+	
+	public List<WebElement> listOfThemeEmailpage(int timeout) {
+		return FindElements(driver, "//label[@part='label-container']//span");
 	}
 }

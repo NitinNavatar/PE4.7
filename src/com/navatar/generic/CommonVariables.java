@@ -1999,6 +1999,37 @@ public class CommonVariables {
 		    public static String AI_ATAssignTo1,AI_ATAssignTo2,AI_ATAssignTo3,AI_ATAssignTo4,AI_ATAssignTo5,AI_ATAssignTo6,AI_ATAssignTo7,AI_ATAssignTo8;
 		    
 		    public static String Ai_search1;
+		    
+		    /********************************THEME SEARCH *****************************************************/
+	 		 public static String ThemeName1,ThemeName2,ThemeName3,ThemeName4,ThemeName5;
+	 		public static String ThemeDescription1,ThemeDescription2,ThemeDescription3,ThemeDescription4,ThemeDescription5;
+	 		
+	 		//Firm
+	 		
+	 		public static String TC_Firm1,TC_Firm2,TC_Firm3,TC_Firm4,TC_Firm5;
+	 		public static String TC_Firm1RecordType, TC_Firm2RecordType, TC_Firm3RecordType, TC_Firm4RecordType,TC_Firm5RecordType;
+	 		 
+	 		//Contact
+	 		
+	 		public static String TC_Contact1FName, TC_Contact1LName, TC_Contact1EmailID, TC_Contact1RecordType,TC_Contact1Title;
+	 		public static String TC_Contact2FName, TC_Contact2LName, TC_Contact2EmailID, TC_Contact2RecordType,TC_Contact2Title;
+	 		public static String TC_Contact3FName, TC_Contact3LName, TC_Contact3EmailID, TC_Contact3RecordType,TC_Contact3Title;
+	 		public static String TC_Contact4FName, TC_Contact4LName, TC_Contact4EmailID, TC_Contact4RecordType,TC_Contact4Title;
+	 		public static String TC_Contact5FName, TC_Contact5LName, TC_Contact5EmailID, TC_Contact5RecordType,TC_Contact5Title;
+	 		public static String TC_Contact6FName, TC_Contact6LName, TC_Contact6EmailID, TC_Contact6RecordType,TC_Contact6Title;
+	 		
+	 		//Custom metadata
+	 		public static String AC_LabelName1,AC_LabelName2;
+	 		public static String AC_Value1,AC_Value2;
+	 		
+            //Custom Report
+	 		
+	 		public static String EmailthemeTemplate1_Subject, EmailthemeTemplate1_Body,EmailthemeTemplate1_FolderName,EmailthemeTemplate1_TemplateName,EmailthemeTemplate1_TemplateDescription;
+	 		public static String EmailthemeTemplate2_Subject, EmailthemeTemplate2_Body,EmailthemeTemplate2_FolderName,EmailthemeTemplate2_TemplateName,EmailthemeTemplate2_TemplateDescription;
+	 		public static String EmailthemeTemplate3_Subject, EmailthemeTemplate3_Body,EmailthemeTemplate3_FolderName,EmailthemeTemplate3_TemplateName,EmailthemeTemplate3_TemplateDescription;
+	 		public static String EmailthemeTemplate4_Subject, EmailthemeTemplate4_Body,EmailthemeTemplate4_FolderName,EmailthemeTemplate4_TemplateName,EmailthemeTemplate4_TemplateDescription,EmailthemeTemplate4_Recipient;
+	 		
+	 		public static String EmailName,EmailAddress,EmailSignature;
 		 	
 	public CommonVariables(Object obj) {
 		//TODO Auto-generated constructor stub
@@ -10525,34 +10556,189 @@ public class CommonVariables {
  				 	
  				 	AC_FieldLength1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Custom Fields",excelLabel.Variable_Name, "AC_Field1", excelLabel.Length);
  				 	;
-
- 				 	try {
- 						dataFile.close();
- 					} catch (IOException e) {
- 						// TODO Auto-generated catch block
- 						e.printStackTrace();
- 					}
  					try {
- 						dataWb.close();
- 					} catch (IOException e) {
- 						// TODO Auto-generated catch block
- 						e.printStackTrace();
+						dataFile.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+						dataWb.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 
- 					}
- 					
- 					
- 					break;
- 					
-            	  				
- 					
-				
-		default:
-			break;
+					}
+					
+					
+					break;
+		
+					
+					
+		        	 case "Theme" :
+							
+							try {
+								dataFile=new FileInputStream(new File(AcuityDataSheetFilePath));
+							} catch (FileNotFoundException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							
+							
+							try {
+								dataWb=WorkbookFactory.create(dataFile);
+							} catch (EncryptedDocumentException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (InvalidFormatException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
+							ThemeName1=ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Themes", excelLabel.Variable_Name,
+									"TH_01", excelLabel.Theme_Name);
+
+							ThemeDescription1=ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Themes", excelLabel.Variable_Name,
+									"TH_01", excelLabel.Description);
+							ThemeName2=ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Themes", excelLabel.Variable_Name,
+									"TH_02", excelLabel.Theme_Name);
+
+							ThemeDescription2=ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Themes", excelLabel.Variable_Name,
+									"TH_02", excelLabel.Description);
+							ThemeName3=ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Themes", excelLabel.Variable_Name,
+									"TH_03", excelLabel.Theme_Name);
+
+							ThemeDescription3=ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Themes", excelLabel.Variable_Name,
+									"TH_03", excelLabel.Description);
+							ThemeName4=ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Themes", excelLabel.Variable_Name,
+									"TH_04", excelLabel.Theme_Name);
+							ThemeName5=ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Themes", excelLabel.Variable_Name,
+									"TH_05", excelLabel.Theme_Name);
+
+							ThemeDescription4=ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Themes", excelLabel.Variable_Name,
+									"TH_04", excelLabel.Description);
+							ThemeDescription5=ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Themes", excelLabel.Variable_Name,
+									"TH_05", excelLabel.Description);
+							
+							TC_Firm1=ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Firm", excelLabel.Variable_Name,
+									"TC_Firm_1", excelLabel.Legal_Name);
+					 		TC_Firm2=ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Firm", excelLabel.Variable_Name,
+									"TC_Firm_2", excelLabel.Legal_Name);
+					 		TC_Firm3=ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Firm", excelLabel.Variable_Name,
+									"TC_Firm_3", excelLabel.Legal_Name);
+					 		TC_Firm4=ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Firm", excelLabel.Variable_Name,
+									"TC_Firm_4", excelLabel.Legal_Name);
+					 		TC_Firm5=ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Firm", excelLabel.Variable_Name,
+									"TC_Firm_5", excelLabel.Legal_Name);
+					 		
+					 		TC_Firm1RecordType=ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Firm", excelLabel.Variable_Name,
+									"TC_Firm_1", excelLabel.Record_Type);
+					 		TC_Firm2RecordType=ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Firm", excelLabel.Variable_Name,
+									"TC_Firm_2", excelLabel.Record_Type);
+					 		TC_Firm3RecordType=ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Firm", excelLabel.Variable_Name,
+									"TC_Firm_3", excelLabel.Record_Type);
+					 		TC_Firm4RecordType=ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Firm", excelLabel.Variable_Name,
+									"TC_Firm_4", excelLabel.Record_Type);
+					 		TC_Firm5RecordType=ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Firm", excelLabel.Variable_Name,
+									"TC_Firm_5", excelLabel.Record_Type);
+					 		
+					 		TC_Contact1FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_1", excelLabel.Contact_FirstName);
+					 		TC_Contact1LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_1", excelLabel.Contact_LastName);
+					 		TC_Contact1EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_1", excelLabel.Contact_EmailId);
+					 		TC_Contact1RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_1", excelLabel.Record_Type);
+					 		TC_Contact1Title=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_1", excelLabel.Title);
+					 		
+					 		TC_Contact2FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_2", excelLabel.Contact_FirstName);
+					 		TC_Contact2LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_2", excelLabel.Contact_LastName);
+					 		TC_Contact2EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_2", excelLabel.Contact_EmailId);
+					 		TC_Contact2RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_2", excelLabel.Record_Type);
+					 		TC_Contact2Title=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_2", excelLabel.Title);
+					 		
+					 		TC_Contact3FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_3", excelLabel.Contact_FirstName);
+					 		TC_Contact3LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_3", excelLabel.Contact_LastName);
+					 		TC_Contact3EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_3", excelLabel.Contact_EmailId);
+					 		TC_Contact3RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_3", excelLabel.Record_Type);
+					 		TC_Contact3Title=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_3", excelLabel.Title);
+					 		
+					 		TC_Contact4FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_4", excelLabel.Contact_FirstName);
+					 		TC_Contact4LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_4", excelLabel.Contact_LastName);
+					 		TC_Contact4EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_4", excelLabel.Contact_EmailId);
+					 		TC_Contact4RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_4", excelLabel.Record_Type);
+					 		TC_Contact4Title=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_4", excelLabel.Title);
+					 		
+					 		TC_Contact5FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_5", excelLabel.Contact_FirstName);
+					 		TC_Contact5LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_5", excelLabel.Contact_LastName);
+					 		TC_Contact5EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_5", excelLabel.Contact_EmailId);
+					 		TC_Contact5RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_5", excelLabel.Record_Type);
+					 		TC_Contact5Title=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_5", excelLabel.Title);
+					 		
+					 		TC_Contact5FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_5", excelLabel.Contact_FirstName);
+					 		TC_Contact5LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_5", excelLabel.Contact_LastName);
+					 		TC_Contact5EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_5", excelLabel.Contact_EmailId);
+					 		TC_Contact5RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_5", excelLabel.Record_Type);
+					 		TC_Contact5Title=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_5", excelLabel.Title);
+					 		
+					 		TC_Contact6FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_6", excelLabel.Contact_FirstName);
+					 		TC_Contact6LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_6", excelLabel.Contact_LastName);
+					 		TC_Contact6EmailID=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_6", excelLabel.Contact_EmailId);
+					 		TC_Contact6RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_6", excelLabel.Record_Type);
+					 		TC_Contact6Title=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "TC_Contact_6", excelLabel.Title);
+					 		
+					 		
+					 		EmailthemeTemplate1_Subject = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate1", excelLabel.Subject);
+							EmailthemeTemplate1_Body = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate1", excelLabel.Email_Body);
+							EmailthemeTemplate1_FolderName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate1", excelLabel.Email_Template_Folder_Label);
+							EmailthemeTemplate1_TemplateName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate1", excelLabel.Email_Template_Name);
+							EmailthemeTemplate1_TemplateDescription = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate1", excelLabel.Description);
+					 		
+							EmailthemeTemplate2_Subject = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate2", excelLabel.Subject);
+							EmailthemeTemplate2_Body = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate2", excelLabel.Email_Body);
+							EmailthemeTemplate2_FolderName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate2", excelLabel.Email_Template_Folder_Label);
+							EmailthemeTemplate2_TemplateName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate2", excelLabel.Email_Template_Name);
+							EmailthemeTemplate2_TemplateDescription = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate2", excelLabel.Description);
+					 		
+							EmailthemeTemplate3_Subject = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate3", excelLabel.Subject);
+							EmailthemeTemplate3_Body = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate3", excelLabel.Email_Body);
+							EmailthemeTemplate3_FolderName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate3", excelLabel.Email_Template_Folder_Label);
+							EmailthemeTemplate3_TemplateName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate3", excelLabel.Email_Template_Name);
+							EmailthemeTemplate3_TemplateDescription = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate3", excelLabel.Description);
+					 		
+							EmailthemeTemplate4_Subject = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate4", excelLabel.Subject);
+							EmailthemeTemplate4_Body = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate4", excelLabel.Email_Body);
+							EmailthemeTemplate4_FolderName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate4", excelLabel.Email_Template_Folder_Label);
+							EmailthemeTemplate4_TemplateName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate4", excelLabel.Email_Template_Name);
+							EmailthemeTemplate4_TemplateDescription = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate4", excelLabel.Description);
+							EmailthemeTemplate4_Recipient = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate4", excelLabel.Recipient);
+
+							
+							EmailName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "MyEmailSetting", excelLabel.Variable_Name,"ME_01", excelLabel.Email_Name);
+							EmailAddress = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "MyEmailSetting", excelLabel.Variable_Name,"ME_01", excelLabel.Email_Address);
+							EmailSignature = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath, "MyEmailSetting", excelLabel.Variable_Name,"ME_01", excelLabel.Email_Signature);
+					 		
+					 		
+				 try {
+			dataFile.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			dataWb.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
 		}
 		
 	
-		}
-		
-		
-
+	
+	
+default:
+	break;
 }
+}
+}
+ 				 

@@ -72,6 +72,13 @@ public interface BasePageErrorMessage {
 	public static String SearchBox = "Search this list...";
 	
 	public static String defaultPhotoText="standard";
+	
+	public static String eamilsgn2 = "Use my signature";
+	public static String eamilsgn1 = "BCC me on one message";
+	public static String eamilsgn3 = "Store an activity for each message";
+	public static String eamilSuccessmsg = "Emails sent successfully\n"
+			+ "The emails have been scheduled in the queue. You will receive an email notification once all the emails have been sent.";
+	public static String signature="Regards\nkevin Dilger\nMo. no. +91 999950321\nwww.testnavatar.com";
 
 	public static String defaultPhotoTextForAdminPhoto="profilephoto";
 	public static String titleHighlightColor="RecordType.DeveloperName;Firm_Events:#6464FF,Third_Party_Event:#D2691E;";

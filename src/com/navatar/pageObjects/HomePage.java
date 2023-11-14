@@ -2577,4 +2577,51 @@ public class HomePage extends BasePageBusinessLayer {
 		return isDisplayed(driver, globalSearchNoResultMsg, "Visibility", timeOut, "globalSearchNoResultMsg");
 	}
 
+	@FindBy(xpath = "//a[@class='profile-link-label' and text()='Settings']")
+	private WebElement settingBtn;
+
+	public WebElement getSettingBtn(int timeOut) {
+		return isDisplayed(driver, settingBtn, "Visibility", timeOut, "setting button");
+	}
+	
+	@FindBy(xpath = "//input[@placeholder='Quick Find']")
+	private WebElement quickFind;
+
+	public WebElement getQuickFind(int timeOut) {
+		return isDisplayed(driver, quickFind, "Visibility", timeOut, "quick find searchbar");
+	}
+	
+	public WebElement getQuickSearchItem(String recordName, int timeOut) {
+
+		String xpath = "//a/mark[text()='"+recordName+"']";
+		try {
+			return isDisplayed(driver, FindElement(driver, xpath,  recordName+" quick search" ,
+					action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "textToSearch");
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, FindElement(driver, xpath, recordName+" quick search",
+					action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "textToSearch");
+		}
+	}
+	
+	@FindBy(xpath = "//iframe[contains(@title,'My Email Settings')]")
+	private WebElement myEmailSettingIframe;
+
+	public WebElement getMyEmailSettingIframe(int timeOut) {
+		return isDisplayed(driver, myEmailSettingIframe, "Visibility", timeOut, "iframe");
+	}
+	
+	@FindBy(xpath = "//label[text()='Email Signature']/ancestor::tr//textarea")
+	private WebElement emailSignature;
+
+	public WebElement getEmailSignature(int timeOut) {
+		return isDisplayed(driver, emailSignature, "Visibility", timeOut, "email signature");
+	}
+	
+	@FindBy(xpath = "//input[@title='Save' and @type='submit']")
+	private WebElement saveBtn;
+
+	public WebElement getSaveBtn(int timeOut) {
+		return isDisplayed(driver, saveBtn, "Visibility", timeOut, "save button");
+	}
+	
 }

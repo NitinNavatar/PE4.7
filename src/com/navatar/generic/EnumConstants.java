@@ -77,8 +77,8 @@ public class EnumConstants {
 		},
 		Individuals, Record_Type, Street, City, State, Postal_Code, Country, Other_Street, Other_City, Other_State,
 		Other_Zip, Other_Country, Report_Folder_Name, Report_Name, Select_Report_Type, Show, Range,
-		Email_Template_Folder_Label, Public_Folder_Access, Type, Available_For_Use, Description, Subject, Email_Body,
-		Email_Template_Name, Marketing_InitiativeName, Target_Commitments, Vintage_Year, Fax, Frist_Closing_Date {
+		Email_Template_Folder_Label, Public_Folder_Access, Type, Available_For_Use, Description,Recipient, Subject,Email_Name,Email_Address, Email_Body,
+		Email_Template_Name, Marketing_InitiativeName, Target_Commitments,Email_Signature, Vintage_Year, Fax, Frist_Closing_Date {
 			@Override
 			public String toString() {
 				return "1st Closing Date";
@@ -540,6 +540,16 @@ public class EnumConstants {
 					return "Classic Email Templates";
 				} else {
 					return "Classic Email Templates";
+				}
+			}
+		},
+		MyTemplates {
+			@Override
+			public String toString() {
+				if (ExcelUtils.readDataFromPropertyFile("Mode").equalsIgnoreCase(Mode.Classic.toString())) {
+					return "My Templates";
+				} else {
+					return "My Templates";
 				}
 			}
 		},
@@ -1209,7 +1219,7 @@ public class EnumConstants {
 		};
 	
 	public static enum ShowMoreActionDropDownList{
-		 New_Task,New_Call,Edit, Delete,DS, New_Meeting,Convert_to_Portfolio{
+		 New_Task,New_Call,Edit,Add_to_Theme,Email, Delete,DS, New_Meeting,Convert_to_Portfolio{
 			 @Override
 				public String toString() {
 					return "Convert to Portfolio";
@@ -1406,7 +1416,7 @@ public class EnumConstants {
 	};
 
 	public static enum RelatedTab {
-		Related, Details, Network, Tasks, Meetings, Activities, Affiliations, Documents, Box, Referrals, Clients, KPIs,
+		Related, Details, Network, Call_List,Tasks, Meetings, Activities, Affiliations, Documents, Box, Referrals, Clients, KPIs,
 		Investment, All_Contacts, Board_Members, Recent_Moves, Connections, Contacts, Financing, Consultants,
 		Fundraising, Investors, Investor_Relations, Co_Investments {
 			@Override
@@ -1449,7 +1459,15 @@ public class EnumConstants {
 	public static enum ProjectName {
 		PE, MNA, PEEdge;
 	};
-
+	
+	public static enum Emaillabel {
+		Name,Title,Firm,Email,FirmType {
+		@Override
+		public String toString() {
+			return "Firm Type";
+		}
+	},
+	}
 	public static enum PageLabel {
 		First_Name, Last_Name, Email, Fund_Name, Fundraising_Name, Deal_Name, Status, Investment_Type, Meeting_Type {
 			@Override
@@ -2164,4 +2182,6 @@ public class EnumConstants {
 	public static enum Interactionslabel {
 		Type,Date,Subject,Details,Participants,Tags;
 	}
+	
+	
 }

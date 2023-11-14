@@ -4641,7 +4641,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			tabName = "Contacts";
 			break;
 		case InstituitonsTab:
-			tabName = "Firms";
+			tabName = "Institutions";
 			break;
 		case FundraisingsTab:
 			tabName = "Fundraisings";
