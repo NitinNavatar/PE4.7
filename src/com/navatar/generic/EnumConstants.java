@@ -222,7 +222,7 @@ public class EnumConstants {
 			}
 		}, Object5Tab,
 		Object6Tab, AttendeeTab, Object7Tab, Entities, Deals, Marketing_Events,Interactions, Events, Deal_Team, Financing,
-		Object8Tab, ContactTab, Deal, Acuity, ThemesTab, ClipsTab,Interaction, ContactsTab;
+		Object8Tab, ContactTab, Deal, Acuity, ThemesTab, ClipsTab,Interaction, ContactsTab, AccountsTab, Account, Accounts;
 	}
 
 	public static enum Mode {
@@ -541,7 +541,7 @@ public class EnumConstants {
 				return "Rename Tabs and Labels";
 			}
 		},
-		Event, Custom_Metadata_Types, Theme, Clip
+		Event, Custom_Metadata_Types, Theme, Clip, Rename_Tabs_and_Labels, Accounts, Contacts
 	};
 
 	public static enum ObjectFeatureName {
@@ -608,7 +608,7 @@ public class EnumConstants {
 	};
 
 	public static enum PermissionType {
-		removePermission, givePermission;
+		removePermission, givePermission, Read, Create, Edit, Delete;
 	}
 
 //*************************************************************** Pages Field Labels*********************************************//
@@ -991,7 +991,7 @@ public class EnumConstants {
 	public static enum RecordType {
 		Company, Institution, IndividualInvestor, Contact, PipeLine, Fund, Fundraising, Partnerships, Master, Advisor,
 		Fund_Manager, Fund_Manager_Fund, Indivisual_investor, Intermediary, Lender, Limited_Partner, Portfolio_Company,
-		Deal, Banker;
+		Deal, Banker, New_Demo_Company, New_Company;
 	}
 
 	public static enum searchContactInEmailProspectGrid {
@@ -1539,7 +1539,7 @@ public class EnumConstants {
 		},
 		Deal_Contact, Stage_Upd, Pipeline_Comments, Pipeline_Comments_Upd, Legal_Name, Status_Notes, Legal_Name_Upd,
 		Status_Notes_Upd, Vintage_Year_Upd, Description_Upd, Summary_Upd, Fund, Vintage_Year, Theme, Descrption, Clip,
-		Summary, Theme_Name, Clip_Name, FundraisingContacts, Contact, Pipeline_Name
+		Summary, Theme_Name, Clip_Name, FundraisingContacts, Contact, Pipeline_Name, Firm_Name, Account_Name_Upd, Advisor_Layout
 	};
 
 	public static enum Links {

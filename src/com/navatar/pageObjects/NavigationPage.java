@@ -207,5 +207,180 @@ public class NavigationPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, createNavPopUpMinimizeButton, "Visibility", timeOut, "createNavPopUpMinimizeButton");
 
 	}
+	
+	@FindBy(xpath = "(//div[@class='treeview']//li)[4]")
+	private WebElement firmLinkOnCreateOption;
+
+	public WebElement getFirmLinkOnCreateOption(int timeOut) {
+		return isDisplayed(driver, firmLinkOnCreateOption, "Visibility", timeOut, "Firm Link On Create Option");
+
+	}
+	
+	@FindBy(xpath="(//div[@class='flexipageComponent']//button[contains(@class,'active')]/span)[1]")
+	private WebElement createLinkOnNavigationPage;
+
+	/**
+	 * @return the lightningPageNextBtn
+	 */
+	public WebElement getCreateLinkOnNavigationPage(int timeOut) {
+		return isDisplayed(driver, createLinkOnNavigationPage, "Visibility", timeOut, "Create Link On Navigation Page");
+	}
+	
+	@FindBy(xpath = "//div[contains(@class,'for_desk')]//input")
+	private WebElement firmNameTextBoxForCreateOption;
+
+	public WebElement getFirmNameTextBoxForCreateOption(int timeOut) {
+		return isDisplayed(driver, firmNameTextBoxForCreateOption, "Visibility", timeOut, "Firm Name Text Box For Create Option");
+
+	}
+	
+	@FindBy(xpath = "//div[contains(@class,'for_desk')]//label")
+	private WebElement firmNameLabelForCreateOption;
+
+	public WebElement getFirmNameLabelForCreateOption(int timeOut) {
+		return isDisplayed(driver, firmNameLabelForCreateOption, "Visibility", timeOut, "Firm Name Label For Create Option");
+
+	}
+	
+	@FindBy(xpath = "//footer[contains(@class,'Footer')]//button[text()='Cancel']")
+	private WebElement cancelButtonForCreateOption;
+
+	public WebElement getCancelButtonForCreateOption(int timeOut) {
+		return isDisplayed(driver, cancelButtonForCreateOption, "Visibility", timeOut, "Cancel Button For Create Option");
+
+	}
+	
+	@FindBy(xpath = "//lightning-icon[contains(@class,'utility-close')]")
+	private WebElement crossIconForQuickFirm;
+
+	public WebElement getCrossIconForQuickFirm(int timeOut) {
+		return isDisplayed(driver, crossIconForQuickFirm, "Visibility", timeOut, "Cross Icon For Quick Firm");
+	}
+	
+	@FindBy(xpath = "//footer[contains(@class,'Footer')]//button[text()='Save']")
+	private WebElement saveButtonForCreateOption;
+
+	public WebElement getSaveButtonForCreateOption(int timeOut) {
+		return isDisplayed(driver, saveButtonForCreateOption, "Visibility", timeOut, "Save Button For Create Option");
+	}
+	
+	@FindBy(xpath = "//p[text()='These required fields must be completed: Firm Name. ']")
+	private WebElement errorOnQuickFirm;
+
+	public WebElement getErrorOnQuickFirm(int timeOut) {
+		return isDisplayed(driver, errorOnQuickFirm, "Visibility", timeOut, "Error On Quick Firm");
+	}
+	
+	@FindBy(xpath = "//div[text()='Complete this field.']")
+	private WebElement errorOnQuickFirmName;
+
+	public WebElement getErrorOnQuickFirmName(int timeOut) {
+		return isDisplayed(driver, errorOnQuickFirmName, "Visibility", timeOut, "Error On Quick Firm Name");
+	}
+	
+	public WebElement getRecordTypeOnQuickFirm(String RecordType, int timeOut) {
+		return FindElement(driver,"//span[@title='"+ RecordType +"']/ancestor::lightning-base-combobox-item","Record Type On Quick Firm", action.BOOLEAN, timeOut);
+	}
+	
+	@FindBy(xpath = "//div[contains(@class,'for_desk')]//button")
+	private WebElement firmRecordTypeForCreateOption;
+
+	public WebElement getFirmRecordTypeForCreateOption(int timeOut) {
+		return isDisplayed(driver, firmRecordTypeForCreateOption, "Visibility", timeOut, "Firm Record Type For Create Option");
+
+	}
+	
+	@FindBy(xpath = "//div[text()='You have entered an invalid format.']")
+	private WebElement errorOnEmailOfQuickContact;
+
+	public WebElement getErrorOnEmailOfQuickContact(int timeOut) {
+		return isDisplayed(driver, errorOnEmailOfQuickContact, "Visibility", timeOut, "Error On Email Of Quick Contact");
+	}
+	
+	@FindBy(xpath = "//div[text()='Mobile number should not more than 10 digit']")
+	private WebElement errorOnPhoneOfQuickContact;
+
+	public WebElement getErrorOnPhoneOfQuickContact(int timeOut) {
+		return isDisplayed(driver, errorOnPhoneOfQuickContact, "Visibility", timeOut, "Error On Phone Of Quick Contact");
+	}
+
+	@FindBy(xpath = "(//div[@class='treeview']//li)[3]")
+	private WebElement contactLinkOnCreateOption;
+
+	public WebElement getContactLinkOnCreateOption(int timeOut) {
+		return isDisplayed(driver, contactLinkOnCreateOption, "Visibility", timeOut, "Contact Link On Create Option");
+	}
+	
+	@FindBy(xpath = "//input[@name='Phone']")
+	private WebElement phoneTextBoxForContactOption;
+
+	public WebElement getPhoneTextBoxForContactOption(int timeOut) {
+		return isDisplayed(driver, phoneTextBoxForContactOption, "Visibility", timeOut, "Phone Text Box For Create Option");
+	}
+	
+	@FindBy(xpath = "//input[@name='FirstName']")
+	private WebElement firstNameTextBoxForCreateOption;
+
+	public WebElement getFirstNameTextBoxForCreateOption(int timeOut) {
+		return isDisplayed(driver, firstNameTextBoxForCreateOption, "Visibility", timeOut, "First Name Text Box For Create Option");
+	}
+	
+	@FindBy(xpath = "//label[text()='F Name']")
+	private WebElement fNameLabelForCreateOption;
+
+	public WebElement getFNameLabelForCreateOption(int timeOut) {
+		return isDisplayed(driver, fNameLabelForCreateOption, "Visibility", timeOut, "F Name Label For Create Option");
+	}
+	
+	@FindBy(xpath = "//label[text()='L Name']")
+	private WebElement lNameLabelForCreateOption;
+
+	public WebElement getLNameLabelForCreateOption(int timeOut) {
+		return isDisplayed(driver, lNameLabelForCreateOption, "Visibility", timeOut, "L Name Label For Create Option");
+	}
+	
+	@FindBy(xpath = "//label[text()='Email ID']")
+	private WebElement emailIDLabelForCreateOption;
+
+	public WebElement getEmailIDLabelForCreateOption(int timeOut) {
+		return isDisplayed(driver, emailIDLabelForCreateOption, "Visibility", timeOut, "Email ID Label For Create Option");
+	}
+	
+	@FindBy(xpath = "//input[@name='LastName']")
+	private WebElement lastNameTextBoxForCreateOption;
+
+	public WebElement getLastNameTextBoxForCreateOption(int timeOut) {
+		return isDisplayed(driver, lastNameTextBoxForCreateOption, "Visibility", timeOut, "Last Name Text Box For Create Option");
+	}
+	
+	@FindBy(xpath = "//label[text()='Phone Number']")
+	private WebElement phoneNumberLabelForCreateOption;
+
+	public WebElement getPhoneNumberLabelForCreateOption(int timeOut) {
+		return isDisplayed(driver, phoneNumberLabelForCreateOption, "Visibility", timeOut, "Phone Number Label For Create Option");
+	}
+	
+	
+	@FindBy(xpath = "//Label[text()='Account Name']/..//div/input[@placeholder='Search']")
+	private WebElement firmNameTextBoxForContactOption;
+
+	public WebElement getFirmNameTextBoxForContactOption(int timeOut) {
+		return isDisplayed(driver, firmNameTextBoxForContactOption, "Visibility", timeOut, "Firm Name Text Box For Create Option");
+	}
+	
+	@FindBy(xpath = "//input[@name='Email']")
+	private WebElement emailTextBoxForContactOption;
+
+	public WebElement getEmailTextBoxForContactOption(int timeOut) {
+		return isDisplayed(driver, emailTextBoxForContactOption, "Visibility", timeOut, "Email Text Box For Create Option");
+	}
+	
+
+	@FindBy(xpath = "//p[text()='These required fields must be completed: Last Name. ']")
+	private WebElement errorOnQuickContact;
+
+	public WebElement getErrorOnQuickContact(int timeOut) {
+		return isDisplayed(driver, errorOnQuickContact, "Visibility", timeOut, "Error On Quick Contact");
+	}
 
 }

@@ -712,7 +712,10 @@ public class CommonVariables {
 
 	public static String SmokeMI1;
 
-
+	  public static String AQFirm1,AQFirm2,AQFirm3,AQFirm4,AQFirm41,AQFirm42,AQFirm43,AQFirm5,AQFirm6,AQFirm7,AQRecordType1,AQRecordType2,AQRecordType3,AQRecordType4,AQRecordType41,AQRecordType42,AQRecordType43,AQRecordType5,AQRecordType6,AQRecordType7,AQRecordType8,
+	    AQConFN1,AQConFN2,AQConFN3,AQConFN4,AQConFN5,AQConFN6,AQConFN7,AQConFN8,AQConFN9,AQConLN1,AQConLN2,AQConLN3,AQConLN4,AQConLN5,AQConLN6,AQConLN7,AQConLN8,AQConLN9,AQConFirm1,AQConFirm2,AQConFirm3,AQConFirm4,
+	    AQConFirm5,AQConFirm6,AQConFirm7,AQConFirm8,AQConEmail1,AQConEmail2,AQConEmail3,AQConEmail4,AQConEmail5,AQConEmail6,AQConEmail7,AQConEmail8,AQConPhone1,AQConPhone2,AQConPhone3,AQConPhone4,
+	    AQConPhone5,AQConPhone6,AQConPhone7,AQConPhone8,AQConPhone9,AQConName1,AQLabel1,AQLabel2,AQLabel3,AQLabel4,AQLabel5;
 
 
 	//Module 9
@@ -10542,10 +10545,121 @@ public class CommonVariables {
  					
  					
  					break;
+            	 case "AcuityQuickLinks" :
  					
-            	  				
+ 					try {
+ 						dataFile=new FileInputStream(new File(AcuityDataSheetFilePath));
+ 					} catch (FileNotFoundException e1) {
+ 						// TODO Auto-generated catch block
+ 						e1.printStackTrace();
+ 					}
  					
-				
+ 					try {
+ 						dataWb=WorkbookFactory.create(dataFile);
+ 					} catch (EncryptedDocumentException e) {
+ 						// TODO Auto-generated catch block
+ 						e.printStackTrace();
+ 					} catch (InvalidFormatException e) {
+ 						// TODO Auto-generated catch block
+ 						e.printStackTrace();
+ 					} catch (IOException e) {
+ 						// TODO Auto-generated catch block
+ 						e.printStackTrace();
+ 					}
+ 					
+ 					AQFirm1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns1", excelLabel.Legal_Name);
+ 					AQFirm2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns2", excelLabel.Legal_Name);
+ 					AQFirm3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns3", excelLabel.Legal_Name);
+ 					AQFirm4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns4", excelLabel.Legal_Name);
+ 					AQFirm41=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns41", excelLabel.Legal_Name);
+ 					AQFirm42=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns42", excelLabel.Legal_Name);
+ 					AQFirm43=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns43", excelLabel.Legal_Name);
+ 					AQFirm5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns5", excelLabel.Legal_Name);
+ 					AQFirm6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns6", excelLabel.Legal_Name);
+ 					AQFirm7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns7", excelLabel.Legal_Name);
+ 					
+ 					AQRecordType1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns1", excelLabel.Record_Type);
+ 					AQRecordType2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns2", excelLabel.Record_Type);
+ 					AQRecordType3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns3", excelLabel.Record_Type);
+ 					AQRecordType4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns4", excelLabel.Record_Type);
+ 					AQRecordType41=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns41", excelLabel.Record_Type);
+ 					AQRecordType42=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns42", excelLabel.Record_Type);
+ 					AQRecordType43=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns43", excelLabel.Record_Type);
+ 					AQRecordType5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns5", excelLabel.Record_Type);
+ 					AQRecordType6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns6", excelLabel.Record_Type);
+ 					AQRecordType7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns7", excelLabel.Record_Type);
+ 					AQRecordType8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AQLIns8", excelLabel.Record_Type);
+ 					
+ 					AQConFN1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact1", excelLabel.Contact_FirstName);
+ 					AQConFN2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact2", excelLabel.Contact_FirstName);
+ 					AQConFN3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact3", excelLabel.Contact_FirstName);
+ 					AQConFN4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact4", excelLabel.Contact_FirstName);
+ 					AQConFN5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact5", excelLabel.Contact_FirstName);
+ 					AQConFN6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact6", excelLabel.Contact_FirstName);
+ 					AQConFN7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact7", excelLabel.Contact_FirstName);
+ 					AQConFN8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact8", excelLabel.Contact_FirstName);
+ 					AQConFN9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact8", excelLabel.Contact_FirstName);
+ 					
+ 					AQConLN1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact1", excelLabel.Contact_LastName);
+ 					AQConLN2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact2", excelLabel.Contact_LastName);
+ 					AQConLN3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact3", excelLabel.Contact_LastName);
+ 					AQConLN4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact4", excelLabel.Contact_LastName);
+ 					AQConLN5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact5", excelLabel.Contact_LastName);
+ 					AQConLN6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact6", excelLabel.Contact_LastName);
+ 					AQConLN7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact7", excelLabel.Contact_LastName);
+ 					AQConLN8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact8", excelLabel.Contact_LastName);
+ 					AQConLN9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact8", excelLabel.Contact_LastName);
+ 					
+ 					AQConFirm1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact1", excelLabel.Legal_Name);
+ 					AQConFirm2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact2", excelLabel.Legal_Name);
+ 					AQConFirm3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact3", excelLabel.Legal_Name);
+ 					AQConFirm4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact4", excelLabel.Legal_Name);
+ 					AQConFirm5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact5", excelLabel.Legal_Name);
+ 					AQConFirm6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact6", excelLabel.Legal_Name);
+ 					AQConFirm7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact7", excelLabel.Legal_Name);
+ 					AQConFirm8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact8", excelLabel.Legal_Name);
+
+ 					AQConEmail1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact1", excelLabel.Contact_EmailId);
+ 					AQConEmail2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact2", excelLabel.Contact_EmailId);
+ 					AQConEmail3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact3", excelLabel.Contact_EmailId);
+ 					AQConEmail4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact4", excelLabel.Contact_EmailId);
+ 					AQConEmail5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact5", excelLabel.Contact_EmailId);
+ 					AQConEmail6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact6", excelLabel.Contact_EmailId);
+ 					AQConEmail7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact7", excelLabel.Contact_EmailId);
+ 					AQConEmail8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact8", excelLabel.Contact_EmailId);
+ 					
+ 					AQConPhone1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact1", excelLabel.Other_LabelNames);
+ 					AQConPhone2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact2", excelLabel.Other_LabelNames);
+ 					AQConPhone3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact3", excelLabel.Other_LabelNames);
+ 					AQConPhone4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact4", excelLabel.Other_LabelNames);
+ 					AQConPhone5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact5", excelLabel.Other_LabelNames);
+ 					AQConPhone6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact6", excelLabel.Other_LabelNames);
+ 					AQConPhone7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact7", excelLabel.Other_LabelNames);
+ 					AQConPhone8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact8", excelLabel.Other_LabelNames);
+ 					AQConPhone9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact9", excelLabel.Other_LabelNames);
+
+ 					AQConName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AQLContact1", excelLabel.ContactName);
+ 					AQLabel1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AQ_AccountLabel01", excelLabel.Field_Label);
+ 					AQLabel2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AQ_AccountLabel02", excelLabel.Field_Label);
+ 					AQLabel3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AQ_AccountLabel03", excelLabel.Field_Label);
+ 					AQLabel4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AQ_AccountLabel04", excelLabel.Field_Label);
+ 					AQLabel5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Labels",excelLabel.Variable_Name, "AQ_AccountLabel05", excelLabel.Field_Label);
+ 					
+ 					try {
+ 						dataFile.close();
+ 					} catch (IOException e) {
+ 						// TODO Auto-generated catch block
+ 						e.printStackTrace();
+ 					}
+ 					try {
+ 						dataWb.close();
+ 					} catch (IOException e) {
+ 						// TODO Auto-generated catch block
+ 						e.printStackTrace();
+
+ 					}
+
+ 					break;	
 		default:
 			break;
 		}
