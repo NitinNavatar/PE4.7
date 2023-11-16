@@ -941,7 +941,7 @@ public class SetupPage extends BasePageBusinessLayer {
 		return companyRecordTypeNamelist;
 	}
 
-	@FindBy(xpath = "//iframe[@title='User Profiles ~ Salesforce - Enterprise Edition']")
+	@FindBy(xpath = "//iframe[contains(@title,'Salesforce - Enterprise Edition')]")
 	private WebElement userProfileIframe;
 
 	public WebElement getuserProfileIframe(int timeOut) {

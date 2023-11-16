@@ -3371,5 +3371,101 @@ flag= true;
 
 		return flag;
 	}
+	
+	public boolean createContactFromQuickLinks(String environment, String mode, String firstName, String lastName,
+			String institutionName, String email, String phone) {
+
+		if (sendKeys(driver, contactLastNameQuickLinksPopUp(20), lastName, "lastName name text box: " + lastName,
+				action.SCROLLANDBOOLEAN)) {
+			appLog.info("passed data in text box: " + lastName);
+
+		} else {
+			appLog.error("Not Able to Pass the value: " + lastName);
+			return false;
+		}
+
+		if (firstName != null) {
+			if (sendKeys(driver, contactFirstNameQuickLinksPopUp(5), firstName, "First name text box: " + firstName,
+					action.SCROLLANDBOOLEAN)) {
+				appLog.info("passed data in text box: " + firstName);
+
+			} else {
+				appLog.error("Not Able to Pass the value: " + firstName);
+				return false;
+			}
+		}
+
+		if (phone != null) {
+			if (sendKeys(driver, contactPhoneQuickLinksPopUp(5), phone, "Phone name text box: " + phone,
+					action.SCROLLANDBOOLEAN)) {
+				appLog.info("passed data in text box: " + phone);
+
+			} else {
+				appLog.error("Not Able to Pass the value: " + phone);
+				return false;
+			}
+		}
+
+		if (email != null) {
+			if (sendKeys(driver, contactEmailQuickLinksPopUp(5), email, "Email name text box: " + email,
+					action.SCROLLANDBOOLEAN)) {
+				appLog.info("passed data in text box: " + email);
+
+			} else {
+				appLog.error("Not Able to Pass the value: " + email);
+				return false;
+			}
+		}
+
+		if (institutionName != null || institutionName == "") {
+			if (sendKeys(driver, contactFirmNameInputBoxQuickLinksPopUp(5), institutionName,
+					"Legal name text box: " + institutionName, action.SCROLLANDBOOLEAN)) {
+				appLog.info("passed data in text box: " + institutionName);
+
+				if (click(driver, contactFirmNameDropdownElementQuickLinksPopUp(institutionName, 35),
+						"Legal Name from DropDown: " + institutionName, action.SCROLLANDBOOLEAN)) {
+					appLog.info("Clicked on Legal Name: " + institutionName);
+				} else {
+					appLog.error("Not able to Click on Legal Name: " + institutionName);
+					return false;
+				}
+
+			} else {
+				appLog.error("Not Able to Pass the value: " + institutionName);
+				return false;
+			}
+		}
+
+		if (click(driver, saveButtonQuickLinksPopUp(10), "saveButtonQuickLinksPopUp: ", action.SCROLLANDBOOLEAN)) {
+			appLog.info("Click on Save Button");
+			ThreadSleep(5000);
+			refresh(driver);
+			ThreadSleep(5000);
+			WebElement ele = isDisplayed(driver, getContactFullNameInViewMode(environment, mode, 60), "visibility", 20,
+					"");
+			String contactFullName = getText(driver, ele, "Contact Name", action.BOOLEAN);
+			System.err.println("Actual Contact Name : " + contactFullName);
+			String expectedContactFullName = "";
+			if (firstName == null || "".equalsIgnoreCase(firstName)) {
+				expectedContactFullName = lastName;
+			} else {
+				expectedContactFullName = firstName + " " + lastName;
+			}
+			
+			if (contactFullName.contains(expectedContactFullName)) {
+				appLog.info("Contact Created Successfully :" + expectedContactFullName);
+				return true;
+			} else {
+				appLog.error("Contact did not get created successfully, Expected Header Name: "
+						+ expectedContactFullName + " but Actual Header name: " + contactFullName);
+				return false;
+			}
+
+		} else {
+			appLog.error("Not able to Click on Save Button");
+			return false;
+		}
+
+	}
 
 }

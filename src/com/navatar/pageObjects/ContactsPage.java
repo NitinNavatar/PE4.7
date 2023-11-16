@@ -128,7 +128,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 	/**
 	 * @return the contactFullNameLabel
 	 */
-	public WebElement getContactFullNameInViewMode(String projectName, int timeOut) {
+	public WebElement getContactFullNameInViewMode(String environment, String mode, int timeOut) {
 
 		return isDisplayed(driver, contactFullNameInViewMode_Lighting, "Visibility", timeOut,
 				"Contact Full Name In View Mode Lighting");
@@ -1013,4 +1013,92 @@ public class ContactsPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, saveButtonOnNewContactPopup, "Visibility", timeOut, "save button");
 	}
 
+	@FindBy(xpath = "//div[contains(@id,\"modal-content\")]//input[@name=\"Phone\"]")
+	private WebElement contactPhoneQuickLinksPopUp;
+
+	public WebElement contactPhoneQuickLinksPopUp(int timeOut) {
+		return isDisplayed(driver, contactPhoneQuickLinksPopUp, "Visibility", timeOut, "contactPhoneQuickLinksPopUp");
+	}
+
+	public WebElement contactFirmNameInputBoxQuickLinksPopUp(int timeOut) {
+		String xpath = "//div[contains(@id,\"modal-content\")]//label[text()=\"Firm Name\"]/following-sibling::*//input";
+		String xpath1 = "//div[contains(@id,\"modal-content\")]//label[text()=\"Account Name\"]/following-sibling::*//input";
+		if(xpath.equalsIgnoreCase("Firm Name")) {
+			return FindElement(driver, xpath, "contactFirmNameInputBoxQuickLinksPopUp", action.SCROLLANDBOOLEAN,
+					timeOut);
+		} else {
+			return FindElement(driver, xpath1, "contactFirmNameInputBoxQuickLinksPopUp", action.SCROLLANDBOOLEAN,
+					timeOut);
+		}
+	}
+
+	public WebElement contactFirmNameDropdownElementQuickLinksPopUp(String firmName, int timeOut) {
+		String xpath = "//li[text()=\"" + firmName + "\"]/ancestor::div[@data-name]";
+
+		try {
+			return FindElement(driver, xpath, "contactFirmNameDropdownElementQuickLinksPopUp: " + firmName,
+					action.SCROLLANDBOOLEAN, timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "contactFirmNameDropdownElementQuickLinksPopUp: " + firmName,
+					action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+
+	@FindBy(xpath = "//div[contains(@id,\"modal-content\")]/following-sibling::footer//button[text()=\"Save\"]")
+	private WebElement saveButtonQuickLinksPopUp;
+
+	public WebElement saveButtonQuickLinksPopUp(int timeOut) {
+
+		return isDisplayed(driver, saveButtonQuickLinksPopUp, "Visibility", timeOut, "saveButtonQuickLinksPopUp");
+
+	}
+
+	public WebElement contactFirmNameDropdownElementQuickLinksPopUp(String contactFirstName, String contactLastName,
+			int timeOut) {
+		String xpath = "//*[text()='Contact']/following-sibling::*//*[text()='" + contactFirstName + " "
+				+ contactLastName + "']";
+
+		try {
+			return FindElement(driver, xpath, "contactFirmNameDropdownElementQuickLinksPopUp: " + firmName,
+					action.SCROLLANDBOOLEAN, timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "contactFirmNameDropdownElementQuickLinksPopUp: " + firmName,
+					action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+
+	@FindBy(xpath = "//span[text()='Next']/ancestor::button")
+	private WebElement nextButton;
+
+	public WebElement nextButton(int timeOut) {
+
+		return isDisplayed(driver, nextButton, "Visibility", timeOut, "nextButton");
+
+	}
+
+	@FindBy(xpath = "//div[contains(@id,\"modal-content\")]//input[@name=\"LastName\"]")
+	private WebElement contactLastNameQuickLinksPopUp;
+
+	public WebElement contactLastNameQuickLinksPopUp(int timeOut) {
+		return isDisplayed(driver, contactLastNameQuickLinksPopUp, "Visibility", timeOut,
+				"contactLastNameQuickLinksPopUp");
+	}
+	
+	@FindBy(xpath = "//div[contains(@id,\"modal-content\")]//input[@name=\"FirstName\"]")
+	private WebElement contactFirstNameQuickLinksPopUp;
+
+	public WebElement contactFirstNameQuickLinksPopUp(int timeOut) {
+		return isDisplayed(driver, contactFirstNameQuickLinksPopUp, "Visibility", timeOut,
+				"contactFirstNameQuickLinksPopUp");
+	}
+	
+	@FindBy(xpath = "//div[contains(@id,\"modal-content\")]//input[@name=\"Email\"]")
+	private WebElement contactEmailQuickLinksPopUp;
+
+	public WebElement contactEmailQuickLinksPopUp(int timeOut) {
+		return isDisplayed(driver, contactEmailQuickLinksPopUp, "Visibility", timeOut, "contactEmailQuickLinksPopUp");
+	}
+	
 }

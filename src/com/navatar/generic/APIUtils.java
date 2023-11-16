@@ -187,14 +187,17 @@ public class APIUtils {
 						String RT = getObjectActiveRecordTypeId("Account", value);
 						data.put(label, RT);
 					}else if (label.contains("Date")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String date = convertDate(value);
 							data.put(label, date);
 							System.out.println(
 									"Added Data for Account :" + i + " Label :" + label + " with value :" + value);
 						}
-					} else {
+					} else if (label.equals("ParentId")) {
+						String RT = getObjectRecordId("Account", value);
+						data.put(label, RT);
+					}else {
 						data.put(label, value);
 					}
 					System.out.println("Added Data for account :" + i + " Label :" + label + " with value :" + value);
@@ -234,7 +237,7 @@ public class APIUtils {
 						String account = getObjectRecordId("Account", value);
 						data.put(label, account);
 					}else if (label.contains("Date")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String date = convertDate(value);
 							data.put(label, date);
@@ -259,6 +262,63 @@ public class APIUtils {
 	}
 	
 	
+	public void TargetObjectDataUpload(String filePath,String sheetName) {
+		
+		Map<String, Object> data = new HashMap<String, Object>();
+		APIUtils api = new APIUtils();
+		int lastcol = ExcelUtils.getLastColumn(filePath, sheetName, 0);
+
+		int row = ExcelUtils.getLastRow(filePath, sheetName);
+		for (int i = 1; i < row + 1; i++) {
+			String status = ExcelUtils.readData(filePath, sheetName, i, 0);
+			if (!status.equalsIgnoreCase("Created")) {
+				for (int j = 1; j < lastcol; j++) {
+
+					String label = ExcelUtils.readData(filePath, sheetName, 0, j).trim();
+					String value = ExcelUtils.readData(filePath, sheetName, i, j).trim();
+					if (label.equals("RecordTypeId")) {
+						String RT = api.getObjectActiveRecordTypeId("navpeII__Fundraising__c", value);
+						data.put(label, RT);
+						System.out.println(
+								"Added Data for Target :" + i + " Label :" + label + " with value :" + value);
+					} else if (label.equals("AccountId") || label.equals("navpeII__Legal_Name__c")
+							|| label.equals("navmnaI__Account_Name__c")) {
+						String accoundId = api.getObjectRecordId("Account", value);
+						data.put(label, accoundId);
+						System.out.println(
+								"Added Data for Target :" + i + " Label :" + label + " with value :" + value);
+					} else if (label.equals("navpeII__Fund_Name__c")) {
+						String dealId = api.getObjectRecordId("navpeII__Fund__c", value);
+						data.put(label, dealId);
+						System.out.println(
+								"Added Data for Target :" + i + " Label :" + label + " with value :" + value);
+					}else if (label.contains("Date")) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
+
+							String date = api.convertDate(value);
+							data.put(label, date);
+							System.out.println(
+									"Added Data for Target :" + i + " Label :" + label + " with value :" + value);
+						}
+					} else {
+						data.put(label, value);
+						System.out.println(
+								"Added Data for Target :" + i + " Label :" + label + " with value :" + value);
+					}
+
+
+				}
+
+				api.createObejectRecordByAPI("navpeII__Fundraising__c", data);
+				ExcelUtils.writeDataInExcel(filePath, "Created", sheetName, i, 0);
+			} else {
+				System.out.println("Data already created for Target :" + i);
+			}
+		}
+
+	}
+	
+	
 	public void DealObjectDataUpload(String filePath,String sheetName) {
 		
 		Map<String, Object> data = new HashMap<String, Object>();
@@ -273,10 +333,10 @@ public class APIUtils {
 
 					String label = ExcelUtils.readData(filePath, sheetName, 0, j).trim();
 					String value = ExcelUtils.readData(filePath, sheetName, i, j).trim();
-					if (label.equals("RecordTypeId")) {
+					if (label.equals("RecordTypeId") || label.contains("Deal")) {
 
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
-							String RT = getObjectActiveRecordTypeId("navpeII__Pipeline__c", value);
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
+							String RT = getObjectRecordId("navpeII__Pipeline__c", value);
 							data.put(label, RT);
 							System.out.println(
 									"Added Data for Deal :" + i + " Label :" + label + " with value :" + value);
@@ -284,8 +344,8 @@ public class APIUtils {
 							// :"+value, YesNo.No);
 
 						}
-					} else if (label.equals("AccountId") || label.equals("navpeII__Company_Name__c")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+					} else if (label.equals("AccountId") || label.equals("navpeII__Company__c") || label.equals("navpeII__Institution__c")) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 							String accoundId = getObjectRecordId("Account", value);
 							data.put(label, accoundId);
 							System.out.println(
@@ -294,8 +354,19 @@ public class APIUtils {
 							// :"+value, YesNo.No);
 
 						}
+					}else if (label.equals("navpeII__Source_Company__c")) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
+						String account = getObjectRecordId("Account", value);
+						data.put(label, account);
+						}
+					}
+					else if (label.equals("navpeII__Source_Contact__c")) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
+						String account = getObjectRecordId("Contact", value);
+						data.put(label, account);
+						}
 					}else if (label.contains("Date")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String date = convertDate(value);
 							data.put(label, date);
@@ -303,7 +374,7 @@ public class APIUtils {
 									"Added Data for Deal :" + i + " Label :" + label + " with value :" + value);
 						}
 					} else {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 							data.put(label, value);
 							System.out.println(
 									"Added Data for Deal :" + i + " Label :" + label + " with value :" + value);
@@ -315,7 +386,7 @@ public class APIUtils {
 
 				}
 
-				createObejectRecordByAPI("navpeII__Pipeline__c", data);
+				createObejectRecordByAPI("navpeII__Financing__c", data);
 				ExcelUtils.writeDataInExcel(filePath, "Created", sheetName, i, 0);
 			} else {
 				System.out.println("Data already created for Deal :" + i);
@@ -346,7 +417,7 @@ public class APIUtils {
 
  
 
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 							String RT = getObjectActiveRecordTypeId("navpeII__Fund__c", value);
 							data.put(label, RT);
 							System.out.println(
@@ -358,7 +429,7 @@ public class APIUtils {
 
 						}
 					}else {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 							data.put(label, value);
 							System.out.println(
 									"Added Data for Fund :" + i + " Label :" + label + " with value :" + value);
@@ -403,8 +474,8 @@ public class APIUtils {
 					String value = ExcelUtils.readData(filePath, sheetName, i, j).trim();
 					if (label.equals("RecordTypeId")) {
 
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
-							String RT = getObjectActiveRecordTypeId("navmnaI__Deal_Contacts__c", value);
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
+							String RT = getObjectRecordId("navpeII__Deal_Team__c", value);
 							data.put(label, RT);
 							System.out.println(
 									"Added Data for Deal Team:" + i + " Label :" + label + " with value :" + value);
@@ -413,7 +484,7 @@ public class APIUtils {
 
 						}
 					} else if (label.contains("Contact")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 							String accoundId = getObjectRecordId("Contact", value);
 							data.put(label, accoundId);
 							System.out.println(
@@ -423,8 +494,8 @@ public class APIUtils {
 
 						}
 					}else if (label.contains("Deal")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
-							String accoundId = getObjectRecordId("navmnaI__Deal__c", value);
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
+							String accoundId = getObjectRecordId("navpeII__Pipeline__c", value);
 							data.put(label, accoundId);
 							System.out.println(
 									"Added Data for Deal team :" + i + " Label :" + label + " with value :" + value);
@@ -433,7 +504,7 @@ public class APIUtils {
 
 						}
 					}else if (label.contains("Date")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String date = convertDate(value);
 							data.put(label, date);
@@ -441,7 +512,7 @@ public class APIUtils {
 									"Added Data for Deal Team :" + i + " Label :" + label + " with value :" + value);
 						}
 					} else {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 							data.put(label, value);
 							System.out.println(
 									"Added Data for Deal Team :" + i + " Label :" + label + " with value :" + value);
@@ -453,7 +524,7 @@ public class APIUtils {
 
 				}
 
-				createObejectRecordByAPI("navmnaI__Deal_Contacts__c", data);
+				createObejectRecordByAPI("navpeII__Deal_Team__c", data);
 				ExcelUtils.writeDataInExcel(filePath, "Created", sheetName, i, 0);
 			} else {
 				System.out.println("Data already created for Deal Team :" + i);
@@ -479,8 +550,8 @@ public class APIUtils {
 					String value = ExcelUtils.readData(filePath, sheetName, i, j).trim();
 					if (label.equals("RecordTypeId")) {
 
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
-							String RT = getObjectActiveRecordTypeId("navmnaI__Clip__c", value);
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
+							String RT = getObjectActiveRecordTypeId("navpeII__Clip__c", value);
 							data.put(label, RT);
 							System.out.println(
 									"Added Data for clip :" + i + " Label :" + label + " with value :" + value);
@@ -489,7 +560,7 @@ public class APIUtils {
 
 						}
 					} else if (label.equals("AccountId") || label.equals("navmnaI__Account__c")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 							String accoundId = getObjectRecordId("Account", value);
 							data.put(label, accoundId);
 							System.out.println(
@@ -499,7 +570,7 @@ public class APIUtils {
 
 						}
 					}else if (label.contains("Date")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String date = convertDate(value);
 							data.put(label, date);
@@ -507,7 +578,7 @@ public class APIUtils {
 									"Added Data for Clip :" + i + " Label :" + label + " with value :" + value);
 						}
 					} else {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 							data.put(label, value);
 							System.out.println(
 									"Added Data for clip :" + i + " Label :" + label + " with value :" + value);
@@ -519,7 +590,7 @@ public class APIUtils {
 
 				}
 
-				createObejectRecordByAPI("navmnaI__Clip__c", data);
+				createObejectRecordByAPI("navpeII__Clip__c", data);
 				ExcelUtils.writeDataInExcel(filePath, "Created", sheetName, i, 0);
 			} else {
 				System.out.println("Data already created for Clip :" + i);
@@ -546,8 +617,8 @@ public class APIUtils {
 					String value = ExcelUtils.readData(filePath, sheetName, i, j).trim();
 					if (label.equals("RecordTypeId")) {
 
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
-							String RT = getObjectActiveRecordTypeId("navmnaI__Clip__c", value);
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
+							String RT = getObjectActiveRecordTypeId("navpeII__Clip__c", value);
 							data.put(label, RT);
 							System.out.println("Added Data for clip relation :" + i + " Label :" + label
 									+ " with value :" + value);
@@ -556,8 +627,8 @@ public class APIUtils {
 
 						}
 					} else if (label.contains("Clip")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
-							String RT = getObjectRecordId("navmnaI__Clip__c", value);
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
+							String RT = getObjectRecordId("navpeII__Clip__c", value);
 							data.put(label, RT);
 							System.out.println("Added Data for clip relation :" + i + " Label :" + label
 									+ " with value :" + value);
@@ -569,7 +640,7 @@ public class APIUtils {
 						String relatedAss = label.split("<break>")[0];
 						String type = label.split("<break>")[1];
 
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String newId = "";
 							if (id != null && !id.equals("")) {
@@ -585,15 +656,15 @@ public class APIUtils {
 
 								break;
 							case "Deal":
-								newId = getObjectRecordId("navmnaI__Deal__c", value);
+								newId = getObjectRecordId("navpeII__Pipeline__c", value);
 
 								break;
 							case "Target":
-								newId = getObjectRecordId("navmnaI__Target__c", value);
+								newId = getObjectRecordId("navpeII__Fundraising__c", value);
 
 								break;
 							case "Theme":
-								newId = getObjectRecordId("Theme__c", value);
+								newId = getObjectRecordId("navpeII__Theme__c", value);
 
 								break;
 							default:
@@ -606,7 +677,7 @@ public class APIUtils {
 
 						}
 					}else if (label.contains("Date")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String date = convertDate(value);
 							data.put(label, date);
@@ -614,7 +685,7 @@ public class APIUtils {
 									"Added Data for Clip Relation :" + i + " Label :" + label + " with value :" + value);
 						}
 					} else {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 							data.put(label, value);
 							System.out.println("Added Data for clip relation :" + i + " Label :" + label
 									+ " with value :" + value);
@@ -626,7 +697,7 @@ public class APIUtils {
 
 				}
 
-				createObejectRecordByAPI("Clip_Relation__c", data);
+				createObejectRecordByAPI("navpeII__Clip_Relation__c", data);
 				ExcelUtils.writeDataInExcel(filePath, "Created", sheetName, i, 0);
 			} else {
 				System.out.println("Data already created for Clip Relation :" + i);
@@ -652,7 +723,7 @@ public class APIUtils {
 					String value = ExcelUtils.readData(filePath, sheetName, i, j).trim();
 					if (label.equals("RecordTypeId")) {
 
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 							String RT = getObjectActiveRecordTypeId("navpeII__Theme__c", value);
 							data.put(label, RT);
 							System.out.println(
@@ -662,7 +733,7 @@ public class APIUtils {
 
 						}
 					} else if (label.equals("AccountId") || label.equals("navmnaI__Account__c")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 							String accoundId = getObjectRecordId("Account", value);
 							data.put(label, accoundId);
 							System.out.println(
@@ -672,7 +743,7 @@ public class APIUtils {
 
 						}
 					}else if (label.contains("Date")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String date = convertDate(value);
 							data.put(label, date);
@@ -680,7 +751,7 @@ public class APIUtils {
 									"Added Data for Theme :" + i + " Label :" + label + " with value :" + value);
 						}
 					} else {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 							data.put(label, value);
 							System.out.println(
 									"Added Data for Deal :" + i + " Label :" + label + " with value :" + value);
@@ -719,8 +790,8 @@ public class APIUtils {
 					String value = ExcelUtils.readData(filePath, sheetName, i, j).trim();
 					if (label.equals("RecordTypeId")) {
 
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
-							String RT = getObjectActiveRecordTypeId("navmnaI__Theme_Relation__c", value);
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
+							String RT = getObjectActiveRecordTypeId("navpeII__Theme_Relation__c", value);
 							data.put(label, RT);
 							System.out.println("Added Data for Theme relation :" + i + " Label :" + label
 									+ " with value :" + value);
@@ -728,9 +799,9 @@ public class APIUtils {
 							// :"+value, YesNo.No);
 
 						}
-					} else if (label.equals("navmnaI__Theme__c")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
-							String RT = getObjectRecordId("navmnaI__Theme__c", value);
+					} else if (label.equals("navpeII__Theme__c")) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
+							String RT = getObjectRecordId("navpeII__Theme__c", value);
 							data.put(label, RT);
 							System.out.println("Added Data for Theme relation :" + i + " Label :" + label
 									+ " with value :" + value);
@@ -742,7 +813,7 @@ public class APIUtils {
 						String relatedAss = label.split("<break>")[0];
 						String type = label.split("<break>")[1];
 
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String newId = "";
 							if (id != null && !id.equals("")) {
@@ -758,19 +829,19 @@ public class APIUtils {
 
 								break;
 							case "Deal":
-								newId = getObjectRecordId("navmnaI__Deal__c", value);
+								newId = getObjectRecordId("navpeII__Pipeline__c", value);
 
 								break;
-							case "Target":
-								newId = getObjectRecordId("navmnaI__Target__c", value);
+							case "Fundraising":
+								newId = getObjectRecordId("navpeII__Fundraising__c", value);
 
 								break;
 							case "Theme":
-								newId = getObjectRecordId("navmnaI__Theme__c", value);
+								newId = getObjectRecordId("navpeII__Theme__c", value);
 
 								break;
 							case "Clip":
-								newId = getObjectRecordId("navmnaI__Clip__c", value);
+								newId = getObjectRecordId("navpeII__Clip__c", value);
 
 								break;
 							default:
@@ -783,7 +854,7 @@ public class APIUtils {
 
 						}
 					}else if (label.contains("Date")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String date = convertDate(value);
 							data.put(label, date);
@@ -791,7 +862,7 @@ public class APIUtils {
 									"Added Data for Theme Relation :" + i + " Label :" + label + " with value :" + value);
 						}
 					} else {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 							data.put(label, value);
 							System.out.println("Added Data for Theme relation :" + i + " Label :" + label
 									+ " with value :" + value);
@@ -803,7 +874,7 @@ public class APIUtils {
 
 				}
 
-				createObejectRecordByAPI("navmnaI__Theme_Relation__c", data);
+				createObejectRecordByAPI("navpeII__Theme_Relation__c", data);
 				ExcelUtils.writeDataInExcel(filePath, "Created", sheetName, i, 0);
 			} else {
 				System.out.println("Data already created for Theme Relation :" + i);
@@ -839,14 +910,14 @@ public class APIUtils {
 						System.out.println(
 								"Added Data for Fundraising :" + i + " Label :" + label + " with value :" + value);
 					} else if (label.equals("navpeII__Fund_Name__c")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 						String dealId = getObjectRecordId("navpeII__Fund__c", value);
 						data.put(label, dealId);
 						System.out.println(
 								"Added Data for Fundraising :" + i + " Label :" + label + " with value :" + value);
 						}
 					}else if (label.contains("Date")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String date = convertDate(value);
 							data.put(label, date);
@@ -887,16 +958,16 @@ public class APIUtils {
 					String label = ExcelUtils.readData(filePath, sheetName, 0, j).trim();
 					String value = ExcelUtils.readData(filePath, sheetName, i, j).trim();
 					if (label.equals("RecordTypeId")) {
-						String RT = getObjectActiveRecordTypeId("navmnaI__Target__c", value);
+						String RT = getObjectActiveRecordTypeId("navpeII__Fundraising__c", value);
 						data.put(label, RT);
-					} else if (label.contains("Target")) {
-						String accoundId = getObjectRecordId("navmnaI__Target__c", value);
+					} else if (label.contains("Fundraising")) {
+						String accoundId = getObjectRecordId("navpeII__Fundraising__c", value);
 						data.put(label, accoundId);
 					} else if (label.contains("Contact")) {
 						String dealId = getObjectRecordId("Contact", value);
 						data.put(label, dealId);
 					}else if (label.contains("Date")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String date = convertDate(value);
 							data.put(label, date);
@@ -911,7 +982,7 @@ public class APIUtils {
 
 				}
 
-				createObejectRecordByAPI("navmnaI__Contact_Role__c", data);
+				createObejectRecordByAPI("navpeII__Fundraising_Contact__c", data);
 				ExcelUtils.writeDataInExcel(filePath, "Created", sheetName, i, 0);
 			} else {
 				System.out.println("Data already created for Target Role :" + i);
@@ -938,7 +1009,7 @@ public class APIUtils {
 					String label = ExcelUtils.readData(filePath, sheetName, 0, j).trim();
 					String value = ExcelUtils.readData(filePath, sheetName, i, j).trim();
 					if (label.equals("RecordTypeId")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String RT = getObjectActiveRecordTypeId("Task", value);
 							data.put(label, RT);
@@ -950,7 +1021,7 @@ public class APIUtils {
 						String relatedAss = label.split("<>")[0];
 						String type = label.split("<>")[1];
 
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String newId = "";
 							if (id != null && !id.equals("")) {
@@ -959,19 +1030,21 @@ public class APIUtils {
 							switch (type) {
 							case "Account":
 								newId = getObjectRecordId("Account", value);
-
 								break;
-
 							case "Deal":
-								newId = getObjectRecordId("navmnaI__Deal__c", value);
+								newId = getObjectRecordId("navpeII__Pipeline__c", value);
 
 								break;
-							case "Target":
-								newId = getObjectRecordId("navmnaI__Target__c", value);
+							case "Fundraising":
+								newId = getObjectRecordId("navpeII__Fundraising__c", value);
+
+								break;
+							case "Fund":
+								newId = getObjectRecordId("navpeII__Fund__c", value);
 
 								break;
 							case "Theme":
-								newId = getObjectRecordId("navmnaI__Theme__c", value);
+								newId = getObjectRecordId("navpeII__Theme__c", value);
 
 								break;
 							default:
@@ -984,7 +1057,7 @@ public class APIUtils {
 
 						}
 					} else if (label.equals("OwnerId")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 							if(value.equalsIgnoreCase("User1")) {
 								String query="SELECT Id FROM User WHERE IsActive = true  AND FirstName = 'CRM1'";
 								String user1=getQueryResult(query, "Id");
@@ -1007,7 +1080,7 @@ public class APIUtils {
 							
 						}
 					} else if (label.equals("WhoId")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String accoundId = getObjectRecordId("Contact", value);
 							data.put(label, accoundId);
@@ -1015,7 +1088,7 @@ public class APIUtils {
 									"Added Data for Task :" + i + " Label :" + label + " with value :" + value);
 						}
 					} else if (label.contains("Date")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String date = convertDate(value);
 							data.put(label, date);
@@ -1023,7 +1096,7 @@ public class APIUtils {
 									"Added Data for Task :" + i + " Label :" + label + " with value :" + value);
 						}
 					} else {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							data.put(label, value);
 							System.out.println(
@@ -1059,7 +1132,7 @@ public class APIUtils {
 					String label = ExcelUtils.readData(filePath, sheetName, 0, j).trim();
 					String value = ExcelUtils.readData(filePath, sheetName, i, j).trim();
 					if (label.equals("TaskId")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String RT = getTaskObjectRecordId(value);
 							data.put(label, RT);
@@ -1068,7 +1141,7 @@ public class APIUtils {
 
 						}
 					} else if (label.equals("RelationId")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String accoundId = getObjectRecordId("Contact", value);
 							data.put(label, accoundId);
@@ -1076,7 +1149,7 @@ public class APIUtils {
 									+ " with value :" + value);
 						}
 					}else if (label.contains("Date")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String date = convertDate(value);
 							data.put(label, date);
@@ -1084,7 +1157,7 @@ public class APIUtils {
 									"Added Data for Task Relation :" + i + " Label :" + label + " with value :" + value);
 						}
 					}  else {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							data.put(label, value);
 							System.out.println("Added Data for Task Relation :" + i + " Label :" + label
@@ -1121,7 +1194,7 @@ public class APIUtils {
 					String label = ExcelUtils.readData(filePath, sheetName, 0, j).trim();
 					String value = ExcelUtils.readData(filePath, sheetName, i, j).trim();
 					if (label.equals("RecordTypeId")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String RT = getObjectActiveRecordTypeId("Event", value);
 							data.put(label, RT);
@@ -1133,7 +1206,7 @@ public class APIUtils {
 						String relatedAss = label.split("<>")[0];
 						String type = label.split("<>")[1];
 
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String newId = "";
 							if (id != null && !id.equals("")) {
@@ -1171,7 +1244,7 @@ public class APIUtils {
 
 						}
 					} else if (label.equals("OwnerId")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 							if(value.equalsIgnoreCase("User1")) {
 								String query="SELECT Id FROM User WHERE IsActive = true  AND FirstName = 'CRM1'";
 								String user1=getQueryResult(query, "Id");
@@ -1194,7 +1267,7 @@ public class APIUtils {
 							
 						}
 					} else if (label.equals("WhoId")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String accoundId = getObjectRecordId("Contact", value);
 							data.put(label, accoundId);
@@ -1202,7 +1275,7 @@ public class APIUtils {
 									"Added Data for Event :" + i + " Label :" + label + " with value :" + value);
 						}
 					} else if (label.contains("Date")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String date = convertDate(value);
 							data.put(label, date);
@@ -1210,7 +1283,7 @@ public class APIUtils {
 									"Added Data for Event :" + i + " Label :" + label + " with value :" + value);
 						}
 					} else {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							data.put(label, value);
 							System.out.println(
@@ -1246,7 +1319,7 @@ public class APIUtils {
 					String label = ExcelUtils.readData(filePath, sheetName, 0, j).trim();
 					String value = ExcelUtils.readData(filePath, sheetName, i, j).trim();
 					if (label.equals("EventId")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String RT = getEventObjectRecordId(value);
 							data.put(label, RT);
@@ -1255,7 +1328,7 @@ public class APIUtils {
 
 						}
 					} else if (label.contains("RelationId")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 							String accoundId = "";
 							String label1 = label.split("<break>")[0];
 							String obj = label.split("<break>")[1];
@@ -1270,7 +1343,7 @@ public class APIUtils {
 									+ " with value :" + value);
 						}
 					}else if (label.contains("Date")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String date = convertDate(value);
 							data.put(label, date);
@@ -1278,7 +1351,7 @@ public class APIUtils {
 									"Added Data for Event Relation :" + i + " Label :" + label + " with value :" + value);
 						}
 					}  else {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							data.put(label, value);
 							System.out.println("Added Data for Event Relation :" + i + " Label :" + label
@@ -1347,7 +1420,7 @@ public class APIUtils {
 						
 						data.put(label, user);
 					}else if (label.contains("Date")) {
-						if (value != null && !value.equalsIgnoreCase("") && !value.isBlank() && !value.isEmpty()) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 
 							String date = convertDate(value);
 							data.put(label, date);

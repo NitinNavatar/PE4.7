@@ -134,7 +134,7 @@ public class EnumConstants {
 		Task_Subject, Task_Status, User_Name, OrgPassword, Password, Participants, Tags, MeetingAndCallsHeader,
 		ValidationRuleErrorMsg, ValidationRuleErrorMsgLocation, CreateNewRecordPopUp, AddContactsToDealTeamPopUp,
 		AddContactsToFundraisingPopup, Classification, ValidationRuleFormula, ParticipantRecord,
-		ParticipantRecordObject, TagsRecord, TagsObject, Tab_Name, Record_Name, RecordName, ObjectName,NextTouchPointDay,NextTouchPointDate,External_ContactName,External_FirmName,External_Title,External_MeetingAndCallCount;
+		ParticipantRecordObject, TagsRecord, TagsObject, Tab_Name, Record_Name, RecordName, ObjectName,NextTouchPointDay,NextTouchPointDate,External_ContactName,External_FirmName,External_Title,External_MeetingAndCallCount, Assigned;
 
 	};
 
@@ -193,7 +193,7 @@ public class EnumConstants {
 
 			@Override
 			public String toString() {
-				return "Firms";
+				return "Institution";
 			}
 
 		},
@@ -215,9 +215,14 @@ public class EnumConstants {
 		},
 		NavatarSetup, Pipelines, FundDrawdowns, FundInvestments, CapitalCalls, FundraisingContacts, LimitedPartne,
 		ReportsTab, Correspondence_Lists, LimitedPartner, CompaniesTab, TaskRayTab, TaskRay, TestCustomObjectTab,
-		TaskTab, Other, Object1Tab, Object2Tab, Object3Tab, Object4Tab, RecycleBinTab, SDGTab, DealTab, Object5Tab,
+		TaskTab, Other, Object1Tab, Object2Tab, Object3Tab, Object4Tab, RecycleBinTab, SDGTab, DealTab{
+			@Override
+			public String toString() {
+				return "Pipelines";
+			}
+		}, Object5Tab,
 		Object6Tab, AttendeeTab, Object7Tab, Entities, Deals, Marketing_Events,Interactions, Events, Deal_Team, Financing,
-		Object8Tab, ContactTab, Deal, Acuity, ThemesTab, ClipsTab,Interaction, ContactsTab;
+		Object8Tab, ContactTab, Deal, Acuity, ThemesTab, ClipsTab,Interaction, ContactsTab, AccountsTab, Account, Accounts;
 	}
 
 	public static enum Mode {
@@ -263,7 +268,12 @@ public class EnumConstants {
 	}
 
 	public static enum IconType {
-		updatePhoto, DeletePhoto, Edit, Locked, Task, Call, Meeting, Event, Email;
+		updatePhoto, DeletePhoto, Edit, Locked, Task,  Meeting, Event, Email,Call{
+			@Override
+			public String toString() {
+				return "Call";
+			}
+		};
 	}
 
 	public static enum NavatarSetupSideMenuTab {
@@ -292,7 +302,12 @@ public class EnumConstants {
 				return "Indication of Interest";
 			}
 		},
-		LOI, Due_Diligence, Parked, Closed, Closed_Updated, DD, NonDisclosureAgreement {
+		LOI,  Parked, Closed, Closed_Updated, DD,Due_Diligence{
+			@Override
+			public String toString() {
+				return "Idea Generation";
+			}
+		}, NonDisclosureAgreement {
 			@Override
 			public String toString() {
 				return "Non-Disclosure Agreement";
@@ -401,7 +416,12 @@ public class EnumConstants {
 				return "Time Log";
 			}
 		},
-		Valuation, Deal, Deal_Expert {
+		Valuation, Deal{
+			@Override
+			public String toString() {
+				return "Pipeline";
+			}
+		}, Deal_Expert {
 			@Override
 			public String toString() {
 				return "Deal Expert";
@@ -491,7 +511,12 @@ public class EnumConstants {
 				return "Lightning App Builder";
 			}
 		},
-		Profiles, Custom_Object, Tabs, Create, Flows, Override, Users, Sharing_Settings, Institution, Firm,
+		Profiles, Custom_Object, Tabs, Create, Flows, Override, Users, Sharing_Settings, Institution, Firm {
+			@Override
+			public String toString() {
+				return "Institution";
+			}
+		},
 		CommunicationTemplates {
 			@Override
 			public String toString() {
@@ -516,7 +541,7 @@ public class EnumConstants {
 				return "Rename Tabs and Labels";
 			}
 		},
-		Event, Custom_Metadata_Types, Theme, Clip
+		Event, Custom_Metadata_Types, Theme, Clip, Rename_Tabs_and_Labels, Accounts, Contacts
 	};
 
 	public static enum ObjectFeatureName {
@@ -593,7 +618,7 @@ public class EnumConstants {
 	};
 
 	public static enum PermissionType {
-		removePermission, givePermission;
+		removePermission, givePermission, Read, Create, Edit, Delete;
 	}
 
 //*************************************************************** Pages Field Labels*********************************************//
@@ -976,7 +1001,7 @@ public class EnumConstants {
 	public static enum RecordType {
 		Company, Institution, IndividualInvestor, Contact, PipeLine, Fund, Fundraising, Partnerships, Master, Advisor,
 		Fund_Manager, Fund_Manager_Fund, Indivisual_investor, Intermediary, Lender, Limited_Partner, Portfolio_Company,
-		Deal, Banker;
+		Deal, Banker, New_Demo_Company, New_Company;
 	}
 
 	public static enum searchContactInEmailProspectGrid {
@@ -1469,7 +1494,12 @@ public class EnumConstants {
 	},
 	}
 	public static enum PageLabel {
-		First_Name, Last_Name, Email, Fund_Name, Fundraising_Name, Deal_Name, Status, Investment_Type, Meeting_Type {
+		First_Name, Last_Name, Email, Fund_Name, Fundraising_Name, Status, Investment_Type,Deal_Name{
+			@Override
+			public String toString() {
+				return "Pipeline Name";
+			}
+		}, Meeting_Type {
 			@Override
 			public String toString() {
 				return "Meeting Type";
@@ -1488,9 +1518,14 @@ public class EnumConstants {
 
 			}
 		},
-		Watchlist, Stage, Highest_Stage_Reached, Deal_Quality_Score, Average_Deal_Quality_Score, Date_Received,
+		Watchlist, Stage, Highest_Stage_Reached, Deal_Quality_Score, Average_Deal_Quality_Score,
 		Total_Deals_Shown, Profile_Image, Industry, Watch_list, Deal_Conversion_Date, Portfolio_Company,
-		Related_Associations, Name, Subject, Subject_updated, Due_Date, New_Task, Related_To, Comments, Edit,
+		Related_Associations, Name, Subject, Subject_updated, Due_Date, New_Task, Related_To, Comments, Edit,Date_Received{
+			@Override
+			public String toString() {
+				return "Log In Date";
+			}
+		},
 		Assigned_To {
 			@Override
 			public String toString() {
@@ -1508,8 +1543,13 @@ public class EnumConstants {
 		},
 		Contact_Name, Tax_Forms, Partner_Type, Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places,
 		Values, Is_Touchpoint, Description, Request, Date_Requested, Attendee_Staff, Label, Panel_Width, Panel_Height,
-		Deal, Company, Firm, Fundraising, Team_Member_Role, Type_of_dept, Member, Page_Layout_Name, Organizer,
-		Convert_to_Portfolio, Deal_Contact_Type, Team_Member, Location, End, All_Day_Event, Role, Lender_Status {
+		 Company, Firm, Fundraising, Team_Member_Role, Type_of_dept, Member, Page_Layout_Name, Organizer,
+		Convert_to_Portfolio, Deal_Contact_Type, Team_Member, Location, End, All_Day_Event, Role,Deal{
+			@Override
+			public String toString() {
+				return "Pipeline";
+			}
+		}, Lender_Status {
 			@Override
 			public String toString() {
 				return "Lender Status";
@@ -1517,7 +1557,7 @@ public class EnumConstants {
 		},
 		Deal_Contact, Stage_Upd, Pipeline_Comments, Pipeline_Comments_Upd, Legal_Name, Status_Notes, Legal_Name_Upd,
 		Status_Notes_Upd, Vintage_Year_Upd, Description_Upd, Summary_Upd, Fund, Vintage_Year, Theme, Descrption, Clip,
-		Summary, Theme_Name, Clip_Name, FundraisingContacts, Contact
+		Summary, Theme_Name, Clip_Name, FundraisingContacts, Contact, Pipeline_Name, Firm_Name, Account_Name_Upd, Advisor_Layout
 	};
 
 	public static enum Links {
@@ -2177,7 +2217,12 @@ public class EnumConstants {
 	}
 
 	public static enum TaggedName {
-		Companies, People, Deals, Firms, Funds;
+		Companies, People, Deals, Funds,Firms{
+			@Override
+			public String toString() {
+				return "Institutions";
+			}
+		};
 	}
 	public static enum Interactionslabel {
 		Type,Date,Subject,Details,Participants,Tags;

@@ -2027,7 +2027,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 		;
 		String xpath = "";
 		xpath = "//*[text()='" + appName + "']/../../following-sibling::*//*[text()='" + developerName
-				+ "']/../../following-sibling::*//*[text()='Show Actions']/..";
+				+ "']/../../following-sibling::*//div[text()='Lightning']/../../..//*[text()='Show Actions']/..";
 		WebElement scrollEle = FindElement(driver,
 				"//div[@class='uiScroller scroller-wrapper scroll-bidirectional native']", "Widget scroll",
 				action.SCROLLANDBOOLEAN, 60);
@@ -4985,7 +4985,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 		boolean flag = false;
 		;
 		String xpath = "";
-		xpath = "//th//a[text()='" + userName + "']";
+		xpath = "//td//span[text()='" + userName + "']/..";
 		ThreadSleep(2000);
 		WebElement ele = FindElement(driver, xpath, userName, action.SCROLLANDBOOLEAN, timeOut);
 		ele = isDisplayed(driver, ele, "visibility", timeOut, userName);
@@ -5762,7 +5762,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 		if (CommonLib.switchToFrame(driver, 50, getuserProfileIframe(50))) {
 			ThreadSleep(5000);
 			log(LogStatus.INFO, "Successfully switched to User Profile Iframe", YesNo.No);
-			xPath = "//div[@class='bRelatedList']//a[text()='" + profileName + "']";
+			xPath = "//span[text()='" + profileName + "']";
 			ele = CommonLib.FindElement(driver, xPath, profileName + " profile name", action.SCROLLANDBOOLEAN, 50);
 			if (CommonLib.clickUsingJavaScript(driver, ele, profileName + " profile name", action.BOOLEAN)) {
 				log(LogStatus.INFO, "Successfully clicked on the " + profileName + " profile name", YesNo.No);
@@ -6341,7 +6341,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 		boolean flag = false;
 		;
 		String xpath = "";
-		xpath = "//th//a[text()='" + userName + "']";
+		xpath = "//td//span[text()='" + userName + "']/..";
 		ThreadSleep(2000);
 		WebElement ele = FindElement(driver, xpath, userName, action.SCROLLANDBOOLEAN, timeOut);
 		ele = isDisplayed(driver, ele, "visibility", timeOut, userName);
@@ -6535,7 +6535,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 			switchToFrame(driver, 60, getSetUpPageIframe(60));
 
 			String xpath = "";
-			xpath = "//th//a[text()='" + profileForSelection + "']";
+			xpath = "//td//span[text()='" + profileForSelection + "']/..";
 			ele = FindElement(driver, xpath, profileForSelection, action.SCROLLANDBOOLEAN, 10);
 			ele = isDisplayed(driver, ele, "visibility", 10, profileForSelection);
 			if (clickUsingJavaScript(driver, ele, profileForSelection.toString(), action.BOOLEAN)) {
@@ -7476,7 +7476,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 		if (CommonLib.switchToFrame(driver, 50, getuserProfileIframe(50))) {
 			ThreadSleep(5000);
 			log(LogStatus.INFO, "Successfully switched to User Profile Iframe", YesNo.No);
-			xPath = "//div[@class='bRelatedList']//a[text()='" + profileName + "']";
+			xPath = "//span[text()='" + profileName + "']/..";
 			ele = CommonLib.FindElement(driver, xPath, profileName + " profile name", action.SCROLLANDBOOLEAN, 50);
 			if (CommonLib.clickUsingJavaScript(driver, ele, profileName + " profile name", action.BOOLEAN)) {
 				log(LogStatus.INFO, "Successfully clicked on the " + profileName + " profile name", YesNo.No);

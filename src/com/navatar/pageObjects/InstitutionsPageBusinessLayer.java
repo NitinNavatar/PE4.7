@@ -10,6 +10,7 @@ import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.CommonVariables;
 import com.navatar.generic.EnumConstants.ContactPageFieldLabelText;
+import com.navatar.generic.EnumConstants.Header;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.RecordType;
@@ -2478,4 +2479,58 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		}
 		return true;
 	}
+	
+	public boolean createInstitutionFromQuickLinks(String projectName, String environment, String mode,
+			String institutionName, String recordType) {
+		boolean flag = false;
+
+		if (sendKeys(driver, firmNameQuickLinksPopUp(25), institutionName, "leagl name text box",
+				action.SCROLLANDBOOLEAN)) {
+			appLog.info("passed data in text box: " + institutionName);
+
+		} else {
+			appLog.error("Not Able to Pass the value: " + institutionName);
+			return false;
+		}
+
+		if (recordType != null) {
+			if (click(driver, firmRecordTypeQuickLinksPopUp(10), "firmRecordTypeQuickLinksPopUp",
+					action.SCROLLANDBOOLEAN)) {
+				appLog.info("clicked Firm Record Type Link");
+				if (click(driver, firmRecordTypeDropDownElementQuickLinksPopUp(recordType, 15),
+						"firmRecordTypeDropDownElementQuickLinksPopUp: " + recordType, action.SCROLLANDBOOLEAN)) {
+					appLog.info("Click on Record Type Dropdown value: " + recordType);
+
+				} else {
+					appLog.error("Not able to Click on Record Type Dropdown value: " + recordType);
+
+					return false;
+				}
+
+			} else {
+				appLog.error("Not able to Click on Record Type Dropdown Link");
+				return false;
+			}
+		}
+
+		if (click(driver, saveButtonQuickLinksPopUp(10), "saveButtonQuickLinksPopUp: ", action.SCROLLANDBOOLEAN)) {
+			appLog.info("Click on Save Button");
+			WebElement ele = verifyCreatedItemOnPage(Header.Company, institutionName);
+			if (ele != null) {
+				appLog.info("created institution " + institutionName + " is verified successfully.");
+				appLog.info(institutionName + " is created successfully.");
+				flag = true;
+
+			} else {
+				appLog.error("Created institution " + institutionName + " is not matched");
+				appLog.error(institutionName + " is not created.");
+			}
+
+		} else {
+			appLog.error("Not able to Click on Save Button");
+		}
+		return flag;
+
+	}
+
 }

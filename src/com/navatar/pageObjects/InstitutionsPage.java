@@ -743,7 +743,41 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 
 	}
 	
+	@FindBy(xpath = "//div[contains(@id,\"modal-content\")]//label[text()=\"Record Type\"]/following-sibling::*//button")
+	private WebElement firmRecordTypeQuickLinksPopUp;
+
+	public WebElement firmRecordTypeQuickLinksPopUp(int timeOut) {
+
+		return isDisplayed(driver, firmRecordTypeQuickLinksPopUp, "Visibility", timeOut,
+				"firmRecordTypeQuickLinksPopUp");
+
+	}
 	
+	@FindBy(xpath = "//div[contains(@id,\"modal-content\")]/following-sibling::footer//button[text()=\"Save\"]")
+	private WebElement saveButtonQuickLinksPopUp;
+
+	public WebElement saveButtonQuickLinksPopUp(int timeOut) {
+
+		return isDisplayed(driver, saveButtonQuickLinksPopUp, "Visibility", timeOut,
+				"saveButtonQuickLinksPopUp");
+
+	}
+	
+	@FindBy(xpath = "//div[contains(@id,\"modal-content\")]//input[@name=\"Name\"]")
+	private WebElement firmNameQuickLinksPopUp;
+
+	public WebElement firmNameQuickLinksPopUp(int timeOut) {
+
+		return isDisplayed(driver, firmNameQuickLinksPopUp, "Visibility", timeOut, "firmNameQuickLinksPopUp");
+
+	}
+	
+	public WebElement firmRecordTypeDropDownElementQuickLinksPopUp(String recordType, int timeOut) {
+		String xpath = "//span[text()=\""+recordType+"\"]//ancestor::lightning-base-combobox-item";
+		WebElement ele = null;
+		ele = FindElement(driver, xpath, " record type " + recordType, action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "visibility", timeOut, " record type " + recordType);
+	}
 	
 
 }

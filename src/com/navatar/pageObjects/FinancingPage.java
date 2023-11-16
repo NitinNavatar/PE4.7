@@ -41,7 +41,7 @@ public class FinancingPage extends BasePageBusinessLayer {
 		WebElement ele=FindElement(driver, xpath, memberOrDeal, action.BOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "memberOrDeal");
 	}
-	@FindBy(xpath = "//label[text()='Firm']/following-sibling::div//button")
+	@FindBy(xpath = "//label[text()='Institution']/following-sibling::div//button")
 	private WebElement FirmCrossIcon;
 
 	public WebElement getFirmCrossIcon(String projectName, int timeOut) {
