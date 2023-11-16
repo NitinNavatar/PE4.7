@@ -7694,7 +7694,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 	}
-
+	
 	/**
 	 * @author Ankur Huria
 	 * @param expectedResult
@@ -8658,7 +8658,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return result;
 	}
-	
+
 	/**
 	 * @author Ankur Huria
 	 * @param activityTimeLineTab
@@ -12538,7 +12538,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return flag;
 	}
-
+	
 	/**
 	 * @author Sourabh Saini
 	 * @param intractionSubjectName
@@ -16375,7 +16375,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return negativeResults;
 	}
-
+	
 	public boolean activityTimelineNotesSuggesstionBoxHandle(String recordsAndNotes) {
 		Integer status = 0;
 
@@ -23469,7 +23469,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return flag;
 
 	}
-
 	public String notificationEventNavigateToDetailPageOrNot(String eventName) {
 
 		CommonLib.refresh(driver);
@@ -26761,4 +26760,67 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 //		}
 		return result;
 	}
-}
+	 public boolean  connectedappsetup(String projectName,String appName,String email,String URL,String value) {
+		 SetupPageBusinessLayer sp = new SetupPageBusinessLayer(driver);
+			boolean flag = true;
+				if (sp.searchStandardOrCustomObject(environment, mode, object.App_Manager)) {
+					log(LogStatus.INFO, "click on Object : " + object.valueOf("App Manager"), YesNo.No);
+					ThreadSleep(2000);
+					if (click(driver, getNew_Connected_app(20), "New Connected app", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "clicked on New Connected app button", YesNo.No);
+						switchToFrame(driver, 30, sp.getSetUpPageIframe(60));
+						ThreadSleep(5000);
+						if (CommonLib.sendKeys(driver, getConnected_App_Name(30), appName, "app name",
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, appName + " value has been passed in Connected App Name", YesNo.No);
+							if (CommonLib.sendKeys(driver, getContact_email(30), email, "Email",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, email + " value has been passed in Email", YesNo.No);
+								if (click(driver, getEnableOAuthSettings(20), "Enable OAuth Settings", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on Enable OAuth Settings icon", YesNo.No);
+									ThreadSleep(2000);
+									if (CommonLib.sendKeys(driver, getcallbackURL(30), URL, "URL",
+											action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO, "able to send" + URL, YesNo.No);
+										if (selectVisibleTextFromDropDown(driver, getAvailableOAuthScopes(10),
+												"Selected Tab List",value)) {
+											appLog.info(value + " is selected successfully in Available tabs");
+											if (click(driver, sp.getAddBtn(10), "Custom Tab Add Button",
+													action.SCROLLANDBOOLEAN)) {
+												appLog.info("clicked on Add button");
+												if (click(driver, sp.getCreateUserSaveBtn_Lighting(10), "Save Button",
+														action.SCROLLANDBOOLEAN)) {
+													flag = true;
+													log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
+													ThreadSleep(2000);
+												} else {
+													log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
+												}
+											} else {
+												log(LogStatus.ERROR, "not able to click on Custom Tab Add Button", YesNo.Yes);
+											}
+										} else {
+											log(LogStatus.ERROR, value + " is not selected successfully in Available tabs", YesNo.Yes);
+										}
+									} else {
+										log(LogStatus.ERROR, "not able to send" + URL, YesNo.Yes);
+									}
+								} else {
+									log(LogStatus.ERROR, "not able to clicked on Enable OAuth Settings icon", YesNo.Yes);
+								}
+							} else {
+								log(LogStatus.ERROR, email + " value has not been passed in Email", YesNo.Yes);
+							}
+						} else {
+							log(LogStatus.ERROR, appName + " value has not been passed in Connected App Name", YesNo.Yes);
+						}
+					} else {
+						log(LogStatus.ERROR, "not able to clicked on New Connected app button", YesNo.Yes);
+					}
+				} else {
+					log(LogStatus.ERROR,  "not able to click on Object : " + object.valueOf("App Manager"), YesNo.Yes);
+				}
+				
+		return flag;
+	 }
+	}
