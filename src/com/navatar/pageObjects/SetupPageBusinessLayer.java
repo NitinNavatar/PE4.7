@@ -3990,7 +3990,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 		if (objectName == object.Global_Actions.toString() || objectName == object.Activity_Setting.toString()
 				|| objectName == object.App_Manager.toString() || objectName == object.Lightning_App_Builder.toString()
 				|| objectName == object.Profiles.toString() || objectName == object.Override.toString()
-				|| objectName == object.Tabs.toString() || objectName == object.Users.toString()
+				|| objectName == object.Tabs.toString() || objectName == object.Users.toString() || objectName == object.Rename_Tabs_and_Labels.toString()
 				|| objectName == object.Sharing_Settings.toString()) {
 			if (objectName == object.Global_Actions.toString() || objectName == object.Tabs.toString()
 					|| objectName == object.Users.toString()) {
@@ -7336,7 +7336,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 																			"Switched into Validation Rule Iframe",
 																			YesNo.No);
 
-																	if (validationRuleName(30).getAttribute("value")
+																	if (RuleName(30).getText()
 																			.equals("")) {
 																		log(LogStatus.INFO,
 																				"Validation rule has been Created",

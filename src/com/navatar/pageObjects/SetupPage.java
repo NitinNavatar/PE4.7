@@ -1273,7 +1273,15 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement validationRuleFormula(int timeOut) {
 		return isDisplayed(driver, validationRuleFormula, "Visibility", timeOut, "validationRuleFormula");
 	}
+	
+	
+	@FindBy(xpath = "//label[text() = 'Rule Name']/../following-sibling::td")
+	private WebElement ruleName;
 
+	public WebElement RuleName(int timeOut) {
+		return isDisplayed(driver, ruleName, "Visibility", timeOut, "ruleName");
+	}
+	
 	@FindBy(id = "ValidationMessage")
 	private WebElement validationRuleMessage;
 
@@ -1300,7 +1308,7 @@ public class SetupPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "//iframe[contains(@title,\"Validation Rule\")]")
+	@FindBy(xpath = "//iframe[contains(@title,'Validation Rule')]")
 	private WebElement validationRuleIframe;
 
 	public WebElement validationRuleIframe(int timeOut) {

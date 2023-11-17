@@ -1013,7 +1013,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, saveButtonOnNewContactPopup, "Visibility", timeOut, "save button");
 	}
 
-	@FindBy(xpath = "//div[contains(@id,\"modal-content\")]//input[@name=\"Phone\"]")
+	@FindBy(xpath = "//div[contains(@id,'modal-content')]//input[@name='Phone']")
 	private WebElement contactPhoneQuickLinksPopUp;
 
 	public WebElement contactPhoneQuickLinksPopUp(int timeOut) {
@@ -1022,7 +1022,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 
 	public WebElement contactFirmNameInputBoxQuickLinksPopUp(int timeOut) {
 		String xpath = "//div[contains(@id,\"modal-content\")]//label[text()=\"Firm Name\"]/following-sibling::*//input";
-		String xpath1 = "//div[contains(@id,\"modal-content\")]//label[text()=\"Account Name\"]/following-sibling::*//input";
+		String xpath1 = "//div[contains(@id,\"modal-content\")]//label[text()=\"Legal Name\"]/following-sibling::*//input";
 		if(xpath.equalsIgnoreCase("Firm Name")) {
 			return FindElement(driver, xpath, "contactFirmNameInputBoxQuickLinksPopUp", action.SCROLLANDBOOLEAN,
 					timeOut);

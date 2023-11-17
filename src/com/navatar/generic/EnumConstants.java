@@ -193,7 +193,7 @@ public class EnumConstants {
 
 			@Override
 			public String toString() {
-				return "Institution";
+				return "Institutions";
 			}
 
 		},
@@ -608,7 +608,7 @@ public class EnumConstants {
 	};
 
 	public static enum PermissionType {
-		removePermission, givePermission, Read, Create, Edit, Delete;
+		removePermission, givePermission, Read, Create, Edit, Delete, Update;
 	}
 
 //*************************************************************** Pages Field Labels*********************************************//
@@ -991,7 +991,7 @@ public class EnumConstants {
 	public static enum RecordType {
 		Company, Institution, IndividualInvestor, Contact, PipeLine, Fund, Fundraising, Partnerships, Master, Advisor,
 		Fund_Manager, Fund_Manager_Fund, Indivisual_investor, Intermediary, Lender, Limited_Partner, Portfolio_Company,
-		Deal, Banker, New_Demo_Company, New_Company;
+		Deal, Banker, New_Demo_Company, New_Institution;
 	}
 
 	public static enum searchContactInEmailProspectGrid {
@@ -1539,7 +1539,7 @@ public class EnumConstants {
 		},
 		Deal_Contact, Stage_Upd, Pipeline_Comments, Pipeline_Comments_Upd, Legal_Name, Status_Notes, Legal_Name_Upd,
 		Status_Notes_Upd, Vintage_Year_Upd, Description_Upd, Summary_Upd, Fund, Vintage_Year, Theme, Descrption, Clip,
-		Summary, Theme_Name, Clip_Name, FundraisingContacts, Contact, Pipeline_Name, Firm_Name, Account_Name_Upd, Advisor_Layout
+		Summary, Theme_Name, Clip_Name, FundraisingContacts, Contact, Pipeline_Name, Firm_Name, Account_Name_Upd, Advisor_Layout, Advisor
 	};
 
 	public static enum Links {
