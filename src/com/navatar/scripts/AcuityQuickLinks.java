@@ -1,6 +1,18 @@
 package com.navatar.scripts;
 
-import static com.navatar.generic.CommonLib.*;
+import static com.navatar.generic.CommonLib.ThreadSleep;
+import static com.navatar.generic.CommonLib.click;
+import static com.navatar.generic.CommonLib.clickUsingJavaScript;
+import static com.navatar.generic.CommonLib.exit;
+import static com.navatar.generic.CommonLib.isDisplayed;
+import static com.navatar.generic.CommonLib.log;
+import static com.navatar.generic.CommonLib.refresh;
+import static com.navatar.generic.CommonLib.removeNumbersFromString;
+import static com.navatar.generic.CommonLib.selectVisibleTextFromDropDown;
+import static com.navatar.generic.CommonLib.sendKeys;
+import static com.navatar.generic.CommonLib.switchOnWindow;
+import static com.navatar.generic.CommonLib.switchToDefaultContent;
+import static com.navatar.generic.CommonLib.switchToFrame;
 import static com.navatar.generic.CommonVariables.*;
 import static com.navatar.generic.SmokeCommonVariables.adminPassword;
 import static com.navatar.generic.SmokeCommonVariables.superAdminUserName;
@@ -12,6 +24,7 @@ import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
+import com.navatar.generic.EnumConstants.Environment;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.NavigationMenuItems;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
@@ -19,6 +32,7 @@ import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.PermissionType;
 import com.navatar.generic.EnumConstants.RecordType;
+import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
@@ -163,6 +177,9 @@ public class AcuityQuickLinks extends BaseLib{
 		log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName, YesNo.Yes);
 		sa.assertTrue(false,"Not Able to Click on "+navigationMenuName);
 	}
+ } else {
+	 	log(LogStatus.ERROR, "Not Able to Click on "+TabName.InstituitonsTab, YesNo.Yes);
+		sa.assertTrue(false,"Not Able to Click on "+TabName.InstituitonsTab);
  }
 	
 	refresh(driver);
@@ -180,7 +197,10 @@ public class AcuityQuickLinks extends BaseLib{
 		log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName, YesNo.Yes);
 		sa.assertTrue(false,"Not Able to Click on "+navigationMenuName);
 	}
- }
+ } else {
+	 	log(LogStatus.ERROR, "Not Able to Click on "+TabName.InstituitonsTab, YesNo.Yes);
+		sa.assertTrue(false,"Not Able to Click on "+TabName.InstituitonsTab);
+}
 		ThreadSleep(2000);
 		switchToDefaultContent(driver);
 		sa.assertAll();
@@ -309,7 +329,8 @@ public class AcuityQuickLinks extends BaseLib{
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		
 		String[][] accounts = { { AQFirm1, AQRecordType1 },{ AQFirm2, AQRecordType2 },
-				{ AQFirm3, AQRecordType3 },{ AQFirm4, AQRecordType4 } };
+				{ AQFirm3, AQRecordType3 },{ AQFirm4, AQRecordType4 },{ AQFirm41, AQRecordType41 },
+				{ AQFirm42, AQRecordType42 },{ AQFirm43, AQRecordType43 }};
 	for (String[] account : accounts) {
 		try {
 		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
@@ -348,13 +369,13 @@ public class AcuityQuickLinks extends BaseLib{
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
     InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
-		String[] accounts = {AQFirm1,AQFirm2,AQFirm3,AQFirm4};
-		String[] RecordTypes = {AQRecordType1,AQRecordType2,AQRecordType3,AQRecordType4};
+		String[] accounts = {AQFirm1,AQFirm2,AQFirm3,AQFirm4,AQFirm41,AQFirm42,AQFirm43};
+		String[] RecordTypes = {AQRecordType1,AQRecordType2,AQRecordType3,AQRecordType4,AQRecordType41,AQRecordType42,AQRecordType43};
 		  
 		for (String account : accounts) {
 	   if (fp.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.InstituitonsTab, YesNo.No);
-	      if (fp.clickOnAlreadyCreatedItem(projectName, TabName.AccountsTab,account.replace("  ", "").replace("\"", ""), 10)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, TabName.InstituitonsTab,account.replace("  ", "").replace("\"", ""), 10)) {
 	          log(LogStatus.INFO, "Able to open created Account : " + account, YesNo.Yes);
 	       } else {
 	          sa.assertTrue(false, "Not Able to open created Account : " + account);
@@ -367,12 +388,12 @@ public class AcuityQuickLinks extends BaseLib{
 	  }
 	   refresh(driver);
 	   
+	  for(String RecordType : RecordTypes) {
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 			if(clickUsingJavaScript(driver, npbl.getFirmLinkOnCreateOption(5),"Firm Link on Create Option", action.BOOLEAN)) {
 				log(LogStatus.INFO, "Able to Click on " + PageLabel.Firm.toString(), YesNo.No);
 				ThreadSleep(5000);
-				for(String RecordType : RecordTypes) {
 				if(clickUsingJavaScript(driver, npbl.getFirmRecordTypeForCreateOption(5),"Save Button For Quick Firm", action.BOOLEAN)) {
 					click(driver, npbl.getRecordTypeOnQuickFirm(RecordType, 5),"Select Record Type :" + RecordType, action.BOOLEAN);
 					log(LogStatus.INFO, "Firm Record Type from Create Option is visible", YesNo.No);
@@ -400,7 +421,6 @@ public class AcuityQuickLinks extends BaseLib{
 					log(LogStatus.ERROR,"Save Button from Create Option is not visible", YesNo.Yes);
 					sa.assertTrue(false,"Save Button from Create Option is not visible");
 				}
-			 }
 			} else {
 				log(LogStatus.ERROR, "Not able to Click on " + PageLabel.Firm.toString(), YesNo.Yes);
 				sa.assertTrue(false,"Not able to Click on " + PageLabel.Firm.toString());
@@ -410,7 +430,8 @@ public class AcuityQuickLinks extends BaseLib{
 			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName);
 		}
 	   		refresh(driver);
-	   
+	  }
+	  
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 				if(clickUsingJavaScript(driver, npbl.getFirmLinkOnCreateOption(5),"Firm Link on Create Option", action.BOOLEAN)) {
@@ -443,7 +464,7 @@ public class AcuityQuickLinks extends BaseLib{
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		boolean flag = false;
 			if (ip.clickOnTab(projectName, mode,TabName.InstituitonsTab)) {
-				if (ip.clickOnAlreadyCreatedItem(projectName, TabName.AccountsTab, AQFirm1, 20)) {
+				if (ip.clickOnAlreadyCreatedItem(projectName, TabName.InstituitonsTab, AQFirm1, 20)) {
 					WebElement ele=null;
 					cp.clickOnShowMoreDropdownOnly(environment, mode,PageName.Object1Page);
 					log(LogStatus.INFO,"Able to Click on Show more Icon : "+TabName.InstituitonsTab+" For : "+AQFirm1,YesNo.No);
@@ -487,9 +508,9 @@ public class AcuityQuickLinks extends BaseLib{
 			}
 		refresh(driver);
 		
-		 if (fp.clickOnTab(environment, mode, TabName.AccountsTab)) {
+		 if (fp.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
 		       log(LogStatus.INFO, "Click on Tab : " + TabName.InstituitonsTab, YesNo.No);
-		      if (fp.clickOnAlreadyCreatedItem(projectName, TabName.AccountsTab,AQFirm1.replace("  ", "").replace("\"", ""), 10)) {
+		      if (fp.clickOnAlreadyCreatedItem(projectName, TabName.InstituitonsTab,AQFirm1.replace("  ", "").replace("\"", ""), 10)) {
 		          log(LogStatus.INFO, "Able to open created Account : " + AQFirm1, YesNo.Yes);
 		       } else {
 		          sa.assertTrue(false, "Not Able to open created Account : " + AQFirm1);
@@ -551,7 +572,7 @@ public class AcuityQuickLinks extends BaseLib{
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	lp.CRMLogin(superAdminUserName, adminPassword);
 	
-	String profileForSelection = "MnA Standard User";
+	String profileForSelection = "PE Standard User";
 	String parentID=null, objects[] ={TabName.Account.toString()}, permissionTypes[] = {PermissionType.Read.toString(),PermissionType.Create.toString(),PermissionType.Edit.toString(),PermissionType.Delete.toString()}, status = "Not Checked";
 	boolean flag = false;
 	
@@ -615,8 +636,8 @@ public class AcuityQuickLinks extends BaseLib{
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	lp.CRMLogin(superAdminUserName, adminPassword);
 	
-	String profileForSelection = "MnA Standard User";
-	String parentID=null, objects[] ={TabName.Account.toString()}, permissionTypes[] = {PermissionType.Read.toString(),PermissionType.Create.toString(),PermissionType.Edit.toString(),PermissionType.Delete.toString()}, status = "Checked";
+	String profileForSelection = "PE Standard User";
+	String parentID=null, objects[] ={TabName.Account.toString()}, permissionTypes[] = {PermissionType.Read.toString(),PermissionType.Create.toString(),PermissionType.Update.toString(),PermissionType.Delete.toString()}, status = "Checked";
 	boolean flag = false;
 	
 		switchToDefaultContent(driver);
@@ -653,12 +674,13 @@ public class AcuityQuickLinks extends BaseLib{
 		home.notificationPopUpClose();
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-				String Value = npbl.getFirmLinkOnCreateOption(5).getText();
-				if(Value.equalsIgnoreCase(PageLabel.Firm.toString())) {
-					log(LogStatus.INFO, PageLabel.Firm.toString() + "is visible at 4th position", YesNo.No);
+				clickUsingJavaScript(driver, npbl.getFirmLinkOnCreateOption(5),"Firm Link on Create Option", action.BOOLEAN);
+				ThreadSleep(5000);
+				if(isDisplayed(driver, npbl.getFirmNameLabelForCreateOption(10), "Visibility", 10, "Firm Name Label") != null) {
+					log(LogStatus.INFO, PageLabel.Firm.toString() + "is functional", YesNo.No);
 				} else {
-					log(LogStatus.ERROR, PageLabel.Firm.toString() + "is not visible at 4th position", YesNo.Yes);
-					sa.assertTrue(false,PageLabel.Firm.toString() + "is not visible at 4th position");
+					log(LogStatus.ERROR, PageLabel.Firm.toString() + "is not functional", YesNo.Yes);
+					sa.assertTrue(false,PageLabel.Firm.toString() + "is not functional");
 				}
 			} else {
 				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName, YesNo.Yes);
@@ -760,7 +782,7 @@ public class AcuityQuickLinks extends BaseLib{
 	String parentWindow = "";
 	boolean flag1 = false;
 	String tabNames1 = TabName.Accounts.toString();
-	String[] labelsWithValues1 = {"Account Name<break>Account Name","City<break>City"};
+	String[] labelsWithValues1 = {"Account Name<break>Legal Name","City<break>City"};
 		if (home.clickOnSetUpLink()) {
 			parentWindow = switchOnWindow(driver);
 			if (parentWindow == null) {
@@ -844,7 +866,7 @@ public class AcuityQuickLinks extends BaseLib{
 				if (sp.searchStandardOrCustomObject(environment, mode, object.Profiles.toString())) {
 					log(LogStatus.INFO, "Profile has been open", YesNo.Yes);
 	
-					if (sp.defaultRecordTypeSelect("MnA Standard User", "Account", "Advisor")) {
+					if (sp.defaultRecordTypeSelect("PE Standard User", "Account", "Advisor")) {
 						log(LogStatus.INFO,
 								"-----The record type of Account has been selected to: " + "Advisor" + "-----",
 								YesNo.No);
@@ -883,7 +905,7 @@ public class AcuityQuickLinks extends BaseLib{
 					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 					if(clickUsingJavaScript(driver, npbl.getFirmLinkOnCreateOption(5),"Firm Link on Create Option", action.BOOLEAN)) {
 						log(LogStatus.INFO, "Able to Click on " + PageLabel.Firm.toString(), YesNo.No);
-						
+						ThreadSleep(2000);
 						if(npbl.getFirmRecordTypeForCreateOption(5).getAttribute("data-value").equalsIgnoreCase(object.Advisor.toString())) {
 							log(LogStatus.INFO, "Default Record Type is updated as " + object.Advisor.toString(), YesNo.No);
 						} else {
@@ -929,7 +951,7 @@ public class AcuityQuickLinks extends BaseLib{
 						{ recordTypeLabel.Description.toString(), contactRecordTypeArray[0] + bp.recordTypeDescription },
 						{ recordTypeLabel.Active.toString(), "" } } };
 		
-		String[] profileForSelection = { "MnA Standard User"};
+		String[] profileForSelection = { "PE Standard User"};
 		boolean isMakeAvailable = false;
 		boolean isMakeDefault = false;
 		boolean flag = false;
@@ -941,8 +963,8 @@ public class AcuityQuickLinks extends BaseLib{
 				flag = false;
 				parentID = switchOnWindow(driver);
 				if (parentID != null) {
-					if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(), object.Account.toString())) {
-						if (sp.clickOnObjectFeature("", Mode.Lightning.toString(), object.Account,
+					if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(), object.Institution.toString())) {
+						if (sp.clickOnObjectFeature("", Mode.Lightning.toString(), object.Institution,
 								ObjectFeatureName.recordTypes)) {
 								if (sp.listOfRecordTypes().contains(contactrecordType[i][0][1])) {
 									log(LogStatus.INFO, "Record Type: " + contactrecordType[i][0][1]
@@ -950,7 +972,7 @@ public class AcuityQuickLinks extends BaseLib{
 									flag = true;
 								} else {
 									flag = sp.createRecordTypeForObject(projectName, contactrecordType[i], isMakeAvailable,
-											profileForSelection, isMakeDefault, PageLabel.Advisor_Layout.toString().replace("_", " "), 10);
+											profileForSelection, isMakeDefault, PageLabel.Advisor.toString().replace("_", " "), 10);
 								}
 							if (flag) {
 								log(LogStatus.INFO, "Created Record Type : " + contactRecordTypeArray[i], YesNo.No);
@@ -1064,6 +1086,7 @@ public class AcuityQuickLinks extends BaseLib{
 			if(clickUsingJavaScript(driver, npbl.getFirmLinkOnCreateOption(5),"Firm Link on Create Option", action.BOOLEAN)) {
 				log(LogStatus.INFO, "Able to Click on " + PageLabel.Firm.toString(), YesNo.No);
 						log(LogStatus.INFO, "Default Record Type is updated as " + object.Advisor.toString(), YesNo.No);
+						ThreadSleep(2000);
 						click(driver, ip.firmRecordTypeQuickLinksPopUp(10), "firmRecordTypeQuickLinksPopUp",
 								action.SCROLLANDBOOLEAN);
 						if(click(driver, ip.firmRecordTypeDropDownElementQuickLinksPopUp(RecordType.New_Demo_Company.toString().replace("_", " "), 5),"Select Record Type :" + RecordType.New_Demo_Company.toString().replace("_", " "), action.BOOLEAN)) {
@@ -1101,7 +1124,7 @@ public class AcuityQuickLinks extends BaseLib{
 		
 		String[][] RecordTypes = { { recordTypeLabel.Active.toString(), "Not Checked" }};
 		
-		String[] profileForSelection = { "MnA Standard User"};
+		String[] profileForSelection = { "PE Standard User"};
 		boolean flag = false;
 		String parentID=null;
 		for(int k=0; k<profileForSelection.length; k++) {
@@ -1257,7 +1280,7 @@ public class AcuityQuickLinks extends BaseLib{
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		String master= "--Master--";
-		String[] profileForSelection = { "MnA Standard User"};
+		String[] profileForSelection = { "PE Standard User"};
 		String parentID=null;
 		for(int k=0; k<profileForSelection.length; k++) {
 			home.notificationPopUpClose();
@@ -1395,8 +1418,8 @@ public class AcuityQuickLinks extends BaseLib{
 				flag = false;
 				parentID = switchOnWindow(driver);
 				if (parentID != null) {
-					if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Firm.toString())) {
-						if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Firm,
+					if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Institution.toString())) {
+						if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Institution,
 								ObjectFeatureName.recordTypes)) {
 							if (sp.clickOnAlreadyCreatedLayout(contactRecordTypeArray[0])) {
 								if (sp.editRecordTypeForObject(projectName, RecordTypes, 10)) {
@@ -1443,11 +1466,11 @@ public class AcuityQuickLinks extends BaseLib{
 				ThreadSleep(2000);
 				click(driver, ip.firmRecordTypeQuickLinksPopUp(10), "firmRecordTypeQuickLinksPopUp",
 						action.SCROLLANDBOOLEAN);
-				if(click(driver, ip.firmRecordTypeDropDownElementQuickLinksPopUp(RecordType.New_Company.toString().replace("_", " "), 5),"Select Record Type :" + RecordType.New_Company.toString().replace("_", " "), action.BOOLEAN)) {
-						log(LogStatus.INFO, RecordType.New_Company.toString().replace("_", " ")+" Record Type from Create Option is visible", YesNo.No);
+				if(click(driver, ip.firmRecordTypeDropDownElementQuickLinksPopUp(RecordType.New_Institution.toString().replace("_", " "), 5),"Select Record Type :" + RecordType.New_Institution.toString().replace("_", " "), action.BOOLEAN)) {
+						log(LogStatus.INFO, RecordType.New_Institution.toString().replace("_", " ")+" Record Type from Create Option is visible", YesNo.No);
 					} else {
-						log(LogStatus.ERROR,RecordType.New_Company.toString().replace("_", " ") +" Record Type from Create Option is not visible", YesNo.Yes);
-						sa.assertTrue(false,RecordType.New_Company.toString().replace("_", " ") +" Record Type from Create Option is not visible");
+						log(LogStatus.ERROR,RecordType.New_Institution.toString().replace("_", " ") +" Record Type from Create Option is not visible", YesNo.Yes);
+						sa.assertTrue(false,RecordType.New_Institution.toString().replace("_", " ") +" Record Type from Create Option is not visible");
 					}
 				} else {
 					log(LogStatus.ERROR,"Not able to Click on " + PageLabel.Firm.toString(), YesNo.Yes);
@@ -1637,7 +1660,7 @@ public class AcuityQuickLinks extends BaseLib{
 	lp.CRMLogin(superAdminUserName, adminPassword);
 	
 	String[][] RecordType = { { recordTypeLabel.Active.toString(), "Checked" }};
-	String[] profileForSelection = { "MnA Standard User"};
+	String[] profileForSelection = { "PE Standard User"};
 		boolean flag = false;
 		String parentID=null;
 	
@@ -2214,7 +2237,7 @@ public class AcuityQuickLinks extends BaseLib{
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	lp.CRMLogin(superAdminUserName, adminPassword);
 	
-	String profileForSelection = "MnA Standard User";
+	String profileForSelection = "PE Standard User";
 	String parentID=null, objects[] ={object.Contact.toString()}, permissionTypes[] = {PermissionType.Read.toString(),PermissionType.Create.toString(),PermissionType.Edit.toString(),PermissionType.Delete.toString()}, status = "Not Checked";
 	boolean flag = false;
 	
@@ -2279,8 +2302,8 @@ public class AcuityQuickLinks extends BaseLib{
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	lp.CRMLogin(superAdminUserName, adminPassword);
 	
-	String profileForSelection = "MnA Standard User";
-	String parentID=null, objects[] ={object.Contact.toString()}, permissionTypes[] = {PermissionType.Read.toString(),PermissionType.Create.toString(),PermissionType.Edit.toString(),PermissionType.Delete.toString()}, status = "Checked";
+	String profileForSelection = "PE Standard User";
+	String parentID=null, objects[] ={object.Contact.toString()}, permissionTypes[] = {PermissionType.Read.toString(),PermissionType.Create.toString(),PermissionType.Update.toString(),PermissionType.Delete.toString()}, status = "Checked";
 	boolean flag = false;
 	
 		switchToDefaultContent(driver);
@@ -2365,7 +2388,7 @@ public class AcuityQuickLinks extends BaseLib{
 		ThreadSleep(3000);
 
 		if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Contact,
-				ObjectFeatureName.FieldAndRelationShip, "Email", PermissionType.removePermission, "MnA Standard User")) {
+				ObjectFeatureName.FieldAndRelationShip, "Email", PermissionType.removePermission, "PE Standard User")) {
 			log(LogStatus.PASS,
 					"Email field Permission is given in the Contact Object Manager",
 					YesNo.No);
@@ -2440,7 +2463,7 @@ public class AcuityQuickLinks extends BaseLib{
 		ThreadSleep(3000);
 
 		if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Contact,
-				ObjectFeatureName.FieldAndRelationShip, "Email", PermissionType.givePermission, "MnA Standard User")) {
+				ObjectFeatureName.FieldAndRelationShip, "Email", PermissionType.givePermission, "PE Standard User")) {
 			log(LogStatus.PASS,
 					"Email field Permission is given in the Contact Object Manager",
 					YesNo.No);
@@ -2714,7 +2737,7 @@ public class AcuityQuickLinks extends BaseLib{
 					appLog.error("Not Able to Pass the value: " + account[1]);
 				}
 				
-				if (sendKeys(driver, cp.contactPhoneQuickLinksPopUp(5), account[4], "Email name text box: " + account[4],
+				if (sendKeys(driver, cp.contactPhoneQuickLinksPopUp(5), account[4], "Phone number text box: " + account[4],
 						action.SCROLLANDBOOLEAN)) {
 					appLog.info("passed data in text box: " + account[4]);
 

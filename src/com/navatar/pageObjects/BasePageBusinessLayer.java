@@ -1321,7 +1321,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			tabName = "Entities";
 			break;
 		case Deals:
-			tabName = "Deals";
+			tabName = "Pipelines";
 			break;
 		case Marketing_Events:
 			tabName = "Marketing Events";
@@ -1346,7 +1346,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			break;
 
 		case InstituitonsTab:
-			tabName = "Firms";
+			tabName = "Institutions";
 			break;
 
 		case FundraisingsTab:
