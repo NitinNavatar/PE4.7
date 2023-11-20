@@ -7917,4 +7917,241 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return flag;
 	}
 
+	public void createFieldsForCustomObjects(String projectName, String[][] labelAndValues) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentWindow = null;
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		if (home.clickOnSetUpLink(environment, mode)) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object Marketing Event");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object Marketing Event",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object Marketing Event");
+			}
+			ThreadSleep(3000);
+			String[] dataTypes = null;
+			String[] fieldLabelNames = null;
+
+			for (String[] objects : labelAndValues) {
+
+				int j = 0;
+				String[][] valuesandLabels = new String[objects[3].split("<break>", -1).length][2];
+				for (String value : objects[3].split("<break>", -1)) {
+
+					valuesandLabels[j][0] = objects[2];
+					valuesandLabels[j][1] = value;
+
+					j++;
+				}
+
+				dataTypes = objects[0].split("<break>", -1);
+				fieldLabelNames = objects[1].split("<break>", -1);
+
+				int loopCount = 0;
+				String[][] tempValuesandLabelsArray = new String[1][2];
+				for (String dataType : dataTypes) {
+
+					tempValuesandLabelsArray[0][0] = valuesandLabels[loopCount][0];
+					tempValuesandLabelsArray[0][1] = valuesandLabels[loopCount][1];
+					if (setup.addCustomFieldforFormula(environment, mode, objects[4],
+							ObjectFeatureName.FieldAndRelationShip, dataType, fieldLabelNames[loopCount],
+							tempValuesandLabelsArray, null, null)) {
+						log(LogStatus.PASS, "Field Object is created for :" + fieldLabelNames[loopCount], YesNo.No);
+					} else {
+						log(LogStatus.PASS, "Field Object is not created for :" + fieldLabelNames[loopCount],
+								YesNo.Yes);
+						sa.assertTrue(false, "Field Object is not created for :" + fieldLabelNames[loopCount]);
+					}
+
+					loopCount++;
+				}
+			}
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		} else {
+			log(LogStatus.ERROR,
+					"Not able to click on setup link so cannot create Fields Objects for custom object Marketing Event",
+					YesNo.Yes);
+			sa.assertTrue(false,
+					"Not able to click on setup link so cannot create Fields Objects for custom object Marketing Event");
+		}
+		lp.CRMlogout(environment, mode);
+		sa.assertAll();
+	}
+	
+	public boolean removeAllRecordTypesOfObject(String profileName, String recordTypeToOpenFromProfile) {
+		boolean flag = false;
+		String xPath = "";
+		WebElement ele = null;
+		ThreadSleep(5000);
+		if (CommonLib.switchToFrame(driver, 50, getuserProfileIframe(50))) {
+			ThreadSleep(5000);
+			log(LogStatus.INFO, "Successfully switched to User Profile Iframe", YesNo.No);
+			xPath = "//div[@class='x-panel-bwrap']//span[text()='" + profileName + "']/..";
+			ele = CommonLib.FindElement(driver, xPath, profileName + " profile name", action.SCROLLANDBOOLEAN, 50);
+			if (CommonLib.clickUsingJavaScript(driver, ele, profileName + " profile name", action.BOOLEAN)) {
+				log(LogStatus.INFO, "Successfully clicked on the " + profileName + " profile name", YesNo.No);
+				ThreadSleep(12000);
+				CommonLib.switchToDefaultContent(driver);
+				ThreadSleep(2000);
+				if (CommonLib.switchToFrame(driver, 50, getProfileIframe(50))) {
+					ThreadSleep(5000);
+					log(LogStatus.INFO, "Successfully switched to Profile Iframe", YesNo.No);
+					xPath = "//h4[contains(text(),'Record Type Settings')]/ancestor::tbody//td[text()='"
+							+ recordTypeToOpenFromProfile + "s']/following-sibling::td/a";
+					ele = FindElement(driver, xPath, recordTypeToOpenFromProfile + " edit button",
+							action.SCROLLANDBOOLEAN, 20);
+					if (click(driver, ele, recordTypeToOpenFromProfile + " edit button", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on edit button of " + recordTypeToOpenFromProfile, YesNo.Yes);
+						ThreadSleep(9000);
+						CommonLib.switchToDefaultContent(driver);
+						if (CommonLib.switchToFrame(driver, 50, geteditRecordTypeIframe(50))) {
+
+							log(LogStatus.INFO, "Successfully switched to edit record Iframe", YesNo.No);
+							ThreadSleep(5000);
+
+							if (click(driver, getSelectedRecordTypeOption(30), "Selected record type options",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "clicked on the option value of selected record", YesNo.No);
+								try {
+									Robot rb = new Robot();
+									rb.keyPress(KeyEvent.VK_CONTROL);
+									rb.keyPress(KeyEvent.VK_A);
+									Actions act = new Actions(driver);
+									act.sendKeys(Keys.CONTROL + "a");
+									if (click(driver, getLeftArrowIcon(10), "Left Arrow button",
+											action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO, "clicked on the left arrow button", YesNo.No);
+
+										if (click(driver, getMasterOptionValueFromAvailabelRecord(10),
+												"option value \"--Master--\" of available record",
+												action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "clicked on the option value of available record",
+													YesNo.No);
+
+											if (click(driver, getRightArrowIcon(20), "right arrow icon",
+													action.SCROLLANDBOOLEAN)) {
+												log(LogStatus.INFO, "clicked on the right arrow icon", YesNo.No);
+												if (getMasterOptionValueFromSelectedRecord(20) != null) {
+													log(LogStatus.INFO,
+															"\"--Master--\" value is availabel on Selected record",
+															YesNo.No);
+
+													if (click(driver, getSaveButton("", 30), "Save button",
+															action.SCROLLANDBOOLEAN)) {
+														log(LogStatus.INFO, "clicked on the save button", YesNo.No);
+														flag = true;
+													} else {
+														log(LogStatus.ERROR, "Not able to click on save button",
+																YesNo.No);
+													}
+
+												} else {
+													log(LogStatus.ERROR,
+															"\"--Master--\" value is not availabel on Selected record",
+															YesNo.No);
+												}
+											} else {
+												log(LogStatus.ERROR, "Not able to clicked on right arrow icon",
+														YesNo.No);
+											}
+										} else {
+											log(LogStatus.ERROR,
+													"Not able to click on the option value of availabel record",
+													YesNo.No);
+										}
+									} else {
+										log(LogStatus.ERROR, "Not able to click on the left arrow button", YesNo.No);
+									}
+
+								} catch (Exception ex) {
+									log(LogStatus.ERROR, "Not able to select the record", YesNo.No);
+								}
+							} else {
+								log(LogStatus.ERROR, "Not able to click on the option value of selected record",
+										YesNo.No);
+							}
+						} else {
+							log(LogStatus.ERROR, "Not able to switch to edit record Iframe", YesNo.No);
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not able to click on edit button of " + recordTypeToOpenFromProfile,
+								YesNo.Yes);
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not able to switched to Profile Iframe", YesNo.Yes);
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to click on the " + profileName + " profile name", YesNo.Yes);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to switched to User profile Iframe", YesNo.Yes);
+		}
+		return flag;
+	}
+	
+	public boolean loginAndEditUser(String userfirstname, String userlastname, String userEmailID, String title,
+			String basedOnValueToWriteInExcel, boolean dataToWrite) {
+
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		boolean flag = false;
+		if (home.clickOnSetUpLink()) {
+			flag = true;
+			String parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot Update User with EmailId: "
+								+ userEmailID);
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot Update User with EmailId: "
+								+ userEmailID,
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot Update User with EmailId: "
+						+ userEmailID);
+			}
+			if (setup.editPEUserAndUpdateTheName(userfirstname, userlastname, userEmailID, title)) {
+				log(LogStatus.INFO,
+						"CRM User Name has been updated Successfully to: " + userfirstname + " " + userlastname,
+						YesNo.No);
+
+				if (dataToWrite) {
+					if (userfirstname != null) {
+						ExcelUtils.writeData(testCasesFilePath, userfirstname, "Users", excelLabel.Variable_Name,
+								basedOnValueToWriteInExcel, excelLabel.User_First_Name);
+					}
+
+					if (userlastname != null) {
+						ExcelUtils.writeData(testCasesFilePath, userlastname, "Users", excelLabel.Variable_Name,
+								basedOnValueToWriteInExcel, excelLabel.User_Last_Name);
+					}
+				}
+				flag = true;
+
+			} else {
+				log(LogStatus.ERROR,
+						"CRM User Name has not been updated Successfully to: " + userfirstname + " " + userlastname,
+						YesNo.No);
+				sa.assertTrue(false,
+						"CRM User Name has not been updated Successfully to: " + userfirstname + " " + userlastname);
+			}
+			driver.close();
+			driver.switchTo().window(parentWindow);
+
+		}
+
+		return flag;
+	}
 }
+

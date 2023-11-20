@@ -87,6 +87,12 @@ public interface BasePageErrorMessage {
 	public static String HitASnagMessage="Record Type ID: this ID value isn't valid for the user:";
 	public static String ErrorMessage="No item display";
 	public static String ErrorMessageAcuity="No items to display.";
+	public static String copyThemeErrorMsg1="These required fields must be completed: Existing Theme Name";
+	public static String copyThemeErrorMsg2="These required fields must be completed: Theme Name";
+	public static String errorMsginResearchTheme="Select atleast a record";
+	public static String errorMsgTeamMember="Member already exists with the same role.";
+	public static String errorMsgTeamMember2="These required fields must be completed: Member, Role";
+	public static String errorMsgTeamMember3="Select atleast a record.";
 	public static String OldTaskMsg(String user,String contactName,  int otherContactNum) {
 		String msg="a Task";
 		if (user==null) {
