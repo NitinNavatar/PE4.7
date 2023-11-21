@@ -256,6 +256,50 @@ public class DealPage extends BasePageBusinessLayer {
 
 		return isDisplayed(driver, companyName1, "Visibility", timeOut, "Company Name1");
 	}
+	
+	@FindBy(xpath = "//label[text()='Stage']/../following-sibling::td//select")
+	private WebElement dealStageDropDownList_Classic;
+
+	@FindBy(xpath = "//label[text()='Stage']//following-sibling::div//button")
+	private WebElement dealStageDropDownList_Lighting;
+
+	/**
+	 * @return the fundType
+	 */
+	public WebElement getDealStage(String environment, String mode, int timeOut) {
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			return isDisplayed(driver, dealStageDropDownList_Classic, "Visibility", timeOut, "Deal Stage Classic");
+		} else {
+			return isDisplayed(driver, dealStageDropDownList_Lighting, "Visibility", timeOut, "Deal Stage Lighting");
+		}
+
+	}
+	
+	public WebElement getSourceFirmAndSourceContactTextBox(String fieldLabelName, int timeOut) {
+		String xpath = "//*[text()='" + fieldLabelName + "']/following-sibling::div//input";
+		WebElement ele = FindElement(driver, xpath, fieldLabelName + " text box ", action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "text box : " + fieldLabelName);
+
+	}
+	
+	public WebElement getDealType(String projectName, int timeOut) {
+
+		String xpath = "//*[text()='Deal Type']/..//div//button";
+		WebElement ele = FindElement(driver, xpath, "Deal Type", action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "Deal Type : " );
+
+	}
+	
+	@FindBy(xpath = "//button[@name=\"SaveEdit\"]")
+
+	private WebElement editSaveButton;
+
+	/**
+	 * @return the customTabSelectedList
+	 */
+	public WebElement getEditSaveButton(int timeOut) {
+		return isDisplayed(driver, editSaveButton, "Visibility", timeOut, "Edit Save Button");
+	}
 
 	@FindBy(xpath = "//button[contains(@aria-label,'Stage')]")
 	private WebElement stageField;
@@ -404,6 +448,23 @@ public class DealPage extends BasePageBusinessLayer {
 	public WebElement getCreatedConfirmationMsg(String projectName, int timeOut) {
 
 		return isDisplayed(driver, createdConfirmationMsg, "Visibility", timeOut, "Created Confirmation Msg");
+	}
+	
+	
+	@FindBy(xpath = "//label[text()='Status']/..//button")
+	private WebElement statusLabel;
+
+	public WebElement getStatusfield(int timeOut) {
+		return isDisplayed(driver, statusLabel, "Visibility", timeOut, "status field");
+
+	}
+	
+	@FindBy(xpath = "//label[text()='Stage']/..//button")
+	private WebElement stageLabel;
+
+	public WebElement getStagefield(int timeOut) {
+		return isDisplayed(driver, stageLabel, "Visibility", timeOut, "status field");
+
 	}
 
 	@FindBy(xpath = "//h2[text()='New Deal']/../..//button[text()='Save']")

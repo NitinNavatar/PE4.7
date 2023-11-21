@@ -18,6 +18,7 @@ import org.openqa.selenium.support.FindBy;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.EnumConstants.ContactPagePhotoActions;
+import com.navatar.generic.EnumConstants.Header;
 import com.navatar.generic.EnumConstants.InstitutionPageFieldLabelText;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageLabel;
@@ -1562,7 +1563,268 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 
 	}
 
+	public boolean createDeal(String projectName, String mode, String dealType, String dealName, String companyName,
+			String status, String stage, String[][] labelswithValues, int timeOut) {
+		WebElement ele;
+		boolean flag = false;
+		String xpath = "";
+		// status="Prospect";
+		// stage="Prospect";
+		// dealType="Sell-side Deal";
+		ThreadSleep(2000);
+		if (click(driver, getNewButton(projectName, mode, timeOut), "New Button", action.BOOLEAN)) {
+			appLog.info("Clicked on New Button");
+			ThreadSleep(1000);
+			if (!dealType.equals("") || !dealType.isEmpty()) {
+				ThreadSleep(2000);
+				ele = getRadioButtonforRecordType(dealType, timeOut);
+				if (click(driver, ele, dealType, action.SCROLLANDBOOLEAN)) {
+					appLog.info(" Selected Deal type : " + dealType);
+					ThreadSleep(1000);
+					if (click(driver, getContinueOrNextButton(projectName, timeOut), "Continue Button",
+							action.BOOLEAN)) {
+						appLog.info("Clicked on Continue or Nxt Button");
+						ThreadSleep(1000);
+					} else {
+						appLog.error("Not Able to Click on Continue or Nxt Button");
+					}
 
+				} else {
+					appLog.error("Not Able to Select Deal type: " + dealType);
+				}
+			}
+			ele = getLabelTextBox(projectName, PageName.DealPage.toString(), PageLabel.Deal_Name.toString(), timeOut);
+			if (sendKeys(driver, ele, dealName, "Deal Name", action.BOOLEAN)) {
+				appLog.info("Successfully Entered value on Deal Name TextBox : " + dealName);
+				ThreadSleep(1000);
+				if (sendKeys(driver, getCompanyName(60), companyName, "Company Name",
+						action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(2000);
+					if (click(driver,
+							FindElement(driver,
+									"//span[contains(@class,'listbox__option')]//*[@title='" + companyName + "']",
+									"Company Name List", action.BOOLEAN, 30),
+							companyName + "   :   Company Name", action.BOOLEAN)) {
+						appLog.info(companyName + "  is present in list.");
+					} else {
+						appLog.info(companyName + "  is not present in the list.");
+						return false;
+					}
+
+				} else {
+					appLog.error("Not able to enter Company name");
+					return false;
+				}
+				if (click(driver, getStatus(projectName, timeOut), "Deal status : " + status,
+						action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(2000);
+					appLog.info("Clicked on Deal status");
+
+					xpath = "//span[@title='" + status + "']";
+					WebElement dealStageEle = FindElement(driver, xpath, status, action.SCROLLANDBOOLEAN, timeOut);
+					ThreadSleep(2000);
+					if (click(driver, dealStageEle, status, action.SCROLLANDBOOLEAN)) {
+						appLog.info("Selected Deal status : " + status);
+					} else {
+						appLog.error("Not able to Select on Deal status : " + status);
+					}
+
+				} else {
+					appLog.error("Not able to Click on Deal status : ");
+				}
+				ThreadSleep(4000);
+				if (stage != null) {
+					if (click(driver, getDealStage(environment, mode, timeOut), "Deal stage : " + stage,
+							action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(2000);
+						appLog.info("Clicked on Deal stage");
+
+						xpath = "//label[text()='Stage']/following-sibling::*//span[@title='" + stage + "']";
+						WebElement dealStageEle = FindElement(driver, xpath, stage, action.SCROLLANDBOOLEAN, timeOut);
+						ThreadSleep(2000);
+						if (clickUsingJavaScript(driver, dealStageEle, stage, action.SCROLLANDBOOLEAN)) {
+							appLog.info("Selected Deal stage : " + stage);
+						} else {
+							appLog.error("Not able to Select on Deal stage : " + stage);
+						}
+
+					} else {
+						appLog.error("Not able to Click on Deal stage : ");
+					}
+				}
+
+				if (labelswithValues != null) {
+					for (String[] strings : labelswithValues) {
+						String labelText = strings[0].replace("_", " ");
+						if (labelText.equalsIgnoreCase("Source Contact") || labelText.equalsIgnoreCase("Source Firm")) {
+							if (sendKeys(driver, getSourceFirmAndSourceContactTextBox(labelText, 10), strings[1],
+									labelText + " text box", action.SCROLLANDBOOLEAN)) {
+								ThreadSleep(1000);
+								if (click(driver,
+										FindElement(driver,
+												"//*[text()='" + labelText + "']/..//*[@title='" + strings[1] + "']",
+												strings[1] + " auto suggest drop down list", action.BOOLEAN, 30),
+										strings[1] + "   : auto suggest drop down list", action.BOOLEAN)) {
+									appLog.info(strings[1] + "  is selected from auto suggest drop down list.");
+								} else {
+									appLog.info(strings[1] + "  is not selected from auto suggest drop down list.");
+									return false;
+								}
+
+							} else {
+								appLog.error("Not able to enter " + labelText + " value " + strings[1]
+										+ " in text box so cannot create Deal : " + dealName);
+								return false;
+							}
+						} else if (labelText.equalsIgnoreCase("Pipeline Comments")
+								|| labelText.equalsIgnoreCase("Deal Description")) {
+
+							if (sendKeys(driver,
+									FindElement(driver,
+											"//*[text()='" + labelText + "']/following-sibling::div//textarea",
+											labelText, action.SCROLLANDBOOLEAN, 30),
+									strings[1], labelText, action.SCROLLANDBOOLEAN)) {
+								appLog.info(strings[1] + "  is passed to pipeline comment input box.");
+
+							} else {
+								appLog.error("Not able to enter " + labelText + " value " + strings[1]
+										+ " in text box so cannot create Deal : " + dealName);
+								return false;
+							}
+
+						} else if (labelText.equalsIgnoreCase(excelLabel.Active.toString())) {
+
+							ele = FindElement(driver, "//input[@name='navmnaI__Active__c']", "Active checkbox",
+									action.BOOLEAN, timeOut);
+							if (strings[1].equalsIgnoreCase("true")) {
+
+								clickUsingJavaScript(driver, ele, "", action.BOOLEAN);
+								appLog.error("click on Checkbox ");
+
+							}
+						} else if (labelText.equalsIgnoreCase("Deal Type")) {
+							if (click(driver, getDealType(projectName, timeOut), "Deal type : " + labelText,
+									action.SCROLLANDBOOLEAN)) {
+								ThreadSleep(2000);
+								appLog.error("Clicked on Deal type");
+
+								xpath = "//span[@title='" + strings[1] + "']";
+								WebElement dealStageEle = FindElement(driver, xpath, strings[1],
+										action.SCROLLANDBOOLEAN, timeOut);
+								ThreadSleep(2000);
+								if (clickUsingJavaScript(driver, dealStageEle, strings[1], action.SCROLLANDBOOLEAN)) {
+									appLog.info("Selected Deal type : " + strings[1]);
+								} else {
+									appLog.error("Not able to Select on Deal typoe : " + strings[1]);
+								}
+
+							} else {
+								appLog.error("Not able to Click on Deal type : ");
+							}
+
+						} else {
+
+							if (sendKeys(driver,
+									FindElement(driver, "//*[text()='" + labelText + "']/following-sibling::div//input",
+											labelText, action.SCROLLANDBOOLEAN, 30),
+									strings[1], labelText, action.SCROLLANDBOOLEAN)) {
+								appLog.info(strings[1] + "  is passed to pipeline comment input box.");
+
+							} else {
+								appLog.error("Not able to enter " + labelText + " value " + strings[1]
+										+ " in text box so cannot create Deal : " + dealName);
+								return false;
+							}
+
+						}
+					}
+				}
+
+				if (click(driver, getEditSaveButton(30), "Save Button", action.SCROLLANDBOOLEAN)) {
+					appLog.info("Click on save Button");
+
+					ThreadSleep(3000);
+					String str = getText(driver, verifyCreatedItemOnPage(Header.Deal, dealName),
+							"Deal Name header Label Text", action.SCROLLANDBOOLEAN);
+					if (str != null) {
+						if (str.contains(dealName)) {
+							appLog.info("created Deal " + dealName + " is verified successfully.");
+							appLog.info(dealName + " is created successfully.");
+							flag = true;
+						} else {
+							appLog.error("Created  " + dealName + " is not matched with " + str);
+						}
+					} else {
+						appLog.error("Created  " + dealName + " is not visible");
+					}
+
+				} else {
+					appLog.error("Not Able to Click on save Button");
+				}
+
+			} else {
+				appLog.error("Not Able to Entered value on Deal Name TextBox : " + dealName);
+			}
+		} else {
+			appLog.error("Not Able to Click on New Button");
+		}
+
+		return flag;
+	}
+
+	public boolean changeDealStatusAndDealStage(String projectName, String dealName, String status, String stage,
+			int timeOut) {
+		boolean flag = false;
+		String xPath;
+
+		ThreadSleep(2000);
+		if (clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Edit, 10)) {
+			ThreadSleep(2000);
+			xPath = "//label[text()='Status']/..//div[contains(@class,'slds-listbox')]//span[@class='slds-truncate']";
+			if (CommonLib.dropDownHandle(driver, getStatusfield(20), xPath, "status", status)) {
+				appLog.info("The value " + status + " has been selected from status field");
+				if (stage != "" && stage != null) {
+					xPath = "//label[text()='Stage']/..//div[contains(@class,'slds-listbox')]//span[@class='slds-truncate']";
+					if (CommonLib.dropDownHandle(driver, getStagefield(20), xPath, "stage", stage)) {
+						appLog.info("The value " + stage + " has been selected from stage field");
+
+						if (click(driver, getCustomTabSaveBtn(projectName, 30), "Save Button",
+								action.SCROLLANDBOOLEAN)) {
+							appLog.info("Clicked on save button");
+							if (getCreatedConfirmationMsg(projectName,20) != null) {
+								appLog.info("Deal stage and status has been updated of Deal " + dealName);
+								flag = true;
+							} else {
+								appLog.error("Deal stage and status are not updated of Deal " + dealName);
+							}
+						} else {
+							appLog.error("Not Able to Click on save Button");
+						}
+
+					}
+				} else {
+					if (click(driver, getCustomTabSaveBtn(projectName, 30), "Save Button", action.SCROLLANDBOOLEAN)) {
+						appLog.info("Clicked on save button");
+						if (getCreatedConfirmationMsg(projectName,20) != null) {
+							appLog.info("Deal stage and status has been updated of Deal " + dealName);
+							flag = true;
+						} else {
+							appLog.error("Deal stage and status are not updated of Deal " + dealName);
+						}
+					} else {
+						appLog.error("Not Able to Click on save Button");
+					}
+				}
+			} else {
+				appLog.error("The value " + status + " is not selected from status field");
+			}
+
+		} else {
+			appLog.error("Not Able to Click on edit Button");
+		}
+		return flag;
+
+	}
 	
 	public boolean createDealFromNavigation(String dealName, String companyName)
 	{
@@ -1634,5 +1896,37 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return false;
 	}
 
+
+	public boolean clickOnCreatedDeal(String environment, String mode, String dealName) {
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			if (click(driver, getGoButton(60), "Go Button", action.BOOLEAN)) {
+				// WebElement dealname = FindElement(driver,
+				// "//div[@class='x-panel-bwrap']//span[text()='" + dealName + "']",
+				// "Partnership Legal Name", action.BOOLEAN, 60);
+				WebElement dealname = FindElement(driver, "//a[text()='" + dealName + "']", "Partnership Legal Name",
+						action.BOOLEAN, 60);
+				if (dealname != null) {
+					if (click(driver, dealname, "Partnership Name", action.SCROLLANDBOOLEAN)) {
+						appLog.info("Clicked on partnership name" + dealName + "successfully.");
+						return true;
+					} else {
+						appLog.error("Not able to click on partnership name");
+					}
+				} else {
+					appLog.error("Partnership name is not displaying");
+				}
+			} else {
+				appLog.error("Not able to click on go button so cannot click on created partnership");
+			}
+		} else {
+			if (clickOnAlreadyCreated_Lighting(environment, mode, TabName.DealTab, dealName, 30)) {
+				appLog.info("Clicked on partnership name" + dealName + "successfully.");
+				return true;
+			} else {
+				appLog.error("Not able to click on partnership name : " + dealName);
+			}
+		}
+		return false;
+	}
 
 }

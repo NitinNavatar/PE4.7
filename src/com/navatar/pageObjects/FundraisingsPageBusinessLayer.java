@@ -10,6 +10,7 @@ import com.navatar.generic.BaseLib;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
+import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.relevantcodes.extentreports.LogStatus;
@@ -115,6 +116,95 @@ public class FundraisingsPageBusinessLayer extends FundraisingsPage {
 		return false;
 	}
 
+	public boolean createFundRaising(String environment,String mode,String fundraisingName, String fundName, String legalName,String stage) {
+		ThreadSleep(5000);
+		if (click(driver, getNewButton(environment,mode,60), "New Button", action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(500);
+			if (sendKeys(driver, getFundraisingName(environment,mode,60), fundraisingName, "FundRaising Name", action.BOOLEAN)) {
+				ThreadSleep(500);
+				if (sendKeys(driver, getFundName(environment,mode,60), fundName, "Fund Name", action.BOOLEAN)) {
+					ThreadSleep(500);
+					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						ThreadSleep(1000);
+						if (click(driver,
+								FindElement(driver,
+										"//div[contains(@class,'listbox')]//*[@title='"+fundName+"']",
+										"Fund Name List", action.THROWEXCEPTION, 30),
+								fundName + "   :   Fund Name", action.BOOLEAN)) {
+							appLog.info(fundName + "  is present in list.");
+						} else {
+							appLog.info(fundName + "  is not present in the list.");
+						}
+					}
+					if (sendKeys(driver, getLegalName(environment,mode,60), legalName, "Legal Name", action.BOOLEAN)) {
+						ThreadSleep(500);
+						if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+							ThreadSleep(1000);
+							if (click(driver,
+									FindElement(driver,
+											"//li//*[@title='"+legalName+"']",
+											"Legal Name List", action.THROWEXCEPTION, 30),
+									legalName + "   :   Legal Name", action.SCROLLANDBOOLEAN)) {
+								appLog.info(legalName + "  is present in list.");
+							} else {
+								appLog.info(legalName + "  is not present in the list.");
+							}
+						}
+						
+						if (click(driver, getFundraisingStage(60), "Fundraising Stage", action.SCROLLANDBOOLEAN)) {
+							WebElement fundTypeEle = FindElement(driver,
+									"//label[text()='Stage']/following-sibling::div//span[@title='" + stage + "']", stage,
+									action.SCROLLANDBOOLEAN, 10);
+							ThreadSleep(500);
+							if (click(driver, fundTypeEle, stage, action.SCROLLANDBOOLEAN)) {
+
+							} else {
+								appLog.error("Not able to Select Fund Type");
+							}
+						} else {
+							appLog.error("Not able to Click on Fund Type");
+						}
+						
+						if (click(driver, getCustomTabSaveBtn(environment,60), "Save Button", action.SCROLLANDBOOLEAN)) {
+							ThreadSleep(500);
+							
+								ThreadSleep(2000);
+								String fundraising=null;
+								WebElement ele;
+								if (Mode.Lightning.toString().equalsIgnoreCase(mode)) {
+									String	xpath="//*[contains(text(),'Fundraising')]/..//*[text()='"+fundraisingName+"']";
+									 ele = FindElement(driver, xpath, "Header : "+fundraisingName, action.BOOLEAN, 30);
+								
+								} else {
+									ele=getFundraisingNameInViewMode(environment, mode, 60);
+								}
+								
+								if (ele!=null) {
+									appLog.info("Fundraising is created successfully.:" + fundraisingName);
+									return true;
+								} else {
+									appLog.info("FundRaising is not created successfully.:" + fundraisingName);
+								}
+							
+						} else {
+							appLog.error("Not able to click on save button");
+						}
+					} else {
+						appLog.error("Not able to enter legal Name");
+					}
+				} else {
+					appLog.error("Not able to enter fund name");
+				}
+			} else {
+				appLog.error("Not able to enter value in fundraiisng text box");
+			}
+		} else {
+			appLog.error("Not able to click on new button so we cannot create fundraising");
+		}
+		return false;
+	}
+
+	
 	public boolean clickOnCreatedFundRaising(String environment,String mode,String fundRaising){
 		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
 		if (getSelectedOptionOfDropDown(driver, getViewDropdown(60), "View dropdown", "text").equalsIgnoreCase("All")) {
@@ -428,4 +518,74 @@ public class FundraisingsPageBusinessLayer extends FundraisingsPage {
 		}
 		return flag;
 	}
+
+	public boolean clickOnCreatedFundraising(String environment, String mode, String fundraisingName) {
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			if (click(driver, getGoButton(60), "Go Button", action.BOOLEAN)) {
+				WebElement partnershipName = FindElement(driver,
+						"//div[@class='x-panel-bwrap']//span[text()='" + fundraisingName + "']", "Partnership Legal Name",
+						action.BOOLEAN, 60);
+				if (partnershipName != null) {
+					if (click(driver, partnershipName, "Partnership Name", action.SCROLLANDBOOLEAN)) {
+						appLog.info("Clicked on partnership name" + fundraisingName + "successfully.");
+						return true;
+					} else {
+						appLog.error("Not able to click on partnership name");
+					}
+				} else {
+					appLog.error("Partnership name is not displaying");
+				}
+			} else {
+				appLog.error("Not able to click on go button so cannot click on created partnership");
+			}
+		} else {
+			if (clickOnAlreadyCreated_Lighting(environment, mode, TabName.Fundraising, fundraisingName, 30)) {
+				appLog.info("Clicked on target name" + fundraisingName + "successfully.");
+				return true;
+			} else {
+				appLog.error("Not able to click on target name : " + fundraisingName);
+				return false;
+			}
+		}
+		return false;
+	}
+
+	public boolean changeFundraisingStage(String projectName, String mode, String stage, int timeOut) {
+		boolean flag = false;
+		stage = stage.replace("_", " ");
+		ThreadSleep(2000);
+		if (clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Edit,
+				10)) {
+			ThreadSleep(2000);
+			if (click(driver, getTargetStage(projectName, timeOut), "Fundraising stage : " + stage,
+					action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(2000);
+				appLog.info("Clicked on target stage");
+				String xpath = "//span[@title='" + stage + "']";
+				// String xpath="//div[@class='select-options']//li/a[@title='"+stage+"']";
+				WebElement dealStageEle = FindElement(driver, xpath, stage, action.SCROLLANDBOOLEAN, timeOut);
+				ThreadSleep(2000);
+				if (click(driver, dealStageEle, stage, action.SCROLLANDBOOLEAN)) {
+					appLog.info("Selected Fundraising stage : " + stage);
+				} else {
+					appLog.error("Not able to Select on Fundraising stage : " + stage);
+				}
+
+			} else {
+				appLog.error("Not able to Click on Fundraising stage : ");
+			}
+			ThreadSleep(2000);
+			if (click(driver, getEditSaveButton(30), "Save Button", action.SCROLLANDBOOLEAN)) {
+				appLog.info("Click on save Button");
+				flag = true;
+				ThreadSleep(2000);
+			} else {
+				appLog.error("Not Able to Click on save Button");
+			}
+		} else {
+			appLog.error("Not Able to Click on edit Button");
+		}
+		return flag;
+	}
+
 }
