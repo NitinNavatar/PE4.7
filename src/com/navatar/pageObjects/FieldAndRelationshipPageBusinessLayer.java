@@ -242,7 +242,7 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 		{
 			log(LogStatus.INFO,"Field value has been passed in "+fieldName,YesNo.No);
 			CommonLib.ThreadSleep(6000);
-			xPath="//span[text()='"+fieldName+"']";
+			xPath="//a//span[text()='"+fieldName+"']";
 			ele = FindElement(driver, xPath, fieldName + " xpath", action.SCROLLANDBOOLEAN, 30);
 			if (CommonLib.click(driver, ele,fieldName+" field" , action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "clicked on Field" + fieldName, YesNo.No);

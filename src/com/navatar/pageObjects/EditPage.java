@@ -713,10 +713,10 @@ public class EditPage extends BasePageBusinessLayer {
 	public WebElement tabNameElementInEditPage(String tabName, int timeOut) {
 
 		try {
-			return FindElement(driver, "//span[text()=\""+tabName+"\" and @class=\"uiOutputText\"]/parent::a",
+			return FindElement(driver, "//span[text()=\""+tabName+"\" and (@class='uiOutputText' or @data-aura-class='uiOutputText')]/parent::a",
 					"Tab Name: " + tabName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, "//span[text()=\""+tabName+"\" and @class=\"uiOutputText\"]/parent::a",
+			return FindElement(driver, "//span[text()=\""+tabName+"\" and (@class='uiOutputText' or @data-aura-class='uiOutputText')]/parent::a",
 					"Tab Name: " + tabName, action.SCROLLANDBOOLEAN, timeOut);
 		}
 
@@ -730,7 +730,7 @@ public class EditPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "(//span[text()='Details' and @class='uiOutputText'])[2]/parent::a")
+	@FindBy(xpath = "(//span[text()='Details' and (@class='uiOutputText' or @data-aura-class='uiOutputText')])[2]/parent::a")
 	private WebElement detailTabCreatedAfterAddTab;
 
 	public WebElement detailTabCreatedAfterAddTab(int timeOut) {

@@ -487,7 +487,9 @@ public class ContactsPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "//button[text()='New Referral']/ancestor::li/following-sibling::li//button")
+//	@FindBy(xpath = "//button[text()='New Referral']/ancestor::li/following-sibling::li//button")
+	@FindBy(xpath = "//button[@class='slds-button slds-button_icon-border-filled']//lightning-primitive-icon")
+
 	private WebElement contactPageOnProfileEroButton;
 
 	public WebElement getcontactPageOnProfileEroButton(String projectName, int timeOut) {
@@ -496,7 +498,9 @@ public class ContactsPage extends BasePageBusinessLayer {
 
 	}
 
+//	@FindBy(xpath = "//span[text()='Delete']")
 	@FindBy(xpath = "//span[text()='Delete']")
+
 	private WebElement contactPageDeleteButton;
 
 	public WebElement getcontactPageDeleteButton(String projectName, int timeOut) {

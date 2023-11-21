@@ -3653,7 +3653,7 @@ public class HomePageBusineesLayer extends HomePage {
 				parentid = switchOnWindow(driver);
 				if (parentid != null) {
 					ThreadSleep(5000);
-					WebElement sdgHeader = FindElement(driver, "//h1//*[text()='" + SDGName + "']",
+					WebElement sdgHeader = FindElement(driver, "//*[text()='" + SDGName + "']",
 							SDGName + " tag name xpath", action.BOOLEAN, 10);
 					if (sdgHeader != null) {
 						log(LogStatus.PASS, SDGName + " tag name is displaying ", YesNo.No);
@@ -3829,7 +3829,7 @@ public class HomePageBusineesLayer extends HomePage {
 		parentid = switchOnWindow(driver);
 		if (parentid != null) {
 			ThreadSleep(5000);
-			WebElement sdgHeader = FindElement(driver, "//h1//*[text()='" + SDGName + "']", SDGName + " tag name xpath",
+			WebElement sdgHeader = FindElement(driver, "//*[text()='" + SDGName + "']", SDGName + " tag name xpath",
 					action.BOOLEAN, 10);
 			if (sdgHeader != null) {
 				log(LogStatus.PASS, SDGName + " tag name is displaying ", YesNo.No);
@@ -4424,8 +4424,14 @@ public class HomePageBusineesLayer extends HomePage {
 			if (monthLength == 1) {
 				dates = "0" + dates;
 			}
+			
+			if(dates.equalsIgnoreCase("Invalid Date")) {
+				System.out.println("No need to add");
+			}else {
+				dateResolved.add(dates);
+			}
 
-			dateResolved.add(dates);
+			
 
 		}
 		/* Sorting the ArrayList using Collections.sort() method */
@@ -4433,7 +4439,7 @@ public class HomePageBusineesLayer extends HomePage {
 		List<Date> pureDatesList = dateResolved.stream().filter(s -> !s.equals("")).map(date -> {
 			try {
 
-				return new SimpleDateFormat("MM/dd/yyyy").parse(date);
+				return new SimpleDateFormat("M/d/yyyy").parse(date);
 
 			} catch (java.text.ParseException e) {
 				e.printStackTrace();
@@ -4441,7 +4447,7 @@ public class HomePageBusineesLayer extends HomePage {
 			return null;
 		}).collect(Collectors.toList());
 
-		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+		SimpleDateFormat formatter = new SimpleDateFormat("M/d/yyyy");
 
 		Collections.sort(pureDatesList, new Comparator<Date>() {
 			@Override

@@ -2152,7 +2152,7 @@ public class HomePage extends BasePageBusinessLayer {
 
 	public WebElement listButtonOnSDG(String sdgName, String buttonText, int timeOut) {
 
-		String xpath = "//a[text()='" + sdgName + "']/ancestor::header//div//button[text()='" + buttonText + "']";
+		String xpath = "//a[text()='" + sdgName + "']/ancestor::div//button[text()='" + buttonText + "']";
 		try {
 			return FindElement(driver, xpath, "SelectTagOfFilterInSDG", action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -2307,7 +2307,7 @@ public class HomePage extends BasePageBusinessLayer {
 
 	public WebElement getClonnedSDGViewAllClick(int timeOut) {
 		// String xpath ="//a//div//span[text()='Sortable Data Grid Fields']/..";
-		String xpath = "//a//div//span[text()=\"Sortable Data Grid Fields\"]//ancestor::a";
+		String xpath = "//span[text()=\"Sortable Data Grid Fields\"]//ancestor::span[@class='view-all-label']/..";
 
 		return isDisplayed(driver, FindElement(driver, xpath, "View All Click", action.SCROLL, 30), "Visibility",
 				timeOut, "Clonned SDG View All Click");
@@ -2315,7 +2315,7 @@ public class HomePage extends BasePageBusinessLayer {
 	}
 
 	public List<WebElement> getClonnedSDGColumns(int timeOut) {
-		String xpath = "//span[@title='Override Label']//ancestor::table//td[3]/span/span";
+		String xpath = "//div[contains(@class,'ViewMode-normal')]//span[@title='Override Label']//ancestor::table//td[3]//span";
 		return FindElements(driver, xpath, "Clonned SDG Columns");
 	}
 

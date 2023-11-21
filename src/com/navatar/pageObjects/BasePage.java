@@ -3292,7 +3292,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, refrshActivity, "Visibility", timeOut, "refrshActivity");
 	}
 
-	@FindBy(xpath = "//button[@title='Select a List View']")
+	@FindBy(xpath = "//button[contains(@title,'Select a List View')]")
 	private WebElement selectListIcon_Lighting;
 
 	/**
@@ -5638,7 +5638,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, filterFielddropdown, "Visibility", timeOut, "filterFielddropdown");
 	}
 
-	@FindBy(xpath = "//label[text()='Field']/parent::lightning-combobox//span[@class='slds-truncate']")
+	@FindBy(xpath = "//label[text()='Field']/ancestor::lightning-combobox//span[@class='slds-truncate']")
 	private List<WebElement> filterFielddropdownlist;
 
 	public List<WebElement> getfilterFielddropdownlist(String projectName, int timeOut) {
@@ -5652,7 +5652,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, filterOperatordropdown, "Visibility", timeOut, "OperatorFielddropdown");
 	}
 
-	@FindBy(xpath = "//label[text()='Operator']/parent::lightning-combobox//span[@class='slds-truncate']")
+	@FindBy(xpath = "//label[text()='Operator']/ancestor::lightning-combobox//span[@class='slds-truncate']")
 	private List<WebElement> filterOperatordropdownlist;
 
 	public List<WebElement> getfilterOperatordropdownlist(String projectName, int timeOut) {
@@ -5730,7 +5730,7 @@ public abstract class BasePage extends BaseLib {
 	}
 
 	public WebElement getUserNameHeader(String userName, int timeOut) {
-		String xpath = "//h2[contains(text(),'"+userName+"')]";
+		String xpath = "//div[contains(@class,'UserProfile')]//span[contains(text(),'"+userName+"')]";
 		WebElement ele = FindElement(driver, xpath, "User Header Found: " + userName, action.SCROLLANDBOOLEAN, timeOut);
 		try {
 			return isDisplayed(driver, ele, "Visibility", timeOut, "User Header Found: " + userName);
