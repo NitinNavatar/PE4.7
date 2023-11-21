@@ -10508,4 +10508,15 @@ public abstract class BasePage extends BaseLib {
 		return FindElement(driver, path, "info popup message", action.BOOLEAN, timeOut).getText();
 	}
 
+	@FindBy(xpath = "//button[@name=\"SaveEdit\"]")
+
+	private WebElement editSaveButton;
+
+	/**
+	 * @return the customTabSelectedList
+	 */
+	public WebElement getEditSaveButton(int timeOut) {
+		return isDisplayed(driver, editSaveButton, "Visibility", timeOut, "Edit Save Button");
+	}
+	
 }

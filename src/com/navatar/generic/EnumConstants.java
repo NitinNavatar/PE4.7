@@ -134,7 +134,7 @@ public class EnumConstants {
 		Task_Subject, Task_Status, User_Name, OrgPassword, Password, Participants, Tags, MeetingAndCallsHeader,
 		ValidationRuleErrorMsg, ValidationRuleErrorMsgLocation, CreateNewRecordPopUp, AddContactsToDealTeamPopUp,
 		AddContactsToFundraisingPopup, Classification, ValidationRuleFormula, ParticipantRecord,
-		ParticipantRecordObject, TagsRecord, TagsObject, Tab_Name, Record_Name, RecordName, ObjectName,NextTouchPointDay,NextTouchPointDate,External_ContactName,External_FirmName,External_Title,External_MeetingAndCallCount, Assigned;
+		ParticipantRecordObject, TagsRecord, TagsObject, Tab_Name, Record_Name, RecordName, ObjectName,NextTouchPointDay,NextTouchPointDate,External_ContactName,External_FirmName,External_Title,External_MeetingAndCallCount, Assigned, Fundraising_Name, Active;
 
 	};
 
@@ -320,7 +320,7 @@ public class EnumConstants {
 			}
 		},
 		Prospect, Interested, Sent_PPM, Declined, Deny, Verbal_Commitment, Follow_up_Diligence, New_Interested,
-		New_Stage_Verification;
+		New_Stage_Verification, Completed;
 	}
 
 	public static enum YesNo {
@@ -2208,5 +2208,9 @@ public class EnumConstants {
 	}
 	public static enum Interactionslabel {
 		Type,Date,Subject,Details,Participants,Tags;
+	}
+	
+	public static enum ApiHeader {
+		Subject, StartDateTime, EndDateTime, Description, WhoId;
 	}
 }

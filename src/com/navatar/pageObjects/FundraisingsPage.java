@@ -93,7 +93,23 @@ public class FundraisingsPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, deleteFundRaisingConfirmationMsg, "Visibility", timeOut, "fundraising delete confirmation message");
 	}
 	
-	
+	@FindBy(xpath = "//label[text()='Stage']/following-sibling::div//button")
+	private WebElement fundraisingStage;
+
+	public WebElement getFundraisingStage(int timeOut) {
+		return isDisplayed(driver, fundraisingStage, "Visibility", timeOut, "fundraising Stage");
+	}
 	
 
+	@FindBy(xpath = "//*[text()='Stage']/..//div//button")
+	private WebElement targetStageDropDownList;
+
+	/**
+	 * @return the fundType
+	 */
+	public WebElement getTargetStage(String projectName, int timeOut) {
+
+		return isDisplayed(driver, targetStageDropDownList, "Visibility", timeOut, "target Stage");
+
+	}	
 }
