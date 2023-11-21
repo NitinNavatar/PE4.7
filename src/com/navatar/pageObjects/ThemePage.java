@@ -5,7 +5,9 @@ import static com.navatar.generic.CommonLib.FindElements;
 import static com.navatar.generic.CommonLib.isDisplayed;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -503,4 +505,652 @@ public class ThemePage extends BasePageBusinessLayer {
 	
 	return isDisplayed(driver, type, "Visibility", timeOut, ContactName);
 	}
+   
+   @FindBy(xpath = "//div[text()='No items to display']")
+	private WebElement themeNoItemDisplay;
+
+	public WebElement themeNoItemDisplay(int timeOut) {
+
+		return isDisplayed(driver, themeNoItemDisplay, "Visibility", timeOut, "themeNoItemDisplay");
+	}
+	
+	public List<WebElement> themeOuterButtons() {
+		return FindElements(driver,
+				"//ul[@class='slds-button-group-list']/li//button[contains(@class,'slds-button_neutral')]",
+				"themeOuterButtons");
+	}
+	
+	@FindBy(xpath = "//*[text()='Show more actions']/ancestor::lightning-button-menu")
+	private WebElement downArrowButtonInTheme;
+
+	public WebElement downArrowButtonInTheme(int timeOut) {
+
+		return isDisplayed(driver, downArrowButtonInTheme, "Visibility", timeOut, "downArrowButtonInTheme");
+	}
+	
+	public List<WebElement> themeInnerButtons() {
+		return FindElements(driver, "//div[contains(@class,'slds-dropdown_right')]//a/span", "themeInnerButtons");
+	}
+	
+	@FindBy(xpath = "//label[text()='Existing Theme Name']/..//span[@title]")
+	private WebElement existingThemeNameVerify;
+
+	public WebElement existingThemeNameVerify(int timeOut) {
+
+		return isDisplayed(driver, existingThemeNameVerify, "Visibility", timeOut, "existingThemeNameVerify");
+	}
+	
+	@FindBy(xpath = "//label[text()='Existing Theme Name']/parent::slot//button[@title='Remove']")
+	private WebElement existingThemeRemoveButtton;
+
+	public WebElement existingThemeRemoveButtton(int timeOut) {
+
+		return isDisplayed(driver, existingThemeRemoveButtton, "Visibility", timeOut, "existingThemeRemoveButtton");
+	}
+	
+	@FindBy(xpath = "//label[text()='Existing Theme Name']/ancestor::*//input[@placeholder='Search Themes...']")
+	private WebElement existingThemeNameInput;
+
+	public WebElement existingThemeNameInput(int timeOut) {
+
+		return isDisplayed(driver, existingThemeNameInput, "Visibility", timeOut, "existingThemeNameInput");
+	}
+	
+	public WebElement existingThemeNameDropDown(String existingThemeName, int timeOut) {
+
+		String xpath = "//*[text()='" + existingThemeName + "']/ancestor::div[@data-name]";
+		WebElement type = FindElement(driver, xpath, existingThemeName, action.SCROLLANDBOOLEAN, timeOut);
+
+		return isDisplayed(driver, type, "Visibility", timeOut, existingThemeName);
+
+	}
+	
+	@FindBy(xpath = "//*[text()='Copy All Interactions']/ancestor::span//input")
+	private WebElement copyAllInteractionCheckBox;
+
+	public WebElement copyAllInteractionCheckBox(int timeOut) {
+
+		return isDisplayed(driver, copyAllInteractionCheckBox, "Visibility", timeOut, "copyAllInteractionCheckBox");
+	}
+	
+	public WebElement copyThemeSaveOrCancelButton(String buttonName, int timeOut) {
+
+		String xpath = "//div[@class='slds-modal__footer']//button[text()=\"" + buttonName + "\"]";
+
+		List<WebElement> elements = FindElements(driver, xpath, "copyThemeSaveOrCancelButton: " + buttonName);
+
+		for (WebElement ele : elements) {
+
+			if (ele.isDisplayed()) {
+				return ele;
+			}
+
+		}
+		return null;
+
+	}
+	
+	@FindBy(xpath = "//h1[text()='Copy Theme']")
+	private WebElement copyThemeHeader;
+
+	public WebElement copyThemeHeader(int timeOut) {
+
+		return isDisplayed(driver, copyThemeHeader, "Visibility", timeOut, "copyThemeHeader");
+	}
+	
+	public WebElement copyThemeErrorMsg(int timeOut) {
+
+		String xpath = "//h2[text()='Review the errors on this page.']/parent::div/following-sibling::p";
+		WebElement type = FindElement(driver, xpath, "Copy Theme Error Msg: ", action.SCROLLANDBOOLEAN, timeOut);
+
+		return isDisplayed(driver, type, "Visibility", timeOut, "Copy Theme Error Msg: ");
+
+	}
+	
+	@FindBy(xpath = "//button[contains(@aria-label,\"Custom Theme Picklist\")]")
+	private WebElement customThemePicklistComboxBox;
+
+	public WebElement customThemePicklistComboxBox(int timeOut) {
+
+		return isDisplayed(driver, customThemePicklistComboxBox, "Visibility", timeOut, "customThemePicklistComboxBox");
+	}
+	
+	public WebElement customThemePicklistComboxBoxDropDownValue(String value, int timeOut) {
+
+		String xpath = "//span[text()=\"" + value + "\"]/ancestor::lightning-base-combobox-item";
+		WebElement type = FindElement(driver, xpath, "customThemePicklistComboxBoxDropDownValue: " + value,
+				action.SCROLLANDBOOLEAN, timeOut);
+
+		return isDisplayed(driver, type, "Visibility", timeOut, "customThemePicklistComboxBoxDropDownValue: " + value);
+
+	}
+	
+	public WebElement updateThemeFooterButton(String buttoName, int timeOut) {
+		List<WebElement> eleList = FindElements(driver, "//lightning-button//button[text()=\"" + buttoName + "\"]",
+				"Save Button");
+		for (WebElement webElement : eleList) {
+			webElement = isDisplayed(driver, webElement, "Visibility", 2, "updateThemeFooterButton: " + buttoName);
+			if (webElement != null) {
+				return webElement;
+			}
+		}
+
+		return null;
+	}
+	
+	@FindBy(xpath = "//div/h1[text()=\"New Theme\"]")
+	private WebElement newThemeHeader;
+
+	public WebElement newThemeHeader(int timeOut) {
+
+		return isDisplayed(driver, newThemeHeader, "Visibility", timeOut, "newThemeHeader");
+
+	}
+	
+	@FindBy(xpath = "//lightning-icon[@title=\"Close\"]")
+	private WebElement newThemeCloseIcon;
+
+	public WebElement newThemeCloseIcon(int timeOut) {
+
+		return isDisplayed(driver, newThemeCloseIcon, "Visibility", timeOut, "newThemeCloseIcon");
+
+	}
+	
+	public WebElement themeFieldOfTextArea(String labelName, int timeOut) {
+
+		String xpath = "//label[text()=\"" + labelName + "\"]/ancestor::lightning-textarea//textarea";
+		WebElement type = FindElement(driver, xpath, "themeFieldOfTextArea: ", action.SCROLLANDBOOLEAN, timeOut);
+
+		return isDisplayed(driver, type, "Visibility", timeOut, "themeFieldOfTextArea: ");
+
+	}
+	
+	@FindBy(xpath = "(//span[text()='Description']/ancestor::lightning-layout/following-sibling::*//li)[1]")
+	private WebElement themeDescriptionText;
+
+	public WebElement themeDescriptionText(int timeOut) {
+
+		return isDisplayed(driver, themeDescriptionText, "Visibility", timeOut, "themeDescriptionText");
+	}
+	
+	@FindBy(xpath = "//ul//a[text()=\"show more\"]")
+	private WebElement descriptionShowMoreLink;
+
+	public WebElement descriptionShowMoreLink(int timeOut) {
+
+		return isDisplayed(driver, descriptionShowMoreLink, "Visibility", timeOut, "descriptionShowMoreLink");
+
+	}
+	
+	@FindBy(xpath = "//span[text()='Description']/ancestor::lightning-layout/following-sibling::*//p/..//li")
+	private WebElement themeTeamText;
+
+	public WebElement themeTeamText(int timeOut) {
+
+		return isDisplayed(driver, themeTeamText, "Visibility", timeOut, "themeTeamText");
+	}
+	
+	@FindBy(xpath = "//*[@title=\"Add Team Member\"]")
+	private WebElement addTeamMemberPlusIconButton;
+
+	public WebElement addTeamMemberPlusIconButton(int timeOut) {
+
+		return isDisplayed(driver, addTeamMemberPlusIconButton, "Visibility", timeOut, "addTeamMemberPlusIconButton");
+
+	}
+	
+	@FindBy(xpath = "//*[text()='New Team Member']/ancestor::header/following-sibling::div//*[text()='Theme']/parent::div/following-sibling::div//span/span")
+	private WebElement teamMemberThemeName;
+
+	public WebElement teamMemberThemeName(int timeOut) {
+
+		return isDisplayed(driver, teamMemberThemeName, "Visibility", timeOut, "teamMemberThemeName");
+	}
+	
+	@FindBy(xpath = "//*[text()='New Team Member']/ancestor::header/following-sibling::div//*[text()='Member']/ancestor::label/following-sibling::div//input")
+	private WebElement teamMemberThemeMemberInputBox;
+
+	public WebElement teamMemberThemeMemberInputBox(int timeOut) {
+
+		return isDisplayed(driver, teamMemberThemeMemberInputBox, "Visibility", timeOut,
+				"teamMemberThemeMemberInputBox");
+	}
+	
+	public WebElement teamMemberThemeMemberSelection(String memberName, int timeOut) {
+
+		String xpath = "//*[text()='New Team Member']/ancestor::header/following-sibling::div//*[text()='Member']/ancestor::label/following-sibling::*//div[@title='"
+				+ memberName + "']/ancestor::a";
+		WebElement type = FindElement(driver, xpath, "teamMemberThemeMemberSelection: " + memberName,
+				action.SCROLLANDBOOLEAN, timeOut);
+
+		return isDisplayed(driver, type, "Visibility", timeOut, "teamMemberThemeMemberSelection: " + memberName);
+
+	}
+	
+	@FindBy(xpath = "//*[text()='New Team Member']/ancestor::header/following-sibling::div//*[text()='Role']/ancestor::span/following-sibling::*//a")
+	private WebElement teamMemberRoleButton;
+
+	public WebElement teamMemberRoleButton(int timeOut) {
+
+		return isDisplayed(driver, teamMemberRoleButton, "Visibility", timeOut, "teamMemberRoleButton");
+	}
+	
+	public WebElement teamMemberRoleSelection(String role, int timeOut) {
+
+		String xpath = "//a[@role=\"menuitemradio\" and text()=\"" + role + "\"]";
+		WebElement type = FindElement(driver, xpath, "teamMemberRoleSelection: " + role, action.SCROLLANDBOOLEAN,
+				timeOut);
+
+		return isDisplayed(driver, type, "Visibility", timeOut, "teamMemberRoleSelection: " + role);
+
+	}
+	
+	public WebElement teamMemberButtonName(String buttonName, int timeOut) {
+
+		String xpath = "//*[text()=\"New Team Member\"]/ancestor::header/following-sibling::footer//span[text()=\""
+				+ buttonName + "\"]/ancestor::button";
+		WebElement type = FindElement(driver, xpath, "teamMemberButtonName: " + buttonName, action.SCROLLANDBOOLEAN,
+				timeOut);
+
+		return isDisplayed(driver, type, "Visibility", timeOut, "teamMemberButtonName: " + buttonName);
+
+	}
+	
+	@FindBy(xpath = "//span[contains(@class,\"toastMessage\")][contains(normalize-space(), \"was created.\")]")
+	private WebElement addTeamMemberSuccessMsg;
+
+	public WebElement addTeamMemberSuccessMsg(int timeOut) {
+
+		return isDisplayed(driver, addTeamMemberSuccessMsg, "Visibility", timeOut, "addTeamMemberSuccessMsg");
+
+	}
+	
+	@FindBy(xpath = "//ul[contains(@class,\"errorsList\")]//li")
+	private WebElement addTeamMemberErrorMsg;
+
+	public WebElement addTeamMemberErrorMsg(int timeOut) {
+
+		return isDisplayed(driver, addTeamMemberErrorMsg, "Visibility", timeOut, "addTeamMemberErrorMsg");
+
+	}
+	
+	
+	
+	public List<WebElement> AddTeamMemberNameDataElements() {
+		return FindElements(driver,
+				"//*[contains(@class,\"themteamdatatable\")]//tbody//tr/th[@data-label=\"Name\"]" + "",
+				"AddTeamMemberHeaders");
+	}
+	
+	@FindBy(xpath = "//span[text()='Delete']/ancestor::button")
+	private WebElement themeDeleteConfirmButton;
+
+	public WebElement themeDeleteConfirmButton(int timeOut) {
+
+		return isDisplayed(driver, themeDeleteConfirmButton, "Visibility", timeOut, "themeDeleteConfirmButton");
+	}
+	
+	@FindBy(xpath = "//span[contains(@class,'toastMessage')][contains(normalize-space(), \"was deleted.\")]")
+	private WebElement themeDeleteTastMsg;
+
+	public WebElement themeDeleteTastMsg(int timeOut) {
+
+		return isDisplayed(driver, themeDeleteTastMsg, "Visibility", timeOut, "themeDeleteTastMsg");
+	}
+	
+	@FindBy(xpath = "//*[@title='Remove Team Member']")
+	private WebElement removeTeamMemberMinusIconButton;
+
+	public WebElement removeTeamMemberMinusIconButton(int timeOut) {
+
+		return isDisplayed(driver, removeTeamMemberMinusIconButton, "Visibility", timeOut,
+				"removeTeamMemberMinusIconButton");
+
+	}
+	
+	@FindBy(xpath = "//input[contains(@class,\"datatable-select-all\")]")
+	private WebElement teamMemberAllCheckBoxInput;
+
+	public WebElement teamMemberAllCheckBoxInput(int timeOut) {
+		return isDisplayed(driver, teamMemberAllCheckBoxInput, "Visibility", timeOut, "teamMemberAllCheckBoxInput");
+
+	}
+	
+	public WebElement checBoxOfTeamMembers(String teamMemberName, String roleName, int timeOut) {
+
+		String xpath = "//*[contains(@class,\"themteamdatatable\")]//tbody//tr//*[text()=\"" + teamMemberName
+				+ "\"]/ancestor::tr//*[text()=\"" + roleName + "\"]/ancestor::tr//*[@type=\"checkbox\"]";
+		WebElement type = FindElement(driver, xpath,
+				"checBoxOfTeamMembers: " + teamMemberName + " with Role: " + roleName, action.SCROLLANDBOOLEAN,
+				timeOut);
+
+		return isDisplayed(driver, type, "Visibility", timeOut,
+				"checBoxOfTeamMembers: " + teamMemberName + " with Role: " + roleName);
+
+	}
+	
+	public WebElement teamMemberButton(String teamMemberButtonName, int timeOut) {
+
+		String xpath = "//lightning-button//button[text()=\"" + teamMemberButtonName + "\"]";
+		WebElement type = FindElement(driver, xpath, "teamMemberButtonName: " + teamMemberButtonName,
+				action.SCROLLANDBOOLEAN, timeOut);
+
+		return isDisplayed(driver, type, "Visibility", timeOut, "teamMemberButtonName: " + teamMemberButtonName);
+
+	}
+	
+	@FindBy(xpath = "//p[text()=\"No items to display\"]")
+	private WebElement noRecordFoundThemeTeam;
+
+	public WebElement noRecordFoundThemeTeam(int timeOut) {
+		return isDisplayed(driver, noRecordFoundThemeTeam, "Visibility", timeOut, "noRecordFoundThemeTeam");
+
+	}
+	
+	@FindBy(xpath = "//div[contains(@class,\"main-Container-themeteam\")]//p")
+	private WebElement themeTeamErrorMsg;
+
+	public WebElement themeTeamErrorMsg(int timeOut) {
+		return isDisplayed(driver, themeTeamErrorMsg, "Visibility", timeOut, "themeTeamErrorMsg");
+
+	}
+	
+	public List<WebElement> researchResultsGridCountsInTheme() {
+		return FindElements(driver,
+				"//div[contains(@class,'slds-col slds-size_9-of-12')]//div[contains(@class,'slds-col slds-size_1-of-1')]//span[contains(@class,'slds-page-header__title') and not(contains(text(),'(0)'))]",
+				"researchResultsGridCountsInTheme");
+	}
+	
+	public List<WebElement> recordsNamesOnTaggedSection(String tagNameOnTaggedSection, int timeOut) {
+
+		String xpath = "//span[text()='" + tagNameOnTaggedSection + "']/ancestor::table//lightning-formatted-url//a";
+
+		List<WebElement> recordsNameOnTagged = FindElements(driver, xpath, "recordsNameOnTaggedSection");
+
+		for (int i = 0; i < 3; i++) {
+			if (recordsNameOnTagged.size() == 0) {
+				recordsNameOnTagged = FindElements(driver, xpath, "recordsNameOnTaggedSection");
+			} else {
+				break;
+			}
+		}
+
+		return recordsNameOnTagged;
+	}
+	
+	public WebElement themeRecordPageName(String tabNameFromPropertyFile, String themeRecordName, int timeOut) {
+
+		String xpath = "//div[contains(@class,\"entityNameTitle\") and text()=\"" + tabNameFromPropertyFile
+				+ "\"]/following-sibling::*/*[text()=\"" + themeRecordName + "\"]";
+		try {
+			return FindElement(driver, xpath, "Record name: " + themeRecordName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Record name: " + themeRecordName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+	
+	public WebElement recordsNameOnTaggedSection(String tagNameOnTaggedSection, String themeRecordName, int timeOut) {
+
+		String xpath = "//span[text()=\"" + tagNameOnTaggedSection
+				+ "\"]/ancestor::table//lightning-formatted-url//a[text()=\"" + themeRecordName + "\"]";
+		try {
+			return FindElement(driver, xpath, "Record name: " + themeRecordName, action.BOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Record name: " + themeRecordName, action.BOOLEAN, timeOut);
+		}
+
+	}
+	
+	public List<WebElement> themeGridsHeaders(String sectionName) {
+		return FindElements(driver, "(//span[@title=\"" + sectionName
+				+ "\" and not(contains(text(),\"(0)\"))]/ancestor::div[contains(@class,\"slds-box\")]/following-sibling::div)[1]//table//thead//th//span[@class=\"slds-truncate\"]",
+				"themeGridsHeaders");
+	}
+	
+	public WebElement themeGridsViewAllButton(String sectionName, int timeOut) {
+
+		String xpath = "(//span[@title=\"" + sectionName
+				+ "\" and not(contains(text(),\"(0)\"))]/ancestor::div[contains(@class,\"slds-box\")]/following-sibling::div)[1]/div/div//button[text()=\"View All\"]";
+		WebElement type = FindElement(driver, xpath, "themeGridsViewAllButton", action.SCROLLANDBOOLEAN, timeOut);
+
+		return isDisplayed(driver, type, "Visibility", timeOut, "themeGridsViewAllButton");
+
+	}
+	
+	public WebElement themeGridsSortingButton(String sectionName, int timeOut) {
+
+		String xpath = "//span[@title='" + sectionName
+				+ "']/ancestor::ul/following-sibling::ul//span[text()='Sorted by']/ancestor::ul//button";
+		WebElement type = FindElement(driver, xpath, "themeGridsSortingButton: " + sectionName, action.SCROLLANDBOOLEAN,
+				timeOut);
+
+		return isDisplayed(driver, type, "Visibility", timeOut, "themeGridsSortingButton: " + sectionName);
+
+	}
+	
+	public WebElement themeGridsSortingButtonOptionsValue(String sectionName, String sortByValue, int timeOut) {
+
+		String xpath = "//span[@title='" + sectionName
+				+ "']/ancestor::ul/following-sibling::ul//span[text()='Sorted by']/ancestor::ul//button/../following-sibling::div//*[text()='"
+				+ sortByValue + "']/ancestor::lightning-base-combobox-item";
+		WebElement type = FindElement(driver, xpath,
+				"themeGridsSortingButtonOptionsValue, Section: " + sectionName + " & SortByValue: " + sortByValue,
+				action.SCROLLANDBOOLEAN, timeOut);
+
+		return isDisplayed(driver, type, "Visibility", timeOut,
+				"themeGridsSortingButtonOptionsValue, Section: " + sectionName + " & SortByValue: " + sortByValue);
+
+	}
+	
+	public List<WebElement> interactionAllIcons() {
+
+		String xpath = "//th//lightning-icon";
+		List<WebElement> ele = FindElements(driver, xpath, "Interactions Tab All Icons");
+		for (int i = 0; i < 3; i++) {
+			if (ele.size() == 0) {
+				ele = FindElements(driver, xpath, "Interactions Tab All Icons");
+			} else
+				break;
+		}
+
+		return ele;
+	}
+	
+	public WebElement themeGridsclumnAndRowWiseData(String sectionName, int columnIndex, int rowIndex, int timeOut) {
+
+		String xpath = "(//span[@title=\"" + sectionName
+				+ "\" and not(contains(text(),\"(0)\"))]/ancestor::div[contains(@class,\"slds-box\")]/following-sibling::div)[1]//table//tbody/tr["
+				+ rowIndex + "]/*[" + columnIndex + "]";
+
+		String xpath2 = "(//span[@title=\"" + sectionName
+				+ "\" and not(contains(text(),\"(0)\"))]/ancestor::div[contains(@class,\"slds-box\")]/following-sibling::div)[1]//table//tbody/tr["
+				+ rowIndex + "]/*[" + columnIndex + "]//*";
+
+		List<WebElement> types = FindElements(driver, xpath2, sectionName);
+		for (WebElement type : types) {
+			System.out.println("Type of Element: " + type.getTagName());
+			if (type.getTagName().equals("a") || type.getTagName().equals("input")
+					|| type.getTagName().equals("button")) {
+				return type;
+			}
+		}
+		return isDisplayed(driver, FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, timeOut), "Visibility",
+				timeOut, sectionName);
+
+	}
+	
+	public WebElement popUpOfIntractionPage(int timeOut) {
+
+		String xpath = "//lightning-layout//h2";
+		WebElement ele = FindElement(driver, xpath, "subject of Interaction page: ", action.SCROLLANDBOOLEAN, timeOut);
+		try {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "subject of Interaction page: ");
+
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "subject of Interaction page: ");
+		}
+	}
+	
+	public WebElement dataOfSectionBasedOnColumn(String sectionName, String recordName, String columnName,
+			int timeOut) {
+
+		String xpath = "(//span[@title=\"" + sectionName
+				+ "\" and not(contains(text(),\"(0)\"))]/ancestor::div[contains(@class,\"slds-box\")]/following-sibling::div)[1]//table//*[text()=\""
+				+ recordName + "\"]/ancestor::tr/*[@data-label=\"" + columnName + "\"]";
+		try {
+			return FindElement(driver, xpath, "dataOfSectionBasedOnColumn: " + sectionName + " of Record: " + recordName
+					+ " of Column: " + columnName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "dataOfSectionBasedOnColumn: " + sectionName + " of Record: " + recordName
+					+ " of Column: " + columnName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+	
+	public WebElement themeGridsRemoveIcon(String sectionName, int timeOut) {
+
+		String xpath = "//span[@title='" + sectionName
+				+ "']/ancestor::div[contains(@class,'slds-box')]//lightning-layout-item//lightning-icon[contains(@title,'Remove')]";
+		WebElement type = FindElement(driver, xpath, "themeGridsRemoveIcon " + sectionName, action.SCROLLANDBOOLEAN,
+				timeOut);
+
+		return isDisplayed(driver, type, "Visibility", timeOut, "themeGridsRemoveIcon " + sectionName);
+
+	}
+	
+	public WebElement checkBoxOfRecordInAGrid(String sectionName, String recordName, Integer columnNumber,
+			int timeOut) {
+
+		String xpath = "(//span[@title=\"" + sectionName
+				+ "\" and not(contains(text(),\"(0)\"))]/ancestor::div[contains(@class,\"slds-box\")]/following-sibling::div)[1]//table//tbody/tr/*["
+				+ columnNumber + "]//*[text()=\"" + recordName + "\"]/ancestor::tr//*[@type=\"checkbox\"]";
+		WebElement type = FindElement(driver, xpath, "checkBoxOfRecordInAGrid: " + sectionName + " with Record: "
+				+ recordName + " with Column Number: " + columnNumber, action.SCROLLANDBOOLEAN, timeOut);
+
+		return isDisplayed(driver, type, "Visibility", timeOut, "checkBoxOfRecordInAGrid: " + sectionName
+				+ " with Record: " + recordName + " with Column Number: " + columnNumber);
+
+	}
+	
+	public WebElement checkBoxOfAllRecordInAGrid(String sectionName, int timeOut) {
+
+		String xpath = "(//span[@title=\"" + sectionName
+				+ "\" and not(contains(text(),\"(0)\"))]/ancestor::div[contains(@class,\"slds-box\")]/following-sibling::div)[1]//table//thead//tr//*[@type=\"checkbox\"]";
+		WebElement type = FindElement(driver, xpath, "checkBoxOfAllRecordInAGrid: " + sectionName,
+				action.SCROLLANDBOOLEAN, timeOut);
+
+		return isDisplayed(driver, type, "Visibility", timeOut, "checkBoxOfAllRecordInAGrid: " + sectionName);
+
+	}
+	
+	public WebElement footerButtonOfAGrid(String sectionName, String buttonName, int timeOut) {
+
+		String xpath = "(//span[@title=\"" + sectionName
+				+ "\" and not(contains(text(),\"(0)\"))]/ancestor::div[contains(@class,\"slds-box\")]/following-sibling::div)[1]//button[text()=\""
+				+ buttonName + "\"]";
+		WebElement type = FindElement(driver, xpath, "footerButtonOfAGrid: " + buttonName, action.SCROLLANDBOOLEAN,
+				timeOut);
+
+		return isDisplayed(driver, type, "Visibility", timeOut, "footerButtonOfAGrid: " + buttonName);
+
+	}
+	
+	public WebElement logANoteButtonBasedOnSection(String sectionName, String recordName, int timeOut) {
+
+		String xpath = "(//span[@title='" + sectionName
+				+ "' and not(contains(text(),'(0)'))]/ancestor::div[contains(@class,'slds-box')]/following-sibling::div[contains(@class,'around_none')])[1]//table//a[text()=\""
+				+ recordName + "\"]/ancestor::tr//td//button[@title=\"Log Note\"]";
+		try {
+			return FindElement(driver, xpath,
+					"logANoteButtonBasedOnSection: " + sectionName + " of Record: " + recordName,
+					action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath,
+					"logANoteButtonBasedOnSection: " + sectionName + " of Record: " + recordName,
+					action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+	
+	@FindBy(xpath = "//button[text()=\"Yes\"]")
+	private WebElement yesButton;
+
+	public WebElement yesButton(int timeOut) {
+		return isDisplayed(driver, yesButton, "Visibility", timeOut, "yesButton");
+
+	}
+	
+	@FindBy(xpath = "//div[@role=\"alert\"]//following-sibling::p")
+	private WebElement newThemeErrorMsg;
+
+	public WebElement newThemeErrorMsg(int timeOut) {
+		return isDisplayed(driver, newThemeErrorMsg, "Visibility", timeOut, "newThemeErrorMsg");
+
+	}
+	
+	public List<WebElement> themeGrids() {
+		return FindElements(driver,
+				"//div[contains(@class,\"slds-size_9-of-12 main-Container\")]//span[contains(@class,\"slds-page-header__title\")]",
+				"themeGrids");
+	}
+	
+	public WebElement editIconLinkOfTeamMember(String member, String role, int timeout) {
+		return isDisplayed(driver,
+				FindElement(driver,
+						"//*[text()=\"" + member
+								+ "\"]/ancestor::th/following-sibling::td[@data-label=\"Role\"]//span[text()=\"" + role
+								+ "\"]/..//button",
+						"Value For Field Parameters", action.SCROLLANDBOOLEAN, timeout),
+				"Visibility", timeout, "editIconLinkOfTeamMember of member: " + member + " Role: " + role);
+	}
+	
+	@FindBy(xpath = "//button[@name=\"picklist\"]")
+	private WebElement teamMemberEditRolePicklistButton;
+
+	public WebElement teamMemberEditRolePicklistButton(int timeOut) {
+		return isDisplayed(driver, teamMemberEditRolePicklistButton, "Visibility", timeOut,
+				"teamMemberEditRolePicklistButton");
+
+	}
+	
+	public WebElement teamMemberEditRolePicklistValue(String role, int timeout) {
+		return isDisplayed(driver,
+				FindElement(driver, "//span[text()=\"" + role + "\"]/ancestor::lightning-base-combobox-item",
+						"teamMemberEditRolePicklistValue", action.SCROLLANDBOOLEAN, timeout),
+				"Visibility", timeout, "teamMemberEditRolePicklistValue" + role);
+	}
+	
+	public WebElement teamMemberEditRoleFooterButtonName(String buttonName, int timeout) {
+		return isDisplayed(driver,
+				FindElement(driver, "//div[contains(@class,\"footer\")]//button[text()=\"" + buttonName + "\"]",
+						"teamMemberEditRoleFooterButtonName: " + buttonName, action.SCROLLANDBOOLEAN, timeout),
+				"Visibility", timeout, "teamMemberEditRoleFooterButtonName" + buttonName);
+	}
+	
+	public List<String> themeGridFirstColumnText(String sectionName) {
+		return FindElements(driver, "(//span[@title=\"" + sectionName
+				+ "\" and not(contains(text(),\"(0)\"))]/ancestor::div[contains(@class,\"slds-box\")]/following-sibling::div)[1]//table//tbody/tr/th",
+				"themeGridFirstColumnText").stream()
+				.map(x -> CommonLib.getText(driver, x, "TeamMemberData", action.BOOLEAN)).collect(Collectors.toList());
+	}
+	
+	public List<String> themeGridsHeadersText(String sectionName) {
+		return FindElements(driver, "(//span[@title=\"" + sectionName
+				+ "\" and not(contains(text(),\"(0)\"))]/ancestor::div[contains(@class,\"slds-box\")]/following-sibling::div)[1]//table//thead//th//span[@class=\"slds-truncate\"]",
+				"themeGridsHeaders").stream().map(x -> CommonLib.getText(driver, x, "TeamMemberData", action.BOOLEAN))
+				.collect(Collectors.toList());
+	}
+	
+	public List<String> AddTeamMemberNameData() {
+		return AddTeamMemberNameDataElements().stream()
+				.map(x -> CommonLib.getText(driver, x, "TeamMemberData", action.BOOLEAN)).collect(Collectors.toList());
+	}
+	
+	public List<String> AddTeamMemberDataAsPerIndex(Integer index) {
+		return FindElements(driver, "//*[contains(@class,\"themteamdatatable\")]//tbody//tr[" + index + "]/*",
+				"themeDataAsPerIndex").stream().map(x -> CommonLib.getText(driver, x, "TeamMemberData", action.BOOLEAN))
+				.collect(Collectors.toList());
+	}
+
 }

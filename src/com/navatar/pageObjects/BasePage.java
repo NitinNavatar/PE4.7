@@ -10600,5 +10600,65 @@ public abstract class BasePage extends BaseLib {
 		String path = "//div[@class='windowViewMode-normal oneContent active lafPageHost']//button[text()='"+ recordName +"']/ancestor::td/..//td//lightning-base-formatted-text";
 		return FindElement(driver, path, "info popup message", action.BOOLEAN, timeOut).getText();
 	}
+	
+	@FindBy(xpath = "//input[@class='slds-input' and @placeholder='Search']")
+	private WebElement inputSeacrObject;
+
+	public WebElement getInputSeacrObject(int timeOut) {
+		return isDisplayed(driver, inputSeacrObject, "Visibility", timeOut, "input search object");
+	}
+	
+	public WebElement dropDownListOfRelatedTag(String value, int timeOut) {
+		String xpath = "//ul[@class='drop_ul']//li[@class='slds-nav-vertical__item for_desk' and text()='"+value+"']";
+		try {
+			return FindElement(driver, xpath, "value " + value, action.BOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "value " + value, action.BOOLEAN, timeOut);
+		}
+	}
+	
+	@FindBy(xpath = "//label[text()='Clip Name']/..//input")
+	private WebElement clipName;
+
+	public WebElement getClipName(int timeOut) {
+		return isDisplayed(driver, clipName, "Visibility", timeOut, "clip name");
+	}
+	
+	@FindBy(xpath = "//label[text()='Summary']/..//textarea")
+	private WebElement summaryArea;
+
+	public WebElement getSummaryTextArea(int timeOut) {
+		return isDisplayed(driver, summaryArea, "Visibility", timeOut, "summary area");
+	}
+	
+	@FindBy(xpath = "//h2[contains(text(),'Clip')]/../..//button[@title='Save']")
+	private WebElement saveBtnOnClipPopup;
+
+	public WebElement getSaveBtnOnClipPopup(int timeOut) {
+		return isDisplayed(driver, saveBtnOnClipPopup, "Visibility", timeOut, "save button on clip popup");
+	}
+	
+	public WebElement getSuggestedTagRecord(String suggestedTagName, int timeOut) {
+		String xpath = "//div[text()='Suggested Tags']/..//lightning-base-formatted-text[text()='"+suggestedTagName+"']/ancestor::th[@data-label='Reference Found']/..//input[@type='checkbox']";
+		try {
+			return FindElement(driver, xpath, "suggested tag name" + suggestedTagName, action.BOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "suggested tag name " + suggestedTagName, action.BOOLEAN, timeOut);
+		}
+	}
+	
+	@FindBy(xpath = "//h2[text()='Clip']/../..//footer//button[text()='Tag']")
+	private WebElement clipPopupTagButton;
+
+	public WebElement getClipPopupTagButton(int timeOut) {
+		return isDisplayed(driver, clipPopupTagButton, "Visibility", timeOut, "clip tag");
+	}
+	
+	@FindBy(xpath = "//span[text()='Clips']/../..//h2[contains(@id,'modal-heading')]")
+	private WebElement clipNameOnPopup;
+
+	public WebElement getClipNameOnPopup(int timeOut) {
+		return isDisplayed(driver, clipNameOnPopup, "Visibility", timeOut, "clip name");
+	}
 
 }

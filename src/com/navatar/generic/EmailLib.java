@@ -19,6 +19,7 @@ import javax.mail.BodyPart;
 import javax.mail.Flags;
 import javax.mail.Folder;
 import javax.mail.Message;
+import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.NoSuchProviderException;
@@ -32,6 +33,9 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.search.FlagTerm;
+
+import com.navatar.generic.EnumConstants.YesNo;
+import com.relevantcodes.extentreports.LogStatus;
 
 
 public class EmailLib {
@@ -1105,5 +1109,149 @@ public class EmailLib {
 		        }
 		    }
 		    return result;
+		}
+	 
+		public static void getEmailBody(String mailType, String Email, String emailPassword, String senderEmailId, String subjectName, String[] to, String[] cc, String body)
+				throws InterruptedException {
+			Properties props = System.getProperties();
+			SoftAssert sa = new SoftAssert();
+			props.setProperty("mail.store.protocol", "imaps");
+
+			try {
+				Thread.sleep(2000);
+				Session session = Session.getDefaultInstance(props, null);
+				Store store = session.getStore("imaps");
+
+				System.out.println("Gmail logging in...");
+				store = session.getStore("imaps");
+				store.connect("imap.gmail.com", Email, emailPassword);
+				Folder inbox;
+				Folder spam;
+				System.out.println("Connected to = " + store);
+				Thread.sleep(2000);
+				inbox = store.getFolder("Inbox");
+				spam=store.getFolder("[Gmail]/Spam");
+				inbox.open(Folder.READ_WRITE);
+				spam.open(Folder.READ_WRITE);
+				spam.copyMessages(spam.getMessages(), inbox);
+				Thread.sleep(5000);
+				System.out.println("Total mails are = " + inbox.getMessageCount());
+
+				Flags seen = new Flags(Flags.Flag.SEEN);
+				FlagTerm unseenFlagTerm = new FlagTerm(seen, false);
+				Message[] UnreadMessages = inbox.search(unseenFlagTerm);
+
+				System.out.println("Searching done...");
+				System.out.println("Total Unread mails are = " + UnreadMessages.length);
+
+				int flag = 0, UnreadMessagesCount = 0;
+				if ((mailType.equalsIgnoreCase("email body")) || (mailType.equalsIgnoreCase("emailcontent"))
+						|| (mailType.equalsIgnoreCase("body") || (mailType.equalsIgnoreCase("emailbody")))) {
+					for (Message message : UnreadMessages) {
+						UnreadMessagesCount = UnreadMessages.length;
+						try {
+							Address[] froms = message.getFrom();
+							String sender = froms == null ? null : ((InternetAddress) froms[0]).getAddress();
+							String Subject = message.getSubject();
+							System.out.println("sender's email address : " + sender);
+							if (sender.equalsIgnoreCase(senderEmailId)
+									&& Subject.contains(subjectName)) {
+								System.out.println("Email Subject : " + message.getSubject());
+								// String Content = (String) message.getContent();
+								Object content = message.getContent();
+
+								if(to!=null)
+								{
+									Address[] actualTo=message.getRecipients(RecipientType.TO);
+									for(int i=0; i<to.length; i++)
+									{
+									
+										int k=0;
+										for(int j=0; j<actualTo.length; j++)
+										{
+											if(actualTo[j].toString().trim().contains(to[i].trim()))
+											{
+												CommonLib.log(LogStatus.INFO, "Actual email id "+actualTo[j].toString()+" has been matched with expected email id "+to[i]+" in To", YesNo.No);
+												k++;
+											}
+										}
+										if(k==0)
+										{
+											CommonLib.log(LogStatus.ERROR, "expected email id "+to[i]+" is not matched in To field.", YesNo.No);					
+											sa.assertTrue(false, "expected email id "+to[i]+" is not matched in To field.");
+										}
+									}
+								}
+								if(cc!=null)
+								{
+									Address[] actualCc=message.getRecipients(RecipientType.CC);
+									for(int i=0; i<cc.length; i++)
+									{
+										
+										int k=0;
+										for(int j=0; j<actualCc.length; j++)
+										{
+											if(actualCc[j].toString().trim().contains(cc[i].trim()))
+											{
+												CommonLib.log(LogStatus.INFO, "Actual email id "+actualCc[j].toString()+" has been matched with expected email id "+cc[i]+" in cc", YesNo.No);
+												k++;		
+											}
+										}
+										if(k==0)
+										{
+											CommonLib.log(LogStatus.ERROR, "expected email id "+cc[i]+" is not matched in cc field.", YesNo.No);					
+											sa.assertTrue(false, "expected email id "+cc[i]+" is not matched in cc field.");
+										}
+									}
+								}
+								if(body!=null)
+								{
+
+									MimeMultipart mmp = (MimeMultipart) content;
+									String bodyText= getTextFromMimeMultipart(mmp);
+									System.out.println("Body Message    -   "+bodyText); 
+									if(bodyText.contains(body))
+									{
+										CommonLib.log(LogStatus.INFO, "Expected body message "+body+" has been matched", YesNo.No);
+
+									}
+									else
+									{
+										CommonLib.log(LogStatus.ERROR, "Expected body message "+body+" is not matched", YesNo.No);	
+										sa.assertTrue(false,"Expected body message "+body+" is not matched");
+									}
+								}
+
+							}
+
+							else {
+								flag++;
+							}
+
+
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.getMessage();
+							CommonLib.log(LogStatus.ERROR, "Exception Occured. Message"+e.getMessage(), YesNo.No);	
+							sa.assertTrue(false, "Exception Occured. Message"+e.getMessage());
+
+						}
+					}
+				}
+				inbox.close(false);
+				store.close();
+
+				if (flag == UnreadMessagesCount) {
+					CommonLib.log(LogStatus.ERROR, "No Email mail received", YesNo.No);	
+					sa.assertTrue(false,"No Email mail received");
+				} 
+
+			} catch (MessagingException e) {
+				e.printStackTrace();
+				CommonLib.log(LogStatus.ERROR, "Exception Occured. Message"+e.getMessage(), YesNo.No);	
+				sa.assertTrue(false, "Exception Occured. Message"+e.getMessage());
+
+			}
+
 		}
 }
