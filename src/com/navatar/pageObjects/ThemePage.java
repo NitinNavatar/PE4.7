@@ -1129,27 +1129,26 @@ public class ThemePage extends BasePageBusinessLayer {
 	}
 	
 	public List<String> themeGridFirstColumnText(String sectionName) {
-		return FindElements(driver, "(//span[@title=\"" + sectionName
-				+ "\" and not(contains(text(),\"(0)\"))]/ancestor::div[contains(@class,\"slds-box\")]/following-sibling::div)[1]//table//tbody/tr/th",
-				"themeGridFirstColumnText").stream()
-				.map(x -> CommonLib.getText(driver, x, "TeamMemberData", action.BOOLEAN)).collect(Collectors.toList());
+		return FindElements(driver, "(//span[@title='" + sectionName
+				+ "' and not(contains(text(),'(0)'))]/ancestor::div[contains(@class,'slds-box')]/following-sibling::div)[1]//table//tbody/tr/th",
+				"themeGridFirstColumnText").stream().map(data -> data.getText()).collect(Collectors.toList());
 	}
 	
 	public List<String> themeGridsHeadersText(String sectionName) {
 		return FindElements(driver, "(//span[@title=\"" + sectionName
 				+ "\" and not(contains(text(),\"(0)\"))]/ancestor::div[contains(@class,\"slds-box\")]/following-sibling::div)[1]//table//thead//th//span[@class=\"slds-truncate\"]",
-				"themeGridsHeaders").stream().map(x -> CommonLib.getText(driver, x, "TeamMemberData", action.BOOLEAN))
+				"themeGridsHeaders").stream().map(x -> x.getText())
 				.collect(Collectors.toList());
 	}
 	
 	public List<String> AddTeamMemberNameData() {
 		return AddTeamMemberNameDataElements().stream()
-				.map(x -> CommonLib.getText(driver, x, "TeamMemberData", action.BOOLEAN)).collect(Collectors.toList());
+				.map(x ->  x.getText()).collect(Collectors.toList());
 	}
 	
 	public List<String> AddTeamMemberDataAsPerIndex(Integer index) {
 		return FindElements(driver, "//*[contains(@class,\"themteamdatatable\")]//tbody//tr[" + index + "]/*",
-				"themeDataAsPerIndex").stream().map(x -> CommonLib.getText(driver, x, "TeamMemberData", action.BOOLEAN))
+				"themeDataAsPerIndex").stream().map(x ->  x.getText())
 				.collect(Collectors.toList());
 	}
 
