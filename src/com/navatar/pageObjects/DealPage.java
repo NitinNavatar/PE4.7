@@ -241,7 +241,7 @@ public class DealPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, markStageCompleteButton, "Visibility", timeOut, "Mark Stage as Complete button ");
 	}
 
-	@FindBy(xpath = "//label[text()='Company']/following-sibling::div//input")
+	@FindBy(xpath = "//label[text()='Company Name']/following-sibling::div//input")
 	private WebElement companyName;
 
 	public WebElement getCompanyName(int timeOut) {

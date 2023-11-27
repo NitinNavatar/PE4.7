@@ -2515,6 +2515,8 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 
 		if (click(driver, saveButtonQuickLinksPopUp(10), "saveButtonQuickLinksPopUp: ", action.SCROLLANDBOOLEAN)) {
 			appLog.info("Click on Save Button");
+			ThreadSleep(2000);
+			refresh(driver);
 			WebElement ele = verifyCreatedItemOnPage(Header.Company, institutionName);
 			if (ele != null) {
 				appLog.info("created institution " + institutionName + " is verified successfully.");

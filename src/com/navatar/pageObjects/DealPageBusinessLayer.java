@@ -1772,7 +1772,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return flag;
 	}
 
-	public boolean changeDealStatusAndDealStage(String projectName, String dealName, String status, String stage,
+	public boolean changeDealStatusAndDealStage(String projectName, String dealName, String stage,
 			int timeOut) {
 		boolean flag = false;
 		String xPath;
@@ -1780,11 +1780,8 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		ThreadSleep(2000);
 		if (clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Edit, 10)) {
 			ThreadSleep(2000);
-			xPath = "//label[text()='Status']/..//div[contains(@class,'slds-listbox')]//span[@class='slds-truncate']";
-			if (CommonLib.dropDownHandle(driver, getStatusfield(20), xPath, "status", status)) {
-				appLog.info("The value " + status + " has been selected from status field");
 				if (stage != "" && stage != null) {
-					xPath = "//label[text()='Stage']/..//div[contains(@class,'slds-listbox')]//span[@class='slds-truncate']";
+					xPath = "//label[text()='Stage']/..//div[contains(@class,'slds-form')]//span[@class='slds-truncate']";
 					if (CommonLib.dropDownHandle(driver, getStagefield(20), xPath, "stage", stage)) {
 						appLog.info("The value " + stage + " has been selected from stage field");
 
@@ -1815,10 +1812,6 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 						appLog.error("Not Able to Click on save Button");
 					}
 				}
-			} else {
-				appLog.error("The value " + status + " is not selected from status field");
-			}
-
 		} else {
 			appLog.error("Not Able to Click on edit Button");
 		}

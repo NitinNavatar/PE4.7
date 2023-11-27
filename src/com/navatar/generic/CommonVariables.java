@@ -1706,7 +1706,7 @@ public class CommonVariables {
 	 		    ATDealStage1,ATDealStage2,ATDealStatus1,ATDealStatus2,ATTargetName1,ATTargetName2,ATTargetStage1,ATFundName1,ATFundType1,ATFundCategory1,ATFundName2,ATFundType2,ATFundCategory2,
 	 		    ATTargetStage2,ATDTDealName1,ATDTContact1,ATDTRole1,ATDTDealName2,ATDTContact2,ATDTRole2,
 	 		    ATCRTargetName1,ATCRContactName1,ATCRRole1,ATCRTargetName2,ATCRContactName2,ATETSubject1,ATETNote1,ATETAction1,ATETRelated1,ATETSubject2,ATETNote2,ATETRelated2,ATETAction2,ATETPriority2,ATETNote3,ATETRelated3,ATETAction3,ATETPriority3,ATETSubject3,ATETStatus3,
-	 		    ATDealNewStatus1,ATDealNewStage1,ATDealNewStatus5,ATDealNewStage5,ATDealNewStatus7,ATDealNewStage7,ATETSubject4,ATETNote4,ATETAction4,ATETRelated4,ATETSubject5,ATETNote5,ATETRelated5,ATETAction5,ATETPriority5,ATETNote6,ATETRelated6,ATETAction6,ATETPriority6,ATETSubject6,ATETStatus6,ATETSubject7,ATETNote7,ATETAction7,ATETRelated7,
+	 		    ATDealNewStatus1,ATDealNewStage1,ATDealNewStage2,ATETSubject4,ATETNote4,ATETAction4,ATETRelated4,ATETSubject5,ATETNote5,ATETRelated5,ATETAction5,ATETPriority5,ATETNote6,ATETRelated6,ATETAction6,ATETPriority6,ATETSubject6,ATETStatus6,ATETSubject7,ATETNote7,ATETAction7,ATETRelated7,
 	 		    ATETSubject8,ATETNote8,ATETRelated8,ATETAction8,ATETPriority8,ATETNote9,ATETRelated9,ATETAction9,ATETPriority9,ATETSubject9,ATETStatus9,ATDealNewStage9,ATDealNewStatus9,ATETNote10,ATETSubject10,ATETAction10,ATETRelated10,ATETSubject11,ATETNote11,ATETRelated11,ATETAction11,ATETPriority11,ATETNote12,ATETRelated12,ATETAction12,ATETPriority12,ATETSubject12,ATETStatus12,
 	 		    ATETNote13,ATETSubject13,ATETAction13,ATETRelated13,ATETPriority13,ATETStatus13,
 	 		    AT_TaggedFirmsName1,AT_TaggedFirmsCount1,AT_TaggedPeopleName1,AT_TaggedPeopleCount1,AT_TaggedFirmsName2,AT_TaggedFirmsCount2,AT_TaggedPeopleName2,AT_TaggedPeopleCount2,AT_TaggedFirmsName3,
@@ -2055,6 +2055,7 @@ public class CommonVariables {
 		tabCustomObjField=ExcelUtils.readDataFromPropertyFile("CustomTabFieldName");
 		System.err.println("smokeExcelPathCommonVariable : "+testCasesFilePath);
 		todaysDate=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "MM/dd/YYYY");
+		todaysDate1=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "YYYY-MM-dd");
 		todaysDateSingleDate=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "MM/d/YYYY");
 		todaysDateSingleDateSingleMonth=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		todaysDateSingleMonth=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/dd/YYYY");
@@ -10770,6 +10771,7 @@ public class CommonVariables {
  					ATDealCompany2 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Deal", excelLabel.Variable_Name,"AATDeal2", excelLabel.Company);
  					ATDealStage2 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Deal", excelLabel.Variable_Name,"AATDeal2", excelLabel.Stage);
  					ATDealStatus2 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Deal", excelLabel.Variable_Name,"AATDeal2", excelLabel.Status);
+ 					ATDealNewStage2 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Deal", excelLabel.Variable_Name,"AATDeal2", excelLabel.Other_LabelValues);
  					
  					ATFundName1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Fund", excelLabel.Variable_Name,"AATFund1", excelLabel.Fund_Name);
  					ATFundType1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Fund", excelLabel.Variable_Name,"AATFund1", excelLabel.Fund_Type);
@@ -10779,10 +10781,10 @@ public class CommonVariables {
  					ATFundType2 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Fund", excelLabel.Variable_Name,"AATFund2", excelLabel.Fund_Type);
  					ATFundCategory2 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Fund", excelLabel.Variable_Name,"AATFund2", excelLabel.Fund_Investment_Category);
  					
- 					ATTargetName1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Fundraisings", excelLabel.Variable_Name,"ATTarget1", excelLabel.Fundraising_Name);
- 					ATTargetName2 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Fundraisings", excelLabel.Variable_Name,"ATTarget2", excelLabel.Fundraising_Name);
- 					ATTargetStage1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Fundraisings", excelLabel.Variable_Name,"ATTarget1", excelLabel.Stage);
- 					ATTargetStage2 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Fundraisings", excelLabel.Variable_Name,"ATTarget2", excelLabel.Stage);
+ 					ATTargetName1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Fundraising", excelLabel.Variable_Name,"ATTarget1", excelLabel.Fundraising_Name);
+ 					ATTargetName2 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Fundraising", excelLabel.Variable_Name,"ATTarget2", excelLabel.Fundraising_Name);
+ 					ATTargetStage1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Fundraising", excelLabel.Variable_Name,"ATTarget1", excelLabel.Stage);
+ 					ATTargetStage2 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Fundraising", excelLabel.Variable_Name,"ATTarget2", excelLabel.Stage);
  					
  					ATDTDealName1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Deal Team", excelLabel.Variable_Name,"ATDT1", excelLabel.Deal_Name);
  					ATDTContact1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Deal Team", excelLabel.Variable_Name,"ATDT1", excelLabel.Contact);
@@ -10792,12 +10794,12 @@ public class CommonVariables {
  					ATDTContact2 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Deal Team", excelLabel.Variable_Name,"ATDT2", excelLabel.Contact);
  					ATDTRole2 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Deal Team", excelLabel.Variable_Name,"ATDT2", excelLabel.Role);
  					 					
- 					ATCRTargetName1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Contact Role", excelLabel.Variable_Name,"ATDT1", excelLabel.Fundraising_Name);
- 					ATCRContactName1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Contact Role", excelLabel.Variable_Name,"ATDT1", excelLabel.ContactName);
- 					ATCRRole1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Contact Role", excelLabel.Variable_Name,"ATDT1", excelLabel.Role);
+ 					ATCRTargetName1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Fundraising Contact", excelLabel.Variable_Name,"ATDT1", excelLabel.FundRaising_Name);
+ 					ATCRContactName1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Fundraising Contact", excelLabel.Variable_Name,"ATDT1", excelLabel.Contact);
+ 					ATCRRole1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Fundraising Contact", excelLabel.Variable_Name,"ATDT1", excelLabel.Role);
  					
- 					ATCRTargetName2 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Contact Role", excelLabel.Variable_Name,"ATDT2", excelLabel.Fundraising_Name);
- 					ATCRContactName2 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Contact Role", excelLabel.Variable_Name,"ATDT2", excelLabel.ContactName);
+ 					ATCRTargetName2 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Fundraising Contact", excelLabel.Variable_Name,"ATDT2", excelLabel.FundRaising_Name);
+ 					ATCRContactName2 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Fundraising Contact", excelLabel.Variable_Name,"ATDT2", excelLabel.Contact);
  				
  					ATETSubject1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Activity Timeline", excelLabel.Variable_Name,"ATET01", excelLabel.Subject);
  					ATETNote1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Activity Timeline", excelLabel.Variable_Name,"ATET01", excelLabel.Notes);

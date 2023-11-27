@@ -539,7 +539,7 @@ public class FundraisingsPageBusinessLayer extends FundraisingsPage {
 				appLog.error("Not able to click on go button so cannot click on created partnership");
 			}
 		} else {
-			if (clickOnAlreadyCreated_Lighting(environment, mode, TabName.Fundraising, fundraisingName, 30)) {
+			if (clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundraisingsTab, fundraisingName, 30)) {
 				appLog.info("Clicked on target name" + fundraisingName + "successfully.");
 				return true;
 			} else {

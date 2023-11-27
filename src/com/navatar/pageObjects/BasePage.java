@@ -3756,7 +3756,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, todaysCallDate, "Visibility", timeOut, "Call Date today");
 	}
 
-	@FindBy(xpath = "//span[text()='People']")
+	@FindBy(xpath = "//div[contains(@class,'for_desk')]//span[text()='Contacts']")
 	private WebElement peopleTabOnTagged;
 
 	/**
