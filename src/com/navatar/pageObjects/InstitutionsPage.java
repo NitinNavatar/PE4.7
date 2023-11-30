@@ -743,7 +743,7 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 
 	}
 	
-	@FindBy(xpath = "//div[contains(@id,\"modal-content\")]//label[text()=\"Record Type\"]/following-sibling::*//button")
+	@FindBy(xpath = "//div[contains(@id,'modal-content')]//label[text()='Record Type ID']/following-sibling::*//button")
 	private WebElement firmRecordTypeQuickLinksPopUp;
 
 	public WebElement firmRecordTypeQuickLinksPopUp(int timeOut) {
@@ -753,7 +753,7 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 
 	}
 	
-	@FindBy(xpath = "//div[contains(@id,\"modal-content\")]/following-sibling::footer//button[text()=\"Save\"]")
+	@FindBy(xpath = "//div[contains(@id,'modal-content')]/following-sibling::footer//button[text()='Save']")
 	private WebElement saveButtonQuickLinksPopUp;
 
 	public WebElement saveButtonQuickLinksPopUp(int timeOut) {
@@ -763,7 +763,7 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 
 	}
 	
-	@FindBy(xpath = "//div[contains(@id,\"modal-content\")]//input[@name=\"Name\"]")
+	@FindBy(xpath = "//div[contains(@id,'modal-content')]//input[@name='Name']")
 	private WebElement firmNameQuickLinksPopUp;
 
 	public WebElement firmNameQuickLinksPopUp(int timeOut) {
@@ -773,7 +773,7 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 	}
 	
 	public WebElement firmRecordTypeDropDownElementQuickLinksPopUp(String recordType, int timeOut) {
-		String xpath = "//span[text()=\""+recordType+"\"]//ancestor::lightning-base-combobox-item";
+		String xpath = "//span[text()='"+recordType+"']//ancestor::lightning-base-combobox-item";
 		WebElement ele = null;
 		ele = FindElement(driver, xpath, " record type " + recordType, action.SCROLLANDBOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "visibility", timeOut, " record type " + recordType);

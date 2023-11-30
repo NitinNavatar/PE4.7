@@ -3766,7 +3766,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, todaysCallDate, "Visibility", timeOut, "Call Date today");
 	}
 
-	@FindBy(xpath = "//span[text()='People']")
+	@FindBy(xpath = "//div[contains(@class,'for_desk')]//span[text()='Contacts']")
 	private WebElement peopleTabOnTagged;
 
 	/**
@@ -10661,4 +10661,15 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, clipNameOnPopup, "Visibility", timeOut, "clip name");
 	}
 
+	@FindBy(xpath = "//button[@name=\"SaveEdit\"]")
+
+	private WebElement editSaveButton;
+
+	/**
+	 * @return the customTabSelectedList
+	 */
+	public WebElement getEditSaveButton(int timeOut) {
+		return isDisplayed(driver, editSaveButton, "Visibility", timeOut, "Edit Save Button");
+	}
+	
 }

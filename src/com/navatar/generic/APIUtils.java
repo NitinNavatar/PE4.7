@@ -1176,7 +1176,6 @@ public class APIUtils {
 
 	}
 	
-	
 	public void EventObjectDataUpload(String filePath,String sheetName) {
 		
 		Map<String, Object> data = new HashMap<String, Object>();
@@ -1300,6 +1299,13 @@ public class APIUtils {
 			}
 		}
 
+	}
+	
+
+	public String EventObjectDataUpload(Map<String, Object> data) {
+		
+			return createObejectRecordByAPI("Event", data);
+			
 	}
 	
 	

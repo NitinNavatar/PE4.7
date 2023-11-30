@@ -33,7 +33,7 @@ public class DealTeamPageBusinessLayer extends DealTeamPage{
 	 * @return true if Deal Team created successfully
 	 */
 	public boolean createDealTeam(String projectName,String dealName,String[][] requestInfo,String basedOnValue,action action,int timeOut) {
-		boolean flag=true;
+		boolean flag=false;
 		String label;
 		String value;
 		String xpath="";
@@ -122,7 +122,7 @@ public class DealTeamPageBusinessLayer extends DealTeamPage{
 				
 				ThreadSleep(3000);
 				refresh(driver);
-				ThreadSleep(3000);
+				ThreadSleep(5000);
 				xpath="//*[text()='Deal Team']/parent::h1//slot/lightning-formatted-text";
 				ele = FindElement(driver, xpath, "dt id", action, timeOut);
 				if (ele!=null) {
@@ -130,10 +130,10 @@ public class DealTeamPageBusinessLayer extends DealTeamPage{
 					
 				
 					log(LogStatus.INFO,"successfully created and noted id of DT"+id+" and deal name "+dealName,YesNo.No);	
+					flag = true;
 				} else {
 					sa.assertTrue(false,"could not create DT"+dealName);
 					log(LogStatus.SKIP,"could not create DT"+dealName,YesNo.Yes);
-					flag=false;
 				}
 			} else {
 				sa.assertTrue(false,"Not Able to Click on save button so cannot create deal team");
