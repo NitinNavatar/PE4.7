@@ -1,0 +1,21 @@
+Status,Name,RecordTypeId
+,Dan Comp1,Company
+,Dan Comp2,Company
+,Dan Comp3,Company
+,Dan Comp4,Company
+,Dan Comp5,Company
+,Dan Advisor1,Institution
+,Dan Advisor2,Institution
+,Dan Advisor3,Institution
+,Dan Advisor4,Institution
+,Dan Advisor5,Institution
+,Dan FS1,Intermediary
+,Dan FS2,Intermediary
+,Dan FS3,Lender
+,Dan FS4,Lender
+,Dan FS5,Advisor
+,Dan StrgCorp1,Advisor
+,Dan StrgCorp2,Limited Partner
+,Dan StrgCorp3,Limited Partner
+,Dan StrgCorp4,Portfolio Company
+,Dan StrgCorp5,Portfolio Company
