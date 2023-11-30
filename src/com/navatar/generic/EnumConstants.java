@@ -77,8 +77,8 @@ public class EnumConstants {
 		},
 		Individuals, Record_Type, Street, City, State, Postal_Code, Country, Other_Street, Other_City, Other_State,
 		Other_Zip, Other_Country, Report_Folder_Name, Report_Name, Select_Report_Type, Show, Range,
-		Email_Template_Folder_Label, Public_Folder_Access, Type, Available_For_Use, Description, Subject, Email_Body,
-		Email_Template_Name, Marketing_InitiativeName, Target_Commitments, Vintage_Year, Fax, Frist_Closing_Date {
+		Email_Template_Folder_Label, Public_Folder_Access, Type, Available_For_Use, Description,Recipient, Subject,Email_Name,Email_Address, Email_Body,
+		Email_Template_Name, Marketing_InitiativeName, Target_Commitments,Email_Signature, Vintage_Year, Fax, Frist_Closing_Date {
 			@Override
 			public String toString() {
 				return "1st Closing Date";
@@ -125,7 +125,7 @@ public class EnumConstants {
 		, Default_Sort, Date_Field, Field_Name, Field_Value, Filter_Condition, TextBox_Type, Page_Layout_Name,
 		Button_Name, Tag, Advance_Due_Date, Advance_Start_Date, Advance_End_Date, Suggested_Tag, People, Deals,
 		Meetings_And_Calls, Day, End_Day, Contact_Type, Other_LabelNames, Other_LabelValues, Search_String, Output,
-		ResearchFindings, All_Categories, Firms, Intermediary, Lender, Portfolio_Company, Contacts, Fund, Fund_Count,
+		ResearchFindings,CategoriesToSelectFromAdvanced,Object_Value,Clip_Name,Grid_Data,Target_Name,Add_To_Theme,Remove_To_Theme,Operator,Theme_Grid,Theme_Grid_Columns,All_Categories, Firms, Intermediary, Lender, Portfolio_Company, Contacts, Fund, Fund_Count,
 		Interactions, Referenced_Accounts, Referenced_Contacts, Section, ContactHeader, dealHeader, ConnectionHeader,
 		Deal_Company, Deal_Stage, Deal_DateRecieved, Advance_Status, Advance_Priority, Companies_Count, People_Count,
 		Deals_Count, Contact_Name, Contact_Deals, Contact_Meetings_And_Calls, Contact_Email, Related_Association,
@@ -248,7 +248,7 @@ public class EnumConstants {
 	}
 
 	public static enum PageName {
-		FundsPage, InstitutionsPage, CommitmentsPage, HomePage, NavatarInvestorManager, ManageFolderPopUp,
+		FundsPage, InstitutionsPage,FromViewAll, CommitmentsPage, HomePage, NavatarInvestorManager, ManageFolderPopUp,
 		ManageApprovalsPopUp, NavigationPage, ProjectDetailsPoPUp, NavatarInvestorAddOnsPage, NewProjectPopUp,
 		PipelineCustomPage, CompanyPage, CreateFundraisingPage, CreateCommitmentFundType,
 		CreateCommitmentCoInvestmentType, FundraisingPage, PartnershipsPage, DealPage, TaskRayPage, LimitedPartnerPage,
@@ -535,12 +535,19 @@ public class EnumConstants {
 				return "Navatar Create Menu";
 			}
 		},
-		Affiliation, Financing, Commitment, Advisor, User, Company_Information, Rename_Tabs_And_Labels {
+		Affiliation, Financing, Commitment, Advisor,Target, User, Company_Information, Rename_Tabs_And_Labels {
 			@Override
 			public String toString() {
 				return "Rename Tabs and Labels";
 			}
 		},
+		Theme_Team {
+			@Override
+			public String toString() {
+				return "Theme Team";
+			}
+		},
+		
 		Event, Custom_Metadata_Types, Theme, Clip, Rename_Tabs_and_Labels, Accounts, Contacts
 	};
 
@@ -565,6 +572,16 @@ public class EnumConstants {
 					return "Classic Email Templates";
 				} else {
 					return "Classic Email Templates";
+				}
+			}
+		},
+		MyTemplates {
+			@Override
+			public String toString() {
+				if (ExcelUtils.readDataFromPropertyFile("Mode").equalsIgnoreCase(Mode.Classic.toString())) {
+					return "My Templates";
+				} else {
+					return "My Templates";
 				}
 			}
 		},
@@ -1234,7 +1251,7 @@ public class EnumConstants {
 		};
 	
 	public static enum ShowMoreActionDropDownList{
-		 New_Task,New_Call,Edit, Delete,DS, New_Meeting,Convert_to_Portfolio{
+		 New_Task,Create_Task,New_Call,Edit,Add_to_Theme,Email,New_Team_Member,Copy_Theme, Delete,DS, New_Meeting,Convert_to_Portfolio{
 			 @Override
 				public String toString() {
 					return "Convert to Portfolio";
@@ -1431,7 +1448,7 @@ public class EnumConstants {
 	};
 
 	public static enum RelatedTab {
-		Related, Details, Network, Tasks, Meetings, Activities, Affiliations, Documents, Box, Referrals, Clients, KPIs,
+		Related, Details, Network,Acuity, Call_List,Tasks, Meetings, Activities, Affiliations, Documents, Box, Referrals, Clients, KPIs,
 		Investment, All_Contacts, Board_Members, Recent_Moves, Connections, Contacts, Financing, Consultants,
 		Fundraising, Investors, Investor_Relations, Co_Investments {
 			@Override
@@ -1474,7 +1491,15 @@ public class EnumConstants {
 	public static enum ProjectName {
 		PE, MNA, PEEdge;
 	};
-
+	
+	public static enum Emaillabel {
+		Name,Title,Firm,Email,FirmType {
+		@Override
+		public String toString() {
+			return "Firm Type";
+		}
+	},
+	}
 	public static enum PageLabel {
 		First_Name, Last_Name, Email, Fund_Name, Fundraising_Name, Status, Investment_Type,Deal_Name{
 			@Override
@@ -2199,7 +2224,7 @@ public class EnumConstants {
 	}
 
 	public static enum TaggedName {
-		Companies, People, Deals, Funds,Firms{
+		Companies, People, Deals,Themes, Funds,Firms{
 			@Override
 			public String toString() {
 				return "Institutions";
@@ -2213,4 +2238,23 @@ public class EnumConstants {
 	public static enum ApiHeader {
 		Subject, StartDateTime, EndDateTime, Description, WhoId;
 	}
+	public static enum themeLabels {
+		Custom_Theme_Picklist, Custom_Theme_TA, Custom_Theme_Text_Area, Description, Custom_Theme_LTA, Custom_Theme_RTA,
+		Custom_Theme_Description;
+	};
+	
+	public static enum updateThemeButton {
+		Save_And_New {
+			public String toString() {
+				return "Save & New";
+			}
+		},
+		Save, Cancel;
+		;
+	};
+	
+	public static enum teamMemberNavigation {
+		Sub_Tab, Action_Button;
+	};	
+	
 }

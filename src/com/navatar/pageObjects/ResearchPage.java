@@ -271,4 +271,33 @@ public class ResearchPage extends BasePageBusinessLayer {
 			}
 			
 		}
+		
+		@FindBy(xpath = "//lightning-layout[@class='slds-m-top_small slds-grid']//input")
+		private WebElement searchByKeywordTextbox;
+
+		public WebElement getSearchByKeywordTextbox(int timeOut) {
+			return isDisplayed(driver, searchByKeywordTextbox, "Visibility", timeOut, "search By Keyword Textbox");
+
+		}
+		
+		@FindBy(xpath = "//div[contains(@class,'addMinus')]//lightning-icon[@title='Add']")
+		private WebElement searchForSpecificAddOption;
+
+		public WebElement getSearchForSpecificAddOption(int timeOut) {
+			return isDisplayed(driver, searchForSpecificAddOption, "Visibility", timeOut, "Search For Specific Add Option");
+
+		}
+		
+		public WebElement getValueForSpecificRecord(String value, int timeout) {
+			return isDisplayed(driver,  FindElement(driver, "//div[@data-name='"+ value+"']//li[text()='"+ value +"']/..",
+					"Value For Specific Record",action.BOOLEAN,timeout), "Visibility", timeout, "Value For Specific Record");
+		}
+		
+		@FindBy(xpath = "//div[@class='inner-custom-mechanish displaydiv']//button[@title='Research']")
+		private WebElement researchButtonForAdvanced;
+
+		public WebElement getResearchButtonForAdvanced(int timeOut) {
+			return isDisplayed(driver, researchButtonForAdvanced, "Visibility", timeOut, "Research Button For Advanced");
+
+		}
 }

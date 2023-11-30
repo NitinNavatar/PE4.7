@@ -72,6 +72,13 @@ public interface BasePageErrorMessage {
 	public static String SearchBox = "Search this list...";
 	
 	public static String defaultPhotoText="standard";
+	
+	public static String eamilsgn2 = "Use my signature";
+	public static String eamilsgn1 = "BCC me on one message";
+	public static String eamilsgn3 = "Store an activity for each message";
+	public static String eamilSuccessmsg = "Emails sent successfully\n"
+			+ "The emails have been scheduled in the queue. You will receive an email notification once all the emails have been sent.";
+	public static String signature="Regards\nkevin Dilger\nMo. no. +91 999950321\nwww.testnavatar.com";
 
 	public static String defaultPhotoTextForAdminPhoto="profilephoto";
 	public static String titleHighlightColor="RecordType.DeveloperName;Firm_Events:#6464FF,Third_Party_Event:#D2691E;";
@@ -80,6 +87,12 @@ public interface BasePageErrorMessage {
 	public static String HitASnagMessage="Record Type ID: this ID value isn't valid for the user:";
 	public static String ErrorMessage="No item display";
 	public static String ErrorMessageAcuity="No items to display.";
+	public static String copyThemeErrorMsg1="These required fields must be completed: Existing Theme Name";
+	public static String copyThemeErrorMsg2="These required fields must be completed: Theme Name";
+	public static String errorMsginResearchTheme="Select atleast a record";
+	public static String errorMsgTeamMember="Member already exists with the same role.";
+	public static String errorMsgTeamMember2="These required fields must be completed: Member, Role";
+	public static String errorMsgTeamMember3="Select atleast a record.";
 	public static String OldTaskMsg(String user,String contactName,  int otherContactNum) {
 		String msg="a Task";
 		if (user==null) {

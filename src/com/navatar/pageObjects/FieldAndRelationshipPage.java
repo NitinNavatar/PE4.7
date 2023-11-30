@@ -164,5 +164,28 @@ public class FieldAndRelationshipPage extends BasePageBusinessLayer {
 	public WebElement getactivePicklist(int timeOut) {
 		return isDisplayed(driver, activePicklist, "Visibility", timeOut, "Active Picklist");
 	}
+	
+	@FindBy(xpath = "//input[@title=\"New Values\"]")
+	private WebElement pickListNewValueButton;
+
+	public WebElement pickListNewValueButton(int timeOut) {
+		return isDisplayed(driver, pickListNewValueButton, "Visibility", timeOut, "pickListNewValueButton");
+	}
+	
+	@FindBy(xpath = "//iframe[contains(@title,'Add Picklist')]")
+	private WebElement addPickListValuesIFrame;
+
+	public WebElement addPickListValuesIFrame(int timeOut) {
+
+		return isDisplayed(driver, addPickListValuesIFrame, "Visibility", timeOut, "addPickListValuesIFrame");
+	}
+	
+	@FindBy(xpath = "//textarea[@name=\"p1\"]")
+	private WebElement addPickListLabelName;
+
+	public WebElement addPickListLabelName(int timeOut) {
+
+		return isDisplayed(driver, addPickListLabelName, "Visibility", timeOut, "addPickListLabelName");
+	}
 
 }

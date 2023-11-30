@@ -620,5 +620,82 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 
 	}
 
+	public boolean newPicklistValueCreate(String projectName, String fieldName, String labelName) {
+		String xPath = "";
+		WebElement ele;
+		boolean flag = false;
+		if (CommonLib.sendKeysAndPressEnter(driver, getQucikSearchInFieldAndRelationshipPage(50), fieldName, "Field",
+				action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Field value has been passed in " + fieldName, YesNo.No);
+			CommonLib.ThreadSleep(6000);
+			xPath = "//span[text()='" + fieldName + "']";
+			ele = FindElement(driver, xPath, fieldName + " xpath", action.SCROLLANDBOOLEAN, 30);
+			if (CommonLib.click(driver, ele, fieldName + " field", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "clicked on Field" + fieldName, YesNo.No);
+				CommonLib.ThreadSleep(7000);
+				CommonLib.switchToFrame(driver, 40, getfieldsAndRelationshipsIframe(30));
+				try {
+					ele = pickListNewValueButton(35);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					log(LogStatus.ERROR, "Could not found the " + fieldName + " Element", YesNo.Yes);
+					return false;
+				}
+				if (CommonLib.click(driver, ele, "New Button Of Values", action.SCROLLANDBOOLEAN)) {
+					CommonLib.switchToDefaultContent(driver);
+					CommonLib.switchToFrame(driver, 50, addPickListValuesIFrame(30));
+					if (CommonLib.sendKeys(driver, addPickListLabelName(50), labelName, labelName + " Picklist Value",
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, labelName + " has been passed in the Picklist Label Name", YesNo.No);
+						if (CommonLib.click(driver, geteditPicklistSaveButton(30), "Save Button",
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on the Save button", YesNo.No);
+							CommonLib.switchToDefaultContent(driver);
+							CommonLib.switchToFrame(driver, 40, getfieldsAndRelationshipsIframe(30));
+							CommonLib.ThreadSleep(15000);
+							try {
+								ele = new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.presenceOfElementLocated(
+										By.xpath("//td[text()='" + labelName + "']/preceding-sibling::th")));
+							} catch (Exception ex) {
+								ex.printStackTrace();
+								log(LogStatus.ERROR, "Could not found the " + labelName + " Element", YesNo.Yes);
+								return false;
+							}
+
+							String Buttonstatus = CommonLib.getText(driver, ele, labelName + " value status",
+									action.SCROLLANDBOOLEAN);
+							if (Buttonstatus.equals(labelName)) {
+								log(LogStatus.PASS, labelName + " value has been Created", YesNo.No);
+								flag = true;
+							} else {
+								log(LogStatus.ERROR, labelName + " value is not Created", YesNo.Yes);
+								flag = false;
+							}
+						} else {
+							log(LogStatus.ERROR, "Could not click on the save button", YesNo.Yes);
+							flag = false;
+						}
+					} else {
+						log(LogStatus.ERROR, "Could not pass the label name of " + labelName, YesNo.Yes);
+						flag = false;
+					}
+				} else {
+					log(LogStatus.ERROR, "Could not click on the New Button for Values Add of " + labelName, YesNo.Yes);
+					flag = false;
+				}
+
+			}
+
+			else {
+				log(LogStatus.ERROR, "Could not click on the " + fieldName, YesNo.Yes);
+				flag = false;
+			}
+		} else {
+			log(LogStatus.ERROR, "Could not pass the Field value " + fieldName, YesNo.Yes);
+			flag = false;
+		}
+		return flag;
+
+	}
 
 }

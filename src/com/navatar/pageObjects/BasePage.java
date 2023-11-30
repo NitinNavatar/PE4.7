@@ -720,6 +720,16 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getSalesForceLightingIcon(int timeOut) {
 		return isDisplayed(driver, salesForceLightingIcon, "Visibility", timeOut, "Sales Force Lighting Icon");
 	}
+	
+	@FindBy(xpath = "(//a[text()='Switch to Lightning Experience'])[1]")
+	private WebElement salesForceLightingIconnew;
+
+	/**
+	 * @return the salesForceLightingIcon
+	 */
+	public WebElement getSalesForceLightingIconnew(int timeOut) {
+		return isDisplayed(driver, salesForceLightingIconnew, "Visibility", timeOut, "Sales Force Lighting Icon new");
+	}
 
 	@FindBy(xpath = "//div[contains(@class,'userProfilePanel')]//a[contains(@class,'switch-to-aloha')]")
 	private WebElement switchToClassic;
@@ -5605,6 +5615,27 @@ public abstract class BasePage extends BaseLib {
 
 	}
 
+	public WebElement getThemeSubject(String subjectName, int timeOut) {
+		String xPath = "//a[@title='" + subjectName + "']";
+		return FindElement(driver, xPath, subjectName, action.SCROLLANDBOOLEAN, timeOut);
+
+	}
+	
+	public List<WebElement> listOfThemeEmailHeaderDetail(int timeout) {
+		return FindElements(driver, "//*[@class='mainAccordion slds-theme_default slds-p-vertical_small']//span[@class='slds-cell-fixed slds-has-button-menu']/a//span[@class='slds-truncate']");
+	}
+	
+	@FindBy(xpath = "(//div[text()='No items to display'])[2]")
+	private WebElement ClipErrorMsg;
+
+	/**
+	 * @return the navigationPopUpHeader
+	 */
+	public WebElement getClipErrorMsg(int timeOut) {
+		WebElement ele = isDisplayed(driver, ClipErrorMsg, "Visibility", timeOut, "Clip Error Msg");
+		return ele;
+	}
+	
 	@FindBy(xpath = "//*[text()='View Calendar']")
 	private WebElement calenderIcon;
 
@@ -10481,6 +10512,68 @@ public abstract class BasePage extends BaseLib {
 		return FindElement(driver, path, "info popup message", action.BOOLEAN, timeOut);
 	}
 
+	
+	@FindBy(xpath = "//span[text()='New Connected App']")
+	private WebElement New_Connected_app;
+
+	/**
+	 * @return the New_Connected_app
+	 */
+	public WebElement getNew_Connected_app(int timeOut) {
+		return isDisplayed(driver, New_Connected_app, "Visibility", timeOut, "New Connected app");
+	}
+	
+	@FindBy(xpath = "//*[contains(text(),'Connected App Name')]/..//following-sibling::td//input")
+	private WebElement Connected_App_Name;
+
+	/**
+	 * @return the New_Connected_app
+	 */
+	public WebElement getConnected_App_Name(int timeOut) {
+		return isDisplayed(driver, Connected_App_Name, "Visibility", timeOut, "Connected App Name");
+	}
+	
+	@FindBy(xpath = "//*[contains(text(),'Contact Email')]/..//following-sibling::td//input")
+	private WebElement Contact_email;
+
+	/**
+	 * @return the New_Connected_app
+	 */
+	public WebElement getContact_email(int timeOut) {
+		return isDisplayed(driver, Contact_email, "Visibility", timeOut, "Contact email");
+	}
+	
+	@FindBy(xpath = "//*[contains(@for,'isOauth')]/..//following-sibling::td//input")
+	private WebElement EnableOAuthSettings;
+
+	/**
+	 * @return the New_Connected_app
+	 */
+	public WebElement getEnableOAuthSettings(int timeOut) {
+		return isDisplayed(driver, EnableOAuthSettings, "Visibility", timeOut, "Enable OAuth Settings");
+	}
+	
+	@FindBy(xpath = "//*[contains(text(),'Callback URL')]/..//..//following-sibling::td//textarea")
+	private WebElement callbackURL;
+
+	/**
+	 * @return the New_Connected_app
+	 */
+	public WebElement getcallbackURL(int timeOut) {
+		return isDisplayed(driver, callbackURL, "Visibility", timeOut, "call back URL");
+	}
+	
+	@FindBy(xpath = "//label[text()='Available OAuth Scopes']/..//following-sibling::select")
+	private WebElement AvailableOAuthScopes;
+
+	public WebElement getAvailableOAuthScopes(int timeOut) {
+		return isDisplayed(driver, AvailableOAuthScopes, "Visibility", timeOut, "Available OAuth Scopes");
+	}
+	
+	public List<WebElement> listOfThemeEmailpage(int timeout) {
+		return FindElements(driver, "//label[@part='label-container']//span");
+	}
+
 	@FindBy(xpath = "//span[@title='Interactions']/ancestor::div//a[@title='View All']")
 	private WebElement viewAllOptionOnInteraction;
 	/**
@@ -10506,6 +10599,66 @@ public abstract class BasePage extends BaseLib {
 
 		String path = "//div[@class='windowViewMode-normal oneContent active lafPageHost']//button[text()='"+ recordName +"']/ancestor::td/..//td//lightning-base-formatted-text";
 		return FindElement(driver, path, "info popup message", action.BOOLEAN, timeOut).getText();
+	}
+	
+	@FindBy(xpath = "//input[@class='slds-input' and @placeholder='Search']")
+	private WebElement inputSeacrObject;
+
+	public WebElement getInputSeacrObject(int timeOut) {
+		return isDisplayed(driver, inputSeacrObject, "Visibility", timeOut, "input search object");
+	}
+	
+	public WebElement dropDownListOfRelatedTag(String value, int timeOut) {
+		String xpath = "//ul[@class='drop_ul']//li[@class='slds-nav-vertical__item for_desk' and text()='"+value+"']";
+		try {
+			return FindElement(driver, xpath, "value " + value, action.BOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "value " + value, action.BOOLEAN, timeOut);
+		}
+	}
+	
+	@FindBy(xpath = "//label[text()='Clip Name']/..//input")
+	private WebElement clipName;
+
+	public WebElement getClipName(int timeOut) {
+		return isDisplayed(driver, clipName, "Visibility", timeOut, "clip name");
+	}
+	
+	@FindBy(xpath = "//label[text()='Summary']/..//textarea")
+	private WebElement summaryArea;
+
+	public WebElement getSummaryTextArea(int timeOut) {
+		return isDisplayed(driver, summaryArea, "Visibility", timeOut, "summary area");
+	}
+	
+	@FindBy(xpath = "//h2[contains(text(),'Clip')]/../..//button[@title='Save']")
+	private WebElement saveBtnOnClipPopup;
+
+	public WebElement getSaveBtnOnClipPopup(int timeOut) {
+		return isDisplayed(driver, saveBtnOnClipPopup, "Visibility", timeOut, "save button on clip popup");
+	}
+	
+	public WebElement getSuggestedTagRecord(String suggestedTagName, int timeOut) {
+		String xpath = "//div[text()='Suggested Tags']/..//lightning-base-formatted-text[text()='"+suggestedTagName+"']/ancestor::th[@data-label='Reference Found']/..//input[@type='checkbox']";
+		try {
+			return FindElement(driver, xpath, "suggested tag name" + suggestedTagName, action.BOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "suggested tag name " + suggestedTagName, action.BOOLEAN, timeOut);
+		}
+	}
+	
+	@FindBy(xpath = "//h2[text()='Clip']/../..//footer//button[text()='Tag']")
+	private WebElement clipPopupTagButton;
+
+	public WebElement getClipPopupTagButton(int timeOut) {
+		return isDisplayed(driver, clipPopupTagButton, "Visibility", timeOut, "clip tag");
+	}
+	
+	@FindBy(xpath = "//span[text()='Clips']/../..//h2[contains(@id,'modal-heading')]")
+	private WebElement clipNameOnPopup;
+
+	public WebElement getClipNameOnPopup(int timeOut) {
+		return isDisplayed(driver, clipNameOnPopup, "Visibility", timeOut, "clip name");
 	}
 
 	@FindBy(xpath = "//button[@name=\"SaveEdit\"]")

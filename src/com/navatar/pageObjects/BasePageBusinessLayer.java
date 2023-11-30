@@ -7700,7 +7700,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 	}
-
+	
 	/**
 	 * @author Ankur Huria
 	 * @param expectedResult
@@ -8664,7 +8664,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return result;
 	}
-	
+
 	/**
 	 * @author Ankur Huria
 	 * @param activityTimeLineTab
@@ -12544,7 +12544,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return flag;
 	}
-
+	
 	/**
 	 * @author Sourabh Saini
 	 * @param intractionSubjectName
@@ -16381,7 +16381,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return negativeResults;
 	}
-
+	
 	public boolean activityTimelineNotesSuggesstionBoxHandle(String recordsAndNotes) {
 		Integer status = 0;
 
@@ -23475,7 +23475,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return flag;
 
 	}
-
 	public String notificationEventNavigateToDetailPageOrNot(String eventName) {
 
 		CommonLib.refresh(driver);
@@ -26767,4 +26766,319 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 //		}
 		return result;
 	}
-}
+	 public boolean  connectedappsetup(String projectName,String appName,String email,String URL,String value) {
+		 SetupPageBusinessLayer sp = new SetupPageBusinessLayer(driver);
+			boolean flag = true;
+				if (sp.searchStandardOrCustomObject(environment, mode, object.App_Manager)) {
+					log(LogStatus.INFO, "click on Object : " + object.valueOf("App Manager"), YesNo.No);
+					ThreadSleep(2000);
+					if (click(driver, getNew_Connected_app(20), "New Connected app", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "clicked on New Connected app button", YesNo.No);
+						switchToFrame(driver, 30, sp.getSetUpPageIframe(60));
+						ThreadSleep(5000);
+						if (CommonLib.sendKeys(driver, getConnected_App_Name(30), appName, "app name",
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, appName + " value has been passed in Connected App Name", YesNo.No);
+							if (CommonLib.sendKeys(driver, getContact_email(30), email, "Email",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, email + " value has been passed in Email", YesNo.No);
+								if (click(driver, getEnableOAuthSettings(20), "Enable OAuth Settings", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on Enable OAuth Settings icon", YesNo.No);
+									ThreadSleep(2000);
+									if (CommonLib.sendKeys(driver, getcallbackURL(30), URL, "URL",
+											action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO, "able to send" + URL, YesNo.No);
+										if (selectVisibleTextFromDropDown(driver, getAvailableOAuthScopes(10),
+												"Selected Tab List",value)) {
+											appLog.info(value + " is selected successfully in Available tabs");
+											if (click(driver, sp.getAddBtn(10), "Custom Tab Add Button",
+													action.SCROLLANDBOOLEAN)) {
+												appLog.info("clicked on Add button");
+												if (click(driver, sp.getCreateUserSaveBtn_Lighting(10), "Save Button",
+														action.SCROLLANDBOOLEAN)) {
+													flag = true;
+													log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
+													ThreadSleep(2000);
+												} else {
+													log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
+												}
+											} else {
+												log(LogStatus.ERROR, "not able to click on Custom Tab Add Button", YesNo.Yes);
+											}
+										} else {
+											log(LogStatus.ERROR, value + " is not selected successfully in Available tabs", YesNo.Yes);
+										}
+									} else {
+										log(LogStatus.ERROR, "not able to send" + URL, YesNo.Yes);
+									}
+								} else {
+									log(LogStatus.ERROR, "not able to clicked on Enable OAuth Settings icon", YesNo.Yes);
+								}
+							} else {
+								log(LogStatus.ERROR, email + " value has not been passed in Email", YesNo.Yes);
+							}
+						} else {
+							log(LogStatus.ERROR, appName + " value has not been passed in Connected App Name", YesNo.Yes);
+						}
+					} else {
+						log(LogStatus.ERROR, "not able to clicked on New Connected app button", YesNo.Yes);
+					}
+				} else {
+					log(LogStatus.ERROR,  "not able to click on Object : " + object.valueOf("App Manager"), YesNo.Yes);
+				}
+				
+		return flag;
+	 }
+	 
+	 public boolean editOfRecordType(String projectName, String recordTypeListArray[], String[][] recordTypeFields,
+				object Object, boolean removeAllSelectedRecordType, String profileName) {
+
+			String parentID = null;
+			boolean flag = false;
+			HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+			SetupPageBusinessLayer sp = new SetupPageBusinessLayer(driver);
+
+			Integer loopCount = 0;
+			Integer status = 0;
+
+			home.notificationPopUpClose();
+			if (home.clickOnSetUpLink()) {
+				flag = false;
+				parentID = switchOnWindow(driver);
+				if (parentID != null) {
+
+					if (removeAllSelectedRecordType) {
+						if (sp.searchStandardOrCustomObject(environment, mode, object.Profiles.toString())) {
+							log(LogStatus.INFO, "Profile has been open", YesNo.Yes);
+
+							if (sp.removeAllRecordTypesOfObject(profileName, Object.toString())) {
+								log(LogStatus.INFO, "The record type of " + Object + " has been removed", YesNo.No);
+								flag = true;
+							} else {
+								log(LogStatus.ERROR, "The record type of " + Object + " is not removed", YesNo.No);
+								sa.assertTrue(false, "The record type of " + Object + " is not removed");
+							}
+						} else {
+							log(LogStatus.ERROR, "Not Able to Search the " + object.Profiles + " object", YesNo.Yes);
+							sa.assertTrue(false, "Not Able to Search the Object" + object.Profiles + " object");
+						}
+					} else {
+						flag = true;
+					}
+
+					if (flag) {
+						for (int i = 0; i < recordTypeListArray.length; i++) {
+							if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(),
+									Object.toString())) {
+								if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), Object,
+										ObjectFeatureName.recordTypes)) {
+									if (sp.clickOnAlreadyCreatedLayout(recordTypeListArray[i])) {
+										if (sp.editRecordTypeForObject(projectName, recordTypeFields, 10)) {
+											log(LogStatus.INFO, recordTypeListArray[i] + " has been updated ", YesNo.Yes);
+											status++;
+										} else {
+											log(LogStatus.ERROR, recordTypeListArray[i] + " not updated ", YesNo.Yes);
+											sa.assertTrue(false, recordTypeListArray[i] + " not updated ");
+										}
+
+									} else {
+										log(LogStatus.ERROR, recordTypeListArray[i] + " is not clickable", YesNo.Yes);
+										sa.assertTrue(false, recordTypeListArray[i] + " is not clickable");
+									}
+
+								} else {
+									log(LogStatus.ERROR, "object feature " + ObjectFeatureName.recordTypes
+											+ " is not clickable of Object: " + Object, YesNo.Yes);
+									sa.assertTrue(false, "object feature " + ObjectFeatureName.recordTypes
+											+ " is not clickable of Object: " + Object);
+								}
+							} else {
+								log(LogStatus.ERROR, Object + " object could not be found in object manager", YesNo.Yes);
+								sa.assertTrue(false, Object + " object could not be found in object manager");
+							}
+							loopCount++;
+
+						}
+					} else {
+						log(LogStatus.ERROR, "Master is not able to select from Object: " + Object
+								+ " So not able to Update the Record Type", YesNo.Yes);
+						sa.assertTrue(false, "Master is not able to select from Object: " + Object
+								+ " So not able to Update the Record Type");
+					}
+
+					driver.close();
+					driver.switchTo().window(parentID);
+					switchToDefaultContent(driver);
+
+				} else {
+					log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+					sa.assertTrue(false, "could not find new window to switch");
+				}
+			} else {
+				log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
+				sa.assertTrue(false, "could not click on setup link");
+			}
+
+			if (status.equals(loopCount) && status != 0) {
+
+				return true;
+			} else
+				return false;
+		}
+	 
+	 public boolean createClip(String[][] clipPanel, String[][] clipPopup, String[] suggestedTag) {
+			boolean flag = false;
+
+			if (clipPanel != null) {
+
+				for (int i = 0; i < clipPanel.length; i++) {
+					String labelName = clipPanel[i][0];
+					String value = clipPanel[i][1];
+					if (labelName.equalsIgnoreCase("Notes")) {
+						if (sendKeys(driver, getTextareaOnPopup(20), value, "Note area", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, value + " has been passed in Notes field", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, value + " is not passed in Notes field", YesNo.No);
+							return false;
+						}
+					}
+
+					if (labelName.equalsIgnoreCase("tag")) {
+						ArrayList<String> relatedTags = new ArrayList<String>();
+						if (value.contains("<break>")) {
+							String[] val = value.split("<break>");
+							for (int j = 0; j < val.length; j++) {
+								relatedTags.add(val[j]);
+							}
+						} else {
+							relatedTags.add(value);
+						}
+						if (getInputSeacrObject(10) == null) {
+							if (clickUsingJavaScript(driver, getTagIconOnPopup(20), "Tag icon")) {
+								log(LogStatus.INFO, "Clicked on tag icon of clip", YesNo.No);
+								for (int j = 0; j < relatedTags.size(); j++) {
+									if (sendKeys(driver, getInputSeacrObject(20), relatedTags.get(j), "related tag",
+											action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO, relatedTags.get(j) + " has been passed in related tag",
+												YesNo.No);
+										if (CommonLib.click(driver, dropDownListOfRelatedTag(relatedTags.get(j), 20),
+												"related tag list " + relatedTags.get(j), action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO,
+													"related tag value " + relatedTags.get(j) + " has been selected",
+													YesNo.No);
+										} else {
+											log(LogStatus.ERROR,
+													"related tag value " + relatedTags.get(j) + " is not selected",
+													YesNo.No);
+											return false;
+
+										}
+									} else {
+										log(LogStatus.ERROR, "Not able to pass value " + relatedTags.get(j)
+												+ " is not passed in related tag", YesNo.No);
+										return false;
+									}
+								}
+
+							} else {
+								log(LogStatus.ERROR, "Not able to click on tag icon of clip", YesNo.No);
+								return false;
+							}
+						}
+					}
+
+				}
+
+			}
+
+			if (clipPopup != null) {
+				if (CommonLib.click(driver, getSaveButtonOnPopup(20), "save button", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on save button", YesNo.No);
+
+					for (String[] arr : clipPopup) {
+						String labelName = arr[0];
+						String value = arr[1];
+
+						if (labelName.equalsIgnoreCase("Clip Name")) {
+							if (sendKeys(driver, getClipName(20), value, "clip name", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clip name " + value + " has been passed", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Clip name " + value + " is not passed", YesNo.No);
+								return false;
+							}
+						}
+
+						if (labelName.equalsIgnoreCase("Summary")) {
+							if (sendKeys(driver, getSummaryTextArea(20), value, "summary", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Summary " + value + " has been passed", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Summary " + value + " is not passed", YesNo.No);
+								return false;
+							}
+						}
+
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
+
+					return false;
+				}
+			}
+			if (suggestedTag != null) {
+				if (click(driver, getSaveBtnOnClipPopup(20), "save button of clip popup", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on save button", YesNo.No);
+					int k = 0;
+					for (int i = 0; i < suggestedTag.length; i++) {
+						if (clickUsingJavaScript(driver, getSuggestedTagRecord(suggestedTag[i], 20),
+								"suggestd tag " + suggestedTag[i])) {
+							log(LogStatus.INFO, "Clicked on suggested tag chechbox of " + suggestedTag[i], YesNo.No);
+
+						} else {
+							log(LogStatus.ERROR, "Not able to click on suggested tag chechbox of " + suggestedTag[i],
+									YesNo.No);
+							k++;
+						}
+					}
+					if (k == 0) {
+						if (click(driver, getClipPopupTagButton(20), "tag button", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on tag button", YesNo.No);
+							if (getClipNameOnPopup(20) != null) {
+								log(LogStatus.INFO, "Clip has been created", YesNo.No);
+								return true;
+							} else {
+								log(LogStatus.ERROR, "Clip is not created", YesNo.No);
+								return false;
+							}
+						} else {
+							log(LogStatus.ERROR, "Not able to click on tag button", YesNo.No);
+							return false;
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to select the suggested popup", YesNo.No);
+						return false;
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
+					return false;
+				}
+
+			} else {
+
+				if (click(driver, getSaveBtnOnClipPopup(20), "save button of clip popup", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on save button", YesNo.No);
+					if (getClipNameOnPopup(20) != null) {
+						log(LogStatus.INFO, "Clip has been created", YesNo.No);
+						return true;
+					} else {
+						log(LogStatus.ERROR, "Clip is not created", YesNo.No);
+						return false;
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
+					return false;
+				}
+			}
+
+		}
+	}
