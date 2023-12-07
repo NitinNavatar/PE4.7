@@ -13866,7 +13866,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 					}
 
-					else if (labelName.contains("User")) {
+					else if (labelName.contains("User") || labelName.contains("Assigned To")) {
 						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
 								+ labelName + "']/..//button";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
@@ -17456,10 +17456,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						String labelName = val[0];
 						String value = val[1];
 
-						if (labelName.contains("User")) {
+						if (labelName.contains("User") || labelName.contains("Assigned To") ) {
 
 							String actualAssignedToId = getText(driver, assignedToVerificationInAdvance(labelName, 10),
-									"User", action.SCROLLANDBOOLEAN);
+									"Assigned To", action.SCROLLANDBOOLEAN);
 
 							log(LogStatus.INFO, "Successfully get the value from Assigned To field", YesNo.No);
 							if (value.equals(actualAssignedToId)) {
@@ -17635,7 +17635,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 						}
 
-						else if (labelName.contains("User")) {
+						else if (labelName.contains("User") || labelName.contains("Assigned To") ) {
 
 							String actualAssignedToId = getText(driver, assignedToVerificationInTasks(labelName, 10),
 									"User", action.SCROLLANDBOOLEAN);
@@ -22972,8 +22972,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					String labelName = val[0];
 					String value = val[1];
 
-					if (labelName.contains("User") || labelName.contains(excelLabel.Status.toString())
-							|| labelName.contains(excelLabel.Priority.toString())) {
+					if (labelName.contains("User") || labelName.contains(excelLabel.Status.toString())|| labelName.contains("Assigned To")
+							|| labelName.contains(excelLabel.Priority.toString()) ) {
 
 						String actualValue = getText(driver,
 								valueOfLabelInSubjectLinkPopUpInInteractionSection(labelName, 7), labelName,
@@ -24694,7 +24694,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								|| labelName.equalsIgnoreCase("Tags")
 								|| labelName.contains(excelLabel.Subject.toString())
 								|| labelName.contains(excelLabel.Status.toString())
-								|| labelName.contains(excelLabel.Priority.toString()) || labelName.contains("Date")) {
+								|| labelName.contains(excelLabel.Priority.toString()) || labelName.contains("Date") ) {
 
 							if (labelName.equalsIgnoreCase(excelLabel.Related_To.toString())) {
 								labelName = "Tags";

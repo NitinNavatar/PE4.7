@@ -781,8 +781,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 					ThreadSleep(1000);
 					if (click(driver,
 							FindElement(driver,
-									"//input[contains(@placeholder,'Search')]/../following-sibling::*//*[@title='"
-											+ companyName + "']",
+									"//*[text()='Company']/..//*[@title='" + companyName + "']",
 									"Company Name List", action.BOOLEAN, 30),
 							companyName + "   :   Company Name", action.BOOLEAN)) {
 						appLog.info(companyName + "  is present in list.");
