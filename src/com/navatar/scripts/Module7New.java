@@ -1174,8 +1174,8 @@ public class Module7New extends BaseLib {
 		boolean flag = true;
 		WebElement ele = null;
 		String primaryContact = M7NContact8FName + " " + M7NContact8LName;
-		M7NEvent1StartDate = yesterdaysDate;
-		M7NEvent1EndDate = todaysDate;
+		M7NEvent1StartDate = previousOrForwardDate(-2, "M/d/YYYY");
+		M7NEvent1EndDate = previousOrForwardDate(-1, "M/d/YYYY");
 		String task = M7NEvent1Subject;
 		String relatedValue = M7NIns6;
 		String[][] event1 = { { PageLabel.Subject.toString(), task }, { PageLabel.Name.toString(), primaryContact },
@@ -1239,7 +1239,7 @@ public class Module7New extends BaseLib {
 									+ primaryContact, YesNo.No);
 						} else {
 							log(LogStatus.ERROR, "Last touch point value is not matched For : " + primaryContact
-									+ " Actual : " + actualValue + " /t Expected : " + expectedValue, YesNo.Yes);
+									+ " Actual : " + actualValue + "  Expected : " + expectedValue, YesNo.Yes);
 							sa.assertTrue(false, "last touch point value is not matched For : " + primaryContact
 									+ " Actual : " + actualValue + " /t Expected : " + expectedValue);
 						}
