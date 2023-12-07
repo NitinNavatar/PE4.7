@@ -53,7 +53,7 @@ public class AcuityDealsEmails extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void ADETc001_createCRMUser(String projectName) {
+	public void ADETc001_1_createCRMUser(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -193,9 +193,11 @@ public class AcuityDealsEmails extends BaseLib {
 		String value="";
 		String type="";
 		String TabName1 ="";
-		String[][] EntityOrAccounts = {{ ADEIns18, ADEIns18RecordType ,null} , { ADEIns2, ADEIns2RecordType ,null},
+		String[][] EntityOrAccounts = {
+				{ ADEIns18, ADEIns18RecordType ,null} , { ADEIns2, ADEIns2RecordType ,null},
 		 { ADEIns3, ADEIns3RecordType ,null}, { ADEIns19, ADEIns19RecordType ,null}, { ADEIns5, ADEIns5RecordType ,null},
-		 { ADEIns7, ADEIns7RecordType ,null},{ ADEIns16, ADEIns16RecordType ,null}};
+		 { ADEIns7, ADEIns7RecordType ,null},
+		 { ADEIns16, ADEIns16RecordType ,null}};
 		
 
 		for (String[] accounts : EntityOrAccounts) {
@@ -1902,7 +1904,7 @@ public class AcuityDealsEmails extends BaseLib {
 		String stage1 =Stage.LOI.toString();
 		String hsr1 = Stage.LOI.toString();
 		String dateReceived1 = todaysDate;
-		String companyname = ADEIns1;
+		String companyname = ADEIns18;
 		String labellabels = EditPageLabel.Source_Firm.toString();
 		String otherLabelValues = ADEDeal4SourceFirm;
 
@@ -12570,7 +12572,7 @@ public void ADETc098_VerifyThatDealNamesClickableandDealRedirectionforAccounts(S
 		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns5, 30)) {
 			if (BP.dealAcuityDealName(dealName, 30) != null) {
 				log(LogStatus.PASS, "deal name: " + dealName + " is hyperlink and is present", YesNo.No);
-				if (clickUsingJavaScript(driver, BP.dealAcuityDealName(dealName, 10), "deal name: " + dealName,
+				if (click(driver, BP.dealAcuityDealName(dealName, 10), "deal name: " + dealName,
 						action.BOOLEAN)) {
 					log(LogStatus.PASS, "Clicked on deal name: " + dealName, YesNo.No);
 				try {
@@ -14413,7 +14415,7 @@ public void ADETc114_VerifySortingatDealSectionDateReceivedAICIPEAccountsisAecen
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-	String order = "date";	
+	String order = "Date Received";	
 	if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
 		log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
 		
@@ -15206,6 +15208,8 @@ public void ADETc120_1_VerifySortingatDealSectionDateReceivedForInstitutionRecor
 		if(fp.clickOnAlreadyCreatedItem(projectName, ADEIns3, 30)){
 			
 			log(LogStatus.INFO,"open created item"+ADEIns3,YesNo.No);
+			refresh(driver);
+			ThreadSleep(5000);
 					List<WebElement> ele =BP.getsortingStage1(10);
 					if (CommonLib.checkFundraisingStageSorting(driver, true, ele)) {
 				log(LogStatus.PASS,
