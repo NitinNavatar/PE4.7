@@ -23,6 +23,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import com.navatar.generic.APIUtils;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
@@ -458,6 +459,27 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		sa.assertAll();
 	}
 
+	@Test
+	public void AcuityMNNRTc001_5_CreateAccountByAPI(){
+		
+		String filePath = System.getProperty("user.dir") + "\\API Files\\Acuity Notes Tagging\\Account.xlsx";
+
+		String sheetName = "Account";
+
+		new APIUtils(crmUser1EmailID).AccountObjectDataUpload(filePath, sheetName);
+	}
+	
+	@Test
+	public void AcuityMNNRTc001_6_CreateContactByAPI(){
+		
+		String filePath = System.getProperty("user.dir") + "\\API Files\\Acuity Notes Tagging\\Contact.xlsx";
+
+		String sheetName = "Contact";
+
+		new APIUtils(crmUser1EmailID).ContactObjectDataUpload(filePath, sheetName);
+	}
+
+	
 	@Parameters({ "projectName" })
 
 	@Test
