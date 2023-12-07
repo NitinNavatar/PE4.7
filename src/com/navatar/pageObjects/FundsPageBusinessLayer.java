@@ -1503,7 +1503,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 				ThreadSleep(1000);
 				if (click(driver,
 						FindElement(driver,
-								"//input[contains(@placeholder,'Search')]/../following-sibling::*//*[@title='"
+								"//input[contains(@placeholder,'Search')]/../../../following-sibling::*//*[@title='"
 										+ companyname + "']",
 								"Company Name List", action.BOOLEAN, 30),
 						companyname + "   :   Company Name", action.BOOLEAN)) {
