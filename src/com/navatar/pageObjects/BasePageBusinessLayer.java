@@ -1471,6 +1471,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case Events:
 			viewList = "All";
 			break;
+		case FundraisingsTab:
+			viewList = "All";
+			break;
 
 		default:
 			return false;
@@ -23383,10 +23386,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	public String clickOnThemeRecord(String themeName) {
 		boolean flag = false;
 		String parentID = null;
-		if (sendKeysAndPressEnter(driver, getSearchBoxOnTheme(20), themeName, "Theme name", action.SCROLLANDBOOLEAN)) {
+		if (sendKeysAndPressEnter(driver, getSearchBoxOnTheme(20), themeName, "Theme Name", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "The value : " + themeName + " has been in search box of theme", YesNo.No);
 			ThreadSleep(3000);
-			if (clickUsingJavaScript(driver, getThemeName(themeName, 20), "Theme name", action.SCROLLANDBOOLEAN)) {
+			if (clickUsingJavaScript(driver, getThemeName(themeName, 20), "Theme Name", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on the Theme name : " + themeName, YesNo.No);
 				parentID = switchOnWindow(driver);
 				if (getThemeNameOnDetailsPage(themeName, 30) != null) {
