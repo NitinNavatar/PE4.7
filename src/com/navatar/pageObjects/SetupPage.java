@@ -1485,4 +1485,16 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, activityComponentDropdown, "Visibility", timeOut, "activity component dropdown ");
 
 	}
+	
+	@FindBy(xpath = "//td[@id='bottomButtonRow']//input[@name='save']")
+
+	private WebElement createUserbottomSaveBtn_Lighting;
+
+	/**
+	 * @return the createUserSaveBtn
+	 */
+	public WebElement createUserbottomSaveBtn_Lighting(int timeOut) {
+		return isDisplayed(driver, createUserbottomSaveBtn_Lighting, "Visibility", timeOut,
+				"create user save button in lighting");
+	}
 }

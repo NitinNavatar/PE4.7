@@ -3,18 +3,19 @@ package com.navatar.scripts;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
 import static com.navatar.generic.ExcelUtils.readAllDataForAColumn;
-import static com.navatar.generic.SmokeCommonVariables.adminPassword;
-import static com.navatar.generic.SmokeCommonVariables.crmUser1EmailID;
-import static com.navatar.generic.SmokeCommonVariables.crmUser3FirstName;
-import static com.navatar.generic.SmokeCommonVariables.crmUser3LastName;
-import static com.navatar.generic.SmokeCommonVariables.crmUser3Lience;
-import static com.navatar.generic.SmokeCommonVariables.crmUser3Profile;
-import static com.navatar.generic.SmokeCommonVariables.superAdminUserName;
+import static com.navatar.generic.CommonVariables.adminPassword;
+import static com.navatar.generic.CommonVariables.crmUser1EmailID;
+import static com.navatar.generic.CommonVariables.crmUser3FirstName;
+import static com.navatar.generic.CommonVariables.crmUser3LastName;
+import static com.navatar.generic.CommonVariables.crmUser3Lience;
+import static com.navatar.generic.CommonVariables.crmUser3Profile;
+import static com.navatar.generic.CommonVariables.superAdminUserName;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
@@ -24,22 +25,7 @@ import com.navatar.generic.APIUtils;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
-import com.navatar.generic.EnumConstants.AppSetting;
-import com.navatar.generic.EnumConstants.Environment;
-import com.navatar.generic.EnumConstants.Mode;
-import com.navatar.generic.EnumConstants.NavigationMenuItems;
-import com.navatar.generic.EnumConstants.ObjectFeatureName;
-import com.navatar.generic.EnumConstants.PageLabel;
-import com.navatar.generic.EnumConstants.PageName;
-import com.navatar.generic.EnumConstants.PermissionType;
-import com.navatar.generic.EnumConstants.ProgressType;
-import com.navatar.generic.EnumConstants.RelatedTab;
-import com.navatar.generic.EnumConstants.TabName;
-import com.navatar.generic.EnumConstants.YesNo;
-import com.navatar.generic.EnumConstants.action;
-import com.navatar.generic.EnumConstants.excelLabel;
-import com.navatar.generic.EnumConstants.object;
-import com.navatar.generic.EnumConstants.recordTypeLabel;
+import com.navatar.generic.EnumConstants.*;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.ClipPageBusinessLayer;
@@ -935,6 +921,97 @@ public class AcuityResearch extends BaseLib{
 	lp.CRMlogout();
 	sa.assertAll();
 }
+
+@Parameters({ "projectName"})
+@Test
+	public void ARTc004_1_CreateCustomFields(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		
+		boolean flag = false;
+		String parentID=null;
+		
+		object[] objectsName = {object.Account,object.Deal};
+		String name = "" ,length = "", field = "";
+		
+		if (home.clickOnSetUpLink()) {
+			parentID=switchOnWindow(driver);
+			if (parentID!=null) {
+				for(object objectName : objectsName){
+					String Email = "Custom Advanced " + objectName+ " Email";
+					String Phone = "Custom Advanced " + objectName+ " Phone";
+					String Date = "Custom Advanced " + objectName+ " Date";
+					String AN = "Custom Advanced " + objectName+ " AutoNumber";
+					String DT = "Custom Advanced " + objectName+ " DateTime";
+					String Geo = "Custom Advanced " + objectName+ " GeoLocation";
+					String CB = "Custom Advanced " + objectName+ " Checkbox";
+					String Cur = "Custom Advanced " + objectName+ " Currency";
+					String Per = "Custom Advanced " + objectName+ " Percent";
+					String Time = "Custom Advanced " + objectName+ " Time";
+					String Url = "Custom Advanced " + objectName+ " URL";
+					String [][] fieldsType = {{object.Email.toString(),Email,""},{ReportField.Phone.toString(),Phone,""},{PageLabel.Date.toString(),Date,""},{PageLabel.Auto_Number.toString(),AN,""},{PageLabel.Date_Time.toString(),DT,""},{PageLabel.Geolocation.toString(),Geo,"2"},
+							{SubjectElement.Checkbox.toString(),CB,""},{PageLabel.Currency.toString(),Cur,""},{excelLabel.Percent.toString(),Per,"2"},{PageLabel.Time.toString(),Time,""},{CSVLabel.URL.toString(),Url,""}};
+					for(String[] fieldType : fieldsType) {
+						field=fieldType[0];
+						name=fieldType[1];
+						length=fieldType[2];
+						String[][] labelAndValues= {{excelLabel.Length.toString(),length}};
+				if (sp.addCustomFieldforFormula(environment,mode, objectName, ObjectFeatureName.FieldAndRelationShip, field, name, labelAndValues, null, null)) {
+					flag=true;
+					log(LogStatus.INFO, "successfully created new custom field", YesNo.No);
+					if (sendKeys(driver, sp.getQuickSearchInObjectManager_Lighting(10),name+Keys.ENTER, "search", action.SCROLLANDBOOLEAN)) {
+							sp.returnAPINameOfField(projectName, name);
+							log(LogStatus.PASS, "found api name of "+name, YesNo.Yes);
+					}else {
+						log(LogStatus.FAIL, "could not find api name of "+name, YesNo.Yes);
+						sa.assertTrue(false, "could not find api name of "+name);
+					
+					}
+				}
+				else {
+					log(LogStatus.FAIL, "could not create new field", YesNo.Yes);
+					sa.assertTrue(false, "could not create new field");
+					}
+				   }
+				}
+				if (flag) {
+				List<String> layoutName = new ArrayList<String>();
+				layoutName.add(Layout.Contact_Layout.toString().replace("_", " "));
+				HashMap<String, String> sourceANDDestination = new HashMap<String, String>();
+				sourceANDDestination.put(name,excelLabel.Title.toString());
+				List<String> abc = sp.DragNDrop("", mode, object.Contact, ObjectFeatureName.pageLayouts, layoutName, sourceANDDestination);
+				ThreadSleep(10000);
+				if (!abc.isEmpty()) {
+					log(LogStatus.FAIL, "field not added/already present 1", YesNo.Yes);
+				}else{
+					log(LogStatus.INFO, "field added/already present 1", YesNo.Yes);
+				}
+				}else {
+					log(LogStatus.FAIL, "new field could not be created, so no need to add in page layout", YesNo.Yes);
+					sa.assertTrue(false, "new field could not be created, so no need to add in page layout");
+	
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+				switchToDefaultContent(driver);
+				refresh(driver);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch", YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch");
+	
+			}
+		}
+		else {
+			log(LogStatus.FAIL, "could not click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "could not click on setup link");
+		
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 
 	@Test
 	public void ARTc004_1_CreateAccountByApi() {
@@ -9271,4 +9348,1481 @@ public class AcuityResearch extends BaseLib{
 			sa.assertAll();
 		}
 	
+	@Parameters({ "projectName"})
+	@Test
+	public void ARTc051_VerifyTheResearchFunctionality(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		
+		String ele;
+		int i = 1;
+		String searchValues[] = {"","a","zz","1234567890~!@#$%^&*()_+-=[]{}?|;':,.<>/"};
+		lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+		ThreadSleep(2000);
+		for(String searchValue : searchValues) {
+			log(LogStatus.PASS, "WOrking for " + searchValue, YesNo.Yes);
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+				ThreadSleep(2000);
+				click(driver, rp.getAdvancedResearch(5), "Research Button",action.BOOLEAN);
+				refresh(driver);
+				ThreadSleep(5000);
+				click(driver, rp.getCloseButtonForAdvanced(5), "Research Close Button",action.BOOLEAN);
+				ThreadSleep(2000);
+				ele = rp.getResearchFindings(10).getText();
+				if (ele!=null && ele.equalsIgnoreCase("Search Results")) {
+				log(LogStatus.PASS, ele +" is visible", YesNo.Yes);
+				} else {
+					log(LogStatus.ERROR, ele +" is not Matched with Search Results", YesNo.Yes);
+					sa.assertTrue(false, ele +" is not Matched with Search Results");
+				}
+					ele = rp.getNoResult(10).getText();
+					if(ele.contains(bp.errorName1)){
+						log(LogStatus.PASS, ele +" has been Matched with " +bp.errorName1, YesNo.No);
+					} else {
+						log(LogStatus.ERROR, ele +" is not Matched with " +bp.errorName1, YesNo.Yes);
+						sa.assertTrue(false, ele +" is not Matched with " +bp.errorName1);
+					}
+		} else {
+			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to send value "+searchValue);
+		}
+	}
+		i++;
+		refresh(driver);
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void ARTc052_VerifyResearchLinksForValidData(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+	ThreadSleep(2000);
+	String headerName;
+	
+	String[] searchValues = {AR_Firm66};
+	
+	for(String searchValue : searchValues) {
+		
+		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
+		log(LogStatus.PASS, "Working for " + searchValue, YesNo.No);
+	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			ThreadSleep(2000);
+			if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+				ThreadSleep(2000);
+				clickUsingJavaScript(driver, rp.getAdvancedResearch(10),"Advanced Research", action.BOOLEAN);
+				log(LogStatus.PASS, "Clicked on Research button", YesNo.No);
+				ThreadSleep(8000);
+			} else {
+				log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to send value "+searchValue);
+			}
+					click(driver, rp.getCloseButtonForAdvanced(10),"Advanced Research Button", action.BOOLEAN);
+					log(LogStatus.PASS, "Clicked on Research button on advanced area", YesNo.No);
+					ThreadSleep(2000);
+					if(isDisplayed(driver, rp.getAdvancedLink(10), "Visibility", 10, "Advanced Link") != null) {
+						log(LogStatus.PASS, "Advanced Research Link is visible", YesNo.No);
+						click(driver, rp.getAdvancedLink(10),"Advanced Research Link", action.BOOLEAN);
+						log(LogStatus.PASS, "Clicked on Advanced Research Link", YesNo.No);
+						ThreadSleep(2000);
+						if(rp.getResearchButtonForAdvanced(10) != null) {
+							log(LogStatus.PASS, "Advanced Research option is visible", YesNo.No);
+							ThreadSleep(2000);
+						} else {
+							log(LogStatus.ERROR, "Advanced Research option is not visible", YesNo.Yes);
+							sa.assertTrue(false,"Advanced Research option is not visible");
+						}
+						if(rp.getSearchByKeywordTextbox(5) != null){
+							log(LogStatus.PASS, "Search By Keyword option is visible", YesNo.No);
+							ThreadSleep(2000);
+						} else {
+							log(LogStatus.ERROR, "Search By Keyword option is not visible", YesNo.Yes);
+							sa.assertTrue(false,"Search By Keyword option is not visible");
+						}
+						if(rp.getSearchForSpecificDropdown(5) != null){
+							log(LogStatus.PASS, "Search For Specific option is visible", YesNo.No);
+							ThreadSleep(2000);
+						} else {
+							log(LogStatus.ERROR, "Search For Specific option is not visible", YesNo.Yes);
+							sa.assertTrue(false,"Search For Specific option is not visible");
+						}
+						if(rp.getSearchByFieldForFieldOption(5) != null){
+							log(LogStatus.PASS, "Search By Field option is visible", YesNo.No);
+							ThreadSleep(2000);
+						} else {
+							log(LogStatus.ERROR, "Search By Field option is not visible", YesNo.Yes);
+							sa.assertTrue(false,"Search By Field option is not visible");
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on Advanced Research Link", YesNo.Yes);
+						sa.assertTrue(false,"Not able to click on Advanced Research Link");
+					}
+		}
+		log(LogStatus.INFO,
+				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+						+ searchValue + "---------",
+				YesNo.No);
+		if(rp.getNoResult(5) != null){
+			log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+		} else 
+			if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+				log(LogStatus.INFO,
+						"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------",
+						YesNo.No);
+			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+				if(list.isEmpty()) {
+					
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
+				} else {
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.Yes);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
+				}
+	
+			} else {
+				log(LogStatus.FAIL,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------",
+						YesNo.Yes);
+				sa.assertTrue(false,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------");
+				
+		}
+			if (rp.mouseHoverOnNavigationAndGetText()) {
+				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+			} else {
+				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.Yes);
+				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+			}
+			
+			if (rp.mouseHoverOnGridAndGetText()) {
+				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+			} else {
+				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.Yes);
+				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+			}
+			int gridSize = rp.getElementsFromGrid().size();
+			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+			for(int i=0; i<gridSize; i++)
+			{		
+				headerName = rp.getElementsFromGrid().get(i).getText();
+				String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+				
+				if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+					log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+				} else {
+					log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.Yes);
+					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+				}
+				if (rp.VerifyViewMoreOption(headerName)) {
+					log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+				} else {
+					log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.Yes);
+					sa.assertTrue(false,"--------- Not able to click on view more option for" + headerName + " ---------");
+				}
+			}
+		}
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();	
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void ARTc053_VerifyAdvancedWithCreateThemeFunctionality(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+	ThreadSleep(2000);
+	
+	String[] searchValues = {AR_Firm8};
+	String[] labelName = {RecordType.Advisor.toString(),RecordType.Company.toString(),RecordType.Institution.toString(),RecordType.Intermediary.toString(),RecordType.Lender.toString(),RecordType.Limited_Partner.toString().toString().replace("_", " "),RecordType.Portfolio_Company.toString().toString().replace("_", " "),
+			RecordType.Private_Equity.toString().toString().replace("_", " "),RecordType.Banker.toString(),RecordType.Broker.toString(),RecordType.Buy_Side_Deal.toString().replaceAll("_", " "),RecordType.Capital_Raise.toString().replace("_", " "),RecordType.Sell_Side_Deal.toString().replaceAll("_", " "),
+			RecordType.FRGRT.toString().replace("_", " "),RecordType.MSGRT.toString().replace("_", " "),RecordType.Theme.toString(),RecordType.Clip.toString(),RecordType.Interaction.toString()};
+	
+	for(String searchValue : searchValues) {
+		
+		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
+		log(LogStatus.PASS, "Working for " + searchValue, YesNo.No);
+	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			ThreadSleep(2000);
+			if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+				ThreadSleep(2000);
+				clickUsingJavaScript(driver, rp.getAdvancedResearch(10),"Advanced Research", action.BOOLEAN);
+				log(LogStatus.PASS, "Clicked on Research button", YesNo.No);
+				ThreadSleep(8000);
+			} else {
+				log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to send value "+searchValue);
+			}
+				if(click(driver, rp.getCreateThemeLink(10),"Advanced Research Button", action.BOOLEAN)) {
+					log(LogStatus.PASS, "Clicked on Research button on advanced area", YesNo.No);
+					ThreadSleep(2000);
+					if(click(driver, rp.getAdvancedLinkOnCreateThemePopup(10),"Advanced Research Link", action.BOOLEAN)) {
+						log(LogStatus.PASS, "Clicked on Advanced Research Link", YesNo.No);
+						ThreadSleep(2000);
+						if(isDisplayed(driver, rp.getLabelofAllCategoriesOnCreateThemePopup(10), "Visibility", 10, "Search By Keyword(s)") != null) {
+							log(LogStatus.PASS, "Label Of All Categories On Theme Popup is visible", YesNo.No);
+							ThreadSleep(2000);
+							for(int i =0; i<labelName.length;i++) {
+								String Label = rp.getLabelsofCategoriesOnCreateThemePopup(5).get(i).getText();
+								if(Label.equalsIgnoreCase(labelName[i])) {
+									log(LogStatus.PASS, Label + " is visible On Theme Popup", YesNo.No);
+									ThreadSleep(2000);
+								} else {
+									log(LogStatus.ERROR, Label + " is not visible On Theme Popup", YesNo.Yes);
+									sa.assertTrue(false,Label + " is not visible On Theme Popup");
+								}
+							}
+							click(driver, rp.getCancelButtonOnCreateThemePopup(10),"Cancel Button On Create Theme Popup", action.BOOLEAN);
+						} else {
+							log(LogStatus.ERROR, "Label Of All Categories On Theme Popup is not visible", YesNo.Yes);
+							sa.assertTrue(false,"Label Of All Categories On Theme Popup is not visible");
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on Advanced Research Link", YesNo.Yes);
+						sa.assertTrue(false,"Not able to click on Advanced Research Link");
+					}
+				} else {
+					log(LogStatus.ERROR, "Advanced Research option is not visible", YesNo.Yes);
+					sa.assertTrue(false,"Advanced Research option is not visible");
+				}
+		}
+		log(LogStatus.INFO,
+				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+						+ searchValue + "---------",
+				YesNo.No);
+		if(rp.getNoResult(5) != null){
+			log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+		} else 
+			if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+				log(LogStatus.INFO,
+						"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------",
+						YesNo.No);
+				ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+				if(list.isEmpty()) {
+					
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
+				} else {
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.Yes);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
+				}
+	
+			} else {
+				log(LogStatus.FAIL,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------",
+						YesNo.Yes);
+				sa.assertTrue(false,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------");
+				
+			}
+		}
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();	
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void ARTc054_VerifyAdvancedWithAddToThemeFunctionality(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+	ThreadSleep(2000);
+	
+	String[] searchValues = {AR_Firm8};
+	String[] labelName = {RecordType.Advisor.toString(),RecordType.Company.toString(),RecordType.Institution.toString(),RecordType.Intermediary.toString(),RecordType.Lender.toString(),RecordType.Limited_Partner.toString().toString().replace("_", " "),RecordType.Portfolio_Company.toString().toString().replace("_", " "),
+			RecordType.Private_Equity.toString().toString().replace("_", " "),RecordType.Banker.toString(),RecordType.Broker.toString(),RecordType.Buy_Side_Deal.toString().replaceAll("_", " "),RecordType.Capital_Raise.toString().replace("_", " "),RecordType.Sell_Side_Deal.toString().replaceAll("_", " "),
+			RecordType.FRGRT.toString().replace("_", " "),RecordType.MSGRT.toString().replace("_", " "),RecordType.Theme.toString(),RecordType.Clip.toString(),RecordType.Interaction.toString()};
+	
+	for(String searchValue : searchValues) {
+		
+		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
+		log(LogStatus.PASS, "Working for " + searchValue, YesNo.No);
+	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			ThreadSleep(2000);
+			if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+				ThreadSleep(2000);
+				clickUsingJavaScript(driver, rp.getAdvancedResearch(10),"Advanced Research", action.BOOLEAN);
+				log(LogStatus.PASS, "Clicked on Research button", YesNo.No);
+				ThreadSleep(8000);
+			} else {
+				log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to send value "+searchValue);
+			}
+				if(click(driver, rp.getAddToThemeLink(10),"Advanced Research Button", action.BOOLEAN)) {
+					log(LogStatus.PASS, "Clicked on Research button on advanced area", YesNo.No);
+					ThreadSleep(2000);
+					if(click(driver, rp.getAdvancedLinkOnCreateThemePopup(10),"Advanced Research Link", action.BOOLEAN)) {
+						log(LogStatus.PASS, "Clicked on Advanced Research Link", YesNo.No);
+						ThreadSleep(2000);
+						if(isDisplayed(driver, rp.getLabelofAllCategoriesOnCreateThemePopup(10), "Visibility", 10, "Search By Keyword(s)") != null) {
+							log(LogStatus.PASS, "Label Of All Categories On Theme Popup is visible", YesNo.No);
+							ThreadSleep(2000);
+							for(int i =0; i<labelName.length;i++) {
+								String Label = rp.getLabelsofCategoriesOnCreateThemePopup(5).get(i).getText();
+								if(Label.equalsIgnoreCase(labelName[i])) {
+									log(LogStatus.PASS, Label + " is visible On Theme Popup", YesNo.No);
+									ThreadSleep(2000);
+								} else {
+									log(LogStatus.ERROR, Label + " is not visible On Theme Popup", YesNo.Yes);
+									sa.assertTrue(false,Label + " is not visible On Theme Popup");
+								}
+							}
+							click(driver, rp.getCancelButtonOnCreateThemePopup(10),"Cancel Button On Create Theme Popup", action.BOOLEAN);
+						} else {
+							log(LogStatus.ERROR, "Label Of All Categories On Theme Popup is not visible", YesNo.Yes);
+							sa.assertTrue(false,"Label Of All Categories On Theme Popup is not visible");
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on Advanced Research Link", YesNo.Yes);
+						sa.assertTrue(false,"Not able to click on Advanced Research Link");
+					}
+				} else {
+					log(LogStatus.ERROR, "Advanced Research option is not visible", YesNo.Yes);
+					sa.assertTrue(false,"Advanced Research option is not visible");
+				}
+		}
+		log(LogStatus.INFO,
+				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+						+ searchValue + "---------",
+				YesNo.No);
+		if(rp.getNoResult(5) != null){
+			log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+		} else 
+			if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+				log(LogStatus.INFO,
+						"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------",
+						YesNo.No);
+				ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+				if(list.isEmpty()) {
+					
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
+				} else {
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.Yes);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
+				}
+	
+			} else {
+				log(LogStatus.FAIL,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------",
+						YesNo.Yes);
+				sa.assertTrue(false,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------");
+				
+			}
+		}
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();	
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void ARTc055_VerifyAdvancedWithExportFunctionality(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+	ThreadSleep(2000);
+	
+	String[] searchValues = {AR_Firm8};
+	String[] labelName = {RecordType.Advisor.toString(),RecordType.Company.toString(),RecordType.Institution.toString(),RecordType.Intermediary.toString(),RecordType.Lender.toString(),RecordType.Limited_Partner.toString().toString().replace("_", " "),RecordType.Portfolio_Company.toString().toString().replace("_", " "),
+			RecordType.Private_Equity.toString().toString().replace("_", " "),RecordType.Banker.toString(),RecordType.Broker.toString(),RecordType.Buy_Side_Deal.toString().replaceAll("_", " "),RecordType.Capital_Raise.toString().replace("_", " "),RecordType.Sell_Side_Deal.toString().replaceAll("_", " "),
+			RecordType.FRGRT.toString().replace("_", " "),RecordType.MSGRT.toString().replace("_", " "),RecordType.Theme.toString(),RecordType.Clip.toString(),RecordType.Interaction.toString()};
+	
+	for(String searchValue : searchValues) {
+		
+		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
+		log(LogStatus.PASS, "Working for " + searchValue, YesNo.No);
+	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			ThreadSleep(2000);
+			if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+				ThreadSleep(2000);
+				clickUsingJavaScript(driver, rp.getAdvancedResearch(10),"Advanced Research", action.BOOLEAN);
+				log(LogStatus.PASS, "Clicked on Research button", YesNo.No);
+				ThreadSleep(8000);
+			} else {
+				log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to send value "+searchValue);
+			}
+				if(click(driver, rp.getExportLink(10),"Advanced Research Button", action.BOOLEAN)) {
+					log(LogStatus.PASS, "Clicked on Research button on advanced area", YesNo.No);
+					ThreadSleep(2000);
+						if(rp.getLabelofAllCategoriesOnCreateThemePopup(10) != null) {
+							log(LogStatus.PASS, "Label Of All Categories On Theme Popup is visible", YesNo.No);
+							ThreadSleep(2000);
+							for(int i =0; i<labelName.length;i++) {
+								String Label = rp.getLabelsofCategoriesOnCreateThemePopup(5).get(i).getText();
+								if(Label.equalsIgnoreCase(labelName[i])) {
+									log(LogStatus.PASS, Label + " is visible On Theme Popup", YesNo.No);
+									ThreadSleep(2000);
+								} else {
+									log(LogStatus.ERROR, Label + " is not visible On Theme Popup", YesNo.Yes);
+									sa.assertTrue(false,Label + " is not visible On Theme Popup");
+								}
+							}
+							click(driver, rp.getCancelButtonOnCreateThemePopup(10),"Cancel Button On Create Theme Popup", action.BOOLEAN);
+						} else {
+							log(LogStatus.ERROR, "Label Of All Categories On Theme Popup is not visible", YesNo.Yes);
+							sa.assertTrue(false,"Label Of All Categories On Theme Popup is not visible");
+						}
+				} else {
+					log(LogStatus.ERROR, "Advanced Research option is not visible", YesNo.Yes);
+					sa.assertTrue(false,"Advanced Research option is not visible");
+				}
+		}
+		log(LogStatus.INFO,
+				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+						+ searchValue + "---------",
+				YesNo.No);
+		if(rp.getNoResult(5) != null){
+			log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+		} else 
+			if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+				log(LogStatus.INFO,
+						"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------",
+						YesNo.No);
+				ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+				if(list.isEmpty()) {
+					
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
+				} else {
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.Yes);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
+				}
+	
+			} else {
+				log(LogStatus.FAIL,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------",
+						YesNo.Yes);
+				sa.assertTrue(false,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------");
+				
+			}
+		}
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();	
+	}
+	
+@Parameters({ "projectName"})
+@Test
+	public void ARTc056_VerifyResearchFunctionalityForNSADMIN(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	ThreadSleep(2000);
+	String headerName;
+	
+	String[] searchValues = {AR_Firm8};
+	
+	for(String searchValue : searchValues) {
+		
+		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"AdvancedSearch",excelLabel.ResearchFindings, searchValue, excelLabel.Variable_Name);
+		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
+	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+			ThreadSleep(2000);
+			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
+			ThreadSleep(10000);
+		} else {
+			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to send value "+searchValue);
+		}
+	}
+		log(LogStatus.INFO,
+				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+						+ searchValue + "---------",
+				YesNo.No);
+			
+			if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+				log(LogStatus.INFO,
+						"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------",
+						YesNo.No);
+			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+				if(list.isEmpty()) {
+					
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+				} else {
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.Yes);
+					sa.assertTrue(false,"---------Result Count from Left Navigation Panel Doesn't Match with Excel Data For " + varibale + "---------list:"+list);
+				}
+	
+			} else {
+				log(LogStatus.FAIL,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------",
+						YesNo.Yes);
+				sa.assertTrue(false,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------");
+				
+		}
+			if (rp.mouseHoverOnNavigationAndGetText()) {
+				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+			} else {
+				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.Yes);
+				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+			}
+			
+			if (rp.mouseHoverOnGridAndGetText()) {
+				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+			} else {
+				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.Yes);
+				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+			}
+			int gridSize = rp.getElementsFromGrid().size();
+			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+			for(int i=0; i<gridSize; i++)
+			{		
+				headerName = rp.getElementsFromGrid().get(i).getText();
+				String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
+				
+				if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+					log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+				} else {
+					log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.Yes);
+					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+				}
+				if (rp.VerifyViewMoreOption(headerName)) {
+					log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+				} else {
+					log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.Yes);
+				}
+			}
+		}
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();
+	
+	}
+
+@Parameters({ "projectName"})
+@Test
+	public void ARTc057_VerifyAddRemoveIconsInSearchForSpecificRecords(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	
+	lp.CRMLogin(superAdminUserName, adminPassword);
+	ThreadSleep(2000);
+	String searchValue = AR_Firm8;
+	ArrayList<String> list=new ArrayList<>();
+		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"SearchData",excelLabel.ResearchFindings, searchValue, excelLabel.Variable_Name);
+		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+				ThreadSleep(2000);
+				clickUsingJavaScript(driver, rp.getAdvancedResearch(10),"Advanced Research Button", action.BOOLEAN);
+				ThreadSleep(8000);
+			} else {
+				log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to send value "+searchValue);
+			}
+				for(int k = 0; k < 5; k++) {
+						click(driver, rp.getSearchForSpecificAddOption(5),"Search For Specific For Add Option", action.BOOLEAN);
+						ThreadSleep(2000);
+						log(LogStatus.INFO, "Able to Click on Add Option", YesNo.No);
+					}
+				
+				for(int k = 0; k < 4; k++) {
+					click(driver, rp.getSearchForSpecificRemoveOption(5),"Search For Specific For Remove Option", action.BOOLEAN);
+					ThreadSleep(2000);
+					log(LogStatus.INFO, "Able to Click on Remove Option", YesNo.No);
+				}
+				
+				JavascriptExecutor js = (JavascriptExecutor) driver;
+				js.executeScript("window.scrollBy(0,250)", "");
+				if(	click(driver, rp.getResearchButtonForAdvanced(5),"Research Button For Advanced", action.BOOLEAN)){
+					log(LogStatus.INFO, "Able to Click on Research Button For Advanced", YesNo.No);
+					ThreadSleep(2000);
+					click(driver, rp.getCloseButtonForAdvanced(5),"Close Button For Advanced", action.BOOLEAN);
+				} else {
+					log(LogStatus.ERROR, "Not Able to click on Research Button For Advanced", YesNo.Yes);
+					BaseLib.sa.assertTrue(false,"Not Able to click on Research Button For Advanced");
+				}
+				
+				list=	rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 5);
+
+				if(list.isEmpty()) {
+					
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+				} else {
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+				}
+			} else {
+				log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName,YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on "+navigationMenuName);
+			}
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();	
+	}
+
+@Parameters({ "projectName"})
+@Test
+	public void ARTc058_VerifyAddRemoveIconsInSearchForSpecificRecordsAndAddRecordInFieldParameters_VerifyImpact(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	
+	lp.CRMLogin(superAdminUserName, adminPassword);
+	ThreadSleep(2000);
+	String fields = AR_Field1;
+	String operators = AR_Operator1;
+	String valueField = AR_Value1;
+	ArrayList<String> list=new ArrayList<>();
+		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"AdvancedResearch",excelLabel.ResearchFindings, fields, excelLabel.Variable_Name);
+		log(LogStatus.PASS, "Working for " + fields, YesNo.Yes);
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+				clickUsingJavaScript(driver, rp.getAdvancedResearch(10),"Advanced Research Button", action.BOOLEAN);
+				ThreadSleep(8000);
+				for(int k = 0; k < 5; k++) {
+						click(driver, rp.getSearchForSpecificAddOption(5),"Search For Specific For Add Option", action.BOOLEAN);
+						ThreadSleep(2000);
+						log(LogStatus.INFO, "Able to Click on Add Option", YesNo.No);
+					}
+				
+				for(int k = 0; k < 4; k++) {
+					click(driver, rp.getSearchForSpecificRemoveOption(5),"Search For Specific For Remove Option", action.BOOLEAN);
+					ThreadSleep(2000);
+					log(LogStatus.INFO, "Able to Click on Remove Option", YesNo.No);
+				}
+				
+				JavascriptExecutor js = (JavascriptExecutor) driver;
+				js.executeScript("window.scrollBy(0,250)", "");
+				
+				click(driver, rp.getSearchByFieldForFieldOption(1,5),"Search By Field For Field Option", action.BOOLEAN);
+				if(sendKeys(driver, rp.getSearchByFieldForFieldOption(1,5), fields, "Search By Field For Field Option", action.BOOLEAN)){
+					ThreadSleep(1000);
+					click(driver, rp.getValueForFieldParameter(fields,5),"Select Value for Field Parameter", action.BOOLEAN);
+					log(LogStatus.INFO, "Able to select " + fields + " to Search By Field For Field Option", YesNo.No);
+						ThreadSleep(2000);
+						click(driver, rp.getSearchByFieldForOperatorOption(5),"Search By Field For Operator Option", action.BOOLEAN);
+					if(click(driver, rp.getSearchByFieldForOperatorValue(1, operators,5),"Search By Field For Operator Value", action.BOOLEAN)){
+//					selectVisibleTextFromDropDown(driver, getSearchByFieldForOperatorOption(timeout), "Search By Field For Operator Option", operators[j]);
+						
+							log(LogStatus.INFO, "Able to send " + operators + " to Search By Field For Operator Option", YesNo.No);
+						    ThreadSleep(2000);
+							sendKeys(driver, rp.getSearchByFieldForValueOption(1,5), valueField, "Search By Field For Value Option", action.BOOLEAN);
+							log(LogStatus.INFO, "Able to send " + valueField + " to Search By Field For Value Option", YesNo.No);
+							ThreadSleep(2000);
+						} else {
+							log(LogStatus.ERROR, "Not able to select " + operators + " to Search For Specific Dropdown", YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not able to select " + operators + " to Search For Specific Dropdown");
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to select " + fields + " to Search For Specific Dropdown", YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to select " + fields + " to Search For Specific Dropdown");
+					}
+				
+				if(	click(driver, rp.getResearchButtonForAdvanced(5),"Research Button For Advanced", action.BOOLEAN)){
+					log(LogStatus.INFO, "Able to Click on Research Button For Advanced", YesNo.No);
+					ThreadSleep(2000);
+					click(driver, rp.getCloseButtonForAdvanced(5),"Close Button For Advanced", action.BOOLEAN);
+				} else {
+					log(LogStatus.ERROR, "Not Able to click on Research Button For Advanced", YesNo.Yes);
+					BaseLib.sa.assertTrue(false,"Not Able to click on Research Button For Advanced");
+				}
+				
+				list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 5);
+				if(list.isEmpty()) {
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+				} else {
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+				}
+			} else {
+				log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName,YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on "+navigationMenuName);
+			}
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();	
+	}
+
+@Parameters({ "projectName"})
+@Test
+	public void ARTc059_VerifyObjectInSearchForSpecificRecords(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	
+	String objects[] ={object.Contact.toString(),object.Deal.toString(),object.Fund.toString(),object.Fundraising.toString(),object.Theme.toString(),PageLabel.Firm.toString()};
+	
+	lp.CRMLogin(superAdminUserName, adminPassword);
+	ThreadSleep(2000);
+	
+	for(String object : objects) {
+		log(LogStatus.PASS, "Working for " + object, YesNo.Yes);
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+				clickUsingJavaScript(driver, rp.getAdvancedResearch(10),"Advanced Research Button", action.BOOLEAN);
+				ThreadSleep(8000);
+				click(driver, rp.getSearchForSpecificDropdownButton(1,5),"Search For Specific Dropdown Button", action.BOOLEAN);
+				ThreadSleep(1000);
+				if(object.equalsIgnoreCase(PageLabel.Firm.toString())) {
+					object = PageLabel.Firm.toString();
+				}
+				if(click(driver, rp.getSearchForSpecificDropdown(object,1,5), "Search For Specific Dropdown", action.BOOLEAN)){
+					log(LogStatus.INFO, "Able to select " + object + " to Search For Specific Dropdown", YesNo.No);
+					ThreadSleep(2000);
+					
+					} else {
+						log(LogStatus.ERROR, "Not able to select " + object + " to Search For Specific Dropdown", YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to select " + object + " to Search For Specific Dropdown");
+					}
+			} else {
+				log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName,YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on "+navigationMenuName);
+			}
+		refresh(driver);
+		}
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();	
+	}
+
+@Parameters({ "projectName"})
+@Test
+	public void ARTc060_RemoveObjectPermissionForObjects_VerifyImpact(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	
+	lp.CRMLogin(superAdminUserName, adminPassword);
+	
+	String profileForSelection = "PE Standard User";
+	String parentID=null, objects[] ={object.Contact.toString(),object.Deal.toString(),object.Fundraising.toString(),object.Theme.toString(),PageLabel.Firm.toString(),PageLabel.Fund.toString()}, permissionTypes[] = {PermissionType.Read.toString(),PermissionType.Create.toString(),PermissionType.Edit.toString(),PermissionType.Delete.toString()}, status = "Not Checked";
+	boolean flag = false;
+	
+	switchToDefaultContent(driver);
+	home.notificationPopUpClose();
+		if (home.clickOnSetUpLink()) {
+			parentID = switchOnWindow(driver);
+		if (parentID!=null) {
+			ThreadSleep(2000);
+			if(sp.giveAndRemoveObjectPermissionFromProfiles(profileForSelection,objects,permissionTypes,status)) {
+				log(LogStatus.PASS,"Remove Permission from Contact Object", YesNo.No);
+				flag=true;
+			}else {
+				log(LogStatus.ERROR,"Not able to remove permission from" + objects + "Object", YesNo.Yes);
+				sa.assertTrue(false, "Not able to remove permission from" + objects + "Object");
+			}
+	
+			driver.close();
+			driver.switchTo().window(parentID);
+		}else {
+			log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
+			sa.assertTrue(false, "setup link is not clickable");
+		}
+	}
+	switchToDefaultContent(driver);
+	ThreadSleep(5000);
+	lp.CRMlogout();
+	refresh(driver);
+	ThreadSleep(2000);
+	
+	lp.CRMLogin(glUser1EmailID, adminPassword);
+	ThreadSleep(2000);
+	
+	for(String object : objects) {
+		log(LogStatus.PASS, "Working for " + object, YesNo.Yes);
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+				clickUsingJavaScript(driver, rp.getAdvancedResearch(10),"Advanced Research Button", action.BOOLEAN);
+				ThreadSleep(8000);
+				click(driver, rp.getSearchForSpecificDropdownButton(1,5),"Search For Specific Dropdown Button", action.BOOLEAN);
+				ThreadSleep(1000);
+				if(object.equalsIgnoreCase(PageLabel.Firm.toString())) {
+					object = PageLabel.Firm.toString();
+				}
+				if(click(driver, rp.getSearchForSpecificDropdown(object,1,5), "Search For Specific Dropdown", action.BOOLEAN)){
+					log(LogStatus.ERROR, "Able to select " + object + " to Search For Specific Dropdown", YesNo.No);
+					BaseLib.sa.assertTrue(false, "Able to select " + object + " to Search For Specific Dropdown");
+					ThreadSleep(2000);
+					} else {
+						log(LogStatus.INFO, "Not able to select " + object + " to Search For Specific Dropdown", YesNo.Yes);
+					}
+			} else {
+				log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName,YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on "+navigationMenuName);
+			}
+		refresh(driver);
+		}
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();	
+	}
+
+@Parameters({ "projectName"})
+@Test
+	public void ARTc061_AddObjectPermissionForObjects_VerifyImpact(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	
+	lp.CRMLogin(superAdminUserName, adminPassword);
+	
+	String profileForSelection = "PE Standard User";
+	String parentID=null, objects[] ={object.Contact.toString(),object.Deal.toString(),object.Fundraising.toString(),object.Theme.toString(),PageLabel.Firm.toString(),PageLabel.Fund.toString()}, permissionTypes[] = {PermissionType.Read.toString(),PermissionType.Create.toString(),PermissionType.Edit.toString(),PermissionType.Delete.toString()}, status = "Checked";
+	boolean flag = false;
+	
+	switchToDefaultContent(driver);
+	home.notificationPopUpClose();
+		if (home.clickOnSetUpLink()) {
+			parentID = switchOnWindow(driver);
+		if (parentID!=null) {
+			ThreadSleep(2000);
+			if(sp.giveAndRemoveObjectPermissionFromProfiles(profileForSelection,objects,permissionTypes,status)) {
+				log(LogStatus.PASS,"Give Permission from Contact Object", YesNo.No);
+				flag=true;
+			}else {
+				log(LogStatus.ERROR,"Not able to Give permission from" + objects + "Object", YesNo.Yes);
+				sa.assertTrue(false, "Not able to Give permission from" + objects + "Object");
+			}
+	
+			driver.close();
+			driver.switchTo().window(parentID);
+		}else {
+			log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
+			sa.assertTrue(false, "setup link is not clickable");
+		}
+	}
+	switchToDefaultContent(driver);
+	ThreadSleep(5000);
+	lp.CRMlogout();
+	refresh(driver);
+	ThreadSleep(2000);
+	
+	lp.CRMLogin(glUser1EmailID, adminPassword);
+	ThreadSleep(2000);
+	
+	for(String object : objects) {
+		log(LogStatus.PASS, "Working for " + object, YesNo.Yes);
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+				clickUsingJavaScript(driver, rp.getAdvancedResearch(10),"Advanced Research Button", action.BOOLEAN);
+				ThreadSleep(8000);
+				click(driver, rp.getSearchForSpecificDropdownButton(1,5),"Search For Specific Dropdown Button", action.BOOLEAN);
+				ThreadSleep(1000);
+				if(object.equalsIgnoreCase(PageLabel.Firm.toString())) {
+					object = PageLabel.Firm.toString();
+				}
+				if(click(driver, rp.getSearchForSpecificDropdown(object,1,5), "Search For Specific Dropdown", action.BOOLEAN)){
+					log(LogStatus.INFO, "Able to select " + object + " to Search For Specific Dropdown", YesNo.No);
+					ThreadSleep(2000);
+					} else {
+						log(LogStatus.ERROR, "Not able to select " + object + " to Search For Specific Dropdown", YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to select " + object + " to Search For Specific Dropdown");
+					}
+			} else {
+				log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName,YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on "+navigationMenuName);
+			}
+		refresh(driver);
+		}
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();	
+	}
+
+@Parameters({ "projectName" })
+@Test
+	public void ARTc062_MakeFieldInvisibleForAllPage_VerifyImpact(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	
+	lp.CRMLogin(superAdminUserName, adminPassword);
+	String parentWindow = "", contactFields[] = {"Department"}, dealFields[] = {"Stage"},fundraisingFields[] = {"Custom Target Phone"},fundFields[] = {"Custom Fund Phone"},themeFields[] = {"Theme Name"},clipFields[] = {"Notes"};
+	String[] objects = {"Account:Entity Type","Contact:Department","Deal:Stage","Target:Custom Target Phone","Fund:Custom Fund Phone","Theme:Theme Name","Clip:Notes"};
+
+	if (home.clickOnSetUpLink()) {
+		parentWindow = switchOnWindow(driver);
+		if (parentWindow == null) {
+			sa.assertTrue(false,
+					"No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+			log(LogStatus.SKIP,
+					"No new window is open after click on setup link in lighting mode so cannot create Field Set Component",
+					YesNo.Yes);
+			exit("No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+		}
+		ThreadSleep(3000);
+
+		if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Account,
+				ObjectFeatureName.FieldAndRelationShip, "Entity Type", PermissionType.removePermission, "PE Standard User")) {
+			log(LogStatus.PASS,
+					"Entity Type field Permission is given from the Firm Object Manager",
+					YesNo.No);
+		} else {
+			log(LogStatus.ERROR,
+					"Entity Type field Permission is not given for Firm Object Manager",
+					YesNo.No);
+			sa.assertTrue(false,
+					"Entity Type field Permission is not given for Firm Object Manager");
+		}
+		
+		CommonLib.switchToDefaultContent(driver);
+		ThreadSleep(2000);
+		for(int i=0; i < contactFields.length; i++) {
+		if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Contact,
+				ObjectFeatureName.FieldAndRelationShip, contactFields[i], PermissionType.removePermission, "PE Standard User")) {
+			log(LogStatus.PASS,
+					contactFields[i] + " field Permission is given from the Contact Object Manager",
+					YesNo.No);
+		} else {
+			log(LogStatus.ERROR,
+					contactFields[i] + " field Permission is not given for Contact Object Manager",
+					YesNo.No);
+			sa.assertTrue(false,
+					contactFields[i] + " field Permission is not given for Contact Object Manager");
+		}
+		}
+		
+		CommonLib.switchToDefaultContent(driver);
+		ThreadSleep(2000);
+		for(int i=0; i < dealFields.length; i++) {
+		if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Deal,
+				ObjectFeatureName.FieldAndRelationShip, dealFields[i], PermissionType.removePermission, "PE Standard User")) {
+			log(LogStatus.PASS,
+					dealFields[i] +" field Permission is given from the Deal Object Manager",
+					YesNo.No);
+		} else {
+			log(LogStatus.ERROR,
+					dealFields[i] + " field Permission is not given for Deal Object Manager",
+					YesNo.No);
+			sa.assertTrue(false,
+					dealFields[i] + " field Permission is not given for Deal Object Manager");
+		}
+		}	
+		
+		CommonLib.switchToDefaultContent(driver);
+		ThreadSleep(2000);
+		for(int i=0; i < fundFields.length; i++) {
+			if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Fund,
+					ObjectFeatureName.FieldAndRelationShip, fundFields[i], PermissionType.removePermission, "PE Standard User")) {
+				log(LogStatus.PASS,
+						fundFields[i] +" field Permission is given from the Fund Object Manager",
+						YesNo.No);
+			} else {
+				log(LogStatus.ERROR,
+						fundFields[i] + " field Permission is not given for Fund Object Manager",
+						YesNo.No);
+				sa.assertTrue(false,
+						fundFields[i] + " field Permission is not given for Fund Object Manager");
+			}
+			}	
+			
+			CommonLib.switchToDefaultContent(driver);
+			ThreadSleep(2000);
+		for(int i=0; i < fundraisingFields.length; i++) {
+		if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Fundraising,
+				ObjectFeatureName.FieldAndRelationShip, fundraisingFields[i], PermissionType.removePermission, "PE Standard User")) {
+			log(LogStatus.PASS,
+					fundraisingFields[i] + " field Permission is given from the Target Object Manager",
+					YesNo.No);
+		} else {
+			log(LogStatus.ERROR,
+					fundraisingFields[i] + " field Permission is not given for Target Object Manager",
+					YesNo.No);
+			sa.assertTrue(false,
+					fundraisingFields[i] + " field Permission is not given for Target Object Manager");
+			}
+		}	
+		CommonLib.switchToDefaultContent(driver);
+		ThreadSleep(2000);
+	for(int i=0; i < themeFields.length; i++) {
+	if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Theme,
+			ObjectFeatureName.FieldAndRelationShip, themeFields[i], PermissionType.removePermission, "PE Standard User")) {
+		log(LogStatus.PASS,
+				themeFields[i] + " field Permission is given from the Theme Object Manager",
+				YesNo.No);
+	} else {
+		log(LogStatus.ERROR,
+				themeFields[i] + " field Permission is not given for Theme Object Manager",
+				YesNo.No);
+		sa.assertTrue(false,
+				themeFields[i] + " field Permission is not given for Theme Object Manager");
+		}
+	}
+		CommonLib.switchToDefaultContent(driver);
+		ThreadSleep(2000);
+	for(int i=0; i < clipFields.length; i++) {
+	if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Clip,
+			ObjectFeatureName.FieldAndRelationShip, clipFields[i], PermissionType.removePermission, "PE Standard User")) {
+		log(LogStatus.PASS,
+				clipFields[i] + " field Permission is given from the Clip Object Manager",
+				YesNo.No);
+	} else {
+		log(LogStatus.ERROR,
+				clipFields[i] + " field Permission is not given for Clip Object Manager",
+				YesNo.No);
+		sa.assertTrue(false,
+				clipFields[i] + " field Permission is not given for Clip Object Manager");
+		}
+	}
+		CommonLib.switchToDefaultContent(driver);
+		ThreadSleep(2000);
+		driver.close();
+	}
+		driver.switchTo().window(parentWindow);
+		refresh(driver);		
+		ThreadSleep(2000);
+		lp.CRMLogin(glUser1EmailID, adminPassword);
+		ThreadSleep(2000);
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+					clickUsingJavaScript(driver, rp.getAdvancedResearch(10),"Advanced Research Button", action.BOOLEAN);
+					ThreadSleep(8000);
+					for(String object : objects) {
+					click(driver, rp.getSearchByFieldForFieldOption(5),"Search By Field Parameter Dropdown", action.BOOLEAN);
+					sendKeys(driver, rp.getSearchByFieldForFieldOption(5), object, "Search By Field For Field Option", action.BOOLEAN);
+					if(isDisplayed(driver, rp.getValueForFieldParameter(object,5), "Visibility", 5, "Value for Field Parameter") == null){
+						log(LogStatus.INFO, "Not Able to select " + object + " to Search By Field For Field Option", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "Able to select " + object + " to Search By Field For Field Option", YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Able to select " + object + " to Search By Field For Field Option");
+						}
+				}
+			}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+@Parameters({ "projectName" })
+@Test
+	public void ARTc063_MakeFieldVisibleForAllPage_VerifyImpact(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	
+	lp.CRMLogin(superAdminUserName, adminPassword);
+	String parentWindow = "", contactFields[] = {"Department"}, dealFields[] = {"Stage"},fundraisingFields[] = {"Custom Target Phone"},fundFields[] = {"Custom Fund Phone"},themeFields[] = {"Theme Name"},clipFields[] = {"Notes"};
+	String[] objects = {"Account:Entity Type","Contact:Department","Deal:Stage","Target:Custom Target Phone","Fund:Custom Fund Phone","Theme:Theme Name","Clip:Notes"};
+
+	if (home.clickOnSetUpLink()) {
+		parentWindow = switchOnWindow(driver);
+		if (parentWindow == null) {
+			sa.assertTrue(false,
+					"No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+			log(LogStatus.SKIP,
+					"No new window is open after click on setup link in lighting mode so cannot create Field Set Component",
+					YesNo.Yes);
+			exit("No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+		}
+		ThreadSleep(3000);
+
+		if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Account,
+				ObjectFeatureName.FieldAndRelationShip, "Entity Type", PermissionType.givePermission, "PE Standard User")) {
+			log(LogStatus.PASS,
+					"Entity Type field Permission is given from the Firm Object Manager",
+					YesNo.No);
+		} else {
+			log(LogStatus.ERROR,
+					"Entity Type field Permission is not given for Firm Object Manager",
+					YesNo.No);
+			sa.assertTrue(false,
+					"Entity Type field Permission is not given for Firm Object Manager");
+		}
+		
+		CommonLib.switchToDefaultContent(driver);
+		ThreadSleep(2000);
+		for(int i=0; i < contactFields.length; i++) {
+		if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Contact,
+				ObjectFeatureName.FieldAndRelationShip, contactFields[i], PermissionType.givePermission, "PE Standard User")) {
+			log(LogStatus.PASS,
+					contactFields[i] + " field Permission is given from the Contact Object Manager",
+					YesNo.No);
+		} else {
+			log(LogStatus.ERROR,
+					contactFields[i] + " field Permission is not given for Contact Object Manager",
+					YesNo.No);
+			sa.assertTrue(false,
+					contactFields[i] + " field Permission is not given for Contact Object Manager");
+		}
+		}
+		
+		CommonLib.switchToDefaultContent(driver);
+		ThreadSleep(2000);
+		for(int i=0; i < dealFields.length; i++) {
+		if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Deal,
+				ObjectFeatureName.FieldAndRelationShip, dealFields[i], PermissionType.givePermission, "PE Standard User")) {
+			log(LogStatus.PASS,
+					dealFields[i] +" field Permission is given from the Deal Object Manager",
+					YesNo.No);
+		} else {
+			log(LogStatus.ERROR,
+					dealFields[i] + " field Permission is not given for Deal Object Manager",
+					YesNo.No);
+			sa.assertTrue(false,
+					dealFields[i] + " field Permission is not given for Deal Object Manager");
+		}
+		}	
+		CommonLib.switchToDefaultContent(driver);
+		ThreadSleep(2000);
+		for(int i=0; i < fundFields.length; i++) {
+			if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Fund,
+					ObjectFeatureName.FieldAndRelationShip, fundFields[i], PermissionType.givePermission, "PE Standard User")) {
+				log(LogStatus.PASS,
+						fundFields[i] +" field Permission is given from the Fund Object Manager",
+						YesNo.No);
+			} else {
+				log(LogStatus.ERROR,
+						fundFields[i] + " field Permission is not given for Fund Object Manager",
+						YesNo.No);
+				sa.assertTrue(false,
+						fundFields[i] + " field Permission is not given for Fund Object Manager");
+			}
+			}	
+		CommonLib.switchToDefaultContent(driver);
+		ThreadSleep(2000);
+		for(int i=0; i < fundraisingFields.length; i++) {
+		if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Fundraising,
+				ObjectFeatureName.FieldAndRelationShip, fundraisingFields[i], PermissionType.givePermission, "PE Standard User")) {
+			log(LogStatus.PASS,
+					fundraisingFields[i] + " field Permission is given from the Target Object Manager",
+					YesNo.No);
+		} else {
+			log(LogStatus.ERROR,
+					fundraisingFields[i] + " field Permission is not given for Target Object Manager",
+					YesNo.No);
+			sa.assertTrue(false,
+					fundraisingFields[i] + " field Permission is not given for Target Object Manager");
+			}
+		}
+		CommonLib.switchToDefaultContent(driver);
+		ThreadSleep(2000);
+	for(int i=0; i < themeFields.length; i++) {
+	if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Theme,
+			ObjectFeatureName.FieldAndRelationShip, themeFields[i], PermissionType.givePermission, "PE Standard User")) {
+		log(LogStatus.PASS,
+				themeFields[i] + " field Permission is given from the Theme Object Manager",
+				YesNo.No);
+	} else {
+		log(LogStatus.ERROR,
+				themeFields[i] + " field Permission is not given for Theme Object Manager",
+				YesNo.No);
+		sa.assertTrue(false,
+				themeFields[i] + " field Permission is not given for Theme Object Manager");
+		}
+	}
+		CommonLib.switchToDefaultContent(driver);
+		ThreadSleep(2000);
+	for(int i=0; i < clipFields.length; i++) {
+	if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Clip,
+			ObjectFeatureName.FieldAndRelationShip, clipFields[i], PermissionType.givePermission, "PE Standard User")) {
+		log(LogStatus.PASS,
+				clipFields[i] + " field Permission is given from the Clip Object Manager",
+				YesNo.No);
+	} else {
+		log(LogStatus.ERROR,
+				clipFields[i] + " field Permission is not given for Clip Object Manager",
+				YesNo.No);
+		sa.assertTrue(false,
+				clipFields[i] + " field Permission is not given for Clip Object Manager");
+		}
+	}
+		CommonLib.switchToDefaultContent(driver);
+		ThreadSleep(2000);
+		driver.close();
+	}
+		driver.switchTo().window(parentWindow);
+		refresh(driver);		
+		ThreadSleep(2000);
+		lp.CRMLogin(glUser1EmailID, adminPassword);
+		ThreadSleep(2000);
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+					clickUsingJavaScript(driver, rp.getAdvancedResearch(10),"Advanced Research Button", action.BOOLEAN);
+					ThreadSleep(8000);
+					for(String object : objects) {
+					click(driver, rp.getSearchByFieldForFieldOption(5),"Search By Field Parameter Dropdown", action.BOOLEAN);
+					sendKeys(driver, rp.getSearchByFieldForFieldOption(5), object, "Search By Field For Field Option", action.BOOLEAN);
+					if(isDisplayed(driver, rp.getValueForFieldParameter(object,5), "Visibility", 5, "Value for Field Parameter") != null){
+						log(LogStatus.INFO, "Able to select " + object + " to Search By Field For Field Option", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "Not able to select " + object + " to Search By Field For Field Option", YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not able to select " + object + " to Search By Field For Field Option");
+						}
+				}
+			}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+@Parameters({ "projectName" })
+@Test
+	public void ARTc064_UpdateFieldNames_VerifyImpact(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	
+	lp.CRMLogin(superAdminUserName, adminPassword);
+	String parentWindow = "";
+
+	String[] objects = {"Account:Entity Type Updated","Contact:Department Updated","Deal:Stage Updated","Fund:Custom Fund Phone Updated","Fundraising:Custom Fundraising Phone Updated","Theme:Theme Name Updated","Clip:Notes Updated"};
+		 String[] accountField = {PageLabel.Entity_Type.toString(),PageLabel.Entity_Type_Updated.toString()};
+		 String[] contactField = {PageLabel.Department.toString(),PageLabel.Department_Updated.toString()};
+		 String[] dealField = {PageLabel.Stage.toString(),PageLabel.Stage_Upd.toString()};
+		 String[] fundField = {PageLabel.Custom_Fund_Phone.toString(),PageLabel.Custom_Fund_Phone_Updated.toString()};
+		 String[] targetField = {PageLabel.Custom_Fundraising_Phone.toString(),PageLabel.Custom_Fundraising_Phone_Updated.toString()};
+		 String[] themeField = {PageLabel.Theme_Name.toString(),PageLabel.Theme_Name_Updated.toString()};
+		 String[] clipField = {PageLabel.Notes.toString(),PageLabel.Notes_Updated.toString()};
+	ThreadSleep(2000);
+	if (home.clickOnSetUpLink()) {
+		parentWindow = switchOnWindow(driver);
+		if (parentWindow == null) {
+			sa.assertTrue(false,
+					"No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+			log(LogStatus.SKIP,
+					"No new window is open after click on setup link in lighting mode so cannot create Field Set Component",
+					YesNo.Yes);
+			exit("No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+		}
+		ThreadSleep(3000);
+		if (setup.editCustomFieldOnObjectManager(environment,mode, object.Account.toString(), ObjectFeatureName.FieldAndRelationShip, accountField[0].replaceAll("_", " "),accountField[1].replaceAll("_", " "))) {
+			log(LogStatus.INFO, "successfully created new custom field", YesNo.No);
+		}
+		else {
+			log(LogStatus.FAIL, "could not create new field", YesNo.Yes);
+			sa.assertTrue(false, "could not create new field");
+		}
+		
+		if (setup.editCustomFieldOnObjectManager(environment,mode, object.Contact.toString(), ObjectFeatureName.FieldAndRelationShip, contactField[0].replaceAll("_", " "),contactField[1].replaceAll("_", " "))) {
+			log(LogStatus.INFO, "successfully created new custom field", YesNo.No);
+		}
+		else {
+			log(LogStatus.FAIL, "could not create new field", YesNo.Yes);
+			sa.assertTrue(false, "could not create new field");
+		}
+		
+		if (setup.editCustomFieldOnObjectManager(environment,mode, object.Deal.toString(), ObjectFeatureName.FieldAndRelationShip, dealField[0].replaceAll("_", " "),dealField[1].replaceAll("_", " "))) {
+			log(LogStatus.INFO, "successfully created new custom field", YesNo.No);
+		}
+		else {
+			log(LogStatus.FAIL, "could not create new field", YesNo.Yes);
+			sa.assertTrue(false, "could not create new field");
+		}
+		
+		if (setup.editCustomFieldOnObjectManager(environment,mode, object.Fund.toString(), ObjectFeatureName.FieldAndRelationShip, fundField[0].replaceAll("_", " "),fundField[1].replaceAll("_", " "))) {
+			log(LogStatus.INFO, "successfully created new custom field", YesNo.No);
+		}
+		else {
+			log(LogStatus.FAIL, "could not create new field", YesNo.Yes);
+			sa.assertTrue(false, "could not create new field");
+		}
+		
+		if (setup.editCustomFieldOnObjectManager(environment,mode, object.Fundraising.toString(), ObjectFeatureName.FieldAndRelationShip, targetField[0].replaceAll("_", " "),targetField[1].replaceAll("_", " "))) {
+			log(LogStatus.INFO, "successfully created new custom field", YesNo.No);
+		}
+		else {
+			log(LogStatus.FAIL, "could not create new field", YesNo.Yes);
+			sa.assertTrue(false, "could not create new field");
+		}
+		
+		if (setup.editCustomFieldOnObjectManager(environment,mode, object.Theme.toString(), ObjectFeatureName.FieldAndRelationShip, themeField[0].replaceAll("_", " "),themeField[1].replaceAll("_", " "))) {
+			log(LogStatus.INFO, "successfully created new custom field", YesNo.No);
+		}
+		else {
+			log(LogStatus.FAIL, "could not create new field", YesNo.Yes);
+			sa.assertTrue(false, "could not create new field");
+		}
+		if (setup.editCustomFieldOnObjectManager(environment,mode, object.Clip.toString(), ObjectFeatureName.FieldAndRelationShip, clipField[0].replaceAll("_", " "),clipField[1].replaceAll("_", " "))) {
+			log(LogStatus.INFO, "successfully created new custom field", YesNo.No);
+		}
+		else {
+			log(LogStatus.FAIL, "could not create new field", YesNo.Yes);
+			sa.assertTrue(false, "could not create new field");
+		}
+			ThreadSleep(2000);
+		driver.close();
+	ThreadSleep(2000);
+	}
+	driver.switchTo().window(parentWindow);
+	lp.CRMlogout();
+	ThreadSleep(2000);
+	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+	ThreadSleep(2000);
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+					clickUsingJavaScript(driver, rp.getAdvancedResearch(10),"Advanced Research Button", action.BOOLEAN);
+					ThreadSleep(8000);
+					for(String object : objects) {
+					click(driver, rp.getSearchByFieldForFieldOption(5),"Search By Field Parameter Dropdown", action.BOOLEAN);
+					sendKeys(driver, rp.getSearchByFieldForFieldOption(5), object, "Search By Field For Field Option", action.BOOLEAN);
+					if(isDisplayed(driver, rp.getValueForFieldParameter(object,5), "Visibility", 5, "Value for Field Parameter") != null){
+						log(LogStatus.INFO, "Able to select " + object + " to Search By Field For Field Option", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "Not able to select " + object + " to Search By Field For Field Option", YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not able to select " + object + " to Search By Field For Field Option");
+						}
+				}
+			}
+	lp.CRMlogout();
+	sa.assertAll();
+}
+
+@Parameters({ "projectName" })
+@Test
+	public void ARTc065_RevertUpdatedFieldNames_VerifyImpact(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	
+	lp.CRMLogin(superAdminUserName, adminPassword);
+	String parentWindow = "";
+
+	String[] objects = {"Account:Entity Type","Contact:Department","Deal:Stage","Fund:Custom Fund Phone","Fundraising:Custom Fundraising Phone","Theme:Theme Name","Clip:Notes"};
+	 String[] accountField = {PageLabel.Entity_Type_Updated.toString(),PageLabel.Entity_Type.toString()};
+	 String[] contactField = {PageLabel.Department_Updated.toString(),PageLabel.Department.toString()};
+	 String[] dealField = {PageLabel.Stage_Upd.toString(),PageLabel.Stage.toString()};
+	 String[] fundField = {PageLabel.Custom_Fund_Phone_Updated.toString(),PageLabel.Custom_Fund_Phone.toString()};
+	 String[] targetField = {PageLabel.Custom_Fundraising_Phone_Updated.toString(),PageLabel.Custom_Fundraising_Phone.toString()};
+	 String[] themeField = {PageLabel.Theme_Name_Updated.toString(),PageLabel.Theme_Name.toString()};
+	 String[] clipField = {PageLabel.Notes_Updated.toString(),PageLabel.Notes.toString()};
+	ThreadSleep(2000);
+	if (home.clickOnSetUpLink()) {
+		parentWindow = switchOnWindow(driver);
+		if (parentWindow == null) {
+			sa.assertTrue(false,
+					"No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+			log(LogStatus.SKIP,
+					"No new window is open after click on setup link in lighting mode so cannot create Field Set Component",
+					YesNo.Yes);
+			exit("No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+		}
+		ThreadSleep(3000);
+		if (setup.editCustomFieldOnObjectManager(environment,mode, object.Account.toString(), ObjectFeatureName.FieldAndRelationShip, accountField[0].replaceAll("_", " "),accountField[1].replaceAll("_", " "))) {
+			log(LogStatus.INFO, "successfully created new custom field", YesNo.No);
+		}
+		else {
+			log(LogStatus.FAIL, "could not create new field", YesNo.Yes);
+			sa.assertTrue(false, "could not create new field");
+		}
+		
+		if (setup.editCustomFieldOnObjectManager(environment,mode, object.Contact.toString(), ObjectFeatureName.FieldAndRelationShip, contactField[0].replaceAll("_", " "),contactField[1].replaceAll("_", " "))) {
+			log(LogStatus.INFO, "successfully created new custom field", YesNo.No);
+		}
+		else {
+			log(LogStatus.FAIL, "could not create new field", YesNo.Yes);
+			sa.assertTrue(false, "could not create new field");
+		}
+		
+		if (setup.editCustomFieldOnObjectManager(environment,mode, object.Deal.toString(), ObjectFeatureName.FieldAndRelationShip, dealField[0].replaceAll("_", " "),dealField[1].replaceAll("_", " "))) {
+			log(LogStatus.INFO, "successfully created new custom field", YesNo.No);
+		}
+		else {
+			log(LogStatus.FAIL, "could not create new field", YesNo.Yes);
+			sa.assertTrue(false, "could not create new field");
+		}
+		
+		if (setup.editCustomFieldOnObjectManager(environment,mode, object.Fund.toString(), ObjectFeatureName.FieldAndRelationShip, fundField[0].replaceAll("_", " "),fundField[1].replaceAll("_", " "))) {
+			log(LogStatus.INFO, "successfully created new custom field", YesNo.No);
+		}
+		else {
+			log(LogStatus.FAIL, "could not create new field", YesNo.Yes);
+			sa.assertTrue(false, "could not create new field");
+		}
+		
+		if (setup.editCustomFieldOnObjectManager(environment,mode, object.Fundraising.toString(), ObjectFeatureName.FieldAndRelationShip, targetField[0].replaceAll("_", " "),targetField[1].replaceAll("_", " "))) {
+			log(LogStatus.INFO, "successfully created new custom field", YesNo.No);
+		}
+		else {
+			log(LogStatus.FAIL, "could not create new field", YesNo.Yes);
+			sa.assertTrue(false, "could not create new field");
+		}
+		
+		if (setup.editCustomFieldOnObjectManager(environment,mode, object.Theme.toString(), ObjectFeatureName.FieldAndRelationShip, themeField[0].replaceAll("_", " "),themeField[1].replaceAll("_", " "))) {
+			log(LogStatus.INFO, "successfully created new custom field", YesNo.No);
+		}
+		else {
+			log(LogStatus.FAIL, "could not create new field", YesNo.Yes);
+			sa.assertTrue(false, "could not create new field");
+		}
+		
+		if (setup.editCustomFieldOnObjectManager(environment,mode, object.Clip.toString(), ObjectFeatureName.FieldAndRelationShip, clipField[0].replaceAll("_", " "),clipField[1].replaceAll("_", " "))) {
+			log(LogStatus.INFO, "successfully created new custom field", YesNo.No);
+		}
+		else {
+			log(LogStatus.FAIL, "could not create new field", YesNo.Yes);
+			sa.assertTrue(false, "could not create new field");
+		}
+			ThreadSleep(2000);
+		driver.close();
+	ThreadSleep(2000);
+	}
+	driver.switchTo().window(parentWindow);
+	lp.CRMlogout();
+	ThreadSleep(2000);
+	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+	ThreadSleep(2000);
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+					clickUsingJavaScript(driver, rp.getAdvancedResearch(10),"Advanced Research Button", action.BOOLEAN);
+					ThreadSleep(8000);
+					for(String object : objects) {
+					click(driver, rp.getSearchByFieldForFieldOption(5),"Search By Field Parameter Dropdown", action.BOOLEAN);
+					sendKeys(driver, rp.getSearchByFieldForFieldOption(5), object, "Search By Field For Field Option", action.BOOLEAN);
+					if(isDisplayed(driver, rp.getValueForFieldParameter(object,5), "Visibility", 5, "Value for Field Parameter") != null){
+						log(LogStatus.INFO, "Able to select " + object + " to Search By Field For Field Option", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "Not able to select " + object + " to Search By Field For Field Option", YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not able to select " + object + " to Search By Field For Field Option");
+						}
+				}
+			}
+	lp.CRMlogout();
+	sa.assertAll();
+}
+
 }

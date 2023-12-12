@@ -134,7 +134,7 @@ public class EnumConstants {
 		Task_Subject, Task_Status, User_Name, OrgPassword, Password, Participants, Tags, MeetingAndCallsHeader,
 		ValidationRuleErrorMsg, ValidationRuleErrorMsgLocation, CreateNewRecordPopUp, AddContactsToDealTeamPopUp,
 		AddContactsToFundraisingPopup, Classification, ValidationRuleFormula, ParticipantRecord,
-		ParticipantRecordObject, TagsRecord, TagsObject, Tab_Name, Record_Name, RecordName, ObjectName,NextTouchPointDay,NextTouchPointDate,External_ContactName,External_FirmName,External_Title,External_MeetingAndCallCount, Assigned, Fundraising_Name, Active;
+		ParticipantRecordObject, TagsRecord, TagsObject, Tab_Name, Record_Name, RecordName, ObjectName,NextTouchPointDay,NextTouchPointDate,External_ContactName,External_FirmName,External_Title,External_MeetingAndCallCount, Assigned, Fundraising_Name, Active, Opeartor;
 
 	};
 
@@ -267,6 +267,10 @@ public class EnumConstants {
 
 	}
 
+	public static enum Layout {
+		Contact_Layout;
+	};
+	
 	public static enum IconType {
 		updatePhoto, DeletePhoto, Edit, Locked, Task,  Meeting, Event, Email,Call{
 			@Override
@@ -991,7 +995,7 @@ public class EnumConstants {
 	public static enum RecordType {
 		Company, Institution, IndividualInvestor, Contact, PipeLine, Fund, Fundraising, Partnerships, Master, Advisor,
 		Fund_Manager, Fund_Manager_Fund, Indivisual_investor, Intermediary, Lender, Limited_Partner, Portfolio_Company,
-		Deal, Banker, New_Demo_Company, New_Company;
+		Deal, Banker, New_Demo_Company, New_Company, Theme, Interaction, Clip, Broker, Buy_Side_Deal, Sell_Side_Deal, MSGRT, FRGRT, Capital_Raise, Private_Equity;
 	}
 
 	public static enum searchContactInEmailProspectGrid {
@@ -1539,7 +1543,7 @@ public class EnumConstants {
 		},
 		Deal_Contact, Stage_Upd, Pipeline_Comments, Pipeline_Comments_Upd, Legal_Name, Status_Notes, Legal_Name_Upd,
 		Status_Notes_Upd, Vintage_Year_Upd, Description_Upd, Summary_Upd, Fund, Vintage_Year, Theme, Descrption, Clip,
-		Summary, Theme_Name, Clip_Name, FundraisingContacts, Contact, Pipeline_Name, Firm_Name, Account_Name_Upd, Advisor_Layout
+		Summary, Theme_Name, Clip_Name, FundraisingContacts, Contact, Pipeline_Name, Firm_Name, Account_Name_Upd, Advisor_Layout, Currency, Auto_Number, Time, Date_Time, Geolocation, Entity_Type, Entity_Type_Updated, Department, Department_Updated, Custom_Fund_Phone_Updated, Custom_Fund_Phone, Custom_Fundraising_Phone, Custom_Fundraising_Phone_Updated, Theme_Name_Updated, Notes, Notes_Updated
 	};
 
 	public static enum Links {
@@ -1596,7 +1600,7 @@ public class EnumConstants {
 	};
 
 	public static enum SubjectElement {
-		CheckBox, StrikedText, SubjectLink, RedFlag, ExpandIcon, CollapseIcon, Attachment, NextGrid, PastGrid;
+		CheckBox, StrikedText, SubjectLink, RedFlag, ExpandIcon, CollapseIcon, Attachment, NextGrid, PastGrid, Checkbox;
 	};
 
 	public static enum ActivityType {

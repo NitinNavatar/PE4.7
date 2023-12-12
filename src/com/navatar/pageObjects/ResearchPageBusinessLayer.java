@@ -1,12 +1,14 @@
 package com.navatar.pageObjects;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.EnumConstants.NavigationMenuItems;
@@ -400,5 +402,116 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 			}
 	return flag;
 	}
+	
+
+	public boolean AddKeywordsForAdvancedResearch(String variableName, String value, String tabNames,String tabValue, String field, String operator, String values, action action, int timeout ) {
+		boolean flag = false;
+		String[] tabName = tabNames.split("<break>");
+		String[] tabValues = tabValue.split("<break>");
+		int tabCount = tabName.length;
+		String[] fields = field.split("<break>");
+		String[] operators = operator.split("<break>");
+		String[] valueField = values.split("<break>");
+		int fieldCount = fields.length;
+		for(int i =0; i<variableName.length(); i++) {
+			if(isDisplayed(driver, getResearchButtonForAdvanced(timeout), "Visibility", timeout, "Research Button On Advanced") != null){
+				log(LogStatus.INFO, "Research Button On Advanced is visible", YesNo.No);	
+			} else {
+				if(click(driver, getAdvancedLink(timeout),"Research Advanced Link", action.BOOLEAN)){
+					log(LogStatus.INFO, "Able to Click on Research Advanced Link", YesNo.No);
+				} else {
+					log(LogStatus.ERROR, "Not Able to click on Research Advanced Link", YesNo.Yes);
+					BaseLib.sa.assertTrue(false,"Not Able to click on Research Advanced Link");
+				}
+			}
+			if(getSearchByKeywordTextbox(timeout).getText() == null || (getSearchByKeywordTextbox(timeout).getText() == "")){
+				sendKeys(driver, getSearchByKeywordTextbox(timeout), value, "Search For Specific Textbox", action.BOOLEAN);
+				log(LogStatus.INFO, "Able to send " + value + " to Search For Specific Textbox", YesNo.No);
+			}
+		if(!(tabName[i].contains("NA")) && !(tabName[i] == "")) {
+			for(int k = 0; k < tabCount; k++) {
+			if(k>0) {
+				click(driver, getSearchForSpecificAddOption(timeout),"Search For Specific For Add Option", action.BOOLEAN);
+				ThreadSleep(2000);
+				log(LogStatus.INFO, "Able to Click on Add Option", YesNo.No);
+			}
+			int count = k+1;
+			click(driver, getSearchForSpecificDropdownButton(count,timeout),"Search For Specific Dropdown Button", action.BOOLEAN);
+			if(click(driver, getSearchForSpecificDropdown(tabName[k],count,timeout), "Search For Specific Dropdown", action.BOOLEAN)){
+				log(LogStatus.INFO, "Able to select " + tabName[k] + " to Search For Specific Dropdown", YesNo.No);
+				ThreadSleep(2000);
+					sendKeys(driver, getSearchForSpecificSearch(count,timeout), tabValues[k], "Search For Specific Textbox", action.BOOLEAN);
+					ThreadSleep(1000);
+					click(driver, getValueForSpecificRecord(tabValues[k],timeout),"Search For Specific Record", action.BOOLEAN);
+					log(LogStatus.INFO, "Able to send " + tabValues[k] + " to Search For Specific Textbox", YesNo.No);
+//					click(driver, getValueForSpecificRecord(tabValues[k],timeout),"Select Value for Specific Record", action.BOOLEAN);
+				} else {
+					log(LogStatus.ERROR, "Not able to select " + tabName[k] + " to Search For Specific Dropdown", YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not able to select " + tabName[k] + " to Search For Specific Dropdown");
+				}
+			}
+		}
+		if(!(fields[i].contains("NA")) && !(fields[i] == "")) {
+			for(int j = 0; j < fieldCount; j++) {
+			if(j>0) {
+				click(driver, getSearchForFieldAddOption(timeout),"Search For Specific For Add Option", action.BOOLEAN);
+				log(LogStatus.INFO, "Able to Click on Add Option", YesNo.No);
+				JavascriptExecutor js = (JavascriptExecutor) driver;
+				js.executeScript("window.scrollBy(0,150)", "");
+			}
+			int count = j +1;
+//				scrollDownThroughWebelement(driver, getSearchByFieldForFieldOption(timeout), "Search By Field For Field Option");
+				click(driver, getSearchByFieldForFieldOption(count,timeout),"Search By Field For Field Option", action.BOOLEAN);
+			if(sendKeys(driver, getSearchByFieldForFieldOption(count,timeout), fields[j], "Search By Field For Field Option", action.BOOLEAN)){
+				ThreadSleep(1000);
+				click(driver, getValueForFieldParameter(fields[j],timeout),"Select Value for Field Parameter", action.BOOLEAN);
+				log(LogStatus.INFO, "Able to select " + fields[j] + " to Search By Field For Field Option", YesNo.No);
+					ThreadSleep(2000);
+					click(driver, getSearchByFieldForOperatorOption(timeout),"Search By Field For Operator Option", action.BOOLEAN);
+				if(click(driver, getSearchByFieldForOperatorValue(count, operators[j],timeout),"Search By Field For Operator Value", action.BOOLEAN)){
+//				selectVisibleTextFromDropDown(driver, getSearchByFieldForOperatorOption(timeout), "Search By Field For Operator Option", operators[j]);
+					
+						log(LogStatus.INFO, "Able to send " + operators[j] + " to Search By Field For Operator Option", YesNo.No);
+					    ThreadSleep(2000);
+						sendKeys(driver, getSearchByFieldForValueOption(count,timeout), valueField[j], "Search By Field For Value Option", action.BOOLEAN);
+						log(LogStatus.INFO, "Able to send " + valueField[j] + " to Search By Field For Value Option", YesNo.No);
+						ThreadSleep(2000);
+					} else {
+						log(LogStatus.ERROR, "Not able to select " + operators[j] + " to Search For Specific Dropdown", YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to select " + operators[j] + " to Search For Specific Dropdown");
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to select " + fields[j] + " to Search For Specific Dropdown", YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not able to select " + fields[j] + " to Search For Specific Dropdown");
+				}
+			}
+		}
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollBy(0,250)", "");
+		if(	click(driver, getResearchButtonForAdvanced(timeout),"Research Button For Advanced", action.BOOLEAN)){
+			log(LogStatus.INFO, "Able to Click on Research Button For Advanced", YesNo.No);
+			ThreadSleep(2000);
+			click(driver, getCloseButtonForAdvanced(timeout),"Close Button For Advanced", action.BOOLEAN);
+		} else {
+			log(LogStatus.ERROR, "Not Able to click on Research Button For Advanced", YesNo.Yes);
+			BaseLib.sa.assertTrue(false,"Not Able to click on Research Button For Advanced");
+		}
+
+		ArrayList<String> list = VerifyNameAndCountForResearchLeftPanel(variableName, action.SCROLLANDBOOLEAN, timeout);
+			if(list.isEmpty()) {
+				log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+				flag = true;
+			} else {
+				log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list :"+list + "Keyword :" + variableName, YesNo.No);
+				BaseLib.sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list :"+list + "Keyword :" + variableName);
+				flag = false;
+			}
+		refresh(driver);
+		ThreadSleep(2000);
+			break;
+		}
+		return flag;
+	}
+
 	
 }

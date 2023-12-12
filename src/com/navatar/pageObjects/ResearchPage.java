@@ -12,6 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.SmokeCommonVariables;
+import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.action;
 
 
@@ -248,6 +249,14 @@ public class ResearchPage extends BasePageBusinessLayer {
 
 		}
 		
+		@FindBy(xpath = "//div[@class='inner-custom-mechanish displaydiv']//button[@title='Close']")
+		private WebElement closeButtonForAdvanced;
+
+		public WebElement getCloseButtonForAdvanced(int timeOut) {
+			return isDisplayed(driver, closeButtonForAdvanced, "Visibility", timeOut, "Close Button For Advanced");
+
+		}
+		
 //	@FindBy()
 //	protected WebElement NavigationSideBar;
 //
@@ -270,5 +279,202 @@ public class ResearchPage extends BasePageBusinessLayer {
 						"No Result",action.SCROLLANDBOOLEAN,timeout), "Visibility", timeout, "No Result");
 			}
 			
+		}
+		
+		@FindBy(xpath = "//div[contains(@class,'header__name-title')]//span[@title='Advanced']")
+		private WebElement advancedLink;
+
+		public WebElement getAdvancedLink(int timeOut) {
+			return isDisplayed(driver, advancedLink, "Visibility", timeOut, "Advanced Link");
+
+		}
+		
+		@FindBy(xpath = "//div[@class='inner-custom-mechanish displaydiv']//button[@title='Research']")
+		private WebElement researchButtonForAdvanced;
+
+		public WebElement getResearchButtonForAdvanced(int timeOut) {
+			return isDisplayed(driver, researchButtonForAdvanced, "Visibility", timeOut, "Research Button For Advanced");
+
+		}
+		
+		@FindBy(xpath = "//lightning-layout[@class='slds-m-top_small slds-grid']//input")
+		private WebElement searchByKeywordTextbox;
+
+		public WebElement getSearchByKeywordTextbox(int timeOut) {
+			return isDisplayed(driver, searchByKeywordTextbox, "Visibility", timeOut, "search By Keyword Textbox");
+
+		}
+		
+		@FindBy(xpath = "(//div[contains(@class,'icon-group')]//lightning-icon)[1]")
+		private WebElement searchForSpecificDropdown;
+
+		public WebElement getSearchForSpecificDropdown(int timeOut) {
+			return isDisplayed(driver, searchForSpecificSearch, "Visibility", timeOut, "Search For Specific Dropdown");
+
+		}
+		
+		@FindBy(xpath = "//div[@class='slds-combobox-group']//input[@placeholder='Search ']")
+		private WebElement searchForSpecificSearch;
+
+		public WebElement getSearchForSpecificSearch(int timeOut) {
+			return isDisplayed(driver, searchForSpecificSearch, "Visibility", timeOut, "Search For Specific Search");
+
+		}
+		
+		@FindBy(xpath = "//div[contains(@class,'main-searchlook')]//input[@name='name']")
+		private WebElement searchByFieldForFieldOption;
+
+		public WebElement getSearchByFieldForFieldOption(int timeOut) {
+			return isDisplayed(driver, searchByFieldForFieldOption, "Visibility", timeOut, "Search By Field For Field Option");
+
+		}
+		
+		@FindBy(xpath = "//div[@part='button-group']//button[@title='Create Theme']")
+		private WebElement createThemeLink;
+
+		public WebElement getCreateThemeLink(int timeOut) {
+			return isDisplayed(driver, createThemeLink, "Visibility", timeOut, "Create Theme Link");
+
+		}
+		
+		@FindBy(xpath = "//div[contains(@class,'around_medium')]//span[@title='Advanced']")
+		private WebElement advancedLinkOnCreateThemePopup;
+
+		public WebElement getAdvancedLinkOnCreateThemePopup(int timeOut) {
+			return isDisplayed(driver, advancedLinkOnCreateThemePopup, "Visibility", timeOut, "Advanced Link On Create Theme Popup");
+
+		}
+		
+		@FindBy(xpath = "//div[contains(@class,'around_medium')]//span[@title='Advanced']")
+		private WebElement labelOfAllCategoriesOnCreateThemePopup;
+
+		public WebElement getLabelofAllCategoriesOnCreateThemePopup(int timeOut) {
+			return isDisplayed(driver, labelOfAllCategoriesOnCreateThemePopup, "Visibility", timeOut, "Label of All Categories On Create Theme Popup");
+
+		}
+		
+		public List<WebElement> getLabelsofCategoriesOnCreateThemePopup(int timeOut) {
+			return FindElements(driver, "//div[contains(@class,'slds-border_top')]//lightning-base-formatted-text",
+					"Labels of Categories On Create Theme Popup");
+		}
+
+		@FindBy(xpath = "//div[@class='slds-modal__footer']/button[@title='Save']")
+		private WebElement cancelButtonOnCreateThemePopup;
+
+		public WebElement getCancelButtonOnCreateThemePopup(int timeOut) {
+			return isDisplayed(driver, cancelButtonOnCreateThemePopup, "Visibility", timeOut, "Cancel Button On Create Theme Popup");
+
+		}
+		
+		@FindBy(xpath = "//div[@part='button-group']//button[@title='Add To Theme']")
+		private WebElement addToThemeLink;
+
+		public WebElement getAddToThemeLink(int timeOut) {
+			return isDisplayed(driver, addToThemeLink, "Visibility", timeOut, "Add To Theme Link");
+
+		}
+		
+		@FindBy(xpath = "//div[@part='button-group']//button[@title='Export']")
+		private WebElement exportLink;
+
+		public WebElement getExportLink(int timeOut) {
+			return isDisplayed(driver, exportLink, "Visibility", timeOut, "Export Link");
+
+		}
+		
+		@FindBy(xpath = "//lightning-icon[@title='Remove']")
+		private WebElement searchForSpecificRemoveOption;
+
+		public WebElement getSearchForSpecificRemoveOption(int timeOut) {
+			return isDisplayed(driver, searchForSpecificRemoveOption, "Visibility", timeOut, "Search For Specific Remove Option");
+
+		}
+		
+		public WebElement getSearchByFieldForFieldOption(int count, int timeOut) {
+			String xpath = "(//div[contains(@class,'main-searchlook')]//input[@name='name'])["+ count +"]";
+
+			return FindElement(driver, xpath, "Search By Field For Field Option", action.SCROLLANDBOOLEAN, timeOut);
+		}
+		
+		@FindBy(xpath = "//div[contains(@class,'addMinus')]//lightning-icon[@title='Add']")
+		private WebElement searchForSpecificAddOption;
+
+		public WebElement getSearchForSpecificAddOption(int timeOut) {
+			return isDisplayed(driver, searchForSpecificAddOption, "Visibility", timeOut, "Search For Specific Add Option");
+
+		}
+		
+		@FindBy(xpath = "//div[contains(@class,'addMinus')]//lightning-icon[@title='Add Row']")
+		private WebElement searchForFieldAddOption;
+
+		public WebElement getSearchForFieldAddOption(int timeOut) {
+			return isDisplayed(driver, searchForFieldAddOption, "Visibility", timeOut, "Search For Specific Add Option");
+
+		}
+		
+		public WebElement getValueForSpecificRecord(String value, int timeout) {
+			return isDisplayed(driver,  FindElement(driver, "//div[@data-name='"+ value+"']//li[text()='"+ value +"']/..",
+					"Value For Specific Record",action.BOOLEAN,timeout), "Visibility", timeout, "Value For Specific Record");
+		}
+		//span[@title='Account:Annual Revenue']
+		public WebElement getValueForFieldParameter(String value, int timeout) {
+			return isDisplayed(driver,  FindElement(driver, "//span[@title='"+ value +"']",
+					"Value For Field Parameters",action.SCROLLANDBOOLEAN,timeout), "Visibility", timeout, "Value For Field Parameters");
+		}
+		
+		@FindBy(xpath = "//div[contains(@class,'main-searchlook')]//button[@aria-label='Select an Operator']")
+		private WebElement searchByFieldForOperatorOption;
+
+		public WebElement getSearchByFieldForOperatorOption(int timeOut) {
+			return isDisplayed(driver, searchByFieldForOperatorOption, "Visibility", timeOut, "Search By Field For Operator Option");
+
+		}
+		
+		public WebElement getSearchByFieldForOperatorOption(int count, int timeout) {
+			return isDisplayed(driver,  FindElement(driver, "(//div[contains(@class,'main-searchlook')]//button[@aria-label='Select an Operator'])["+count+"]",
+					"Search By Field For Operator Option",action.SCROLLANDBOOLEAN,timeout), "Visibility", timeout, "Search By Field For Operator Option");
+		}
+		
+		public WebElement getSearchByFieldForOperatorValue(int count, String value, int timeout) {
+			return isDisplayed(driver,  FindElement(driver, "(//div[contains(@class,'slds-dropdown_fluid')]//span[text()='"+ value +"']/../..)["+count+"]",
+					"Value For Specific Record",action.SCROLLANDBOOLEAN,timeout), "Visibility", timeout, "Value For Specific Record");
+		}
+		
+		@FindBy(xpath = "(//div[contains(@class,'main-searchlook')]//input)[2]")
+		private WebElement searchByFieldForValueOption;
+
+		public WebElement getSearchByFieldForValueOption(int timeOut) {
+			return isDisplayed(driver, searchByFieldForValueOption, "Visibility", timeOut, "Search By Field For Value Option");
+
+		}
+		
+		public WebElement getSearchByFieldForValueOption(int count, int timeout) {
+			count = count *2;
+			return isDisplayed(driver,  FindElement(driver, "(//div[contains(@class,'main-searchlook')]//input)["+count+"]",
+					"Value For Specific Record",action.SCROLLANDBOOLEAN,timeout), "Visibility", timeout, "Value For Specific Record");
+		}
+		
+		public WebElement getSearchForSpecificDropdownButton(int count, int timeOut) {
+			String xpath = "//div[@class='slds-combobox-group']//button[@aria-label='Select']";
+
+			return FindElement(driver, xpath, "Search For Specific Dropdown button", action.SCROLLANDBOOLEAN, timeOut);
+		}
+		
+		public WebElement getSearchForSpecificDropdown(String object, int count, int timeOut) {
+			String xpath;
+			if(object.equalsIgnoreCase(PageLabel.Firm.toString())) {
+				xpath = "(//div[@class='slds-combobox-group']//div//lightning-base-combobox-item[@data-value='Account'])["+ count +"]";
+			} else {
+				xpath = "(//div[@class='slds-combobox-group']//div//lightning-base-combobox-item[contains(@data-value,'"+ object +"')])["+ count +"]";	
+			}
+			
+
+			return FindElement(driver, xpath, "Search For Specific Dropdown", action.SCROLLANDBOOLEAN, timeOut);
+		}
+		
+		public WebElement getSearchForSpecificSearch(int count, int timeOut) {
+			String xpath = "//div[@class='slds-combobox-group']//input[@placeholder='Search ']";
+
+			return FindElement(driver, xpath, "Search For Specific Search", action.SCROLLANDBOOLEAN, timeOut);
 		}
 }
