@@ -305,6 +305,22 @@ public class ResearchPage extends BasePageBusinessLayer {
 
 		}
 		
+		@FindBy(xpath = "//lightning-layout[@class='slds-grid']//lightning-icon[@title='Add']")
+		private WebElement addButtonForSearchForSpecificRecord;
+
+		public WebElement getAddButtonForSearchForSpecificRecord(int timeOut) {
+			return isDisplayed(driver, addButtonForSearchForSpecificRecord, "Visibility", timeOut, "Add Button For Search For Specific Record");
+
+		}
+		
+		@FindBy(xpath = "//lightning-layout[@class='slds-grid']//lightning-icon[@title='Add']")
+		private WebElement addButtonForSearchByParameter;
+
+		public WebElement getAddButtonForSearchByParameter(int timeOut) {
+			return isDisplayed(driver, addButtonForSearchByParameter, "Visibility", timeOut, "Add Button For Search By Parameter");
+
+		}
+		
 		@FindBy(xpath = "(//div[contains(@class,'icon-group')]//lightning-icon)[1]")
 		private WebElement searchForSpecificDropdown;
 
@@ -401,6 +417,19 @@ public class ResearchPage extends BasePageBusinessLayer {
 
 		public WebElement getSearchForSpecificAddOption(int timeOut) {
 			return isDisplayed(driver, searchForSpecificAddOption, "Visibility", timeOut, "Search For Specific Add Option");
+
+		}
+		
+		@FindBy(xpath = "//div[contains(@class,'addMinus')]//lightning-icon[@title='Add' and @aria-disabled='false']")
+		private WebElement searchForSpecificAddOptionAttribute;
+
+		public boolean getSearchForSpecificAddOptionAttribute(int timeOut) {
+			if(isDisplayed(driver, searchForSpecificAddOptionAttribute, "Visibility", timeOut, "Search For Specific Add Option Attribute") != null) {
+				return false;
+			} else {
+				return true;
+			}
+			
 
 		}
 		

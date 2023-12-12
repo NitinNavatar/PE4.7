@@ -3,6 +3,8 @@ package com.navatar.scripts;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
 import static com.navatar.generic.ExcelUtils.readAllDataForAColumn;
+import static com.navatar.generic.SmokeCommonVariables.adminPassword;
+import static com.navatar.generic.SmokeCommonVariables.superAdminUserName;
 import static com.navatar.generic.CommonVariables.adminPassword;
 import static com.navatar.generic.CommonVariables.crmUser1EmailID;
 import static com.navatar.generic.CommonVariables.crmUser3FirstName;
@@ -1886,6 +1888,172 @@ public class AcuityResearch extends BaseLib{
 	sa.assertAll();
 	
 	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ARTc006_6_VerifyResearchDataForCurrentRecord(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	FundRaisingPageBusinessLayer frp = new FundRaisingPageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	lp.CRMLogin(glUser1EmailID, adminPassword);
+	
+	String[] searchValues = readAllDataForAColumn(ResearchDataSheetFilePath, "CurrentRecord", 0, false).split("<break>");
+	
+	for(String searchValue : searchValues) {
+		String variable =ExcelUtils.readData(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, searchValue, excelLabel.ResearchFindings);
+		String tabName =ExcelUtils.readData(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, searchValue, excelLabel.Tab_Name);
+		String recordName =ExcelUtils.readData(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, searchValue, excelLabel.Record_Name);
+		if(!tabName.equals("ThemesTab"))
+		{
+		if (fp.clickOnTab(environment, mode, TabName.valueOf(tabName))) {
+		       log(LogStatus.INFO, "Click on Tab : " + TabName.valueOf(tabName), YesNo.No);
+		      if (fp.clickOnAlreadyCreatedItem(projectName, TabName.valueOf(tabName),recordName.replace("  ", "").replace("\"", "").trim(), 10)) {
+		    	  if(rp.openResearchForCurrentRecord(projectName,ProgressType.Current_Record.toString(),variable,10)) {
+			   		   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(searchValue, action.SCROLLANDBOOLEAN, 10);
+			   			if(list.isEmpty()) {
+			   				
+			   				log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			   				ExcelUtils.writeData(ResearchDataSheetFilePath, "Pass", "CurrentRecord", excelLabel.Variable_Name,
+			   						searchValue, excelLabel.Status);
+			   				ThreadSleep(1000);
+			   			} else {
+			   				log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Variable Name: "+ searchValue + "||" + "list : "+list, YesNo.No);
+			   				sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Variable: "+ searchValue + "||" + "list : "+list);
+			   				ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValue + "||" + "list : "+list, "CurrentRecord", excelLabel.Variable_Name,
+			   						searchValue, excelLabel.Status);
+			   				ThreadSleep(1000);
+			   			}  	  
+		           }
+		       } else {
+		          sa.assertTrue(false, "Not Able to open created Record : " + recordName);
+		           log(LogStatus.SKIP, "Not Able to open created Record: " + recordName, YesNo.Yes);
+		           ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValue + "||" + "Not Able to open created Record: " + recordName, "CurrentRecord", excelLabel.Variable_Name,
+	   						searchValue, excelLabel.Status);
+		           ThreadSleep(1000);
+		      }
+		   } else {
+		       log(LogStatus.ERROR, "Not able to click on " + TabName.valueOf(tabName) + " tab", YesNo.Yes);
+		       sa.assertTrue(false, "Not able to click on " + TabName.valueOf(tabName) + " tab");
+		       ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValue + "||" + "Not able to click on " + TabName.valueOf(tabName), "CurrentRecord", excelLabel.Variable_Name,
+							searchValue, excelLabel.Status);
+		       ThreadSleep(1000);
+		   }  
+		}
+		else
+		{
+			if (lp.clickOnTab(projectName, TabName.Themes.toString())) {
+	
+				log(LogStatus.INFO, "Clicked on Tab : "+TabName.Themes.toString(), YesNo.No);
+				ThreadSleep(2000);
+				String parentWindowID=bp.clickOnThemeRecord(recordName.replace("  ", "").replace("\"", "").trim());
+				ThreadSleep(2000);
+				if (parentWindowID!=null) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+					if(rp.openResearchForCurrentRecord(projectName,ProgressType.Current_Record.toString(),variable,10)) {
+				   		   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(searchValue, action.SCROLLANDBOOLEAN, 10);
+				   			if(list.isEmpty()) {
+				   				
+				   				log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+				   				ExcelUtils.writeData(ResearchDataSheetFilePath, "Pass", "CurrentRecord", excelLabel.Variable_Name,
+				   						searchValue, excelLabel.Status);
+				   				ThreadSleep(1000);
+				   			} else {
+				   				log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Variable Name: "+ searchValue + "||" + "list : "+list, YesNo.No);
+				   				sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Variable: "+ searchValue + "||" + "list : "+list);
+				   				ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValue + "||" + "list : "+list, "CurrentRecord", excelLabel.Variable_Name,
+				   						searchValue, excelLabel.Status);
+				   				ThreadSleep(1000);
+				   				
+				   			}  	  
+			           }
+					driver.close();
+					driver.switchTo().window(parentWindowID);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
+					sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
+					ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValue + "||" + "Not able to open "+recordName +" reocrd", "CurrentRecord",excelLabel.Variable_Name,
+	   						searchValue, excelLabel.Status);
+					ThreadSleep(1000);
+				}
+				
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab : "+TabName.Themes.toString(), YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab : "+TabName.Themes.toString());
+				ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValue + "||" + "Not able to click on tab : "+TabName.Themes.toString(), "CurrentRecord",excelLabel.Variable_Name,
+							searchValue, excelLabel.Status);
+				ThreadSleep(1000);
+			}
+	
+	
+		}
+	}   
+			lp.CRMlogout();
+			sa.assertAll();
+		}
+
+@Parameters({ "projectName"})
+@Test
+	public void ARTc006_7_VerifyResearchFunctionalityForAdvancedSearch(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	lp.CRMLogin(superAdminUserName, adminPassword);
+	ThreadSleep(2000);
+	
+	String[] searchValues = readAllDataForAColumn(ResearchDataSheetFilePath, "AdvancedSearch" , 0 ,false).split("<break>");
+	String variableName =ExcelUtils.readData(ResearchDataSheetFilePath,"AdvancedSearch",excelLabel.Variable_Name, searchValues[0], excelLabel.ResearchFindings);
+		log(LogStatus.PASS, "WOrking for " + searchValues[0], YesNo.Yes);
+	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 5)) {
+		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+		if(sendKeys(driver, rp.getTextAreaResearch(5),variableName, "Input", action.BOOLEAN)){
+			ThreadSleep(2000);
+			clickUsingJavaScript(driver, rp.getResearchButton(10),"Advanced Research Button", action.BOOLEAN);
+			ThreadSleep(8000);
+		} else {
+			log(LogStatus.ERROR, "Not Able to send value "+searchValues[0], YesNo.Yes);
+			sa.assertTrue(false,"Not Able to send value "+searchValues[0]);
+		}
+	}
+	for(String searchValue : searchValues) {
+		variableName =ExcelUtils.readData(ResearchDataSheetFilePath,"AdvancedSearch",excelLabel.Variable_Name, searchValue, excelLabel.ResearchFindings);
+		String TabName =ExcelUtils.readData(ResearchDataSheetFilePath,"AdvancedSearch",excelLabel.Variable_Name, searchValue, excelLabel.Tab_Name);
+		String RecordName =ExcelUtils.readData(ResearchDataSheetFilePath,"AdvancedSearch",excelLabel.Variable_Name, searchValue, excelLabel.Record_Name);
+		String FieldName =ExcelUtils.readData(ResearchDataSheetFilePath,"AdvancedSearch",excelLabel.Variable_Name, searchValue, excelLabel.Field);
+		String OperatorName =ExcelUtils.readData(ResearchDataSheetFilePath,"AdvancedSearch",excelLabel.Variable_Name, searchValue, excelLabel.Opeartor);
+		String ValueName =ExcelUtils.readData(ResearchDataSheetFilePath,"AdvancedSearch",excelLabel.Variable_Name, searchValue, excelLabel.Value);
+	log(LogStatus.INFO,
+			"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+					+ searchValue + "---------",
+			YesNo.No);
+		if (rp.AddKeywordsForAdvancedResearch(searchValue,variableName,TabName,RecordName,FieldName,OperatorName,ValueName,action.BOOLEAN,5)) {
+
+			log(LogStatus.INFO,
+					"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+							+ searchValue + "---------",
+					YesNo.No);
+		
+		} else {
+			log(LogStatus.FAIL,
+					"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+							+ searchValue + "---------",
+					YesNo.No);
+			sa.assertTrue(false,
+					"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+							+ searchValue + "---------");
+		}
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();
+	
+	}
+}
 
 @Parameters({ "projectName" })
 @Test
@@ -9239,115 +9407,6 @@ public class AcuityResearch extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "projectName" })
-	@Test
-	public void ARTc050_VerifyResearchDataForCurrentRecord(String projectName) {
-	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
-	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
-	FundRaisingPageBusinessLayer frp = new FundRaisingPageBusinessLayer(driver);
-	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
-	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-	lp.CRMLogin(glUser1EmailID, adminPassword);
-	
-	String[] searchValues = readAllDataForAColumn(ResearchDataSheetFilePath, "CurrentRecord", 0, false).split("<break>");
-	
-	for(String searchValue : searchValues) {
-		String variable =ExcelUtils.readData(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, searchValue, excelLabel.ResearchFindings);
-		String tabName =ExcelUtils.readData(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, searchValue, excelLabel.Tab_Name);
-		String recordName =ExcelUtils.readData(ResearchDataSheetFilePath,"CurrentRecord",excelLabel.Variable_Name, searchValue, excelLabel.Record_Name);
-		if(!tabName.equals("ThemesTab"))
-		{
-		if (fp.clickOnTab(environment, mode, TabName.valueOf(tabName))) {
-		       log(LogStatus.INFO, "Click on Tab : " + TabName.valueOf(tabName), YesNo.No);
-		      if (fp.clickOnAlreadyCreatedItem(projectName, TabName.valueOf(tabName),recordName.replace("  ", "").replace("\"", "").trim(), 10)) {
-		    	  if(rp.openResearchForCurrentRecord(projectName,ProgressType.Current_Record.toString(),variable,10)) {
-			   		   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(searchValue, action.SCROLLANDBOOLEAN, 10);
-			   			if(list.isEmpty()) {
-			   				
-			   				log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-			   				ExcelUtils.writeData(ResearchDataSheetFilePath, "Pass", "CurrentRecord", excelLabel.Variable_Name,
-			   						searchValue, excelLabel.Status);
-			   				ThreadSleep(1000);
-			   			} else {
-			   				log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Variable Name: "+ searchValue + "||" + "list : "+list, YesNo.No);
-			   				sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Variable: "+ searchValue + "||" + "list : "+list);
-			   				ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValue + "||" + "list : "+list, "CurrentRecord", excelLabel.Variable_Name,
-			   						searchValue, excelLabel.Status);
-			   				ThreadSleep(1000);
-			   			}  	  
-		           }
-		       } else {
-		          sa.assertTrue(false, "Not Able to open created Record : " + recordName);
-		           log(LogStatus.SKIP, "Not Able to open created Record: " + recordName, YesNo.Yes);
-		           ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValue + "||" + "Not Able to open created Record: " + recordName, "CurrentRecord", excelLabel.Variable_Name,
-	   						searchValue, excelLabel.Status);
-		           ThreadSleep(1000);
-		      }
-		   } else {
-		       log(LogStatus.ERROR, "Not able to click on " + TabName.valueOf(tabName) + " tab", YesNo.Yes);
-		       sa.assertTrue(false, "Not able to click on " + TabName.valueOf(tabName) + " tab");
-		       ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValue + "||" + "Not able to click on " + TabName.valueOf(tabName), "CurrentRecord", excelLabel.Variable_Name,
-  						searchValue, excelLabel.Status);
-		       ThreadSleep(1000);
-		   }  
-		}
-		else
-		{
-			if (lp.clickOnTab(projectName, TabName.Themes.toString())) {
-
-				log(LogStatus.INFO, "Clicked on Tab : "+TabName.Themes.toString(), YesNo.No);
-				ThreadSleep(2000);
-				String parentWindowID=bp.clickOnThemeRecord(recordName.replace("  ", "").replace("\"", "").trim());
-				ThreadSleep(2000);
-				if (parentWindowID!=null) {
-					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-					if(rp.openResearchForCurrentRecord(projectName,ProgressType.Current_Record.toString(),variable,10)) {
-				   		   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(searchValue, action.SCROLLANDBOOLEAN, 10);
-				   			if(list.isEmpty()) {
-				   				
-				   				log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-				   				ExcelUtils.writeData(ResearchDataSheetFilePath, "Pass", "CurrentRecord", excelLabel.Variable_Name,
-				   						searchValue, excelLabel.Status);
-				   				ThreadSleep(1000);
-				   			} else {
-				   				log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Variable Name: "+ searchValue + "||" + "list : "+list, YesNo.No);
-				   				sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Variable: "+ searchValue + "||" + "list : "+list);
-				   				ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValue + "||" + "list : "+list, "CurrentRecord", excelLabel.Variable_Name,
-				   						searchValue, excelLabel.Status);
-				   				ThreadSleep(1000);
-				   				
-				   			}  	  
-			           }
-					driver.close();
-					driver.switchTo().window(parentWindowID);
-				}
-				else
-				{
-					log(LogStatus.ERROR, "Not able to open "+recordName +" reocrd", YesNo.No);
-					sa.assertTrue(false, "Not able to open "+recordName +" reocrd");
-					ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValue + "||" + "Not able to open "+recordName +" reocrd", "CurrentRecord",excelLabel.Variable_Name,
-	   						searchValue, excelLabel.Status);
-					ThreadSleep(1000);
-				}
-				
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Not able to click on tab : "+TabName.Themes.toString(), YesNo.No);
-				sa.assertTrue(false,  "Not able to click on tab : "+TabName.Themes.toString());
-				ExcelUtils.writeData(ResearchDataSheetFilePath, "Variable: "+ searchValue + "||" + "Not able to click on tab : "+TabName.Themes.toString(), "CurrentRecord",excelLabel.Variable_Name,
-   						searchValue, excelLabel.Status);
-				ThreadSleep(1000);
-			}
-
-
-		}
-	}   
-			lp.CRMlogout();
-			sa.assertAll();
-		}
-	
 	@Parameters({ "projectName"})
 	@Test
 	public void ARTc051_VerifyTheResearchFunctionality(String projectName) {
@@ -9358,7 +9417,7 @@ public class AcuityResearch extends BaseLib{
 		
 		String ele;
 		int i = 1;
-		String searchValues[] = {"","a","zz","1234567890~!@#$%^&*()_+-=[]{}?|;':,.<>/"};
+		String searchValues[] = {"","a","Test","zz","1234567890~!@#$%^&*()_+-=[]{}?|;':,.<>/"};
 		lp.CRMLogin(glUser1EmailID, adminPassword, appName);
 		ThreadSleep(2000);
 		for(String searchValue : searchValues) {
@@ -9449,6 +9508,20 @@ public class AcuityResearch extends BaseLib{
 						} else {
 							log(LogStatus.ERROR, "Search By Keyword option is not visible", YesNo.Yes);
 							sa.assertTrue(false,"Search By Keyword option is not visible");
+						}
+						if(rp.getAddButtonForSearchForSpecificRecord(5) != null){
+							log(LogStatus.PASS, "Add Button For Search For Specific Record option is visible", YesNo.No);
+							ThreadSleep(2000);
+						} else {
+							log(LogStatus.ERROR, "Add Button For Search For Specific Record option is not visible", YesNo.Yes);
+							sa.assertTrue(false,"Add Button For Search For Specific Record option is not visible");
+						}
+						if(rp.getAddButtonForSearchByParameter(5) != null){
+							log(LogStatus.PASS, "Add Button For Search By Parameter option is visible", YesNo.No);
+							ThreadSleep(2000);
+						} else {
+							log(LogStatus.ERROR, "Add Button For Search By Parameter option is not visible", YesNo.Yes);
+							sa.assertTrue(false,"Add Button For Search By Parameter option is not visible");
 						}
 						if(rp.getSearchForSpecificDropdown(5) != null){
 							log(LogStatus.PASS, "Search For Specific option is visible", YesNo.No);
@@ -9954,16 +10027,29 @@ public class AcuityResearch extends BaseLib{
 				log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
 				sa.assertTrue(false,"Not Able to send value "+searchValue);
 			}
-				for(int k = 0; k < 5; k++) {
+				for(int k = 0; k < 8; k++) {
 						click(driver, rp.getSearchForSpecificAddOption(5),"Search For Specific For Add Option", action.BOOLEAN);
 						ThreadSleep(2000);
 						log(LogStatus.INFO, "Able to Click on Add Option", YesNo.No);
 					}
+				if(rp.getSearchForSpecificAddOptionAttribute(5) == true) {
+					log(LogStatus.INFO, "Maximum reached to add new rows on Search For Specific Records", YesNo.No);
+				} else {
+					log(LogStatus.ERROR, "still not reached to maximum to add new rows on Search For Specific Records", YesNo.Yes);
+					BaseLib.sa.assertTrue(false,"still not reached to maximum to add new rows on Search For Specific Records");
+				}
 				
-				for(int k = 0; k < 4; k++) {
+				for(int k = 0; k < 8; k++) {
 					click(driver, rp.getSearchForSpecificRemoveOption(5),"Search For Specific For Remove Option", action.BOOLEAN);
 					ThreadSleep(2000);
 					log(LogStatus.INFO, "Able to Click on Remove Option", YesNo.No);
+				}
+				
+				if(rp.getSearchForSpecificRemoveOption(5) != null) {
+					log(LogStatus.INFO, "Maximum reached to remove new rows on Search For Specific Records", YesNo.No);
+				} else {
+					log(LogStatus.ERROR, "still not reached to maximum to remove new rows on Search For Specific Records", YesNo.Yes);
+					BaseLib.sa.assertTrue(false,"still not reached to maximum to remove new rows on Search For Specific Records");
 				}
 				
 				JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -10086,28 +10172,30 @@ public class AcuityResearch extends BaseLib{
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	
 	String objects[] ={object.Contact.toString(),object.Deal.toString(),object.Fund.toString(),object.Fundraising.toString(),object.Theme.toString(),PageLabel.Firm.toString()};
+	String tabValues[] ={AR_Record4,AR_Record5,AR_Record6,AR_Record7,AR_Record8,AR_Record3};
 	
 	lp.CRMLogin(superAdminUserName, adminPassword);
 	ThreadSleep(2000);
 	
-	for(String object : objects) {
-		log(LogStatus.PASS, "Working for " + object, YesNo.Yes);
+	for(int k = 0; k <= objects.length;k++) {
+		k = k+1;
+		log(LogStatus.PASS, "Working for " + objects[k], YesNo.Yes);
 		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 				clickUsingJavaScript(driver, rp.getAdvancedResearch(10),"Advanced Research Button", action.BOOLEAN);
 				ThreadSleep(8000);
 				click(driver, rp.getSearchForSpecificDropdownButton(1,5),"Search For Specific Dropdown Button", action.BOOLEAN);
 				ThreadSleep(1000);
-				if(object.equalsIgnoreCase(PageLabel.Firm.toString())) {
-					object = PageLabel.Firm.toString();
-				}
-				if(click(driver, rp.getSearchForSpecificDropdown(object,1,5), "Search For Specific Dropdown", action.BOOLEAN)){
-					log(LogStatus.INFO, "Able to select " + object + " to Search For Specific Dropdown", YesNo.No);
+				if(click(driver, rp.getSearchForSpecificDropdown(objects[k],1,5), "Search For Specific Dropdown", action.BOOLEAN)){
+					log(LogStatus.INFO, "Able to select " + objects[k] + " to Search For Specific Dropdown", YesNo.No);
 					ThreadSleep(2000);
-					
+					sendKeys(driver, rp.getSearchForSpecificSearch(k,5), tabValues[k], "Search For Specific Textbox", action.BOOLEAN);
+					ThreadSleep(1000);
+					click(driver, rp.getValueForSpecificRecord(tabValues[k],5),"Search For Specific Record", action.BOOLEAN);
+					log(LogStatus.INFO, "Able to send " + tabValues[k] + " to Search For Specific Textbox", YesNo.No);
 					} else {
-						log(LogStatus.ERROR, "Not able to select " + object + " to Search For Specific Dropdown", YesNo.Yes);
-						BaseLib.sa.assertTrue(false, "Not able to select " + object + " to Search For Specific Dropdown");
+						log(LogStatus.ERROR, "Not able to select " + objects[k] + " to Search For Specific Dropdown", YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to select " + objects[k] + " to Search For Specific Dropdown");
 					}
 			} else {
 				log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName,YesNo.Yes);
@@ -10173,9 +10261,6 @@ public class AcuityResearch extends BaseLib{
 				ThreadSleep(8000);
 				click(driver, rp.getSearchForSpecificDropdownButton(1,5),"Search For Specific Dropdown Button", action.BOOLEAN);
 				ThreadSleep(1000);
-				if(object.equalsIgnoreCase(PageLabel.Firm.toString())) {
-					object = PageLabel.Firm.toString();
-				}
 				if(click(driver, rp.getSearchForSpecificDropdown(object,1,5), "Search For Specific Dropdown", action.BOOLEAN)){
 					log(LogStatus.ERROR, "Able to select " + object + " to Search For Specific Dropdown", YesNo.No);
 					BaseLib.sa.assertTrue(false, "Able to select " + object + " to Search For Specific Dropdown");
@@ -10293,7 +10378,7 @@ public class AcuityResearch extends BaseLib{
 		}
 		ThreadSleep(3000);
 
-		if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Account,
+		if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Firm,
 				ObjectFeatureName.FieldAndRelationShip, "Entity Type", PermissionType.removePermission, "PE Standard User")) {
 			log(LogStatus.PASS,
 					"Entity Type field Permission is given from the Firm Object Manager",
