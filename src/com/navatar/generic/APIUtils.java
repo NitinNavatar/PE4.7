@@ -195,10 +195,14 @@ public class APIUtils {
 									"Added Data for Account :" + i + " Label :" + label + " with value :" + value);
 						}
 					} else if (label.equals("ParentId")) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 						String RT = getObjectRecordId("Account", value);
 						data.put(label, RT);
+						}
 					}else {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 						data.put(label, value);
+						}
 					}
 					System.out.println("Added Data for account :" + i + " Label :" + label + " with value :" + value);
 
@@ -333,7 +337,7 @@ public class APIUtils {
 
 					String label = ExcelUtils.readData(filePath, sheetName, 0, j).trim();
 					String value = ExcelUtils.readData(filePath, sheetName, i, j).trim();
-					if (label.equals("RecordTypeId") || label.contains("Deal")) {
+					if (label.equals("RecordTypeId") ) {
 
 						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 							String RT = getObjectRecordId("navpeII__Pipeline__c", value);
@@ -344,7 +348,7 @@ public class APIUtils {
 							// :"+value, YesNo.No);
 
 						}
-					} else if (label.equals("AccountId") || label.equals("navpeII__Company__c") || label.equals("navpeII__Institution__c")) {
+					} else if (label.equals("AccountId") || label.equals("navpeII__Company__c") || label.equals("navpeII__Institution__c") || label.equals("navpeII__Company_Name__c")) {
 						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 							String accoundId = getObjectRecordId("Account", value);
 							data.put(label, accoundId);
@@ -386,7 +390,7 @@ public class APIUtils {
 
 				}
 
-				createObejectRecordByAPI("navpeII__Financing__c", data);
+				createObejectRecordByAPI("navpeII__Pipeline__c", data);
 				ExcelUtils.writeDataInExcel(filePath, "Created", sheetName, i, 0);
 			} else {
 				System.out.println("Data already created for Deal :" + i);
@@ -832,6 +836,10 @@ public class APIUtils {
 								newId = getObjectRecordId("navpeII__Pipeline__c", value);
 
 								break;
+							case "Fund":
+								newId = getObjectRecordId("navpeII__Fund__c", value);
+
+								break;
 							case "Fundraising":
 								newId = getObjectRecordId("navpeII__Fundraising__c", value);
 
@@ -876,6 +884,7 @@ public class APIUtils {
 
 				createObejectRecordByAPI("navpeII__Theme_Relation__c", data);
 				ExcelUtils.writeDataInExcel(filePath, "Created", sheetName, i, 0);
+				data.clear();
 			} else {
 				System.out.println("Data already created for Theme Relation :" + i);
 			}
@@ -1043,6 +1052,10 @@ public class APIUtils {
 								newId = getObjectRecordId("navpeII__Fund__c", value);
 
 								break;
+							case "Contact":
+								newId = getObjectRecordId("Contact", value);
+								break;
+								
 							case "Theme":
 								newId = getObjectRecordId("navpeII__Theme__c", value);
 

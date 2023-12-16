@@ -6705,7 +6705,7 @@ public abstract class BasePage extends BaseLib {
 
 	public List<WebElement> sdgGridAllHeadersLabelNameList(String sdgGridName) {
 
-		String xpath = "//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='" + sdgGridName
+		String xpath = "//div[contains(@class,'main-Container')]//span[@title='" + sdgGridName
 				+ "']/../../../../../following-sibling::div//table/thead/tr/th";
 		List<WebElement> ele = FindElements(driver, xpath, "SDG grid header label name " + sdgGridName);
 
@@ -6715,8 +6715,8 @@ public abstract class BasePage extends BaseLib {
 	public List<WebElement> sdgGridColumnsDataList(String Title, int CloumnIndex) {
 		// index start from 2 in Deal SDG grid.
 
-		String xpath = "//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='" + Title
-				+ "']/../../../../../following-sibling::div//table/tbody/tr/td[" + CloumnIndex + "]";
+		String xpath = "//div[contains(@class,'main-Container')]//span[@title='" + Title
+				+ "']/../../../../../../following-sibling::div//table//tbody/tr//a[" + CloumnIndex + "]";
 		List<WebElement> ele = FindElements(driver, xpath, "SDG grid " + Title + " column data ");
 
 		return ele;
@@ -7660,7 +7660,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement getNotePopUpSectionDetail(String sectionName, int timeOut) {
 		String xPath = "//span[@class=\"slds-accordion__summary-content\" and text()='" + sectionName
-				+ "']/ancestor::h3/../following-sibling::div";
+				+ "']";
 
 		return isDisplayed(driver,
 				FindElement(driver, xPath, sectionName + " section", action.SCROLLANDBOOLEAN, timeOut), "Visibility",
@@ -8354,6 +8354,18 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement subjectOfInteractionCard(String subjectName, int timeOut) {
 		String xpath = "//a[@class=\"interaction_sub subject_text\" and text()=\"" + subjectName + "\"]";
+		WebElement ele = FindElement(driver, xpath, "subjectOfInteractionCard: " + subjectName, action.SCROLLANDBOOLEAN,
+				timeOut);
+		try {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "subjectOfInteractionCard: " + subjectName);
+
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "subjectOfInteractionCard: " + subjectName);
+		}
+	}
+	
+	public WebElement subjectOnInteractionCard(String subjectName, int timeOut) {
+		String xpath = "//*[contains(@class,'for_desk')]//button[@title='"+ subjectName +"']";
 		WebElement ele = FindElement(driver, xpath, "subjectOfInteractionCard: " + subjectName, action.SCROLLANDBOOLEAN,
 				timeOut);
 		try {
@@ -10243,7 +10255,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, clipIconOnNavigation, "Visibility", timeOut, "clip icon on Navigation");
 	}
 
-	@FindBy(xpath = "//li//span[text()='Clips']")
+	@FindBy(xpath = "//li//span[text()='Clip']")
 	private WebElement clipTextFromNavigation;
 
 	public WebElement getClipTextFromNavigation(int timeOut) {

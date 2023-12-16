@@ -535,7 +535,7 @@ public class EnumConstants {
 				return "Navatar Create Menu";
 			}
 		},
-		Affiliation, Financing, Commitment, Advisor,Target, User, Company_Information, Rename_Tabs_And_Labels {
+		Affiliation, Financing, Commitment, Advisor, User, Company_Information, Rename_Tabs_And_Labels {
 			@Override
 			public String toString() {
 				return "Rename Tabs and Labels";
@@ -1251,7 +1251,7 @@ public class EnumConstants {
 		};
 	
 	public static enum ShowMoreActionDropDownList{
-		 New_Task,Create_Task,New_Call,Edit,Add_to_Theme,Email,New_Team_Member,Copy_Theme, Delete,DS, New_Meeting,Convert_to_Portfolio{
+		 New_Task,Create_Task,New_Call,Edit,Add_To_Theme,Email,New_Team_Member,Copy_Theme, Delete,DS, New_Meeting,Convert_to_Portfolio{
 			 @Override
 				public String toString() {
 					return "Convert to Portfolio";

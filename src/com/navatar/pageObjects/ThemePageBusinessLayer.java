@@ -224,7 +224,7 @@ public class ThemePageBusinessLayer extends ThemePage {
 												"Dropdown Value: " + recordName, action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "Clicked on Save Button", YesNo.No);
 
-											if (successMsg(10) != null) {
+											if (successMsg1(10) != null) {
 												log(LogStatus.INFO,
 														"Success Msg is showing, So Add to Theme Created for record: "
 																+ recordName,
@@ -415,11 +415,11 @@ public class ThemePageBusinessLayer extends ThemePage {
 
 		if (addToThemeFromActionButton && !clickonPlusIconOrNot) {
 
-			if (BP.clickOnShowMoreActionDownArrow(projectName, pageName, ShowMoreActionDropDownList.Add_to_Theme, 10)) {
+			if (BP.clickOnShowMoreActionDownArrow(projectName, pageName, ShowMoreActionDropDownList.Add_To_Theme, 10)) {
 				log(LogStatus.INFO, "Clicked on Add To Theme Action Button", YesNo.No);
 			} else {
 
-				if (BP.clickOnShowMoreActionDownArrow(projectName, pageName, ShowMoreActionDropDownList.Add_to_Theme,
+				if (BP.clickOnShowMoreActionDownArrow(projectName, pageName, ShowMoreActionDropDownList.Add_To_Theme,
 						20)) {
 					log(LogStatus.INFO, "Clicked on Add To Theme Action Button", YesNo.No);
 				}
@@ -524,9 +524,12 @@ public class ThemePageBusinessLayer extends ThemePage {
 					log(LogStatus.INFO, "Advance Search has been applied", YesNo.No);
 
 					CommonLib.ThreadSleep(3000);
-					if (BP.clickOnShowMoreActionDownArrow(projectName, pageName,
-							ShowMoreActionDropDownList.Add_to_Theme, 10)) {
-						log(LogStatus.INFO, "Clicked on Add To Theme Action Button", YesNo.No);
+//					if (BP.clickOnShowMoreActionDownArrow(projectName, pageName,
+//							ShowMoreActionDropDownList.Add_To_Theme, 10)) {
+//						log(LogStatus.INFO, "Clicked on Add To Theme Action Button", YesNo.No);
+					
+					if (CommonLib.click(driver, getAddtoThemeButton(10), "AddtoThemeButton", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Click on Add to Theme Button", YesNo.No);
 
 						CommonLib.ThreadSleep(5000);
 						String actualExpectedThemeName = CommonLib.getText(driver,
@@ -681,10 +684,16 @@ public class ThemePageBusinessLayer extends ThemePage {
 						}
 
 					} else {
-						log(LogStatus.ERROR, "Not ABle to Click on Add To Theme Action Button", YesNo.No);
+						log(LogStatus.ERROR, "Not ABle to Click on Add to theme buttton", YesNo.No);
 						return false;
 
 					}
+					
+//					} else {
+//						log(LogStatus.ERROR, "Not ABle to Click on Add To Theme Action Button", YesNo.No);
+//						return false;
+//
+//					}
 				} else {
 					log(LogStatus.ERROR, "Advance Search has not been applied", YesNo.No);
 					return false;
@@ -719,7 +728,7 @@ public class ThemePageBusinessLayer extends ThemePage {
 						"Dropdown Value: " + recordName, action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on Save Button", YesNo.No);
 
-					if (successMsg(10) != null) {
+					if (successMsg1(10) != null) {
 						log(LogStatus.INFO, "Success Msg is showing, So Add to Theme Created for record: " + recordName,
 								YesNo.No);
 						flag = true;
@@ -3290,16 +3299,16 @@ public class ThemePageBusinessLayer extends ThemePage {
 			}
 
 			for (String columnName : columnNames) {
-				int columnIndex = columnDataText.indexOf(columnName);
+				int columnIndex = columnDataText.indexOf(columnName) + 1;
 
 				if (clickUsingJavaScript(driver, themeGridsSortingButton(gridName, 8),
 						gridName.toString() + "  Grid header column", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.PASS, "Clicked on Sorted By Link of Grid: " + gridName, YesNo.No);
-
+					
 					if (clickUsingJavaScript(driver, themeGridsSortingButtonOptionsValue(gridName, columnName, 10),
 							gridName.toString() + "  Grid header column", action.SCROLLANDBOOLEAN)) {
 						ThreadSleep(6000);
-						log(LogStatus.PASS, "Clicked on Header " + columnName + " Clomun " + (columnIndex + 1)
+						log(LogStatus.PASS, "Clicked on Header " + columnName + " Clomun " + (columnIndex)
 								+ SortOrder.Decending, YesNo.No);
 
 						if (!dateColumns.contains(columnName)) {
@@ -3345,7 +3354,7 @@ public class ThemePageBusinessLayer extends ThemePage {
 										List<String> customOrderOfPicklistColumnData = new ArrayList<String>();
 
 										List<WebElement> actualPicklistColumnDataWebElements = sdgGridColumnsDataList(
-												gridName.toString(), columnIndex + 1);
+												gridName.toString(), columnIndex);
 										actualPicklistColumnData = actualPicklistColumnDataWebElements.stream()
 												.map(pickList -> pickList.getText()).collect(Collectors.toList());
 
@@ -3400,7 +3409,7 @@ public class ThemePageBusinessLayer extends ThemePage {
 								List<String> actualAmount = new ArrayList<String>();
 								List<Integer> sortedActualAmount = new ArrayList<Integer>();
 								List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(gridName.toString(),
-										columnIndex + 1);
+										columnIndex);
 								actualAmount = actualDateListWebElement.stream().map(date -> date.getText())
 										.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
 										.collect(Collectors.toList());
@@ -3440,7 +3449,7 @@ public class ThemePageBusinessLayer extends ThemePage {
 							List<String> expectedDateListText = new ArrayList<String>();
 							List<String> actualDateListText = new ArrayList<String>();
 							List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(gridName.toString(),
-									columnIndex + 1);
+									columnIndex);
 							actualDateListText = actualDateListWebElement.stream().map(date -> date.getText())
 									.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
 									.collect(Collectors.toList());
@@ -3498,7 +3507,7 @@ public class ThemePageBusinessLayer extends ThemePage {
 
 					if (clickUsingJavaScript(driver, themeGridsSortingButtonOptionsValue(gridName, columnName, 10),
 							gridName.toString() + "  Grid header column " + columnName, action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.PASS, "Clicked on Header " + columnName + " Column no. " + (columnIndex + 1)
+						log(LogStatus.PASS, "Clicked on Header " + columnName + " Column no. " + (columnIndex)
 								+ " for " + SortOrder.Assecending, YesNo.No);
 						ThreadSleep(6000);
 
@@ -3507,9 +3516,9 @@ public class ThemePageBusinessLayer extends ThemePage {
 							if (!amountColumns.contains(columnName)) {
 								if (pickListColumnAndValues.stream().filter(x -> x.contains(columnName))
 										.collect(Collectors.toList()).size() == 0) {
-									if (sdgGridColumnsDataList(gridName.toString(), columnIndex + 1).size() > 0) {
+									if (sdgGridColumnsDataList(gridName.toString(), columnIndex).size() > 0) {
 										if (CommonLib.checkSorting(driver, SortOrder.Assecending,
-												sdgGridColumnsDataList(gridName.toString(), columnIndex + 1))) {
+												sdgGridColumnsDataList(gridName.toString(), columnIndex))) {
 											log(LogStatus.PASS,
 													"Verified " + SortOrder.Assecending + " Sorting on : "
 															+ gridName.toString() + " for Column " + columnName,
@@ -3544,7 +3553,7 @@ public class ThemePageBusinessLayer extends ThemePage {
 										List<String> customOrderOfPicklistColumnData = new ArrayList<String>();
 
 										List<WebElement> actualPicklistColumnDataWebElements = sdgGridColumnsDataList(
-												gridName.toString(), columnIndex + 1);
+												gridName.toString(), columnIndex);
 										actualPicklistColumnData = actualPicklistColumnDataWebElements.stream()
 												.map(pickList -> pickList.getText()).collect(Collectors.toList());
 										expectedPicklistColumnData = actualPicklistColumnData;
@@ -3596,7 +3605,7 @@ public class ThemePageBusinessLayer extends ThemePage {
 								List<String> actualAmount = new ArrayList<String>();
 								List<Integer> sortedActualAmount = new ArrayList<Integer>();
 								List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(gridName.toString(),
-										columnIndex + 1);
+										columnIndex);
 								actualAmount = actualDateListWebElement.stream().map(date -> date.getText())
 										.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
 										.collect(Collectors.toList());
@@ -3646,7 +3655,7 @@ public class ThemePageBusinessLayer extends ThemePage {
 							List<String> expectedDateListText = new ArrayList<String>();
 							List<String> actualDateListText = new ArrayList<String>();
 							List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(gridName.toString(),
-									columnIndex + 1);
+									columnIndex);
 							actualDateListText = actualDateListWebElement.stream().map(date -> date.getText())
 									.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
 									.collect(Collectors.toList());
