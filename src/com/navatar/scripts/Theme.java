@@ -1933,7 +1933,7 @@ public void THSTc034_VerifytheUIForMaxCharacterinContactNameandFirmname(String p
 			if (fp.clickOnAlreadyCreatedItem(projectName, TC_Firm5, 30)) {
 				log(LogStatus.INFO, "Click on Tab : " + TC_Firm5, YesNo.No);
 				ThreadSleep(5000);
-				if (tp.clickOnShowMoreActionDownArrow(projectName, PageName.CompanyPage, ShowMoreActionDropDownList.Add_to_Theme, 10)) {
+				if (tp.clickOnShowMoreActionDownArrow(projectName, PageName.CompanyPage, ShowMoreActionDropDownList.Add_To_Theme, 10)) {
 					log(LogStatus.INFO, "Add to theme is  selected from drop down", YesNo.No);
 					ThreadSleep(5000);
 					if (sendKeys(driver, tp.addToThemePopUpSearchBox2(20), themeName, "Theme Search Box", action.BOOLEAN)) {

@@ -265,20 +265,36 @@ public class AcuityTheme extends BaseLib {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 
 		String[][] labelAndValues = {
-				{ ATFC_1_FieldType, ATFC_1_FieldLabel, excelLabel.Length.toString(), ATFC_1_FieldValues,
-						ATFC_1_ObjectName },
-				{ ATFC_2_FieldType, ATFC_2_FieldLabel, excelLabel.Length.toString(), ATFC_2_FieldValues,
-						ATFC_2_ObjectName },
-				{ ATFC_3_FieldType, ATFC_3_FieldLabel, excelLabel.Length.toString(), ATFC_3_FieldValues,
-						ATFC_3_ObjectName },
-				{ ATFC_4_FieldType, ATFC_4_FieldLabel, excelLabel.Length.toString(), ATFC_4_FieldValues,
-						ATFC_4_ObjectName },
-				{ ATFC_5_FieldType, ATFC_5_FieldLabel, excelLabel.Length.toString(), ATFC_5_FieldValues,
-						ATFC_5_ObjectName },
-				{ ATFC_6_FieldType, ATFC_6_FieldLabel, excelLabel.Length.toString(), ATFC_6_FieldValues,
-						ATFC_6_ObjectName },
-				{ ATFC_7_FieldType, ATFC_7_FieldLabel, excelLabel.Length.toString(), ATFC_7_FieldValues,
-						ATFC_7_ObjectName } };
+				
+				/*
+				 * { ATFC_1_FieldType, ATFC_1_FieldLabel, excelLabel.Length.toString(),
+				 * ATFC_1_FieldValues, ATFC_1_ObjectName },
+				 * 
+				 * 
+				 * { ATFC_2_FieldType, ATFC_2_FieldLabel, excelLabel.Length.toString(),
+				 * ATFC_2_FieldValues, ATFC_2_ObjectName },
+				 * 
+				 * 
+				 * { ATFC_3_FieldType, ATFC_3_FieldLabel, excelLabel.Length.toString(),
+				 * ATFC_3_FieldValues, ATFC_3_ObjectName },
+				 * 
+				 * 
+				 * { ATFC_4_FieldType, ATFC_4_FieldLabel, excelLabel.Length.toString(),
+				 * ATFC_4_FieldValues, ATFC_4_ObjectName },
+				 * 
+				 * 
+				 * { ATFC_5_FieldType, ATFC_5_FieldLabel, excelLabel.Length.toString(),
+				 * ATFC_5_FieldValues, ATFC_5_ObjectName },
+				 */
+				 
+				
+				  { ATFC_6_FieldType, ATFC_6_FieldLabel, excelLabel.Length.toString(),
+				  ATFC_6_FieldValues, ATFC_6_ObjectName },
+				 
+				/*
+				 * { ATFC_7_FieldType, ATFC_7_FieldLabel, excelLabel.Length.toString(),
+				 * ATFC_7_FieldValues, ATFC_7_ObjectName }
+				 */ };
 
 		setup.createFieldsForCustomObjects(projectName, labelAndValues);
 	}
@@ -299,7 +315,12 @@ public class AcuityTheme extends BaseLib {
 
 		String targetRecordTypeList = AT_RecordTypes_3;
 		String targetRecordTypeArray[] = targetRecordTypeList.split(breakSP, -1);
-		String[] profileForSelection = { "MnA Standard User" };
+		String[] profileForSelection = { "PE Standard User" };
+		
+		String fundRecordTypeList = AT_RecordTypes_6;
+		String fundRecordTypeArray[] = fundRecordTypeList.split(breakSP, -1);
+		
+		
 		boolean isMakeAvailable = false;
 		boolean isMakeDefault = true;
 		boolean flag = false;
@@ -329,6 +350,12 @@ public class AcuityTheme extends BaseLib {
 						{ recordTypeLabel.Description.toString(), targetRecordTypeArray[0] + recordTypeDescription } },
 				{ { recordTypeLabel.Record_Type_Label.toString(), targetRecordTypeArray[1] }, {
 						recordTypeLabel.Description.toString(), targetRecordTypeArray[1] + recordTypeDescription } } };
+		
+		String[][][] fundRecordType = {
+				{ { recordTypeLabel.Record_Type_Label.toString(), fundRecordTypeArray[0] },
+						{ recordTypeLabel.Description.toString(), fundRecordTypeArray[0] + recordTypeDescription } },
+				{ { recordTypeLabel.Record_Type_Label.toString(), fundRecordTypeArray[1] }, {
+						recordTypeLabel.Description.toString(), fundRecordTypeArray[1] + recordTypeDescription } } };
 
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		for (int i = 0; i < contactRecordTypeArray.length; i++) {
@@ -348,7 +375,7 @@ public class AcuityTheme extends BaseLib {
 									flag = true;
 								} else {
 									flag = sp.createRecordTypeForObject(projectName, contactRecordType[i],
-											isMakeAvailable, profileForSelection, isMakeDefault, null, 10);
+											isMakeAvailable, profileForSelection, isMakeDefault, "Contact Layout", 10);
 								}
 
 							} else {
@@ -360,7 +387,7 @@ public class AcuityTheme extends BaseLib {
 									flag = true;
 								} else {
 									flag = sp.createRecordTypeForObject(projectName, contactRecordType[i],
-											isMakeAvailable, profileForSelection, isMakeDefault, null, 10);
+											isMakeAvailable, profileForSelection, isMakeDefault, "Contact Layout", 10);
 								}
 							}
 							if (flag) {
@@ -473,8 +500,8 @@ public class AcuityTheme extends BaseLib {
 				String parentID = switchOnWindow(driver);
 
 				if (parentID != null) {
-					if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(), object.Target.toString())) {
-						if (sp.clickOnObjectFeature("", Mode.Lightning.toString(), object.Target,
+					if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(), object.Fundraising.toString())) {
+						if (sp.clickOnObjectFeature("", Mode.Lightning.toString(), object.Fundraising,
 								ObjectFeatureName.recordTypes)) {
 							if (i == 0) {
 								if (sp.listOfRecordTypes().contains(targetRecordType[i][0][1])) {
@@ -513,8 +540,75 @@ public class AcuityTheme extends BaseLib {
 									"object feature " + ObjectFeatureName.recordTypes + " is not clickable");
 						}
 					} else {
-						log(LogStatus.ERROR, object.Target + " object could not be found in object manager", YesNo.Yes);
-						sa.assertTrue(false, object.Target + " object could not be found in object manager");
+						log(LogStatus.ERROR, object.Fundraising + " object could not be found in object manager", YesNo.Yes);
+						sa.assertTrue(false, object.Fundraising + " object could not be found in object manager");
+					}
+
+					driver.close();
+					driver.switchTo().window(parentID);
+					switchToDefaultContent(driver);
+					refresh(driver);
+
+				} else {
+					log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+					sa.assertTrue(false, "could not find new window to switch");
+				}
+			} else {
+				log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
+				sa.assertTrue(false, "could not click on setup link");
+			}
+
+		}
+		
+		for (int i = 0; i < targetRecordTypeArray.length; i++) {
+			home.notificationPopUpClose();
+			if (home.clickOnSetUpLink()) {
+				flag = false;
+				String parentID = switchOnWindow(driver);
+
+				if (parentID != null) {
+					if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(), object.Fund.toString())) {
+						if (sp.clickOnObjectFeature("", Mode.Lightning.toString(), object.Fund,
+								ObjectFeatureName.recordTypes)) {
+							if (i == 0) {
+								if (sp.listOfRecordTypes().contains(fundRecordType[i][0][1])) {
+									log(LogStatus.INFO, "Record Type: " + fundRecordType[i][0][1]
+											+ " is already created, So not going to Create", YesNo.No);
+									flag = true;
+								} else {
+									flag = sp.createRecordTypeForObject(projectName, fundRecordType[i],
+											isMakeAvailable, profileForSelection, isMakeDefault, null, 10);
+								}
+
+							} else {
+								isMakeDefault = false;
+
+								if (sp.listOfRecordTypes().contains(fundRecordType[i][0][1])) {
+									log(LogStatus.INFO, "Record Type: " + fundRecordType[i][0][1]
+											+ " is already created, So not going to Create", YesNo.No);
+									flag = true;
+								} else {
+									flag = sp.createRecordTypeForObject(projectName, fundRecordType[i],
+											isMakeAvailable, profileForSelection, isMakeDefault, null, 10);
+								}
+							}
+							if (flag) {
+								log(LogStatus.INFO, "Created Record Type : " + fundRecordTypeArray[i], YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Not Able to Create Record Type : " + fundRecordTypeArray[i],
+										YesNo.Yes);
+								sa.assertTrue(false, "Not Able to Create Record Type : " + fundRecordTypeArray[i]);
+							}
+
+						} else {
+							log(LogStatus.ERROR,
+									"object feature " + ObjectFeatureName.recordTypes + " is not clickable", YesNo.Yes);
+							sa.assertTrue(false,
+									"object feature " + ObjectFeatureName.recordTypes + " is not clickable");
+						}
+					} else {
+						log(LogStatus.ERROR, object.Fund + " object could not be found in object manager", YesNo.Yes);
+						sa.assertTrue(false, object.Fund + " object could not be found in object manager");
 					}
 
 					driver.close();
@@ -556,7 +650,7 @@ public class AcuityTheme extends BaseLib {
 		String targetRecordTypeArray[] = targetRecordTypeList.split(breakSP, -1);
 
 		String[][] recordTypeFields = { { recordTypeLabel.Active.toString(), "Not Checked" } };
-		String profileName = "MnA Standard User";
+		String profileName = "PE Standard User";
 
 		lp.CRMLogin(superAdminUserName, adminPassword);
 
@@ -577,13 +671,13 @@ public class AcuityTheme extends BaseLib {
 			sa.assertTrue(false, "----Record Types not Gets InActive for Object: " + object.Deal + "----");
 		}
 
-		if (bp.editOfRecordType(projectName, targetRecordTypeArray, recordTypeFields, object.Target, true,
+		if (bp.editOfRecordType(projectName, targetRecordTypeArray, recordTypeFields, object.Fundraising, true,
 				profileName)) {
-			log(LogStatus.INFO, "----Record Types Gets InActive for Object: " + object.Target + "----", YesNo.No);
+			log(LogStatus.INFO, "----Record Types Gets InActive for Object: " + object.Fundraising + "----", YesNo.No);
 
 		} else {
-			log(LogStatus.ERROR, "----Record Types not Gets InActive for Object: " + object.Target + "----", YesNo.No);
-			sa.assertTrue(false, "----Record Types not Gets InActive for Object: " + object.Target + "----");
+			log(LogStatus.ERROR, "----Record Types not Gets InActive for Object: " + object.Fundraising + "----", YesNo.No);
+			sa.assertTrue(false, "----Record Types not Gets InActive for Object: " + object.Fundraising + "----");
 		}
 
 		lp.CRMlogout();
@@ -611,42 +705,42 @@ public class AcuityTheme extends BaseLib {
 		List<String> expectedListOfTabs = Arrays.asList(AT_Theme_TabName_1.split("<break>", -1));
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
-		if (lp.clickOnTab(projectName, themeTabName)) {
-			log(LogStatus.INFO, "Click on Tab : " + themeTabName, YesNo.No);
-
-			if (theme.themeNoItemDisplay(10) != null) {
-
-				log(LogStatus.INFO, "Verified: No items to display msg is showing", YesNo.No);
-
-			} else {
-
-				log(LogStatus.ERROR, "No items to display msg is not showing", YesNo.No);
-				sa.assertTrue(false, "No items to display msg is not showing");
-			}
-
-		} else {
-			log(LogStatus.ERROR, "Not able to click on " + themeTabName + " Tab", YesNo.No);
-			sa.assertTrue(false, "Record: " + themeTabName + " has not been Created under: " + themeTabName);
-		}
+//		if (lp.clickOnTab(projectName, themeTabName)) {
+//			log(LogStatus.INFO, "Click on Tab : " + themeTabName, YesNo.No);
+//
+//			if (theme.themeNoItemDisplay(10) != null) {
+//
+//				log(LogStatus.INFO, "Verified: No items to display msg is showing", YesNo.No);
+//
+//			} else {
+//
+//				log(LogStatus.ERROR, "No items to display msg is not showing", YesNo.No);
+//				sa.assertTrue(false, "No items to display msg is not showing");
+//			}
+//
+//		} else {
+//			log(LogStatus.ERROR, "Not able to click on " + themeTabName + " Tab", YesNo.No);
+//			sa.assertTrue(false, "Record: " + themeTabName + " has not been Created under: " + themeTabName);
+//		}
 
 		String themeName = null;
 		String themeDescription = null;
-		for (String themeNameAndDescription : themeNameAndDescriptions) {
+//		for (String themeNameAndDescription : themeNameAndDescriptions) {
+//
+//			String[] themeNameAndDescriptionList = themeNameAndDescription.split("<Break>", -1);
+//
+//			themeName = themeNameAndDescriptionList[0];
+//			themeDescription = themeNameAndDescriptionList[1];
+//			if (theme.createTheme(projectName, themeTabName, themeName, themeDescription)) {
+//				log(LogStatus.INFO, "Record: " + themeName + " has been Created under: " + themeTabName, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, "Record: " + themeName + " has not been Created under: " + themeTabName, YesNo.No);
+//				sa.assertTrue(false, "Record: " + themeName + " has not been Created under: " + themeTabName);
+//			}
+//
+//		}
 
-			String[] themeNameAndDescriptionList = themeNameAndDescription.split("<Break>", -1);
-
-			themeName = themeNameAndDescriptionList[0];
-			themeDescription = themeNameAndDescriptionList[1];
-			if (theme.createTheme(projectName, themeTabName, themeName, themeDescription)) {
-				log(LogStatus.INFO, "Record: " + themeName + " has been Created under: " + themeTabName, YesNo.No);
-			} else {
-				log(LogStatus.ERROR, "Record: " + themeName + " has not been Created under: " + themeTabName, YesNo.No);
-				sa.assertTrue(false, "Record: " + themeName + " has not been Created under: " + themeTabName);
-			}
-
-		}
-
-		List<String> negativeResultOfButtons = theme.verifyButtonsOnAPageAndInDownArrowButtonInTheme(true, projectName,
+		List<String> negativeResultOfButtons = theme.verifyButtonsOnAPageAndInDownArrowButtonInTheme(false, projectName,
 				themeTabName, themeName, ExpectedButtonsOnPage, ExpectedButtonsInDownArrowButton, false, false);
 		if (negativeResultOfButtons.isEmpty()) {
 			log(LogStatus.PASS, "-----Verified Buttons on Page & in DownArrow Button-----", YesNo.No);
@@ -915,7 +1009,7 @@ public class AcuityTheme extends BaseLib {
 			sa.assertTrue(false, "Team Member has not been Created: " + member1 + " with Role: " + role1 + " of Theme: "
 					+ themeName);
 		}
-		if (theme.createTeamMember(false, themeTabName, themeName, projectName, false, themeName, member2, role2,
+		if (theme.createTeamMember(true, themeTabName, themeName, projectName, false, themeName, member2, role2,
 				title2, true, teamMemberNavigation.Action_Button, true, false, null)) {
 			log(LogStatus.INFO,
 					"Team Member has been Created: " + member2 + " with Role: " + role2 + " of Theme: " + themeName,
@@ -940,7 +1034,7 @@ public class AcuityTheme extends BaseLib {
 					+ themeName);
 		}
 
-		if (theme.createTeamMember(false, themeTabName, themeName, projectName, false, themeName, member, role, title,
+		if (theme.createTeamMember(true, themeTabName, themeName, projectName, false, themeName, member, role, title,
 				true, teamMemberNavigation.Action_Button, true, false, null)) {
 			log(LogStatus.INFO,
 					"Team Member has been Created: " + member + " with Role: " + role + " of Theme: " + themeName,
@@ -1287,13 +1381,13 @@ public class AcuityTheme extends BaseLib {
 			sa.assertTrue(false, "----Record Types not Gets Active for Object: " + object.Deal + "----");
 		}
 
-		if (bp.editOfRecordType(projectName, targetRecordTypeArray, recordTypeFields, object.Target, false,
+		if (bp.editOfRecordType(projectName, targetRecordTypeArray, recordTypeFields, object.Fundraising, false,
 				profileName)) {
-			log(LogStatus.INFO, "----Record Types Gets Active for Object: " + object.Target + "----", YesNo.No);
+			log(LogStatus.INFO, "----Record Types Gets Active for Object: " + object.Fundraising + "----", YesNo.No);
 
 		} else {
-			log(LogStatus.ERROR, "----Record Types not Gets Active for Object: " + object.Target + "----", YesNo.No);
-			sa.assertTrue(false, "----Record Types not Gets Active for Object: " + object.Target + "----");
+			log(LogStatus.ERROR, "----Record Types not Gets Active for Object: " + object.Fundraising + "----", YesNo.No);
+			sa.assertTrue(false, "----Record Types not Gets Active for Object: " + object.Fundraising + "----");
 		}
 
 		lp.CRMlogout();
@@ -1383,62 +1477,25 @@ public class AcuityTheme extends BaseLib {
 		
 	}
 	
-//////Before Execution of TC012, Kindly Upload Data through Data Loader From User1///////
-	@Parameters({ "projectName" })
-
 	@Test
-	public void AcuityThemeTc012_RecordTypeOfObjectsInActive(String projectName) {
+	public void  AcuityThemeTc011_10_CreateFundByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\\\API Files\\\\Acuity Theme\\Fund.xlsx";
+		String sheetName="Fund";
+		new APIUtils().FundObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void AcuityThemeTc011_11_CreateFundraisingByApi() {
 
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-
-		String contactRecordTypeList = AT_RecordTypes_1;
-		String contactRecordTypeArray[] = contactRecordTypeList.split(breakSP, -1);
-
-		String dealRecordTypeList = AT_RecordTypes_4;
-		String dealRecordTypeArray[] = dealRecordTypeList.split(breakSP, -1);
-
-		String targetRecordTypeList = AT_RecordTypes_3;
-		String targetRecordTypeArray[] = targetRecordTypeList.split(breakSP, -1);
-
-		String[][] recordTypeFields = { { recordTypeLabel.Active.toString(), "Not Checked" } };
-		String profileName = "MnA Standard User";
-
-		lp.CRMLogin(superAdminUserName, adminPassword);
-
-		if (bp.editOfRecordType(projectName, contactRecordTypeArray, recordTypeFields, object.Contact, true,
-				profileName)) {
-			log(LogStatus.INFO, "----Record Types Gets InActive for Object: " + object.Contact + "----", YesNo.No);
-
-		} else {
-			log(LogStatus.ERROR, "----Record Types not Gets InActive for Object: " + object.Contact + "----", YesNo.No);
-			sa.assertTrue(false, "----Record Types not Gets InActive for Object: " + object.Contact + "----");
-		}
-
-		if (bp.editOfRecordType(projectName, dealRecordTypeArray, recordTypeFields, object.Deal, true, profileName)) {
-			log(LogStatus.INFO, "----Record Types Gets InActive for Object: " + object.Deal + "----", YesNo.No);
-
-		} else {
-			log(LogStatus.ERROR, "----Record Types not Gets InActive for Object: " + object.Deal + "----", YesNo.No);
-			sa.assertTrue(false, "----Record Types not Gets InActive for Object: " + object.Deal + "----");
-		}
-
-		if (bp.editOfRecordType(projectName, targetRecordTypeArray, recordTypeFields, object.Target, true,
-				profileName)) {
-			log(LogStatus.INFO, "----Record Types Gets InActive for Object: " + object.Target + "----", YesNo.No);
-
-		} else {
-			log(LogStatus.ERROR, "----Record Types not Gets InActive for Object: " + object.Target + "----", YesNo.No);
-			sa.assertTrue(false, "----Record Types not Gets InActive for Object: " + object.Target + "----");
-		}
-
-		lp.CRMlogout();
-		sa.assertAll();
-		CommonLib.ThreadSleep(3000);
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity Theme\\Fundraising.xlsx";
+		String sheetName="Fundraising";
+		new APIUtils(crmUser1EmailID).FundraisingObjectDataUpload(filePath, sheetName);
 
 	}
-
-	@Parameters({ "projectName" })
+	
+@Parameters({ "projectName" })
 
 	@Test
 	public void AcuityThemeTc013_CheckNavAndGridCountsOfTheme(String projectName) {
@@ -1488,7 +1545,7 @@ public class AcuityTheme extends BaseLib {
 
 		String themeName = AT_Theme2;
 		String themeTabName = tabObj9;
-		String themeNameForAddToTheme = AT_Theme21;
+		String themeNameForAddToTheme = AT_Theme2;
 
 		List<String> expectedThemeRecordsToCheckRedirection = new ArrayList<String>();
 		expectedThemeRecordsToCheckRedirection.add(themeName);
@@ -1498,13 +1555,15 @@ public class AcuityTheme extends BaseLib {
 		String[] contactNames = AT_Con1.split("<break>", -1);
 
 		String[] dealNames1 = AT_Deal1.split("<break>", -1);
-		String[] dealNames2 = AT_Deal2.split("<break>", -1);
+//		String[] dealNames2 = AT_Deal2.split("<break>", -1);
 
-		String[] targetNames = AT_Target1.split("<break>", -1);
+		String[] FundraisingNames = AT_Fundraising1.split("<break>", -1);
+		
+		String[] FundNames = AT_Fund1.split("<break>", -1);
 
 		String[][] addToThemeData = { { AT_Theme_Grid_11, tabObj1, accountNames[0] },
 				{ AT_Theme_Grid_15, tabObj2, contactNames[0] }, { AT_Theme_Grid_16, tabObj4, dealNames1[0] },
-				{ AT_Theme_Grid_17, tabObj4, dealNames2[0] }, { AT_Theme_Grid_18, tabObj3, targetNames[0] } };
+				 { AT_Theme_Grid_18, tabObj10, FundraisingNames[0] },{ AT_Theme_Grid_115, tabObj3, FundNames[0] } };
 
 		Integer addToThemeLoopCount = 0;
 
@@ -1615,21 +1674,46 @@ public class AcuityTheme extends BaseLib {
 			}
 		}
 
-		for (String recordName : dealNames2) {
-			if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj4, recordName, null)) {
+//		for (String recordName : dealNames2) {
+//			if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj4, recordName, null)) {
+//				log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
+//				List<String> negativeResult = theme.verifyRedirectionOnClickOnThemeAndSortingInTaggedSection(false,
+//						TaggedName.Themes, tabObj9, expectedThemeRecordsToCheckRedirection, true);
+//				if (negativeResult.isEmpty()) {
+//					log(LogStatus.PASS, "-----Verified Theme records Redirection to Specific Page Records in case of "
+//							+ tabObj4 + " -----", YesNo.No);
+//
+//				} else {
+//					sa.assertTrue(false,
+//							"-----Not Verified Theme records Redirection to Specific Page Records in case of " + tabObj4
+//									+ "-----");
+//					log(LogStatus.FAIL,
+//							"-----Not Verified Theme records Redirection to Specific Page Records in case of " + tabObj4
+//									+ "-----",
+//							YesNo.Yes);
+//				}
+//
+//			} else {
+//				log(LogStatus.ERROR, "Not able to Open the Record: " + recordName, YesNo.No);
+//				sa.assertTrue(false, "Not able to Open the Record: " + recordName);
+//			}
+//		}
+
+		for (String recordName : FundraisingNames) {
+			if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj10, recordName, null)) {
 				log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
 				List<String> negativeResult = theme.verifyRedirectionOnClickOnThemeAndSortingInTaggedSection(false,
 						TaggedName.Themes, tabObj9, expectedThemeRecordsToCheckRedirection, true);
 				if (negativeResult.isEmpty()) {
 					log(LogStatus.PASS, "-----Verified Theme records Redirection to Specific Page Records in case of "
-							+ tabObj4 + " -----", YesNo.No);
+							+ tabObj3 + " -----", YesNo.No);
 
 				} else {
 					sa.assertTrue(false,
-							"-----Not Verified Theme records Redirection to Specific Page Records in case of " + tabObj4
+							"-----Not Verified Theme records Redirection to Specific Page Records in case of " + tabObj3
 									+ "-----");
 					log(LogStatus.FAIL,
-							"-----Not Verified Theme records Redirection to Specific Page Records in case of " + tabObj4
+							"-----Not Verified Theme records Redirection to Specific Page Records in case of " + tabObj3
 									+ "-----",
 							YesNo.Yes);
 				}
@@ -1639,8 +1723,8 @@ public class AcuityTheme extends BaseLib {
 				sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 			}
 		}
-
-		for (String recordName : targetNames) {
+		
+		for (String recordName : FundNames) {
 			if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj3, recordName, null)) {
 				log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
 				List<String> negativeResult = theme.verifyRedirectionOnClickOnThemeAndSortingInTaggedSection(false,
@@ -1768,7 +1852,7 @@ public class AcuityTheme extends BaseLib {
 		gridAndColumns.put(AT_Theme_Grid_14, Arrays.asList(AT_Theme_GridColumns_29.split("<break>", -1)));
 		gridAndColumns.put(AT_Theme_Grid_15, Arrays.asList(AT_Theme_GridColumns_30.split("<break>", -1)));
 		gridAndColumns.put(AT_Theme_Grid_16, Arrays.asList(AT_Theme_GridColumns_31.split("<break>", -1)));
-		gridAndColumns.put(AT_Theme_Grid_17, Arrays.asList(AT_Theme_GridColumns_31.split("<break>", -1)));
+		gridAndColumns.put(AT_Theme_Grid_17, Arrays.asList(AT_Theme_GridColumns_116.split("<break>", -1)));
 		gridAndColumns.put(AT_Theme_Grid_18, Arrays.asList(AT_Theme_GridColumns_32.split("<break>", -1)));
 		gridAndColumns.put(AT_Theme_Grid_19, Arrays.asList(AT_Theme_GridColumns_33.split("<break>", -1)));
 		gridAndColumns.put(AT_Theme_Grid_20, Arrays.asList(AT_Theme_GridColumns_34.split("<break>", -1)));
@@ -1811,12 +1895,11 @@ public class AcuityTheme extends BaseLib {
 		String priority = AT_Activity_AdvancePriority19;
 		String status = AT_Activity_AdvanceStatus19;
 
-		String[][] updateTask1BasicSection = { { AMNNR_TaskLabel1, task1SubjectName }, { AMNNR_TaskLabel2, task1Notes },
-				{ AMNNR_TaskLabel3, relatedTo } };
-
-		String[][] updateTask1AdvancedSection = { { AMNNR_TaskLabel4, getAdvanceDueDate }, { AMNNR_TaskLabel5, status },
-				{ AMNNR_TaskLabel6, priority } };
-
+		
+		String[][] updateTask1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes }, { "Related_To", relatedTo } };
+		String[][] updateTask1AdvancedSection = { { "Due Date", getAdvanceDueDate }, {"Status", status}, {"Priority", priority} };
+		
+		
 		String[] SuggestedTags = null;
 		String[][] createNewRecordPopUp = null;
 		String[][] addContactsToDealTeamPopUp = null;
@@ -1881,7 +1964,7 @@ public class AcuityTheme extends BaseLib {
 
 		Integer taskCount = 1;
 		Integer callCount = 12;
-		Integer EventCount = 12;
+		Integer EventCount = 13;
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		List<String> negativeResult = theme.verifyRecordsonInteractionsViewAllPopup(true, projectName, themeTabName,
 				themeName, taskCount, callCount, EventCount, true);
@@ -2016,17 +2099,17 @@ public class AcuityTheme extends BaseLib {
 		String record1 = AT_Firm2;
 		String record2 = AT_Firm3;
 
-		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
-				{ AMNNR_CallLabel3, relatedTo1 } };
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related to", relatedTo1 } };
 
-		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvance1DueDate },
-				{ AMNNR_CallLabel5, crmUser1FirstName + " " + crmUser1LastName } };
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName } };
 
-		String[][] task2BasicSection = { { AMNNR_CallLabel1, task2SubjectName }, { AMNNR_CallLabel2, task2Notes },
-				{ AMNNR_CallLabel3, relatedTo2 } };
+		String[][] task2BasicSection = { { "Subject", task2SubjectName }, { "Notes", task2Notes },
+				{ "Related to", relatedTo2 } };
 
-		String[][] task2AdvancedSection = { { AMNNR_CallLabel4, getAdvance2DueDate },
-				{ AMNNR_CallLabel5, crmUser1FirstName + " " + crmUser1LastName } };
+		String[][] task2AdvancedSection = { { "Date", getAdvance2DueDate },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName } };
 
 		List<DataContainer> datas = new ArrayList<DataContainer>();
 
@@ -2099,17 +2182,17 @@ public class AcuityTheme extends BaseLib {
 		String record1 = AT_Firm4;
 		String record2 = AT_Firm5;
 
-		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
-				{ AMNNR_CallLabel3, relatedTo1 } };
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{"Related to", relatedTo1 } };
 
-		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvance1DueDate },
-				{ AMNNR_CallLabel5, crmUser1FirstName + " " + crmUser1LastName } };
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName } };
 
-		String[][] task2BasicSection = { { AMNNR_CallLabel1, task2SubjectName }, { AMNNR_CallLabel2, task2Notes },
-				{ AMNNR_CallLabel3, relatedTo2 } };
+		String[][] task2BasicSection = { { "Subject", task2SubjectName }, { "Notes", task2Notes },
+				{ "Related to", relatedTo2 } };
 
-		String[][] task2AdvancedSection = { { AMNNR_CallLabel4, getAdvance2DueDate },
-				{ AMNNR_CallLabel5, crmUser1FirstName + " " + crmUser1LastName } };
+		String[][] task2AdvancedSection = { { "Date", getAdvance2DueDate },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName } };
 
 		List<DataContainer> datas = new ArrayList<DataContainer>();
 
@@ -2156,7 +2239,7 @@ public class AcuityTheme extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void AcuityThemeTc022_ViewNotePopupVerificationCheckForFinancialSponsor(String projectName) {
+	public void AcuityThemeTc022_ViewNotePopupVerificationCheckForInstitution(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
@@ -2182,17 +2265,17 @@ public class AcuityTheme extends BaseLib {
 		String record1 = AT_Firm6;
 		String record2 = AT_Firm7;
 
-		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
-				{ AMNNR_CallLabel3, relatedTo1 } };
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{"Related to", relatedTo1 } };
 
-		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvance1DueDate },
-				{ AMNNR_CallLabel5, crmUser1FirstName + " " + crmUser1LastName } };
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName } };
 
-		String[][] task2BasicSection = { { AMNNR_CallLabel1, task2SubjectName }, { AMNNR_CallLabel2, task2Notes },
-				{ AMNNR_CallLabel3, relatedTo2 } };
+		String[][] task2BasicSection = { { "Subject", task2SubjectName }, { "Notes", task2Notes },
+				{ "Related to", relatedTo2 } };
 
-		String[][] task2AdvancedSection = { { AMNNR_CallLabel4, getAdvance2DueDate },
-				{ AMNNR_CallLabel5, crmUser1FirstName + " " + crmUser1LastName } };
+		String[][] task2AdvancedSection = { { "Date", getAdvance2DueDate },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName } };
 
 		List<DataContainer> datas = new ArrayList<DataContainer>();
 
@@ -2239,7 +2322,7 @@ public class AcuityTheme extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void AcuityThemeTc023_1_ViewNotePopupVerificationCheckForStrategicCorporation(String projectName) {
+	public void AcuityThemeTc023_1_ViewNotePopupVerificationCheckForIntermediary(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
@@ -2265,17 +2348,17 @@ public class AcuityTheme extends BaseLib {
 		String record1 = AT_Firm8;
 		String record2 = AT_Firm9;
 
-		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
-				{ AMNNR_CallLabel3, relatedTo1 } };
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{"Related to", relatedTo1 } };
 
-		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvance1DueDate },
-				{ AMNNR_CallLabel5, crmUser1FirstName + " " + crmUser1LastName } };
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName } };
 
-		String[][] task2BasicSection = { { AMNNR_CallLabel1, task2SubjectName }, { AMNNR_CallLabel2, task2Notes },
-				{ AMNNR_CallLabel3, relatedTo2 } };
+		String[][] task2BasicSection = { { "Subject", task2SubjectName }, { "Notes", task2Notes },
+				{ "Related to", relatedTo2 } };
 
-		String[][] task2AdvancedSection = { { AMNNR_CallLabel4, getAdvance2DueDate },
-				{ AMNNR_CallLabel5, crmUser1FirstName + " " + crmUser1LastName } };
+		String[][] task2AdvancedSection = { { "Date", getAdvance2DueDate },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName } };
 
 		List<DataContainer> datas = new ArrayList<DataContainer>();
 
@@ -2330,11 +2413,11 @@ public class AcuityTheme extends BaseLib {
 		String themeName = AT_Theme2;
 		String themeTabName = tabObj9;
 
-		String task1SubjectName = AT_Activity_Subject9;
+		String task1SubjectName = AT_Activity_Subject1;
 		String task1Notes = AT_Activity_Notes1;
 
 		String getAdvance1DueDate = AT_Activity_DueDate1;
-		String relatedTo1 = AT_Activity_RelatedTo9 + crmUser1FirstName + " " + crmUser1LastName;
+		String relatedTo1 = AT_Activity_RelatedTo1 + crmUser1FirstName + " " + crmUser1LastName;
 
 		String task2SubjectName = AT_Activity_Subject2;
 		String task2Notes = AT_Activity_Notes1;
@@ -2345,20 +2428,281 @@ public class AcuityTheme extends BaseLib {
 		String sectionName = AT_Theme_Grid_15;
 		String columnNames = AT_Theme_GridColumns_47;
 
+		
 		String record1 = AT_Con2;
 		String record2 = AT_Con3;
 
-		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
-				{ AMNNR_CallLabel3, relatedTo1 } };
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{"Related to", relatedTo1 } };
 
-		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvance1DueDate },
-				{ AMNNR_CallLabel5, crmUser1FirstName + " " + crmUser1LastName } };
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName } };
 
-		String[][] task2BasicSection = { { AMNNR_CallLabel1, task2SubjectName }, { AMNNR_CallLabel2, task2Notes },
-				{ AMNNR_CallLabel3, relatedTo2 } };
+		String[][] task2BasicSection = { { "Subject", task2SubjectName }, { "Notes", task2Notes },
+				{ "Related to", relatedTo2 } };
 
-		String[][] task2AdvancedSection = { { AMNNR_CallLabel4, getAdvance2DueDate },
-				{ AMNNR_CallLabel5, crmUser1FirstName + " " + crmUser1LastName } };
+		String[][] task2AdvancedSection = { { "Date", getAdvance2DueDate },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName } };
+
+		List<DataContainer> datas = new ArrayList<DataContainer>();
+
+		datas.add(new DataContainer(sectionName, columnNames, record1, task1SubjectName, task1BasicSection,
+				task1AdvancedSection, IconType.Call, PageName.ThemesPage));
+		datas.add(new DataContainer(sectionName, columnNames, record2, task2SubjectName, task2BasicSection,
+				task2AdvancedSection, IconType.Meeting, PageName.ThemesPage));
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		WebElement ele;
+		if (theme.navigateToTheme(projectName, themeTabName, themeName, false)) {
+			log(LogStatus.PASS, "Successfully Navigate to theme: " + themeName, YesNo.No);
+			
+			ele = FindElement(driver, "//span[contains(text(),'Private Equity')]","Contact" , action.SCROLLANDBOOLEAN,20);
+			scrollDownThroughWebelement(driver, ele,"Contact");
+			ThreadSleep(2000);
+
+			List<String> negativeResult = theme.verifyViewNotePopupAfterClick(datas);
+			if (negativeResult.isEmpty()) {
+				log(LogStatus.PASS,
+						"-----Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----",
+						YesNo.No);
+
+			} else {
+				sa.assertTrue(false,
+						"-----Not Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----, Reason: "
+								+ negativeResult);
+				log(LogStatus.FAIL,
+						"-----Not Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----, Reason: "
+								+ negativeResult,
+						YesNo.Yes);
+			}
+
+			driver.close();
+			driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+		}
+
+		else {
+			sa.assertTrue(false, "Not Successfully Navigate to theme: " + themeName);
+			log(LogStatus.FAIL, "Not Successfully Navigate to theme: " + themeName, YesNo.Yes);
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+		CommonLib.ThreadSleep(3000);
+
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void AcuityThemeTc023_3_ViewNotePopupVerificationCheckForLender(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
+
+		String themeName = AT_Theme2;
+		String themeTabName = tabObj9;
+
+		String task1SubjectName = AT_Activity_Subject24;
+		String task1Notes = AT_Activity_Notes1;
+
+		String getAdvance1DueDate = AT_Activity_DueDate1;
+		String relatedTo1 = AT_Activity_RelatedTo24 + crmUser1FirstName + " " + crmUser1LastName;
+
+		String task2SubjectName = AT_Activity_Subject25;
+		String task2Notes = AT_Activity_Notes1;
+
+		String getAdvance2DueDate = AT_Activity_DueDate2;
+		String relatedTo2 = AT_Activity_RelatedTo25 + crmUser1FirstName + " " + crmUser1LastName;
+
+		String sectionName = AT_Theme_Grid_117;
+		String columnNames = AT_Theme_GridColumns_47;
+
+		String record1 = AT_Firm10;
+		String record2 = AT_Firm11;
+
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{"Related to", relatedTo1 } };
+
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName } };
+
+		String[][] task2BasicSection = { { "Subject", task2SubjectName }, { "Notes", task2Notes },
+				{ "Related to", relatedTo2 } };
+
+		String[][] task2AdvancedSection = { { "Date", getAdvance2DueDate },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName } };
+
+		List<DataContainer> datas = new ArrayList<DataContainer>();
+
+		datas.add(new DataContainer(sectionName, columnNames, record1, task1SubjectName, task1BasicSection,
+				task1AdvancedSection, IconType.Call, PageName.ThemesPage));
+		datas.add(new DataContainer(sectionName, columnNames, record2, task2SubjectName, task2BasicSection,
+				task2AdvancedSection, IconType.Meeting, PageName.ThemesPage));
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		WebElement ele;
+		if (theme.navigateToTheme(projectName, themeTabName, themeName, false)) {
+			log(LogStatus.PASS, "Successfully Navigate to theme: " + themeName, YesNo.No);
+			
+			ele = FindElement(driver, "//span[contains(text(),'Intermediary')]","Contact" , action.SCROLLANDBOOLEAN,20);
+			scrollDownThroughWebelement(driver, ele,"Contact");
+            ThreadSleep(2000);
+			List<String> negativeResult = theme.verifyViewNotePopupAfterClick(datas);
+			if (negativeResult.isEmpty()) {
+				log(LogStatus.PASS,
+						"-----Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----",
+						YesNo.No);
+
+			} else {
+				sa.assertTrue(false,
+						"-----Not Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----, Reason: "
+								+ negativeResult);
+				log(LogStatus.FAIL,
+						"-----Not Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----, Reason: "
+								+ negativeResult,
+						YesNo.Yes);
+			}
+
+			driver.close();
+			driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+		}
+
+		else {
+			sa.assertTrue(false, "Not Successfully Navigate to theme: " + themeName);
+			log(LogStatus.FAIL, "Not Successfully Navigate to theme: " + themeName, YesNo.Yes);
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+		CommonLib.ThreadSleep(3000);
+
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void AcuityThemeTc023_4_ViewNotePopupVerificationCheckForLimitedPartner(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
+
+		String themeName = AT_Theme2;
+		String themeTabName = tabObj9;
+
+		String task1SubjectName = AT_Activity_Subject26;
+		String task1Notes = AT_Activity_Notes1;
+
+		String getAdvance1DueDate = AT_Activity_DueDate1;
+		String relatedTo1 = AT_Activity_RelatedTo26 + crmUser1FirstName + " " + crmUser1LastName;
+
+		String task2SubjectName = AT_Activity_Subject27;
+		String task2Notes = AT_Activity_Notes1;
+
+		String getAdvance2DueDate = AT_Activity_DueDate2;
+		String relatedTo2 = AT_Activity_RelatedTo27 + crmUser1FirstName + " " + crmUser1LastName;
+
+		String sectionName = AT_Theme_Grid_118;
+		String columnNames = AT_Theme_GridColumns_47;
+
+		String record1 = AT_Firm12;
+		String record2 = AT_Firm13;
+
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{"Related to", relatedTo1 } };
+
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName } };
+
+		String[][] task2BasicSection = { { "Subject", task2SubjectName }, { "Notes", task2Notes },
+				{ "Related to", relatedTo2 } };
+
+		String[][] task2AdvancedSection = { { "Date", getAdvance2DueDate },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName } };
+
+		List<DataContainer> datas = new ArrayList<DataContainer>();
+
+		datas.add(new DataContainer(sectionName, columnNames, record1, task1SubjectName, task1BasicSection,
+				task1AdvancedSection, IconType.Call, PageName.ThemesPage));
+		datas.add(new DataContainer(sectionName, columnNames, record2, task2SubjectName, task2BasicSection,
+				task2AdvancedSection, IconType.Meeting, PageName.ThemesPage));
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		WebElement ele;
+		if (theme.navigateToTheme(projectName, themeTabName, themeName, false)) {
+			log(LogStatus.PASS, "Successfully Navigate to theme: " + themeName, YesNo.No);
+			
+			ele = FindElement(driver, "//span[contains(text(),'Lender')]","Contact" , action.SCROLLANDBOOLEAN,20);
+			scrollDownThroughWebelement(driver, ele,"Contact");
+            ThreadSleep(2000);
+
+			List<String> negativeResult = theme.verifyViewNotePopupAfterClick(datas);
+			if (negativeResult.isEmpty()) {
+				log(LogStatus.PASS,
+						"-----Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----",
+						YesNo.No);
+
+			} else {
+				sa.assertTrue(false,
+						"-----Not Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----, Reason: "
+								+ negativeResult);
+				log(LogStatus.FAIL,
+						"-----Not Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----, Reason: "
+								+ negativeResult,
+						YesNo.Yes);
+			}
+
+			driver.close();
+			driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+		}
+
+		else {
+			sa.assertTrue(false, "Not Successfully Navigate to theme: " + themeName);
+			log(LogStatus.FAIL, "Not Successfully Navigate to theme: " + themeName, YesNo.Yes);
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+		CommonLib.ThreadSleep(3000);
+
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void AcuityThemeTc023_5_ViewNotePopupVerificationCheckForPortfolioCompany(String projectName) {
+		WebElement ele;
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
+
+		String themeName = AT_Theme2;
+		String themeTabName = tabObj9;
+
+		String task1SubjectName = AT_Activity_Subject28;
+		String task1Notes = AT_Activity_Notes1;
+
+		String getAdvance1DueDate = AT_Activity_DueDate1;
+		String relatedTo1 = AT_Activity_RelatedTo28 + crmUser1FirstName + " " + crmUser1LastName;
+
+		String task2SubjectName = AT_Activity_Subject29;
+		String task2Notes = AT_Activity_Notes1;
+
+		String getAdvance2DueDate = AT_Activity_DueDate2;
+		String relatedTo2 = AT_Activity_RelatedTo29 + crmUser1FirstName + " " + crmUser1LastName;
+
+		String sectionName = AT_Theme_Grid_119;
+		String columnNames = AT_Theme_GridColumns_47;
+
+		String record1 = AT_Firm14;
+		String record2 = AT_Firm15;
+
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{"Related to", relatedTo1 } };
+
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName } };
+
+		String[][] task2BasicSection = { { "Subject", task2SubjectName }, { "Notes", task2Notes },
+				{ "Related to", relatedTo2 } };
+
+		String[][] task2AdvancedSection = { { "Date", getAdvance2DueDate },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName } };
 
 		List<DataContainer> datas = new ArrayList<DataContainer>();
 
@@ -2371,6 +2715,97 @@ public class AcuityTheme extends BaseLib {
 
 		if (theme.navigateToTheme(projectName, themeTabName, themeName, false)) {
 			log(LogStatus.PASS, "Successfully Navigate to theme: " + themeName, YesNo.No);
+
+			ele = FindElement(driver, "//span[contains(text(),'Limited Partner')]","Contact" , action.SCROLLANDBOOLEAN,20);
+			scrollDownThroughWebelement(driver, ele,"Contact");
+            ThreadSleep(2000);
+            
+			List<String> negativeResult = theme.verifyViewNotePopupAfterClick(datas);
+			if (negativeResult.isEmpty()) {
+				log(LogStatus.PASS,
+						"-----Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----",
+						YesNo.No);
+
+			} else {
+				sa.assertTrue(false,
+						"-----Not Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----, Reason: "
+								+ negativeResult);
+				log(LogStatus.FAIL,
+						"-----Not Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----, Reason: "
+								+ negativeResult,
+						YesNo.Yes);
+			}
+
+			driver.close();
+			driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+		}
+
+		else {
+			sa.assertTrue(false, "Not Successfully Navigate to theme: " + themeName);
+			log(LogStatus.FAIL, "Not Successfully Navigate to theme: " + themeName, YesNo.Yes);
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+		CommonLib.ThreadSleep(3000);
+
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void AcuityThemeTc023_6_ViewNotePopupVerificationCheckForPrivateEquity(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
+
+		String themeName = AT_Theme2;
+		String themeTabName = tabObj9;
+
+		String task1SubjectName = AT_Activity_Subject30;
+		String task1Notes = AT_Activity_Notes1;
+
+		String getAdvance1DueDate = AT_Activity_DueDate1;
+		String relatedTo1 = AT_Activity_RelatedTo30 + crmUser1FirstName + " " + crmUser1LastName;
+
+		String task2SubjectName = AT_Activity_Subject31;
+		String task2Notes = AT_Activity_Notes1;
+
+		String getAdvance2DueDate = AT_Activity_DueDate2;
+		String relatedTo2 = AT_Activity_RelatedTo31 + crmUser1FirstName + " " + crmUser1LastName;
+
+		String sectionName = AT_Theme_Grid_120;
+		String columnNames = AT_Theme_GridColumns_47;
+
+		String record1 = AT_Firm16;
+		String record2 = AT_Firm17;
+
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{"Related to", relatedTo1 } };
+
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName } };
+
+		String[][] task2BasicSection = { { "Subject", task2SubjectName }, { "Notes", task2Notes },
+				{ "Related to", relatedTo2 } };
+
+		String[][] task2AdvancedSection = { { "Date", getAdvance2DueDate },
+				{ "User", crmUser1FirstName + " " + crmUser1LastName } };
+
+		List<DataContainer> datas = new ArrayList<DataContainer>();
+
+		datas.add(new DataContainer(sectionName, columnNames, record1, task1SubjectName, task1BasicSection,
+				task1AdvancedSection, IconType.Call, PageName.ThemesPage));
+		datas.add(new DataContainer(sectionName, columnNames, record2, task2SubjectName, task2BasicSection,
+				task2AdvancedSection, IconType.Meeting, PageName.ThemesPage));
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		WebElement ele;
+		if (theme.navigateToTheme(projectName, themeTabName, themeName, false)) {
+			log(LogStatus.PASS, "Successfully Navigate to theme: " + themeName, YesNo.No);
+			
+			ele = FindElement(driver, "//span[contains(text(),'Portfolio Company')]","Contact" , action.SCROLLANDBOOLEAN,20);
+			scrollDownThroughWebelement(driver, ele,"Contact");
+            ThreadSleep(2000);
 
 			List<String> negativeResult = theme.verifyViewNotePopupAfterClick(datas);
 			if (negativeResult.isEmpty()) {
@@ -2420,15 +2855,19 @@ public class AcuityTheme extends BaseLib {
 		String[] advisorNames = AT_Theme_AddToTheme_48.split("<break>", -1);
 
 		String[] companyNames = AT_Theme_AddToTheme_49.split("<break>", -1);
-		String[] financialSponsorNames = AT_Theme_AddToTheme_50.split("<break>", -1);
-		String[] strategicCorpNames = AT_Theme_AddToTheme_51.split("<break>", -1);
+		String[] InstitutionNames = AT_Theme_AddToTheme_50.split("<break>", -1);
+		String[] IntermediaryNames = AT_Theme_AddToTheme_51.split("<break>", -1);
+		String[] LenderNames = AT_Theme_AddToTheme_117.split("<break>", -1);
+		String[] LimitedPartnerNames = AT_Theme_AddToTheme_118.split("<break>", -1);
+		String[] PortfolioCompanyNames = AT_Theme_AddToTheme_119.split("<break>", -1);
+		String[] PrivateEquityNames = AT_Theme_AddToTheme_120.split("<break>", -1);
 
 		String[] contactNames = AT_Theme_AddToTheme_52.split("<break>", -1);
 
-		String[] dealNames1 = AT_Theme_AddToTheme_53.split("<break>", -1);
-		String[] dealNames2 = AT_Theme_AddToTheme_54.split("<break>", -1);
+		String[] dealNames = AT_Theme_AddToTheme_53.split("<break>", -1);
+		String[] FundNames = AT_Theme_AddToTheme_54.split("<break>", -1);
 
-		String[] targetNames = AT_Theme_AddToTheme_55.split("<break>", -1);
+		String[] FundraisingNames = AT_Theme_AddToTheme_55.split("<break>", -1);
 
 		String[] themeNames = AT_Theme_AddToTheme_56.split("<break>", -1);
 
@@ -2436,14 +2875,18 @@ public class AcuityTheme extends BaseLib {
 
 		String[][] addToThemeData = { { AT_Theme_Grid_11, tabObj1, advisorNames[0], AT_Theme_GridColumns_48 },
 				{ AT_Theme_Grid_12, tabObj1, companyNames[0], AT_Theme_GridColumns_48 },
-				{ AT_Theme_Grid_13, tabObj1, financialSponsorNames[0], AT_Theme_GridColumns_48 },
-				{ AT_Theme_Grid_14, tabObj1, strategicCorpNames[0], AT_Theme_GridColumns_48 },
+				{ AT_Theme_Grid_13, tabObj1, InstitutionNames[0], AT_Theme_GridColumns_48 },
+				{ AT_Theme_Grid_14, tabObj1, IntermediaryNames[0], AT_Theme_GridColumns_48 },
+				{ AT_Theme_Grid_117, tabObj1, LenderNames[0], AT_Theme_GridColumns_48 },
+				{ AT_Theme_Grid_118, tabObj1, LimitedPartnerNames[0], AT_Theme_GridColumns_48 },
+				{ AT_Theme_Grid_119, tabObj1, PortfolioCompanyNames[0], AT_Theme_GridColumns_48 },
+				{ AT_Theme_Grid_120, tabObj1, PrivateEquityNames[0], AT_Theme_GridColumns_48 },
 				{ AT_Theme_Grid_15, tabObj2, contactNames[0], AT_Theme_GridColumns_49 },
-				{ AT_Theme_Grid_16, tabObj4, dealNames1[0], AT_Theme_GridColumns_50 },
-				{ AT_Theme_Grid_17, tabObj4, dealNames2[0], AT_Theme_GridColumns_50 },
-				{ AT_Theme_Grid_18, tabObj3, targetNames[0], AT_Theme_GridColumns_51 },
+				{ AT_Theme_Grid_16, tabObj4, dealNames[0], AT_Theme_GridColumns_50 },
+				{ AT_Theme_Grid_17, tabObj3, FundNames[0], AT_Theme_GridColumns_54 },
+				{ AT_Theme_Grid_18, tabObj10, FundraisingNames[0], AT_Theme_GridColumns_51 },
 				{ AT_Theme_Grid_19, tabObj9, themeNames[0], AT_Theme_GridColumns_52 },
-				{ AT_Theme_Grid_20, tabObj10, clipNames[0], AT_Theme_GridColumns_53 } };
+				{ AT_Theme_Grid_20, tabObj11, clipNames[0], AT_Theme_GridColumns_53 } };
 
 		Integer addToThemeLoopCount = 0;
 
@@ -2515,7 +2958,7 @@ public class AcuityTheme extends BaseLib {
 			}
 		}
 
-		for (String recordName : financialSponsorNames) {
+		for (String recordName : InstitutionNames) {
 			if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
 				log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
 				List<String> negativeResult = theme.verifyRedirectionOnClickOnThemeAndSortingInTaggedSection(false,
@@ -2540,7 +2983,7 @@ public class AcuityTheme extends BaseLib {
 			}
 		}
 
-		for (String recordName : strategicCorpNames) {
+		for (String recordName : IntermediaryNames) {
 			if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
 				log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
 				List<String> negativeResult = theme.verifyRedirectionOnClickOnThemeAndSortingInTaggedSection(false,
@@ -2564,6 +3007,107 @@ public class AcuityTheme extends BaseLib {
 				sa.assertTrue(false, "Not able to Open the Record: " + recordName);
 			}
 		}
+		
+		for (String recordName : LenderNames) {
+			if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
+				log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
+				List<String> negativeResult = theme.verifyRedirectionOnClickOnThemeAndSortingInTaggedSection(false,
+						TaggedName.Themes, tabObj9, expectedThemeRecordsToCheckRedirection, true);
+				if (negativeResult.isEmpty()) {
+					log(LogStatus.PASS, "-----Verified Theme records Redirection to Specific Page Records in case of "
+							+ tabObj1 + " -----", YesNo.No);
+
+				} else {
+					sa.assertTrue(false,
+							"-----Not Verified Theme records Redirection to Specific Page Records in case of " + tabObj1
+									+ "-----");
+					log(LogStatus.FAIL,
+							"-----Not Verified Theme records Redirection to Specific Page Records in case of " + tabObj1
+									+ "-----",
+							YesNo.Yes);
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to Open the Record: " + recordName, YesNo.No);
+				sa.assertTrue(false, "Not able to Open the Record: " + recordName);
+			}
+		}
+		
+		for (String recordName : LimitedPartnerNames) {
+			if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
+				log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
+				List<String> negativeResult = theme.verifyRedirectionOnClickOnThemeAndSortingInTaggedSection(false,
+						TaggedName.Themes, tabObj9, expectedThemeRecordsToCheckRedirection, true);
+				if (negativeResult.isEmpty()) {
+					log(LogStatus.PASS, "-----Verified Theme records Redirection to Specific Page Records in case of "
+							+ tabObj1 + " -----", YesNo.No);
+
+				} else {
+					sa.assertTrue(false,
+							"-----Not Verified Theme records Redirection to Specific Page Records in case of " + tabObj1
+									+ "-----");
+					log(LogStatus.FAIL,
+							"-----Not Verified Theme records Redirection to Specific Page Records in case of " + tabObj1
+									+ "-----",
+							YesNo.Yes);
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to Open the Record: " + recordName, YesNo.No);
+				sa.assertTrue(false, "Not able to Open the Record: " + recordName);
+			}
+		}
+		
+		for (String recordName : PortfolioCompanyNames) {
+			if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
+				log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
+				List<String> negativeResult = theme.verifyRedirectionOnClickOnThemeAndSortingInTaggedSection(false,
+						TaggedName.Themes, tabObj9, expectedThemeRecordsToCheckRedirection, true);
+				if (negativeResult.isEmpty()) {
+					log(LogStatus.PASS, "-----Verified Theme records Redirection to Specific Page Records in case of "
+							+ tabObj1 + " -----", YesNo.No);
+
+				} else {
+					sa.assertTrue(false,
+							"-----Not Verified Theme records Redirection to Specific Page Records in case of " + tabObj1
+									+ "-----");
+					log(LogStatus.FAIL,
+							"-----Not Verified Theme records Redirection to Specific Page Records in case of " + tabObj1
+									+ "-----",
+							YesNo.Yes);
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to Open the Record: " + recordName, YesNo.No);
+				sa.assertTrue(false, "Not able to Open the Record: " + recordName);
+			}
+		}
+		
+		for (String recordName : PrivateEquityNames) {
+			if (BP.navigateToRecordAndClickOnSubTab(projectName, tabObj1, recordName, null)) {
+				log(LogStatus.INFO, "Able to Open the Record: " + recordName, YesNo.No);
+				List<String> negativeResult = theme.verifyRedirectionOnClickOnThemeAndSortingInTaggedSection(false,
+						TaggedName.Themes, tabObj9, expectedThemeRecordsToCheckRedirection, true);
+				if (negativeResult.isEmpty()) {
+					log(LogStatus.PASS, "-----Verified Theme records Redirection to Specific Page Records in case of "
+							+ tabObj1 + " -----", YesNo.No);
+
+				} else {
+					sa.assertTrue(false,
+							"-----Not Verified Theme records Redirection to Specific Page Records in case of " + tabObj1
+									+ "-----");
+					log(LogStatus.FAIL,
+							"-----Not Verified Theme records Redirection to Specific Page Records in case of " + tabObj1
+									+ "-----",
+							YesNo.Yes);
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to Open the Record: " + recordName, YesNo.No);
+				sa.assertTrue(false, "Not able to Open the Record: " + recordName);
+			}
+		}
+		
 
 		lp.CRMlogout();
 		sa.assertAll();
@@ -2581,12 +3125,17 @@ public class AcuityTheme extends BaseLib {
 		String themeName = AT_Theme2;
 		String themeTabName = tabObj9;
 
-		String[][] data = { AT_Theme_RemoveToTheme_48.split("<Section>", -1),
-				AT_Theme_RemoveToTheme_49.split("<Section>", -1), AT_Theme_RemoveToTheme_50.split("<Section>", -1),
+		String[][] data = {
+				/*
+				 * AT_Theme_RemoveToTheme_48.split("<Section>", -1),
+				 * AT_Theme_RemoveToTheme_49.split("<Section>", -1),
+				 */ AT_Theme_RemoveToTheme_50.split("<Section>", -1),
 				AT_Theme_RemoveToTheme_51.split("<Section>", -1), AT_Theme_RemoveToTheme_52.split("<Section>", -1),
 				AT_Theme_RemoveToTheme_53.split("<Section>", -1), AT_Theme_RemoveToTheme_54.split("<Section>", -1),
 				AT_Theme_RemoveToTheme_55.split("<Section>", -1), AT_Theme_RemoveToTheme_56.split("<Section>", -1),
-				AT_Theme_RemoveToTheme_57.split("<Section>", -1), };
+				AT_Theme_RemoveToTheme_57.split("<Section>", -1),AT_Theme_RemoveToTheme_117.split("<Section>", -1),
+				AT_Theme_RemoveToTheme_118.split("<Section>", -1),AT_Theme_RemoveToTheme_119.split("<Section>", -1),
+				AT_Theme_RemoveToTheme_120.split("<Section>", -1)};
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		if (theme.navigateToTheme(projectName, themeTabName, themeName, false)) {
@@ -2642,11 +3191,11 @@ public class AcuityTheme extends BaseLib {
 
 		String record1 = AT_Activity_RelatedTo20;
 
-		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
-				{ AMNNR_CallLabel3, relatedTo1 } };
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related To", relatedTo1 } };
 
-		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvance1DueDate },
-				{ AMNNR_CallLabel5, crmUser1FirstName + " " + crmUser1LastName } };
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName } };
 
 		List<DataContainer> datas = new ArrayList<DataContainer>();
 
@@ -2716,11 +3265,11 @@ public class AcuityTheme extends BaseLib {
 
 		String record1 = AT_Activity_RelatedTo21;
 
-		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
-				{ AMNNR_CallLabel3, relatedTo1 } };
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related to", relatedTo1 } };
 
-		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvance1DueDate },
-				{ AMNNR_CallLabel5, crmUser1FirstName + " " + crmUser1LastName } };
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName } };
 
 		List<DataContainer> datas = new ArrayList<DataContainer>();
 
@@ -2770,7 +3319,7 @@ public class AcuityTheme extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void AcuityThemeTc028_CreateLogACallNoteAndVerificationForFinancialSponsor(String projectName) {
+	public void AcuityThemeTc028_CreateLogACallNoteAndVerificationForInstitution(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
@@ -2790,11 +3339,11 @@ public class AcuityTheme extends BaseLib {
 
 		String record1 = AT_Activity_RelatedTo22;
 
-		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
-				{ AMNNR_CallLabel3, relatedTo1 } };
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related to", relatedTo1 } };
 
-		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvance1DueDate },
-				{ AMNNR_CallLabel5, crmUser1FirstName + " " + crmUser1LastName } };
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName } };
 
 		List<DataContainer> datas = new ArrayList<DataContainer>();
 
@@ -2844,7 +3393,7 @@ public class AcuityTheme extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void AcuityThemeTc029_CreateLogACallNoteAndVerificationForStrategicCorp(String projectName) {
+	public void AcuityThemeTc029_CreateLogACallNoteAndVerificationForIntermediary(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
@@ -2865,11 +3414,11 @@ public class AcuityTheme extends BaseLib {
 
 		String record1 = AT_Activity_RelatedTo23;
 
-		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes },
-				{ AMNNR_CallLabel3, relatedTo1 } };
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related to", relatedTo1 } };
 
-		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvance1DueDate },
-				{ AMNNR_CallLabel5, crmUser1FirstName + " " + crmUser1LastName } };
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName } };
 
 		List<DataContainer> datas = new ArrayList<DataContainer>();
 
@@ -2938,10 +3487,10 @@ public class AcuityTheme extends BaseLib {
 
 		String record1 = AT_Activity_RelatedTo10;
 
-		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes } };
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes } };
 
-		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvance1DueDate },
-				{ AMNNR_CallLabel5, crmUser1FirstName + " " + crmUser1LastName } };
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName } };
 
 		List<DataContainer> datas = new ArrayList<DataContainer>();
 
@@ -2991,7 +3540,7 @@ public class AcuityTheme extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void AcuityThemeTc031_CreateLogACallNoteAndVerificationForSellSideDeal(String projectName) {
+	public void AcuityThemeTc031_CreateLogACallNoteAndVerificationForDeal(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
@@ -3012,13 +3561,13 @@ public class AcuityTheme extends BaseLib {
 		String sectionName = AT_Theme_Grid_16;
 		String columnNames = AT_Theme_GridColumns_47;
 
-		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes } };
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes } };
 
-		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
-				{ AMNNR_CallLabel2, task1Notes }, { AMNNR_CallLabel3, relatedToVerification1 } };
+		String[][] task1BasicSectionVerification = { { "Subject",  task1SubjectName },
+				{ "Notes", task1Notes }, { "Related to", relatedToVerification1 } };
 
-		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvance1DueDate },
-				{ AMNNR_CallLabel5, crmUser1FirstName + " " + crmUser1LastName } };
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName } };
 
 		List<DataContainer> datas = new ArrayList<DataContainer>();
 
@@ -3035,9 +3584,8 @@ public class AcuityTheme extends BaseLib {
 		if (negativeResultOfCalls.isEmpty()) {
 			log(LogStatus.PASS, "-----Verified Create Log a Note-----", YesNo.No);
 
-			ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-					task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
-					PageName.FromViewAll);
+			ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntractionWithClickOnViewAll(driver,
+					task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call);
 
 			if (subjectLinkPopUpNegativeResult.isEmpty()) {
 				log(LogStatus.PASS,
@@ -3070,7 +3618,7 @@ public class AcuityTheme extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void AcuityThemeTc032_CreateLogACallNoteAndVerificationForTarget(String projectName) {
+	public void AcuityThemeTc032_CreateLogACallNoteAndVerificationForFundraising(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
@@ -3091,13 +3639,13 @@ public class AcuityTheme extends BaseLib {
 		String sectionName = AT_Theme_Grid_18;
 		String columnNames = AT_Theme_GridColumns_47;
 
-		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes } };
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes } };
 
-		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
-				{ AMNNR_CallLabel2, task1Notes }, { AMNNR_CallLabel3, relatedToVerification1 } };
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName },
+				{ "Notes", task1Notes }, { "Related to", relatedToVerification1 } };
 
-		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvance1DueDate },
-				{ AMNNR_CallLabel5, crmUser1FirstName + " " + crmUser1LastName } };
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName } };
 
 		List<DataContainer> datas = new ArrayList<DataContainer>();
 
@@ -3114,9 +3662,8 @@ public class AcuityTheme extends BaseLib {
 		if (negativeResultOfCalls.isEmpty()) {
 			log(LogStatus.PASS, "-----Verified Create Log a Note-----", YesNo.No);
 
-			ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-					task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
-					PageName.FromViewAll);
+			ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntractionWithClickOnViewAll(driver,
+					task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call);
 
 			if (subjectLinkPopUpNegativeResult.isEmpty()) {
 				log(LogStatus.PASS,
@@ -3170,13 +3717,13 @@ public class AcuityTheme extends BaseLib {
 		String sectionName = AT_Theme_Grid_19;
 		String columnNames = AT_Theme_GridColumns_47;
 
-		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes } };
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes } };
 
-		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
-				{ AMNNR_CallLabel2, task1Notes }, { AMNNR_CallLabel3, relatedToVerification1 } };
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName },
+				{ "Notes", task1Notes }, { "Related to", relatedToVerification1 } };
 
-		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvance1DueDate },
-				{ AMNNR_CallLabel5, crmUser1FirstName + " " + crmUser1LastName } };
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName } };
 
 		List<DataContainer> datas = new ArrayList<DataContainer>();
 
@@ -3193,9 +3740,8 @@ public class AcuityTheme extends BaseLib {
 		if (negativeResultOfCalls.isEmpty()) {
 			log(LogStatus.PASS, "-----Verified Create Log a Note-----", YesNo.No);
 
-			ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-					task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
-					PageName.FromViewAll);
+			ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntractionWithClickOnViewAll(driver,
+					task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call);
 
 			if (subjectLinkPopUpNegativeResult.isEmpty()) {
 				log(LogStatus.PASS,
@@ -3228,7 +3774,7 @@ public class AcuityTheme extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void AcuityThemeTc034_CreateLogACallNoteAndVerificationForBuySideDeal(String projectName) {
+	public void AcuityThemeTc034_1_CreateLogACallNoteAndVerificationForfund(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
@@ -3249,13 +3795,13 @@ public class AcuityTheme extends BaseLib {
 		String sectionName = AT_Theme_Grid_17;
 		String columnNames = AT_Theme_GridColumns_47;
 
-		String[][] task1BasicSection = { { AMNNR_CallLabel1, task1SubjectName }, { AMNNR_CallLabel2, task1Notes } };
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes } };
 
-		String[][] task1BasicSectionVerification = { { AMNNR_CallLabel1, task1SubjectName },
-				{ AMNNR_CallLabel2, task1Notes }, { AMNNR_CallLabel3, relatedToVerification1 } };
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName },
+				{ "Notes", task1Notes }, { "Related to", relatedToVerification1 } };
 
-		String[][] task1AdvancedSection = { { AMNNR_CallLabel4, getAdvance1DueDate },
-				{ AMNNR_CallLabel5, crmUser1FirstName + " " + crmUser1LastName } };
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName } };
 
 		List<DataContainer> datas = new ArrayList<DataContainer>();
 
@@ -3272,9 +3818,8 @@ public class AcuityTheme extends BaseLib {
 		if (negativeResultOfCalls.isEmpty()) {
 			log(LogStatus.PASS, "-----Verified Create Log a Note-----", YesNo.No);
 
-			ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntraction(driver,
-					task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call,
-					PageName.FromViewAll);
+			ArrayList<String> subjectLinkPopUpNegativeResult = BP.verifySubjectLinkPopUpOnIntractionWithClickOnViewAll(driver,
+					task1SubjectName, task1BasicSectionVerification, task1AdvancedSection, IconType.Call);
 
 			if (subjectLinkPopUpNegativeResult.isEmpty()) {
 				log(LogStatus.PASS,
@@ -3304,7 +3849,305 @@ public class AcuityTheme extends BaseLib {
 		CommonLib.ThreadSleep(3000);
 
 	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void AcuityThemeTc034_2_CreateLogACallNoteAndVerificationForLender(String projectName) {
 
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		String themeName = AT_Theme2;
+		String themeTabName = tabObj9;
+
+		String task1SubjectName = AT_Activity_Subject32;
+		String task1Notes = AT_Activity_Notes1;
+
+		String getAdvance1DueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy",
+				Integer.parseInt("-1"));
+		String relatedTo1 = AT_Activity_RelatedTo32;
+
+		String sectionName = AT_Theme_Grid_117;
+		String columnNames = AT_Theme_GridColumns_47;
+
+		String record1 = AT_Activity_RelatedTo36;
+		
+		
+		
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related To", relatedTo1 } };
+
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName } };
+
+		List<DataContainer> datas = new ArrayList<DataContainer>();
+
+		datas.add(new DataContainer(sectionName, columnNames, record1, task1SubjectName, task1BasicSection,
+				task1AdvancedSection, IconType.Call, PageName.ThemesPage));
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		List<String> negativeResultOfCalls = theme.createLogANoteFromSectionOfThemeAndVerification(true, themeTabName,
+				themeName, task1SubjectName, projectName, task1BasicSection, task1AdvancedSection, null, null, null,
+				false, null, null, null, null, null, null, datas.get(0).gridName,
+				datas.get(0).recordNameBasedOnColumnSelect, false);
+
+		if (negativeResultOfCalls.isEmpty()) {
+			log(LogStatus.PASS, "-----Verified Create Log a Note-----", YesNo.No);
+
+			List<String> negativeResult = theme.verifyViewNotePopupAfterClick(datas);
+			if (negativeResult.isEmpty()) {
+				log(LogStatus.PASS,
+						"-----Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----",
+						YesNo.No);
+
+			} else {
+				sa.assertTrue(false,
+						"-----Not Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----, Reason: "
+								+ negativeResult);
+				log(LogStatus.FAIL,
+						"-----Not Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----, Reason: "
+								+ negativeResult,
+						YesNo.Yes);
+			}
+
+		} else {
+			sa.assertTrue(false, "-----Not Verified Create Log a Note-----, Reason: " + negativeResultOfCalls);
+			log(LogStatus.FAIL, "-----Not Verified Create Log a Note-----, Reason: " + negativeResultOfCalls,
+					YesNo.Yes);
+		}
+
+		driver.close();
+		driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+
+		lp.CRMlogout();
+		sa.assertAll();
+		CommonLib.ThreadSleep(3000);
+
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void AcuityThemeTc034_3_CreateLogACallNoteAndVerificationForLimitedPartner(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		String themeName = AT_Theme2;
+		String themeTabName = tabObj9;
+
+		String task1SubjectName = AT_Activity_Subject33;
+		String task1Notes = AT_Activity_Notes1;
+
+		String getAdvance1DueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy",
+				Integer.parseInt("-1"));
+		String relatedTo1 = AT_Activity_RelatedTo33;
+
+		String sectionName = AT_Theme_Grid_118;
+		String columnNames = AT_Theme_GridColumns_47;
+
+		String record1 = AT_Activity_RelatedTo37;
+		
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related To", relatedTo1 } };
+
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName } };
+
+		List<DataContainer> datas = new ArrayList<DataContainer>();
+
+		datas.add(new DataContainer(sectionName, columnNames, record1, task1SubjectName, task1BasicSection,
+				task1AdvancedSection, IconType.Call, PageName.ThemesPage));
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		List<String> negativeResultOfCalls = theme.createLogANoteFromSectionOfThemeAndVerification(true, themeTabName,
+				themeName, task1SubjectName, projectName, task1BasicSection, task1AdvancedSection, null, null, null,
+				false, null, null, null, null, null, null, datas.get(0).gridName,
+				datas.get(0).recordNameBasedOnColumnSelect, false);
+
+		if (negativeResultOfCalls.isEmpty()) {
+			log(LogStatus.PASS, "-----Verified Create Log a Note-----", YesNo.No);
+
+			List<String> negativeResult = theme.verifyViewNotePopupAfterClick(datas);
+			if (negativeResult.isEmpty()) {
+				log(LogStatus.PASS,
+						"-----Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----",
+						YesNo.No);
+
+			} else {
+				sa.assertTrue(false,
+						"-----Not Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----, Reason: "
+								+ negativeResult);
+				log(LogStatus.FAIL,
+						"-----Not Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----, Reason: "
+								+ negativeResult,
+						YesNo.Yes);
+			}
+
+		} else {
+			sa.assertTrue(false, "-----Not Verified Create Log a Note-----, Reason: " + negativeResultOfCalls);
+			log(LogStatus.FAIL, "-----Not Verified Create Log a Note-----, Reason: " + negativeResultOfCalls,
+					YesNo.Yes);
+		}
+
+		driver.close();
+		driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+
+		lp.CRMlogout();
+		sa.assertAll();
+		CommonLib.ThreadSleep(3000);
+
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void AcuityThemeTc034_4_CreateLogACallNoteAndVerificationForPortfolioCompany(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		String themeName = AT_Theme2;
+		String themeTabName = tabObj9;
+
+		String task1SubjectName = AT_Activity_Subject34;
+		String task1Notes = AT_Activity_Notes1;
+
+		String getAdvance1DueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy",
+				Integer.parseInt("-1"));
+		String relatedTo1 = AT_Activity_RelatedTo34;
+
+		String sectionName = AT_Theme_Grid_119;
+		String columnNames = AT_Theme_GridColumns_47;
+
+		String record1 = AT_Activity_RelatedTo38;
+		
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related To", relatedTo1 } };
+
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName } };
+
+		List<DataContainer> datas = new ArrayList<DataContainer>();
+
+		datas.add(new DataContainer(sectionName, columnNames, record1, task1SubjectName, task1BasicSection,
+				task1AdvancedSection, IconType.Call, PageName.ThemesPage));
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		List<String> negativeResultOfCalls = theme.createLogANoteFromSectionOfThemeAndVerification(true, themeTabName,
+				themeName, task1SubjectName, projectName, task1BasicSection, task1AdvancedSection, null, null, null,
+				false, null, null, null, null, null, null, datas.get(0).gridName,
+				datas.get(0).recordNameBasedOnColumnSelect, false);
+
+		if (negativeResultOfCalls.isEmpty()) {
+			log(LogStatus.PASS, "-----Verified Create Log a Note-----", YesNo.No);
+
+			List<String> negativeResult = theme.verifyViewNotePopupAfterClick(datas);
+			if (negativeResult.isEmpty()) {
+				log(LogStatus.PASS,
+						"-----Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----",
+						YesNo.No);
+
+			} else {
+				sa.assertTrue(false,
+						"-----Not Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----, Reason: "
+								+ negativeResult);
+				log(LogStatus.FAIL,
+						"-----Not Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----, Reason: "
+								+ negativeResult,
+						YesNo.Yes);
+			}
+
+		} else {
+			sa.assertTrue(false, "-----Not Verified Create Log a Note-----, Reason: " + negativeResultOfCalls);
+			log(LogStatus.FAIL, "-----Not Verified Create Log a Note-----, Reason: " + negativeResultOfCalls,
+					YesNo.Yes);
+		}
+
+		driver.close();
+		driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+
+		lp.CRMlogout();
+		sa.assertAll();
+		CommonLib.ThreadSleep(3000);
+
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void AcuityThemeTc034_5_CreateLogACallNoteAndVerificationForPrivateEquity(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		String themeName = AT_Theme2;
+		String themeTabName = tabObj9;
+
+		String task1SubjectName = AT_Activity_Subject35;
+		String task1Notes = AT_Activity_Notes1;
+
+		String getAdvance1DueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy",
+				Integer.parseInt("-1"));
+		String relatedTo1 = AT_Activity_RelatedTo35;
+
+		String sectionName = AT_Theme_Grid_120;
+		String columnNames = AT_Theme_GridColumns_47;
+
+		String record1 = AT_Activity_RelatedTo39;
+		
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related To", relatedTo1 } };
+
+		String[][] task1AdvancedSection = { { "Date", getAdvance1DueDate },
+				{ "Assigned To", crmUser1FirstName + " " + crmUser1LastName } };
+
+		List<DataContainer> datas = new ArrayList<DataContainer>();
+
+		datas.add(new DataContainer(sectionName, columnNames, record1, task1SubjectName, task1BasicSection,
+				task1AdvancedSection, IconType.Call, PageName.ThemesPage));
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		List<String> negativeResultOfCalls = theme.createLogANoteFromSectionOfThemeAndVerification(true, themeTabName,
+				themeName, task1SubjectName, projectName, task1BasicSection, task1AdvancedSection, null, null, null,
+				false, null, null, null, null, null, null, datas.get(0).gridName,
+				datas.get(0).recordNameBasedOnColumnSelect, false);
+
+		if (negativeResultOfCalls.isEmpty()) {
+			log(LogStatus.PASS, "-----Verified Create Log a Note-----", YesNo.No);
+
+			List<String> negativeResult = theme.verifyViewNotePopupAfterClick(datas);
+			if (negativeResult.isEmpty()) {
+				log(LogStatus.PASS,
+						"-----Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----",
+						YesNo.No);
+
+			} else {
+				sa.assertTrue(false,
+						"-----Not Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----, Reason: "
+								+ negativeResult);
+				log(LogStatus.FAIL,
+						"-----Not Verified View Note PopUp After Click on Interaction Notes and Last Interaction Date-----, Reason: "
+								+ negativeResult,
+						YesNo.Yes);
+			}
+
+		} else {
+			sa.assertTrue(false, "-----Not Verified Create Log a Note-----, Reason: " + negativeResultOfCalls);
+			log(LogStatus.FAIL, "-----Not Verified Create Log a Note-----, Reason: " + negativeResultOfCalls,
+					YesNo.Yes);
+		}
+
+		driver.close();
+		driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+
+		lp.CRMlogout();
+		sa.assertAll();
+		CommonLib.ThreadSleep(3000);
+
+	}
+	
 	@Parameters({ "projectName" })
 
 	@Test
@@ -3337,11 +4180,15 @@ public class AcuityTheme extends BaseLib {
 		expectedSectionNameAndCount.put(AT_Theme_Grid_13, 5);
 		expectedSectionNameAndCount.put(AT_Theme_Grid_14, 5);
 		expectedSectionNameAndCount.put(AT_Theme_Grid_15, 5);
-		expectedSectionNameAndCount.put(AT_Theme_Grid_16, 2);
-		expectedSectionNameAndCount.put(AT_Theme_Grid_17, 2);
+		expectedSectionNameAndCount.put(AT_Theme_Grid_16, 5);
+		expectedSectionNameAndCount.put(AT_Theme_Grid_17, 5);
 		expectedSectionNameAndCount.put(AT_Theme_Grid_18, 5);
 		expectedSectionNameAndCount.put(AT_Theme_Grid_19, 5);
 		expectedSectionNameAndCount.put(AT_Theme_Grid_20, 5);
+		expectedSectionNameAndCount.put(AT_Theme_Grid_117, 5);
+		expectedSectionNameAndCount.put(AT_Theme_Grid_118, 5);
+		expectedSectionNameAndCount.put(AT_Theme_Grid_119, 5);
+		expectedSectionNameAndCount.put(AT_Theme_Grid_120, 5);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		if (theme.createCopyTheme(false, true, true, true, true, false, PageName.ThemesPage, projectName, themeTabName,
 				themeName, themeName, null, newNameOfThemeForCopy, themeDescription, errorMsg)) {
@@ -3466,7 +4313,9 @@ public class AcuityTheme extends BaseLib {
 				AT_Theme_RemoveToTheme_64.split("<Section>", -1), AT_Theme_RemoveToTheme_65.split("<Section>", -1),
 				AT_Theme_RemoveToTheme_66.split("<Section>", -1), AT_Theme_RemoveToTheme_67.split("<Section>", -1),
 				AT_Theme_RemoveToTheme_68.split("<Section>", -1), AT_Theme_RemoveToTheme_69.split("<Section>", -1),
-				AT_Theme_RemoveToTheme_70.split("<Section>", -1), };
+				AT_Theme_RemoveToTheme_70.split("<Section>", -1),AT_Theme_RemoveToTheme_121.split("<Section>", -1),
+				AT_Theme_RemoveToTheme_122.split("<Section>", -1),AT_Theme_RemoveToTheme_123.split("<Section>", -1),
+				AT_Theme_RemoveToTheme_124.split("<Section>", -1)};
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		if (theme.navigateToTheme(projectName, themeTabName, themeName, false)) {
@@ -3520,17 +4369,24 @@ public class AcuityTheme extends BaseLib {
 		String accountName2 = AT_Theme_AddToTheme_62;
 		String accountName3 = AT_Theme_AddToTheme_63;
 		String accountName4 = AT_Theme_AddToTheme_64;
+		String accountName5 = AT_Theme_AddToTheme_121;
+		String accountName6 = AT_Theme_AddToTheme_122;
+		String accountName7 = AT_Theme_AddToTheme_123;
+		String accountName8 = AT_Theme_AddToTheme_124;
 		String contactName1 = AT_Theme_AddToTheme_65;
 		String dealName1 = AT_Theme_AddToTheme_66;
-		String dealName2 = AT_Theme_AddToTheme_67;
-		String targetName1 = AT_Theme_AddToTheme_68;
+		String FundName1 = AT_Theme_AddToTheme_67;
+		String FundraisingName1 = AT_Theme_AddToTheme_68;
 		String[] themeNameAndDescriptions = AT_Theme61.split("<Section>", -1);
 
 		String[][] addToThemeData = { { AT_Theme_Grid_11, tabObj1, accountName1 },
 				{ AT_Theme_Grid_12, tabObj1, accountName2 }, { AT_Theme_Grid_13, tabObj1, accountName3 },
-				{ AT_Theme_Grid_14, tabObj1, accountName4 }, { AT_Theme_Grid_15, tabObj2, contactName1 },
-				{ AT_Theme_Grid_16, tabObj4, dealName1 }, { AT_Theme_Grid_17, tabObj4, dealName2 },
-				{ AT_Theme_Grid_18, tabObj3, targetName1 } };
+				{ AT_Theme_Grid_14, tabObj1, accountName4 },{ AT_Theme_Grid_117, tabObj1, accountName5 },
+				{ AT_Theme_Grid_118, tabObj1, accountName6 },{ AT_Theme_Grid_119, tabObj1, accountName7 },
+				{ AT_Theme_Grid_120, tabObj1, accountName8 },
+				{ AT_Theme_Grid_15, tabObj2, contactName1 },
+				{ AT_Theme_Grid_16, tabObj4, dealName1 }, { AT_Theme_Grid_17, tabObj3, FundName1 },
+				{ AT_Theme_Grid_18, tabObj10, FundraisingName1 } };
 
 		String clipName = AT_Clip1;
 		String clipSummary = "";
@@ -3631,11 +4487,15 @@ public class AcuityTheme extends BaseLib {
 		expectedSectionNameAndCount.put(AT_Theme_Grid_13, 6);
 		expectedSectionNameAndCount.put(AT_Theme_Grid_14, 6);
 		expectedSectionNameAndCount.put(AT_Theme_Grid_15, 6);
-		expectedSectionNameAndCount.put(AT_Theme_Grid_16, 3);
-		expectedSectionNameAndCount.put(AT_Theme_Grid_17, 3);
+		expectedSectionNameAndCount.put(AT_Theme_Grid_16, 6);
+		expectedSectionNameAndCount.put(AT_Theme_Grid_17, 6);
 		expectedSectionNameAndCount.put(AT_Theme_Grid_18, 6);
 		expectedSectionNameAndCount.put(AT_Theme_Grid_19, 6);
 		expectedSectionNameAndCount.put(AT_Theme_Grid_20, 6);
+		expectedSectionNameAndCount.put(AT_Theme_Grid_117, 6);
+		expectedSectionNameAndCount.put(AT_Theme_Grid_118, 6);
+		expectedSectionNameAndCount.put(AT_Theme_Grid_119, 6);
+		expectedSectionNameAndCount.put(AT_Theme_Grid_120, 6);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -3671,7 +4531,6 @@ public class AcuityTheme extends BaseLib {
 		String[] objectOrRecordTypesNames = AT_Theme_Grid_12.split("<break>", -1);
 
 		String[][] addToThemeData = { { AT_Theme_Grid_11, tabObj1 } };
-
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		for (String[] data : addToThemeData) {
@@ -3709,7 +4568,7 @@ public class AcuityTheme extends BaseLib {
 		String themeName = AT_Theme71;
 		HashMap<String, Integer> expectedSectionNameAndCount = new HashMap<String, Integer>();
 
-		expectedSectionNameAndCount.put(AT_Theme_Grid_12, 12);
+		expectedSectionNameAndCount.put(AT_Theme_Grid_12, 9);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -5516,13 +6375,13 @@ public class AcuityTheme extends BaseLib {
 			sa.assertTrue(false, "----Record Types not Gets Active for Object: " + object.Contact + "----");
 		}
 
-		if (BP.editOfRecordType(projectName, targetRecordTypeArray, recordTypeFields, object.Target, false,
+		if (BP.editOfRecordType(projectName, targetRecordTypeArray, recordTypeFields, object.Fundraising, false,
 				profileName)) {
-			log(LogStatus.INFO, "----Record Types Gets Active for Object: " + object.Target + "----", YesNo.No);
+			log(LogStatus.INFO, "----Record Types Gets Active for Object: " + object.Fundraising + "----", YesNo.No);
 
 		} else {
-			log(LogStatus.ERROR, "----Record Types not Gets Active for Object: " + object.Target + "----", YesNo.No);
-			sa.assertTrue(false, "----Record Types not Gets Active for Object: " + object.Target + "----");
+			log(LogStatus.ERROR, "----Record Types not Gets Active for Object: " + object.Fundraising + "----", YesNo.No);
+			sa.assertTrue(false, "----Record Types not Gets Active for Object: " + object.Fundraising + "----");
 		}
 
 		lp.CRMlogout();
@@ -5653,13 +6512,13 @@ public class AcuityTheme extends BaseLib {
 			sa.assertTrue(false, "----Record Types not Gets InActive for Object: " + object.Contact + "----");
 		}
 
-		if (BP.editOfRecordType(projectName, targetRecordTypeArray, recordTypeFieldsInActive, object.Target, true,
+		if (BP.editOfRecordType(projectName, targetRecordTypeArray, recordTypeFieldsInActive, object.Fundraising, true,
 				profileName)) {
-			log(LogStatus.INFO, "----Record Types Gets InActive for Object: " + object.Target + "----", YesNo.No);
+			log(LogStatus.INFO, "----Record Types Gets InActive for Object: " + object.Fundraising + "----", YesNo.No);
 
 		} else {
-			log(LogStatus.ERROR, "----Record Types not Gets InActive for Object: " + object.Target + "----", YesNo.No);
-			sa.assertTrue(false, "----Record Types not Gets InActive for Object: " + object.Target + "----");
+			log(LogStatus.ERROR, "----Record Types not Gets InActive for Object: " + object.Fundraising + "----", YesNo.No);
+			sa.assertTrue(false, "----Record Types not Gets InActive for Object: " + object.Fundraising + "----");
 		}
 
 		lp.CRMlogout();
@@ -6753,13 +7612,13 @@ public class AcuityTheme extends BaseLib {
 			sa.assertTrue(false, "----Record Types not Gets Active for Object: " + object.Deal + "----");
 		}
 
-		if (bp.editOfRecordType(projectName, targetRecordTypeArray, recordTypeFields, object.Target, false,
+		if (bp.editOfRecordType(projectName, targetRecordTypeArray, recordTypeFields, object.Fundraising, false,
 				profileName)) {
-			log(LogStatus.INFO, "----Record Types Gets Active for Object: " + object.Target + "----", YesNo.No);
+			log(LogStatus.INFO, "----Record Types Gets Active for Object: " + object.Fundraising + "----", YesNo.No);
 
 		} else {
-			log(LogStatus.ERROR, "----Record Types not Gets Active for Object: " + object.Target + "----", YesNo.No);
-			sa.assertTrue(false, "----Record Types not Gets Active for Object: " + object.Target + "----");
+			log(LogStatus.ERROR, "----Record Types not Gets Active for Object: " + object.Fundraising + "----", YesNo.No);
+			sa.assertTrue(false, "----Record Types not Gets Active for Object: " + object.Fundraising + "----");
 		}
 
 		lp.CRMlogout();
@@ -6847,13 +7706,13 @@ public class AcuityTheme extends BaseLib {
 			sa.assertTrue(false, "----Record Types not Gets InActive for Object: " + object.Deal + "----");
 		}
 
-		if (bp.editOfRecordType(projectName, targetRecordTypeArray, recordTypeFields, object.Target, true,
+		if (bp.editOfRecordType(projectName, targetRecordTypeArray, recordTypeFields, object.Fundraising, true,
 				profileName)) {
-			log(LogStatus.INFO, "----Record Types Gets InActive for Object: " + object.Target + "----", YesNo.No);
+			log(LogStatus.INFO, "----Record Types Gets InActive for Object: " + object.Fundraising + "----", YesNo.No);
 
 		} else {
-			log(LogStatus.ERROR, "----Record Types not Gets InActive for Object: " + object.Target + "----", YesNo.No);
-			sa.assertTrue(false, "----Record Types not Gets InActive for Object: " + object.Target + "----");
+			log(LogStatus.ERROR, "----Record Types not Gets InActive for Object: " + object.Fundraising + "----", YesNo.No);
+			sa.assertTrue(false, "----Record Types not Gets InActive for Object: " + object.Fundraising + "----");
 		}
 
 		lp.CRMlogout();
