@@ -3,6 +3,7 @@ package com.navatar.scripts;
 
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
+import static com.navatar.generic.ExcelUtils.readAllDataForAColumn;
 import static com.navatar.generic.SmokeCommonVariables.SmokeC1_EmailID;
 import static com.navatar.generic.SmokeCommonVariables.adminPassword;
 import static com.navatar.generic.SmokeCommonVariables.crmUser1EmailID;
@@ -38,13 +39,17 @@ import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.RelatedTab;
 import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
+import com.navatar.generic.EnumConstants.SortOrder;
 import com.navatar.generic.EnumConstants.Stage;
 import com.navatar.generic.EnumConstants.TabName;
+import com.navatar.generic.EnumConstants.Themelabel;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.generic.EnumConstants.object;
+import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.recordTypeLabel;
+import com.navatar.generic.EnumConstants.teamMemberNavigation;
 import com.navatar.pageObjects.*;
 import com.relevantcodes.extentreports.LogStatus;
 
@@ -157,11 +162,11 @@ public class Theme extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		String parentWindow = null;
-		String[] splitedUserLastName = removeNumbersFromString(crmUser1LastName);
+		String[] splitedUserLastName = removeNumbersFromString(crmUser2LastName);
 		String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
 		String emailId = lp.generateRandomEmailId(gmailUserName);
-		ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",excelLabel.User_Last_Name);
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User2",excelLabel.User_Last_Name);
+		lp.CRMLogin(superAdminUserName, adminPassword);
 		boolean flag = false;
 		for (int i = 0; i < 3; i++) {
 			try {
@@ -176,12 +181,12 @@ public class Theme extends BaseLib {
 								YesNo.Yes);
 						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
 					}
-					if (setup.createPEUser( crmUser1FirstName, UserLastName, emailId, crmUserLience,
+					if (setup.createPEUser( crmUser2FirstName, UserLastName, emailId, crmUserLience,
 							crmUserProfile,null)) {
-						log(LogStatus.INFO, "CRM User is created Successfully: " + crmUser1FirstName + " " + UserLastName, YesNo.No);
-						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User1",
+						log(LogStatus.INFO, "CRM User is created Successfully: " + crmUser2FirstName + " " + UserLastName, YesNo.No);
+						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User2",
 								excelLabel.User_Email);
-						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",
+						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User2",
 								excelLabel.User_Last_Name);
 						flag = true;
 						break;
@@ -200,16 +205,16 @@ public class Theme extends BaseLib {
 		if (flag) {
 			if(!environment.equalsIgnoreCase(Environment.Sandbox.toString())) {
 				if (setup.installedPackages(crmUser1FirstName, UserLastName)) {
-					appLog.info("PE Package is installed Successfully in CRM User: " + crmUser1FirstName + " "
+					appLog.info("PE Package is installed Successfully in CRM User: " + crmUser2FirstName + " "
 							+ UserLastName);
 
 				} else {
 					appLog.error(
-							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
+							"Not able to install PE package in CRM User2: " + crmUser2FirstName + " " + UserLastName);
 					sa.assertTrue(false,
-							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
+							"Not able to install PE package in CRM User2: " + crmUser2FirstName + " " + UserLastName);
 					log(LogStatus.ERROR,
-							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName,
+							"Not able to install PE package in CRM User2: " + crmUser2FirstName + " " + UserLastName,
 							YesNo.Yes);
 				}
 			}
@@ -238,11 +243,11 @@ public class Theme extends BaseLib {
 		appLog.info("ResetLinkIs: " + passwordResetLink);
 		driver.get(passwordResetLink);
 		if (lp.setNewPassword()) {
-			appLog.info("Password is set successfully for CRM User1: " + crmUser1FirstName + " " + UserLastName );
+			appLog.info("Password is set successfully for CRM User2: " + crmUser2FirstName + " " + UserLastName );
 		} else {
-			appLog.info("Password is not set for CRM User1: " + crmUser1FirstName + " " + UserLastName);
-			sa.assertTrue(false, "Password is not set for CRM User1: " + crmUser1FirstName + " " + UserLastName);
-			log(LogStatus.ERROR, "Password is not set for CRM User1: " + crmUser1FirstName + " " + UserLastName,
+			appLog.info("Password is not set for CRM User1: " + crmUser2FirstName + " " + UserLastName);
+			sa.assertTrue(false, "Password is not set for CRM User2: " + crmUser2FirstName + " " + UserLastName);
+			log(LogStatus.ERROR, "Password is not set for CRM User2: " + crmUser2FirstName + " " + UserLastName,
 					YesNo.Yes);
 		}
 		lp.CRMlogout();
@@ -256,11 +261,11 @@ public class Theme extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		String parentWindow = null;
-		String[] splitedUserLastName = removeNumbersFromString(crmUser1LastName);
+		String[] splitedUserLastName = removeNumbersFromString(crmUser3LastName);
 		String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
 		String emailId = lp.generateRandomEmailId(gmailUserName);
-		ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",excelLabel.User_Last_Name);
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User3",excelLabel.User_Last_Name);
+		lp.CRMLogin(superAdminUserName, adminPassword);
 		boolean flag = false;
 		for (int i = 0; i < 3; i++) {
 			try {
@@ -269,18 +274,117 @@ public class Theme extends BaseLib {
 					parentWindow = switchOnWindow(driver);
 					if (parentWindow == null) {
 						sa.assertTrue(false,
-								"No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User3");
 						log(LogStatus.SKIP,
-								"No new window is open after click on setup link in lighting mode so cannot create CRM User1",
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User3",
 								YesNo.Yes);
-						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User3");
 					}
-					if (setup.createPEUser( crmUser1FirstName, UserLastName, emailId, crmUserLience,
+					if (setup.createPEUser( crmUser3FirstName, UserLastName, emailId, crmUserLience,
 							crmUserProfile,null)) {
-						log(LogStatus.INFO, "CRM User is created Successfully: " + crmUser1FirstName + " " + UserLastName, YesNo.No);
-						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User1",
+						log(LogStatus.INFO, "CRM User is created Successfully: " + crmUser3FirstName + " " + UserLastName, YesNo.No);
+						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User3",
 								excelLabel.User_Email);
-						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",
+						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User3",
+								excelLabel.User_Last_Name);
+						flag = true;
+						break;
+
+					}
+					driver.close();
+					driver.switchTo().window(parentWindow);
+
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				log(LogStatus.INFO, "could not find setup link, trying again..", YesNo.No);
+			}
+
+		}
+		if (flag) {
+			if(!environment.equalsIgnoreCase(Environment.Sandbox.toString())) {
+				if (setup.installedPackages(crmUser3FirstName, UserLastName)) {
+					appLog.info("PE Package is installed Successfully in CRM User: " + crmUser1FirstName + " "
+							+ UserLastName);
+
+				} else {
+					appLog.error(
+							"Not able to install PE package in CRM User3: " + crmUser3FirstName + " " + UserLastName);
+					sa.assertTrue(false,
+							"Not able to install PE package in CRM User3: " + crmUser3FirstName + " " + UserLastName);
+					log(LogStatus.ERROR,
+							"Not able to install PE package in CRM User3: " + crmUser3FirstName + " " + UserLastName,
+							YesNo.Yes);
+				}
+			}
+			
+
+		}else{
+
+			log(LogStatus.ERROR, "could not click on setup link, test case fail", YesNo.Yes);
+			sa.assertTrue(false, "could not click on setup link, test case fail");
+
+		}
+
+		lp.CRMlogout();
+		closeBrowser();
+		config(ExcelUtils.readDataFromPropertyFile("Browser"));
+		lp = new LoginPageBusinessLayer(driver);
+		String passwordResetLink=null;
+		try {
+			passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
+					ExcelUtils.readDataFromPropertyFile("gmailUserName"),
+					ExcelUtils.readDataFromPropertyFile("gmailPassword"));
+		} catch (InterruptedException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		appLog.info("ResetLinkIs: " + passwordResetLink);
+		driver.get(passwordResetLink);
+		if (lp.setNewPassword()) {
+			appLog.info("Password is set successfully for CRM User3: " + crmUser3FirstName + " " + UserLastName );
+		} else {
+			appLog.info("Password is not set for CRM User3: " + crmUser3FirstName + " " + UserLastName);
+			sa.assertTrue(false, "Password is not set for CRM User3: " + crmUser3FirstName + " " + UserLastName);
+			log(LogStatus.ERROR, "Password is not set for CRM User3: " + crmUser3FirstName + " " + UserLastName,
+					YesNo.Yes);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void THSTc001_4_createCRMUser(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentWindow = null;
+		String[] splitedUserLastName = removeNumbersFromString(crmUser4LastName);
+		String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
+		String emailId = lp.generateRandomEmailId(gmailUserName);
+		ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User4",excelLabel.User_Last_Name);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		boolean flag = false;
+		for (int i = 0; i < 3; i++) {
+			try {
+				if (home.clickOnSetUpLink()) {
+					flag = true;
+					parentWindow = switchOnWindow(driver);
+					if (parentWindow == null) {
+						sa.assertTrue(false,
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User4");
+						log(LogStatus.SKIP,
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User4",
+								YesNo.Yes);
+						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User4");
+					}
+					if (setup.createPEUser( crmUser4FirstName, UserLastName, emailId, crmUserLience,
+							crmUserProfile,null)) {
+						log(LogStatus.INFO, "CRM User is created Successfully: " + crmUser4FirstName + " " + UserLastName, YesNo.No);
+						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User4",
+								excelLabel.User_Email);
+						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User4",
 								excelLabel.User_Last_Name);
 						flag = true;
 						break;
@@ -299,16 +403,16 @@ public class Theme extends BaseLib {
 		if (flag) {
 			if(!environment.equalsIgnoreCase(Environment.Sandbox.toString())) {
 				if (setup.installedPackages(crmUser1FirstName, UserLastName)) {
-					appLog.info("PE Package is installed Successfully in CRM User: " + crmUser1FirstName + " "
+					appLog.info("PE Package is installed Successfully in CRM User: " + crmUser4FirstName + " "
 							+ UserLastName);
 
 				} else {
 					appLog.error(
-							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
+							"Not able to install PE package in CRM User4: " + crmUser4FirstName + " " + UserLastName);
 					sa.assertTrue(false,
-							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
+							"Not able to install PE package in CRM User4: " + crmUser4FirstName + " " + UserLastName);
 					log(LogStatus.ERROR,
-							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName,
+							"Not able to install PE package in CRM User4: " + crmUser4FirstName + " " + UserLastName,
 							YesNo.Yes);
 				}
 			}
@@ -350,19 +454,673 @@ public class Theme extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void THSTc001_4_createCRMUser(String projectName) {
+	public void THSTc002_VerifyifTooltipisVisibleonEveryFieldandValue(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		String ExpectedMsg = BP.SearchBox;
+		String ExpectedErrorMsg = BP.acuityDefaultMessage;
+		String expected[] = {Themelabel.ThemeName.toString(),Themelabel.Description.toString(),Themelabel.DateCreated.toString(),
+				Themelabel.CreatedBy.toString(),Themelabel.Team.toString()};
+		String actualDetail = null;
+		
+		if (fp.clickOnTab(environment, mode, TabName.ThemesTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.ThemesTab, YesNo.No);
+			ThreadSleep(3000);
+			for(int i=0;i<expected.length;i++) {
+				WebElement ele = BP.listOfThemeHeaderDetail(10).get(i);
+				actualDetail = getText(driver, ele, "Theme detail",action.SCROLLANDBOOLEAN);
+				if(actualDetail.contains(expected[i])) {
+				log(LogStatus.INFO,actualDetail+ " matches with " +expected[i],YesNo.No);
+			
+			}else {
+				log(LogStatus.ERROR, actualDetail+"not matches with "+expected[i], YesNo.Yes);
+				sa.assertTrue(false, actualDetail+"not matches with "+expected[i]);
+			}
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + TabName.ThemesTab + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + TabName.ThemesTab + " tab");
+		}
+		
+		String actualMsg  = BP.getsearchbox(10).getAttribute("placeholder");
+		if (actualMsg.equals(ExpectedMsg)) {
+									log(LogStatus.INFO,
+											"Actual result " + actualMsg
+													+ " of pop up has been matched with Expected result : " + ExpectedMsg,
+											YesNo.No);
+								} else {
+									log(LogStatus.ERROR,
+											"Actual result " + actualMsg
+													+ " of pop up has been not matched with Expected result : "
+													+ ExpectedMsg,
+											YesNo.No);
+									sa.assertTrue(false,"Actual result " + actualMsg
+											+ " of pop up has been not matched with Expected result : "
+											+ ExpectedMsg);
+								}
+		
+		 String  errormsg  = BP.getAllInteractionErrorMsg(10).getText();
+		 if(errormsg.contains(ExpectedErrorMsg)) {
+				log(LogStatus.INFO,
+						"Actual result " + ExpectedErrorMsg
+								+ " of pop up has been matched with Expected result : " + ExpectedMsg
+								+ " for Contact Name: ",YesNo.No);
+	                } else {
+		log(LogStatus.ERROR,
+				"Actual result " + errormsg
+						+ " of pop up has been not matched with Expected result : "
+						+ ExpectedErrorMsg,
+				YesNo.No);
+		sa.assertTrue(false,"Actual result " + errormsg
+				+ " of pop up has been not matched with Expected result : "
+				+ ExpectedErrorMsg);
+	}
+		 
+		ThreadSleep(5000);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	
+	@Test
+	public void THSTcAPI_01_createAccountByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Theme Search\\Account.xlsx";
+		String sheetName="Account";
+		new APIUtils().AccountObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void THSTcAPI_02_createContactByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Theme Search\\Contact.xlsx";
+		String sheetName="Contact";
+		new APIUtils().ContactObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void THSTcAPI_03_createDealByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Theme Search\\Deal.xlsx";
+		String sheetName="Deal";
+		new APIUtils().DealObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+//	@Test
+//	public void AcuityThemeTc011_4_createTargetByApi() {
+//		
+//		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity Theme\\Target.xlsx";
+//		String sheetName="Target";
+//		new APIUtils().TargetObjectDataUpload(filePath, sheetName);
+//		
+//	}
+	
+	@Test
+	public void THSTcAPI_11_createClipByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Theme Search\\Clip.xlsx";
+		String sheetName="Clip";
+		new APIUtils().ClipObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void THSTcAPI_06_createThemeByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Theme Search\\Theme.xlsx";
+		String sheetName="Theme";
+		new APIUtils().ThemeObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void THSTcAPI_07_createThemeRelationByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Theme Search\\Theme Relation.xlsx";
+		String sheetName="ThemeRelation";
+		new APIUtils().ThemeRelationObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void THSTcAPI_09_createTaskByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Theme Search\\Task.xlsx";
+		String sheetName="Task";
+		new APIUtils().TaskObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void THSTcAPI_10_createEventByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Theme Search\\Event.xlsx";
+		String sheetName="Event";
+		new APIUtils().EventObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void  THSTcAPI_04_CreateFundByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\\\API Files\\\\Theme Search\\Fund.xlsx";
+		String sheetName="Fund";
+		new APIUtils().FundObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Test
+	public void THSTcAPI_05_CreateFundraisingByApi() {
+
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Theme Search\\Fundraising.xlsx";
+		String sheetName="Fundraising";
+		new APIUtils(crmUser1EmailID).FundraisingObjectDataUpload(filePath, sheetName);
+
+	}
+	
+	@Test
+	public void THSTcAPI_08_createThemeTeamsByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Theme Search\\ThemeTeam.xlsx";
+		String sheetName="ThemeTeams";
+		new APIUtils().ThemeTeamsObjectDataUpload(filePath, sheetName);
+		
+	}
+	
+	@Parameters({ "projectName" })
+
+	@Test
+	public void THSTc003_CreateThemeRecordFromNewThemeButton(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		String themeTabName = "Themes";
+		String themeName = ThemeName1;
+		String themeDescription = ThemeDescription1;
+
+		String member1 = crmUser2FirstName + " " + crmUser2LastName;
+		String role1 = excelLabel.Advisor.toString();
+		String title1 = "";
+		String member2 = crmUser4FirstName + " " + crmUser4LastName;
+		String role2 = excelLabel.Lead.toString();
+		String title2 = "";
+		
+		if (theme.createTheme(projectName, themeTabName, themeName, themeDescription)) {
+			log(LogStatus.INFO, "Record: " + themeName + " has been Created under: " + themeTabName, YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Record: " + themeName + " has not been Created under: " + themeTabName, YesNo.No);
+			sa.assertTrue(false, "Record: " + themeName + " has not been Created under: " + themeTabName);
+		}
+		
+		if (theme.createTeamMember(true, themeTabName, themeName, projectName, true, themeName, member1, role1, title1,
+				true, teamMemberNavigation.Action_Button, true, false, null)) {
+			log(LogStatus.INFO,
+					"Team Member has been Created: " + member1 + " with Role: " + role1 + " of Theme: " + themeName,
+					YesNo.No);
+			CommonLib.refresh(driver);
+			if (theme.checkDescriptionAndTeamMember(themeDescription, member1, false)) {
+				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
+						YesNo.No);
+
+			} else {
+				log(LogStatus.ERROR,
+						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
+				sa.assertTrue(false,
+						"-----Theme " + themeName + " description and Team Member Value not verified------");
+			}
+
+		} else {
+			log(LogStatus.ERROR,
+					"Team Member has not been Created: " + member1 + " with Role: " + role1 + " of Theme: " + themeName,
+					YesNo.No);
+			sa.assertTrue(false, "Team Member has not been Created: " + member1 + " with Role: " + role1 + " of Theme: "
+					+ themeName);
+		}
+		if (theme.createTeamMember(false, themeTabName, themeName, projectName, true, themeName, member2, role2,
+				title2, true, teamMemberNavigation.Action_Button, true, false, null)) {
+			log(LogStatus.INFO,
+					"Team Member has been Created: " + member2 + " with Role: " + role2 + " of Theme: " + themeName,
+					YesNo.No);
+			CommonLib.refresh(driver);
+			if (theme.checkDescriptionAndTeamMember(themeDescription, member2, false)) {
+				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
+						YesNo.No);
+
+			} else {
+				log(LogStatus.ERROR,
+						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
+				sa.assertTrue(false,
+						"-----Theme " + themeName + " description and Team Member Value not verified------");
+			}
+
+		} else {
+			log(LogStatus.ERROR,
+					"Team Member has not been Created: " + member2 + " with Role: " + role2 + " of Theme: " + themeName,
+					YesNo.No);
+			sa.assertTrue(false, "Team Member has not been Created: " + member2 + " with Role: " + role2 + " of Theme: "
+					+ themeName);
+		}
+			
+		ThreadSleep(5000);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName" })
+
+	@Test
+	public void THSTc004_1_VerifyviewofallTeammembersonThemesPage(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		String themeTabName = "Themes";
+		String themeName = ThemeName2;
+		String themeDescription = ThemeDescription2;
+
+		String member1 = crmUser2FirstName + " " + crmUser2LastName;
+		String role1 = excelLabel.Advisor.toString();
+		String title1 = "";
+		String member2 = crmUser4FirstName + " " + crmUser4LastName;
+		String role2 = excelLabel.Lead.toString();
+		String title2 = "";
+		String member3 = "PE Admin";
+		String role3 = excelLabel.Lead.toString();
+		String title3 = "";
+		
+		if (theme.createTheme(projectName, themeTabName, themeName, themeDescription)) {
+			log(LogStatus.INFO, "Record: " + themeName + " has been Created under: " + themeTabName, YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Record: " + themeName + " has not been Created under: " + themeTabName, YesNo.No);
+			sa.assertTrue(false, "Record: " + themeName + " has not been Created under: " + themeTabName);
+		}
+	
+		if (theme.createTeamMember(true, themeTabName, themeName, projectName, true, themeName, member1, role1, title1,
+				true, teamMemberNavigation.Action_Button, true, false, null)) {
+			log(LogStatus.INFO,
+					"Team Member has been Created: " + member1 + " with Role: " + role1 + " of Theme: " + themeName,
+					YesNo.No);
+//			CommonLib.refresh(driver);
+//			if (theme.checkDescriptionAndTeamMember(themeDescription, member1, false)) {
+//				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
+//						YesNo.No);
+//
+//			} else {
+//				log(LogStatus.ERROR,
+//						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
+//				sa.assertTrue(false,
+//						"-----Theme " + themeName + " description and Team Member Value not verified------");
+//			}
+//
+		} else {
+			log(LogStatus.ERROR,
+					"Team Member has not been Created: " + member1 + " with Role: " + role1 + " of Theme: " + themeName,
+					YesNo.No);
+			sa.assertTrue(false, "Team Member has not been Created: " + member1 + " with Role: " + role1 + " of Theme: "
+					+ themeName);
+		}
+		if (theme.createTeamMember(true, themeTabName, themeName, projectName, true, themeName, member2, role2,
+				title2, true, teamMemberNavigation.Action_Button, true, false, null)) {
+			log(LogStatus.INFO,
+					"Team Member has been Created: " + member2 + " with Role: " + role2 + " of Theme: " + themeName,
+					YesNo.No);
+			CommonLib.refresh(driver);
+//			if (theme.checkDescriptionAndTeamMember(themeDescription, member2, false)) {
+//				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
+//						YesNo.No);
+//
+//			} else {
+//				log(LogStatus.ERROR,
+//						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
+//				sa.assertTrue(false,
+//						"-----Theme " + themeName + " description and Team Member Value not verified------");
+//			}
+
+		} else {
+			log(LogStatus.ERROR,
+					"Team Member has not been Created: " + member2 + " with Role: " + role2 + " of Theme: " + themeName,
+					YesNo.No);
+			sa.assertTrue(false, "Team Member has not been Created: " + member2 + " with Role: " + role2 + " of Theme: "
+					+ themeName);
+		}
+		
+		if (theme.createTeamMember(true, themeTabName, themeName, projectName, true, themeName, member3, role3,
+				title3, true, teamMemberNavigation.Action_Button, true, false, null)) {
+			log(LogStatus.INFO,
+					"Team Member has been Created: " + member3 + " with Role: " + role3 + " of Theme: " + themeName,
+					YesNo.No);
+			CommonLib.refresh(driver);
+//			if (theme.checkDescriptionAndTeamMember(themeDescription, member3, false)) {
+//				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
+//						YesNo.No);
+//
+//			} else {
+//				log(LogStatus.ERROR,
+//						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
+//				sa.assertTrue(false,
+//						"-----Theme " + themeName + " description and Team Member Value not verified------");
+//			}
+
+		} else {
+			log(LogStatus.ERROR,
+					"Team Member has not been Created: " + member3 + " with Role: " + role3 + " of Theme: " + themeName,
+					YesNo.No);
+			sa.assertTrue(false, "Team Member has not been Created: " + member3 + " with Role: " + role3 + " of Theme: "
+					+ themeName);
+		}
+			
+		ThreadSleep(5000);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void THSTc004_2_VerifyviewofallTeammembersonThemesPage(
+			String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
+
+		String themeName = ThemeName2;
+		String themeTabName = "Themes";
+		String themeNameForAddToTheme = ThemeName2;
+
+		List<String> expectedThemeRecordsToCheckRedirection = new ArrayList<String>();
+		expectedThemeRecordsToCheckRedirection.add(themeName);
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		String[] accountNames = "Dan Comp3<break>Dan Instn3<break>Dan Intermed3<break>Dan Lender3<break>Dan Advisor3<break>Dan LP3<break>Dan PFC3".split("<break>", -1);
+
+		String[] contactNames = "Dan AdvCont3<break>Dan CompanyContact11<break>Dan InstCont3"
+				.split("<break>", -1);
+
+		String[] dealNames = "DanTest Deal 6<break>DanTest Deal 2<break>DanTest Deal 12".split("<break>", -1);
+
+		String[] FundNames = "Dan Fund 4<break>Dan Fund 9".split("<break>", -1);
+		
+		String[] FundraisingNames = {"Dan FundR 6"};
+		
+		String[] themes = {"Dan Theme 9"};
+
+
+		if (theme.navigateToTheme(projectName, themeTabName, themeNameForAddToTheme, false)) {
+			log(LogStatus.PASS, "Successfully Navigate to theme: " + themeName, YesNo.No);
+
+		}
+
+		else {
+			sa.assertTrue(false, "Not Successfully Navigate to theme: " + themeName);
+			log(LogStatus.FAIL, "Not Successfully Navigate to theme: " + themeName, YesNo.Yes);
+		}
+		for (String accountName : accountNames) {
+			CommonLib.refresh(driver);
+			if (theme.createAddToTheme(false, true, false, true, false, PageName.ThemesPage, projectName, themeTabName,
+					themeNameForAddToTheme,"Advisor", "Institution", accountName, null, null, false, false, false, null)) {
+				log(LogStatus.PASS, "-----Add To Theme Created for Theme: " + themeNameForAddToTheme + " for Object: "
+						+ tabObj1 + " and for Record: " + accountName + " -----", YesNo.No);
+			} else {
+				sa.assertTrue(false, "-----Add To Theme Not Created for Theme: " + themeNameForAddToTheme
+						+ " for Object: " + tabObj1 + " and for Record: " + accountName + " -----");
+				log(LogStatus.FAIL, "-----Add To Theme Not Created for Theme: " + themeNameForAddToTheme
+						+ " for Object: " + tabObj1 + " and for Record: " + accountName + " -----", YesNo.Yes);
+			}
+
+		}
+		
+		for (String contactName : contactNames) {
+			CommonLib.refresh(driver);
+			if (theme.createAddToTheme(false, true, false, true, false, PageName.ThemesPage, projectName, themeTabName,
+					themeNameForAddToTheme,"Contact", tabObj2, contactName, null, null, false, false, false, null)) {
+				log(LogStatus.PASS, "-----Add To Theme Created for Theme: " + themeNameForAddToTheme + " for Object: "
+						+ tabObj2 + " and for Record: " + contactName + " -----", YesNo.No);
+			} else {
+				sa.assertTrue(false, "-----Add To Theme Not Created for Theme: " + themeNameForAddToTheme
+						+ " for Object: " + tabObj2 + " and for Record: " + contactName + " -----");
+				log(LogStatus.FAIL, "-----Add To Theme Not Created for Theme: " + themeNameForAddToTheme
+						+ " for Object: " + tabObj2 + " and for Record: " + contactName + " -----", YesNo.Yes);
+			}
+
+		}
+		
+		for (String dealName : dealNames) {
+			CommonLib.refresh(driver);
+			if (theme.createAddToTheme(false, true, false, true, false, PageName.ThemesPage, projectName, themeTabName,
+					themeNameForAddToTheme,"Contact", tabObj4, dealName, null, null, false, false, false, null)) {
+				log(LogStatus.PASS, "-----Add To Theme Created for Theme: " + themeNameForAddToTheme + " for Object: "
+						+ tabObj4 + " and for Record: " + dealName + " -----", YesNo.No);
+			} else {
+				sa.assertTrue(false, "-----Add To Theme Not Created for Theme: " + themeNameForAddToTheme
+						+ " for Object: " + tabObj4 + " and for Record: " + dealName + " -----");
+				log(LogStatus.FAIL, "-----Add To Theme Not Created for Theme: " + themeNameForAddToTheme
+						+ " for Object: " + tabObj4 + " and for Record: " + dealName + " -----", YesNo.Yes);
+			}
+
+		}
+		
+		for (String Fundname : FundNames) {
+			CommonLib.refresh(driver);
+			if (theme.createAddToTheme(false, true, false, true, false, PageName.ThemesPage, projectName, themeTabName,
+					themeNameForAddToTheme,"Fund", tabObj3, Fundname, null, null, false, false, false, null)) {
+				log(LogStatus.PASS, "-----Add To Theme Created for Theme: " + themeNameForAddToTheme + " for Object: "
+						+ tabObj3 + " and for Record: " + Fundname + " -----", YesNo.No);
+			} else {
+				sa.assertTrue(false, "-----Add To Theme Not Created for Theme: " + themeNameForAddToTheme
+						+ " for Object: " + tabObj3 + " and for Record: " + Fundname + " -----");
+				log(LogStatus.FAIL, "-----Add To Theme Not Created for Theme: " + themeNameForAddToTheme
+						+ " for Object: " + tabObj3 + " and for Record: " + Fundname + " -----", YesNo.Yes);
+			}
+
+		}
+		
+		for (String Fundraisingname : FundraisingNames) {
+			CommonLib.refresh(driver);
+			if (theme.createAddToTheme(false, true, false, true, false, PageName.ThemesPage, projectName, themeTabName,
+					themeNameForAddToTheme,"Fundraising", tabObj10, Fundraisingname, null, null, false, false, false, null)) {
+				log(LogStatus.PASS, "-----Add To Theme Created for Theme: " + themeNameForAddToTheme + " for Object: "
+						+ tabObj3 + " and for Record: " + Fundraisingname + " -----", YesNo.No);
+			} else {
+				sa.assertTrue(false, "-----Add To Theme Not Created for Theme: " + themeNameForAddToTheme
+						+ " for Object: " + tabObj3 + " and for Record: " + Fundraisingname + " -----");
+				log(LogStatus.FAIL, "-----Add To Theme Not Created for Theme: " + themeNameForAddToTheme
+						+ " for Object: " + tabObj3 + " and for Record: " + Fundraisingname + " -----", YesNo.Yes);
+			}
+
+		}
+		
+		for (String theme1 : themes) {
+			CommonLib.refresh(driver);
+			if (theme.createAddToTheme(false, true, false, true, false, PageName.ThemesPage, projectName, themeTabName,
+					themeNameForAddToTheme,"Theme", tabObj9, theme1, null, null, false, false, false, null)) {
+				log(LogStatus.PASS, "-----Add To Theme Created for Theme: " + themeNameForAddToTheme + " for Object: "
+						+ tabObj9 + " and for Record: " + theme1 + " -----", YesNo.No);
+			} else {
+				sa.assertTrue(false, "-----Add To Theme Not Created for Theme: " + themeNameForAddToTheme
+						+ " for Object: " + tabObj9 + " and for Record: " + theme1 + " -----");
+				log(LogStatus.FAIL, "-----Add To Theme Not Created for Theme: " + themeNameForAddToTheme
+						+ " for Object: " + tabObj9 + " and for Record: " + theme1 + " -----", YesNo.Yes);
+			}
+
+		}
+
+		driver.close();
+		driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+
+		lp.CRMlogout();
+		sa.assertAll();
+		CommonLib.ThreadSleep(3000);
+
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+		public void THSTc005_VerifyResearchFunctionalityForValidData(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		ThreadSleep(2000);
+		List<String> list=new ArrayList<>();
+		String ExpectedMsg = bp.lessThanTwoChars;
+		
+		if (fp.clickOnTab(environment, mode, TabName.ThemesTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.ThemesTab, YesNo.No);
+			ThreadSleep(3000);
+			String[] searchValues = readAllDataForAColumn(ResearchDataSheetFilePath, "ThemeSearch" ,0,false).split("<break>");
+		for(String searchValue : searchValues) {
+//			for(int i =0; i <=30; i++) {
+			String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"ThemeSearch",excelLabel.Variable_Name, searchValue, excelLabel.Name);
+		    log(LogStatus.PASS, "WOrking for " + varibale, YesNo.Yes);
+		    
+		    String Categories =ExcelUtils.readData(BaseLib.ResearchDataSheetFilePath,"ThemeSearch",excelLabel.Variable_Name, searchValue, excelLabel.All_Categories);
+		    log(LogStatus.PASS, "WOrking for " + searchValue, YesNo.Yes);
+		    String [] expected = Categories.split("<Break>");
+		    
+		    if (sendKeys(driver, bp.getsearchIcon_Interaction(20), varibale + "\n", "Search Icon Text",
+					action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(5000);
+		} else {
+			log(LogStatus.ERROR, "Not Able to send value "+varibale, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to send value "+varibale);
+		}
+	
+		log(LogStatus.INFO,
+				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+						+ varibale + "---------",
+				YesNo.No);
+
+		if(bp.getClipNotext(5) != null){
+			log(LogStatus.PASS, "There is no data retaled to " + varibale, YesNo.No);
+	
+		}  else if(varibale.length()<2 || varibale == null || varibale == " ") {
+		 String  errormsg  = bp.getAllClipErrorMsg(10).getText();
+		 if(errormsg.contains(ExpectedMsg)) {
+				log(LogStatus.INFO,
+						"Actual result " + errormsg
+								+ " of pop up has been matched with Expected result : " + ExpectedMsg
+								+ " for Contact Name: ",YesNo.No);
+		 } else {
+				log(LogStatus.ERROR,
+						"Actual result " + errormsg
+								+ " of pop up has been not matched with Expected result : "
+								+ ExpectedMsg,
+						YesNo.No);
+				sa.assertTrue(false,"Actual result " + errormsg
+						+ " of pop up has been not matched with Expected result : "
+						+ ExpectedMsg);
+			}
+		}else if(varibale.length()>=2 ){
+		list=	compareMultipleListWithBreak(driver,Categories, bp.listOfClipThemeDetail(10));
+
+			if(list.isEmpty()) {
+				
+				log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			} else {
+				log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+				sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+			}	
+		}
+		else 
+			 {
+				log(LogStatus.FAIL,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ varibale + "---------",
+						YesNo.No);
+				sa.assertTrue(false,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ varibale + "---------");
+				
+		}
+		
+		refresh(driver);
+		
+		}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + TabName.ThemesTab, YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + TabName.ThemesTab);
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+		
+		}
+	
+	@Parameters({ "projectName"})
+	@Test
+		public void THSTc006_VerifyAllThemesapppagewhenUpdatetheThemedetailsfromacuitypage(String projectName) {
+	    LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	    FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	    ThemePageBusinessLayer tp = new ThemePageBusinessLayer(driver);
+	    BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	    
+	    
+			 lp.CRMLogin(superAdminUserName, adminPassword);
+			 String themeName = ThemeName2;
+			 String themeNameupdated = ThemeName2+ "updated";
+			 
+		   if (fp.clickOnTab(environment, mode, TabName.ThemesTab)) {
+		       log(LogStatus.INFO, "Click on Tab : " + TabName.ThemesTab, YesNo.No);
+		       if (sendKeys(driver, bp.getsearchIcon_Interaction(20),themeName, "Search Icon Text",
+						action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Pass Value : " + themeName, YesNo.No);
+					ThreadSleep(5000);
+					if (clickUsingJavaScript(driver, bp.getThemeSubject(themeName, 30), "subject",
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Click on subject of Clip :" +themeName, YesNo.No);
+						String parentWindowId = CommonLib.switchOnWindow(driver);
+						if (!parentWindowId.isEmpty()) {
+							ThreadSleep(3000);
+						
+		           if (tp.UpdateThemeName(projectName, themeNameupdated, 10)) {
+		               log(LogStatus.INFO, "successfully update Theme name " + themeNameupdated, YesNo.Yes);
+		           } else {
+		               sa.assertTrue(false, "not able to update Theme name " + themeNameupdated);
+		               log(LogStatus.SKIP, "not able to update Theme name " + themeNameupdated, YesNo.Yes);
+		           }
+		           driver.close();
+					driver.switchTo().window(parentWindowId);
+						}
+					}else {
+						log(LogStatus.ERROR, "Not able to Click on subject of theme :" + themeName, YesNo.Yes);
+						sa.assertTrue(false, "Not able to Click on subject of theme");
+					}
+		       } else {
+		          sa.assertTrue(false, "Not Able to open created Theme : " + themeName);
+		           log(LogStatus.SKIP, "Not Able to open created Theme: " + themeName, YesNo.Yes);
+		      }
+		   } else {
+		       log(LogStatus.ERROR, "Not able to click on " + TabName.ThemesTab + " tab", YesNo.Yes);
+		       sa.assertTrue(false, "Not able to click on " + TabName.ThemesTab + " tab");
+		   }
+		   switchToDefaultContent(driver);
+			lp.CRMlogout();
+			sa.assertAll();
+			
+			}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void THSTc007_VerifyUpdateduserNameiNTeamColumnonThemespage(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	
 		String parentWindow = null;
-		String[] splitedUserLastName = removeNumbersFromString(crmUser1LastName);
-		String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
-		String emailId = lp.generateRandomEmailId(gmailUserName);
-		ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",excelLabel.User_Last_Name);
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String userfirstname = crmUser3FirstName;
+		String UserLastName = crmUser3LastName+ " updated";
+		String emailId = crmUser3EmailID;
+		
+		lp.CRMLogin(superAdminUserName, adminPassword);
 		boolean flag = false;
-		for (int i = 0; i < 3; i++) {
-			try {
 				if (home.clickOnSetUpLink()) {
 					flag = true;
 					parentWindow = switchOnWindow(driver);
@@ -374,78 +1132,1239 @@ public class Theme extends BaseLib {
 								YesNo.Yes);
 						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
 					}
-					if (setup.createPEUser( crmUser1FirstName, UserLastName, emailId, crmUserLience,
-							crmUserProfile,null)) {
-						log(LogStatus.INFO, "CRM User is created Successfully: " + crmUser1FirstName + " " + UserLastName, YesNo.No);
-						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User1",
+					if (setup.editPEUserFirstandLastName( userfirstname, UserLastName, emailId)) {
+						log(LogStatus.INFO, "CRM User is updated Successfully: " + crmUser1FirstName + " " + UserLastName, YesNo.No);
+						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User2",
 								excelLabel.User_Email);
-						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",
+						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User2",
 								excelLabel.User_Last_Name);
+					} else {
+						appLog.error("CRM User not updated Successfully:  " + crmUser1FirstName + " " + UserLastName);
 						flag = true;
-						break;
-
 					}
+
+					
 					driver.close();
 					driver.switchTo().window(parentWindow);
 
 				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				log(LogStatus.INFO, "could not find setup link, trying again..", YesNo.No);
-			}
-
-		}
-		if (flag) {
-			if(!environment.equalsIgnoreCase(Environment.Sandbox.toString())) {
-				if (setup.installedPackages(crmUser1FirstName, UserLastName)) {
-					appLog.info("PE Package is installed Successfully in CRM User: " + crmUser1FirstName + " "
-							+ UserLastName);
-
-				} else {
-					appLog.error(
-							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
-					sa.assertTrue(false,
-							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
-					log(LogStatus.ERROR,
-							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName,
-							YesNo.Yes);
+				switchToDefaultContent(driver);
+				lp.CRMlogout();
+				sa.assertAll();
+				
 				}
-			}
-			
-
-		}else{
-
-			log(LogStatus.ERROR, "could not click on setup link, test case fail", YesNo.Yes);
-			sa.assertTrue(false, "could not click on setup link, test case fail");
-
-		}
-
-		lp.CRMlogout();
-		closeBrowser();
-		config(ExcelUtils.readDataFromPropertyFile("Browser"));
-		lp = new LoginPageBusinessLayer(driver);
-		String passwordResetLink=null;
-		try {
-			passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
-					ExcelUtils.readDataFromPropertyFile("gmailUserName"),
-					ExcelUtils.readDataFromPropertyFile("gmailPassword"));
-		} catch (InterruptedException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		appLog.info("ResetLinkIs: " + passwordResetLink);
-		driver.get(passwordResetLink);
-		if (lp.setNewPassword()) {
-			appLog.info("Password is set successfully for CRM User1: " + crmUser1FirstName + " " + UserLastName );
+	
+	@Parameters({ "projectName"})
+	@Test
+		public void THSTc008_VerifyResearchFunctionalityForValidData(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		ThreadSleep(2000);
+		List<String> list=new ArrayList<>();
+		String ExpectedMsg = bp.ErrorMessageAcuity;
+		
+		if (fp.clickOnTab(environment, mode, TabName.ThemesTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.ThemesTab, YesNo.No);
+			ThreadSleep(3000);
+			String[] searchValues = readAllDataForAColumn(ResearchDataSheetFilePath, "ThemeSearch1" ,0,false).split("<break>");
+		for(String searchValue : searchValues) {
+//			for(int i =0; i <=30; i++) {
+			String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"ThemeSearch1",excelLabel.Variable_Name, searchValue, excelLabel.Name);
+		    log(LogStatus.PASS, "WOrking for " + varibale, YesNo.Yes);
+		    
+		    String Categories =ExcelUtils.readData(BaseLib.ResearchDataSheetFilePath,"ThemeSearch1",excelLabel.Variable_Name, searchValue, excelLabel.All_Categories);
+		    log(LogStatus.PASS, "WOrking for " + searchValue, YesNo.Yes);
+		    String [] expected = Categories.split("<Break>");
+		    
+		    if (sendKeys(driver, bp.getsearchIcon_Interaction(20), varibale + "\n", "Search Icon Text",
+					action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(5000);
 		} else {
-			appLog.info("Password is not set for CRM User1: " + crmUser1FirstName + " " + UserLastName);
-			sa.assertTrue(false, "Password is not set for CRM User1: " + crmUser1FirstName + " " + UserLastName);
-			log(LogStatus.ERROR, "Password is not set for CRM User1: " + crmUser1FirstName + " " + UserLastName,
-					YesNo.Yes);
+			log(LogStatus.ERROR, "Not Able to send value "+varibale, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to send value "+varibale);
 		}
+	
+		log(LogStatus.INFO,
+				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+						+ varibale + "---------",
+				YesNo.No);
+
+		if(bp.getClipNotext(5) != null){
+			log(LogStatus.PASS, "There is no data retaled to " + varibale, YesNo.No);
+	
+		}  else if(varibale.length()<2 || varibale == null || varibale == " ") {
+		 String  errormsg  = bp.getAllClipErrorMsg(10).getText();
+		 if(errormsg.contains(ExpectedMsg)) {
+				log(LogStatus.INFO,
+						"Actual result " + errormsg
+								+ " of pop up has been matched with Expected result : " + ExpectedMsg
+								+ " for Contact Name: ",YesNo.No);
+		 } else {
+				log(LogStatus.ERROR,
+						"Actual result " + errormsg
+								+ " of pop up has been not matched with Expected result : "
+								+ ExpectedMsg,
+						YesNo.No);
+				sa.assertTrue(false,"Actual result " + errormsg
+						+ " of pop up has been not matched with Expected result : "
+						+ ExpectedMsg);
+			}
+		}else if(varibale.length()>=2 ){
+		list=	compareMultipleListWithBreak(driver,Categories, bp.listOfClipThemeDetail(10));
+
+			if(list.isEmpty()) {
+				
+				log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			} else {
+				log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+				sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+			}	
+		}
+		else 
+			 {
+				log(LogStatus.FAIL,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ varibale + "---------",
+						YesNo.No);
+				sa.assertTrue(false,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ varibale + "---------");
+				
+		}
+		
+		refresh(driver);
+		
+		}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + TabName.ThemesTab, YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + TabName.ThemesTab);
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+		
+		}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void THSTc009_VerifyUIofgridforMaxSpecialCharacter(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		String themeTabName = "Themes";
+		String themeName = ThemeName3;
+		String themeDescription = ThemeDescription3;
+
+		String member1 = crmUser2FirstName + " " + crmUser2LastName;
+		String role1 = excelLabel.Advisor.toString();
+		String title1 = "";
+		String member2 = crmUser3FirstName + " " + crmUser3LastName+ " updated";
+		String role2 = excelLabel.Lead.toString();
+		String title2 = "";
+		
+		if (theme.createTheme(projectName, themeTabName, themeName, themeDescription)) {
+			log(LogStatus.INFO, "Record: " + themeName + " has been Created under: " + themeTabName, YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Record: " + themeName + " has not been Created under: " + themeTabName, YesNo.No);
+			sa.assertTrue(false, "Record: " + themeName + " has not been Created under: " + themeTabName);
+		}
+		
+		if (theme.createTeamMember(true, themeTabName, themeName, projectName, true, themeName, member1, role1, title1,
+				true, teamMemberNavigation.Action_Button, true, false, null)) {
+			log(LogStatus.INFO,
+					"Team Member has been Created: " + member1 + " with Role: " + role1 + " of Theme: " + themeName,
+					YesNo.No);
+			CommonLib.refresh(driver);
+			if (theme.checkDescriptionAndTeamMember(themeDescription, member1, false)) {
+				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
+						YesNo.No);
+
+			} else {
+				log(LogStatus.ERROR,
+						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
+				sa.assertTrue(false,
+						"-----Theme " + themeName + " description and Team Member Value not verified------");
+			}
+
+		} else {
+			log(LogStatus.ERROR,
+					"Team Member has not been Created: " + member1 + " with Role: " + role1 + " of Theme: " + themeName,
+					YesNo.No);
+			sa.assertTrue(false, "Team Member has not been Created: " + member1 + " with Role: " + role1 + " of Theme: "
+					+ themeName);
+		}
+		if (theme.createTeamMember(false, themeTabName, themeName, projectName, true, themeName, member2, role2,
+				title2, true, teamMemberNavigation.Action_Button, true, false, null)) {
+			log(LogStatus.INFO,
+					"Team Member has been Created: " + member2 + " with Role: " + role2 + " of Theme: " + themeName,
+					YesNo.No);
+			CommonLib.refresh(driver);
+			if (theme.checkDescriptionAndTeamMember(themeDescription, member2, false)) {
+				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
+						YesNo.No);
+
+			} else {
+				log(LogStatus.ERROR,
+						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
+				sa.assertTrue(false,
+						"-----Theme " + themeName + " description and Team Member Value not verified------");
+			}
+
+		} else {
+			log(LogStatus.ERROR,
+					"Team Member has not been Created: " + member2 + " with Role: " + role2 + " of Theme: " + themeName,
+					YesNo.No);
+			sa.assertTrue(false, "Team Member has not been Created: " + member2 + " with Role: " + role2 + " of Theme: "
+					+ themeName);
+		}
+			
+		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+	
+	@Parameters({ "projectName"})
+	@Test
+		public void THSTc010_VerifyResearchFunctionalityForValidData(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		ThreadSleep(2000);
+		List<String> list=new ArrayList<>();
+		String ExpectedMsg = bp.ErrorMessageAcuity;
+		String searchValue = ThemeName3;
+		
+		if (fp.clickOnTab(environment, mode, TabName.ThemesTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.ThemesTab, YesNo.No);
+			ThreadSleep(3000);
+		    String Categories =ExcelUtils.readData(BaseLib.ResearchDataSheetFilePath,"ThemeSearch1",excelLabel.Variable_Name, searchValue, excelLabel.All_Categories);
+		    log(LogStatus.PASS, "WOrking for " + searchValue, YesNo.Yes);
+		    String [] expected = Categories.split("<Break>");
+		    
+		    if (sendKeys(driver, bp.getsearchIcon_Interaction(20), searchValue + "\n", "Search Icon Text",
+					action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(5000);
+		} else {
+			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to send value "+searchValue);
+		}
+	
+		log(LogStatus.INFO,
+				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+						+ searchValue + "---------",
+				YesNo.No);
+
+		if(bp.getClipNotext(5) != null){
+			log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+	
+		}  else if(searchValue.length()<2 || searchValue == null || searchValue == " ") {
+		 String  errormsg  = bp.getAllClipErrorMsg(10).getText();
+		 if(errormsg.contains(ExpectedMsg)) {
+				log(LogStatus.INFO,
+						"Actual result " + errormsg
+								+ " of pop up has been matched with Expected result : " + ExpectedMsg
+								+ " for Contact Name: ",YesNo.No);
+		 } else {
+				log(LogStatus.ERROR,
+						"Actual result " + errormsg
+								+ " of pop up has been not matched with Expected result : "
+								+ ExpectedMsg,
+						YesNo.No);
+				sa.assertTrue(false,"Actual result " + errormsg
+						+ " of pop up has been not matched with Expected result : "
+						+ ExpectedMsg);
+			}
+		}else if(searchValue.length()>=2 ){
+		list=	compareMultipleListWithBreak(driver,searchValue, bp.listOfClipThemeDetail(10));
+
+			if(list.isEmpty()) {
+				
+				log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			} else {
+				log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+				sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+			}	
+		}
+		else 
+			 {
+				log(LogStatus.FAIL,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------",
+						YesNo.No);
+				sa.assertTrue(false,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------");
+				
+		}
+		
+		refresh(driver);
+		
+		
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + TabName.ThemesTab, YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + TabName.ThemesTab);
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+		
+		}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void THSTc011_VerifySearchwhileCreatingNewthemeonnewtab(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		String themeTabName = "Themes";
+		String themeName = ThemeName4;
+		String themeDescription = ThemeDescription3;
+
+		String member1 = crmUser2FirstName + " " + crmUser2LastName;
+		String role1 = excelLabel.Advisor.toString();
+		String title1 = "";
+		String member2 = crmUser3FirstName + " " + crmUser3LastName+ " updated";
+		String role2 = excelLabel.Lead.toString();
+		String title2 = "";
+		
+		if (theme.createTheme(projectName, themeTabName, themeName, themeDescription)) {
+			log(LogStatus.INFO, "Record: " + themeName + " has been Created under: " + themeTabName, YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Record: " + themeName + " has not been Created under: " + themeTabName, YesNo.No);
+			sa.assertTrue(false, "Record: " + themeName + " has not been Created under: " + themeTabName);
+		}
+	
+		if (theme.createTeamMember(true, themeTabName, themeName, projectName, true, themeName, member1, role1, title1,
+				true, teamMemberNavigation.Action_Button, true, false, null)) {
+			log(LogStatus.INFO,
+					"Team Member has been Created: " + member1 + " with Role: " + role1 + " of Theme: " + themeName,
+					YesNo.No);
+//			CommonLib.refresh(driver);
+//			if (theme.checkDescriptionAndTeamMember(themeDescription, member1, false)) {
+//				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
+//						YesNo.No);
+//
+//			} else {
+//				log(LogStatus.ERROR,
+//						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
+//				sa.assertTrue(false,
+//						"-----Theme " + themeName + " description and Team Member Value not verified------");
+//			}
+
+		} else {
+			log(LogStatus.ERROR,
+					"Team Member has not been Created: " + member1 + " with Role: " + role1 + " of Theme: " + themeName,
+					YesNo.No);
+			sa.assertTrue(false, "Team Member has not been Created: " + member1 + " with Role: " + role1 + " of Theme: "
+					+ themeName);
+		}
+		if (theme.createTeamMember(true, themeTabName, themeName, projectName, true, themeName, member2, role2,
+				title2, true, teamMemberNavigation.Action_Button, true, false, null)) {
+			log(LogStatus.INFO,
+					"Team Member has been Created: " + member2 + " with Role: " + role2 + " of Theme: " + themeName,
+					YesNo.No);
+//			CommonLib.refresh(driver);
+//			if (theme.checkDescriptionAndTeamMember(themeDescription, member2, false)) {
+//				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
+//						YesNo.No);
+//
+//			} else {
+//				log(LogStatus.ERROR,
+//						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
+//				sa.assertTrue(false,
+//						"-----Theme " + themeName + " description and Team Member Value not verified------");
+//			}
+
+		} else {
+			log(LogStatus.ERROR,
+					"Team Member has not been Created: " + member2 + " with Role: " + role2 + " of Theme: " + themeName,
+					YesNo.No);
+			sa.assertTrue(false, "Team Member has not been Created: " + member2 + " with Role: " + role2 + " of Theme: "
+					+ themeName);
+		}
+			
+		ThreadSleep(5000);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+		public void THSTc012_VerifyResearchFunctionalityForValidData(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		ThreadSleep(2000);
+		List<String> list=new ArrayList<>();
+		String ExpectedMsg = bp.ErrorMessageAcuity;
+		String searchValue = ThemeName4;
+		
+		if (fp.clickOnTab(environment, mode, TabName.ThemesTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.ThemesTab, YesNo.No);
+			ThreadSleep(3000);
+		    String Categories =ExcelUtils.readData(BaseLib.ResearchDataSheetFilePath,"ThemeSearch1",excelLabel.Variable_Name, searchValue, excelLabel.All_Categories);
+		    log(LogStatus.PASS, "WOrking for " + searchValue, YesNo.Yes);
+		    String [] expected = Categories.split("<Break>");
+		    
+		    if (sendKeys(driver, bp.getsearchIcon_Interaction(20), searchValue + "\n", "Search Icon Text",
+					action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(5000);
+		} else {
+			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to send value "+searchValue);
+		}
+	
+		log(LogStatus.INFO,
+				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+						+ searchValue + "---------",
+				YesNo.No);
+
+		if(bp.getClipNotext(5) != null){
+			log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+	
+		}  else if(searchValue.length()<2 || searchValue == null || searchValue == " ") {
+		 String  errormsg  = bp.getAllClipErrorMsg(10).getText();
+		 if(errormsg.contains(ExpectedMsg)) {
+				log(LogStatus.INFO,
+						"Actual result " + errormsg
+								+ " of pop up has been matched with Expected result : " + ExpectedMsg
+								+ " for Contact Name: ",YesNo.No);
+		 } else {
+				log(LogStatus.ERROR,
+						"Actual result " + errormsg
+								+ " of pop up has been not matched with Expected result : "
+								+ ExpectedMsg,
+						YesNo.No);
+				sa.assertTrue(false,"Actual result " + errormsg
+						+ " of pop up has been not matched with Expected result : "
+						+ ExpectedMsg);
+			}
+		}else if(searchValue.length()>=2 ){
+		list=	compareMultipleListWithBreak(driver,searchValue, bp.listOfClipThemeDetail(10));
+
+			if(list.isEmpty()) {
+				
+				log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			} else {
+				log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+				sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+			}	
+		}
+		else 
+			 {
+				log(LogStatus.FAIL,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------",
+						YesNo.No);
+				sa.assertTrue(false,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------");
+				
+		}
+		
+		refresh(driver);
+		
+		
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + TabName.ThemesTab, YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + TabName.ThemesTab);
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+		
+		}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void THSTc013_1_VerifySearchifdeletetheparticularThemefromacuitydetailpage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		String themeName = ThemeName1;
+		
+		if (fp.clickOnTab(environment, mode, TabName.ThemesTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.ThemesTab, YesNo.No);
+
+			  if (sendKeys(driver, bp.getsearchIcon_Interaction(20),themeName, "Search Icon Text",
+						action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Pass Value : " + themeName, YesNo.No);
+					ThreadSleep(5000);
+					if (clickUsingJavaScript(driver, bp.getThemeSubject(themeName, 30), "subject",
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Click on subject of Clip :" +themeName, YesNo.No);
+						String parentWindowId = CommonLib.switchOnWindow(driver);
+						if (!parentWindowId.isEmpty()) {
+							ThreadSleep(3000);
+							
+				cp.clickOnShowMoreDropdownOnly(projectName, PageName.ThemesPage, "");
+				log(LogStatus.INFO, "Able to Click on Show more Icon : " + TabName.ThemesTab + " For : " + themeName,
+						YesNo.No);
+				ThreadSleep(500);
+				WebElement ele = cp.actionDropdownElement(projectName, PageName.ThemesPage,
+						ShowMoreActionDropDownList.Delete, 15);
+				if (ele == null) {
+					ele = cp.getDeleteButton(projectName, 30);
+				}
+
+				if (click(driver, ele, "Delete More Icon", action.BOOLEAN)) {
+					log(LogStatus.INFO,
+							"Able to Click on Delete more Icon : " + TabName.ThemesTab + " For : " + themeName,
+							YesNo.No);
+					ThreadSleep(1000);
+					if (click(driver, cp.getDeleteButtonOnDeletePopUp(projectName, 30), "Delete Button",
+							action.BOOLEAN)) {
+						log(LogStatus.INFO, "Able to Click on Delete button on Delete PoPup : " + TabName.ThemesTab
+								+ " For : " + themeName, YesNo.No);
+						ThreadSleep(3000);
+					} else {
+						log(LogStatus.INFO, "not able to click on delete button, so not deleted : " + TabName.ThemesTab
+								+ " For : " + themeName, YesNo.No);
+						sa.assertTrue(false, "not able to click on delete button, so not deleted : "
+								+ TabName.ThemesTab + " For : " + themeName);
+					}
+				} else {
+					log(LogStatus.INFO,
+							"not Able to Click on Delete more Icon : " + TabName.ThemesTab + " For : " + themeName,
+							YesNo.No);
+					sa.assertTrue(false,
+							"not Able to Click on Delete more Icon : " + TabName.ThemesTab + " For : " + themeName);
+				}
+				driver.close();
+				driver.switchTo().window(parentWindowId);
+					}
+			} else {
+				log(LogStatus.INFO, "not Able to Click subject " + themeName, YesNo.No);
+				sa.assertTrue(false, "not Able to Click subject " + themeName);
+			}
+					} else {
+						log(LogStatus.INFO, "not Able to pass value " + themeName, YesNo.No);
+						sa.assertTrue(false, "not Able to pass value " + themeName);
+					}
+		} else {
+			log(LogStatus.INFO, "not Able to Click on " + TabName.ThemesTab, YesNo.No);
+			sa.assertTrue(false, "not Able to Click on " + TabName.ThemesTab);
+		}
+					switchToDefaultContent(driver);
+					lp.CRMlogout();
+					sa.assertAll();
+					
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+		public void THSTc013_2_VerifyResearchFunctionalityForValidData(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		ThreadSleep(2000);
+		List<String> list=new ArrayList<>();
+		String ExpectedMsg = bp.ErrorMessageAcuity;
+		String searchValue = ThemeName1;
+		
+		if (fp.clickOnTab(environment, mode, TabName.ThemesTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.ThemesTab, YesNo.No);
+			ThreadSleep(3000);
+		    String Categories =ExcelUtils.readData(BaseLib.ResearchDataSheetFilePath,"ThemeSearch1",excelLabel.Variable_Name, searchValue, excelLabel.All_Categories);
+		    log(LogStatus.PASS, "WOrking for " + searchValue, YesNo.Yes);
+		    String [] expected = Categories.split("<Break>");
+		    
+		    if (sendKeys(driver, bp.getsearchIcon_Interaction(20), searchValue + "\n", "Search Icon Text",
+					action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(5000);
+		} else {
+			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to send value "+searchValue);
+		}
+	
+		log(LogStatus.INFO,
+				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+						+ searchValue + "---------",
+				YesNo.No);
+
+		if(bp.getClipNotext(5) != null){
+			log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+	
+		}  else if(searchValue.length()<2 || searchValue == null || searchValue == " ") {
+		 String  errormsg  = bp.getAllClipErrorMsg(10).getText();
+		 if(errormsg.contains(ExpectedMsg)) {
+				log(LogStatus.INFO,
+						"Actual result " + errormsg
+								+ " of pop up has been matched with Expected result : " + ExpectedMsg
+								+ " for Contact Name: ",YesNo.No);
+		 } else {
+				log(LogStatus.ERROR,
+						"Actual result " + errormsg
+								+ " of pop up has been not matched with Expected result : "
+								+ ExpectedMsg,
+						YesNo.No);
+				sa.assertTrue(false,"Actual result " + errormsg
+						+ " of pop up has been not matched with Expected result : "
+						+ ExpectedMsg);
+			}
+		}else if(searchValue.length()>=2 ){
+		list=	compareMultipleListWithBreak(driver,searchValue, bp.listOfClipThemeDetail(10));
+
+			if(list.isEmpty()) {
+				
+				log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			} else {
+				log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+				sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+			}	
+		}
+		else 
+			 {
+				log(LogStatus.FAIL,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------",
+						YesNo.No);
+				sa.assertTrue(false,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------");
+				
+		}
+		
+		refresh(driver);
+		
+		
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + TabName.ThemesTab, YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + TabName.ThemesTab);
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+		
+		}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void THSTc014_1_VerifySearchifRestoretheparticularThemefromacuitydetailpage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		WebElement ele = null;
+		TabName tabName = TabName.RecycleBinTab;
+		String name = ThemeName1;
+		
+		if (cp.clickOnTab(projectName, tabName)) {
+			log(LogStatus.INFO, "Clicked on Tab : " + tabName + " For : " + name, YesNo.No);
+			ThreadSleep(1000);
+			cp.clickOnAlreadyCreatedItem(projectName, tabName, name, 20);
+			log(LogStatus.INFO, "Clicked on  : " + name + " For : " + tabName, YesNo.No);
+			ThreadSleep(2000);
+
+			ele = cp.getCheckboxOfRestoreItemOnRecycleBin(projectName, name, 10);
+			if (clickUsingJavaScript(driver, ele, "Check box against : " + name, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on checkbox for " + name, YesNo.No);
+
+				ThreadSleep(1000);
+				ele = cp.getRestoreButtonOnRecycleBin(projectName, 10);
+				if (clickUsingJavaScript(driver, ele, "Restore Button : " + name, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on Restore Button for " + name, YesNo.No);
+					ThreadSleep(1000);
+				} else {
+					sa.assertTrue(false, "Not Able to Click on Restore Button for " + name);
+					log(LogStatus.SKIP, "Not Able to Click on Restore Button for " + name, YesNo.Yes);
+				}
+
+			} else {
+				sa.assertTrue(false, "Not Able to Click on checkbox for " + name);
+				log(LogStatus.SKIP, "Not Able to Click on checkbox for " + name, YesNo.Yes);
+			}
+
+		} else {
+			sa.assertTrue(false, "Not Able to Click on Tab : " + tabName + " For : " + name);
+			log(LogStatus.SKIP, "Not Able to Click on Tab : " + tabName + " For : " + name, YesNo.Yes);
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+		
+}
+	
+	@Parameters({ "projectName"})
+	@Test
+		public void THSTc014_2_VerifyResearchFunctionalityForValidData(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		ThreadSleep(2000);
+		List<String> list=new ArrayList<>();
+		String ExpectedMsg = bp.ErrorMessageAcuity;
+		String searchValue = ThemeName1;
+		
+		if (fp.clickOnTab(environment, mode, TabName.ThemesTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.ThemesTab, YesNo.No);
+			ThreadSleep(3000);
+		    String Categories =ExcelUtils.readData(BaseLib.ResearchDataSheetFilePath,"ThemeSearch1",excelLabel.Variable_Name, searchValue, excelLabel.All_Categories);
+		    log(LogStatus.PASS, "WOrking for " + searchValue, YesNo.Yes);
+		    String [] expected = Categories.split("<Break>");
+		    
+		    if (sendKeys(driver, bp.getsearchIcon_Interaction(20), searchValue + "\n", "Search Icon Text",
+					action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(5000);
+		} else {
+			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to send value "+searchValue);
+		}
+	
+		log(LogStatus.INFO,
+				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+						+ searchValue + "---------",
+				YesNo.No);
+
+		if(bp.getClipNotext(5) != null){
+			log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+	
+		}  else if(searchValue.length()<2 || searchValue == null || searchValue == " ") {
+		 String  errormsg  = bp.getAllClipErrorMsg(10).getText();
+		 if(errormsg.contains(ExpectedMsg)) {
+				log(LogStatus.INFO,
+						"Actual result " + errormsg
+								+ " of pop up has been matched with Expected result : " + ExpectedMsg
+								+ " for Contact Name: ",YesNo.No);
+		 } else {
+				log(LogStatus.ERROR,
+						"Actual result " + errormsg
+								+ " of pop up has been not matched with Expected result : "
+								+ ExpectedMsg,
+						YesNo.No);
+				sa.assertTrue(false,"Actual result " + errormsg
+						+ " of pop up has been not matched with Expected result : "
+						+ ExpectedMsg);
+			}
+		}else if(searchValue.length()>=2 ){
+		list=	compareMultipleListWithBreak(driver,searchValue, bp.listOfClipThemeDetail(10));
+
+			if(list.isEmpty()) {
+				
+				log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			} else {
+				log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+				sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+			}	
+		}
+		else 
+			 {
+				log(LogStatus.FAIL,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------",
+						YesNo.No);
+				sa.assertTrue(false,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------");
+				
+		}
+		
+		refresh(driver);
+		
+		
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + TabName.ThemesTab, YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + TabName.ThemesTab);
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+		
+		}
+	@Parameters({ "projectName" })
+	@Test
+	public void THSTc015_VerifyDefaultSortingOrderOfGrid (String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		
+		if (fp.clickOnTab(environment, mode, TabName.ThemesTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.ThemesTab, YesNo.No);
+			ThreadSleep(3000);
+			List<WebElement> ele = BP.getDateCreateThemeSearch(10);
+			if (CommonLib.checkSortingforDate(driver, SortOrder.Decending, ele)) {
+				log(LogStatus.PASS, "-----------Deal Column is in Descending Order By Default  --------------",
+						YesNo.No);
+				sa.assertTrue(true, "-----------Deal Column is in Descending Order By Default --------------");
+			} else {
+				log(LogStatus.ERROR, "-----------Deal Column is not in Descending Order By Default  --------------",
+						YesNo.Yes);
+				sa.assertTrue(false,
+						"-----------Deal Column is not in Descending Order By Default  --------------");
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + TabName.ThemesTab, YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + TabName.ThemesTab);
+		}
+			ThreadSleep(5000);
+			lp.CRMlogout();
+			sa.assertAll();
+		}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void THSTc016_1_VerifyImpactonTaskandeventswhenCRMuserwillgetInactive(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	
+		String parentWindow = null;
+		String userfirstname = crmUser4FirstName;
+		String UserLastName = crmUser4LastName;
+		String emailId = crmUser4EmailID;
+		
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		boolean flag = false;
+				if (home.clickOnSetUpLink()) {
+					flag = true;
+					parentWindow = switchOnWindow(driver);
+					if (parentWindow == null) {
+						sa.assertTrue(false,
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+						log(LogStatus.SKIP,
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User1",
+								YesNo.Yes);
+						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+					}
+					if (setup.editPEUser( userfirstname, UserLastName, emailId)) {
+						log(LogStatus.INFO, "CRM User is updated Successfully: " + crmUser1FirstName + " " + UserLastName, YesNo.No);
+						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User2",
+								excelLabel.User_Email);
+						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User2",
+								excelLabel.User_Last_Name);
+					} else {
+						appLog.error("CRM User not updated Successfully:  " + crmUser1FirstName + " " + UserLastName);
+						flag = true;
+					}
+
+					
+					driver.close();
+					driver.switchTo().window(parentWindow);
+
+				}
+				switchToDefaultContent(driver);
+				lp.CRMlogout();
+				sa.assertAll();
+				
+				}
+	
+
+	@Parameters({ "projectName"})
+	@Test
+		public void THSTc016_2_VerifyResearchFunctionalityForValidData(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		
+        String searchValue = ThemeName1;
+        String username = crmUser4FirstName+" "+crmUser4LastName;
+		
+		if (fp.clickOnTab(environment, mode, TabName.ThemesTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.ThemesTab, YesNo.No);
+			ThreadSleep(3000);
+		    
+		    if (sendKeysAndPressEnter(driver, bp.getsearchIcon_Interaction(20), searchValue + "\n", "Search Icon Text",
+					action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(5000);
+		} else {
+			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to send value "+searchValue);
+		}
+		    String actualMsg = getText(driver, bp.getTeamThemeSearch(20), "team theme search", action.SCROLLANDBOOLEAN);
+			if (actualMsg.contains(username)) {
+				log(LogStatus.INFO,
+						"Actual result " + actualMsg
+								+ " of pop up has been matched with Expected result : " + username
+								+ " for theme Name: " + ThemeName1,
+						YesNo.No);
+			} else {
+				log(LogStatus.ERROR,
+						"Actual result " + actualMsg
+								+ " of pop up has been not matched with Expected result : "
+								+ username + " for theme Name: " + ThemeName1,
+						YesNo.No);
+			}
+		
+       } else {
+        log(LogStatus.INFO, "not Able to Click on " + TabName.ThemesTab, YesNo.No);
+       sa.assertTrue(false, "not Able to Click on " + TabName.ThemesTab);
+     }
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();
+			
+ }
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void THSTc017_VerifyUIOfThemes(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		String expected[] = {ThemeName1,ThemeDescription1,todaysDate,crmUser1FirstName+" "+crmUser1LastName,crmUser2FirstName+" "+crmUser2LastName+","+crmUser4FirstName+" "+crmUser4LastName};
+
+		String actualDetail = null;
+		
+		 String themeName = ThemeName1;
+		if (fp.clickOnTab(environment, mode, TabName.ThemesTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.ThemesTab, YesNo.No);
+			ThreadSleep(3000);
+			if (sendKeysAndPressEnter(driver, bp.getsearchIcon_Interaction(20),themeName, "Search Icon Text",
+					action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Pass Value : " + themeName, YesNo.No);
+				ThreadSleep(5000);
+				ThreadSleep(5000);
+				for(int i=0;i<expected.length;i++) {
+					WebElement ele = bp.listOfThemeDetail(10).get(i);
+					actualDetail = getText(driver, ele, "Theme detail",action.SCROLLANDBOOLEAN);
+					if(actualDetail.contains(expected[i])) {
+					log(LogStatus.INFO,actualDetail+ " matches with " +expected[i],YesNo.No);
+				
+				}else {
+					log(LogStatus.ERROR, actualDetail+"not matches with "+expected[i], YesNo.Yes);
+					sa.assertTrue(false, actualDetail+"not matches with "+expected[i]);
+				}
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to pass Value : " + ThemeName1, YesNo.Yes);
+				sa.assertTrue(false, "Not able to pass Value : " + ThemeName1);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + TabName.ThemesTab + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + TabName.ThemesTab + " tab");
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+				
+	 }
+		
+	@Parameters({ "projectName"})
+	@Test
+		public void THSTc018_1_CreateCustomFields(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		ResearchPageBusinessLayer rp=new ResearchPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		
+		String RecordTypeArray[] = {"XYZ"};
+		
+		String[][][] RecordType = {{ { recordTypeLabel.Record_Type_Label.toString(), RecordTypeArray[0] },
+						{ recordTypeLabel.Description.toString(), RecordTypeArray[0] + bp.recordTypeDescription },
+						{ recordTypeLabel.Active.toString(), "" } }};
+		
+		String[] profileForSelection = { "PE Standard User"};
+		String layout = "Account Layout";
+		boolean isMakeAvailable = false;
+		boolean isMakeDefault = false;
+		boolean flag = false;
+		String parentID=null;
+		
+		if (home.clickOnSetUpLink()) {
+			flag = false;
+			parentID = switchOnWindow(driver);
+			if (parentID != null) {
+				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(), object.Firm.toString())) {
+					log(LogStatus.INFO, "Click on Tab : " + object.Firm.toString(), YesNo.No);
+					if (sp.clickOnObjectFeature("", Mode.Lightning.toString(), object.Firm,
+							ObjectFeatureName.recordTypes)) {
+						log(LogStatus.INFO, "Click on Tab : " + ObjectFeatureName.recordTypes, YesNo.No);
+						if(sp.createRecordTypeForObject(projectName, RecordType[0], isMakeAvailable,
+								profileForSelection, isMakeDefault, layout, 10)) {
+							log(LogStatus.INFO, "created record type : " +RecordTypeArray , YesNo.No);
+						 } else {
+						        log(LogStatus.INFO, "not Able to created record type : " +RecordTypeArray , YesNo.No);
+						       sa.assertTrue(false, "not Able to created record type : " +RecordTypeArray);
+						     }
+					 } else {
+					        log(LogStatus.INFO, "not Able to Click on Tab : " + ObjectFeatureName.recordTypes, YesNo.No);
+					       sa.assertTrue(false, "not Able to Click on Tab : " + ObjectFeatureName.recordTypes);
+					     }
+				 } else {
+				        log(LogStatus.INFO, "not Able to Click on Tab : " + ObjectFeatureName.recordTypes, YesNo.No);
+				       sa.assertTrue(false, "not Able to Click on Tab : " + ObjectFeatureName.recordTypes);
+				     }
+				driver.close();
+				driver.switchTo().window(parentID);
+			}
+			switchToDefaultContent(driver);
+			lp.CRMlogout();
+			sa.assertAll();
+					
+		 }
+	}
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void THSTc018_2_VerifySearchfornewrecordtype(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		// INS
+		String value = "";
+		String type = "";
+		String TabName1 = "";
+		String[][] EntityOrAccounts = { { "New Record Company", "XYZ", null } };
+
+//		for (String[] accounts : EntityOrAccounts) {
+//			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
+//				log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
+//				value = accounts[0];
+//				type = accounts[1];
+//				if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
+//					log(LogStatus.INFO, "successfully Created Account/Entity : " + value + " of record type : " + type,
+//							YesNo.No);
+//				} else {
+//					sa.assertTrue(false, "Not Able to Create Account/Entity : " + value + " of record type : " + type);
+//					log(LogStatus.SKIP, "Not Able to Create Account/Entity : " + value + " of record type : " + type,
+//							YesNo.Yes);
+//				}
+//
+//			} else {
+//				sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.Object1Tab);
+//				log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.Object1Tab, YesNo.Yes);
+//			}
+//		}
+		
+		String themeName = ThemeName1;
+		String themeTabName = "Themes";
+		String themeNameForAddToTheme = ThemeName1;
+        String accountName = "New Record Company";
+        if (theme.navigateToTheme(projectName, themeTabName, themeNameForAddToTheme, false)) {
+			log(LogStatus.PASS, "Successfully Navigate to theme: " + themeName, YesNo.No);
+
+		}
+
+	     else {
+			sa.assertTrue(false, "Not Successfully Navigate to theme: " + themeName);
+			log(LogStatus.FAIL, "Not Successfully Navigate to theme: " + themeName, YesNo.Yes);
+		}
+		
+			CommonLib.refresh(driver);
+			if (theme.createAddToTheme(false, true, false, true, false, PageName.ThemesPage, projectName, themeTabName,
+					themeNameForAddToTheme,"Advisor", tabObj1, accountName, null, null, false, false, false, null)) {
+				log(LogStatus.PASS, "-----Add To Theme Created for Theme: " + themeNameForAddToTheme + " for Object: "
+						+ tabObj1 + " and for Record: " + accountName + " -----", YesNo.No);
+			} else {
+				sa.assertTrue(false, "-----Add To Theme Not Created for Theme: " + themeNameForAddToTheme
+						+ " for Object: " + tabObj1 + " and for Record: " + accountName + " -----");
+				log(LogStatus.FAIL, "-----Add To Theme Not Created for Theme: " + themeNameForAddToTheme
+						+ " for Object: " + tabObj1 + " and for Record: " + accountName + " -----", YesNo.Yes);
+			}
+			switchToDefaultContent(driver);
+			lp.CRMlogout();
+			sa.assertAll();
+					
+		 }
+			
+			
+			@Parameters({ "projectName"})
+			@Test
+				public void THSTc018_3_VerifyResearchFunctionalityForValidData(String projectName) {
+				LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+				BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+				ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+				NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+				FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+				lp.CRMLogin(crmUser1EmailID, adminPassword);
+				ThreadSleep(2000);
+				List<String> list=new ArrayList<>();
+				String ExpectedMsg = bp.ErrorMessageAcuity;
+				String searchValue = ThemeName1;
+				
+				if (fp.clickOnTab(environment, mode, TabName.ThemesTab)) {
+					log(LogStatus.INFO, "Click on Tab : " + TabName.ThemesTab, YesNo.No);
+					ThreadSleep(3000);
+				    String Categories =ExcelUtils.readData(BaseLib.ResearchDataSheetFilePath,"ThemeSearch1",excelLabel.Variable_Name, searchValue, excelLabel.All_Categories);
+				    log(LogStatus.PASS, "WOrking for " + searchValue, YesNo.Yes);
+				    String [] expected = Categories.split("<Break>");
+				    
+				    if (sendKeys(driver, bp.getsearchIcon_Interaction(20), "New Record Company" + "\n", "Search Icon Text",
+							action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(5000);
+				} else {
+					log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to send value "+searchValue);
+				}
+			
+				log(LogStatus.INFO,
+						"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+								+ searchValue + "---------",
+						YesNo.No);
+
+				if(bp.getClipNotext(5) != null){
+					log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+			
+				}  else if(searchValue.length()<2 || searchValue == null || searchValue == " ") {
+				 String  errormsg  = bp.getAllClipErrorMsg(10).getText();
+				 if(errormsg.contains(ExpectedMsg)) {
+						log(LogStatus.INFO,
+								"Actual result " + errormsg
+										+ " of pop up has been matched with Expected result : " + ExpectedMsg
+										+ " for Contact Name: ",YesNo.No);
+				 } else {
+						log(LogStatus.ERROR,
+								"Actual result " + errormsg
+										+ " of pop up has been not matched with Expected result : "
+										+ ExpectedMsg,
+								YesNo.No);
+						sa.assertTrue(false,"Actual result " + errormsg
+								+ " of pop up has been not matched with Expected result : "
+								+ ExpectedMsg);
+					}
+				}else if(searchValue.length()>=2 ){
+				list=	compareMultipleListWithBreak(driver,searchValue, bp.listOfClipThemeDetail(10));
+
+					if(list.isEmpty()) {
+						
+						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					} else {
+						log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+						sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+					}	
+				}
+				else 
+					 {
+						log(LogStatus.FAIL,
+								"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+										+ searchValue + "---------",
+								YesNo.No);
+						sa.assertTrue(false,
+								"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+										+ searchValue + "---------");
+						
+				}
+				
+				refresh(driver);
+				
+				
+				} else {
+					log(LogStatus.ERROR, "Not able to click on " + TabName.ThemesTab, YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on " + TabName.ThemesTab);
+				}
+				switchToDefaultContent(driver);
+				lp.CRMlogout();
+				sa.assertAll();
+				
+				}
+	@Parameters({ "projectName"})
+	@Test
+	public void THSTc019_1_Verifyimpactonthemewhenchangethecolumnheadername(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		String parentWindow = "";
+
+	
+		 String[] accountField = {PageLabel.Description.toString(),PageLabel.Description_updated.toString()};
+		 
+		 ThreadSleep(2000);
+			if (home.clickOnSetUpLink()) {
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+					log(LogStatus.SKIP,
+							"No new window is open after click on setup link in lighting mode so cannot create Field Set Component",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+				}
+				ThreadSleep(3000);
+				if (setup.editCustomFieldOnObjectManager(environment,mode, object.Theme.toString(), ObjectFeatureName.FieldAndRelationShip, accountField[0],accountField[1].replaceAll("_", " "))) {
+					log(LogStatus.INFO, "successfully created new custom field", YesNo.No);
+				}
+				else {
+					log(LogStatus.FAIL, "could not create new field", YesNo.Yes);
+					sa.assertTrue(false, "could not create new field");
+				}
+				ThreadSleep(2000);
+				driver.close();
+			ThreadSleep(2000);
+			}
+			driver.switchTo().window(parentWindow);
+				switchToDefaultContent(driver);
+				lp.CRMlogout();
+				sa.assertAll();
+						
+			 }
+
+	
+	@Parameters({ "projectName"})
+	@Test
+		public void THSTc019_2_Verifyimpactonthemewhenchangethecolumnheadername(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		
+		
+		if (fp.clickOnTab(environment, mode, TabName.ThemesTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.ThemesTab, YesNo.No);
+			ThreadSleep(3000);
+			if (CommonLib.click(driver, theme.newThemeButton(30), "newThemeButton", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on the New theme Button", YesNo.No);
+
+				if (CommonLib.click(driver, theme.noButton(30), "noButton", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on the No Button", YesNo.No);
+					if(theme.getthemeDescriptionlabel(20)!= null) {
+						log(LogStatus.INFO, "Description updated label is present", YesNo.No);
+					}
+					else {
+						log(LogStatus.FAIL, "Description updated label is not present", YesNo.Yes);
+						sa.assertTrue(false, "Description updated label is not present");
+					}
+				}else {
+						log(LogStatus.FAIL, "Not able to Clicked on the No Button", YesNo.Yes);
+						sa.assertTrue(false, "Not able to Clicked on the No Button");
+					}
+			}else {
+				log(LogStatus.FAIL, "Not able to Clicked on the New theme Button", YesNo.Yes);
+				sa.assertTrue(false, "Not able to Clicked on the New theme Button");
+			}
+		} else {
+	        log(LogStatus.INFO, "not Able to Click on " + TabName.ThemesTab, YesNo.No);
+	       sa.assertTrue(false, "not Able to Click on " + TabName.ThemesTab);
+	     }
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+				
+	 }
 	
 	@Parameters({ "projectName" })
 	@Test

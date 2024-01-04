@@ -1152,4 +1152,11 @@ public class ThemePage extends BasePageBusinessLayer {
 				.collect(Collectors.toList());
 	}
 
+	@FindBy(xpath = "//label[text()='Description updated']")
+	private WebElement themeDescriptionlabel;
+
+	public WebElement getthemeDescriptionlabel(int timeOut) {
+		return isDisplayed(driver, themeDescriptionlabel, "Visibility", timeOut, "theme Description label");
+
+	}
 }

@@ -168,7 +168,7 @@ public class APIUtils {
 	}
 
 //Data of file
-    public void AccountObjectDataUpload(String filePath,String sheetName) {
+public void AccountObjectDataUpload(String filePath,String sheetName) {
 		
 		Map<String, Object> data = new HashMap<String, Object>();
 		
@@ -195,10 +195,14 @@ public class APIUtils {
 									"Added Data for Account :" + i + " Label :" + label + " with value :" + value);
 						}
 					} else if (label.equals("ParentId")) {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 						String RT = getObjectRecordId("Account", value);
 						data.put(label, RT);
+						}
 					}else {
+						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 						data.put(label, value);
+						}
 					}
 					System.out.println("Added Data for account :" + i + " Label :" + label + " with value :" + value);
 
@@ -386,7 +390,7 @@ public class APIUtils {
 
 				}
 
-				createObejectRecordByAPI("navpeII__Financing__c", data);
+				createObejectRecordByAPI("navpeII__Pipeline__c", data);
 				ExcelUtils.writeDataInExcel(filePath, "Created", sheetName, i, 0);
 			} else {
 				System.out.println("Data already created for Deal :" + i);
@@ -1385,10 +1389,10 @@ public class APIUtils {
 					String label = ExcelUtils.readData(filePath, sheetName, 0, j).trim();
 					String value = ExcelUtils.readData(filePath, sheetName, i, j).trim();
 					if (label.equals("RecordTypeId")) {
-						String RT = getObjectActiveRecordTypeId("navmnaI__Theme__c", value);
+						String RT = getObjectActiveRecordTypeId("navpeII__Theme__c", value);
 						data.put(label, RT);
 					} else if (label.contains("Theme")) {
-						String accoundId =getObjectRecordId("navmnaI__Theme__c", value);
+						String accoundId =getObjectRecordId("navpeII__Theme__c", value);
 						data.put(label, accoundId);
 					} else if (label.contains("Member")) {
 						String user="";
@@ -1435,7 +1439,7 @@ public class APIUtils {
 
 				}
 
-				createObejectRecordByAPI("navmnaI__Theme_Team__c", data);
+				createObejectRecordByAPI("navpeII__Theme_Team__c", data);
 				ExcelUtils.writeDataInExcel(filePath, "Created", sheetName, i, 0);
 			} else {
 				System.out.println("Data already created for Target Role :" + i);
