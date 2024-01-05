@@ -36,7 +36,7 @@ public class FieldAndRelationshipPage extends BasePageBusinessLayer {
 				"Fields & Relationships iframe");
 	}
 
-	@FindBy(xpath = "//iframe[@title='Picklist Edit: Industry ~ Salesforce - Enterprise Edition']")
+	@FindBy(xpath = "//iframe[contains(@title,'Picklist Edit: Role ~ Salesforce - Enterprise Edition')]")
 	private WebElement piclistEditiframe;
 
 	public WebElement getpiclistEditiframe(int timeOut) {

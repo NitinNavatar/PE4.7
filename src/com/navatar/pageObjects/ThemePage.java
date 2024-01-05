@@ -209,6 +209,22 @@ public class ThemePage extends BasePageBusinessLayer {
 
 	}
 	
+	@FindBy(xpath = "//button[contains(@title,'Remove')]")
+	private WebElement ThemeRemoveButton;
+
+	public WebElement getThemeRemoveButton(int timeOut) {
+		return isDisplayed(driver, ThemeRemoveButton, "Visibility", timeOut, "Theme Remove Button");
+
+	}
+	
+	@FindBy(xpath = "//h2[text()='Sorry to interrupt']/ancestor::div[contains(@class,'modal-container')]//button[@title='OK']")
+	private WebElement errorOKbutton;
+
+	public WebElement geterrorOKbutton(int timeOut) {
+		return isDisplayed(driver, errorOKbutton, "Visibility", timeOut, "error OK button ");
+
+	}
+	
 	public WebElement getSearchForSpecificDropdownButton(int count, int timeOut) {
 		String xpath = "(//div[@class='slds-combobox-group']//button[@data-value])[" + count + "]";
 

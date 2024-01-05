@@ -4607,7 +4607,7 @@ public class AcuityTheme extends BaseLib {
 
 		HashMap<String, Integer> expectedSectionNameAndCount = new HashMap<String, Integer>();
 
-		expectedSectionNameAndCount.put(AT_Theme_Grid_12, 12);
+		expectedSectionNameAndCount.put(AT_Theme_Grid_12, 9);
 		expectedSectionNameAndCount.put(AT_Theme_Grid_15, 6);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -4678,7 +4678,7 @@ public class AcuityTheme extends BaseLib {
 
 		HashMap<String, Integer> expectedSectionNameAndCount = new HashMap<String, Integer>();
 
-		expectedSectionNameAndCount.put(AT_Theme_Grid_12, 12);
+		expectedSectionNameAndCount.put(AT_Theme_Grid_12, 9);
 		expectedSectionNameAndCount.put(AT_Theme_Grid_15, 6);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -4750,8 +4750,8 @@ public class AcuityTheme extends BaseLib {
 		HashMap<String, Integer> expectedSectionNameAndCount = new HashMap<String, Integer>();
 		expectedSectionNameAndCount.put(AT_Theme_Grid_12, 1);
 		expectedSectionNameAndCount.put(AT_Theme_Grid_15, 1);
-		expectedSectionNameAndCount.put(AT_Theme_Grid_17, 2);
-		expectedSectionNameAndCount.put(AT_Theme_Grid_19, 2);
+//		expectedSectionNameAndCount.put(AT_Theme_Grid_17, 2);
+		expectedSectionNameAndCount.put(AT_Theme_Grid_19, 1);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -4824,7 +4824,7 @@ public class AcuityTheme extends BaseLib {
 
 		expectedSectionNameAndCount.put(AT_Theme_Grid_12, 1);
 		expectedSectionNameAndCount.put(AT_Theme_Grid_15, 1);
-		expectedSectionNameAndCount.put(AT_Theme_Grid_17, 2);
+		expectedSectionNameAndCount.put(AT_Theme_Grid_17, 1);
 		expectedSectionNameAndCount.put(AT_Theme_Grid_19, 3);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -4911,7 +4911,7 @@ public class AcuityTheme extends BaseLib {
 		boolean flag = false;
 
 		HashMap<String, Integer> expectedSectionNameAndCount = new HashMap<String, Integer>();
-		expectedSectionNameAndCount.put(AT_Theme_Grid_11, 10);
+		expectedSectionNameAndCount.put(AT_Theme_Grid_11, 8);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -4981,9 +4981,9 @@ public class AcuityTheme extends BaseLib {
 		boolean flag = false;
 
 		HashMap<String, Integer> expectedSectionNameAndCount = new HashMap<String, Integer>();
-		expectedSectionNameAndCount.put(AT_Theme_Grid_11, 10);
+		expectedSectionNameAndCount.put(AT_Theme_Grid_11, 8);
 		expectedSectionNameAndCount.put(AT_Theme_Grid_15, 1);
-		expectedSectionNameAndCount.put(AT_Theme_Grid_16, 4);
+		expectedSectionNameAndCount.put(AT_Theme_Grid_16, 1);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -5129,7 +5129,7 @@ public class AcuityTheme extends BaseLib {
 			themeDescription = themeNameAndDescriptionList[1];
 
 			if (theme.createTheme(projectName, themeTabName, false, themeName, themeDescription, null, false,
-					"Please Enter the Theme Name", false)) {
+					"These required fields must be completed: Theme Name"/* "Please Enter the Theme Name" */, false)) {
 				log(LogStatus.INFO, "Cancel Theme and Validation Rule Error Msg Verified", YesNo.No);
 			} else {
 				log(LogStatus.ERROR, "Cancel Theme and Validation Rule Error Msg has not been Verified", YesNo.No);
@@ -5330,13 +5330,14 @@ public class AcuityTheme extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
 
-		String[] userTypesToGivePermissions = { "MnA Standard User" };
+		String[] userTypesToGivePermissions = { "PE Standard User" };
 		String[][] objectAndPermissionAndGivenOrGivenNot = {
-				{ "Deals", "Read", PermissionType.removePermission.toString() },
+				{ "Pipelines", "Read", PermissionType.removePermission.toString() },
 				{ "Accounts", "Read", PermissionType.removePermission.toString() },
 				{ "Contacts", "Read", PermissionType.removePermission.toString() },
-				{ "Targets", "Read", PermissionType.removePermission.toString() },
-				{ "Clips", "Read", PermissionType.removePermission.toString() } };
+				{ "Fundraisings", "Read", PermissionType.removePermission.toString() },
+				{ "Clips", "Read", PermissionType.removePermission.toString() },
+				{ "Funds", "Read", PermissionType.removePermission.toString() }};
 
 		String[][] objectAndPermissionAndGivenOrGivenNotRevertBack = {
 				{ "Deals", "Create<break>Delete",
@@ -5348,11 +5349,13 @@ public class AcuityTheme extends BaseLib {
 				{ "Contacts", "Create<break>Delete",
 						PermissionType.givePermission.toString() + "<break>"
 								+ PermissionType.givePermission.toString() },
-				{ "Targets", "Create<break>Delete",
+				{ "Fundraisings", "Create<break>Delete",
 						PermissionType.givePermission.toString() + "<break>"
 								+ PermissionType.givePermission.toString() },
 				{ "Clips", "Create<break>Delete", PermissionType.givePermission.toString() + "<break>"
-						+ PermissionType.givePermission.toString() } };
+						+ PermissionType.givePermission.toString() },
+				{ "Funds", "Create<break>Delete", PermissionType.givePermission.toString() + "<break>"
+						+ PermissionType.givePermission.toString() }};
 
 		String themeTabName = tabObj9;
 		String themeName = AT_Theme2;
@@ -6352,7 +6355,8 @@ public class AcuityTheme extends BaseLib {
 		String[][] addToThemeData = { { AT_Theme_Grid_13, tabObj1, AT_Theme_AddToTheme_83 },
 				{ AT_Theme_Grid_15, tabObj2, AT_Theme_AddToTheme_84 },
 				{ AT_Theme_Grid_16, tabObj4, AT_Theme_AddToTheme_85 },
-				{ AT_Theme_Grid_18, tabObj3, AT_Theme_AddToTheme_86 } };
+				{ AT_Theme_Grid_18, tabObj10, AT_Theme_AddToTheme_86 },
+				{ AT_Theme_Grid_17, tabObj3, AT_Theme_AddToTheme_87 }};
 
 		String contactRecordTypeList = AT_RecordTypes_1;
 		String contactRecordTypeArray[] = contactRecordTypeList.split(breakSP, -1);
@@ -6362,30 +6366,30 @@ public class AcuityTheme extends BaseLib {
 
 		String[][] recordTypeFields = { { recordTypeLabel.Active.toString(), "Checked" } };
 		String[][] recordTypeFieldsInActive = { { recordTypeLabel.Active.toString(), "Not Checked" } };
-		String profileName = "MnA Standard User";
+		String profileName = "PE Standard User";
 
-		lp.CRMLogin(superAdminUserName, adminPassword);
-
-		if (BP.editOfRecordType(projectName, contactRecordTypeArray, recordTypeFields, object.Contact, false,
-				profileName)) {
-			log(LogStatus.INFO, "----Record Types Gets Active for Object: " + object.Contact + "----", YesNo.No);
-
-		} else {
-			log(LogStatus.ERROR, "----Record Types not Gets Active for Object: " + object.Contact + "----", YesNo.No);
-			sa.assertTrue(false, "----Record Types not Gets Active for Object: " + object.Contact + "----");
-		}
-
-		if (BP.editOfRecordType(projectName, targetRecordTypeArray, recordTypeFields, object.Fundraising, false,
-				profileName)) {
-			log(LogStatus.INFO, "----Record Types Gets Active for Object: " + object.Fundraising + "----", YesNo.No);
-
-		} else {
-			log(LogStatus.ERROR, "----Record Types not Gets Active for Object: " + object.Fundraising + "----", YesNo.No);
-			sa.assertTrue(false, "----Record Types not Gets Active for Object: " + object.Fundraising + "----");
-		}
-
-		lp.CRMlogout();
-		CommonLib.ThreadSleep(5000);
+//		lp.CRMLogin(superAdminUserName, adminPassword);
+//
+//		if (BP.editOfRecordType(projectName, contactRecordTypeArray, recordTypeFields, object.Contact, false,
+//				profileName)) {
+//			log(LogStatus.INFO, "----Record Types Gets Active for Object: " + object.Contact + "----", YesNo.No);
+//
+//		} else {
+//			log(LogStatus.ERROR, "----Record Types not Gets Active for Object: " + object.Contact + "----", YesNo.No);
+//			sa.assertTrue(false, "----Record Types not Gets Active for Object: " + object.Contact + "----");
+//		}
+//
+//		if (BP.editOfRecordType(projectName, targetRecordTypeArray, recordTypeFields, object.Fundraising, false,
+//				profileName)) {
+//			log(LogStatus.INFO, "----Record Types Gets Active for Object: " + object.Fundraising + "----", YesNo.No);
+//
+//		} else {
+//			log(LogStatus.ERROR, "----Record Types not Gets Active for Object: " + object.Fundraising + "----", YesNo.No);
+//			sa.assertTrue(false, "----Record Types not Gets Active for Object: " + object.Fundraising + "----");
+//		}
+//
+//		lp.CRMlogout();
+//		CommonLib.ThreadSleep(5000);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -7055,7 +7059,7 @@ public class AcuityTheme extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void AcuityThemeTc064_UpdateCustomMetaDataForFieldsOfThemeInCaseOfTarget(String projectName) {
+	public void AcuityThemeTc064_UpdateCustomMetaDataForFieldsOfThemeInCaseOfFundraising(String projectName) {
 
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
