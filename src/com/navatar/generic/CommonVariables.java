@@ -1704,7 +1704,7 @@ public class CommonVariables {
 	 		    ATConFN1,ATConFN2,ATConFN3,ATConFN4,ATConFN5,ATConFN6,ATConLN1,ATConLN2,ATConLN3,ATConLN4,ATConLN5,ATConLN6,ATConFirm1,ATConFirm2,ATConFirm3,ATConFirm4,
 	 		    ATConFirm5,ATConFirm6,ATConEmail1,ATConEmail2,ATConEmail3,ATConEmail4,ATConEmail5,ATConEmail6,ATDealName1,ATDealName2,ATDealRT1,ATDealRT2,ATDealCompany1,ATDealCompany2,
 	 		    ATDealStage1,ATDealStage2,ATDealStatus1,ATDealStatus2,ATTargetName1,ATTargetName2,ATTargetStage1,ATFundName1,ATFundType1,ATFundCategory1,ATFundName2,ATFundType2,ATFundCategory2,
-	 		    ATTargetStage2,ATDTDealName1,ATDTContact1,ATDTRole1,ATDTDealName2,ATDTContact2,ATDTRole2,
+	 		    ATTargetStage2,ATDTDealName1,ATDTContact1,ATDTRole1,ATDTDealTeam1,ATDTDealName2,ATDTContact2,ATDTRole2,
 	 		    ATCRTargetName1,ATCRContactName1,ATCRRole1,ATCRTargetName2,ATCRContactName2,ATETSubject1,ATETNote1,ATETAction1,ATETRelated1,ATETSubject2,ATETNote2,ATETRelated2,ATETAction2,ATETPriority2,ATETNote3,ATETRelated3,ATETAction3,ATETPriority3,ATETSubject3,ATETStatus3,
 	 		    ATDealNewStatus1,ATDealNewStage1,ATDealNewStage2,ATETSubject4,ATETNote4,ATETAction4,ATETRelated4,ATETSubject5,ATETNote5,ATETRelated5,ATETAction5,ATETPriority5,ATETNote6,ATETRelated6,ATETAction6,ATETPriority6,ATETSubject6,ATETStatus6,ATETSubject7,ATETNote7,ATETAction7,ATETRelated7,
 	 		    ATETSubject8,ATETNote8,ATETRelated8,ATETAction8,ATETPriority8,ATETNote9,ATETRelated9,ATETAction9,ATETPriority9,ATETSubject9,ATETStatus9,ATDealNewStage9,ATDealNewStatus9,ATETNote10,ATETSubject10,ATETAction10,ATETRelated10,ATETSubject11,ATETNote11,ATETRelated11,ATETAction11,ATETPriority11,ATETNote12,ATETRelated12,ATETAction12,ATETPriority12,ATETSubject12,ATETStatus12,
@@ -10088,6 +10088,7 @@ public class CommonVariables {
  					ATDTDealName1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Deal Team", excelLabel.Variable_Name,"ATDT1", excelLabel.Deal_Name);
  					ATDTContact1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Deal Team", excelLabel.Variable_Name,"ATDT1", excelLabel.Contact);
  					ATDTRole1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Deal Team", excelLabel.Variable_Name,"ATDT1", excelLabel.Role);
+ 					ATDTDealTeam1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Deal Team", excelLabel.Variable_Name,"ATDT1", excelLabel.DealTeamID);
  					
  					ATDTDealName2 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Deal Team", excelLabel.Variable_Name,"ATDT2", excelLabel.Deal_Name);
  					ATDTContact2 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Deal Team", excelLabel.Variable_Name,"ATDT2", excelLabel.Contact);

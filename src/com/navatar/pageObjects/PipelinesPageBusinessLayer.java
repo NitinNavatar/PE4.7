@@ -33,7 +33,7 @@ public class PipelinesPageBusinessLayer extends PipelinesPage {
 		// TODO Auto-generated constructor stub
 	}
 
-	public boolean fieldValueVerificationOnPipelinePage(String environment, String mode, TabName tabName,
+	public boolean fieldValueVerificationOnPipelinePage(String environment, String mode,
 			String labelName,String labelValue) {
 		String finalLabelName;
 		if (labelName.contains("_")) {
@@ -60,7 +60,7 @@ public class PipelinesPageBusinessLayer extends PipelinesPage {
 			
 		
 		xpath = "//span[text()='"+finalLabelName+"']/../following-sibling::div//*[text()='"+labelValue+"']";
-			
+		//span[text()="Active"]/../following-sibling::div//lightning-primitive-input-checkbox
 		
 		ele = 	FindElement(driver, xpath, finalLabelName + " label text with  " + labelValue, action.SCROLLANDBOOLEAN, 10);
 		scrollDownThroughWebelement(driver, ele, finalLabelName + " label text with  " + labelValue);

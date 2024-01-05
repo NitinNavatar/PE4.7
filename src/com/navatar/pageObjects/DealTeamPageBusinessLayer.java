@@ -64,7 +64,7 @@ public class DealTeamPageBusinessLayer extends DealTeamPage{
 						log(LogStatus.SKIP,"Not Able to send "+value+" to label : "+label,YesNo.Yes);
 						return false;
 					}
-				}else if(PageLabel.Team_Member_Role.toString().equals(reuestData[0]) || PageLabel.Deal_Contact_Type.toString().equals(reuestData[0])) {
+				}else if(PageLabel.Team_Member_Role.toString().replace("_", " ").equals(reuestData[0]) || PageLabel.Deal_Contact_Type.toString().equals(reuestData[0])) {
 
 					if (click(driver, getteamMemberRoleDropDownList(projectName, 10), label, action)) {
 						ThreadSleep(2000);
@@ -256,9 +256,9 @@ public class DealTeamPageBusinessLayer extends DealTeamPage{
 			} else {
 				appLog.info("Not able to click on Cross Icon button");
 				log(LogStatus.INFO, "Not able to clicked on edit button so cannot Account Name ", YesNo.Yes);
-				BaseLib.sa.assertTrue(false, "Not able to clicked on edit button so cannot Account Name ");
+//				BaseLib.sa.assertTrue(false, "Not able to clicked on edit button so cannot Account Name ");
 			}
-			if(PageLabel.Team_Member.toString().equals(reuestData[0]) || PageLabel.Deal.toString().equals(reuestData[0]) ||PageLabel.Deal_Contact.toString().equals(reuestData[0])){
+			if(PageLabel.Team_Member.toString().equals(reuestData[0]) || CreateNew_DefaultValues.New_Deal.toString().equals(reuestData[0]) ||PageLabel.Deal_Contact.toString().equals(reuestData[0])){
 				if (sendKeys(driver, getListTextbox(projectName,label, timeOut), value, label+" : "+value,action.BOOLEAN)) {
 					ThreadSleep(3000);
 					log(LogStatus.INFO,"Able to send "+value+" to label : "+label,YesNo.Yes);

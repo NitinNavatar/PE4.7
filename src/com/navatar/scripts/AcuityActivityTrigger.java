@@ -1,14 +1,23 @@
 package com.navatar.scripts;
 
+import static com.navatar.generic.CommonLib.FindElement;
 import static com.navatar.generic.CommonLib.ThreadSleep;
+import static com.navatar.generic.CommonLib.click;
 import static com.navatar.generic.CommonLib.clickUsingJavaScript;
 import static com.navatar.generic.CommonLib.exit;
 import static com.navatar.generic.CommonLib.getText;
+import static com.navatar.generic.CommonLib.isAlertPresent;
+import static com.navatar.generic.CommonLib.isDisplayed;
+import static com.navatar.generic.CommonLib.isSelected;
 import static com.navatar.generic.CommonLib.log;
 import static com.navatar.generic.CommonLib.refresh;
 import static com.navatar.generic.CommonLib.removeNumbersFromString;
+import static com.navatar.generic.CommonLib.scrollDownThroughWebelement;
+import static com.navatar.generic.CommonLib.selectVisibleTextFromDropDown;
+import static com.navatar.generic.CommonLib.sendKeys;
 import static com.navatar.generic.CommonLib.switchOnWindow;
 import static com.navatar.generic.CommonLib.switchToDefaultContent;
+import static com.navatar.generic.CommonLib.switchToFrame;
 import static com.navatar.generic.CommonVariables.*;
 import static com.navatar.generic.SmokeCommonVariables.adminPassword;
 import static com.navatar.generic.SmokeCommonVariables.crmUser1EmailID;
@@ -16,8 +25,10 @@ import static com.navatar.generic.SmokeCommonVariables.superAdminUserName;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -29,11 +40,21 @@ import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.EnumConstants.ActivityRelatedLabel;
 import com.navatar.generic.EnumConstants.ApiHeader;
+import com.navatar.generic.EnumConstants.CheckBox;
+import com.navatar.generic.EnumConstants.CreateNew_DefaultValues;
 import com.navatar.generic.EnumConstants.CreationPage;
+import com.navatar.generic.EnumConstants.EditPageLabel;
 import com.navatar.generic.EnumConstants.Environment;
+import com.navatar.generic.EnumConstants.InstRecordType;
+import com.navatar.generic.EnumConstants.Mode;
+import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.PageLabel;
+import com.navatar.generic.EnumConstants.PageName;
+import com.navatar.generic.EnumConstants.RelatedTab;
+import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
 import com.navatar.generic.EnumConstants.Stage;
 import com.navatar.generic.EnumConstants.TabName;
+import com.navatar.generic.EnumConstants.Watchlist;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
@@ -153,95 +174,95 @@ import com.relevantcodes.extentreports.LogStatus;
 		FundraisingsPageBusinessLayer target=new FundraisingsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);//change
 	
-//		String[][] entitys = {{ ATFirm1, ATRecordType1}, { ATFirm2, ATRecordType2},
-//				{ ATFirm3, ATRecordType3}, { ATFirm4, ATRecordType4}, { ATFirm5, ATRecordType5},{ ATFirm6, ATRecordType6}};
-//	
-//		ThreadSleep(5000);
-//		for(int i=0;i<entitys.length;i++) {
-//			if (lp.clickOnTab(projectName,mode, TabName.InstituitonsTab)) {
-//				log(LogStatus.INFO,"Click on Tab : "+TabName.InstituitonsTab,YesNo.No);	
-//	
-//				if (ip.createInstitution(environment, mode, entitys[i][0], entitys[i][1], null,null)) {
-//					log(LogStatus.INFO,"successfully Created Account/Entity : "+entitys[i][0]+" of record type : "+entitys[i][1],YesNo.No);	
-//				} else {
-//					sa.assertTrue(false,"Not Able to Create Account/Entity : "+entitys[i][0]+" of record type : "+entitys[i][1]);
-//					log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+entitys[i][0]+" of record type : "+entitys[i][1],YesNo.Yes);
-//				}
-//	
-//	
-//			} else {
-//				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.InstituitonsTab);
-//				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.InstituitonsTab,YesNo.Yes);
-//			}
-//	
-//		}
-//		
-//		refresh(driver);
-//		String[][] contacts = {{ATConFN1, ATConLN1,ATConFirm1,ATConEmail1},{ATConFN2, ATConLN2,ATConFirm2,ATConEmail2},
-//				{ATConFN3, ATConLN3,ATConFirm3,ATConEmail3},{ATConFN4, ATConLN4,ATConFirm4,ATConEmail4},
-//				{ATConFN5, ATConLN5,ATConFirm5,ATConEmail5},{ATConFN6, ATConLN6,ATConFirm6,ATConEmail6}};
-//	
-//		ThreadSleep(5000);
-//		for(int i=0;i<contacts.length;i++) {
-//			if (lp.clickOnTab(projectName,mode, TabName.ContactTab)) {
-//				log(LogStatus.INFO, "Click on Tab : " + TabName.ContactTab, YesNo.No);
-//	
-//				if (cp.createContact(projectName, contacts[i][0], contacts[i][1], contacts[i][2], contacts[i][3],
-//						"", null,null,CreationPage.ContactPage,null,null)) {//change
-//					log(LogStatus.INFO, "successfully Created Contact : " + contacts[i][0] + " " + contacts[i][1],
-//							YesNo.No);
-//				} else {
-//					sa.assertTrue(false, "Not Able to Create Contact : " + contacts[i][0] + " " + contacts[i][1]);
-//					log(LogStatus.SKIP, "Not Able to Create Contact: " + contacts[i][0] + " " + contacts[i][1],
-//							YesNo.Yes);
-//				}
-//	
-//			} else {
-//				sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.ContactTab);
-//				log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.ContactTab, YesNo.Yes);
-//			}
-//		}
-//	
-//	refresh(driver);	
-//		String[][] deals = {{ATDealName1, ATDealRT1, ATDealCompany1, ATDealStage1, ATDealStatus1},{ATDealName2, ATDealRT2, ATDealCompany2, ATDealStage2, ATDealStatus2}};
-//	
-//		ThreadSleep(5000);
-//		for(int i=0;i<deals.length;i++) {
-//			if (ip.clickOnTab(projectName, mode,TabName.Pipelines)) {
-//				if (fp.createDeal(projectName, mode,deals[i][1], deals[i][0], deals[i][2],deals[i][4],deals[i][3],null, 10)) {
-//					log(LogStatus.INFO,"successfully Created Deal : "+deals[i][0]+" of record type : "+deals[i][1],YesNo.No);	
-//				} else {
-//					sa.assertTrue(false,"Not Able to Create Deal : "+deals[i][0]+" of record type : "+deals[i][1]);
-//					log(LogStatus.SKIP,"Not Able to Create Deal : "+deals[i][0]+" of record type : "+deals[i][1],YesNo.Yes);
-//				}
-//			}else {
-//				log(LogStatus.FAIL, "Deal tab is not clickable", YesNo.Yes);
-//				sa.assertTrue(false, "Deal tab is not clickable");
-//			}
-//		}
-//	
-//		refresh(driver);
-//		ThreadSleep(2000);
-//		
-//		String[][] funds = {{ATFundName1, ATFundType1, ATFundCategory1},{ATFundName2, ATFundType2, ATFundCategory2}};
-//		for(int i=0;i<funds.length;i++) {
-//			if (ip.clickOnTab(projectName, mode,TabName.FundsTab)) {
-//				if (fund.createFund(projectName, funds[i][0], funds[i][1],funds[i][2], null, null)) {
-//					log(LogStatus.INFO,"successfully Created Deal : "+funds[i][0]+" of record type : "+funds[i][1],YesNo.No);	
-//				} else {
-//					sa.assertTrue(false,"Not Able to Create Deal : "+funds[i][0]+" of record type : "+funds[i][1]);
-//					log(LogStatus.SKIP,"Not Able to Create Deal : "+funds[i][0]+" of record type : "+funds[i][1],YesNo.Yes);
-//				}
-//			}else {
-//				log(LogStatus.FAIL, "Deal tab is not clickable", YesNo.Yes);
-//				sa.assertTrue(false, "Deal tab is not clickable");
-//			}
-//		}
-//	
-//	refresh(driver);
-//		ThreadSleep(2000);
-//		
-//		
+		String[][] entitys = {{ ATFirm1, ATRecordType1}, { ATFirm2, ATRecordType2},
+				{ ATFirm3, ATRecordType3}, { ATFirm4, ATRecordType4}, { ATFirm5, ATRecordType5},{ ATFirm6, ATRecordType6}};
+	
+		ThreadSleep(5000);
+		for(int i=0;i<entitys.length;i++) {
+			if (lp.clickOnTab(projectName,mode, TabName.InstituitonsTab)) {
+				log(LogStatus.INFO,"Click on Tab : "+TabName.InstituitonsTab,YesNo.No);	
+	
+				if (ip.createInstitution(environment, mode, entitys[i][0], entitys[i][1], null,null)) {
+					log(LogStatus.INFO,"successfully Created Account/Entity : "+entitys[i][0]+" of record type : "+entitys[i][1],YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Not Able to Create Account/Entity : "+entitys[i][0]+" of record type : "+entitys[i][1]);
+					log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+entitys[i][0]+" of record type : "+entitys[i][1],YesNo.Yes);
+				}
+	
+	
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.InstituitonsTab);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.InstituitonsTab,YesNo.Yes);
+			}
+	
+		}
+		
+		refresh(driver);
+		String[][] contacts = {{ATConFN1, ATConLN1,ATConFirm1,ATConEmail1},{ATConFN2, ATConLN2,ATConFirm2,ATConEmail2},
+				{ATConFN3, ATConLN3,ATConFirm3,ATConEmail3},{ATConFN4, ATConLN4,ATConFirm4,ATConEmail4},
+				{ATConFN5, ATConLN5,ATConFirm5,ATConEmail5},{ATConFN6, ATConLN6,ATConFirm6,ATConEmail6}};
+	
+		ThreadSleep(5000);
+		for(int i=0;i<contacts.length;i++) {
+			if (lp.clickOnTab(projectName,mode, TabName.ContactTab)) {
+				log(LogStatus.INFO, "Click on Tab : " + TabName.ContactTab, YesNo.No);
+	
+				if (cp.createContact(projectName, contacts[i][0], contacts[i][1], contacts[i][2], contacts[i][3],
+						"", null,null,CreationPage.ContactPage,null,null)) {//change
+					log(LogStatus.INFO, "successfully Created Contact : " + contacts[i][0] + " " + contacts[i][1],
+							YesNo.No);
+				} else {
+					sa.assertTrue(false, "Not Able to Create Contact : " + contacts[i][0] + " " + contacts[i][1]);
+					log(LogStatus.SKIP, "Not Able to Create Contact: " + contacts[i][0] + " " + contacts[i][1],
+							YesNo.Yes);
+				}
+	
+			} else {
+				sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.ContactTab);
+				log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.ContactTab, YesNo.Yes);
+			}
+		}
+	
+	refresh(driver);	
+		String[][] deals = {{ATDealName1, ATDealRT1, ATDealCompany1, ATDealStage1, ATDealStatus1},{ATDealName2, ATDealRT2, ATDealCompany2, ATDealStage2, ATDealStatus2}};
+	
+		ThreadSleep(5000);
+		for(int i=0;i<deals.length;i++) {
+			if (ip.clickOnTab(projectName, mode,TabName.Pipelines)) {
+				if (fp.createDeal(projectName, mode,deals[i][1], deals[i][0], deals[i][2],deals[i][4],deals[i][3],null, 10)) {
+					log(LogStatus.INFO,"successfully Created Deal : "+deals[i][0]+" of record type : "+deals[i][1],YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Not Able to Create Deal : "+deals[i][0]+" of record type : "+deals[i][1]);
+					log(LogStatus.SKIP,"Not Able to Create Deal : "+deals[i][0]+" of record type : "+deals[i][1],YesNo.Yes);
+				}
+			}else {
+				log(LogStatus.FAIL, "Deal tab is not clickable", YesNo.Yes);
+				sa.assertTrue(false, "Deal tab is not clickable");
+			}
+		}
+	
+		refresh(driver);
+		ThreadSleep(2000);
+		
+		String[][] funds = {{ATFundName1, ATFundType1, ATFundCategory1},{ATFundName2, ATFundType2, ATFundCategory2}};
+		for(int i=0;i<funds.length;i++) {
+			if (ip.clickOnTab(projectName, mode,TabName.FundsTab)) {
+				if (fund.createFund(projectName, funds[i][0], funds[i][1],funds[i][2], null, null)) {
+					log(LogStatus.INFO,"successfully Created Deal : "+funds[i][0]+" of record type : "+funds[i][1],YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Not Able to Create Deal : "+funds[i][0]+" of record type : "+funds[i][1]);
+					log(LogStatus.SKIP,"Not Able to Create Deal : "+funds[i][0]+" of record type : "+funds[i][1],YesNo.Yes);
+				}
+			}else {
+				log(LogStatus.FAIL, "Deal tab is not clickable", YesNo.Yes);
+				sa.assertTrue(false, "Deal tab is not clickable");
+			}
+		}
+	
+	refresh(driver);
+		ThreadSleep(2000);
+		
+		
 		String[][] targets = {{ATTargetName1, ATDealCompany1, ATFundName1, ATTargetStage1},
 				{ATTargetName2, ATDealCompany2, ATFundName2, ATTargetStage2}};
 	
@@ -266,6 +287,70 @@ import com.relevantcodes.extentreports.LogStatus;
 		lp.CRMlogout(environment, mode);//Change
 		sa.assertAll();
 	}
+//
+//@Parameters({ "environment", "mode" })
+//@Test
+//	public void AATc002_addField(String environment, String mode) {
+//		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+//		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+//		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+//		List<String> abc = null;
+//		lp.CRMLogin(superAdminUserName, adminPassword);
+//		if (home.clickOnSetUpLink(environment, mode)) {
+//			List<String> layoutName = new ArrayList<String>();
+//			layoutName.add("Pipeline Layout");
+//			HashMap<String, String> sourceANDDestination = new HashMap<String, String>();
+//			sourceANDDestination.put("Active", "Stage");
+//			abc = setup.DragNDrop(environment, mode, object.Deal, ObjectFeatureName.pageLayouts,
+//					layoutName, sourceANDDestination);
+//			
+//			if (!abc.isEmpty()) {
+//				log(LogStatus.FAIL, "field not added/already present 1", YesNo.Yes);
+//				sa.assertTrue(false, "field not added/already present 1");
+//			} else {
+//				log(LogStatus.INFO, "field added/already present 1", YesNo.Yes);
+//			}
+//		} else {
+//			sa.assertTrue(false, "Not able to click on setup link so cannot Add Field");
+//			log(LogStatus.FAIL, "Not able to click on setup link so cannot Add Field", YesNo.Yes);
+//		}
+//	
+//		ThreadSleep(5000);
+//		////////////////////////
+//	
+//		if (home.clickOnSetUpLink(environment, mode)) {
+//			List<String> layoutName = new ArrayList<String>();
+//			layoutName.add("Fundraising Layout");
+//			HashMap<String, String> sourceANDDestination = new HashMap<String, String>();
+//			sourceANDDestination.put("Active", "Fundraising Name");
+//			abc = setup.DragNDrop(environment, mode, object.Fundraising, ObjectFeatureName.pageLayouts,
+//					layoutName, sourceANDDestination);
+//	
+//			if (!abc.isEmpty()) {
+//				log(LogStatus.FAIL, "field not added/already present 2, Reason: " + abc, YesNo.Yes);
+//				sa.assertTrue(false, "field not added/already present 2, Reason: " + abc);
+//			} else {
+//				log(LogStatus.INFO, "field added/already present 2", YesNo.No);
+//	
+//			}
+//	
+//		} else {
+//			sa.assertTrue(false, "Not able to click on setup link so cannot Add Field");
+//			log(LogStatus.FAIL, "Not able to click on setup link so cannot Add Field", YesNo.Yes);
+//		}
+//	
+//		//////////////////////////
+//	
+//		if (lp.activateLighting(environment, Mode.Classic.toString(), 20)) {
+//			log(LogStatus.PASS, "Able to activated Lighting", YesNo.No);
+//		} else {
+//			log(LogStatus.FAIL, "No Able to activate Lighting", YesNo.Yes);
+//			sa.assertTrue(false, "No Able to activate Lighting");
+//		}
+//		home.switchToLighting();
+//		lp.CRMlogout(environment, mode);
+//		sa.assertAll();
+//	}
 
 @Parameters({ "projectName"})
 @Test
@@ -323,7 +408,7 @@ import com.relevantcodes.extentreports.LogStatus;
 		String contactName = ATDTContact1;
 		String role = ATDTRole1;
 	
-		String[][] data = { { PageLabel.Deal.toString(), dealName },
+		String[][] data = { { EditPageLabel.Deal.toString(), dealName },
 				{ PageLabel.Deal_Contact.toString(), contactName },
 				{ PageLabel.Role.toString(), role }};
 	
@@ -390,9 +475,85 @@ import com.relevantcodes.extentreports.LogStatus;
 		sa.assertAll();	
 	}
 
+@Parameters({ "projectName"})
+@Test
+	public void AATc006_VerifyActiveCheckboxOnDealAndFundraising(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		PipelinesPageBusinessLayer tp= new PipelinesPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		if (ip.clickOnTab(projectName, TabName.Deals)) {
+			  log(LogStatus.INFO, "Click on Tab : " + TabName.DealTab, YesNo.No);
+		      if (ip.clickOnAlreadyCreatedItem(projectName, TabName.DealTab, ATDealName1, 10)) {
+		    	  String[] fieldsWithValues= {PageLabel.Active.toString(),CheckBox.Checked.toString()};
+		    	  ThreadSleep(2000);
+					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+					click(driver, ele2, RelatedTab.Details.toString(), action.BOOLEAN);
+					ThreadSleep(3000);
+			tp.fieldValueVerificationOnPipelinePage(environment,mode, fieldsWithValues[0],fieldsWithValues[1]);
+			String xpath = "//span[text()='"+fieldsWithValues[0]+"']/../following-sibling::div//lightning-primitive-input-checkbox[@ " + fieldsWithValues[1] +" ]";
+			
+			WebElement ele = 	FindElement(driver, xpath, fieldsWithValues[0] + " label text with  " + fieldsWithValues[1], action.SCROLLANDBOOLEAN, 10);
+			scrollDownThroughWebelement(driver, ele, fieldsWithValues[0] + " label text with  " + fieldsWithValues[1]);
+			ele = 	isDisplayed(driver,ele,"Visibility", 10, fieldsWithValues[0] + " label text with  " + fieldsWithValues[1]);
+			if (ele != null) {
+				appLog.info(fieldsWithValues[0] + " label text with  " + fieldsWithValues[1]+" verified");
+			} else {
+				appLog.error("<<<<<<   "+fieldsWithValues[0] + " label text with  " + fieldsWithValues[1]+" not verified "+"   >>>>>>");
+			}
+
+			ThreadSleep(3000);
+		}else {
+			appLog.error("Deal name is not clickable so cannot verify Active checkbox functionality");
+			sa.assertTrue(false, "Deal name is not clickable so cannot verify Active checkbox functionality");
+		}
+		}else {
+			appLog.error("Deal tab is not clickable");
+			sa.assertTrue(false, "deal tab is not clickable");
+		}
+		
+		refresh(driver);
+		ThreadSleep(3000);
+		
+		if (ip.clickOnTab(projectName, TabName.FundraisingsTab)) {
+			  log(LogStatus.INFO, "Click on Tab : " + TabName.FundraisingsTab, YesNo.No);
+		      if (ip.clickOnAlreadyCreatedItem(projectName, TabName.FundraisingsTab, ATTargetName1, 10)) {
+		    	  String[] fieldsWithValues= {PageLabel.Active.toString(),CheckBox.Checked.toString()};
+		    	  ThreadSleep(2000);
+					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+					click(driver, ele2, RelatedTab.Details.toString(), action.BOOLEAN);
+					ThreadSleep(3000);
+			tp.fieldValueVerificationOnPipelinePage(environment,mode, fieldsWithValues[0],fieldsWithValues[1]);
+			String xpath = "//span[text()='"+fieldsWithValues[0]+"']/../following-sibling::div//lightning-primitive-input-checkbox[@ " + fieldsWithValues[1] +" ]";
+			
+			WebElement ele = 	FindElement(driver, xpath, fieldsWithValues[0] + " label text with  " + fieldsWithValues[1], action.SCROLLANDBOOLEAN, 10);
+			scrollDownThroughWebelement(driver, ele, fieldsWithValues[0] + " label text with  " + fieldsWithValues[1]);
+			ele = 	isDisplayed(driver,ele,"Visibility", 10, fieldsWithValues[0] + " label text with  " + fieldsWithValues[1]);
+			if (ele != null) {
+				appLog.info(fieldsWithValues[0] + " label text with  " + fieldsWithValues[1]+" verified");
+			} else {
+				appLog.error("<<<<<<   "+fieldsWithValues[0] + " label text with  " + fieldsWithValues[1]+" not verified "+"   >>>>>>");
+			}
+
+			ThreadSleep(3000);
+		}else {
+			appLog.error("Fundraising name is not clickable so cannot verify Active checkbox functionality");
+			sa.assertTrue(false, "Fundraising name is not clickable so cannot verify Active checkbox functionality");
+		}
+		}else {
+			appLog.error("Fundraising tab is not clickable");
+			sa.assertTrue(false, "Fundraising tab is not clickable");
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
 @Parameters({ "projectName" })
 @Test
-	public void AATc006_CreateRevenueInboxEvent(String projectName) {
+	public void AATc007_CreateRevenueInboxEvent(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
@@ -404,8 +565,8 @@ import com.relevantcodes.extentreports.LogStatus;
 		String dealName = ATDealName1;
 		String targetName = ATTargetName1;
 		String[] firmsTaggedName = {ATFirm1};
-		String[] firmsTaggedCount = {"2"};
-		String[] contactsTaggedCount = {"2"};
+		String[] firmsTaggedCount = {"1"};
+		String[] contactsTaggedCount = {"1"};
 //		String[] userAndContact6=ATETRelated1.split("<userBreak>");
 //		String eventAttendees6=userAndContact6[0];
 		String startDate6 = todaysDate;
@@ -543,7 +704,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 @Parameters({ "projectName" })
 @Test
-	public void AATc007_CreateRevenueInboxCall(String projectName) {
+	public void AATc008_CreateRevenueInboxCall(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -662,7 +823,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 @Parameters({ "projectName" })
 @Test
-	public void AATc008_CreateRevenueInboxTask(String projectName) {
+	public void AATc009_CreateRevenueInboxTask(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -817,7 +978,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 @Parameters({ "projectName" })
 @Test
-	public void AATc009_ChangeDealStageToDecline(String projectName) {
+	public void AATc010_ChangeDealStageToDecline(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	DealPageBusinessLayer dp=new DealPageBusinessLayer(driver);
@@ -853,9 +1014,52 @@ import com.relevantcodes.extentreports.LogStatus;
 	sa.assertAll();	
 	}
 
+@Parameters({ "projectName"})
+@Test
+	public void AATc011_VerifyInactiveCheckboxOnDeal(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		PipelinesPageBusinessLayer tp= new PipelinesPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		if (ip.clickOnTab(projectName, TabName.Deals)) {
+			  log(LogStatus.INFO, "Click on Tab : " + TabName.DealTab, YesNo.No);
+		      if (ip.clickOnAlreadyCreatedItem(projectName, TabName.DealTab, ATDealName1, 10)) {
+		    	  String[] fieldsWithValues= {PageLabel.Active.toString(),CheckBox.Checked.toString()};
+		    	  ThreadSleep(2000);
+					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+					click(driver, ele2, RelatedTab.Details.toString(), action.BOOLEAN);
+					ThreadSleep(3000);
+			tp.fieldValueVerificationOnPipelinePage(environment,mode, fieldsWithValues[0],fieldsWithValues[1]);
+			String xpath = "//span[text()='"+fieldsWithValues[0]+"']/../following-sibling::div//lightning-primitive-input-checkbox[@ " + fieldsWithValues[1] +" ]";
+			
+			WebElement ele = 	FindElement(driver, xpath, fieldsWithValues[0] + " label text with  " + fieldsWithValues[1], action.SCROLLANDBOOLEAN, 10);
+			scrollDownThroughWebelement(driver, ele, fieldsWithValues[0] + " label text with  " + fieldsWithValues[1]);
+			ele = 	isDisplayed(driver,ele,"Visibility", 10, fieldsWithValues[0] + " label text with  " + fieldsWithValues[1]);
+			if (ele == null) {
+				appLog.info(fieldsWithValues[0] + " label text with  " + fieldsWithValues[1]+" verified");
+			} else {
+				appLog.error("<<<<<<   "+fieldsWithValues[0] + " label text with  " + fieldsWithValues[1]+" not verified "+"   >>>>>>");
+			}
+
+			ThreadSleep(3000);
+		}else {
+			appLog.error("Deal name is not clickable so cannot verify Active checkbox functionality");
+			sa.assertTrue(false, "Deal name is not clickable so cannot verify Active checkbox functionality");
+		}
+		}else {
+			appLog.error("Deal tab is not clickable");
+			sa.assertTrue(false, "deal tab is not clickable");
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
 @Parameters({ "projectName" })
 @Test
-	public void AATc010_CreateRevenueInboxEvent(String projectName) {
+	public void AATc012_CreateRevenueInboxEvent(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -949,6 +1153,17 @@ import com.relevantcodes.extentreports.LogStatus;
 				log(LogStatus.ERROR, "Records on Intraction card is not created with name " + subject, YesNo.No);
 				sa.assertTrue(false, "Records on Intraction card is not created with name " + subject);
 			}
+			
+			if (BP.InteractionRecord(eventTitle6, 7) == null) {
+				log(LogStatus.INFO, "Subject: " + eventTitle6 + " not found on All Interaction Page",
+						YesNo.No);
+
+			} else {
+				log(LogStatus.ERROR, "Subject: " + eventTitle6 + " found on All Interaction Page",
+						YesNo.Yes);
+				sa.assertTrue(false, "Subject: " + eventTitle6 + " found on All Interaction Page");
+
+			}
 				}
 		} else {
 			log(LogStatus.ERROR, "Not able to click on " + dealName, YesNo.No);
@@ -991,7 +1206,7 @@ import com.relevantcodes.extentreports.LogStatus;
 	
 @Parameters({ "projectName" })
 @Test
-	public void AATc011_CreateRevenueInboxCall(String projectName) {
+	public void AATc013_CreateRevenueInboxCall(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -1069,6 +1284,17 @@ import com.relevantcodes.extentreports.LogStatus;
 				log(LogStatus.ERROR, "Records on Intraction card is not created with name " + subject, YesNo.No);
 				sa.assertTrue(false, "Records on Intraction card is not created with name " + subject);
 			}
+			
+			if (BP.InteractionRecord(taskSubject1, 7) == null) {
+				log(LogStatus.INFO, "Subject: " + taskSubject1 + " not found on All Interaction Page",
+						YesNo.No);
+
+			} else {
+				log(LogStatus.ERROR, "Subject: " + taskSubject1 + " found on All Interaction Page",
+						YesNo.Yes);
+				sa.assertTrue(false, "Subject: " + taskSubject1 + " found on All Interaction Page");
+
+			}
 				}
 		} else {
 			log(LogStatus.ERROR, "Not able to click on " + dealName, YesNo.No);
@@ -1110,7 +1336,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 @Parameters({ "projectName" })
 @Test
-	public void AATc012_CreateRevenueInboxTask(String projectName) {
+	public void AATc014_CreateRevenueInboxTask(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -1198,6 +1424,17 @@ import com.relevantcodes.extentreports.LogStatus;
 				log(LogStatus.ERROR, "Records on Intraction card is not created with name " + subject, YesNo.No);
 				sa.assertTrue(false, "Records on Intraction card is not created with name " + subject);
 			}
+			
+			if (BP.InteractionRecord(taskSubject1, 7) == null) {
+				log(LogStatus.INFO, "Subject: " + taskSubject1 + " not found on All Interaction Page",
+						YesNo.No);
+
+			} else {
+				log(LogStatus.ERROR, "Subject: " + taskSubject1 + " found on All Interaction Page",
+						YesNo.Yes);
+				sa.assertTrue(false, "Subject: " + taskSubject1 + " found on All Interaction Page");
+
+			}
 				}
 			
 			ThreadSleep(2000);
@@ -1270,7 +1507,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 @Parameters({ "projectName" })
 @Test
-	public void AATc013_ChangeDealStageToDecline(String projectName) {
+	public void AATc015_ChangeDealStageToDecline(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	DealPageBusinessLayer dp=new DealPageBusinessLayer(driver);
@@ -1334,9 +1571,85 @@ import com.relevantcodes.extentreports.LogStatus;
 	sa.assertAll();	
 	}
 
+@Parameters({ "projectName"})
+@Test
+	public void AATc016_VerifyActiveDealAndInActiveFundraising(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		PipelinesPageBusinessLayer tp= new PipelinesPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		if (ip.clickOnTab(projectName, TabName.Deals)) {
+			  log(LogStatus.INFO, "Click on Tab : " + TabName.DealTab, YesNo.No);
+		      if (ip.clickOnAlreadyCreatedItem(projectName, TabName.DealTab, ATDealName1, 10)) {
+		    	  String[] fieldsWithValues= {PageLabel.Active.toString(),CheckBox.Checked.toString()};
+		    	  ThreadSleep(2000);
+					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+					click(driver, ele2, RelatedTab.Details.toString(), action.BOOLEAN);
+					ThreadSleep(3000);
+			tp.fieldValueVerificationOnPipelinePage(environment,mode, fieldsWithValues[0],fieldsWithValues[1]);
+			String xpath = "//span[text()='"+fieldsWithValues[0]+"']/../following-sibling::div//lightning-primitive-input-checkbox[@ " + fieldsWithValues[1] +" ]";
+			
+			WebElement ele = 	FindElement(driver, xpath, fieldsWithValues[0] + " label text with  " + fieldsWithValues[1], action.SCROLLANDBOOLEAN, 10);
+			scrollDownThroughWebelement(driver, ele, fieldsWithValues[0] + " label text with  " + fieldsWithValues[1]);
+			ele = 	isDisplayed(driver,ele,"Visibility", 10, fieldsWithValues[0] + " label text with  " + fieldsWithValues[1]);
+			if (ele != null) {
+				appLog.info(fieldsWithValues[0] + " label text with  " + fieldsWithValues[1]+" verified");
+			} else {
+				appLog.error("<<<<<<   "+fieldsWithValues[0] + " label text with  " + fieldsWithValues[1]+" not verified "+"   >>>>>>");
+			}
+
+			ThreadSleep(3000);
+		}else {
+			appLog.error("Deal name is not clickable so cannot verify Active checkbox functionality");
+			sa.assertTrue(false, "Deal name is not clickable so cannot verify Active checkbox functionality");
+		}
+		}else {
+			appLog.error("Deal tab is not clickable");
+			sa.assertTrue(false, "deal tab is not clickable");
+		}
+		
+		refresh(driver);
+		ThreadSleep(3000);
+		
+		if (ip.clickOnTab(projectName, TabName.FundraisingsTab)) {
+			  log(LogStatus.INFO, "Click on Tab : " + TabName.FundraisingsTab, YesNo.No);
+		      if (ip.clickOnAlreadyCreatedItem(projectName, TabName.FundraisingsTab, ATTargetName1, 10)) {
+		    	  String[] fieldsWithValues= {PageLabel.Active.toString(),CheckBox.Checked.toString()};
+		    	  ThreadSleep(2000);
+					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+					click(driver, ele2, RelatedTab.Details.toString(), action.BOOLEAN);
+					ThreadSleep(3000);
+			tp.fieldValueVerificationOnPipelinePage(environment,mode, fieldsWithValues[0],fieldsWithValues[1]);
+			String xpath = "//span[text()='"+fieldsWithValues[0]+"']/../following-sibling::div//lightning-primitive-input-checkbox[@ " + fieldsWithValues[1] +" ]";
+			
+			WebElement ele = 	FindElement(driver, xpath, fieldsWithValues[0] + " label text with  " + fieldsWithValues[1], action.SCROLLANDBOOLEAN, 10);
+			scrollDownThroughWebelement(driver, ele, fieldsWithValues[0] + " label text with  " + fieldsWithValues[1]);
+			ele = 	isDisplayed(driver,ele,"Visibility", 10, fieldsWithValues[0] + " label text with  " + fieldsWithValues[1]);
+			if (ele == null) {
+				appLog.info(fieldsWithValues[0] + " label text with  " + fieldsWithValues[1]+" verified");
+			} else {
+				appLog.error("<<<<<<   "+fieldsWithValues[0] + " label text with  " + fieldsWithValues[1]+" not verified "+"   >>>>>>");
+			}
+
+			ThreadSleep(3000);
+		}else {
+			appLog.error("Fundraising name is not clickable so cannot verify Active checkbox functionality");
+			sa.assertTrue(false, "Fundraising name is not clickable so cannot verify Active checkbox functionality");
+		}
+		}else {
+			appLog.error("Fundraising tab is not clickable");
+			sa.assertTrue(false, "Fundraising tab is not clickable");
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
 @Parameters({ "projectName" })
 @Test
-	public void AATc014_CreateRevenueInboxEvent(String projectName) {
+	public void AATc017_CreateRevenueInboxEvent(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		
@@ -1465,6 +1778,18 @@ import com.relevantcodes.extentreports.LogStatus;
 				log(LogStatus.ERROR, "Records on Intraction card is not created with name " + subject, YesNo.No);
 				sa.assertTrue(false, "Records on Intraction card is not created with name " + subject);
 			}
+			
+			if (BP.getActivityTimelineSubjectinAllIntearctionPage(eventTitle6, 7) == null) {
+				log(LogStatus.INFO, "Subject: " + eventTitle6 + " not found on All Interaction Page",
+						YesNo.No);
+
+			} else {
+				log(LogStatus.ERROR, "Subject: " + eventTitle6 + " found on All Interaction Page",
+						YesNo.Yes);
+				sa.assertTrue(false, "Subject: " + eventTitle6 + " found on All Interaction Page");
+
+			}
+			
 				}
 		} else {
 			log(LogStatus.ERROR, "Not able to click on " + targetName, YesNo.No);
@@ -1481,7 +1806,7 @@ import com.relevantcodes.extentreports.LogStatus;
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void AATc015_CreateRevenueInboxCall(String projectName) {
+	public void AATc018_CreateRevenueInboxCall(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -1586,6 +1911,17 @@ import com.relevantcodes.extentreports.LogStatus;
 				log(LogStatus.ERROR, "Records on Intraction card is not created with name " + subject, YesNo.No);
 				sa.assertTrue(false, "Records on Intraction card is not created with name " + subject);
 			}
+			
+			if (BP.getActivityTimelineSubjectinAllIntearctionPage(taskSubject1, 7) == null) {
+				log(LogStatus.INFO, "Subject: " + taskSubject1 + " not found on All Interaction Page",
+						YesNo.No);
+
+			} else {
+				log(LogStatus.ERROR, "Subject: " + taskSubject1 + " found on All Interaction Page",
+						YesNo.Yes);
+				sa.assertTrue(false, "Subject: " + taskSubject1 + " found on All Interaction Page");
+
+			}
 				}
 		} else {
 			log(LogStatus.ERROR, "Not able to click on " + targetName, YesNo.No);
@@ -1601,7 +1937,7 @@ import com.relevantcodes.extentreports.LogStatus;
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void AATc016_CreateRevenueInboxTask(String projectName) {
+	public void AATc019_CreateRevenueInboxTask(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -1690,6 +2026,7 @@ import com.relevantcodes.extentreports.LogStatus;
 						log(LogStatus.ERROR, "Records on Intraction card is not created with name " + subject, YesNo.No);
 						sa.assertTrue(false, "Records on Intraction card is not created with name " + subject);
 					}
+					
 				}
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, BP.getPeopleTabOnTagged(10), "People Tab");
@@ -1731,6 +2068,17 @@ import com.relevantcodes.extentreports.LogStatus;
 					log(LogStatus.ERROR, "Records on Intraction card is not created with name " + subject, YesNo.No);
 					sa.assertTrue(false, "Records on Intraction card is not created with name " + subject);
 				}
+				
+				if (BP.getActivityTimelineSubjectinAllIntearctionPage(taskSubject1, 7) == null) {
+					log(LogStatus.INFO, "Subject: " + taskSubject1 + " not found on All Interaction Page",
+							YesNo.No);
+
+				} else {
+					log(LogStatus.ERROR, "Subject: " + taskSubject1 + " found on All Interaction Page",
+							YesNo.Yes);
+					sa.assertTrue(false, "Subject: " + taskSubject1 + " found on All Interaction Page");
+
+				}
 					}
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, BP.getPeopleTabOnTagged(10), "People Tab");
@@ -1761,7 +2109,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 @Parameters({ "projectName" })
 @Test
-	public void AATc017_CreateDealTeam_VerifyImpact(String projectName) {
+	public void AATc020_CreateDealTeam_VerifyImpact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DealTeamPageBusinessLayer DTP = new DealTeamPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
@@ -1771,7 +2119,7 @@ import com.relevantcodes.extentreports.LogStatus;
 		String contactName = ATDTContact2;
 		String role = ATDTRole2;
 	
-		String[][] data = { { PageLabel.Deal.toString(), dealName },
+		String[][] data = { { EditPageLabel.Deal.toString(), dealName },
 				{ PageLabel.Deal_Contact.toString(), contactName },
 				{ PageLabel.Role.toString(), role }};
 	
@@ -1807,7 +2155,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 @Parameters({ "projectName" })
 @Test
-	public void AATc018_CreateContactContactRole_VerifyImpact(String projectName) {
+	public void AATc021_CreateContactContactRole_VerifyImpact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundRaisingPageBusinessLayer tp=new FundRaisingPageBusinessLayer(driver);
@@ -1839,7 +2187,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 @Parameters({ "projectName" })
 @Test
-	public void AATc019_CreateRevenueInboxEvent(String projectName) {
+	public void AATc022_CreateRevenueInboxEvent(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -1918,6 +2266,34 @@ import com.relevantcodes.extentreports.LogStatus;
 		}
 		
 		ThreadSleep(2000);
+			if (lp.clickOnTab(projectName, TabName.Deals)) {
+				
+				log(LogStatus.INFO, "Click on Tab : " + TabName.Deals, YesNo.No);
+				ThreadSleep(3000);
+				
+			if(lp.clickOnAlreadyCreated(environment, mode,TabName.Pipelines , dealName, 10)){
+				log(LogStatus.INFO, "Click on contact : " + dealName, YesNo.No);
+				ThreadSleep(5000);
+				for(String subject : subjects) { 
+				if (!BP.verifySubjectOfInteractionEitherOnCardOrInViewAllPopUp(subject)) {
+					log(LogStatus.ERROR, "Records on Intraction card is not created with name " + subject, YesNo.No);
+				} else {
+					log(LogStatus.INFO,
+							"Records on Intraction card have been verified with name " + subject,
+							YesNo.No);
+					sa.assertTrue(false, "Records on Intraction card have been verified with name " + subject);
+				}
+					}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on " + dealName, YesNo.No);
+				sa.assertTrue(false, "Not able to click on " + dealName);
+			}
+		}else {
+			log(LogStatus.ERROR, "could not click on " + TabName.Deals, YesNo.Yes);
+			sa.assertTrue(false,"could not click on " + TabName.Deals );
+		}		
+			
+		ThreadSleep(2000);
 		if (lp.clickOnTab(projectName, TabName.FundraisingsTab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.FundraisingsTab, YesNo.No);
 			ThreadSleep(3000);
@@ -1926,13 +2302,13 @@ import com.relevantcodes.extentreports.LogStatus;
 			log(LogStatus.INFO, "Click on contact : " + targetName, YesNo.No);
 			ThreadSleep(5000);
 			for(String subject : subjects) { 
-			if (BP.InteractionRecord(subject,10) != null) {
+			if (BP.InteractionRecord(subject,10) == null) {
+				log(LogStatus.ERROR, "Records on Intraction card is not created with name " + subject, YesNo.No);
+			} else {
 				log(LogStatus.INFO,
 						"Records on Intraction card have been verified with name " + subject,
 						YesNo.No);
-			} else {
-				log(LogStatus.ERROR, "Records on Intraction card is not created with name " + subject, YesNo.No);
-				sa.assertTrue(false, "Records on Intraction card is not created with name " + subject);
+				sa.assertTrue(false, "Records on Intraction card have been verified with name " + subject);
 			}
 				}
 		} else {
@@ -1950,7 +2326,7 @@ import com.relevantcodes.extentreports.LogStatus;
 	
 @Parameters({ "projectName" })
 @Test
-	public void AATc020_CreateRevenueInboxCall(String projectName) {
+	public void AATc023_CreateRevenueInboxCall(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -2010,6 +2386,34 @@ import com.relevantcodes.extentreports.LogStatus;
 	}
 	
 		ThreadSleep(2000);
+		if (lp.clickOnTab(projectName, TabName.Deals)) {
+			
+			log(LogStatus.INFO, "Click on Tab : " + TabName.Deals, YesNo.No);
+			ThreadSleep(3000);
+			
+		if(lp.clickOnAlreadyCreated(environment, mode,TabName.Pipelines , dealName, 10)){
+			log(LogStatus.INFO, "Click on contact : " + dealName, YesNo.No);
+			ThreadSleep(5000);
+			for(String subject : subjects) { 
+			if (!BP.verifySubjectOfInteractionEitherOnCardOrInViewAllPopUp(subject)) {
+				log(LogStatus.ERROR, "Records on Intraction card is not created with name " + subject, YesNo.No);
+			} else {
+				log(LogStatus.INFO,
+						"Records on Intraction card have been verified with name " + subject,
+						YesNo.No);
+				sa.assertTrue(false, "Records on Intraction card have been verified with name " + subject);
+			}
+				}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + dealName, YesNo.No);
+			sa.assertTrue(false, "Not able to click on " + dealName);
+		}
+	}else {
+		log(LogStatus.ERROR, "could not click on " + TabName.Deals, YesNo.Yes);
+		sa.assertTrue(false,"could not click on " + TabName.Deals );
+	}		
+		
+		ThreadSleep(2000);
 		if (lp.clickOnTab(projectName, TabName.FundraisingsTab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.FundraisingsTab, YesNo.No);
 			ThreadSleep(3000);
@@ -2018,15 +2422,15 @@ import com.relevantcodes.extentreports.LogStatus;
 			log(LogStatus.INFO, "Click on contact : " + targetName, YesNo.No);
 			ThreadSleep(5000);
 			for(String subject : subjects) { 
-			if (BP.InteractionRecord(subject,10) != null) {
-				log(LogStatus.INFO,
-						"Records on Intraction card have been verified with name " + subject,
-						YesNo.No);
-			} else {
-				log(LogStatus.ERROR, "Records on Intraction card is not created with name " + subject, YesNo.No);
-				sa.assertTrue(false, "Records on Intraction card is not created with name " + subject);
-			}
+				if (!BP.verifySubjectOfInteractionEitherOnCardOrInViewAllPopUp(subject)) {
+					log(LogStatus.ERROR, "Records on Intraction card is not created with name " + subject, YesNo.No);
+				} else {
+					log(LogStatus.INFO,
+							"Records on Intraction card have been verified with name " + subject,
+							YesNo.No);
+					sa.assertTrue(false, "Records on Intraction card have been verified with name " + subject);
 				}
+					}
 		} else {
 			log(LogStatus.ERROR, "Not able to click on " + targetName, YesNo.No);
 			sa.assertTrue(false, "Not able to click on " + targetName);
@@ -2041,7 +2445,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 @Parameters({ "projectName" })
 @Test
-	public void AATc021_CreateRevenueInboxTask(String projectName) {
+	public void AATc024_CreateRevenueInboxTask(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -2057,7 +2461,6 @@ import com.relevantcodes.extentreports.LogStatus;
 		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
 				"ATET12", excelLabel.Advance_Due_Date);
 //		String assignedTo1=ATETPriority12;
-		String status=ATETStatus12;
 		
 		String[][] basicsection1 = { { excelLabel.Subject.toString(), taskSubject1 }, { excelLabel.Notes.toString(), taskNotes1 }, { excelLabel.Related_To.toString(), taskRelatedTo1 } };
 		String[][] advanceSection1 = { { excelLabel.Due_Date.toString(), taskDueDate1 } };
@@ -2070,6 +2473,34 @@ import com.relevantcodes.extentreports.LogStatus;
 			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
 			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
 		}	
+		
+		ThreadSleep(2000);
+		if (lp.clickOnTab(projectName, TabName.Deals)) {
+			
+			log(LogStatus.INFO, "Click on Tab : " + TabName.Deals, YesNo.No);
+			ThreadSleep(3000);
+			
+		if(lp.clickOnAlreadyCreated(environment, mode,TabName.Pipelines , dealName, 10)){
+			log(LogStatus.INFO, "Click on contact : " + dealName, YesNo.No);
+			ThreadSleep(5000);
+			for(String subject : subjects) { 
+			if (!BP.verifySubjectOfInteractionEitherOnCardOrInViewAllPopUp(subject)) {
+				log(LogStatus.ERROR, "Records on Intraction card is not created with name " + subject, YesNo.No);
+			} else {
+				log(LogStatus.INFO,
+						"Records on Intraction card have been verified with name " + subject,
+						YesNo.No);
+				sa.assertTrue(false, "Records on Intraction card have been verified with name " + subject);
+			}
+				}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + dealName, YesNo.No);
+			sa.assertTrue(false, "Not able to click on " + dealName);
+		}
+	}else {
+		log(LogStatus.ERROR, "could not click on " + TabName.Deals, YesNo.Yes);
+		sa.assertTrue(false,"could not click on " + TabName.Deals );
+	}		
 				
 		ThreadSleep(2000);
 		if (lp.clickOnTab(projectName, TabName.FundraisingsTab)) {
@@ -2080,15 +2511,15 @@ import com.relevantcodes.extentreports.LogStatus;
 			log(LogStatus.INFO, "Click on contact : " + targetName, YesNo.No);
 			ThreadSleep(5000);
 			for(String subject : subjects) { 
-			if (BP.InteractionRecord(subject,10) != null) {
-				log(LogStatus.INFO,
-						"Records on Intraction card have been verified with name " + subject,
-						YesNo.No);
-			} else {
-				log(LogStatus.ERROR, "Records on Intraction card is not created with name " + subject, YesNo.No);
-				sa.assertTrue(false, "Records on Intraction card is not created with name " + subject);
-			}
+				if (!BP.verifySubjectOfInteractionEitherOnCardOrInViewAllPopUp(subject)) {
+					log(LogStatus.ERROR, "Records on Intraction card is not created with name " + subject, YesNo.No);
+				} else {
+					log(LogStatus.INFO,
+							"Records on Intraction card have been verified with name " + subject,
+							YesNo.No);
+					sa.assertTrue(false, "Records on Intraction card have been verified with name " + subject);
 				}
+					}
 		} else {
 			log(LogStatus.ERROR, "Not able to click on " + targetName, YesNo.No);
 			sa.assertTrue(false, "Not able to click on " + targetName);
@@ -2103,7 +2534,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 @Parameters({ "projectName" })
 @Test
-	public void AATc022_UpdateContactOnTask(String projectName) {
+	public void AATc025_UpdateContactOnTask(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		DealTeamPageBusinessLayer DTP = new DealTeamPageBusinessLayer(driver);
@@ -2134,7 +2565,192 @@ import com.relevantcodes.extentreports.LogStatus;
 				log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
 				
 
-				if (BP.updateActivityTimelineRecord(projectName, basicsection1, null, null, null, removesection1)) {
+				if (BP.updateActivityTimelineRecord(projectName, null, null, null, null, removesection1)) {
+					log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
+					sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
+				} else {
+					log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
+					sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
+				} 
+				
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Not able to click on edit button of subject "+taskSubject1,YesNo.No);
+				BaseLib.sa.assertTrue(false,"Not able to click on edit button of subject "+taskSubject1);
+				
+			}
+			
+			
+		}
+		 else {
+
+				log(LogStatus.ERROR, "-----Task named: " + taskSubject1 + " not found in Tasks Object-----",YesNo.Yes);
+				BaseLib.sa.assertTrue(false,"-----Task named: " + taskSubject1 + " not found in Tasks Object-----");
+
+			}	
+//	ThreadSleep(5000);	
+//	if (BP.openAppFromAppLauchner(60, "Deal Team")) {
+//		log(LogStatus.INFO, "Click on Tab : " + TabName.Deal_Team, YesNo.No);
+//	    ThreadSleep(2000);
+//		if (DTP.createDealTeam(projectName, dealName, data,TabName.Acuity.toString(), action.SCROLLANDBOOLEAN, 25)) {
+//			log(LogStatus.INFO, "----Successfully Created the Deal Team for Deal: " + dealName + "----", YesNo.No);
+//	
+//			log(LogStatus.INFO,
+//					"---------Now Going to Check Deal Team Count should get increase by one for Contact named "
+//							+ contactName + " at Firm Tab under Acuity section---------",
+//					YesNo.No);
+//				WebElement ele = DTP.getDealTeamID(10);
+//					if (ele != null) {
+//						String id = getText(driver, ele, "deal team id", action.SCROLLANDBOOLEAN);
+//						ExcelUtils.writeData(AcuityDataSheetFilePath, id, "Deal Team", excelLabel.Variable_Name, "ATDT3",
+//								excelLabel.DealTeamID);
+//						log(LogStatus.INFO, "successfully created and noted id of DT" + id + " and deal name " + dealName,
+//								YesNo.No);
+//					}
+//				} else {
+//					sa.assertTrue(false, "could not create DT" + dealName);
+//					log(LogStatus.SKIP, "could not create DT" + dealName, YesNo.Yes);
+//				}
+//			} else {
+//					log(LogStatus.ERROR, "Not able to click on " + TabName.Deal_Team + " tab", YesNo.Yes);
+//					sa.assertTrue(false, "Not able to click on " + TabName.Deal_Team + " tab");
+//			}			
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+@Parameters({ "projectName" })
+@Test
+	public void AATc026_VerifyImpactAfterRemovingContactFromTask(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		ThreadSleep(5000);
+	
+		String eventTitle6= ATETSubject1;
+		String[] contactName = {ATConFN1 +" "+ ATConLN1};
+		String dealName = ATDealName1;
+		String targetName = ATTargetName1;
+		String[] firmsTaggedName = {ATFirm1};
+		
+		ThreadSleep(2000);
+		if (lp.clickOnTab(projectName, TabName.Pipelines)) {
+			
+			log(LogStatus.INFO, "Click on Tab : " + TabName.Pipelines, YesNo.No);
+			ThreadSleep(3000);
+			
+		if(lp.clickOnAlreadyCreated(environment, mode,TabName.Pipelines , dealName, 10)){
+			log(LogStatus.INFO, "Click on contact : " + dealName, YesNo.No);
+			ThreadSleep(5000);
+		
+		clickUsingJavaScript(driver, BP.getPeopleTabOnTagged(10), "People Tab");
+		ThreadSleep(4000);
+		
+		ArrayList<String> result5=BP.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, null, contactName, null, null, null, false,null,null);
+		if(result5.isEmpty())
+		{
+			log(LogStatus.INFO, "The record name and Contact Name have been verifed", YesNo.No);
+		}
+		else
+		{
+			log(LogStatus.ERROR,  "The record name and Contact Name are not verifed. "+result5, YesNo.No);
+			sa.assertTrue(false,  "The record name and Contact Name are not verifed."+result5);
+		}
+		
+			if (BP.verifySubjectOfInteractionEitherOnCardOrInViewAllPopUp(eventTitle6)) {
+				log(LogStatus.INFO,
+						"Records on Intraction card have been verified with name "+eventTitle6 ,
+						YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Records on Intraction card is not created with name "+eventTitle6 , YesNo.No);
+				sa.assertTrue(false, "Records on Intraction card is not created with name "+eventTitle6 );
+			}
+		
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + dealName, YesNo.No);
+			sa.assertTrue(false, "Not able to click on " + dealName);
+		}
+		}else {
+			log(LogStatus.ERROR, "could not click on " + TabName.Pipelines, YesNo.Yes);
+			sa.assertTrue(false,"could not click on " + TabName.Pipelines );
+		}
+		
+		ThreadSleep(2000);
+		if (lp.clickOnTab(projectName, TabName.FundraisingsTab)) {
+			
+			log(LogStatus.INFO, "Click on Tab : " + TabName.FundraisingsTab, YesNo.No);
+			ThreadSleep(3000);
+			
+		if(lp.clickOnAlreadyCreated(environment, mode,TabName.FundraisingsTab , targetName, 10)){
+			log(LogStatus.INFO, "Click on contact : " + targetName, YesNo.No);
+			ThreadSleep(5000);
+		
+		clickUsingJavaScript(driver, BP.getPeopleTabOnTagged(10), "People Tab");
+		ThreadSleep(4000);
+		
+		ArrayList<String> result5=BP.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, null, contactName, null, null, null, false,null,null);
+		if(result5.isEmpty())
+		{
+			log(LogStatus.INFO, "The record name and Contact Name have been verifed", YesNo.No);
+		}
+		else
+		{
+			log(LogStatus.ERROR,  "The record name and Contact Name are not verifed. "+result5, YesNo.No);
+			sa.assertTrue(false,  "The record name and Contact Name are not verifed."+result5);
+		}
+		
+		if (BP.verifySubjectOfInteractionEitherOnCardOrInViewAllPopUp(eventTitle6)) {
+			log(LogStatus.INFO,
+					"Records on Intraction card have been verified with name "+eventTitle6 ,
+					YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Records on Intraction card is not created with name "+eventTitle6 , YesNo.No);
+			sa.assertTrue(false, "Records on Intraction card is not created with name "+eventTitle6 );
+		}
+		
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + targetName, YesNo.No);
+			sa.assertTrue(false, "Not able to click on " + targetName);
+		}
+		}else {
+			log(LogStatus.ERROR, "could not click on " + TabName.FundraisingsTab, YesNo.Yes);
+			sa.assertTrue(false,"could not click on " + TabName.FundraisingsTab );
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+@Parameters({ "projectName" })
+@Test
+	public void AATc027_UpdateContactOnTaskAndDealTeam(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		DealTeamPageBusinessLayer DTP = new DealTeamPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		
+		String dealName = ATDTDealName1;
+		String RelatedTo1 = ATConFN3 +" "+ ATConLN3;
+		String taskSubject1=ATETSubject3;
+		String[] contactName = {ATConFN3 +" "+ ATConLN3};
+		
+		String[][] data = { { PageLabel.Deal_Contact.toString(), RelatedTo1 }};
+
+		String[][] basicsection1 = {{excelLabel.Related_To.toString(), RelatedTo1}};
+		
+		if (home.globalSearchAndNavigate(taskSubject1, "Tasks", false, projectName)) {
+
+			log(LogStatus.INFO, "-----Verified Task named: " + taskSubject1 + " found in Tasks Object-----",YesNo.No);
+			
+			if(CommonLib.clickUsingJavaScript(driver, BP.getEditButtonOnPopup(taskSubject1, 20), "Edit button of popup of subject name "+taskSubject1))
+			{
+				log(LogStatus.INFO,"Clicked on edit button of subject "+taskSubject1,YesNo.No);
+				
+
+				if (BP.updateActivityTimelineRecord(projectName, basicsection1, null, null, null, null)) {
 					log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
 					sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
 				} else {
@@ -2162,8 +2778,9 @@ import com.relevantcodes.extentreports.LogStatus;
 	if (BP.openAppFromAppLauchner(60, "Deal Team")) {
 		log(LogStatus.INFO, "Click on Tab : " + TabName.Deal_Team, YesNo.No);
 	    ThreadSleep(2000);
-		if (DTP.createDealTeam(projectName, dealName, data,TabName.Acuity.toString(), action.SCROLLANDBOOLEAN, 25)) {
-			log(LogStatus.INFO, "----Successfully Created the Deal Team for Deal: " + dealName + "----", YesNo.No);
+		if (fp.clickOnAlreadyCreatedItem(projectName, ATDTDealTeam1, 10)) {
+		if (DTP.UpdateDealContactName(projectName, data,25)) {
+			log(LogStatus.INFO, "----Successfully Updated the Deal Team for Deal: " + dealName + "----", YesNo.No);
 	
 			log(LogStatus.INFO,
 					"---------Now Going to Check Deal Team Count should get increase by one for Contact named "
@@ -2172,11 +2789,12 @@ import com.relevantcodes.extentreports.LogStatus;
 				WebElement ele = DTP.getDealTeamID(10);
 					if (ele != null) {
 						String id = getText(driver, ele, "deal team id", action.SCROLLANDBOOLEAN);
-						ExcelUtils.writeData(AcuityDataSheetFilePath, id, "Deal Team", excelLabel.Variable_Name, "ATDT3",
+						ExcelUtils.writeData(AcuityDataSheetFilePath, id, "Deal Team", excelLabel.Variable_Name, "ATDT1",
 								excelLabel.DealTeamID);
 						log(LogStatus.INFO, "successfully created and noted id of DT" + id + " and deal name " + dealName,
 								YesNo.No);
 					}
+		}
 				} else {
 					sa.assertTrue(false, "could not create DT" + dealName);
 					log(LogStatus.SKIP, "could not create DT" + dealName, YesNo.Yes);
@@ -2191,7 +2809,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 @Parameters({ "projectName" })
 @Test
-	public void AATc023_CreateRevenueInboxTask(String projectName) {
+	public void AATc028_CreateRevenueInboxTask(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -2202,17 +2820,13 @@ import com.relevantcodes.extentreports.LogStatus;
 		String taskNotes1=ATETNote13;
 		String[] contactName = {ATConFN3 +" "+ ATConLN3};
 		String[] firmsTaggedName = {AT_TaggedFirmsName3};
-		String[] firmsTaggedCount = {AT_TaggedFirmsCount3};
 		String[] PeopleTaggedName = {AT_TaggedPeopleName3};
-		String[] PeopleTaggedCount = {AT_TaggedPeopleCount3};
 		String dealName = ATDealName1;
 		String targetName = ATTargetName1;
 		String[] subjects = {ATETSubject13};
 		String taskDueDate1 = tomorrowsDate;
 		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
 				"ATET09", excelLabel.Advance_Due_Date);
-		String assignedTo1=ATETPriority9;
-		String status=ATETStatus13;
 		
 		String[][] basicsection1 = { { excelLabel.Subject.toString(), taskSubject1 }, { excelLabel.Notes.toString(), taskNotes1 }, { excelLabel.Related_To.toString(), taskRelatedTo1 } };
 		String[][] advanceSection1 = { { excelLabel.Due_Date.toString(), taskDueDate1 }};
@@ -2266,7 +2880,7 @@ import com.relevantcodes.extentreports.LogStatus;
 			log(LogStatus.INFO, "Click on contact : " + dealName, YesNo.No);
 			ThreadSleep(5000);
 			for(String subject : subjects) { 
-			if (BP.InteractionRecord(subject,10) != null) {
+			if (BP.verifySubjectOfInteractionEitherOnCardOrInViewAllPopUp(subject)) {
 				log(LogStatus.INFO,
 						"Records on Intraction card have been verified with name " + subject,
 						YesNo.No);
@@ -2280,7 +2894,7 @@ import com.relevantcodes.extentreports.LogStatus;
 			clickUsingJavaScript(driver, BP.getPeopleTabOnTagged(10), "People Tab");
 			ThreadSleep(4000);
 			
-			ArrayList<String> result5=BP.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedCount, PeopleTaggedName, PeopleTaggedCount, null, null, false, null,null);
+			ArrayList<String> result5=BP.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, null, PeopleTaggedName, null, null, null, false, null,null);
 			if(result5.isEmpty())
 			{
 				log(LogStatus.INFO, "The record name and Contact Name have been verifed", YesNo.No);
@@ -2308,28 +2922,28 @@ import com.relevantcodes.extentreports.LogStatus;
 			log(LogStatus.INFO, "Click on contact : " + targetName, YesNo.No);
 			ThreadSleep(5000);
 			for(String subject : subjects) { 
-			if (BP.InteractionRecord(subject,10) != null) {
+			if (!BP.verifySubjectOfInteractionEitherOnCardOrInViewAllPopUp(subject)) {
 				log(LogStatus.INFO,
-						"Records on Intraction card have been verified with name " + subject,
+						"Records on Intraction card is not visible verified with name " + subject,
 						YesNo.No);
 			} else {
-				log(LogStatus.ERROR, "Records on Intraction card is not created with name " + subject, YesNo.No);
-				sa.assertTrue(false, "Records on Intraction card is not created with name " + subject);
+				log(LogStatus.ERROR, "Records on Intraction card is present with name " + subject, YesNo.No);
+				sa.assertTrue(false, "Records on Intraction card is present with name " + subject);
 			}
 				}
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, BP.getPeopleTabOnTagged(10), "People Tab");
 			ThreadSleep(4000);
 			
-			ArrayList<String> result5=BP.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, firmsTaggedCount, PeopleTaggedName, PeopleTaggedCount, null, null, false,null,null);
-			if(result5.isEmpty())
+			ArrayList<String> result5=BP.verifyRecordAndReferencedTypeOnTagged(firmsTaggedName, null, PeopleTaggedName, null, null, null, false,null,null);
+			if(!result5.isEmpty())
 			{
-				log(LogStatus.INFO, "The record name and Contact Name have been verifed", YesNo.No);
+				log(LogStatus.INFO, "The record name and Contact Name are not present", YesNo.No);
 			}
 			else
 			{
-				log(LogStatus.ERROR,  "The record name and Contact Name are not verifed. "+result5, YesNo.No);
-				sa.assertTrue(false,  "The record name and Contact Name are not verifed."+result5);
+				log(LogStatus.ERROR,  "The record name and Contact Name have been verifed. "+result5, YesNo.No);
+				sa.assertTrue(false,  "The record name and Contact Name have been verifed."+result5);
 			}
 			
 		} else {

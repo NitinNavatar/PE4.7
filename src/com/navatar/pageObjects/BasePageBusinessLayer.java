@@ -1498,7 +1498,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				xpath = "//div[@class='listContent']//li/a/span[text()='" + viewList + "']";
 				selectListView = FindElement(driver, xpath, "Select List View : " + viewList, action.SCROLLANDBOOLEAN,
 						30);
-				if (click(driver, selectListView, "select List View : " + viewList, action.SCROLLANDBOOLEAN)) {
+				if (clickUsingJavaScript(driver, selectListView, "select List View : " + viewList, action.SCROLLANDBOOLEAN)) {
 				} else {
 					appLog.error("Not able to select on Select View List : " + viewList);
 				}
