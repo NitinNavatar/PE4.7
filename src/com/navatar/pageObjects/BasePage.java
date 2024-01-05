@@ -10672,7 +10672,58 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getClipNameOnPopup(int timeOut) {
 		return isDisplayed(driver, clipNameOnPopup, "Visibility", timeOut, "clip name");
 	}
+	
+	public List<WebElement> listOfThemeHeaderDetail(int timeout) {
+		return FindElements(driver, "//*[@class='main-Container-alltheme']//span[@class='slds-th__action']/span");
+	}
+	
+	@FindBy(xpath = "//div[text()='No items to display']")
+	private WebElement ClipNotext;
 
+	public WebElement getClipNotext(int timeOut) {
+		return isDisplayed(driver, ClipNotext, "Visibility", timeOut, "Clip No text");
+
+	}
+	
+	@FindBy(xpath = "//div[text()='Your search term must have 2 or more characters']")
+	private WebElement AllClipErrorMsg;
+
+	public WebElement getAllClipErrorMsg(int timeOut) {
+		return isDisplayed(driver, AllClipErrorMsg, "Visibility", timeOut, "All Clip Error Msg");
+	}
+
+	public List<WebElement> listOfClipThemeDetail(int timeout) {
+		return FindElements(driver, "//th[@data-label='Theme Name']//a");
+	}
+	
+	public List<WebElement> getDateCreateThemeSearch(int timeOut) {
+
+		String xpath = "//td[@data-label='Date Created']";
+		List<WebElement> listOfNameElements = FindElements(driver, xpath, "sorting Date");
+		if (listOfNameElements.size() == 0) {
+			return listOfNameElements = FindElements(driver, xpath, "sorting Date");
+		} else
+			return listOfNameElements;
+	}
+	
+	@FindBy(xpath = "//td[@data-label='Team']")
+	private WebElement TeamThemeSearch;
+
+	public WebElement getTeamThemeSearch(int timeOut) {
+		return isDisplayed(driver, TeamThemeSearch, "Visibility", timeOut, "Team Theme Search");
+
+	}
+	
+	public List<WebElement> listOfThemeDetail(int timeout) {
+		return FindElements(driver, "//*[@class='main-Container-alltheme']//span[@class='slds-th__action']/ancestor::table/tbody//div[@class='slds-truncate']");
+	}
+	
+	@FindBy(xpath = "//div[text()='No items to display.']")
+	private WebElement AllthemeErrorMsg;
+
+	public WebElement getAllthemeErrorMsg(int timeOut) {
+		return isDisplayed(driver, AllthemeErrorMsg, "Visibility", timeOut, "All theme Error Msg");
+	}
 	@FindBy(xpath = "//button[@name=\"SaveEdit\"]")
 
 	private WebElement editSaveButton;

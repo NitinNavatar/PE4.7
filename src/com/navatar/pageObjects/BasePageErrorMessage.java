@@ -25,7 +25,7 @@ public interface BasePageErrorMessage {
 	public String alertMsgWithoutSelectingAFolder="Please Select a folder for search.";
 	public String nodataDisplayMsg="No data to display.";
 	public String alertMsgWithoutEnteringValue="Please enter a value.";
-	public String lessThanTwoChars="Your search term must have 2 or more characters.";
+	public String lessThanTwoChars="Your search term must have 2 or more characters";
 	public String noRecordsToDisplayMsg="No records to display";
 	public String noPastActivityMsg1="No past activity.";
 	public String noPastActivityMsg2="Past meetings and tasks marked as done show up here.";

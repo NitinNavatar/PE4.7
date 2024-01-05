@@ -34,6 +34,7 @@ import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.generic.EnumConstants.object;
+import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.relevantcodes.extentreports.LogStatus;
@@ -6066,7 +6067,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 							.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[text()='" + email
 									+ "']/parent::td//preceding-sibling::td[@class='actionColumn']//a[text()='Edit']")));
 				} catch (Exception ex) {
-					ex.printStackTrace();
+//					ex.printStackTrace();
 					log(LogStatus.ERROR, "Could not found the Element of the edit button", YesNo.Yes);
 					flag = false;
 				}
@@ -8152,6 +8153,228 @@ public class SetupPageBusinessLayer extends SetupPage {
 		}
 
 		return flag;
+	}
+	
+	public boolean editPEUserFirstandLastName(String userfirstname, String userlastname, String email) {
+		boolean flag = false;
+		WebElement ele = null;
+		if (click(driver, getExpandUserIcon(30), "expand User Icon", action.SCROLLANDBOOLEAN)) {
+			appLog.info("clicked on user expand icon");
+			if (click(driver, getUsersLink(30), "User Link", action.SCROLLANDBOOLEAN)) {
+				appLog.info("clicked on users link");
+				switchToFrame(driver, 20, getSetUpPageIframe(20));
+				CommonLib.ThreadSleep(3000);
+				try {
+					ele = new WebDriverWait(driver, Duration.ofSeconds(50))
+							.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[text()='" + email
+									+ "']/parent::td//preceding-sibling::td[@class='actionColumn']//a[text()='Edit']")));
+				} catch (Exception ex) {
+//					ex.printStackTrace();
+					log(LogStatus.ERROR, "Could not found the Element of the edit button", YesNo.Yes);
+					flag = false;
+				}
+				if (click(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
+					appLog.info("Clicked on the edit button against " + email);
+					switchToDefaultContent(driver);
+					switchToFrame(driver, 50, getuserEditPageIframe(50));
+					ThreadSleep(3000);
+
+					switchToFrame(driver, 20, getSetUpPageIframe(20));
+					if (sendKeys(driver, getUserFirstName(60), userfirstname, "User First Name",
+							action.SCROLLANDBOOLEAN)) {
+						if (sendKeys(driver, getUserLastName(60), userlastname, "User Last Name",
+								action.SCROLLANDBOOLEAN)) {
+							ThreadSleep(2000);
+							if (clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(30),
+									"Save Button", action.SCROLLANDBOOLEAN)) {
+								appLog.info("clicked on save button");
+								appLog.info("CRM User is created successfully: " + userfirstname + " "
+										+ userlastname);
+								return true;
+							} else {
+								appLog.error("Not able to click on save buttton so cannot create user: "
+										+ userfirstname + " " + userlastname);
+							}
+						} else {
+							appLog.error("Not able to pass user last name in text box: " + userlastname
+									+ " so cannot create user: " + userfirstname + " " + userlastname);
+						}
+					} else {
+						appLog.error("Not able pass user first name in text box: " + userfirstname
+								+ " so cannot create user: " + userfirstname + " " + userlastname);
+					}
+
+				} else {
+					appLog.error("Not able to click on edit user button so cannot update user: " + userfirstname + " "
+							+ userlastname);
+				}
+
+			} else {
+				appLog.error(
+						"Not able to click on users link so cannot update user: " + userfirstname + " " + userlastname);
+			}
+
+		} else {
+			appLog.error("Not able to click on manage user expand icon so cannot update user: " + userfirstname + " "
+					+ userlastname);
+		}
+		switchToDefaultContent(driver);
+		return false;
+	}
+	
+	public String EditUsingFieldNameOnObjectManager(String field, int timeout) {
+		String xpath = "//span[text()='" + field + "']/..";
+		WebElement ele = isDisplayed(driver, FindElement(driver, xpath, field, action.SCROLLANDBOOLEAN, 10),
+				"visibility", 10, field);
+		if (ele != null)
+			return ele.getText();
+		return "";
+
+	}
+	
+	public String EditOptionOnObjectManager(int timeout) {
+		String xpath = " //div[contains(@class,'actionMenu')]//span[text()='Edit']/ancestor::a";
+		WebElement ele = isDisplayed(driver, FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10), "visibility",
+				10, "");
+		if (ele != null)
+			return ele.getText();
+		return "";
+
+	}
+	
+	public boolean editCustomFieldOnObjectManager(String environment, String mode, String objectName,
+			ObjectFeatureName objectLeftSideActions, String fieldLabelName, String labelsWithValues) {
+		WebElement ele = null;
+		String name;
+		if (searchStandardOrCustomObject(environment, mode, objectName)) {
+			log(LogStatus.PASS, "object searched : " + objectName.toString(), YesNo.No);
+			ThreadSleep(5000);
+			String xpath = "//div[@data-aura-class='uiScroller']//a[text()='" + objectName.toString() + "']";
+			if (objectName == object.Custom_Object.toString()) {
+				xpath = "//div[@data-aura-class='uiScroller']//a[text()='" + tabCustomObj.toString() + "']";
+			} else {
+				xpath = "//div[@data-aura-class='uiScroller']//a[text()='" + objectName.toString() + "']";
+			}
+
+			ele = FindElement(driver, xpath, objectName.toString() + " xpath", action.SCROLLANDBOOLEAN, 30);
+			if (ele != null) {
+				if (click(driver, ele, objectName.toString() + " xpath ", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.PASS, "clicked on object Name " + objectName, YesNo.No);
+					ThreadSleep(5000);
+					xpath = "//div[@id='setupComponent']/div[@class='setupcontent']//ul/li/a[@data-list='"
+							+ objectLeftSideActions + "']";
+					ele = FindElement(driver, xpath, objectLeftSideActions + " xpath", action.SCROLLANDBOOLEAN, 20);
+					if (click(driver, ele, objectLeftSideActions + " xpath ", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.PASS, "clicked on object side action :  " + objectLeftSideActions, YesNo.No);
+						ThreadSleep(5000);
+						if (sendKeys(driver, getQuickSearchInObjectManager_Lighting(10), fieldLabelName + Keys.ENTER,
+								"search", action.SCROLLANDBOOLEAN)) {
+							name = EditUsingFieldNameOnObjectManager(fieldLabelName.replace("_", " "), 5);
+							log(LogStatus.PASS, "found api name of " + fieldLabelName, YesNo.Yes);
+							switchToFrame(driver, 20, getEditPageLayoutFrame_Lighting(20));
+							xpath = "//span[text()='" + fieldLabelName + "']/..";
+							// input[@title='"+ fieldLabelName.replaceAll("_", " ")+"']";
+							ele = isDisplayed(driver,
+									FindElement(driver, xpath, fieldLabelName, action.SCROLLANDBOOLEAN, 10),
+									"visibility", 10, fieldLabelName.replace("_", " "));
+							ThreadSleep(5000);
+							if (clickUsingJavaScript(driver, ele, name + " xpath ", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.PASS, "clicked on Edit :  " + fieldLabelName, YesNo.No);
+								ThreadSleep(2000);
+								switchToFrame(driver, 20, getEditPageLayoutFrame_Lighting(20));
+								xpath = "//input[@title='Edit']";
+								ele = isDisplayed(driver,
+										FindElement(driver, xpath, "Edit", action.SCROLLANDBOOLEAN, 10), "visibility",
+										10, fieldLabelName);
+								if (clickUsingJavaScript(driver, ele, EditOptionOnObjectManager(5) + " xpath ",
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.PASS, "clicked on Edit :  " + fieldLabelName, YesNo.No);
+									switchToFrame(driver, 20, getEditPageLayoutFrame_Lighting(20));
+									ThreadSleep(5000);
+//										getFieldLabelTextBox(30).clear();
+//										switchToDefaultContent(driver);
+//										ThreadSleep(5000);
+//										switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+//										switchToFrame(driver, 60, getSetUpPageIframe(60));
+//										ThreadSleep(2000);
+//										if(!CommonLib.isAlertPresent(driver))
+//										{		
+//											CommonLib.clickUsingJavaScript(driver, getFieldLabelTextBox(30),getFieldLabelTextBox(30)+" field" , action.SCROLLANDBOOLEAN);
+//											getFieldLabelTextBox(30).clear();
+////											ThreadSleep(2000);
+////											CommonLib.clickUsingJavaScript(driver, getFieldNameTextBox(30),getFieldLabelTextBox(30)+" field" , action.SCROLLANDBOOLEAN);
+//
+//										}
+//										CommonLib.ThreadSleep(6000);
+//										CommonLib.switchToAlertAndAcceptOrDecline(driver, 20, action.ACCEPT);
+//										CommonLib.ThreadSleep(6000);
+//										CommonLib.switchToDefaultContent(driver);
+//										CommonLib.ThreadSleep(3000);
+										if (sendKeys(driver, getFieldLabelTextBox(30), labelsWithValues,
+												"field label name ", action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.PASS,
+													"passed value in field label text box : " + labelsWithValues,
+													YesNo.No);
+											
+										} else {
+											log(LogStatus.ERROR,
+													"not able to passed value in field label text box : " + labelsWithValues,
+													YesNo.No);
+											sa.assertTrue(false, "not able to passed value in field label text box : " + labelsWithValues);
+										}
+										ThreadSleep(5000);
+  									    switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+										if (click(driver, createUserbottomSaveBtn_Lighting(30), "save button",
+												action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.PASS, "clicked on save button", YesNo.No);
+											ThreadSleep(5000);
+											switchToDefaultContent(driver);
+											return true;
+
+
+									} else {
+										log(LogStatus.FAIL,
+												"Not able to click on save button so cannot create custom field "
+														+ objectName,
+												YesNo.Yes);
+									}
+
+								} else {
+									log(LogStatus.FAIL, "Not able to click on Edit " + fieldLabelName
+											+ " so cannot add custom object ", YesNo.Yes);
+								}
+							} else {
+								log(LogStatus.FAIL,
+										"Not able to click on Edit " + fieldLabelName + " so cannot add custom object ",
+										YesNo.Yes);
+							}
+						} else {
+							log(LogStatus.FAIL, "could not find api name of " + fieldLabelName, YesNo.Yes);
+							sa.assertTrue(false, "could not find api name of " + fieldLabelName);
+
+						}
+
+					} else {
+						log(LogStatus.FAIL, "Not able to click on object side action " + objectLeftSideActions
+								+ " so cannot add custom object ", YesNo.Yes);
+					}
+
+				} else {
+					log(LogStatus.FAIL,
+							"Not able to click on object Name " + objectName + " so cannot add custom object ",
+							YesNo.Yes);
+				}
+			} else {
+				log(LogStatus.FAIL,
+						"Not able to found object : " + objectName.toString() + " so cannot add custom object",
+						YesNo.Yes);
+			}
+		} else {
+			log(LogStatus.FAIL, "Not able to search object " + objectName.toString() + " so cannot add custom object",
+					YesNo.Yes);
+		}
+		switchToDefaultContent(driver);
+		return false;
 	}
 }
 
