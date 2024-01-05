@@ -127,7 +127,14 @@ public class ThemePage extends BasePageBusinessLayer {
 
 	@FindBy(xpath = "//div/span[contains(text(), \"was created\")]")
 	private WebElement successMsg;
+	
+	@FindBy(xpath = "//span[text()='Associated to the Theme']")
+	private WebElement successMsg1;
 
+	public WebElement successMsg1(int timeOut) {
+		return isDisplayed(driver, successMsg1, "Visibility", timeOut, "successMsg1");
+	}
+	
 	public WebElement addToThemeAccountTableRecord(String accountName, String columnName, int timeOut) {
 
 		String path = "//a[text()=\"" + accountName + "\"]/ancestor::tr//td[@data-label=\"" + columnName + "\"]";
@@ -164,7 +171,7 @@ public class ThemePage extends BasePageBusinessLayer {
 
 	}
 	
-	@FindBy(xpath = "//input[@placeholder=\"Search...\"]")
+	@FindBy(xpath = "//input[@placeholder=\"Search Themes...\"]")
 	private WebElement addToThemePopUpSearchBox2;
 
 	public WebElement addToThemePopUpSearchBox2(int timeOut) {
@@ -191,6 +198,14 @@ public class ThemePage extends BasePageBusinessLayer {
 
 	public WebElement getSearchByKeywordTextbox(int timeOut) {
 		return isDisplayed(driver, searchByKeywordTextbox, "Visibility", timeOut, "search By Keyword Textbox");
+
+	}
+	
+	@FindBy(xpath = "//button[text()='Add to Theme']")
+	private WebElement AddtoThemeButton;
+
+	public WebElement getAddtoThemeButton(int timeOut) {
+		return isDisplayed(driver, AddtoThemeButton, "Visibility", timeOut, "Add to Theme Button");
 
 	}
 	
@@ -540,7 +555,7 @@ public class ThemePage extends BasePageBusinessLayer {
 		return isDisplayed(driver, existingThemeNameVerify, "Visibility", timeOut, "existingThemeNameVerify");
 	}
 	
-	@FindBy(xpath = "//label[text()='Existing Theme Name']/parent::slot//button[@title='Remove']")
+	@FindBy(xpath = "//label[text()='Existing Theme Name']/parent::slot//button[contains(@title,'Remove')]")
 	private WebElement existingThemeRemoveButtton;
 
 	public WebElement existingThemeRemoveButtton(int timeOut) {
@@ -932,8 +947,8 @@ public class ThemePage extends BasePageBusinessLayer {
 	public WebElement themeGridsSortingButtonOptionsValue(String sectionName, String sortByValue, int timeOut) {
 
 		String xpath = "//span[@title='" + sectionName
-				+ "']/ancestor::ul/following-sibling::ul//span[text()='Sorted by']/ancestor::ul//button/../following-sibling::div//*[text()='"
-				+ sortByValue + "']/ancestor::lightning-base-combobox-item";
+				+ "']/ancestor::ul/following-sibling::ul//span[text()='Sorted by']/ancestor::ul//button/../following-sibling::div//*[contains(text(),'"
+				+ sortByValue + "')]/ancestor::lightning-base-combobox-item";
 		WebElement type = FindElement(driver, xpath,
 				"themeGridsSortingButtonOptionsValue, Section: " + sectionName + " & SortByValue: " + sortByValue,
 				action.SCROLLANDBOOLEAN, timeOut);

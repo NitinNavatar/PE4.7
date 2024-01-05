@@ -134,7 +134,7 @@ public class EnumConstants {
 		Task_Subject, Task_Status, User_Name, OrgPassword, Password, Participants, Tags, MeetingAndCallsHeader,
 		ValidationRuleErrorMsg, ValidationRuleErrorMsgLocation, CreateNewRecordPopUp, AddContactsToDealTeamPopUp,
 		AddContactsToFundraisingPopup, Classification, ValidationRuleFormula, ParticipantRecord,
-		ParticipantRecordObject, TagsRecord, TagsObject, Tab_Name, Record_Name, RecordName, ObjectName,NextTouchPointDay,NextTouchPointDate,External_ContactName,External_FirmName,External_Title,External_MeetingAndCallCount, Assigned;
+		ParticipantRecordObject, TagsRecord, TagsObject, Tab_Name, Record_Name, RecordName, ObjectName,NextTouchPointDay,NextTouchPointDate,External_ContactName,External_FirmName,External_Title,External_MeetingAndCallCount, Assigned, Fundraising_Name, Active;
 
 	};
 
@@ -320,7 +320,7 @@ public class EnumConstants {
 			}
 		},
 		Prospect, Interested, Sent_PPM, Declined, Deny, Verbal_Commitment, Follow_up_Diligence, New_Interested,
-		New_Stage_Verification;
+		New_Stage_Verification, Completed;
 	}
 
 	public static enum YesNo {
@@ -535,7 +535,7 @@ public class EnumConstants {
 				return "Navatar Create Menu";
 			}
 		},
-		Affiliation, Financing, Commitment, Advisor,Target, User, Company_Information, Rename_Tabs_And_Labels {
+		Affiliation, Financing, Commitment, Advisor, User, Company_Information, Rename_Tabs_And_Labels {
 			@Override
 			public String toString() {
 				return "Rename Tabs and Labels";
@@ -1251,7 +1251,7 @@ public class EnumConstants {
 		};
 	
 	public static enum ShowMoreActionDropDownList{
-		 New_Task,Create_Task,New_Call,Edit,Add_to_Theme,Email,New_Team_Member,Copy_Theme, Delete,DS, New_Meeting,Convert_to_Portfolio{
+		 New_Task,Create_Task,New_Call,Edit,Add_To_Theme,Email,New_Team_Member,Copy_Theme, Delete,DS, New_Meeting,Convert_to_Portfolio{
 			 @Override
 				public String toString() {
 					return "Convert to Portfolio";
@@ -2235,6 +2235,9 @@ public class EnumConstants {
 		Type,Date,Subject,Details,Participants,Tags;
 	}
 	
+	public static enum ApiHeader {
+		Subject, StartDateTime, EndDateTime, Description, WhoId;
+	}
 	public static enum themeLabels {
 		Custom_Theme_Picklist, Custom_Theme_TA, Custom_Theme_Text_Area, Description, Custom_Theme_LTA, Custom_Theme_RTA,
 		Custom_Theme_Description;

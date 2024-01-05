@@ -337,7 +337,7 @@ public void AccountObjectDataUpload(String filePath,String sheetName) {
 
 					String label = ExcelUtils.readData(filePath, sheetName, 0, j).trim();
 					String value = ExcelUtils.readData(filePath, sheetName, i, j).trim();
-					if (label.equals("RecordTypeId") || label.contains("Deal")) {
+					if (label.equals("RecordTypeId") ) {
 
 						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 							String RT = getObjectRecordId("navpeII__Pipeline__c", value);
@@ -348,7 +348,7 @@ public void AccountObjectDataUpload(String filePath,String sheetName) {
 							// :"+value, YesNo.No);
 
 						}
-					} else if (label.equals("AccountId") || label.equals("navpeII__Company__c") || label.equals("navpeII__Institution__c")) {
+					} else if (label.equals("AccountId") || label.equals("navpeII__Company__c") || label.equals("navpeII__Institution__c") || label.equals("navpeII__Company_Name__c")) {
 						if (value != null && !value.equalsIgnoreCase("")  && !value.isEmpty()) {
 							String accoundId = getObjectRecordId("Account", value);
 							data.put(label, accoundId);
@@ -836,6 +836,10 @@ public void AccountObjectDataUpload(String filePath,String sheetName) {
 								newId = getObjectRecordId("navpeII__Pipeline__c", value);
 
 								break;
+							case "Fund":
+								newId = getObjectRecordId("navpeII__Fund__c", value);
+
+								break;
 							case "Fundraising":
 								newId = getObjectRecordId("navpeII__Fundraising__c", value);
 
@@ -880,6 +884,7 @@ public void AccountObjectDataUpload(String filePath,String sheetName) {
 
 				createObejectRecordByAPI("navpeII__Theme_Relation__c", data);
 				ExcelUtils.writeDataInExcel(filePath, "Created", sheetName, i, 0);
+				data.clear();
 			} else {
 				System.out.println("Data already created for Theme Relation :" + i);
 			}
@@ -1047,6 +1052,10 @@ public void AccountObjectDataUpload(String filePath,String sheetName) {
 								newId = getObjectRecordId("navpeII__Fund__c", value);
 
 								break;
+							case "Contact":
+								newId = getObjectRecordId("Contact", value);
+								break;
+								
 							case "Theme":
 								newId = getObjectRecordId("navpeII__Theme__c", value);
 
@@ -1180,7 +1189,6 @@ public void AccountObjectDataUpload(String filePath,String sheetName) {
 
 	}
 	
-	
 	public void EventObjectDataUpload(String filePath,String sheetName) {
 		
 		Map<String, Object> data = new HashMap<String, Object>();
@@ -1304,6 +1312,13 @@ public void AccountObjectDataUpload(String filePath,String sheetName) {
 			}
 		}
 
+	}
+	
+
+	public String EventObjectDataUpload(Map<String, Object> data) {
+		
+			return createObejectRecordByAPI("Event", data);
+			
 	}
 	
 	
