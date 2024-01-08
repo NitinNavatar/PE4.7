@@ -18,9 +18,9 @@ public interface MarketingInitiativesPageErrorMsg {
 	public static String congratulationErrorMsg="Congratulations!";
 	public static String generatedEmailedRecipientErrorMsg(String noOfRecipients, String pageName) {
 		if (pageName.contains("Bulk")) {
-			return "Your emails have been generated and emailed to the "+noOfRecipients+" recipients you specified.";	
+			return " Your emails have been generated and emailed to the recipients you specified.";	
 		} else {
-			return "Your emails have been generated and emailed to the "+noOfRecipients+" recipient(s) you specified.";
+			return " Your emails have been generated and emailed to the recipients you specified.";	
 		}
 		
 	}
