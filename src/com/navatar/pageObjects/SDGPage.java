@@ -147,14 +147,14 @@ public class SDGPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, nameFieldButton, "Visibility", timeOut, "Name Field Button");
 	}
 
-	@FindBy(xpath = "//label[text()='Filter Sequence']/parent::lightning-combobox//button")
+	@FindBy(xpath = "//label[text()='Filter Sequence']/ancestor::lightning-combobox//button")
 	private WebElement filterSequenceButton;
 
 	public WebElement getfilterSequenceButton(int timeOut) {
 		return isDisplayed(driver, filterSequenceButton, "Visibility", timeOut, "Filter Sequence Button");
 	}
 
-	@FindBy(xpath = "//label[text()='Filter Sequence']/parent::lightning-combobox//lightning-base-combobox-item//span[@class='slds-truncate']")
+	@FindBy(xpath = "//label[text()='Filter Sequence']/ancestor::lightning-combobox//lightning-base-combobox-item//span[@class='slds-truncate']")
 	private List<WebElement> filterSequenceDropdownList;
 
 	public List<WebElement> getfilterSequenceDropdownList() {

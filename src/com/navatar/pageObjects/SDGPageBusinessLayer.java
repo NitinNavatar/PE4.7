@@ -706,7 +706,7 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 					CommonLib.refresh(driver);
 					// xpath="//tbody//lst-formatted-text[text()='"++"']/ancestor::td/following-sibling::td//button";
 					xpath = "//tbody//*[text()=\"" + apiNameOrOverrideLabelName
-							+ "\"]/ancestor::td/following-sibling::td//a";
+							+ "\"]/ancestor::td/following-sibling::td//button";
 					ele = CommonLib.FindElement(driver, xpath, "Ero Button", action.SCROLLANDBOOLEAN, 50);
 					if (click(driver, ele, "Ero button", action.BOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on the Ero button", YesNo.No);
@@ -1151,7 +1151,7 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 				for (String f : name) {
 					System.err.println(f);
 					if (f.equalsIgnoreCase("Action Type")) {
-						String xpath = "//label[text()='Action Type']/parent::lightning-combobox//div[contains(@class,'slds-listbox_vertical')]//span[@class='slds-truncate']";
+						String xpath = "//label[text()='Action Type']/ancestor::lightning-combobox//div[contains(@class,'slds-listbox_vertical')]//span[@class='slds-truncate']";
 						if (dropDownHandle(driver, sdgActionAndFieldDropDownButton(f, 20), xpath, "Dropdown: " + f,
 								value[i])) {
 							log(LogStatus.INFO, "Successfully Select the value:  " + value[i] + " from " + f,
