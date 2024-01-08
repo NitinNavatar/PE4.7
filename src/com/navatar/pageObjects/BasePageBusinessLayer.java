@@ -26761,4 +26761,42 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 //		}
 		return result;
 	}
+
+	public ArrayList<String> verifyTooltipOnAdvancedSearch(String xPath,List<String> sectionHeaderName,
+			List<String> toolTipMessage) {
+		List<WebElement> elements;
+		List<String> actualSectionHeaderName = new ArrayList<String>();
+		List<String> actualTooltipName = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<String>();
+			elements = FindElements(driver, xPath, "Advanced Research Button");
+			for (WebElement ele : elements) {
+				actualSectionHeaderName.add(getText(driver, ele, "Advanced Research Button", action.SCROLLANDBOOLEAN));
+				actualTooltipName.add(getAttribute(driver, ele, "Advanced Research Button", "title"));
+			}
+			if (sectionHeaderName.size() == toolTipMessage.size()) {
+				for (int i = 0; i < toolTipMessage.size(); i++) {
+					int k = 0;
+					for (int j = 0; j < actualTooltipName.size(); j++) {
+						if (toolTipMessage.get(i).equals(actualTooltipName.get(j))) {
+							log(LogStatus.INFO,
+									"Actual Tooltip of section : " + actualTooltipName.get(j)
+											+ " have been matched with the Expected tooltip  : " + toolTipMessage.get(i),
+									YesNo.No);
+							k++;
+						}
+					}
+					if (k == 0) {
+						log(LogStatus.ERROR,
+								"Expected tooltip of header Name : " + sectionHeaderName.get(i) + " is not matched",
+								YesNo.No);
+						result.add("Expected tooltip of header Name : " + sectionHeaderName.get(i) + " is not matched");
+					}
+				}
+			} else {
+				log(LogStatus.ERROR, "The size of Header name list and tooltip list are now equal", YesNo.No);
+				result.add("The size of Header name list and tooltip list are now equal");
+			}
+		return result;
+	}
+
 }

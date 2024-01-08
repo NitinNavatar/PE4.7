@@ -5,15 +5,9 @@ import static com.navatar.generic.CommonVariables.*;
 import static com.navatar.generic.ExcelUtils.readAllDataForAColumn;
 import static com.navatar.generic.SmokeCommonVariables.adminPassword;
 import static com.navatar.generic.SmokeCommonVariables.superAdminUserName;
-import static com.navatar.generic.CommonVariables.adminPassword;
-import static com.navatar.generic.CommonVariables.crmUser1EmailID;
-import static com.navatar.generic.CommonVariables.crmUser3FirstName;
-import static com.navatar.generic.CommonVariables.crmUser3LastName;
-import static com.navatar.generic.CommonVariables.crmUser3Lience;
-import static com.navatar.generic.CommonVariables.crmUser3Profile;
-import static com.navatar.generic.CommonVariables.superAdminUserName;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -520,6 +514,47 @@ public class AcuityResearch extends BaseLib{
 }
 	i++;
 	refresh(driver);
+	}
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();
+}
+	
+@Parameters({ "projectName"})
+@Test
+	public void ARTc003_1_VerifyTheResearchFunctionality(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	
+	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+	ThreadSleep(2000);
+	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+		ThreadSleep(2000);
+		if(rp.getProgressDropdown(5) == null) {
+			log(LogStatus.INFO,"Progress Dropdown for Current Record or System Wide is not visible", YesNo.No);
+		} else {
+			log(LogStatus.ERROR,"Progress Dropdown for Current Record or System Wide is visible", YesNo.No);
+				sa.assertTrue(false,"Progress Dropdown for Current Record or System Wide is visible");
+		}
+	}
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	ThreadSleep(5000);
+	refresh(driver);
+	ThreadSleep(5000);
+	lp.CRMLogin(superAdminUserName, adminPassword, appName);
+	ThreadSleep(2000);
+	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+		ThreadSleep(2000);
+		if(rp.getProgressDropdown(5) == null) {
+			log(LogStatus.INFO,"Progress Dropdown for Current Record or System Wide is not visible", YesNo.No);
+		} else {
+			log(LogStatus.ERROR,"Progress Dropdown for Current Record or System Wide is visible", YesNo.No);
+				sa.assertTrue(false,"Progress Dropdown for Current Record or System Wide is visible");
+		}
 	}
 	switchToDefaultContent(driver);
 	lp.CRMlogout();
@@ -1894,8 +1929,6 @@ public class AcuityResearch extends BaseLib{
 	public void ARTc006_6_VerifyResearchDataForCurrentRecord(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
-	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
-	FundRaisingPageBusinessLayer frp = new FundRaisingPageBusinessLayer(driver);
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	lp.CRMLogin(glUser1EmailID, adminPassword);
@@ -9407,6 +9440,67 @@ public class AcuityResearch extends BaseLib{
 		sa.assertAll();
 	}
 
+	@Parameters({ "projectName" })
+	@Test
+	public void ARTc050_VerifyTooltipsOnIconsAndButtonsd(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);	
+			
+		String sectionHeader=AR_String1;
+		String sectionHeader1=AR_String2;
+		String[] arrSectionHeader=sectionHeader.split("<break>");		
+		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		String xpath = "//lightning-layout[@class='slds-m-top_medium slds-text-align_center slds-grid']//button";
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			if(sendKeys(driver, rp.getTextAreaResearch(10),"", "Research Input Field", action.BOOLEAN)){
+				ThreadSleep(2000);
+				click(driver, rp.getAdvancedResearch(5), "Research Button",action.BOOLEAN);
+				refresh(driver);
+				ThreadSleep(5000);
+					ArrayList<String> result=bp.verifyTooltipOnAdvancedSearch(xpath,sectionHeaderName,sectionHeaderName);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
+					}					
+					else
+					{
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result);
+					}
+		
+					String xpath1 = "//lightning-layout[contains(@class,'slds-box')]//lightning-icon[contains(@title,'Add')]";
+
+					String[] arrSectionHeader1=sectionHeader1.split("<break>");		
+					List<String> sectionHeaderName1 = new ArrayList<String>(Arrays.asList(arrSectionHeader1));
+					ArrayList<String> result1=bp.verifyTooltipOnAdvancedSearch(xpath1,sectionHeaderName1,sectionHeaderName1);
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
+					}					
+					else
+					{
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result1, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result1);
+					}
+			}
+			else {
+				log(LogStatus.ERROR,"Not able to send keyword", YesNo.No);
+				sa.assertTrue(false,"Not able to send keyword");
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on tab : "+navigationMenuName, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab : "+navigationMenuName);
+		}
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
 	@Parameters({ "projectName"})
 	@Test
 	public void ARTc051_VerifyTheResearchFunctionality(String projectName) {
@@ -9622,11 +9716,20 @@ public class AcuityResearch extends BaseLib{
 	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
 	ThreadSleep(2000);
 	
+	String sectionHeader=AR_String3;
+	String sectionHeader1=AR_String4;
+	String[] arrSectionHeader=sectionHeader.split("<break>");
+	String[] arrSectionHeader1=sectionHeader1.split("<break>");
+	List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+	List<String> sectionHeaderName1 = new ArrayList<String>(Arrays.asList(arrSectionHeader1));
+	
 	String[] searchValues = {AR_Firm8};
 	String[] labelName = {RecordType.Advisor.toString(),RecordType.Company.toString(),RecordType.Institution.toString(),RecordType.Intermediary.toString(),RecordType.Lender.toString(),RecordType.Limited_Partner.toString().toString().replace("_", " "),RecordType.Portfolio_Company.toString().toString().replace("_", " "),
 			RecordType.Private_Equity.toString().toString().replace("_", " "),RecordType.Banker.toString(),RecordType.Broker.toString(),RecordType.Buy_Side_Deal.toString().replaceAll("_", " "),RecordType.Capital_Raise.toString().replace("_", " "),RecordType.Sell_Side_Deal.toString().replaceAll("_", " "),
 			RecordType.FRGRT.toString().replace("_", " "),RecordType.MSGRT.toString().replace("_", " "),RecordType.Theme.toString(),RecordType.Clip.toString(),RecordType.Interaction.toString()};
 	
+		String xpath = "//div[@class='slds-modal__footer']//button";
+		String xpath1 = "//div[@class='slds-modal__container']/lightning-icon";
 	for(String searchValue : searchValues) {
 		
 		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
@@ -9643,9 +9746,31 @@ public class AcuityResearch extends BaseLib{
 				log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
 				sa.assertTrue(false,"Not Able to send value "+searchValue);
 			}
-				if(click(driver, rp.getCreateThemeLink(10),"Advanced Research Button", action.BOOLEAN)) {
-					log(LogStatus.PASS, "Clicked on Research button on advanced area", YesNo.No);
+				if(click(driver, rp.getCreateThemeLink(10),"Create Theme Button", action.BOOLEAN)) {
+					log(LogStatus.PASS, "Clicked on Create Theme button on advanced area", YesNo.No);
 					ThreadSleep(2000);
+					ArrayList<String> result=bp.verifyTooltipOnAdvancedSearch(xpath,sectionHeaderName,sectionHeaderName);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
+					}					
+					else
+					{
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result);
+					}
+					
+					ArrayList<String> result1=bp.verifyTooltipOnAdvancedSearch(xpath1,sectionHeaderName1,sectionHeaderName1);
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
+					}					
+					else
+					{
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result);
+					}
+					
 					if(click(driver, rp.getAdvancedLinkOnCreateThemePopup(10),"Advanced Research Link", action.BOOLEAN)) {
 						log(LogStatus.PASS, "Clicked on Advanced Research Link", YesNo.No);
 						ThreadSleep(2000);
@@ -9660,6 +9785,24 @@ public class AcuityResearch extends BaseLib{
 								} else {
 									log(LogStatus.ERROR, Label + " is not visible On Theme Popup", YesNo.Yes);
 									sa.assertTrue(false,Label + " is not visible On Theme Popup");
+								}
+								
+								WebElement CheckBoxInAdvanced = rp.getCheckBoxofCategoriesOnCreateThemePopup(labelName[i],5);
+								if(CheckBoxInAdvanced != null) {
+									log(LogStatus.PASS, "Checkbox for " + labelName[i] + " is visible On Theme Popup", YesNo.No);
+									ThreadSleep(2000);
+								} else {
+									log(LogStatus.ERROR, "Checkbox for " + labelName[i] + " is not visible On Theme Popup", YesNo.Yes);
+									sa.assertTrue(false,"Checkbox for " + labelName[i] + " is not visible On Theme Popup");
+								}
+								
+								WebElement CheckBoxOfAllFirm = rp.getCheckboxAndLabelsofIncludeAllContactsForEachFirm(5);
+								if(CheckBoxOfAllFirm != null) {
+									log(LogStatus.PASS, "Checkbox for Include All Contacts For Each Firm is visible On Theme Popup", YesNo.No);
+									ThreadSleep(2000);
+								} else {
+									log(LogStatus.ERROR, "Checkbox for Include All Contacts For Each Firm is not visible On Theme Popup", YesNo.Yes);
+									sa.assertTrue(false,"Checkbox for Include All Contacts For Each Firm is not visible On Theme Popup");
 								}
 							}
 							click(driver, rp.getCancelButtonOnCreateThemePopup(10),"Cancel Button On Create Theme Popup", action.BOOLEAN);
@@ -9723,6 +9866,16 @@ public class AcuityResearch extends BaseLib{
 	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
 	ThreadSleep(2000);
 	
+	String sectionHeader=AR_String3;
+	String sectionHeader1=AR_String4;
+	String[] arrSectionHeader=sectionHeader.split("<break>");
+	String[] arrSectionHeader1=sectionHeader1.split("<break>");
+	List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+	List<String> sectionHeaderName1 = new ArrayList<String>(Arrays.asList(arrSectionHeader1));
+	
+	String xpath = "//div[@class='slds-modal__footer']//button";
+	String xpath1 = "//div[@class='slds-modal__container']/lightning-icon";
+	
 	String[] searchValues = {AR_Firm8};
 	String[] labelName = {RecordType.Advisor.toString(),RecordType.Company.toString(),RecordType.Institution.toString(),RecordType.Intermediary.toString(),RecordType.Lender.toString(),RecordType.Limited_Partner.toString().toString().replace("_", " "),RecordType.Portfolio_Company.toString().toString().replace("_", " "),
 			RecordType.Private_Equity.toString().toString().replace("_", " "),RecordType.Banker.toString(),RecordType.Broker.toString(),RecordType.Buy_Side_Deal.toString().replaceAll("_", " "),RecordType.Capital_Raise.toString().replace("_", " "),RecordType.Sell_Side_Deal.toString().replaceAll("_", " "),
@@ -9747,6 +9900,28 @@ public class AcuityResearch extends BaseLib{
 				if(click(driver, rp.getAddToThemeLink(10),"Advanced Research Button", action.BOOLEAN)) {
 					log(LogStatus.PASS, "Clicked on Research button on advanced area", YesNo.No);
 					ThreadSleep(2000);
+					ArrayList<String> result=bp.verifyTooltipOnAdvancedSearch(xpath,sectionHeaderName,sectionHeaderName);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
+					}					
+					else
+					{
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result);
+					}
+					
+					ArrayList<String> result1=bp.verifyTooltipOnAdvancedSearch(xpath1,sectionHeaderName1,sectionHeaderName1);
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
+					}					
+					else
+					{
+						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab. "+result, YesNo.No);
+						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab. "+result);
+					}
+					
 					if(click(driver, rp.getAdvancedLinkOnCreateThemePopup(10),"Advanced Research Link", action.BOOLEAN)) {
 						log(LogStatus.PASS, "Clicked on Advanced Research Link", YesNo.No);
 						ThreadSleep(2000);
@@ -9761,6 +9936,24 @@ public class AcuityResearch extends BaseLib{
 								} else {
 									log(LogStatus.ERROR, Label + " is not visible On Theme Popup", YesNo.Yes);
 									sa.assertTrue(false,Label + " is not visible On Theme Popup");
+								}
+								
+								WebElement CheckBoxInAdvanced = rp.getCheckBoxofCategoriesOnCreateThemePopup(labelName[i],5);
+								if(CheckBoxInAdvanced != null) {
+									log(LogStatus.PASS, "Checkbox for " + labelName[i] + " is visible On Theme Popup", YesNo.No);
+									ThreadSleep(2000);
+								} else {
+									log(LogStatus.ERROR, "Checkbox for " + labelName[i] + " is not visible On Theme Popup", YesNo.Yes);
+									sa.assertTrue(false,"Checkbox for " + labelName[i] + " is not visible On Theme Popup");
+								}
+								
+								WebElement CheckBoxOfAllFirm = rp.getCheckboxAndLabelsofIncludeAllContactsForEachFirm(5);
+								if(CheckBoxOfAllFirm != null) {
+									log(LogStatus.PASS, "Checkbox for Include All Contacts For Each Firm is visible On Theme Popup", YesNo.No);
+									ThreadSleep(2000);
+								} else {
+									log(LogStatus.ERROR, "Checkbox for Include All Contacts For Each Firm is not visible On Theme Popup", YesNo.Yes);
+									sa.assertTrue(false,"Checkbox for Include All Contacts For Each Firm is not visible On Theme Popup");
 								}
 							}
 							click(driver, rp.getCancelButtonOnCreateThemePopup(10),"Cancel Button On Create Theme Popup", action.BOOLEAN);
@@ -10909,5 +11102,876 @@ public class AcuityResearch extends BaseLib{
 	lp.CRMlogout();
 	sa.assertAll();
 }
+
+@Parameters({ "projectName"})
+@Test
+	public void ARTc066_CheckCreateThemeButtonFunctionalityWithAllCheckboxesChecked(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	ThemePageBusinessLayer tp = new ThemePageBusinessLayer(driver);
+	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+	ThreadSleep(2000);
+	
+	String[] searchValues = {AR_Firm8};
+	String[] labelName = {RecordType.Advisor.toString(),RecordType.Company.toString(),RecordType.Institution.toString(),RecordType.Intermediary.toString(),RecordType.Lender.toString(),RecordType.Limited_Partner.toString().toString().replace("_", " "),RecordType.Portfolio_Company.toString().toString().replace("_", " "),
+			RecordType.Private_Equity.toString().toString().replace("_", " "),RecordType.Banker.toString(),RecordType.Broker.toString(),RecordType.Buy_Side_Deal.toString().replaceAll("_", " "),RecordType.Capital_Raise.toString().replace("_", " "),RecordType.Sell_Side_Deal.toString().replaceAll("_", " "),
+			RecordType.FRGRT.toString().replace("_", " "),RecordType.MSGRT.toString().replace("_", " "),RecordType.Theme.toString(),RecordType.Clip.toString(),RecordType.Interaction.toString()};
+
+	for(String searchValue : searchValues) {
+		
+		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
+		log(LogStatus.PASS, "Working for " + searchValue, YesNo.No);
+	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			ThreadSleep(2000);
+			if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+				ThreadSleep(2000);
+				clickUsingJavaScript(driver, rp.getAdvancedResearch(10),"Advanced Research", action.BOOLEAN);
+				log(LogStatus.PASS, "Clicked on Research button", YesNo.No);
+				ThreadSleep(8000);
+			} else {
+				log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to send value "+searchValue);
+			}
+			log(LogStatus.INFO,
+					"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+							+ searchValue + "---------",
+					YesNo.No);
+			if(rp.getNoResult(5) != null){
+				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+			} else 
+				if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+					log(LogStatus.INFO,
+							"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+									+ searchValue + "---------",
+							YesNo.No);
+					ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+					if(list.isEmpty()) {
+						
+						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
+					} else {
+						log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.Yes);
+						sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
+					}
+		
+				} else {
+					log(LogStatus.FAIL,
+							"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+									+ searchValue + "---------",
+							YesNo.Yes);
+					sa.assertTrue(false,
+							"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+									+ searchValue + "---------");
+					
+				}
+				ThreadSleep(2000);
+				if(click(driver, rp.getCreateThemeLink(10),"Create Theme Button", action.BOOLEAN)) {
+					log(LogStatus.PASS, "Clicked on Create Theme button on advanced area", YesNo.No);
+					ThreadSleep(2000);
+					click(driver, rp.getInputBoxForTheme(10),"Theme Input Box", action.SCROLLANDBOOLEAN);
+					sendKeys(driver, rp.getInputBoxForTheme(10), AR_String5, "Theme Input Box", action.SCROLLANDBOOLEAN);
+					ThreadSleep(2000);
+					if(click(driver, rp.getAdvancedLinkOnCreateThemePopup(10),"Advanced Research Link", action.BOOLEAN)) {
+						log(LogStatus.PASS, "Clicked on Advanced Research Link", YesNo.No);
+						ThreadSleep(2000);
+						if(isDisplayed(driver, rp.getLabelofAllCategoriesOnCreateThemePopup(10), "Visibility", 10, "Search By Keyword(s)") != null) {
+							log(LogStatus.PASS, "Label Of All Categories On Theme Popup is visible", YesNo.No);
+							ThreadSleep(2000);
+							for(int i =0; i<labelName.length;i++) {
+								WebElement CheckBoxInAdvanced = rp.getCheckBoxofCategoriesOnCreateThemePopup(labelName[i],5);
+								if(CheckBoxInAdvanced != null) {
+									click(driver, CheckBoxInAdvanced,"CheckBox of Categories", action.BOOLEAN);
+									log(LogStatus.PASS, "Checkbox for " + labelName[i] + " is visible On Theme Popup", YesNo.No);
+									ThreadSleep(2000);
+								} else {
+									log(LogStatus.ERROR, "Checkbox for " + labelName[i] + " is not visible On Theme Popup", YesNo.Yes);
+									sa.assertTrue(false,"Checkbox for " + labelName[i] + " is not visible On Theme Popup");
+								}
+							}
+							click(driver, rp.getSaveButtonOnCreateThemePopup(10),"Save Button On Create Theme Popup", action.BOOLEAN);
+						} else {
+							log(LogStatus.ERROR, "Label Of All Categories On Theme Popup is not visible", YesNo.Yes);
+							sa.assertTrue(false,"Label Of All Categories On Theme Popup is not visible");
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on Advanced Research Link", YesNo.Yes);
+						sa.assertTrue(false,"Not able to click on Advanced Research Link");
+					}
+				} else {
+					log(LogStatus.ERROR, "Advanced Research option is not visible", YesNo.Yes);
+					sa.assertTrue(false,"Advanced Research option is not visible");
+				}
+			}
+		}
+	ThreadSleep(5000);
+	refresh(driver);	   
+		String themeTabName = tabObj9;
+		String themeName = AR_String5;
+		HashMap<String, Integer> expectedSectionNameAndCount = new HashMap<String, Integer>();
+		expectedSectionNameAndCount.put(MRSD_1_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_2_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_3_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_4_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_5_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_6_ResearchFindings, 5);
+		expectedSectionNameAndCount.put(MRSD_7_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_8_ResearchFindings, 35);
+		expectedSectionNameAndCount.put(MRSD_9_ResearchFindings, 30);
+
+		if (tp.verifyItsLeftCountAndGridCountSepratelyAndTotalSumWithAllCount(true, themeTabName, themeName,
+				projectName, true, expectedSectionNameAndCount, true, true, true, true)) {
+			log(LogStatus.PASS, "-----Verified Counts of Theme Section Wise-----", YesNo.No);
+
+		} else {
+			sa.assertTrue(false, "-----Not Verified Counts of Theme Section Wise-----");
+			log(LogStatus.FAIL, "-----Not Verified Counts of Theme Section Wise-----", YesNo.Yes);
+		}
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();	
+	}
+	
+@Parameters({ "projectName"})
+@Test
+	public void ARTc067_CheckCreateThemeButtonFunctionalityWithAllFirmsCheckboxesChecked(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	ThemePageBusinessLayer tp = new ThemePageBusinessLayer(driver);
+	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+	ThreadSleep(2000);
+	
+	String[] searchValues = {AR_Firm8};
+	String[] labelName = {RecordType.Advisor.toString(),RecordType.Company.toString(),RecordType.Institution.toString(),RecordType.Intermediary.toString(),RecordType.Lender.toString(),RecordType.Limited_Partner.toString().toString().replace("_", " "),RecordType.Portfolio_Company.toString().toString().replace("_", " "),
+			RecordType.Private_Equity.toString().toString().replace("_", " "),RecordType.Banker.toString(),RecordType.Broker.toString(),RecordType.Buy_Side_Deal.toString().replaceAll("_", " "),RecordType.Capital_Raise.toString().replace("_", " "),RecordType.Sell_Side_Deal.toString().replaceAll("_", " "),
+			RecordType.FRGRT.toString().replace("_", " "),RecordType.MSGRT.toString().replace("_", " "),RecordType.Theme.toString(),RecordType.Clip.toString(),RecordType.Interaction.toString()};
+
+	for(String searchValue : searchValues) {
+		
+		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
+		log(LogStatus.PASS, "Working for " + searchValue, YesNo.No);
+	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			ThreadSleep(2000);
+			if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+				ThreadSleep(2000);
+				clickUsingJavaScript(driver, rp.getAdvancedResearch(10),"Advanced Research", action.BOOLEAN);
+				log(LogStatus.PASS, "Clicked on Research button", YesNo.No);
+				ThreadSleep(8000);
+			} else {
+				log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to send value "+searchValue);
+			}
+			log(LogStatus.INFO,
+					"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+							+ searchValue + "---------",
+					YesNo.No);
+			if(rp.getNoResult(5) != null){
+				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+			} else 
+				if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+					log(LogStatus.INFO,
+							"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+									+ searchValue + "---------",
+							YesNo.No);
+					ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+					if(list.isEmpty()) {
+						
+						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
+					} else {
+						log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.Yes);
+						sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
+					}
+		
+				} else {
+					log(LogStatus.FAIL,
+							"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+									+ searchValue + "---------",
+							YesNo.Yes);
+					sa.assertTrue(false,
+							"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+									+ searchValue + "---------");
+					
+				}
+				ThreadSleep(2000);
+				if(click(driver, rp.getCreateThemeLink(10),"Create Theme Button", action.BOOLEAN)) {
+					log(LogStatus.PASS, "Clicked on Create Theme button on advanced area", YesNo.No);
+					ThreadSleep(2000);
+					click(driver, rp.getInputBoxForTheme(10),"Theme Input Box", action.SCROLLANDBOOLEAN);
+					sendKeys(driver, rp.getInputBoxForTheme(10), AR_String6, "Theme Input Box", action.SCROLLANDBOOLEAN);
+					ThreadSleep(2000);
+					if(click(driver, rp.getAdvancedLinkOnCreateThemePopup(10),"Advanced Research Link", action.BOOLEAN)) {
+						log(LogStatus.PASS, "Clicked on Advanced Research Link", YesNo.No);
+						ThreadSleep(2000);
+						if(isDisplayed(driver, rp.getLabelofAllCategoriesOnCreateThemePopup(10), "Visibility", 10, "Search By Keyword(s)") != null) {
+							log(LogStatus.PASS, "Label Of All Categories On Theme Popup is visible", YesNo.No);
+							ThreadSleep(2000);
+							for(int i =0; i<labelName.length;i++) {
+								WebElement CheckBoxInAdvanced = rp.getCheckBoxofCategoriesOnCreateThemePopup(labelName[i],5);
+								if(CheckBoxInAdvanced != null) {
+									click(driver, CheckBoxInAdvanced,"CheckBox of Categories", action.SCROLLANDBOOLEAN);
+									log(LogStatus.PASS, "Checkbox for " + labelName[i] + " is visible On Theme Popup", YesNo.No);
+									ThreadSleep(2000);
+								} else {
+									log(LogStatus.ERROR, "Checkbox for " + labelName[i] + " is not visible On Theme Popup", YesNo.Yes);
+									sa.assertTrue(false,"Checkbox for " + labelName[i] + " is not visible On Theme Popup");
+								}
+							}
+							
+							WebElement CheckBoxOfAll = rp.getCheckboxAndLabelsofIncludeAllContactsForEachFirm(5);
+							if(CheckBoxOfAll != null) {
+								click(driver, CheckBoxOfAll,"CheckBox of All Contact", action.SCROLLANDBOOLEAN);
+								log(LogStatus.PASS, "CheckBox of All Contact is visible On Theme Popup", YesNo.No);
+								ThreadSleep(2000);
+							} else {
+								log(LogStatus.ERROR, "CheckBox of All Contact is not visible On Theme Popup", YesNo.Yes);
+								sa.assertTrue(false,"CheckBox of All Contact is not visible On Theme Popup");
+							}
+							
+							click(driver, rp.getSaveButtonOnCreateThemePopup(10),"Save Button On Create Theme Popup", action.BOOLEAN);
+						} else {
+							log(LogStatus.ERROR, "Label Of All Categories On Theme Popup is not visible", YesNo.Yes);
+							sa.assertTrue(false,"Label Of All Categories On Theme Popup is not visible");
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on Advanced Research Link", YesNo.Yes);
+						sa.assertTrue(false,"Not able to click on Advanced Research Link");
+					}
+				} else {
+					log(LogStatus.ERROR, "Advanced Research option is not visible", YesNo.Yes);
+					sa.assertTrue(false,"Advanced Research option is not visible");
+				}
+			}
+		}
+	ThreadSleep(5000);
+	refresh(driver);	   
+		String themeTabName = tabObj9;
+		String themeName = AR_String6;
+		HashMap<String, Integer> expectedSectionNameAndCount = new HashMap<String, Integer>();
+		expectedSectionNameAndCount.put(MRSD_1_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_2_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_3_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_4_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_5_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_6_ResearchFindings, 5);
+		expectedSectionNameAndCount.put(MRSD_7_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_8_ResearchFindings, 35);
+		expectedSectionNameAndCount.put(MRSD_9_ResearchFindings, 30);
+
+		if (tp.verifyItsLeftCountAndGridCountSepratelyAndTotalSumWithAllCount(true, themeTabName, themeName,
+				projectName, true, expectedSectionNameAndCount, true, true, true, true)) {
+			log(LogStatus.PASS, "-----Verified Counts of Theme Section Wise-----", YesNo.No);
+
+		} else {
+			sa.assertTrue(false, "-----Not Verified Counts of Theme Section Wise-----");
+			log(LogStatus.FAIL, "-----Not Verified Counts of Theme Section Wise-----", YesNo.Yes);
+		}
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();	
+	}
+	
+@Parameters({ "projectName"})
+@Test
+	public void ARTc068_VerifyAdvancedWithAddToThemeFunctionality(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	ThemePageBusinessLayer tp = new ThemePageBusinessLayer(driver);
+	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+	ThreadSleep(2000);
+	
+	String sectionHeader=AR_String3;
+	String sectionHeader1=AR_String4;
+	String[] arrSectionHeader=sectionHeader.split("<break>");
+	String[] arrSectionHeader1=sectionHeader1.split("<break>");
+	List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
+	List<String> sectionHeaderName1 = new ArrayList<String>(Arrays.asList(arrSectionHeader1));
+	
+	String xpath = "//div[@class='slds-modal__footer']//button";
+	String xpath1 = "//div[@class='slds-modal__container']/lightning-icon";
+	
+	String[] searchValues = {AR_Firm8};
+	String[] labelName = {RecordType.Advisor.toString(),RecordType.Company.toString(),RecordType.Institution.toString(),RecordType.Intermediary.toString(),RecordType.Lender.toString(),RecordType.Limited_Partner.toString().toString().replace("_", " "),RecordType.Portfolio_Company.toString().toString().replace("_", " "),
+			RecordType.Private_Equity.toString().toString().replace("_", " ")};
+	
+	for(String searchValue : searchValues) {
+		
+		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
+		log(LogStatus.PASS, "Working for " + searchValue, YesNo.No);
+	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			ThreadSleep(2000);
+			if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+				ThreadSleep(2000);
+				clickUsingJavaScript(driver, rp.getAdvancedResearch(10),"Advanced Research", action.BOOLEAN);
+				log(LogStatus.PASS, "Clicked on Research button", YesNo.No);
+				ThreadSleep(8000);
+			} else {
+				log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to send value "+searchValue);
+			}
+			
+			log(LogStatus.INFO,
+					"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+							+ searchValue + "---------",
+					YesNo.No);
+			if(rp.getNoResult(5) != null){
+				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+			} else 
+				if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+					log(LogStatus.INFO,
+							"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+									+ searchValue + "---------",
+							YesNo.No);
+					ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+					if(list.isEmpty()) {
+						
+						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
+					} else {
+						log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.Yes);
+						sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
+					}
+		
+				} else {
+					log(LogStatus.FAIL,
+							"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+									+ searchValue + "---------",
+							YesNo.Yes);
+					sa.assertTrue(false,
+							"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+									+ searchValue + "---------");
+					
+				}
+				refresh(driver);
+				ThreadSleep(2000);
+				if(click(driver, rp.getAddToThemeLink(10),"Advanced Research Button", action.BOOLEAN)) {
+					log(LogStatus.PASS, "Clicked on Research button on advanced area", YesNo.No);
+					ThreadSleep(2000);
+					if(click(driver, rp.getAdvancedLinkOnCreateThemePopup(10),"Advanced Research Link", action.BOOLEAN)) {
+						log(LogStatus.PASS, "Clicked on Advanced Research Link", YesNo.No);
+						ThreadSleep(2000);
+						if(isDisplayed(driver, rp.getLabelofAllCategoriesOnCreateThemePopup(10), "Visibility", 10, "Search By Keyword(s)") != null) {
+							log(LogStatus.PASS, "Label Of All Categories On Theme Popup is visible", YesNo.No);
+							ThreadSleep(2000);
+							for(int i =0; i<labelName.length;i++) {
+								String Label = rp.getLabelsofCategoriesOnCreateThemePopup(5).get(i).getText();
+								if(Label.equalsIgnoreCase(labelName[i])) {
+									log(LogStatus.PASS, Label + " is visible On Theme Popup", YesNo.No);
+									ThreadSleep(2000);
+								} else {
+									log(LogStatus.ERROR, Label + " is not visible On Theme Popup", YesNo.Yes);
+									sa.assertTrue(false,Label + " is not visible On Theme Popup");
+								}
+								
+								WebElement CheckBoxInAdvanced = rp.getCheckBoxofCategoriesOnCreateThemePopup(labelName[i],5);
+								if(CheckBoxInAdvanced != null) {
+									log(LogStatus.PASS, "Checkbox for " + labelName[i] + " is visible On Theme Popup", YesNo.No);
+									ThreadSleep(2000);
+								} else {
+									log(LogStatus.ERROR, "Checkbox for " + labelName[i] + " is not visible On Theme Popup", YesNo.Yes);
+									sa.assertTrue(false,"Checkbox for " + labelName[i] + " is not visible On Theme Popup");
+								}
+								
+								WebElement CheckBoxOfAllFirm = rp.getCheckboxAndLabelsofIncludeAllContactsForEachFirm(5);
+								if(CheckBoxOfAllFirm != null) {
+									log(LogStatus.PASS, "Checkbox for Include All Contacts For Each Firm is visible On Theme Popup", YesNo.No);
+									ThreadSleep(2000);
+								} else {
+									log(LogStatus.ERROR, "Checkbox for Include All Contacts For Each Firm is not visible On Theme Popup", YesNo.Yes);
+									sa.assertTrue(false,"Checkbox for Include All Contacts For Each Firm is not visible On Theme Popup");
+								}
+							}
+							click(driver, rp.getCancelButtonOnCreateThemePopup(10),"Cancel Button On Create Theme Popup", action.BOOLEAN);
+						} else {
+							log(LogStatus.ERROR, "Label Of All Categories On Theme Popup is not visible", YesNo.Yes);
+							sa.assertTrue(false,"Label Of All Categories On Theme Popup is not visible");
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on Advanced Research Link", YesNo.Yes);
+						sa.assertTrue(false,"Not able to click on Advanced Research Link");
+					}
+				} else {
+					log(LogStatus.ERROR, "Advanced Research option is not visible", YesNo.Yes);
+					sa.assertTrue(false,"Advanced Research option is not visible");
+				}
+		}
+		log(LogStatus.INFO,
+				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+						+ searchValue + "---------",
+				YesNo.No);
+		if(rp.getNoResult(5) != null){
+			log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+		} else 
+			if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+				log(LogStatus.INFO,
+						"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------",
+						YesNo.No);
+				ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+				if(list.isEmpty()) {
+					
+					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
+				} else {
+					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.Yes);
+					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
+				}
+	
+			} else {
+				log(LogStatus.FAIL,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------",
+						YesNo.Yes);
+				sa.assertTrue(false,
+						"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+								+ searchValue + "---------");
+				
+			}
+		}
+	refresh(driver);
+	ThreadSleep(5000);
+		String themeTabName = tabObj9;
+		String themeName = AR_String6;
+		HashMap<String, Integer> expectedSectionNameAndCount = new HashMap<String, Integer>();
+		expectedSectionNameAndCount.put(MRSD_1_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_2_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_3_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_4_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_5_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_6_ResearchFindings, 5);
+		expectedSectionNameAndCount.put(MRSD_7_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_8_ResearchFindings, 35);
+		expectedSectionNameAndCount.put(MRSD_9_ResearchFindings, 30);
+
+		if (tp.verifyItsLeftCountAndGridCountSepratelyAndTotalSumWithAllCount(true, themeTabName, themeName,
+				projectName, true, expectedSectionNameAndCount, true, true, true, true)) {
+			log(LogStatus.PASS, "-----Verified Counts of Theme Section Wise-----", YesNo.No);
+
+		} else {
+			sa.assertTrue(false, "-----Not Verified Counts of Theme Section Wise-----");
+			log(LogStatus.FAIL, "-----Not Verified Counts of Theme Section Wise-----", YesNo.Yes);
+		}
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();	
+	}
+
+@Parameters({ "projectName" })
+@Test
+	public void ARTc069_CreateThemeRecordFromNewThemeButton(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ThemePageBusinessLayer theme = new ThemePageBusinessLayer(driver);
+		String[] themeNameAndDescriptions = AR_String7.split("<Section>", -1);
+		String themeTabName = tabObj9;
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+	
+		String themeName = null;
+		String themeDescription = null;
+		for (String themeNameAndDescription : themeNameAndDescriptions) {
+	
+			String[] themeNameAndDescriptionList = themeNameAndDescription.split("<Break>", -1);
+	
+			themeName = themeNameAndDescriptionList[0];
+			themeDescription = themeNameAndDescriptionList[1];
+			if (theme.createTheme(projectName, themeTabName, themeName, themeDescription)) {
+				log(LogStatus.INFO, "Record: " + themeName + " has been Created under: " + themeTabName, YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Record: " + themeName + " has not been Created under: " + themeTabName, YesNo.No);
+				sa.assertTrue(false, "Record: " + themeName + " has not been Created under: " + themeTabName);
+			}
+	
+		}
+		driver.close();
+		driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+		lp.CRMlogout();
+		sa.assertAll();
+		CommonLib.ThreadSleep(3000);
+	}
+
+@Parameters({ "projectName"})
+@Test
+	public void ARTc070_CheckAddToThemeButtonFunctionalityWithAllCheckboxesChecked(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	ThemePageBusinessLayer tp = new ThemePageBusinessLayer(driver);
+	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+	ThreadSleep(2000);
+	
+	String[] searchValues = {AR_Firm8};
+	String[] labelName = {RecordType.Advisor.toString(),RecordType.Company.toString(),RecordType.Institution.toString(),RecordType.Intermediary.toString(),RecordType.Lender.toString(),RecordType.Limited_Partner.toString().toString().replace("_", " "),RecordType.Portfolio_Company.toString().toString().replace("_", " "),
+			RecordType.Private_Equity.toString().toString().replace("_", " "),RecordType.Banker.toString(),RecordType.Broker.toString(),RecordType.Buy_Side_Deal.toString().replaceAll("_", " "),RecordType.Capital_Raise.toString().replace("_", " "),RecordType.Sell_Side_Deal.toString().replaceAll("_", " "),
+			RecordType.FRGRT.toString().replace("_", " "),RecordType.MSGRT.toString().replace("_", " "),RecordType.Theme.toString(),RecordType.Clip.toString(),RecordType.Interaction.toString()};
+
+	for(String searchValue : searchValues) {
+		
+		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
+		log(LogStatus.PASS, "Working for " + searchValue, YesNo.No);
+	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			ThreadSleep(2000);
+			if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+				ThreadSleep(2000);
+				clickUsingJavaScript(driver, rp.getAdvancedResearch(10),"Advanced Research", action.BOOLEAN);
+				log(LogStatus.PASS, "Clicked on Research button", YesNo.No);
+				ThreadSleep(8000);
+			} else {
+				log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to send value "+searchValue);
+			}
+			log(LogStatus.INFO,
+					"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+							+ searchValue + "---------",
+					YesNo.No);
+			if(rp.getNoResult(5) != null){
+				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+			} else 
+				if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+					log(LogStatus.INFO,
+							"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+									+ searchValue + "---------",
+							YesNo.No);
+					ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+					if(list.isEmpty()) {
+						
+						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
+					} else {
+						log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.Yes);
+						sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
+					}
+		
+				} else {
+					log(LogStatus.FAIL,
+							"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+									+ searchValue + "---------",
+							YesNo.Yes);
+					sa.assertTrue(false,
+							"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+									+ searchValue + "---------");
+					
+				}
+				ThreadSleep(2000);
+				if(click(driver, rp.getAddToThemeLink(10),"Add To Theme Button", action.BOOLEAN)) {
+					log(LogStatus.PASS, "Clicked on Add To Theme button on advanced area", YesNo.No);
+					ThreadSleep(2000);
+					click(driver, rp.getInputBoxForTheme(10),"Theme Input Box", action.SCROLLANDBOOLEAN);
+					sendKeys(driver, rp.getInputBoxForTheme(10), AR_String7, "Theme Input Box", action.SCROLLANDBOOLEAN);
+					ThreadSleep(2000);
+					if(click(driver, rp.getAdvancedLinkOnCreateThemePopup(10),"Advanced Research Link", action.BOOLEAN)) {
+						log(LogStatus.PASS, "Clicked on Advanced Research Link", YesNo.No);
+						ThreadSleep(2000);
+						if(isDisplayed(driver, rp.getLabelofAllCategoriesOnCreateThemePopup(10), "Visibility", 10, "Search By Keyword(s)") != null) {
+							log(LogStatus.PASS, "Label Of All Categories On Theme Popup is visible", YesNo.No);
+							ThreadSleep(2000);
+							for(int i =0; i<labelName.length;i++) {
+								WebElement CheckBoxInAdvanced = rp.getCheckBoxofCategoriesOnCreateThemePopup(labelName[i],5);
+								if(CheckBoxInAdvanced != null) {
+									click(driver, CheckBoxInAdvanced,"CheckBox of Categories", action.BOOLEAN);
+									log(LogStatus.PASS, "Checkbox for " + labelName[i] + " is visible On Theme Popup", YesNo.No);
+									ThreadSleep(2000);
+								} else {
+									log(LogStatus.ERROR, "Checkbox for " + labelName[i] + " is not visible On Theme Popup", YesNo.Yes);
+									sa.assertTrue(false,"Checkbox for " + labelName[i] + " is not visible On Theme Popup");
+								}
+							}
+							click(driver, rp.getSaveButtonOnCreateThemePopup(10),"Save Button On Create Theme Popup", action.BOOLEAN);
+						} else {
+							log(LogStatus.ERROR, "Label Of All Categories On Theme Popup is not visible", YesNo.Yes);
+							sa.assertTrue(false,"Label Of All Categories On Theme Popup is not visible");
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on Advanced Research Link", YesNo.Yes);
+						sa.assertTrue(false,"Not able to click on Advanced Research Link");
+					}
+				} else {
+					log(LogStatus.ERROR,"Add To Theme in Advanced Research option is not visible", YesNo.Yes);
+					sa.assertTrue(false,"Add To Theme in Advanced Research option is not visible");
+				}
+			}
+		}
+	ThreadSleep(5000);
+	refresh(driver);	   
+		String themeTabName = tabObj9;
+		String themeName = AR_String7;
+		HashMap<String, Integer> expectedSectionNameAndCount = new HashMap<String, Integer>();
+		expectedSectionNameAndCount.put(MRSD_1_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_2_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_3_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_4_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_5_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_6_ResearchFindings, 5);
+		expectedSectionNameAndCount.put(MRSD_7_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_8_ResearchFindings, 35);
+		expectedSectionNameAndCount.put(MRSD_9_ResearchFindings, 30);
+
+		if (tp.verifyItsLeftCountAndGridCountSepratelyAndTotalSumWithAllCount(true, themeTabName, themeName,
+				projectName, true, expectedSectionNameAndCount, true, true, true, true)) {
+			log(LogStatus.PASS, "-----Verified Counts of Theme Section Wise-----", YesNo.No);
+
+		} else {
+			sa.assertTrue(false, "-----Not Verified Counts of Theme Section Wise-----");
+			log(LogStatus.FAIL, "-----Not Verified Counts of Theme Section Wise-----", YesNo.Yes);
+		}
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();	
+	}
+	
+@Parameters({ "projectName"})
+@Test
+	public void ARTc071_CheckAddToThemeButtonFunctionalityWithAllCheckboxesCheckedWithCreatedTheme(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	ThemePageBusinessLayer tp = new ThemePageBusinessLayer(driver);
+	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+	ThreadSleep(2000);
+	
+	String[] searchValues = {AR_Firm8};
+	String[] labelName = {RecordType.Advisor.toString(),RecordType.Company.toString(),RecordType.Institution.toString(),RecordType.Intermediary.toString(),RecordType.Lender.toString(),RecordType.Limited_Partner.toString().toString().replace("_", " "),RecordType.Portfolio_Company.toString().toString().replace("_", " "),
+			RecordType.Private_Equity.toString().toString().replace("_", " "),RecordType.Banker.toString(),RecordType.Broker.toString(),RecordType.Buy_Side_Deal.toString().replaceAll("_", " "),RecordType.Capital_Raise.toString().replace("_", " "),RecordType.Sell_Side_Deal.toString().replaceAll("_", " "),
+			RecordType.FRGRT.toString().replace("_", " "),RecordType.MSGRT.toString().replace("_", " "),RecordType.Theme.toString(),RecordType.Clip.toString(),RecordType.Interaction.toString()};
+
+	for(String searchValue : searchValues) {
+		
+		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
+		log(LogStatus.PASS, "Working for " + searchValue, YesNo.No);
+	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			ThreadSleep(2000);
+			if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+				ThreadSleep(2000);
+				clickUsingJavaScript(driver, rp.getAdvancedResearch(10),"Advanced Research", action.BOOLEAN);
+				log(LogStatus.PASS, "Clicked on Research button", YesNo.No);
+				ThreadSleep(8000);
+			} else {
+				log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to send value "+searchValue);
+			}
+			log(LogStatus.INFO,
+					"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+							+ searchValue + "---------",
+					YesNo.No);
+			if(rp.getNoResult(5) != null){
+				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+			} else 
+				if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+					log(LogStatus.INFO,
+							"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+									+ searchValue + "---------",
+							YesNo.No);
+					ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+					if(list.isEmpty()) {
+						
+						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
+					} else {
+						log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.Yes);
+						sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
+					}
+		
+				} else {
+					log(LogStatus.FAIL,
+							"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+									+ searchValue + "---------",
+							YesNo.Yes);
+					sa.assertTrue(false,
+							"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+									+ searchValue + "---------");
+					
+				}
+				ThreadSleep(2000);
+				if(click(driver, rp.getCreateThemeLink(10),"Create Theme Button", action.BOOLEAN)) {
+					log(LogStatus.PASS, "Clicked on Create Theme button on advanced area", YesNo.No);
+					ThreadSleep(2000);
+					click(driver, rp.getInputBoxForTheme(10),"Theme Input Box", action.SCROLLANDBOOLEAN);
+					sendKeys(driver, rp.getInputBoxForTheme(10), AR_String6, "Theme Input Box", action.SCROLLANDBOOLEAN);
+					ThreadSleep(2000);
+					if(click(driver, rp.getAdvancedLinkOnCreateThemePopup(10),"Advanced Research Link", action.BOOLEAN)) {
+						log(LogStatus.PASS, "Clicked on Advanced Research Link", YesNo.No);
+						ThreadSleep(2000);
+						if(isDisplayed(driver, rp.getLabelofAllCategoriesOnCreateThemePopup(10), "Visibility", 10, "Search By Keyword(s)") != null) {
+							log(LogStatus.PASS, "Label Of All Categories On Theme Popup is visible", YesNo.No);
+							ThreadSleep(2000);
+							for(int i =0; i<labelName.length;i++) {
+								WebElement CheckBoxInAdvanced = rp.getCheckBoxofCategoriesOnCreateThemePopup(labelName[i],5);
+								if(CheckBoxInAdvanced != null) {
+									click(driver, CheckBoxInAdvanced,"CheckBox of Categories", action.SCROLLANDBOOLEAN);
+									log(LogStatus.PASS, "Checkbox for " + labelName[i] + " is visible On Theme Popup", YesNo.No);
+									ThreadSleep(2000);
+								} else {
+									log(LogStatus.ERROR, "Checkbox for " + labelName[i] + " is not visible On Theme Popup", YesNo.Yes);
+									sa.assertTrue(false,"Checkbox for " + labelName[i] + " is not visible On Theme Popup");
+								}
+							}
+							
+							WebElement CheckBoxOfAll = rp.getCheckboxAndLabelsofIncludeAllContactsForEachFirm(5);
+							if(CheckBoxOfAll != null) {
+								click(driver, CheckBoxOfAll,"CheckBox of All Contact", action.SCROLLANDBOOLEAN);
+								log(LogStatus.PASS, "CheckBox of All Contact is visible On Theme Popup", YesNo.No);
+								ThreadSleep(2000);
+							} else {
+								log(LogStatus.ERROR, "CheckBox of All Contact is not visible On Theme Popup", YesNo.Yes);
+								sa.assertTrue(false,"CheckBox of All Contact is not visible On Theme Popup");
+							}
+							
+							click(driver, rp.getSaveButtonOnCreateThemePopup(10),"Save Button On Create Theme Popup", action.BOOLEAN);
+						} else {
+							log(LogStatus.ERROR, "Label Of All Categories On Theme Popup is not visible", YesNo.Yes);
+							sa.assertTrue(false,"Label Of All Categories On Theme Popup is not visible");
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on Advanced Research Link", YesNo.Yes);
+						sa.assertTrue(false,"Not able to click on Advanced Research Link");
+					}
+				} else {
+					log(LogStatus.ERROR, "Advanced Research option is not visible", YesNo.Yes);
+					sa.assertTrue(false,"Advanced Research option is not visible");
+				}
+			}
+		}
+	ThreadSleep(5000);
+	refresh(driver);	   
+		String themeTabName = tabObj9;
+		String themeName = AR_String6;
+		HashMap<String, Integer> expectedSectionNameAndCount = new HashMap<String, Integer>();
+		expectedSectionNameAndCount.put(MRSD_1_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_2_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_3_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_4_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_5_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_6_ResearchFindings, 5);
+		expectedSectionNameAndCount.put(MRSD_7_ResearchFindings, 10);
+		expectedSectionNameAndCount.put(MRSD_8_ResearchFindings, 35);
+		expectedSectionNameAndCount.put(MRSD_9_ResearchFindings, 30);
+
+		if (tp.verifyItsLeftCountAndGridCountSepratelyAndTotalSumWithAllCount(true, themeTabName, themeName,
+				projectName, true, expectedSectionNameAndCount, true, true, true, true)) {
+			log(LogStatus.PASS, "-----Verified Counts of Theme Section Wise-----", YesNo.No);
+
+		} else {
+			sa.assertTrue(false, "-----Not Verified Counts of Theme Section Wise-----");
+			log(LogStatus.FAIL, "-----Not Verified Counts of Theme Section Wise-----", YesNo.Yes);
+		}
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();	
+	}
+
+@Parameters({ "projectName"})
+@Test
+	public void ARTc072_VerifyAdvancedWithAddToThemeFunctionality(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+		ThreadSleep(2000);
+		String FieldName = AR_String8, OperatorName = AR_String9, ValueName = AR_String10;
+		String[] searchValues = {AR_Firm8};
+		String[] labelName = {RecordType.Advisor.toString(),RecordType.Company.toString(),RecordType.Institution.toString(),RecordType.Intermediary.toString(),RecordType.Lender.toString(),RecordType.Limited_Partner.toString().toString().replace("_", " "),RecordType.Portfolio_Company.toString().toString().replace("_", " "),
+				RecordType.Private_Equity.toString().toString().replace("_", " "),RecordType.Banker.toString(),RecordType.Broker.toString(),RecordType.Buy_Side_Deal.toString().replaceAll("_", " "),RecordType.Capital_Raise.toString().replace("_", " "),RecordType.Sell_Side_Deal.toString().replaceAll("_", " "),
+				RecordType.FRGRT.toString().replace("_", " "),RecordType.MSGRT.toString().replace("_", " "),RecordType.Theme.toString(),RecordType.Clip.toString(),RecordType.Interaction.toString()};
+		
+		for(String searchValue : searchValues) {
+			
+			String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
+			log(LogStatus.PASS, "Working for " + searchValue, YesNo.No);
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+				ThreadSleep(2000);
+				if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+					ThreadSleep(2000);
+					clickUsingJavaScript(driver, rp.getAdvancedResearch(10),"Advanced Research", action.BOOLEAN);
+					log(LogStatus.PASS, "Clicked on Research button", YesNo.No);
+					ThreadSleep(8000);
+					log(LogStatus.INFO,
+							"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+									+ searchValue + "---------",
+							YesNo.No);
+					if(rp.getNoResult(5) != null){
+						log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+					} else 
+						if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+							log(LogStatus.INFO,
+									"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+											+ searchValue + "---------",
+									YesNo.No);
+							ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+							if(list.isEmpty()) {
+								
+								log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue + "||" + "list : "+list, YesNo.Yes);
+								sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------Keyword: "+ searchValue+ "||" + "list : "+list);
+							}
+				
+						} else {
+							log(LogStatus.FAIL,
+									"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+											+ searchValue + "---------",
+									YesNo.Yes);
+							sa.assertTrue(false,
+									"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+											+ searchValue + "---------");
+						}
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to send value "+searchValue);
+				}
+			rp.AddKeywordsForAdvancedResearch(searchValue,null,null,null,FieldName,OperatorName,ValueName,action.BOOLEAN,5);
+			ThreadSleep(2000);
+			clickUsingJavaScript(driver, rp.getAdvancedResearch(10),"Advanced Research", action.BOOLEAN);
+			log(LogStatus.PASS, "Clicked on Research button", YesNo.No);
+			ThreadSleep(8000);
+					if(click(driver, rp.getAddToThemeLink(10),"Advanced Research Button", action.BOOLEAN)) {
+						log(LogStatus.PASS, "Clicked on Research button on advanced area", YesNo.No);
+						ThreadSleep(2000);
+						
+						if(click(driver, rp.getAdvancedLinkOnCreateThemePopup(10),"Advanced Research Link", action.BOOLEAN)) {
+							log(LogStatus.PASS, "Clicked on Advanced Research Link", YesNo.No);
+							ThreadSleep(2000);
+							if(isDisplayed(driver, rp.getLabelofAllCategoriesOnCreateThemePopup(10), "Visibility", 10, "Search By Keyword(s)") != null) {
+								log(LogStatus.PASS, "Label Of All Categories On Theme Popup is visible", YesNo.No);
+								ThreadSleep(2000);
+								for(int i =0; i<labelName.length;i++) {
+									String Label = rp.getLabelsofCategoriesOnCreateThemePopup(5).get(i).getText();
+									if(Label.equalsIgnoreCase(labelName[i])) {
+										log(LogStatus.PASS, Label + " is visible On Theme Popup", YesNo.No);
+										ThreadSleep(2000);
+									} else {
+										log(LogStatus.ERROR, Label + " is not visible On Theme Popup", YesNo.Yes);
+										sa.assertTrue(false,Label + " is not visible On Theme Popup");
+									}
+								}
+								click(driver, rp.getSaveButtonOnCreateThemePopup(10),"Save Button On Create Theme Popup", action.BOOLEAN);
+							} else {
+								log(LogStatus.ERROR, "Label Of All Categories On Theme Popup is not visible", YesNo.Yes);
+								sa.assertTrue(false,"Label Of All Categories On Theme Popup is not visible");
+							}
+						} else {
+							log(LogStatus.ERROR, "Not able to click on Advanced Research Link", YesNo.Yes);
+							sa.assertTrue(false,"Not able to click on Advanced Research Link");
+						}
+					} else {
+						log(LogStatus.ERROR, "Advanced Research option is not visible", YesNo.Yes);
+						sa.assertTrue(false,"Advanced Research option is not visible");
+					}
+			}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();	
+		}
 
 }

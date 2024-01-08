@@ -10519,4 +10519,15 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, editSaveButton, "Visibility", timeOut, "Edit Save Button");
 	}
 	
+	public WebElement TagsOnCallPopup(String Name, int timeOut) {
+
+		String xpath = "//label[text()='Tags']/following-sibling::lightning-layout//span[@title='" + Name + "']";
+		try {
+			return FindElement(driver, xpath, "Header: " + Name, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Header: " + Name, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+	
 }

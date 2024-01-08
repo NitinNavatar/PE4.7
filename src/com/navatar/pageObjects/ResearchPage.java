@@ -373,12 +373,38 @@ public class ResearchPage extends BasePageBusinessLayer {
 			return FindElements(driver, "//div[contains(@class,'slds-border_top')]//lightning-base-formatted-text",
 					"Labels of Categories On Create Theme Popup");
 		}
+		
+		public WebElement getCheckboxAndLabelsofIncludeAllContactsForEachFirm(int timeOut) {
+			return isDisplayed(driver, FindElement(driver, "//span[text()='Include all contacts for each firm']/../preceding-sibling::input",
+					"Labels of Categories On Create Theme Popup", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "Include All Contacts For Each Firm");
+		}
+		
+		public WebElement getCheckBoxofCategoriesOnCreateThemePopup(String LabelName,int timeOut) {
+			return isDisplayed(driver, FindElement(driver, "//div[contains(@class,'slds-border_top')]//lightning-base-formatted-text[text()='"+ LabelName +"']/ancestor::tr/td//input",
+					"Labels of Categories On Create Theme Popup", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "CheckBox Of Categories");
+		}
 
-		@FindBy(xpath = "//div[@class='slds-modal__footer']/button[@title='Save']")
+		@FindBy(xpath = "//div[@class='slds-modal__footer']/button[@title='Cancel']")
 		private WebElement cancelButtonOnCreateThemePopup;
 
 		public WebElement getCancelButtonOnCreateThemePopup(int timeOut) {
 			return isDisplayed(driver, cancelButtonOnCreateThemePopup, "Visibility", timeOut, "Cancel Button On Create Theme Popup");
+
+		}
+
+		@FindBy(xpath = "//div[@class='slds-modal__footer']/button[@title='Save']")
+		private WebElement saveButtonOnCreateThemePopup;
+
+		public WebElement getSaveButtonOnCreateThemePopup(int timeOut) {
+			return isDisplayed(driver, saveButtonOnCreateThemePopup, "Visibility", timeOut, "Save Button On Create Theme Popup");
+
+		}
+		
+		@FindBy(xpath = "//label[text()='Theme']/..//input")
+		private WebElement inputBoxForTheme;
+
+		public WebElement getInputBoxForTheme(int timeOut) {
+			return isDisplayed(driver, inputBoxForTheme, "Visibility", timeOut, "Input Box For Theme");
 
 		}
 		

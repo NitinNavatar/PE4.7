@@ -134,7 +134,7 @@ public class EnumConstants {
 		Task_Subject, Task_Status, User_Name, OrgPassword, Password, Participants, Tags, MeetingAndCallsHeader,
 		ValidationRuleErrorMsg, ValidationRuleErrorMsgLocation, CreateNewRecordPopUp, AddContactsToDealTeamPopUp,
 		AddContactsToFundraisingPopup, Classification, ValidationRuleFormula, ParticipantRecord,
-		ParticipantRecordObject, TagsRecord, TagsObject, Tab_Name, Record_Name, RecordName, ObjectName,NextTouchPointDay,NextTouchPointDate,External_ContactName,External_FirmName,External_Title,External_MeetingAndCallCount, Assigned, Fundraising_Name, Active, Opeartor;
+		ParticipantRecordObject, TagsRecord, TagsObject, Tab_Name, Record_Name, RecordName, ObjectName,NextTouchPointDay,NextTouchPointDate,External_ContactName,External_FirmName,External_Title,External_MeetingAndCallCount, Assigned, Fundraising_Name, Active, Opeartor, Theme_Grid_Columns, Grid_Data, Add_To_Theme, Theme_Grid, Tier;
 
 	};
 
@@ -222,7 +222,7 @@ public class EnumConstants {
 			}
 		}, Object5Tab,
 		Object6Tab, AttendeeTab, Object7Tab, Entities, Deals, Marketing_Events,Interactions, Events, Deal_Team, Financing,
-		Object8Tab, ContactTab, Deal, Acuity, ThemesTab, ClipsTab,Interaction, ContactsTab, AccountsTab, Account, Accounts;
+		Object8Tab, ContactTab, Deal, Acuity, ThemesTab, ClipsTab,Interaction, ContactsTab, AccountsTab, Account, Accounts, Contacts;
 	}
 
 	public static enum Mode {
@@ -1007,7 +1007,7 @@ public class EnumConstants {
 	}
 
 	public static enum CheckBox {
-		Checked, Unchecked
+		Checked, Unchecked, Not_Checked
 	};
 
 	public static enum OfficeLocationLabel {
@@ -1266,7 +1266,7 @@ public class EnumConstants {
 		public String toString() {
 			return "Convert to Portfolio";
 		}
-	}
+	}, Add_to_Theme, Add_To_Theme
 
 };
 		
@@ -1543,7 +1543,7 @@ public class EnumConstants {
 		},
 		Deal_Contact, Stage_Upd, Pipeline_Comments, Pipeline_Comments_Upd, Legal_Name, Status_Notes, Legal_Name_Upd,
 		Status_Notes_Upd, Vintage_Year_Upd, Description_Upd, Summary_Upd, Fund, Vintage_Year, Theme, Descrption, Clip,
-		Summary, Theme_Name, Clip_Name, FundraisingContacts, Contact, Pipeline_Name, Firm_Name, Account_Name_Upd, Advisor_Layout, Currency, Auto_Number, Time, Date_Time, Geolocation, Entity_Type, Entity_Type_Updated, Department, Department_Updated, Custom_Fund_Phone_Updated, Custom_Fund_Phone, Custom_Fundraising_Phone, Custom_Fundraising_Phone_Updated, Theme_Name_Updated, Notes, Notes_Updated
+		Summary, Theme_Name, Clip_Name, FundraisingContacts, Contact, Pipeline_Name, Firm_Name, Account_Name_Upd, Advisor_Layout, Currency, Auto_Number, Time, Date_Time, Geolocation, Entity_Type, Entity_Type_Updated, Department, Department_Updated, Custom_Fund_Phone_Updated, Custom_Fund_Phone, Custom_Fundraising_Phone, Custom_Fundraising_Phone_Updated, Theme_Name_Updated, Notes, Notes_Updated, Call, Task
 	};
 
 	public static enum Links {
@@ -2208,7 +2208,7 @@ public class EnumConstants {
 			public String toString() {
 				return "Institutions";
 			}
-		};
+		}, Themes;
 	}
 	public static enum Interactionslabel {
 		Type,Date,Subject,Details,Participants,Tags;

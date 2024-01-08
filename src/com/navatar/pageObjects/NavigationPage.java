@@ -382,5 +382,21 @@ public class NavigationPage extends BasePageBusinessLayer {
 	public WebElement getErrorOnQuickContact(int timeOut) {
 		return isDisplayed(driver, errorOnQuickContact, "Visibility", timeOut, "Error On Quick Contact");
 	}
+	
+	@FindBy(xpath = "(//div[@class='treeview']//li)[1]")
+	private WebElement callLinkOnCreateOption;
+
+	public WebElement getCallLinkOnCreateOption(int timeOut) {
+		return isDisplayed(driver, callLinkOnCreateOption, "Visibility", timeOut, "Call Link On Create Option");
+
+	}
+	
+	@FindBy(xpath = "(//div[@class='treeview']//li)[2]")
+	private WebElement taskLinkOnCreateOption;
+
+	public WebElement getTaskLinkOnCreateOption(int timeOut) {
+		return isDisplayed(driver, taskLinkOnCreateOption, "Visibility", timeOut, "Task Link On Create Option");
+
+	}
 
 }

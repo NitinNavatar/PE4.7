@@ -51,6 +51,17 @@ public class ContactsPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, contactLastName_Lighting, "Visibility", timeOut, "Contact Last Name Lighting");
 
 	}
+	
+	@FindBy(xpath = "//label[text()='Phone']/..//following-sibling::div/input")
+	private WebElement contactPhone;
+
+	/**
+	 * @return the getContactPhone
+	 */
+	public WebElement getContactPhone(int timeOut) {
+		return isDisplayed(driver, contactPhone, "Visibility", timeOut, "Contact Phone");
+
+	}
 
 	@FindBy(xpath = "//*[text()='Title']/following-sibling::*//input")
 	private WebElement contactTitle;
@@ -72,9 +83,6 @@ public class ContactsPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, tierInput, "Visibility", timeOut, "Contact tier");
 
 	}
-
-	@FindBy(xpath = "//div[@class='requiredInput']//span//input")
-	private WebElement legalName_Classic;
 
 	@FindBy(xpath = "//*[text()='Account Name']/following-sibling::*//input[@title='Search Accounts']")
 	private WebElement accountName;
@@ -1099,6 +1107,140 @@ public class ContactsPage extends BasePageBusinessLayer {
 
 	public WebElement contactEmailQuickLinksPopUp(int timeOut) {
 		return isDisplayed(driver, contactEmailQuickLinksPopUp, "Visibility", timeOut, "contactEmailQuickLinksPopUp");
+	}
+	
+	@FindBy(xpath = "//*[text()='First Name']/../../input")
+	private WebElement contactFirmName;
+
+	public WebElement getContactFirmName(int timeOut) {
+		return isDisplayed(driver, contactFirmName, "Visibility", timeOut, "first name");
+	}
+
+	@FindBy(xpath = "//*[text()='Last Name']/../../input")
+	private WebElement contactLastName;
+
+	public WebElement getContactLastName(int timeOut) {
+		return isDisplayed(driver, contactLastName, "Visibility", timeOut, "last name");
+	}
+
+	@FindBy(xpath = "//*[text()='Title']/../../input")
+	private WebElement contactTitleName;
+
+	public WebElement getContactTitleName(int timeOut) {
+		return isDisplayed(driver, contactTitleName, "Visibility", timeOut, "title name");
+	}
+
+	@FindBy(xpath = "(//h2[text()='New Contact']/../..//span[text()='Save'])[2]")
+	private WebElement saveBttn;
+
+	public WebElement getsaveBttn(int timeOut) {
+		return isDisplayed(driver, saveBttn, "Visibility", timeOut, "save button");
+	}
+	
+	@FindBy(xpath = "//div[@class='requiredInput']//span//input")
+	private WebElement legalName_Classic;
+	
+//	@FindBy(xpath="//*[text()='Account Name']/../following-sibling::*//input[@title='Search Accounts']")
+	@FindBy(xpath = "//label[text()='Account Name']/following-sibling::div//input")
+	private WebElement legalName_Lighting;
+
+	
+	public WebElement getAccountName(String environment, String mode, int timeOut) {
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			return isDisplayed(driver, legalName_Classic, "Visibility", timeOut, "Account Name Classic");
+		} else {
+			return isDisplayed(driver, legalName_Lighting, "Visibility", timeOut, "Account Name Lighting");
+		}
+
+	}
+	
+	public WebElement getEmailId(String environment, String mode, int timeOut) {
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			return isDisplayed(driver, emailId_Clasic, "Visibility", timeOut, "Email Id Classic");
+		} else {
+			return isDisplayed(driver, emailId_Lighting, "Visibility", timeOut, "Email Id Lighting");
+		}
+
+	}
+	
+	public WebElement getContactPageTextBoxOrRichTextBoxWebElement(String environment, String mode, String labelName,
+			int timeOut) {
+		WebElement ele = null;
+		String xpath = "", inputXpath = "", textAreaXpath = "", finalXpath = "", finalLabelName = "", buttonXpath = "";
+		;
+
+		if (labelName.equalsIgnoreCase(excelLabel.Mailing_State.toString())) {
+			labelName = ContactPageFieldLabelText.Mailing_State.toString();
+		} else if (labelName.equalsIgnoreCase(excelLabel.Mailing_Zip.toString())) {
+			labelName = ContactPageFieldLabelText.Mailing_Zip.toString();
+		} else if (labelName.equalsIgnoreCase(excelLabel.Other_State.toString())) {
+			labelName = ContactPageFieldLabelText.Other_State.toString();
+		} else if (labelName.equalsIgnoreCase(excelLabel.Other_Zip.toString())) {
+			labelName = ContactPageFieldLabelText.Other_Zip.toString();
+		}
+
+		if (labelName.contains("_")) {
+			finalLabelName = labelName.replace("_", " ");
+		} else {
+			finalLabelName = labelName;
+		}
+
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			xpath = "//label[text()='" + finalLabelName + "']";
+			inputXpath = "/../following-sibling::td//input";
+			textAreaXpath = "/../following-sibling::td//textarea";
+		} else {
+			// span[text()='Description']/..//following-sibling::textarea
+//			xpath="//*[text()='"+finalLabelName+"']";
+//			inputXpath="/..//following-sibling::input";
+//			textAreaXpath="/..//following-sibling::textarea";
+
+			xpath = "//label[text()='" + finalLabelName + "']";
+			inputXpath = "/..//following-sibling::div/input";
+			textAreaXpath = "/..//following-sibling::div/textarea";
+			buttonXpath = "/..//button";
+		}
+
+		if (labelName.equalsIgnoreCase(ContactPageFieldLabelText.Description.toString())
+				|| labelName.equalsIgnoreCase(ContactPageFieldLabelText.Mailing_Street.toString())
+				|| labelName.equalsIgnoreCase(ContactPageFieldLabelText.Other_Street.toString())) {
+			finalXpath = xpath + textAreaXpath;
+		} else if (labelName.equalsIgnoreCase(excelLabel.Tier.toString())) {
+			finalXpath = xpath + buttonXpath;
+		}
+
+		else if (labelName.equalsIgnoreCase(excelLabel.Phone.toString())
+				|| labelName.equalsIgnoreCase(excelLabel.Fax.toString())) {
+			xpath = "//*[starts-with(text(),'" + finalLabelName + "')]/following-sibling::div//input";
+			finalXpath = xpath;
+		}
+
+		else {
+			finalXpath = xpath + inputXpath;
+		}
+		ele = isDisplayed(driver,
+				FindElement(driver, finalXpath, finalLabelName + " text box in " + mode, action.SCROLLANDBOOLEAN, 30),
+				"Visibility", timeOut, finalLabelName + "text box in " + mode);
+		return ele;
+
+	}
+	
+	@FindBy(xpath = "//div[@class='pbSubsection']//div[@id='con2_ileinner']")
+	private WebElement contactFullNameInViewMode_Classic;
+
+	
+	public WebElement getContactNameInViewMode(String environment, String mode, String contactName, int timeOut) {
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			return isDisplayed(driver, contactFullNameInViewMode_Classic, "Visibility", timeOut,
+					"Contact Full Name In View Mode Classic");
+		} else {
+			String xpath = "//span[text()='" + contactName + "']/../../../..//a";
+			
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Contact Full Name In View Mode", action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Contact Full Name In View Mode Lighting");
+		}
+
 	}
 	
 }

@@ -8074,4 +8074,93 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 	}
 	
+	public boolean renameSingularAndPluralLabelsOfFields(WebDriver driver, String tabName, String[] labelsWithValues,String[] labelWithValues, int timeOut) {
+
+		switchToDefaultContent(driver);
+		switchToFrame(driver, 60, getSetUpPageIframe(120));
+		boolean flag = false;
+
+		if (clickUsingJavaScript(driver, editButtonInRenameTabAndLabels(tabName, timeOut), tabName,
+				action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "able to click on Edit Button of Tab: " + tabName, YesNo.No);
+			switchToDefaultContent(driver);
+			switchToFrame(driver, 60, getSetUpPageIframe(120));
+
+			if (clickUsingJavaScript(driver, nextButton(timeOut), "Next Button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "able to click on Next Button of Tab: " + tabName, YesNo.No);
+				switchToDefaultContent(driver);
+				switchToFrame(driver, 60, getSetUpPageIframe(120));
+
+				for (String labelAndValue : labelsWithValues) {
+					String[] labelValue = null;
+					String labelName = "";
+					String value = "";
+					labelValue = labelAndValue.split("<break>", -1);
+					labelName = labelValue[0];
+					value = labelValue[1];
+					CommonLib.ThreadSleep(1000);
+					if (CommonLib.sendKeys(driver, renameLabelNameSingularTextBox(labelName, timeOut), value,
+							labelName + " input ", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Enter the Value: " + value + " to InputBox of Labeled: " + labelName,
+								YesNo.No);
+
+					} else {
+						log(LogStatus.ERROR, "Not able to Pass value: " + value + " to input box labeled: " + labelName,
+								YesNo.Yes);
+					}
+
+				}
+				
+				for (String labelAndValue : labelWithValues) {
+					String[] labelValue = null;
+					String labelName = "";
+					String value = "";
+					labelValue = labelAndValue.split("<break>", -1);
+					labelName = labelValue[0];
+					value = labelValue[1];
+					CommonLib.ThreadSleep(1000);
+					if (CommonLib.sendKeys(driver, renameLabelNamePluralTextBox(labelName, timeOut), value,
+							labelName + " input ", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Enter the Value: " + value + " to InputBox of Labeled: " + labelName,
+								YesNo.No);
+
+					} else {
+						log(LogStatus.ERROR, "Not able to Pass value: " + value + " to input box labeled: " + labelName,
+								YesNo.Yes);
+					}
+
+				}
+
+				switchToDefaultContent(driver);
+
+				switchToFrame(driver, 60, getSetUpPageIframe(120));
+				CommonLib.ThreadSleep(5000);
+
+				if (clickUsingJavaScript(driver, getfooterSaveBtn(30), "Save Button", action.SCROLLANDBOOLEAN)) {
+
+					log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
+
+					ThreadSleep(8000);
+					switchToDefaultContent(driver);
+					CommonLib.refresh(driver);
+
+					switchToFrame(driver, 60, getSetUpPageIframe(120));
+					if (editButtonInRenameTabAndLabels(tabName, timeOut) != null) {
+						flag = true;
+					}
+
+				} else {
+					log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on Next Button for tab: " + tabName, YesNo.Yes);
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Edit button of tab: " + tabName, YesNo.Yes);
+		}
+		return flag;
+	}
+
 }

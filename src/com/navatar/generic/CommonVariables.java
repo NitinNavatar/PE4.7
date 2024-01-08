@@ -1102,7 +1102,7 @@ public class CommonVariables {
 	    AR_Firm23,AR_Firm24,AR_Firm25,AR_Firm26,AR_Firm27,AR_Firm28,AR_Firm281,AR_Firm29,AR_Firm30,AR_Firm31,AR_Firm32,AR_Firm33,AR_Firm34,AR_Firm35,AR_Firm36,AR_Firm37,AR_Firm38,AR_Firm39,AR_Firm40,AR_Firm41,AR_Firm42,AR_Firm43,AR_Firm44,AR_Firm45,AR_Firm46,
 	    AR_Firm47,AR_Firm48,AR_Firm49,AR_Firm50,AR_Firm51,AR_Firm52,AR_Firm53,AR_Firm54,AR_Firm55,AR_Firm56,AR_Firm57,AR_Firm58,AR_Firm59,AR_Firm60,AR_Firm61,AR_Firm62,AR_Firm63,AR_Firm64,AR_Firm65,AR_Firm66,AR_Data1,AR_Data2,AR_Data3,
 	    AR_Research1,AR_Research2,AR_Research3,AR_Research4,AR_Research5,AR_Research6,AR_Research7,AR_Research54,AR_Research55,ARNewFirm1Name,ARNewFirm2Name,ARNewFirm1RecordType,ARNewFirm2RecordType,AR_Field1,AR_Operator1,AR_Value1,AR_Record3,
-	    AR_Record4,AR_Record5,AR_Record6,AR_Record7,AR_Record8;
+	    AR_Record4,AR_Record5,AR_Record6,AR_Record7,AR_Record8,AR_String1,AR_String2,AR_String3,AR_String4,AR_String5,AR_String6,AR_String7,AR_String8,AR_String9,AR_String10;
 	    public static String ARUpdated1Name,ARUpdated2Name,ARUpdated3Name,ARUpdated4Name;
 	   
 	    public static String ARFieldName1,ARValue1,ARNewValue1,ARFieldName2,ARValue2,ARNewValue2,ARFieldName3,ARValue3,ARNewValue3,ARFieldName4,ARValue4,ARNewValue4,ARFieldName5,ARValue5,ARNewValue5,
@@ -1710,7 +1710,15 @@ public class CommonVariables {
 	 		    ATETSubject8,ATETNote8,ATETRelated8,ATETAction8,ATETPriority8,ATETNote9,ATETRelated9,ATETAction9,ATETPriority9,ATETSubject9,ATETStatus9,ATDealNewStage9,ATDealNewStatus9,ATETNote10,ATETSubject10,ATETAction10,ATETRelated10,ATETSubject11,ATETNote11,ATETRelated11,ATETAction11,ATETPriority11,ATETNote12,ATETRelated12,ATETAction12,ATETPriority12,ATETSubject12,ATETStatus12,
 	 		    ATETNote13,ATETSubject13,ATETAction13,ATETRelated13,ATETPriority13,ATETStatus13,
 	 		    AT_TaggedFirmsName1,AT_TaggedFirmsCount1,AT_TaggedPeopleName1,AT_TaggedPeopleCount1,AT_TaggedFirmsName2,AT_TaggedFirmsCount2,AT_TaggedPeopleName2,AT_TaggedPeopleCount2,AT_TaggedFirmsName3,
-	 		    AT_TaggedFirmsCount3,AT_TaggedPeopleName3,AT_TaggedPeopleCount3,AT_TaggedFirmsName4,AT_TaggedFirmsCount4,AT_TaggedPeopleName4,AT_TaggedPeopleCount4;
+	 		    AT_TaggedFirmsCount3,AT_TaggedPeopleName3,AT_TaggedPeopleCount3,AT_TaggedFirmsName4,AT_TaggedFirmsCount4,AT_TaggedPeopleName4,AT_TaggedPeopleCount4,
+	 		   CLActionType1,CLSubject1,CLRelated1,CLActionType2,CLSubject2,CLRelated2,CLCMDField1,CLCMDField2,CLCMDField3,CLCMDField4,CLCMDField5,CLCMDNewValue1,CLCMDNewValue2,CLCMDNewValue3,CLCMDNewValue4,CLCMDNewValue5,CLCMDValue1,CLCMDValue2,CLCMDValue3,CLCMDValue4,CLCMDValue5,
+	 		    CLFirm1,CLFirm2,CLFirm3,CLFirm4,CLFirm1Updated,CLFirm4Updated,UpdatedCLFirm4,CLFirm5,CLFirmsName1,CLFirmsName2,CLFirm2Updated,CLRecordType1,CLRecordType2,CLRecordType3,CLRecordType4,CLRecordType5,CLConLN1,CLConLN2,CLConLN3,CLConLN4,CLConLN5,CLConLN6,CLConLN7,CLConLN8,CLConLN9,CLConLN10,CLConLN11,CLConLN12,CLConLN13,CLConLN14,CLConLN15,CLConLN16,CLConLN17,CLConLN18,CLConLN19,CLConLN20,CLConLN21,CLConLN22,CLConLN23,CLConLN1Updated,CLConLN4Updated,CLConFN1,CLConFN2,CLConFN3,CLConFN4,CLConFN5,CLConFN6,CLConFN7,CLConFN8,CLConFN9,CLConFN10,
+	 		    CLConFN11,CLConFN12,CLConFN13,CLConFN14,CLConFN15,CLConFN16,CLConFN17,CLConFN18,CLConFN19,CLConFN20,CLConFN21,CLConFN22,CLConFN23,CLConTitle1,CLConTitle2,CLConTitle3,CLConTitle4,CLConTitle5,CLConTitle6,CLConTitle7,CLConTitle8,CLConTitle9,CLConTitle10,CLConTitle11,CLConTitle12,CLConTitle13,CLConTitle14,CLConTitle15,CLConTitle16,CLConTitle17,CLConTitle18,CLConTitle19,CLConTitle20,
+	 		    CLConTier1,CLConTier2,CLConTier3,CLConTier4,CLConTier5,CLConTier6,CLConTier7,CLConTier8,CLConTier9,CLConTier10,CLConTier11,CLConTier12,CLConTier13,CLConTier14,CLConTier15,CLConTier16,CLConTier17,CLConTier18,CLConTier19,CLConTier20,CLConEmail1,CLConEmail2,CLConEmail3,CLConEmail4,CLConEmail5,CLConEmail6,CLConEmail7,CLConEmail8,CLConEmail9,CLConEmail10,CLConEmail11,
+	 		    CLConEmail12,CLConEmail13,CLConEmail14,CLConEmail15,CLConEmail16,CLConEmail17,CLConEmail18,CLConEmail19,CLConEmail20,CLConEmail21,CLConFirm1,CLConFirm2,CLConFirm3,CLConFirm4,CLConFirm5,CLConFirm6,CLConFirm7,CLConFirm8,CLConFirm9,CLConFirm10,CLConFirm11,CLConFirm12,CLConFirm13,CLConFirm14,CLConFirm15,CLConFirm16,CLConFirm17,CLConFirm18,CLConFirm19,CLConFirm20,CLConFirm21,CLConFirm22,CLConFirm23,
+	 		    CLConPhone1,CLConPhone2,CLConPhone3,CLConPhone4,CLConPhone5,CLConPhone6,CLConPhone7,CLConPhone8,CLConPhone9,CLConPhone10,CLConPhone11,CLConPhone12,CLConPhone13,CLConPhone14,CLConPhone15,CLConPhone16,CLConPhone17,CLConPhone18,CLConPhone19,CLConPhone20,CLTheme1,CLThemeTab1,CLThemeGrid1,CLThemeGrid2,CLThemeGrid3,CLThemeGrid4,CLThemeGrid5,CLTheme2,CLTheme3,CLTheme4,CLTheme5,
+	 		    CLThemeGridColumns2,CLAddToTheme2,CLAddToTheme3,CLAddToTheme4,CLAddToTheme5;
+	 		    
 	 		
             //Tagged section
 	 		
@@ -7701,6 +7709,17 @@ public class CommonVariables {
 					AR_Record7=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"AdvancedResearch",excelLabel.Variable_Name, "ARAT_7", excelLabel.Record_Name);
 					AR_Record8=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"AdvancedResearch",excelLabel.Variable_Name, "ARAT_8", excelLabel.Record_Name);
 					
+					
+					AR_String1=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"AdvancedResearch",excelLabel.Variable_Name, "Research1", excelLabel.Search_String);
+					AR_String2=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"AdvancedResearch",excelLabel.Variable_Name, "Research2", excelLabel.Search_String);
+					AR_String3=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"AdvancedResearch",excelLabel.Variable_Name, "Research3", excelLabel.Search_String);
+					AR_String4=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"AdvancedResearch",excelLabel.Variable_Name, "Research4", excelLabel.Search_String);
+					AR_String5=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"AdvancedResearch",excelLabel.Variable_Name, "Research5", excelLabel.Search_String);
+					AR_String6=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"AdvancedResearch",excelLabel.Variable_Name, "Research6", excelLabel.Search_String);
+					AR_String7=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"AdvancedResearch",excelLabel.Variable_Name, "Research7", excelLabel.Search_String);
+					AR_String8=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"AdvancedResearch",excelLabel.Variable_Name, "Research8", excelLabel.Search_String);
+					AR_String9=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"AdvancedResearch",excelLabel.Variable_Name, "Research9", excelLabel.Search_String);
+					AR_String10=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"AdvancedResearch",excelLabel.Variable_Name, "Research10", excelLabel.Search_String);
 					try {
 						dataFile.close();
 					} catch (IOException e) {
@@ -10897,7 +10916,264 @@ public class CommonVariables {
  	
  					}
  	
- 					break;			
+ 					break;
+ 					
+             	 case "ThemeCallList" :
+						
+						try {
+							dataFile=new FileInputStream(new File(AcuityDataSheetFilePath));
+						} catch (FileNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+						
+						try {
+							dataWb=WorkbookFactory.create(dataFile);
+						} catch (EncryptedDocumentException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (InvalidFormatException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						CLFirm1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "CLIns1", excelLabel.Legal_Name);
+						CLFirm2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "CLIns2", excelLabel.Legal_Name);
+						CLFirm3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "CLIns3", excelLabel.Legal_Name);
+						CLFirm4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "CLIns4", excelLabel.Legal_Name);
+						CLFirm5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "CLIns5", excelLabel.Legal_Name);
+						CLFirm1Updated=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "CLIns1", excelLabel.Other_LabelValues);
+						CLFirmsName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "CLIns1", excelLabel.Other_LabelNames);
+						CLFirmsName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "CLIns2", excelLabel.Other_LabelNames);
+						CLFirm4Updated=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "CLIns4", excelLabel.Other_LabelValues);
+						UpdatedCLFirm4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "CLIns4", excelLabel.Other_LabelNames);
+						
+						CLRecordType1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "CLIns1", excelLabel.Record_Type);
+						CLRecordType2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "CLIns2", excelLabel.Record_Type);
+						CLRecordType3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "CLIns3", excelLabel.Record_Type);
+						CLRecordType4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "CLIns4", excelLabel.Record_Type);
+						CLRecordType5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "CLIns5", excelLabel.Record_Type);
+						
+						CLConFN1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact1", excelLabel.Contact_FirstName);
+						CLConFN2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact2", excelLabel.Contact_FirstName);
+						CLConFN3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact3", excelLabel.Contact_FirstName);
+						CLConFN4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact4", excelLabel.Contact_FirstName);
+						CLConFN5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact5", excelLabel.Contact_FirstName);
+						CLConFN6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact6", excelLabel.Contact_FirstName);
+						CLConFN7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact7", excelLabel.Contact_FirstName);
+						CLConFN8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact8", excelLabel.Contact_FirstName);
+						CLConFN9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact9", excelLabel.Contact_FirstName);
+						CLConFN10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact10", excelLabel.Contact_FirstName);
+						CLConFN11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact11", excelLabel.Contact_FirstName);
+						CLConFN12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact12", excelLabel.Contact_FirstName);
+						CLConFN13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact13", excelLabel.Contact_FirstName);
+						CLConFN14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact14", excelLabel.Contact_FirstName);
+						CLConFN15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact15", excelLabel.Contact_FirstName);
+						CLConFN16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact16", excelLabel.Contact_FirstName);
+						CLConFN17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact17", excelLabel.Contact_FirstName);
+						CLConFN18=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact18", excelLabel.Contact_FirstName);
+						CLConFN19=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact19", excelLabel.Contact_FirstName);
+						CLConFN20=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact20", excelLabel.Contact_FirstName);
+						CLConFN21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact21", excelLabel.Contact_FirstName);
+						CLConFN22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact22", excelLabel.Contact_FirstName);
+						CLConFN23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact23", excelLabel.Contact_FirstName);
+						
+						CLConLN1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact1", excelLabel.Contact_LastName);
+						CLConLN2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact2", excelLabel.Contact_LastName);
+						CLConLN3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact3", excelLabel.Contact_LastName);
+						CLConLN4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact4", excelLabel.Contact_LastName);
+						CLConLN5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact5", excelLabel.Contact_LastName);
+						CLConLN6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact6", excelLabel.Contact_LastName);
+						CLConLN7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact7", excelLabel.Contact_LastName);
+						CLConLN8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact8", excelLabel.Contact_LastName);
+						CLConLN9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact9", excelLabel.Contact_LastName);
+						CLConLN10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact10", excelLabel.Contact_LastName);
+						CLConLN11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact11", excelLabel.Contact_LastName);
+						CLConLN12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact12", excelLabel.Contact_LastName);
+						CLConLN13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact13", excelLabel.Contact_LastName);
+						CLConLN14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact14", excelLabel.Contact_LastName);
+						CLConLN15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact15", excelLabel.Contact_LastName);
+						CLConLN16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact16", excelLabel.Contact_LastName);
+						CLConLN17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact17", excelLabel.Contact_LastName);
+						CLConLN18=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact18", excelLabel.Contact_LastName);
+						CLConLN19=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact19", excelLabel.Contact_LastName);
+						CLConLN20=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact20", excelLabel.Contact_LastName);
+						CLConLN21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact21", excelLabel.Contact_LastName);
+						CLConLN22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact22", excelLabel.Contact_LastName);
+						CLConLN1Updated=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact1", excelLabel.ContactName);
+						CLConLN4Updated=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact7", excelLabel.ContactName);
+						CLConLN23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact23", excelLabel.Contact_LastName);
+						
+						CLConFirm1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact1", excelLabel.Legal_Name);
+						CLConFirm2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact2", excelLabel.Legal_Name);
+						CLConFirm3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact3", excelLabel.Legal_Name);
+						CLConFirm4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact4", excelLabel.Legal_Name);
+						CLConFirm5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact5", excelLabel.Legal_Name);
+						CLConFirm6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact6", excelLabel.Legal_Name);
+						CLConFirm7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact7", excelLabel.Legal_Name);
+						CLConFirm8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact8", excelLabel.Legal_Name);
+						CLConFirm9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact9", excelLabel.Legal_Name);
+						CLConFirm10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact10", excelLabel.Legal_Name);
+						CLConFirm11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact11", excelLabel.Legal_Name);
+						CLConFirm12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact12", excelLabel.Legal_Name);
+						CLConFirm13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact13", excelLabel.Legal_Name);
+						CLConFirm14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact14", excelLabel.Legal_Name);
+						CLConFirm15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact15", excelLabel.Legal_Name);
+						CLConFirm16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact16", excelLabel.Legal_Name);
+						CLConFirm17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact17", excelLabel.Legal_Name);
+						CLConFirm18=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact18", excelLabel.Legal_Name);
+						CLConFirm19=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact19", excelLabel.Legal_Name);
+						CLConFirm20=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact20", excelLabel.Legal_Name);
+						CLConFirm21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact21", excelLabel.Legal_Name);
+						CLConFirm22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact22", excelLabel.Legal_Name);
+						CLConFirm23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact23", excelLabel.Legal_Name);
+						
+						CLConEmail1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact1", excelLabel.Contact_EmailId);
+						CLConEmail2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact2", excelLabel.Contact_EmailId);
+						CLConEmail3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact3", excelLabel.Contact_EmailId);
+						CLConEmail4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact4", excelLabel.Contact_EmailId);
+						CLConEmail5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact5", excelLabel.Contact_EmailId);
+						CLConEmail6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact6", excelLabel.Contact_EmailId);
+						CLConEmail7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact7", excelLabel.Contact_EmailId);
+						CLConEmail8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact8", excelLabel.Contact_EmailId);
+						CLConEmail9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact9", excelLabel.Contact_EmailId);
+						CLConEmail10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact10", excelLabel.Contact_EmailId);
+						CLConEmail11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact11", excelLabel.Contact_EmailId);
+						CLConEmail12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact12", excelLabel.Contact_EmailId);
+						CLConEmail13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact13", excelLabel.Contact_EmailId);
+						CLConEmail14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact14", excelLabel.Contact_EmailId);
+						CLConEmail15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact15", excelLabel.Contact_EmailId);
+						CLConEmail16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact16", excelLabel.Contact_EmailId);
+						CLConEmail17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact17", excelLabel.Contact_EmailId);
+						CLConEmail18=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact18", excelLabel.Contact_EmailId);
+						CLConEmail19=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact19", excelLabel.Contact_EmailId);
+						CLConEmail20=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact20", excelLabel.Contact_EmailId);
+						CLConEmail21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact21", excelLabel.Contact_EmailId);
+						
+						CLConTier1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact1", excelLabel.Other_LabelNames);
+						CLConTier2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact2", excelLabel.Other_LabelNames);
+						CLConTier3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact3", excelLabel.Other_LabelNames);
+						CLConTier4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact4", excelLabel.Other_LabelNames);
+						CLConTier5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact5", excelLabel.Other_LabelNames);
+						CLConTier6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact6", excelLabel.Other_LabelNames);
+						CLConTier7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact7", excelLabel.Other_LabelNames);
+						CLConTier8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact8", excelLabel.Other_LabelNames);
+						CLConTier9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact9", excelLabel.Other_LabelNames);
+						CLConTier10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact10", excelLabel.Other_LabelNames);
+						CLConTier11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact11", excelLabel.Other_LabelNames);
+						CLConTier12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact12", excelLabel.Other_LabelNames);
+						CLConTier13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact13", excelLabel.Other_LabelNames);
+						CLConTier14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact14", excelLabel.Other_LabelNames);
+						CLConTier15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact15", excelLabel.Other_LabelNames);
+						CLConTier16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact16", excelLabel.Other_LabelNames);
+						CLConTier17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact17", excelLabel.Other_LabelNames);
+						CLConTier18=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact18", excelLabel.Other_LabelNames);
+						CLConTier19=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact19", excelLabel.Other_LabelNames);
+						CLConTier20=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact20", excelLabel.Other_LabelNames);
+						
+						CLConPhone1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact1", excelLabel.Other_LabelValues);
+						CLConPhone2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact2", excelLabel.Other_LabelValues);
+						CLConPhone3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact3", excelLabel.Other_LabelValues);
+						CLConPhone4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact4", excelLabel.Other_LabelValues);
+						CLConPhone5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact5", excelLabel.Other_LabelValues);
+						CLConPhone6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact6", excelLabel.Other_LabelValues);
+						CLConPhone7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact7", excelLabel.Other_LabelValues);
+						CLConPhone8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact8", excelLabel.Other_LabelValues);
+						CLConPhone9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact9", excelLabel.Other_LabelValues);
+						CLConPhone10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact10", excelLabel.Other_LabelValues);
+						CLConPhone11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact11", excelLabel.Other_LabelValues);
+						CLConPhone12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact12", excelLabel.Other_LabelValues);
+						CLConPhone13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact13", excelLabel.Other_LabelValues);
+						CLConPhone14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact14", excelLabel.Other_LabelValues);
+						CLConPhone15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact15", excelLabel.Other_LabelValues);
+						CLConPhone16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact16", excelLabel.Other_LabelValues);
+						CLConPhone17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact17", excelLabel.Other_LabelValues);
+						CLConPhone18=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact18", excelLabel.Other_LabelValues);
+						CLConPhone19=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact19", excelLabel.Other_LabelValues);
+						CLConPhone20=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact20", excelLabel.Other_LabelValues);
+						
+						CLConTitle1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact1", excelLabel.Title);
+						CLConTitle2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact2", excelLabel.Title);
+						CLConTitle3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact3", excelLabel.Title);
+						CLConTitle4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact4", excelLabel.Title);
+						CLConTitle5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact5", excelLabel.Title);
+						CLConTitle6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact6", excelLabel.Title);
+						CLConTitle7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact7", excelLabel.Title);
+						CLConTitle8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact8", excelLabel.Title);
+						CLConTitle9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact9", excelLabel.Title);
+						CLConTitle10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact10", excelLabel.Title);
+						CLConTitle11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact11", excelLabel.Title);
+						CLConTitle12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact12", excelLabel.Title);
+						CLConTitle13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact13", excelLabel.Title);
+						CLConTitle14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact14", excelLabel.Title);
+						CLConTitle15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact15", excelLabel.Title);
+						CLConTitle16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact16", excelLabel.Title);
+						CLConTitle17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact17", excelLabel.Title);
+						CLConTitle18=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact18", excelLabel.Title);
+						CLConTitle19=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact19", excelLabel.Title);
+						CLConTitle20=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "CLContact20", excelLabel.Title);
+						
+						CLTheme1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Themes",excelLabel.Variable_Name, "CLTH01", excelLabel.Theme_Name);
+						CLThemeTab1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Themes",excelLabel.Variable_Name, "CLTH01", excelLabel.Grid_Data);
+						CLThemeGrid1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Themes",excelLabel.Variable_Name, "CLTH01", excelLabel.Theme_Grid);
+						CLTheme2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Themes",excelLabel.Variable_Name, "CLTH02", excelLabel.Theme_Name);
+						CLThemeGrid2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Themes",excelLabel.Variable_Name, "CLTH02", excelLabel.Theme_Grid);
+						CLThemeGridColumns2=ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Themes", excelLabel.Variable_Name,
+								"CLTH02", excelLabel.Theme_Grid_Columns);
+						CLTheme3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Themes",excelLabel.Variable_Name, "CLTH03", excelLabel.Theme_Name);
+						CLThemeGrid3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Themes",excelLabel.Variable_Name, "CLTH03", excelLabel.Theme_Grid);
+						CLTheme4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Themes",excelLabel.Variable_Name, "CLTH04", excelLabel.Theme_Name);
+						CLThemeGrid4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Themes",excelLabel.Variable_Name, "CLTH04", excelLabel.Theme_Grid);
+						CLTheme5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Themes",excelLabel.Variable_Name, "CLTH05", excelLabel.Theme_Name);
+						CLThemeGrid5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Themes",excelLabel.Variable_Name, "CLTH05", excelLabel.Theme_Grid);
+						CLAddToTheme2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Themes",excelLabel.Variable_Name, "CLTH02", excelLabel.Add_To_Theme);
+						CLAddToTheme3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Themes",excelLabel.Variable_Name, "CLTH03", excelLabel.Add_To_Theme);
+						CLAddToTheme4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Themes",excelLabel.Variable_Name, "CLTH04", excelLabel.Add_To_Theme);
+						CLAddToTheme5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Themes",excelLabel.Variable_Name, "CLTH05", excelLabel.Add_To_Theme);
+						
+						CLActionType1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "TCL_Activity1", excelLabel.Action_Type);
+						CLSubject1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "TCL_Activity1", excelLabel.Subject);
+						CLRelated1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "TCL_Activity1", excelLabel.Related_To);
+						CLActionType2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "TCL_Activity2", excelLabel.Action_Type);
+						CLSubject2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "TCL_Activity2", excelLabel.Subject);
+						CLRelated2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "TCL_Activity2", excelLabel.Related_To);
+						
+						CLCMDField1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "TCLCMD1", excelLabel.FieldName);
+						CLCMDField2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "TCLCMD2", excelLabel.FieldName);
+						CLCMDField3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "TCLCMD3", excelLabel.FieldName);
+						CLCMDField4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "TCLCMD4", excelLabel.FieldName);
+						CLCMDField5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "TCLCMD5", excelLabel.FieldName);
+						
+						CLCMDNewValue1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "TCLCMD1", excelLabel.New_Value);
+						CLCMDNewValue2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "TCLCMD2", excelLabel.New_Value);
+						CLCMDNewValue3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "TCLCMD3", excelLabel.New_Value);
+						CLCMDNewValue4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "TCLCMD4", excelLabel.New_Value);
+						CLCMDNewValue5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "TCLCMD5", excelLabel.New_Value);
+						
+						CLCMDValue1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "TCLCMD1", excelLabel.Value);
+						CLCMDValue2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "TCLCMD2", excelLabel.Value);
+						CLCMDValue3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "TCLCMD3", excelLabel.Value);
+						CLCMDValue4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "TCLCMD4", excelLabel.Value);
+						CLCMDValue5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "TCLCMD5", excelLabel.Value);
+						
+			 try {
+		dataFile.close();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	try {
+		dataWb.close();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+
+	}
+
 		default:
 			break;
 		}
