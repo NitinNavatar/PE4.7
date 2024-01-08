@@ -530,8 +530,20 @@ public class ThemePageBusinessLayer extends ThemePage {
 					
 					if (CommonLib.click(driver, getAddtoThemeButton(10), "AddtoThemeButton", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Click on Add to Theme Button", YesNo.No);
+						CommonLib.ThreadSleep(2000);
+						if (geterrorOKbutton(30) != null) {
+							if (CommonLib.click(driver, geterrorOKbutton(10), "errorOKbutton", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Click on error OK button", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Not ABle to Click on error OK button", YesNo.No);
+								return false;
 
+							}
+						}
+						
 						CommonLib.ThreadSleep(5000);
+						
+						
 						String actualExpectedThemeName = CommonLib.getText(driver,
 								existingThemeNameVerifyInAddToTheme(20), "Existing Theme Verify", action.BOOLEAN);
 						if (actualExpectedThemeName != null) {
@@ -556,6 +568,9 @@ public class ThemePageBusinessLayer extends ThemePage {
 						}
 						CommonLib.ThreadSleep(3000);
 						if (errorMsgInReasearchAddToTheme != null) {
+							if (CommonLib.click(driver, getThemeRemoveButton(10), "ThemeRemoveButton", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Click on Theme Remove Button", YesNo.No);
+								
 							if (CommonLib.click(driver, addToThemeFooterButton2("Save", 7),
 									"addToThemeFooterButton2: Save", action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Click on Save Button", YesNo.No);
@@ -579,6 +594,12 @@ public class ThemePageBusinessLayer extends ThemePage {
 								return false;
 
 							}
+							} else {
+								log(LogStatus.ERROR, "Not ABle to Click on Theme Remove Button", YesNo.No);
+								return false;
+
+							}
+							
 						}
 						CommonLib.ThreadSleep(3000);
 						if (CommonLib.click(driver, advancedCollapsedExpandButtonInAddToTheme(10),
@@ -590,6 +611,8 @@ public class ThemePageBusinessLayer extends ThemePage {
 								if (categoriesToSelectFromAdvanced[0].equalsIgnoreCase("All Categories")) {
 
 									CommonLib.ThreadSleep(2000);
+									if (!CommonLib.isSelected(driver, allCategoriesCheckBoxOfAddToTheme(5),
+											"allCategoriesCheckBoxOfAddToTheme")) {
 									if (CommonLib.click(driver, allCategoriesCheckBoxOfAddToTheme(10),
 											"allCategoriesCheckBoxOfAddToTheme", action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.INFO, "Click on All Categories Checkbox", YesNo.No);
@@ -598,6 +621,7 @@ public class ThemePageBusinessLayer extends ThemePage {
 										log(LogStatus.ERROR, "Not Able to Click on All Categories Checkbox", YesNo.No);
 										return false;
 
+									}
 									}
 
 								} else {
