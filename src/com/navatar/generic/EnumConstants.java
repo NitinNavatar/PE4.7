@@ -548,7 +548,7 @@ public class EnumConstants {
 			}
 		},
 		
-		Event, Custom_Metadata_Types, Theme, Clip, Rename_Tabs_and_Labels, Accounts, Contacts
+		Event, Custom_Metadata_Types, Theme, Clip, Rename_Tabs_and_Labels, Accounts, Contacts, Object_Manager
 	};
 
 	public static enum ObjectFeatureName {
@@ -1551,7 +1551,13 @@ public class EnumConstants {
 		Contact_Name, Tax_Forms, Partner_Type, Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places,
 		Values, Is_Touchpoint, Description, Request, Date_Requested, Attendee_Staff, Label, Panel_Width, Panel_Height,
 		 Company, Firm, Fundraising, Team_Member_Role, Type_of_dept, Member, Page_Layout_Name, Organizer,
-		Convert_to_Portfolio, Deal_Contact_Type, Team_Member, Location, End, All_Day_Event, Role,Deal{
+		Convert_to_Portfolio, Deal_Contact_Type, Team_Member, Location, End, All_Day_Event, Role {
+		@Override
+		public String toString() {
+			return "Team Member Role";
+		}
+	},
+	Deal{
 			@Override
 			public String toString() {
 				return "Pipeline";
@@ -1564,7 +1570,7 @@ public class EnumConstants {
 		},
 		Deal_Contact, Stage_Upd, Pipeline_Comments, Pipeline_Comments_Upd, Legal_Name, Status_Notes, Legal_Name_Upd,
 		Status_Notes_Upd, Vintage_Year_Upd, Description_Upd, Summary_Upd, Fund, Vintage_Year, Theme, Descrption, Clip,
-		Summary, Theme_Name, Clip_Name, FundraisingContacts, Contact, Pipeline_Name, Firm_Name, Account_Name_Upd, Advisor_Layout, Advisor
+		Summary, Theme_Name, Clip_Name, FundraisingContacts, Contact, Pipeline_Name, Firm_Name, Account_Name_Upd, Advisor_Layout, Advisor, Active
 	};
 
 	public static enum Links {

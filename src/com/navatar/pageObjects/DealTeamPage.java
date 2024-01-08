@@ -12,7 +12,7 @@ public class DealTeamPage extends BasePageBusinessLayer{
 		super(driver);
 		// TODO Auto-generated constructor stub
 	}
-	@FindBy(xpath="//*[text()='Role']/..//div//input")
+	@FindBy(xpath="//*[contains(text(),'Team Member Role')]/..//div//button")
 	private WebElement teamMemberRoleDropDownList;
 
 	/**

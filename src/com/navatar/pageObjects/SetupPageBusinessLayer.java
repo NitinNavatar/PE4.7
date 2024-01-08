@@ -77,7 +77,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 		if (objectName == object.Global_Actions || objectName == object.Activity_Setting
 				|| objectName == object.App_Manager || objectName == object.Lightning_App_Builder
 				|| objectName == object.Profiles || objectName == object.Override || objectName == object.Tabs
-				|| objectName == object.Users || objectName == object.Sharing_Settings
+				|| objectName == object.Users || objectName == object.Sharing_Settings || objectName == object.Object_Manager 
 				|| objectName == object.Rename_Tabs_And_Labels || objectName == object.Custom_Metadata_Types) {
 			if (objectName == object.Global_Actions || objectName == object.Tabs || objectName == object.Users) {
 				index = "[2]";

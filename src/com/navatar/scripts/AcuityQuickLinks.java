@@ -84,9 +84,9 @@ public class AcuityQuickLinks extends BaseLib{
 					if (setup.createPEUser( crmUser1FirstName, UserLastName, emailId, crmUserLience,
 							glUserProfile, null)) {
 						log(LogStatus.INFO, "CRM User is created Successfully: " + glUser1FirstName + " " + UserLastName, YesNo.No);
-						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "Userl",
+						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User1",
 								excelLabel.User_Email);
-						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "Userl",
+						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",
 								excelLabel.User_Last_Name);
 						flag = true;
 						break;
@@ -823,11 +823,11 @@ public class AcuityQuickLinks extends BaseLib{
 				if(clickUsingJavaScript(driver, npbl.getFirmLinkOnCreateOption(5),"Firm Link on Create Option", action.BOOLEAN)) {
 					log(LogStatus.INFO, "Able to Click on " + PageLabel.Firm.toString(), YesNo.No);
 					ThreadSleep(2000);
-					if(npbl.getFirmNameLabelForCreateOption(5).getText().contains(PageLabel.Account_Name.toString().replaceAll("_", " "))) {
-						log(LogStatus.INFO, "Firm Name from Create Option is updated as " + PageLabel.Account_Name.toString(), YesNo.No);
+					if(npbl.getFirmNameLabelForCreateOption(5).getText().contains(PageLabel.Legal_Name.toString().replaceAll("_", " "))) {
+						log(LogStatus.INFO, "Firm Name from Create Option is updated as " + PageLabel.Legal_Name.toString(), YesNo.No);
 					} else {
-						log(LogStatus.ERROR, "Firm Name from Create Option is not updated as " + PageLabel.Account_Name.toString(), YesNo.Yes);
-						sa.assertTrue(false,"Firm Name from Create Option is not updated as " + PageLabel.Account_Name.toString());
+						log(LogStatus.ERROR, "Firm Name from Create Option is not updated as " + PageLabel.Legal_Name.toString(), YesNo.Yes);
+						sa.assertTrue(false,"Firm Name from Create Option is not updated as " + PageLabel.Legal_Name.toString());
 					}
 				} else {
 					log(LogStatus.ERROR, "Not able to Click on " + PageLabel.Firm.toString(), YesNo.Yes);
@@ -1381,6 +1381,117 @@ public class AcuityQuickLinks extends BaseLib{
 					} else {
 						log(LogStatus.ERROR,object.Advisor.toString().replace("_", " ") +" Record Type from Create Option is visible", YesNo.Yes);
 						sa.assertTrue(false,object.Advisor.toString().replace("_", " ") +" Record Type from Create Option is visible");
+					}
+				} else {
+					log(LogStatus.ERROR,"Not able to Click on " + PageLabel.Firm.toString(), YesNo.Yes);
+					sa.assertTrue(false,"Not able to Click on " + PageLabel.Firm.toString());
+				}
+			} else {
+				log(LogStatus.ERROR,"Not Able to Click on "+navigationMenuName, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName);
+			}
+		switchToDefaultContent(driver);
+		ThreadSleep(5000);
+		sa.assertAll();
+		lp.CRMlogout();
+	}
+
+@Parameters({ "projectName"})
+@Test
+	public void AQTc016_AddRecordTypeFromProfiles(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		ResearchPageBusinessLayer rp=new ResearchPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		String recordTypes = "Account";
+		String master= "Advisor";
+		String[] profileForSelection = { "PE Standard User"};
+		String parentID=null;
+		for(int k=0; k<profileForSelection.length; k++) {
+			home.notificationPopUpClose();
+			if (home.clickOnSetUpLink()) {
+				parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+				if (sp.searchStandardOrCustomObject(environment, mode, object.Profiles.toString())) {
+					log(LogStatus.INFO, "click on Object : " + object.Profiles, YesNo.No);
+					ThreadSleep(2000);
+					switchToDefaultContent(driver);
+					switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
+					ThreadSleep(2000);
+					if (clickUsingJavaScript(driver, rp.getProfileSelected(profileForSelection[k],10), profileForSelection[k].toString(), action.BOOLEAN)) {
+						log(LogStatus.INFO, "able to click on " + profileForSelection[k], YesNo.No);
+						ThreadSleep(2000);
+						switchToDefaultContent(driver);
+						ThreadSleep(2000);
+						switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
+						ThreadSleep(2000);
+						if (click(driver, rp.getEditButtonForRecordTypes(recordTypes, 10), "Edit Button", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "able to click on edit button for record type settiing", YesNo.No);
+							switchToDefaultContent(driver);
+							ThreadSleep(5000);
+							switchToFrame(driver, 10, sp.getSetUpPageIframe(10));
+							ThreadSleep(2000);
+							if (selectVisibleTextFromDropDown(driver, sp.getavailableRecordType(10),
+									"Selected Tab List", master)) {
+								appLog.info(recordTypes + " is selected successfully in Available tabs");
+								if (click(driver, sp.getAddBtn(10), "Custom Tab Add Button",
+										action.SCROLLANDBOOLEAN)) {
+									appLog.error("clicked on Add button");
+								} else {
+									appLog.error("Not able to click on Remove button so cannot add custom tabs");
+								}
+							} else {
+								appLog.error(master + " record type is not Available list Tab.");
+							}
+							if (click(driver, sp.getCreateUserSaveBtn_Lighting(10), "Save Button",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
+								ThreadSleep(2000);
+							} else {
+								log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
+								sa.assertTrue(false,"not able to click on save button for record type settiing");
+		
+							}
+							}else {
+								log(LogStatus.ERROR, "not able to click on edit button for record type settiing", YesNo.Yes);
+								sa.assertTrue(false,"not able to click on edit button for record type settiing");
+							}
+					}else {
+						log(LogStatus.ERROR, profileForSelection[k]+" profile is not clickable", YesNo.Yes);
+						sa.assertTrue(false,profileForSelection[k]+" profile is not clickable");
+					}
+				} else {
+					log(LogStatus.ERROR, "profiles tab is not clickable", YesNo.Yes);
+					sa.assertTrue(false,"profiles tab is not clickable");
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+		}else {
+			log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
+			sa.assertTrue(false, "setup link is not clickable");
+		}
+			}else {
+				log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
+				sa.assertTrue(false, "setup link is not clickable");
+			}
+	}
+		ThreadSleep(2000);
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		ThreadSleep(3000);
+		lp.CRMLogin(crmUser1EmailID, adminPassword,appName);
+		ThreadSleep(2000);
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			if(clickUsingJavaScript(driver, npbl.getFirmLinkOnCreateOption(5),"Firm Link on Create Option", action.BOOLEAN)) {
+				log(LogStatus.INFO, "Able to Click on " + PageLabel.Firm.toString(), YesNo.No);
+					if(npbl.getRecordTypeOnQuickFirm(object.Advisor.toString().replace("_", " "), 5) != null) {
+						log(LogStatus.INFO, object.Advisor.toString().replace("_", " ")+" Record Type from Create Option is visible", YesNo.No);
+					} else {
+						log(LogStatus.ERROR,object.Advisor.toString().replace("_", " ") +" Record Type from Create Option is not visible", YesNo.Yes);
+						sa.assertTrue(false,object.Advisor.toString().replace("_", " ") +" Record Type from Create Option is not visible");
 					}
 				} else {
 					log(LogStatus.ERROR,"Not able to Click on " + PageLabel.Firm.toString(), YesNo.Yes);

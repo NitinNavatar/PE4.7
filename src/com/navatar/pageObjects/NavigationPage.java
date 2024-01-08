@@ -264,7 +264,7 @@ public class NavigationPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, saveButtonForCreateOption, "Visibility", timeOut, "Save Button For Create Option");
 	}
 	
-	@FindBy(xpath = "//p[text()='These required fields must be completed: Firm Name. ']")
+	@FindBy(xpath = "//p[text()='These required fields must be completed: Legal Name. ']")
 	private WebElement errorOnQuickFirm;
 
 	public WebElement getErrorOnQuickFirm(int timeOut) {
@@ -361,7 +361,7 @@ public class NavigationPage extends BasePageBusinessLayer {
 	}
 	
 	
-	@FindBy(xpath = "//Label[text()='Account Name']/..//div/input[@placeholder='Search']")
+	@FindBy(xpath = "//Label[text()='Legal Name']/..//div/input[@placeholder='Search']")
 	private WebElement firmNameTextBoxForContactOption;
 
 	public WebElement getFirmNameTextBoxForContactOption(int timeOut) {
