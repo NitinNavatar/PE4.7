@@ -1395,7 +1395,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 					.xpath("//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));
 			js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
 			CommonLib.clickUsingJavaScript(driver, driver.findElement(By.xpath(
-					"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']/a")),
+					"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']/span")),
 					"Add Link");
 
 			CommonLib.switchToDefaultContent(driver);
@@ -1775,7 +1775,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 					.xpath("//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));
 			js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
 			if (CommonLib.clickUsingJavaScript(driver, driver.findElement(By.xpath(
-					"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']/a")),
+					"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']/span")),
 					"Add Link")) {
 				log(LogStatus.INFO, "Add component plus icon has been clicked", YesNo.No);
 				CommonLib.switchToDefaultContent(driver);

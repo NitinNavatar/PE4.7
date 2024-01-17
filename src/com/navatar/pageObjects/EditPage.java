@@ -714,10 +714,10 @@ public class EditPage extends BasePageBusinessLayer {
 	public WebElement tabNameElementInEditPage(String tabName, int timeOut) {
 
 		try {
-			return FindElement(driver, "//span[text()=\"" + tabName + "\" and @class=\"uiOutputText\"]/parent::a",
+			return FindElement(driver, "//span[text()=\"" + tabName + "\" and @data-aura-class=\"uiOutputText\"]/ancestor::a",
 					"Tab Name: " + tabName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, "//span[text()=\"" + tabName + "\" and @class=\"uiOutputText\"]/parent::a",
+			return FindElement(driver, "//span[text()=\"" + tabName + "\" and @data-aura-class=\"uiOutputText\"]/ancestor::a",
 					"Tab Name: " + tabName, action.SCROLLANDBOOLEAN, timeOut);
 		}
 
@@ -731,7 +731,7 @@ public class EditPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "(//span[text()=\"Details\" and @class=\"uiOutputText\"])[2]/parent::a")
+	@FindBy(xpath = "(//span[text()='Details' and @data-aura-class='uiOutputText'])[2]/ancestor::a")
 	private WebElement detailTabCreatedAfterAddTab;
 
 	public WebElement detailTabCreatedAfterAddTab(int timeOut) {
@@ -739,7 +739,7 @@ public class EditPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "//span[text()='Tab Label']/parent::label/following-sibling::div//select")
+	@FindBy(xpath = "//span[text()='Tab Label']/ancestor::label/following-sibling::div//select")
 	private WebElement tabLabelSelectElement;
 
 	public WebElement tabLabelSelectElement(int timeOut) {

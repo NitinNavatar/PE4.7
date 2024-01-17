@@ -352,7 +352,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 													"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));
 									js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
 									if (CommonLib.clickUsingJavaScript(driver, driver.findElement(By.xpath(
-											"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']/a")),
+											"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']/span")),
 											"Add Link")) {
 										log(LogStatus.INFO, "Add component plus icon has been clicked", YesNo.No);
 									}
@@ -479,7 +479,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 			try {
 				ele = new WebDriverWait(driver, Duration.ofSeconds(25))
 						.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='"
-								+ fieldLabel.get(i) + "']/parent::lightning-combobox//button/span[text()='All']")));
+								+ fieldLabel.get(i) + "']/ancestor::lightning-combobox//button/span[text()='All']")));
 				log(LogStatus.INFO, "Element has been found for the " + fieldLabel.get(i), YesNo.No);
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -491,7 +491,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 
 				log(LogStatus.INFO, "Clicked on the " + fieldLabel.get(i), YesNo.No);
 				xPath = "//label[text()='" + fieldLabel.get(i)
-						+ "']/parent::lightning-combobox//span[not(text()='All')]/parent::span/parent::lightning-base-combobox-item";
+						+ "']/ancestor::lightning-combobox//span[not(text()='All')]/ancestor::span/ancestor::lightning-base-combobox-item//span[@title!='']";
 				List<WebElement> elements = CommonLib.FindElements(driver, xPath, fieldLabel.get(i));
 
 				if (elements.size() == size.get(i)) {
@@ -664,7 +664,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		try {
 
 			ele = new WebDriverWait(driver, Duration.ofSeconds(25)).until(ExpectedConditions.presenceOfElementLocated(
-					By.xpath("//label[text()='" + fieldLabel + "']/parent::lightning-combobox//button")));
+					By.xpath("//label[text()='" + fieldLabel + "']/ancestor::lightning-combobox//button")));
 			log(LogStatus.INFO, "Element has been found for the " + fieldLabel, YesNo.No);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -684,7 +684,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		if (CommonLib.click(driver, ele, fieldLabel, action.BOOLEAN)) {
 			CommonLib.ThreadSleep(4000);
 			xPath = "//label[text()='" + fieldLabel
-					+ "']/parent::lightning-combobox//lightning-base-combobox-item//span[@class='slds-truncate']";
+					+ "']/ancestor::lightning-combobox//lightning-base-combobox-item//span[@class='slds-truncate']";
 			List<WebElement> elements = CommonLib.FindElements(driver, xPath, fieldLabel);
 			if (CommonLib.getSelectedOptionOfDropDown(driver, elements, fieldLabel + "Dropdown list", filterName)) {
 				log(LogStatus.INFO, "Drop down has been selected from " + fieldLabel, YesNo.No);
@@ -732,7 +732,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		CommonLib.ThreadSleep(5000);
 		try {
 			ele = new WebDriverWait(driver, Duration.ofSeconds(25)).until(ExpectedConditions.presenceOfElementLocated(
-					By.xpath("//label[text()='" + fieldLabel + "']/parent::lightning-combobox//button")));
+					By.xpath("//label[text()='" + fieldLabel + "']/ancestor::lightning-combobox//button")));
 			log(LogStatus.INFO, "Element has been found for the " + fieldLabel, YesNo.No);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -743,7 +743,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 			CommonLib.ThreadSleep(5000);
 			log(LogStatus.INFO, "Clicked on the " + fieldLabel, YesNo.No);
 			xPath = "//label[text()='" + fieldLabel
-					+ "']/parent::lightning-combobox//span[not(text()='All')]/parent::span/parent::lightning-base-combobox-item";
+					+ "']/ancestor::lightning-combobox//span[not(text()='All')]/ancestor::span/ancestor::lightning-base-combobox-item";
 			List<WebElement> elements = CommonLib.FindElements(driver, xPath, fieldLabel);
 
 			ArrayList<String> dropDownOptionvalue = new ArrayList<String>();

@@ -6359,11 +6359,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 						if (click(driver, getaddFilterBtn(projectName, timeOut), "Add Filter Button", action.BOOLEAN)) {
 							log(LogStatus.INFO, "successfully click on Add Filter buton", YesNo.No);
-							String xpathgetfilterFielddropdownlist = "//label[text()='Field']/parent::lightning-combobox//span[@class='slds-truncate']";
+							String xpathgetfilterFielddropdownlist = "//label[text()='Field']/ancestor::lightning-combobox//span[@class='slds-truncate']";
 							if (dropDownHandle(driver, getfilterFielddropdown(projectName, timeOut),
 									xpathgetfilterFielddropdownlist, "Field filter", filter)) {
 								log(LogStatus.INFO, "successfully Select the Field", YesNo.No);
-								String xpathgetfilterOperatordropdownlist = "//label[text()='Operator']/parent::lightning-combobox//span[@class='slds-truncate']";
+								String xpathgetfilterOperatordropdownlist = "//label[text()='Operator']/ancestor::lightning-combobox//span[@class='slds-truncate']";
 								if (dropDownHandle(driver, getFilterOperatordropdown(projectName, timeOut),
 										xpathgetfilterOperatordropdownlist, "Operator filter", operators[i])) {
 									log(LogStatus.INFO, "successfully Select the Operator", YesNo.No);
@@ -7044,9 +7044,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.ERROR, "Filter Done button is not clicked", YesNo.No);
 				}
 
-			}
-
-			else {
+			} else {
 				log(LogStatus.ERROR, "all checkbox is not clickable", YesNo.No);
 			}
 		} else {

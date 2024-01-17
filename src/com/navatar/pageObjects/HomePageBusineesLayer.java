@@ -4331,14 +4331,14 @@ public class HomePageBusineesLayer extends HomePage {
 			log(LogStatus.PASS, "-----------Page Size has selected to" + pageSize + " --------------", YesNo.No);
 			if (rowButtonCorrespondingToSDG(sdgName, afterUpdateFundName, actionButtonName, timeOut) != null) {
 				log(LogStatus.INFO, "Record Found: " + afterUpdateFundName + " in SDG: " + sdgName, YesNo.Yes);
-				if (click(driver, rowButtonCorrespondingToSDG(sdgName, afterUpdateFundName, actionButtonName, timeOut),
+				if (clickUsingJavaScript(driver, rowButtonCorrespondingToSDG(sdgName, afterUpdateFundName, actionButtonName, timeOut),
 						"Action Button " + actionButtonName, action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on Button: " + actionButtonName + " on SDG: " + sdgName, YesNo.No);
 
 					if (click(driver, deleteRecordConfirmBtn(sdgName),
 							"Delete Confirm Button for " + afterUpdateFundName, action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Delete Confirm Button for " + afterUpdateFundName, YesNo.No);
-						ThreadSleep(5000);
+						ThreadSleep(10000);
 						flag = true;
 					} else {
 						sa.assertTrue(false, "Not Able to Click on Delete Confirm Button for " + afterUpdateFundName);

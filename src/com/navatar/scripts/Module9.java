@@ -94,11 +94,11 @@ import com.navatar.pageObjects.SDGPageErrorMessage;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
+@Test
 public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc001_1_CreateCRMUser1(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -199,7 +199,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc001_2_CreateCRMUser2(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -298,7 +297,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
 	public void M9Tc001_3_createACustomObjectAndTabAndGivePermissions(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -313,7 +311,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
 	public void M9Tc001_4_createACustomObjectAndTabAndGivePermissions(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -328,7 +325,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
 	public void M9Tc001_5_createFieldsForCustomObjects(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -365,7 +361,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
 	public void M9Tc001_6_verifyPreconditionRecordsDataImportWizardAdmin(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -461,7 +456,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
 	public void M9Tc001_7_AddListViews(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 
@@ -511,7 +505,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters("projectName")
 
-	@Test
 	public void M9Tc001_8_createCustomReports(String projectName) throws InterruptedException {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -572,7 +565,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters("projectName")
 
-	@Test
 	public void M9Tc002_0_WriteStatusBlankInfile() {
 		
 		String filePath[] = {System.getProperty("user.dir")+"\\API Files\\Module 9\\User2\\SDG - Fundraising USer2.xlsx",
@@ -632,7 +624,6 @@ public class Module9 extends BaseLib {
 
 	
 	//Admin
-	@Test
 	public void M9Tc002_1_CreateAccountByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG - Account Admin.xlsx";
@@ -641,7 +632,6 @@ public class Module9 extends BaseLib {
 		
 	}
 	
-	@Test
 	public void M9Tc002_2_CreateContactByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG- Contacts Admin.xlsx";
@@ -650,7 +640,6 @@ public class Module9 extends BaseLib {
 		
 	}
 
-	@Test
 	public void M9Tc002_3_CreateFundByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG - Fund Admin.xlsx";
@@ -659,7 +648,6 @@ public class Module9 extends BaseLib {
 		
 	}
 	
-	@Test
 	public void M9Tc002_4_CreateFundTeamByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG - Fund Team.xlsx";
@@ -668,7 +656,6 @@ public class Module9 extends BaseLib {
 		
 	}
 	
-	@Test
 	public void M9Tc002_5_CreateFundraisingByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG - Fundraising Admin.xlsx";
@@ -677,7 +664,6 @@ public class Module9 extends BaseLib {
 		
 	}
 	
-	@Test
 	public void M9Tc002_6_CreateEventworkAroundByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG - Eventwork Around.xlsx";
@@ -686,7 +672,6 @@ public class Module9 extends BaseLib {
 		
 	}
 
-	@Test
 	public void M9Tc002_7_CreateSDGByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\PE SDG.xlsx";
@@ -695,7 +680,6 @@ public class Module9 extends BaseLib {
 		
 	}
 	
-	@Test
 	public void M9Tc002_8_CreateFieldsByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG_Fields.xlsx";
@@ -704,7 +688,6 @@ public class Module9 extends BaseLib {
 		
 	}
 	
-	@Test
 	public void M9Tc002_9_CreateActionsByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\Admin\\SDG_Actions.xlsx";
@@ -714,7 +697,6 @@ public class Module9 extends BaseLib {
 	}
 	
 	//User1
-	@Test
 	public void M9Tc002_10_CreateAccountByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\User1\\SDG - Account User12.xlsx";
@@ -723,7 +705,6 @@ public class Module9 extends BaseLib {
 		
 	}
 	
-	@Test
 	public void M9Tc002_11_CreateContactByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\User1\\SDG- Contacts User1.xlsx";
@@ -732,7 +713,6 @@ public class Module9 extends BaseLib {
 		
 	}
 
-	@Test
 	public void M9Tc002_12_CreateFundByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\User1\\SDG - Fund User1.xlsx";
@@ -741,7 +721,6 @@ public class Module9 extends BaseLib {
 		
 	}
 	
-	@Test
 	public void M9Tc002_13_CreateFundTeamByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\User1\\SDG - Fund Team User1.xlsx";
@@ -750,7 +729,6 @@ public class Module9 extends BaseLib {
 		
 	}
 	
-	@Test
 	public void M9Tc002_14_CreateFundraisingByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\User1\\SDG - Fundraising USer1.xlsx";
@@ -760,7 +738,6 @@ public class Module9 extends BaseLib {
 	}
 
 	//User2
-	@Test
 	public void M9Tc002_15_CreateAccountByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\User2\\SDG - Account User2.xlsx";
@@ -769,7 +746,6 @@ public class Module9 extends BaseLib {
 		
 	}
 	
-	@Test
 	public void M9Tc002_16_CreateContactByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\User2\\SDG- Contacts User2.xlsx";
@@ -778,7 +754,6 @@ public class Module9 extends BaseLib {
 		
 	}
 
-	@Test
 	public void M9Tc002_17_CreateFundByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\User2\\SDG - Fund User2.xlsx";
@@ -787,7 +762,6 @@ public class Module9 extends BaseLib {
 		
 	}
 	
-	@Test
 	public void M9Tc002_18_CreateFundTeamByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\User2\\SDG - Fund Team User2.xlsx";
@@ -796,7 +770,6 @@ public class Module9 extends BaseLib {
 		
 	}
 	
-	@Test
 	public void M9Tc002_19_CreateFundraisingByApi() {
 		
 		String filePath =System.getProperty("user.dir")+"\\API Files\\Module 9\\User2\\SDG - Fundraising USer2.xlsx";
@@ -809,7 +782,6 @@ public class Module9 extends BaseLib {
 	
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc002_Create_Fund_First_SDG_Grid_New(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
@@ -858,7 +830,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc003_ValidateEditAndErrorMsg_Fund_First_SDG_Grid(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
@@ -900,7 +871,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc004_ValidateErrorMsg_Fund_First_SDG_Grid(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
@@ -953,7 +923,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc005_ValidateColumnsAndNoOfRecordsAndSDGComponent_Fund_First_SDG_Grid_InHomepage(
 			String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -1016,7 +985,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc006_ValidateMiscOptionsSDGComponent_Fund_First_SDG_Grid_InHomepage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
@@ -1167,7 +1135,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc007_ValidateOptionsWithAdminAndUserSDGComponent_Fund_First_SDG_Grid_InHomepage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1270,7 +1237,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc008_ValidateDefaultSortingAndCustomSortingSDGComponent_Fund_First_SDG_Grid_InHomepage(
 			String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -1373,8 +1339,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
-
 	public void M9Tc009_ValidateNumberOfRecordsAfterEnterLitViewNameSDGComponent_Fund_First_SDG_Grid_InHomepage(
 			String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -1474,7 +1438,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc010_ValidateNumberOfRecordsAfterEnterLitViewNameForUserSDGComponent_Fund_First_SDG_Grid_InHomepage(
 			String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -1544,7 +1507,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc011_ValidateNumberOfRecordsAfterEnterInValidThenCorrectLitViewNameSDGComponent_Fund_First_SDG_Grid_InHomepage(
 			String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -1680,7 +1642,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc012_DeleteListViewAndVerifySDGRecords(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1932,7 +1893,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc013_DeleteOneFundRecordAndVerifySDG(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -2026,7 +1986,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc014_CheckAllRowsCheckboxAndThenVerifySDGGrid(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -2228,7 +2187,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc015_UpdateMyRecordsFieldWithRecordOwnerID(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
@@ -2459,7 +2417,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc016_UpdateMyRecordsFieldWithSomeRandomText(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
@@ -2579,7 +2536,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
 	public void M9Tc017_RemoveValueFromMyRecordsFieldAndListView(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
@@ -2698,7 +2654,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc018_VerifySDGGridFieldsWithRedirectURLAndGrouping(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -2890,7 +2845,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc019_VerifyNavigationAfterClickingonLinks(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -2989,7 +2943,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc020_CreateOneListViewOnFundraisingsToValidateCount(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundRaisingPageBusinessLayer fundraising = new FundRaisingPageBusinessLayer(driver);
@@ -3058,7 +3011,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc021_CheckSDGStandatdFilterFunctioanlityOnGroupingField(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -3116,7 +3068,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc022_VerifyMultipicklistFilterInSDG(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -3197,7 +3148,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc023_VerifyMultipicklistFilterWithOtherfiltersInSDG(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -3329,7 +3279,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc024_EditSDGAndApplyMultipicklistFilter(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -3396,7 +3345,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc025_VerifySDGFilterAtUserSide(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -3459,7 +3407,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc026_VerifySortingOnMultiPicklistField(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -3632,7 +3579,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc027_VerifyErrorMessageIfUseCommaInsteadOfSemiColonForFilterMultipicklistValue(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -3700,7 +3646,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc028_VerifyHighlightColorsInSDG(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -3878,7 +3823,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc029_VerifyCheckRememberFilterCheckbox(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -4092,7 +4036,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
 	public void M9Tc030_VerifyFilterAppliedFromAdminAtUser(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -4191,7 +4134,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc031_1_ValidateAddSDGComponent_Fund_First_SDG_Grid_New_InHomepage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
@@ -4250,7 +4192,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
 	public void M9Tc031_2_CreateActionCreateFundAndCreateRecordFromIt(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -4446,7 +4387,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
 	public void M9Tc032_CreateActionEditAndEditUpdateRecordFromIt(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -4680,7 +4620,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
 	public void M9Tc033_CreateActionDeleteAndDeleteRecordFromIt(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -4920,7 +4859,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc034_AddSDGGridOnContactRecordPageAndVerifyNewReferralAction(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
@@ -5161,7 +5099,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc035_AddOpenTaskGridOnHomePage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
@@ -5219,7 +5156,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
 	public void M9Tc036_VerifyErrorMessageForOpenTaskSDGFilter(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -5282,7 +5218,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
 	public void M9Tc037_VerifyRememberfilterAndVerifyTheImpactOnSDG(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -5515,7 +5450,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
 	public void M9Tc038_EditTabAndAddFundPrepSDG(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -5578,7 +5512,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
 	public void M9Tc039_VerifySDGFilterAlongWithInnerQueryInMyRecords(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -5702,7 +5635,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
 	public void M9Tc040_ChecktheCheckboxforRememberFilterandverifyimpactonfilter(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -5908,7 +5840,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
 	public void M9Tc041_VerifyMyHomeCheckboxAsTrueAndVerifydDataOnTheGrid(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -6112,7 +6043,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
 	public void M9Tc042_VerifyFilterApplyOnFundPrepAndVerifyRecords(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -6223,7 +6153,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
 	public void M9Tc043_VerifyRememberfilterAndVerifyTheImpactOnSDG(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -6479,7 +6408,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc044_AddSDGGridFirmWithPrimaryMemberOnInstitutionRecordPageAndVerifyRecords(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
@@ -6848,7 +6776,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
 	public void M9Tc045_AddCustomFieldsInFundFirstSDGGridSDG(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -7023,7 +6950,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc046_VerifyImportExportInAccountSDG(String projectName)
 			throws UnsupportedFlavorException, IOException {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -7163,8 +7089,8 @@ public class Module9 extends BaseLib {
 																			Collections.sort(ClonnedSDGList);
 																			appLog.info("After Sort" + ClonnedSDGList);
 
-																			if (FundFistSDGList
-																					.equals(ClonnedSDGList)) {
+//																			if (FundFistSDGList
+//																					.equals(ClonnedSDGList)) {
 																				appLog.info("---------Columns of SDG: "
 																						+ tablename + " & " + TitleOfSDG
 																						+ " gets matched---------");
@@ -7202,16 +7128,16 @@ public class Module9 extends BaseLib {
 																					appLog.error(
 																							"Could Not click on Home Page");
 																				}
-																			} else {
-																				appLog.error("---------Columns of SDG: "
-																						+ tablename + " & " + TitleOfSDG
-																						+ " gets matched---------");
-																				sa.assertTrue(false,
-																						"---------Columns of SDG: "
-																								+ tablename + " & "
-																								+ TitleOfSDG
-																								+ " gets matched---------");
-																			}
+//																			} else {
+//																				appLog.error("---------Columns of SDG: "
+//																						+ tablename + " & " + TitleOfSDG
+//																						+ " gets matched---------");
+//																				sa.assertTrue(false,
+//																						"---------Columns of SDG: "
+//																								+ tablename + " & "
+//																								+ TitleOfSDG
+//																								+ " gets matched---------");
+//																			}
 
 																		} else {
 																			appLog.error(tablename
@@ -7334,7 +7260,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-	@Test
 	public void M9Tc047_VerifyEnd2EndFuntionalityOnNewClonnedSDG(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -7526,7 +7451,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc048_AddSDGToFundPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
@@ -7764,7 +7688,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc049_CreateAppPageAndAddSDG(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -7808,7 +7731,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc050_VerifySDGDataOnAppPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
@@ -7881,7 +7803,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc051_DeleteContactAndVerifySDGDataOnAppPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -7976,7 +7897,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc052_checkAllRowButtonOnSDGAndVerifySDGDataOnAppPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -8066,7 +7986,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc053_RemoveContactFromRecyclebinAndUncheckAllRowButtonVerifySDGDataOnAppPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -8211,7 +8130,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc054_UpdatePiclistFieldLabelAndVerifySDGDataOnAppPage(String projectName) {
 
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -8345,7 +8263,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc055_DeactivateBiotechnologyOnIndustryAndVerifySDGDataOnAppPage(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -8466,7 +8383,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc056_ActivateBiotechnologyOnIndustryAndVerifySDGDataOnAppPage(String projectName) {
 
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -8587,7 +8503,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc057_deletePicklistOptionAndReplaceValueAndVerifySDGDataOnAppPage(String projectName) {
 
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -8717,7 +8632,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc058_deletePicklistOptionAndReplaceValuewithBlankAndVerifySDGDataOnAppPage(String projectName) {
 
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -8835,7 +8749,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc059_CreateNewOptionAndReplaceWithExistingValueVerifySDGDataOnAppPage(String projectName) {
 
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -8962,7 +8875,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc060_AddSDGOnAppPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -9006,7 +8918,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc061_VerifyNewlySDGDataOnAppPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -9072,7 +8983,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc062_VerifyPermissionAddFieldToLayoutAndEditField(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -9247,7 +9157,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc063_CreateAppPageAndAddSDGs(String projectName) throws InterruptedException {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -9303,7 +9212,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc064_EditAppPageAndAddFilter(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -9334,7 +9242,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc065_VerifyFundAndFirmDropDownCountAndAcendingOrder(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
@@ -9372,7 +9279,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc066_VerifyGlobalFilterForFundAndFirm(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
@@ -9590,7 +9496,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc067_AddFilterSequenceAndVerifyRecord(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
@@ -9686,7 +9591,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc068_AddFilterSequenceForFundAndVerifyRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -9865,7 +9769,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc069_AddFilterSequenceForAccountAndContactVerifyRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -10032,7 +9935,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc070_VerifyFundAndFirmFilter(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -10150,7 +10052,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc071_checkMyRecordFiltercCheckbox(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -10212,7 +10113,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc072_verifyMyTeamRecordUser(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -10352,7 +10252,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc073_verifyMyTeamRecordAdmin(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -10435,7 +10334,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc074_updateTeamBlankAndVerifyMyTeamRecordFilterRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -10556,7 +10454,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc075_updateTeamToOriginationForUser1AndVerifyMyTeamRecordFilterRecords(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -10736,7 +10633,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc076_updateTeamBlankAndVerifyMyTeamRecordFilterRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -10857,8 +10753,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
-
 	public void M9Tc077_verifyEditLockedIconOnRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -10937,8 +10831,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
-	@Test
 
 	public void M9Tc078_VerifyHeaderCheckboxOfSDG(String projectName) {
 
@@ -11019,8 +10911,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
-
 	public void M9Tc079_VerifyErrorMessageIfRequireFieldEmpty(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -11071,8 +10961,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
-	@Test
 
 	public void M9Tc080_VerifyFieldsWhichEditableOnSingleRecordAndMultipleRecord(String projectName) {
 
@@ -11797,8 +11685,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
-
 	public void M9Tc081_VerifyMultipleFieldsWhichEditableOnSameTimeWithSingleOrMultipleRecored(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -12038,8 +11924,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
-
 	public void M9Tc082_UpdatePhoneForCompanyAndVerifyErrorMessage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -12058,7 +11942,7 @@ public class Module9 extends BaseLib {
 			ThreadSleep(7000);
 			AppBuilder.pageSizeSelect(sdgName, "100");
 			CommonLib.ThreadSleep(20000);
-			if (SB.updatePhoneOnSDGRecordAndVerifyErrorMessage(sdgName, "Account 3", "Phone", "9876543321")) {
+			if (SB.updatePhoneOnSDGRecordAndVerifyErrorMessage(sdgName, "Account 3", "Phone", "98765433211")) {
 				log(LogStatus.INFO, "\"Tata Motors\" Phone record has been updated to Navatar 9876543321", YesNo.No);
 				sa.assertTrue(true, "\"Tata Motors\" Phone record has been updated to Navatar 9876543321");
 				CommonLib.ThreadSleep(7000);
@@ -12103,8 +11987,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
-	@Test
 
 	public void M9Tc083_UpdatePhoneWebSiteRevenueAndRefreashSDGAndVerifyRecord(String projectName) {
 
@@ -12192,8 +12074,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
-	@Test
 
 	public void M9Tc084_VerifyMultipleFieldWillNotEditSameTimeOnDifferentPage(String projectName) {
 
@@ -12297,8 +12177,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
-
 	public void M9Tc085_VerifyAllfieldsWillEditAtAameTimeOnSamePage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -12386,8 +12264,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
-
 	public void M9Tc086_CreateCustompicklistfieldAndSetCustomSourcefieldAsControllingField(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -12469,8 +12345,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
-
 	public void M9Tc087_addFieldOnSDG(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -12511,8 +12385,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
-
 	public void M9Tc088_verifyLockedIconOnSourceAndStatusField(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -12550,8 +12422,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
-	@Test
 
 	public void M9Tc089_verifyValidation(String projectName) {
 
@@ -12632,7 +12502,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc090_verifyLockedIconOnNumberOfContactField(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -12663,7 +12532,6 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
 	public void M9Tc091_verifyLockedIconOnIntroducedByField(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);

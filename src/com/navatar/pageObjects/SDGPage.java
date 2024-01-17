@@ -49,7 +49,7 @@ public class SDGPage extends BasePageBusinessLayer {
 	 */
 	public WebElement getSDGHeaderValueInViewMode(String projectName, String value, int timeOut) {
 
-		String xpath = "//*[text()='Sortable Data Grid']/..//*[text()='" + value + "']";
+		String xpath = "//*[text()='Sortable Data Grid']/../../..//*[text()='" + value + "']";
 		WebElement ele = FindElement(driver, xpath, value, action.SCROLLANDBOOLEAN, timeOut);
 		scrollDownThroughWebelement(driver, ele, value);
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, value);
@@ -92,7 +92,7 @@ public class SDGPage extends BasePageBusinessLayer {
 	public WebElement sdgLabelValueElement(int timeOut, String SDGCreationLabel) {
 		WebElement ele;
 		String xpath = "//span[text()='" + SDGCreationLabel
-				+ "']/parent::div/following-sibling::div//lightning-formatted-text";
+				+ "']/ancestor::div/../following-sibling::dd//lightning-formatted-text";
 		return ele = FindElement(driver, xpath, "SDGLabelValue Element, Label: " + SDGCreationLabel,
 				action.SCROLLANDBOOLEAN, timeOut);
 
@@ -147,14 +147,14 @@ public class SDGPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, nameFieldButton, "Visibility", timeOut, "Name Field Button");
 	}
 
-	@FindBy(xpath = "//label[text()='Filter Sequence']/parent::lightning-combobox//button")
+	@FindBy(xpath = "//label[text()='Filter Sequence']/ancestor::lightning-combobox//button")
 	private WebElement filterSequenceButton;
 
 	public WebElement getfilterSequenceButton(int timeOut) {
 		return isDisplayed(driver, filterSequenceButton, "Visibility", timeOut, "Filter Sequence Button");
 	}
 
-	@FindBy(xpath = "//label[text()='Filter Sequence']/parent::lightning-combobox//lightning-base-combobox-item//span[@class='slds-truncate']")
+	@FindBy(xpath = "//label[text()='Filter Sequence']/ancestor::lightning-combobox//lightning-base-combobox-item//span[@class='slds-truncate']")
 	private List<WebElement> filterSequenceDropdownList;
 
 	public List<WebElement> getfilterSequenceDropdownList() {

@@ -5744,28 +5744,28 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, filterFielddropdown, "Visibility", timeOut, "filterFielddropdown");
 	}
 
-	@FindBy(xpath = "//label[text()='Field']/parent::lightning-combobox//span[@class='slds-truncate']")
+	@FindBy(xpath = "//label[text()='Field']/ancestor::lightning-combobox//span[@class='slds-truncate']")
 	private List<WebElement> filterFielddropdownlist;
 
 	public List<WebElement> getfilterFielddropdownlist(String projectName, int timeOut) {
 		return filterFielddropdownlist;
 	}
 
-	@FindBy(xpath = "//button[@aria-label='Operator, equals']")
+	@FindBy(xpath = "//button[@aria-label='Operator - Current Selection: equals']")
 	private WebElement filterOperatordropdown;
 
 	public WebElement getFilterOperatordropdown(String projectName, int timeOut) {
 		return isDisplayed(driver, filterOperatordropdown, "Visibility", timeOut, "OperatorFielddropdown");
 	}
 
-	@FindBy(xpath = "//label[text()='Operator']/parent::lightning-combobox//span[@class='slds-truncate']")
+	@FindBy(xpath = "//label[text()='Operator']/ancestor::lightning-combobox//span[@class='slds-truncate']")
 	private List<WebElement> filterOperatordropdownlist;
 
 	public List<WebElement> getfilterOperatordropdownlist(String projectName, int timeOut) {
 		return filterOperatordropdownlist;
 	}
 
-	@FindBy(xpath = "//span[text()='Value']/parent::label/following-sibling::input")
+	@FindBy(xpath = "//span[text()='Value']/ancestor::label/following-sibling::input")
 	private WebElement filterValuefield;
 
 	public WebElement getfilterValuefield(String projectName, int timeOut) {
