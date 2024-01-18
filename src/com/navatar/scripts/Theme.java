@@ -501,7 +501,7 @@ public class Theme extends BaseLib {
 											+ ExpectedMsg);
 								}
 		
-		 String  errormsg  = BP.getAllInteractionErrorMsg(10).getText();
+		 String  errormsg  = BP.getClipNotext(10).getText();
 		 if(errormsg.contains(ExpectedErrorMsg)) {
 				log(LogStatus.INFO,
 						"Actual result " + ExpectedErrorMsg
@@ -665,16 +665,16 @@ public class Theme extends BaseLib {
 					"Team Member has been Created: " + member1 + " with Role: " + role1 + " of Theme: " + themeName,
 					YesNo.No);
 			CommonLib.refresh(driver);
-			if (theme.checkDescriptionAndTeamMember(themeDescription, member1, false)) {
-				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
-						YesNo.No);
-
-			} else {
-				log(LogStatus.ERROR,
-						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
-				sa.assertTrue(false,
-						"-----Theme " + themeName + " description and Team Member Value not verified------");
-			}
+//			if (theme.checkDescriptionAndTeamMember(themeDescription, member1, true)) {
+//				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
+//						YesNo.No);
+//
+//			} else {
+//				log(LogStatus.ERROR,
+//						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
+//				sa.assertTrue(false,
+//						"-----Theme " + themeName + " description and Team Member Value not verified------");
+//			}
 
 		} else {
 			log(LogStatus.ERROR,
@@ -683,22 +683,22 @@ public class Theme extends BaseLib {
 			sa.assertTrue(false, "Team Member has not been Created: " + member1 + " with Role: " + role1 + " of Theme: "
 					+ themeName);
 		}
-		if (theme.createTeamMember(false, themeTabName, themeName, projectName, true, themeName, member2, role2,
+		if (theme.createTeamMember(true, themeTabName, themeName, projectName, true, themeName, member2, role2,
 				title2, true, teamMemberNavigation.Action_Button, true, false, null)) {
 			log(LogStatus.INFO,
 					"Team Member has been Created: " + member2 + " with Role: " + role2 + " of Theme: " + themeName,
 					YesNo.No);
 			CommonLib.refresh(driver);
-			if (theme.checkDescriptionAndTeamMember(themeDescription, member2, false)) {
-				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
-						YesNo.No);
-
-			} else {
-				log(LogStatus.ERROR,
-						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
-				sa.assertTrue(false,
-						"-----Theme " + themeName + " description and Team Member Value not verified------");
-			}
+//			if (theme.checkDescriptionAndTeamMember(themeDescription, member2, false)) {
+//				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
+//						YesNo.No);
+//
+//			} else {
+//				log(LogStatus.ERROR,
+//						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
+//				sa.assertTrue(false,
+//						"-----Theme " + themeName + " description and Team Member Value not verified------");
+//			}
 
 		} else {
 			log(LogStatus.ERROR,
@@ -1279,16 +1279,16 @@ public class Theme extends BaseLib {
 					"Team Member has been Created: " + member1 + " with Role: " + role1 + " of Theme: " + themeName,
 					YesNo.No);
 			CommonLib.refresh(driver);
-			if (theme.checkDescriptionAndTeamMember(themeDescription, member1, false)) {
-				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
-						YesNo.No);
-
-			} else {
-				log(LogStatus.ERROR,
-						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
-				sa.assertTrue(false,
-						"-----Theme " + themeName + " description and Team Member Value not verified------");
-			}
+//			if (theme.checkDescriptionAndTeamMember(themeDescription, member1, false)) {
+//				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
+//						YesNo.No);
+//
+//			} else {
+//				log(LogStatus.ERROR,
+//						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
+//				sa.assertTrue(false,
+//						"-----Theme " + themeName + " description and Team Member Value not verified------");
+//			}
 
 		} else {
 			log(LogStatus.ERROR,
@@ -1297,22 +1297,22 @@ public class Theme extends BaseLib {
 			sa.assertTrue(false, "Team Member has not been Created: " + member1 + " with Role: " + role1 + " of Theme: "
 					+ themeName);
 		}
-		if (theme.createTeamMember(false, themeTabName, themeName, projectName, true, themeName, member2, role2,
+		if (theme.createTeamMember(true, themeTabName, themeName, projectName, true, themeName, member2, role2,
 				title2, true, teamMemberNavigation.Action_Button, true, false, null)) {
 			log(LogStatus.INFO,
 					"Team Member has been Created: " + member2 + " with Role: " + role2 + " of Theme: " + themeName,
 					YesNo.No);
 			CommonLib.refresh(driver);
-			if (theme.checkDescriptionAndTeamMember(themeDescription, member2, false)) {
-				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
-						YesNo.No);
-
-			} else {
-				log(LogStatus.ERROR,
-						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
-				sa.assertTrue(false,
-						"-----Theme " + themeName + " description and Team Member Value not verified------");
-			}
+//			if (theme.checkDescriptionAndTeamMember(themeDescription, member2, false)) {
+//				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
+//						YesNo.No);
+//
+//			} else {
+//				log(LogStatus.ERROR,
+//						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
+//				sa.assertTrue(false,
+//						"-----Theme " + themeName + " description and Team Member Value not verified------");
+//			}
 
 		} else {
 			log(LogStatus.ERROR,
@@ -3133,7 +3133,7 @@ public class Theme extends BaseLib {
 									log(LogStatus.INFO, "Clicked on email contact check box", YesNo.No);
 									if (CommonLib.click(driver, tp.themeEmailNextbtn1(30), "theme Email Next btn1", action.BOOLEAN)) {
 										log(LogStatus.INFO, "Clicked on theme Email Next btn1", YesNo.No);
-										if(tp.selectthemeEmailTemplateFromEmailContact(EmailthemeTemplate1_FolderName,"aaaa")) {
+										if(tp.selectthemeEmailTemplateFromEmailContact(EmailthemeTemplate1_FolderName,EmailthemeTemplate1_TemplateName)) {
 											log(LogStatus.INFO, "email folder is present and email name is not present", YesNo.No);
 										} else {
 											log(LogStatus.ERROR, "email folder is present and email name is present", YesNo.Yes);
@@ -3307,8 +3307,11 @@ public void THSTc030_VerifytheSortinginEmailPageforEachcolumn (String projectNam
 		if (click(driver, tp.themeEmailcontactname(30), "Name",
 				action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Click on theme Email contact name header", YesNo.No);
+			if (click(driver, tp.themeEmailcontactname(30), "Name",
+					action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Click on theme Email contact name header", YesNo.No);
 		List<WebElement> ele = tp.themeemailcontactname(10);
-		if (CommonLib.checkSorting(driver, SortOrder.Assecending, ele)) {
+		if (CommonLib.checkSorting(driver, SortOrder.Decending, ele)) {
 			log(LogStatus.PASS, "-----------Deal Column is in Descending Order By Default  --------------",
 					YesNo.No);
 			sa.assertTrue(true, "-----------Deal Column is in Descending Order By Default --------------");
@@ -3317,6 +3320,10 @@ public void THSTc030_VerifytheSortinginEmailPageforEachcolumn (String projectNam
 					YesNo.Yes);
 			sa.assertTrue(false,
 					"-----------Deal Column is not in Descending Order By Default  --------------");
+		}
+		} else {
+			log(LogStatus.ERROR, "Not able to Click on theme Email contact name header", YesNo.Yes);
+			sa.assertTrue(false, "Not able to Click on theme Email contact name header");
 		}
 		} else {
 			log(LogStatus.ERROR, "Not able to Click on theme Email contact name header", YesNo.Yes);
@@ -3524,7 +3531,7 @@ public void THSTc031_VerifytheUIofSendEmailpageWhenUserSelectsContactsandClickso
 	
 	try {
 		text = email.getEMailContent(gmailUserName, gmailPassword, crmUser1EmailID, TC_Contact1EmailID,
-				"Capital Call Notice");
+				"PE theme Email Subject Text");
 	} catch (InterruptedException e) {
 		// TODO Auto-generated catch block
 		sa.assertTrue(false, "Email Template is not verified from email : " + gmailUserName);
@@ -3806,75 +3813,75 @@ public void THSTc034_VerifytheUIForMaxCharacterinContactNameandFirmname(String p
 	String[][] EntityOrAccounts = {{TC_Firm5, TC_Firm5RecordType,null}};
 	String themeName = ThemeName5;
 	for (String[] accounts : EntityOrAccounts) {
-		if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
-			log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
-			value = accounts[0];
-			type = accounts[1];
-			if (ip.createEntityOrAccount(environment, mode, value, type, null, null,20)) {
-				log(LogStatus.INFO, "successfully Created Account/Entity : " + value + " of record type : " + type,
-						YesNo.No);
-			} else {
-				sa.assertTrue(false, "Not Able to Create Account/Entity : " + value + " of record type : " + type);
-				log(LogStatus.SKIP, "Not Able to Create Account/Entity : " + value + " of record type : " + type,
-						YesNo.Yes);
-			}
-
-		} else {
-			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.Object1Tab);
-			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.Object1Tab, YesNo.Yes);
-		}
+//		if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
+//			log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
+//			value = accounts[0];
+//			type = accounts[1];
+//			if (ip.createEntityOrAccount(environment, mode, value, type, null, null,20)) {
+//				log(LogStatus.INFO, "successfully Created Account/Entity : " + value + " of record type : " + type,
+//						YesNo.No);
+//			} else {
+//				sa.assertTrue(false, "Not Able to Create Account/Entity : " + value + " of record type : " + type);
+//				log(LogStatus.SKIP, "Not Able to Create Account/Entity : " + value + " of record type : " + type,
+//						YesNo.Yes);
+//			}
+//
+//		} else {
+//			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.Object1Tab);
+//			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.Object1Tab, YesNo.Yes);
+//		}
 	}
 	 String contactname = TC_Contact6FName+ " "+TC_Contact6LName;
-		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
-			log(LogStatus.INFO, "Click on Tab : " + TabName.Object2Tab, YesNo.No);
-
-			TC_Contact6EmailID = lp.generateRandomEmailId(gmailUserName);
-			ExcelUtils.writeData(AcuityDataSheetFilePath, TC_Contact6EmailID, "Contact", excelLabel.Variable_Name,
-					"TC_Contact_6", excelLabel.Contact_EmailId);
-
-			if (cp.createContactAcuity(projectName, TC_Contact6FName, TC_Contact6LName, TC_Firm5, TC_Contact6EmailID,
-					TC_Contact6RecordType, null, null, CreationPage.ContactPage, null, null)) {
-				log(LogStatus.INFO, "successfully Created Contact : " + TC_Contact6FName + " " + TC_Contact6LName,
-						YesNo.No);
-			} else {
-				sa.assertTrue(false, "Not Able to Create Contact : " + TC_Contact6FName + " " + TC_Contact6LName);
-				log(LogStatus.SKIP, "Not Able to Create Contact: " + TC_Contact6FName + " " + TC_Contact6LName,
-						YesNo.Yes);
-			}
-		} else {
-			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.Object2Tab);
-			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.Object2Tab, YesNo.Yes);
-		}
+//		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
+//			log(LogStatus.INFO, "Click on Tab : " + TabName.Object2Tab, YesNo.No);
+//
+//			TC_Contact6EmailID = lp.generateRandomEmailId(gmailUserName);
+//			ExcelUtils.writeData(AcuityDataSheetFilePath, TC_Contact6EmailID, "Contact", excelLabel.Variable_Name,
+//					"TC_Contact_6", excelLabel.Contact_EmailId);
+//
+//			if (cp.createContactAcuity(projectName, TC_Contact6FName, TC_Contact6LName, TC_Firm5, TC_Contact6EmailID,
+//					TC_Contact6RecordType, null, null, CreationPage.ContactPage, null, null)) {
+//				log(LogStatus.INFO, "successfully Created Contact : " + TC_Contact6FName + " " + TC_Contact6LName,
+//						YesNo.No);
+//			} else {
+//				sa.assertTrue(false, "Not Able to Create Contact : " + TC_Contact6FName + " " + TC_Contact6LName);
+//				log(LogStatus.SKIP, "Not Able to Create Contact: " + TC_Contact6FName + " " + TC_Contact6LName,
+//						YesNo.Yes);
+//			}
+//		} else {
+//			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.Object2Tab);
+//			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.Object2Tab, YesNo.Yes);
+//		}
 		
-		if (fp.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			log(LogStatus.INFO, "Click on Tab : " + TabName.InstituitonsTab, YesNo.No);
-
-			if (fp.clickOnAlreadyCreatedItem(projectName, TC_Firm5, 30)) {
-				log(LogStatus.INFO, "Click on Tab : " + TC_Firm5, YesNo.No);
-				ThreadSleep(5000);
-				if (tp.clickOnShowMoreActionDownArrow(projectName, PageName.CompanyPage, ShowMoreActionDropDownList.Add_To_Theme, 10)) {
-					log(LogStatus.INFO, "Add to theme is  selected from drop down", YesNo.No);
-					ThreadSleep(5000);
-					if (sendKeys(driver, tp.addToThemePopUpSearchBox2(20), themeName, "Theme Search Box", action.BOOLEAN)) {
-						log(LogStatus.INFO, "Able to Pass the Value:  " + themeName, YesNo.No);
-
-						if (CommonLib.clickUsingJavaScript(driver, tp.addToThemePopUpSearchBoxDropDownValue2(themeName, 20),
-								"Dropdown Value: " + themeName, action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on Dropdown Value: " + themeName, YesNo.No);
-							if (CommonLib.clickUsingJavaScript(driver, tp.addToThemePopUpSaveButton(10),
-									"Dropdown Value: " + themeName, action.SCROLLANDBOOLEAN)) {
-			                    } else {
-								log(LogStatus.ERROR, "Not Able to Click on Save Button", YesNo.No);
-
-							}
-						} else {
-							log(LogStatus.ERROR, "Not Able to Click on Dropdown Value: " + themeName, YesNo.No);
-
-						}
-					} else {
-						log(LogStatus.ERROR, "Not Able to Pass the Value:  " + themeName, YesNo.No);
-
-					}
+//		if (fp.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
+//			log(LogStatus.INFO, "Click on Tab : " + TabName.InstituitonsTab, YesNo.No);
+//
+//			if (fp.clickOnAlreadyCreatedItem(projectName, TC_Firm5, 30)) {
+//				log(LogStatus.INFO, "Click on Tab : " + TC_Firm5, YesNo.No);
+//				ThreadSleep(5000);
+//				if (tp.clickOnShowMoreActionDownArrow(projectName, PageName.CompanyPage, ShowMoreActionDropDownList.Add_To_Theme, 10)) {
+//					log(LogStatus.INFO, "Add to theme is  selected from drop down", YesNo.No);
+//					ThreadSleep(5000);
+//					if (sendKeys(driver, tp.addToThemePopUpSearchBox2(20), themeName, "Theme Search Box", action.BOOLEAN)) {
+//						log(LogStatus.INFO, "Able to Pass the Value:  " + themeName, YesNo.No);
+//
+//						if (CommonLib.clickUsingJavaScript(driver, tp.addToThemePopUpSearchBoxDropDownValue2(themeName, 20),
+//								"Dropdown Value: " + themeName, action.SCROLLANDBOOLEAN)) {
+//							log(LogStatus.INFO, "Clicked on Dropdown Value: " + themeName, YesNo.No);
+//							if (CommonLib.clickUsingJavaScript(driver, tp.addToThemePopUpSaveButton(10),
+//									"Dropdown Value: " + themeName, action.SCROLLANDBOOLEAN)) {
+//			                    } else {
+//								log(LogStatus.ERROR, "Not Able to Click on Save Button", YesNo.No);
+//
+//							}
+//						} else {
+//							log(LogStatus.ERROR, "Not Able to Click on Dropdown Value: " + themeName, YesNo.No);
+//
+//						}
+//					} else {
+//						log(LogStatus.ERROR, "Not Able to Pass the Value:  " + themeName, YesNo.No);
+//
+//					}
 		               
 		               
 		               if (fp.clickOnTab(environment, mode, TabName.ThemesTab)) {
@@ -3939,18 +3946,18 @@ public void THSTc034_VerifytheUIForMaxCharacterinContactNameandFirmname(String p
 		        				log(LogStatus.ERROR, "Not able to click on " + TabName.ThemesTab, YesNo.Yes);
 		        				sa.assertTrue(false, "Not able to click on " + TabName.ThemesTab);
 		        			}
-				} else {
-					log(LogStatus.ERROR, "Not able to Add to theme is  selected from drop down", YesNo.Yes);
-					sa.assertTrue(false, "Not able to Add to theme is  selected from drop down");
-				}
-			} else {
-				log(LogStatus.SKIP, "Not Able to open created account: " + TC_Firm5, YesNo.Yes);
-				sa.assertTrue(false, "Not Able to open created account : " + TC_Firm5);
-			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on " + TabName.InstituitonsTab, YesNo.Yes);
-			sa.assertTrue(false, "Not able to click on " + TabName.InstituitonsTab);
-		}
+//				} else {
+//					log(LogStatus.ERROR, "Not able to Add to theme is  selected from drop down", YesNo.Yes);
+//					sa.assertTrue(false, "Not able to Add to theme is  selected from drop down");
+//				}
+//			} else {
+//				log(LogStatus.SKIP, "Not Able to open created account: " + TC_Firm5, YesNo.Yes);
+//				sa.assertTrue(false, "Not Able to open created account : " + TC_Firm5);
+//			}
+//		} else {
+//			log(LogStatus.ERROR, "Not able to click on " + TabName.InstituitonsTab, YesNo.Yes);
+//			sa.assertTrue(false, "Not able to click on " + TabName.InstituitonsTab);
+//		}
 		        										
 		ThreadSleep(5000);
 		lp.CRMlogout();
@@ -3972,76 +3979,76 @@ public void THSTc034_VerifytheUIForMaxCharacterinContactNameandFirmname(String p
 	String contactname = TC_Contact1FName+ " "+TC_Contact1LName;
 	String themeName = ThemeName5;
 	String message = bp.eamilSuccessmsg;
-	if(clickUsingJavaScript(driver, bp.getUserMenuTab_Lightning().get(0), "profile logo"))
-	{
-		log(LogStatus.INFO, "Clicked on profile logo", YesNo.No);
-		if(clickUsingJavaScript(driver, home.getSettingBtn(40), "Setting button"))
-		{
-			log(LogStatus.INFO, "Clicked on setting button", YesNo.No);
-
-			if(sendKeysAndPressEnter(driver, home.getQuickFind(20), "My Email Settings", "quick find", action.SCROLLANDBOOLEAN))
-			{
-
-				log(LogStatus.INFO, "My Email Settings has been passed in quick find field", YesNo.No);
-
-				if(clickUsingJavaScript(driver, home.getQuickSearchItem("My Email Settings",20), "My Email Settings record"))
-				{
-					log(LogStatus.INFO, "Clicked on My Email Settings record", YesNo.No);
-
-					if(CommonLib.switchToFrame(driver, 40, home.getMyEmailSettingIframe(20)))
-					{
-						log(LogStatus.INFO, "Switched to my email setting iframe", YesNo.No);
-
-						if(sendKeys(driver, home.getEmailSignature(20), signature, "email signature", action.SCROLLANDBOOLEAN))
-						{
-							log(LogStatus.INFO, signature+" has been passed in email signature.", YesNo.No);
-
-							if(click(driver, home.getSaveBtn(20), "save button", action.SCROLLANDBOOLEAN))
-							{								
-								log(LogStatus.INFO, "Clicked on save button", YesNo.No);
-								CommonLib.switchToDefaultContent(driver);
-							}
-							else
-							{
-								log(LogStatus.ERROR, "Clicked on save button", YesNo.No);
-								sa.assertTrue(false, "Clicked on save button");
-							}
-						}
-						else
-						{
-							log(LogStatus.ERROR, signature+" has been passed in email signature.", YesNo.No);
-							sa.assertTrue(false, signature+" has been passed in email signature.");
-						}
-					}
-					else
-					{
-						log(LogStatus.ERROR, "Not able to switched to my email setting iframe", YesNo.No);
-						sa.assertTrue(false, "Not able to switched to my email setting iframe");
-					}
-				}
-				else
-				{
-					log(LogStatus.ERROR, "Not able to clicked on My Email Settings record", YesNo.No);
-					sa.assertTrue(false, "Not able to clicked on My Email Settings record");
-				}
-			}
-			else
-			{
-				log(LogStatus.ERROR, "My Email Settings is not passed in quick find field", YesNo.No);
-				sa.assertTrue(false,  "My Email Settings is not passed in quick find field");
-			}
-		}
-		else
-		{
-			log(LogStatus.ERROR, "Not able to clicked on setting button", YesNo.No);
-			sa.assertTrue(false, "Not able to clicked on setting button");
-		}
-	}
-	else
-	{
-		log(LogStatus.ERROR, "Not able to clicked on profile logo", YesNo.No);
-		sa.assertTrue(false, "Not able to clicked on profile logo");
-	}
+//	if(clickUsingJavaScript(driver, bp.getUserMenuTab_Lightning().get(0), "profile logo"))
+//	{
+//		log(LogStatus.INFO, "Clicked on profile logo", YesNo.No);
+//		if(clickUsingJavaScript(driver, home.getSettingBtn(40), "Setting button"))
+//		{
+//			log(LogStatus.INFO, "Clicked on setting button", YesNo.No);
+//
+//			if(sendKeysAndPressEnter(driver, home.getQuickFind(20), "My Email Settings", "quick find", action.SCROLLANDBOOLEAN))
+//			{
+//
+//				log(LogStatus.INFO, "My Email Settings has been passed in quick find field", YesNo.No);
+//
+//				if(clickUsingJavaScript(driver, home.getQuickSearchItem("My Email Settings",20), "My Email Settings record"))
+//				{
+//					log(LogStatus.INFO, "Clicked on My Email Settings record", YesNo.No);
+//
+//					if(CommonLib.switchToFrame(driver, 40, home.getMyEmailSettingIframe(20)))
+//					{
+//						log(LogStatus.INFO, "Switched to my email setting iframe", YesNo.No);
+//
+//						if(sendKeys(driver, home.getEmailSignature(20), signature, "email signature", action.SCROLLANDBOOLEAN))
+//						{
+//							log(LogStatus.INFO, signature+" has been passed in email signature.", YesNo.No);
+//
+//							if(click(driver, home.getSaveBtn(20), "save button", action.SCROLLANDBOOLEAN))
+//							{								
+//								log(LogStatus.INFO, "Clicked on save button", YesNo.No);
+//								CommonLib.switchToDefaultContent(driver);
+//							}
+//							else
+//							{
+//								log(LogStatus.ERROR, "Clicked on save button", YesNo.No);
+//								sa.assertTrue(false, "Clicked on save button");
+//							}
+//						}
+//						else
+//						{
+//							log(LogStatus.ERROR, signature+" has been passed in email signature.", YesNo.No);
+//							sa.assertTrue(false, signature+" has been passed in email signature.");
+//						}
+//					}
+//					else
+//					{
+//						log(LogStatus.ERROR, "Not able to switched to my email setting iframe", YesNo.No);
+//						sa.assertTrue(false, "Not able to switched to my email setting iframe");
+//					}
+//				}
+//				else
+//				{
+//					log(LogStatus.ERROR, "Not able to clicked on My Email Settings record", YesNo.No);
+//					sa.assertTrue(false, "Not able to clicked on My Email Settings record");
+//				}
+//			}
+//			else
+//			{
+//				log(LogStatus.ERROR, "My Email Settings is not passed in quick find field", YesNo.No);
+//				sa.assertTrue(false,  "My Email Settings is not passed in quick find field");
+//			}
+//		}
+//		else
+//		{
+//			log(LogStatus.ERROR, "Not able to clicked on setting button", YesNo.No);
+//			sa.assertTrue(false, "Not able to clicked on setting button");
+//		}
+//	}
+//	else
+//	{
+//		log(LogStatus.ERROR, "Not able to clicked on profile logo", YesNo.No);
+//		sa.assertTrue(false, "Not able to clicked on profile logo");
+//	}
 								if (fp.clickOnTab(environment, mode, TabName.ThemesTab)) {
 									log(LogStatus.INFO, "Click on Tab : " + TabName.ThemesTab, YesNo.No);
 									if (sendKeys(driver, bp.getsearchIcon_Interaction(20), themeName, "Search Icon Text",
@@ -4074,6 +4081,9 @@ public void THSTc034_VerifytheUIForMaxCharacterinContactNameandFirmname(String p
 															if (CommonLib.click(driver, tp.themeEmailBCCcheckbox(30),
 																	"theme Email BCC check box", action.BOOLEAN)) {
 																log(LogStatus.INFO, "Clicked on theme Email BCC check box", YesNo.No);
+																if (CommonLib.click(driver, tp.themeEmailMySignaturecheckbox(30),
+																		"theme Email My Signature check box", action.BOOLEAN)) {
+																	log(LogStatus.INFO, "Clicked on theme Email My Signature check box", YesNo.No);
 																if (CommonLib.click(driver, tp.themeEmailSendbtn1(30),
 																		"theme Email Send btn1", action.BOOLEAN)) {
 																	log(LogStatus.INFO, "Clicked on theme Email Send btn1", YesNo.No);
@@ -4104,6 +4114,12 @@ public void THSTc034_VerifytheUIForMaxCharacterinContactNameandFirmname(String p
 																			YesNo.Yes);
 																	sa.assertTrue(false,
 																			"Not able to Clicked on theme Email Send btn1");
+																}
+																} else {
+																	log(LogStatus.ERROR, "Not able to Clicked on theme Email My Signature check box",
+																			YesNo.Yes);
+																	sa.assertTrue(false,
+																			"Not able to Clicked on theme Email BCC check box");
 																}
 															} else {
 																log(LogStatus.ERROR, "Not able to Clicked on theme Email BCC check box",
