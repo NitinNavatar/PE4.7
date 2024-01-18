@@ -2049,16 +2049,16 @@ public class CommonVariables {
 	 		// AcuityTheme
 
 	 		// Object Name
-	 		public static String ATFC_1_ObjectName, ATFC_2_ObjectName, ATFC_3_ObjectName, ATFC_4_ObjectName,ATFC_5_ObjectName,ATFC_6_ObjectName,ATFC_7_ObjectName;
+	 		public static String ATFC_1_ObjectName, ATFC_2_ObjectName, ATFC_3_ObjectName, ATFC_4_ObjectName,ATFC_5_ObjectName,ATFC_6_ObjectName,ATFC_7_ObjectName,ATFC_8_ObjectName;
 
 	 		// Field Data Type
-	 		public static String ATFC_1_FieldType, ATFC_2_FieldType, ATFC_3_FieldType, ATFC_4_FieldType,ATFC_5_FieldType,ATFC_6_FieldType,ATFC_7_FieldType;
+	 		public static String ATFC_1_FieldType, ATFC_2_FieldType, ATFC_3_FieldType, ATFC_4_FieldType,ATFC_5_FieldType,ATFC_6_FieldType,ATFC_7_FieldType,ATFC_8_FieldType;
 
 	 		// Field Label
-	 		public static String ATFC_1_FieldLabel, ATFC_2_FieldLabel, ATFC_3_FieldLabel, ATFC_4_FieldLabel,ATFC_5_FieldLabel,ATFC_6_FieldLabel,ATFC_7_FieldLabel;
+	 		public static String ATFC_1_FieldLabel, ATFC_2_FieldLabel, ATFC_3_FieldLabel, ATFC_4_FieldLabel,ATFC_5_FieldLabel,ATFC_6_FieldLabel,ATFC_7_FieldLabel,ATFC_8_FieldLabel;
 
 	 		// Field Values
-	 		public static String ATFC_1_FieldValues, ATFC_2_FieldValues, ATFC_3_FieldValues, ATFC_4_FieldValues,ATFC_5_FieldValues,ATFC_6_FieldValues,ATFC_7_FieldValues;
+	 		public static String ATFC_1_FieldValues, ATFC_2_FieldValues, ATFC_3_FieldValues, ATFC_4_FieldValues,ATFC_5_FieldValues,ATFC_6_FieldValues,ATFC_7_FieldValues,ATFC_8_FieldValues;
 	 		
 	 		public static String AT_RecordTypes_1, AT_RecordTypes_2, AT_RecordTypes_3, AT_RecordTypes_4, AT_RecordTypes_5,AT_RecordTypes_6;
 	 		public static String AT_RecordTypes_Description_1, AT_RecordTypes_Layout_2;
@@ -10237,6 +10237,8 @@ public class CommonVariables {
      					"ATField6", excelLabel.Object_Name);
      			ATFC_7_ObjectName = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "FieldComponent", excelLabel.Variable_Name,
      					"ATField7", excelLabel.Object_Name);
+     			ATFC_8_ObjectName = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "FieldComponent", excelLabel.Variable_Name,
+     					"ATField8", excelLabel.Object_Name);
      			
 
      			ATFC_1_FieldType = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "FieldComponent", excelLabel.Variable_Name,
@@ -10253,6 +10255,8 @@ public class CommonVariables {
      					"ATField6", excelLabel.Field_Type);
      			ATFC_7_FieldType = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "FieldComponent", excelLabel.Variable_Name,
      					"ATField7", excelLabel.Field_Type);
+     			ATFC_8_FieldType = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "FieldComponent", excelLabel.Variable_Name,
+     					"ATField8", excelLabel.Field_Type);
      			
 
      			ATFC_1_FieldLabel = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "FieldComponent", excelLabel.Variable_Name,
@@ -10270,6 +10274,8 @@ public class CommonVariables {
      					"ATField6", excelLabel.Field_Label);
      			ATFC_7_FieldLabel = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "FieldComponent", excelLabel.Variable_Name,
      					"ATField7", excelLabel.Field_Label);
+     			ATFC_8_FieldLabel = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "FieldComponent", excelLabel.Variable_Name,
+     					"ATField8", excelLabel.Field_Label);
      			
 
 
@@ -10291,6 +10297,8 @@ public class CommonVariables {
      					excelLabel.Variable_Name, "ATField6", excelLabel.Length);
      			ATFC_7_FieldValues = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "FieldComponent",
      					excelLabel.Variable_Name, "ATField7", excelLabel.Length);
+     			ATFC_8_FieldValues = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "FieldComponent",
+     					excelLabel.Variable_Name, "ATField8", excelLabel.Length);
      			
 
      			AT_RecordTypes_1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "Record Types", excelLabel.Variable_Name,

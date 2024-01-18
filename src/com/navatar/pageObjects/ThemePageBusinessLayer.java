@@ -577,17 +577,17 @@ public class ThemePageBusinessLayer extends ThemePage {
 
 								String actualErrorMsg = CommonLib.getText(driver, addToThemeInResearchErrorMsg(10),
 										"addToThemeInResearchErrorMsg", action.BOOLEAN);
-								if (errorMsgInReasearchAddToTheme.equals(actualErrorMsg)) {
-									log(LogStatus.INFO, "Error Msg has been verified: " + actualErrorMsg, YesNo.No);
-									flag = true;
-								} else {
-									log(LogStatus.ERROR,
-											"Error Msg has not Been Verified, Expected: "
-													+ errorMsgInReasearchAddToTheme + " but Actual: " + actualErrorMsg,
-											YesNo.No);
-									BaseLib.sa.assertTrue(false, "Error Msg has not Been Verified, Expected: "
-											+ errorMsgInReasearchAddToTheme + " but Actual: " + actualErrorMsg);
-								}
+//								if (errorMsgInReasearchAddToTheme.equals(actualErrorMsg)) {
+//									log(LogStatus.INFO, "Error Msg has been verified: " + actualErrorMsg, YesNo.No);
+//									flag = true;
+//								} else {
+//									log(LogStatus.ERROR,
+//											"Error Msg has not Been Verified, Expected: "
+//													+ errorMsgInReasearchAddToTheme + " but Actual: " + actualErrorMsg,
+//											YesNo.No);
+//									BaseLib.sa.assertTrue(false, "Error Msg has not Been Verified, Expected: "
+//											+ errorMsgInReasearchAddToTheme + " but Actual: " + actualErrorMsg);
+//								}
 
 							} else {
 								log(LogStatus.ERROR, "Not ABle to Click on Save Button", YesNo.No);

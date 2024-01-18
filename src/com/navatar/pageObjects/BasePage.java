@@ -4046,7 +4046,7 @@ public abstract class BasePage extends BaseLib {
 
 	}
 
-	@FindBy(xpath = "//div[contains(@class,'actionsContainer') or contains(@class,'forceModalActionContainer')]//button/span[text()='Save']")
+	@FindBy(xpath = "//td[contains(@id,'bottomButtonRow') or contains(@class,'bottomButtonRow')]//input[@title='Save']")
 	private WebElement saveButtonLighting1;
 
 	/**
@@ -10332,7 +10332,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, clearButtonOnPopup, "Visibility", timeOut, "Clear on popup");
 	}
 
-	@FindBy(xpath = "//div[@class='slds-utility-panel__body']//button[@title='Clear']")
+	@FindBy(xpath = "//div[@class='slds-utility-panel__body']//button[@title='Save']")
 	private WebElement saveButtonOnPopup;
 
 	public WebElement getSaveButtonOnPopup(int timeOut) {

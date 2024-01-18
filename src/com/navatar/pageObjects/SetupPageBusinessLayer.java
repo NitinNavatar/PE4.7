@@ -2314,6 +2314,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 			CommonLib.refresh(driver);
 			ThreadSleep(5000);
 			switchToFrame(driver, 20, getSetUpPageIframe(60));
+			ThreadSleep(5000);
 			for (String[] lv : labelWithValue) {
 				label = lv[0];
 				value = lv[1];
@@ -3844,23 +3845,23 @@ public class SetupPageBusinessLayer extends SetupPage {
 																YesNo.Yes);
 													}
 
-													xpath = "//label[contains(text(),'Decimal Places')]/../following-sibling::td//input";
-													ele = FindElement(driver, xpath,
-															labelWithValue[0] + " " + labelWithValue[1], action.BOOLEAN,
-															5);
-
-													if (sendKeys(driver, ele, val[1],
-															labelWithValue[0] + " " + labelWithValue[1],
-															action.SCROLLANDBOOLEAN)) {
-														log(LogStatus.PASS,
-																"Passed Value in " + labelWithValue[0] + " " + val[1],
-																YesNo.No);
-													} else {
-														log(LogStatus.FAIL,
-																"Not able to pass " + labelWithValue[0] + " " + val[1],
-																YesNo.Yes);
-													}
-													ThreadSleep(500);
+//													xpath = "//label[contains(text(),'Decimal Places')]/../following-sibling::td//input";
+//													ele = FindElement(driver, xpath,
+//															labelWithValue[0] + " " + labelWithValue[1], action.BOOLEAN,
+//															5);
+//
+//													if (sendKeys(driver, ele, val[1],
+//															labelWithValue[0] + " " + labelWithValue[1],
+//															action.SCROLLANDBOOLEAN)) {
+//														log(LogStatus.PASS,
+//																"Passed Value in " + labelWithValue[0] + " " + val[1],
+//																YesNo.No);
+//													} else {
+//														log(LogStatus.FAIL,
+//																"Not able to pass " + labelWithValue[0] + " " + val[1],
+//																YesNo.Yes);
+//													}
+//													ThreadSleep(500);
 												}
 
 											}
@@ -8106,7 +8107,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		lp.CRMLogin(superAdminUserName, adminPassword);
 		boolean flag = false;
 		if (home.clickOnSetUpLink()) {
 			flag = true;
