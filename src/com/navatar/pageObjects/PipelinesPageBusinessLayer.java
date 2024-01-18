@@ -59,7 +59,8 @@ public class PipelinesPageBusinessLayer extends PipelinesPage {
 		
 			
 		
-		xpath = "//span[text()='"+finalLabelName+"']/../following-sibling::div//*[text()='"+labelValue+"']";
+//		xpath = "//span[text()='"+finalLabelName+"']/../following-sibling::div//*[text()='"+labelValue+"']";
+		xpath = "//span[text()='"+finalLabelName+"']/../../following-sibling::dd//lightning-primitive-input-checkbox[@"+labelValue+"]";
 		//span[text()="Active"]/../following-sibling::div//lightning-primitive-input-checkbox
 		
 		ele = 	FindElement(driver, xpath, finalLabelName + " label text with  " + labelValue, action.SCROLLANDBOOLEAN, 10);

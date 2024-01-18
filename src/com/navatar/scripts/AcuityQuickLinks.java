@@ -1613,7 +1613,7 @@ public class AcuityQuickLinks extends BaseLib{
 		boolean flag = false;
 		String parentID=null;
 	
-		String[] profileForSelection = { "System Administrator"};
+		String[] profileForSelection = { "System Administrator","PE Standard User"};
 		
 		for(int k=0; k<profileForSelection.length; k++) {
 			home.notificationPopUpClose();
@@ -1684,6 +1684,7 @@ public class AcuityQuickLinks extends BaseLib{
 			log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
 			sa.assertTrue(false, "setup link is not clickable");
 		}
+			refresh(driver);
 	}	
 			home.notificationPopUpClose();
 			if (home.clickOnSetUpLink()) {
