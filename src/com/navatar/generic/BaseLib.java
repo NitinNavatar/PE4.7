@@ -50,7 +50,6 @@ import org.testng.annotations.Parameters;
 import static com.navatar.generic.CommonLib.*;
 import com.relevantcodes.extentreports.ExtentReports;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 
 /**
  * 
@@ -102,9 +101,9 @@ public class BaseLib extends AppListeners {
 	@BeforeClass
 	public void config(String browserName){
 		if (browserName.equalsIgnoreCase("Chrome")) {
-			System.setProperty("webdriver.chrome.driver",
-					System.getProperty("user.dir") + "\\exefiles\\chromedriver.exe");
-//			WebDriverManager.chromedriver().setup();
+//			System.setProperty("webdriver.chrome.driver",
+//					System.getProperty("user.dir") + "\\exefiles\\chromedriver.exe");
+////			WebDriverManager.chromedriver().setup();
 			ChromeOptions options = new ChromeOptions();
 			String OsName= System.getProperty("os.name");
 			//options.setBinary("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe");
@@ -129,14 +128,14 @@ public class BaseLib extends AppListeners {
 			
 			
 		} else if (browserName.equalsIgnoreCase("firefox")) {
-			System.setProperty("webdriver.gecko.driver",
-					System.getProperty("user.dir") + "\\exefiles\\geckodriver.exe");
-			DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-			FirefoxOptions options = new FirefoxOptions();
-			options.addPreference("log", "{level: trace}");
-			capabilities.setCapability("marionette", true);
-			capabilities.setCapability("moz:firefoxOptions", options);
-			edriver = new FirefoxDriver(capabilities);
+//			System.setProperty("webdriver.gecko.driver",
+//					System.getProperty("user.dir") + "\\exefiles\\geckodriver.exe");
+//			DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+//			FirefoxOptions options = new FirefoxOptions();
+//			options.addPreference("log", "{level: trace}");
+//			capabilities.setCapability("marionette", true);
+//			capabilities.setCapability("moz:firefoxOptions", options);
+//			edriver = new FirefoxDriver(capabilities);
 		} else if (browserName.equalsIgnoreCase("IE Edge")) {
 			 System.setProperty("webdriver.edge.driver", System.getProperty("user.dir") +"\\exefiles\\MicrosoftWebDriver.exe");
 			 edriver = new EdgeDriver();

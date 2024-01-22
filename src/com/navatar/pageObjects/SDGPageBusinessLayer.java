@@ -12,7 +12,6 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.server.handler.SwitchToFrame;
 
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;

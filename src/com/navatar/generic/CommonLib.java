@@ -5,7 +5,6 @@ import org.apache.poi.ss.formula.functions.Value;
 import org.apache.poi.ss.formula.ptg.ParenthesisPtg;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchWindowException;
@@ -62,6 +61,7 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -117,7 +117,7 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 	 */
 	public static void waitForPageLoad(WebDriver driver) {
 
-		Wait<WebDriver> wait = new WebDriverWait(driver, 60);
+		Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 		wait.until(new Function<WebDriver, Boolean>() {
 			public Boolean apply(WebDriver driver) {
 				if (isAlertPresent(driver)) {
@@ -142,7 +142,7 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 	 * @description match the expected and actual title of the page.
 	 */
 	public static boolean matchTitle(WebDriver driver, String expectedTitle, int timeOut) {
-		WebDriverWait wait = new WebDriverWait(driver, timeOut);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
 		try {
 			wait.until(ExpectedConditions.titleContains(expectedTitle));
 			appLog.info("Title Match Successfull. Expected: " + expectedTitle + "\tActual Title: " + driver.getTitle());
@@ -251,7 +251,7 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 	 * @description switch to the frame based on the locator passed.
 	 */
 	public static boolean switchToFrame(WebDriver driver, int timeOut, Object locator) {
-		WebDriverWait wait = new WebDriverWait(driver, timeOut);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
 		boolean returnValue = true;
 		String xpath = "";
 		try {
@@ -671,7 +671,7 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 	 */
 	public static boolean checkElementVisibility(WebDriver driver, WebElement element, int time,
 			String scrollingToElement) {
-		WebDriverWait wait = new WebDriverWait(driver, time);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
 		WebElement ClickElement = null;
 		try {
 			AppListeners.appLog.info("Checking the visibility of: " + scrollingToElement);
@@ -700,7 +700,7 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 	 * @description check the element visiblity without scroll
 	 */
 	public static boolean checkElementVisibility(WebDriver driver, WebElement element, String elementName, int time) {
-		WebDriverWait wait = new WebDriverWait(driver, time);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
 		WebElement ClickElement = null;
 		try {
 			// IPListeners.ipLog.info("Checking the visibility of:
@@ -729,7 +729,7 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 	 */
 	public static boolean checkElementsVisibility(WebDriver driver, List<WebElement> element, String elementName,
 			int time) {
-		WebDriverWait wait = new WebDriverWait(driver, time);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
 		List<WebElement> ClickElement = null;
 		try {
 			AppListeners.appLog.info("Checking the visibility of: " + elementName);
@@ -761,12 +761,12 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 			String elementName) {
 		try {
 			if (element != null) {
-				WebDriverWait wait = new WebDriverWait(driver, timeout);
+				WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds( timeout));
 				WebElement ele = null;
 				if (ExcelUtils.readDataFromPropertyFile("Browser").equalsIgnoreCase("IE Edge")) {
 					System.out.println("broswer: IE");
 
-					WebDriverWait waitIE = new WebDriverWait(driver, timeout / 4);
+					WebDriverWait waitIE = new WebDriverWait(driver,Duration.ofSeconds( timeout / 4));
 					try {
 						waitIE.until(ExpectedConditions.visibilityOf(element));
 						return element;
@@ -855,7 +855,7 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 		try {
 			scrollDownThroughWebelement(driver, element, elementName);
 			if (element != null) {
-				WebDriverWait wait = new WebDriverWait(driver, timeout);
+				WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
 				WebElement ele = null;
 				if (waitOn.equalsIgnoreCase("Visibility")) {
 					ele = wait.until(ExpectedConditions.visibilityOf(element));
@@ -2484,9 +2484,9 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 		WebElement ele = null;
 		try {
 			if (locator.toString().equalsIgnoreCase(Locator.Name.toString())) {
-				ele = driver.findElementByName(using);
+				ele = driver.findElement(By.name(using));
 			} else {
-				ele = driver.findElementByXPath(using);
+				ele = driver.findElement(By.xpath(using));
 			}
 		} catch (Exception e) {
 
@@ -3070,7 +3070,7 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 
 		try {
 			if (elements != null) {
-				Wait<WebDriver> wait = new WebDriverWait(driver, 25);
+				Wait<WebDriver> wait = new WebDriverWait(driver,Duration.ofSeconds( 25));
 				wait.until(ExpectedConditions.visibilityOf(elements.get(1)));
 				return elements;
 			}
