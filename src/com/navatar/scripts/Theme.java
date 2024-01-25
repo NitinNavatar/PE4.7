@@ -501,7 +501,7 @@ public class Theme extends BaseLib {
 											+ ExpectedMsg);
 								}
 		
-		 String  errormsg  = BP.getAllInteractionErrorMsg(10).getText();
+		 String  errormsg  = BP.getClipNotext(10).getText();
 		 if(errormsg.contains(ExpectedErrorMsg)) {
 				log(LogStatus.INFO,
 						"Actual result " + ExpectedErrorMsg
@@ -551,14 +551,14 @@ public class Theme extends BaseLib {
 		
 	}
 	
-//	@Test
-//	public void AcuityThemeTc011_4_createTargetByApi() {
-//		
-//		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity Theme\\Target.xlsx";
-//		String sheetName="Target";
-//		new APIUtils().TargetObjectDataUpload(filePath, sheetName);
-//		
-//	}
+	@Test
+	public void AcuityThemeTc011_4_createTargetByApi() {
+		
+		String filePath =System.getProperty("user.dir")+"\\API Files\\Acuity Theme\\Target.xlsx";
+		String sheetName="Target";
+		new APIUtils().TargetObjectDataUpload(filePath, sheetName);
+		
+	}
 	
 	@Test
 	public void THSTcAPI_11_createClipByApi() {
@@ -665,7 +665,7 @@ public class Theme extends BaseLib {
 					"Team Member has been Created: " + member1 + " with Role: " + role1 + " of Theme: " + themeName,
 					YesNo.No);
 			CommonLib.refresh(driver);
-			if (theme.checkDescriptionAndTeamMember(themeDescription, member1, false)) {
+			if (theme.checkDescriptionAndTeamMember(themeDescription, member1, true)) {
 				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
 						YesNo.No);
 
@@ -683,7 +683,7 @@ public class Theme extends BaseLib {
 			sa.assertTrue(false, "Team Member has not been Created: " + member1 + " with Role: " + role1 + " of Theme: "
 					+ themeName);
 		}
-		if (theme.createTeamMember(false, themeTabName, themeName, projectName, true, themeName, member2, role2,
+		if (theme.createTeamMember(true, themeTabName, themeName, projectName, true, themeName, member2, role2,
 				title2, true, teamMemberNavigation.Action_Button, true, false, null)) {
 			log(LogStatus.INFO,
 					"Team Member has been Created: " + member2 + " with Role: " + role2 + " of Theme: " + themeName,
@@ -748,18 +748,18 @@ public class Theme extends BaseLib {
 			log(LogStatus.INFO,
 					"Team Member has been Created: " + member1 + " with Role: " + role1 + " of Theme: " + themeName,
 					YesNo.No);
-//			CommonLib.refresh(driver);
-//			if (theme.checkDescriptionAndTeamMember(themeDescription, member1, false)) {
-//				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
-//						YesNo.No);
-//
-//			} else {
-//				log(LogStatus.ERROR,
-//						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
-//				sa.assertTrue(false,
-//						"-----Theme " + themeName + " description and Team Member Value not verified------");
-//			}
-//
+			CommonLib.refresh(driver);
+			if (theme.checkDescriptionAndTeamMember(themeDescription, member1, false)) {
+				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
+						YesNo.No);
+
+			} else {
+				log(LogStatus.ERROR,
+						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
+				sa.assertTrue(false,
+						"-----Theme " + themeName + " description and Team Member Value not verified------");
+			}
+
 		} else {
 			log(LogStatus.ERROR,
 					"Team Member has not been Created: " + member1 + " with Role: " + role1 + " of Theme: " + themeName,
@@ -773,16 +773,16 @@ public class Theme extends BaseLib {
 					"Team Member has been Created: " + member2 + " with Role: " + role2 + " of Theme: " + themeName,
 					YesNo.No);
 			CommonLib.refresh(driver);
-//			if (theme.checkDescriptionAndTeamMember(themeDescription, member2, false)) {
-//				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
-//						YesNo.No);
-//
-//			} else {
-//				log(LogStatus.ERROR,
-//						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
-//				sa.assertTrue(false,
-//						"-----Theme " + themeName + " description and Team Member Value not verified------");
-//			}
+			if (theme.checkDescriptionAndTeamMember(themeDescription, member2, false)) {
+				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
+						YesNo.No);
+
+			} else {
+				log(LogStatus.ERROR,
+						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
+				sa.assertTrue(false,
+						"-----Theme " + themeName + " description and Team Member Value not verified------");
+			}
 
 		} else {
 			log(LogStatus.ERROR,
@@ -798,16 +798,16 @@ public class Theme extends BaseLib {
 					"Team Member has been Created: " + member3 + " with Role: " + role3 + " of Theme: " + themeName,
 					YesNo.No);
 			CommonLib.refresh(driver);
-//			if (theme.checkDescriptionAndTeamMember(themeDescription, member3, false)) {
-//				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
-//						YesNo.No);
-//
-//			} else {
-//				log(LogStatus.ERROR,
-//						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
-//				sa.assertTrue(false,
-//						"-----Theme " + themeName + " description and Team Member Value not verified------");
-//			}
+			if (theme.checkDescriptionAndTeamMember(themeDescription, member3, false)) {
+				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
+						YesNo.No);
+
+			} else {
+				log(LogStatus.ERROR,
+						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
+				sa.assertTrue(false,
+						"-----Theme " + themeName + " description and Team Member Value not verified------");
+			}
 
 		} else {
 			log(LogStatus.ERROR,
@@ -977,7 +977,6 @@ public class Theme extends BaseLib {
 			ThreadSleep(3000);
 			String[] searchValues = readAllDataForAColumn(ResearchDataSheetFilePath, "ThemeSearch" ,0,false).split("<break>");
 		for(String searchValue : searchValues) {
-//			for(int i =0; i <=30; i++) {
 			String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"ThemeSearch",excelLabel.Variable_Name, searchValue, excelLabel.Name);
 		    log(LogStatus.PASS, "WOrking for " + varibale, YesNo.Yes);
 		    
@@ -1170,7 +1169,7 @@ public class Theme extends BaseLib {
 			ThreadSleep(3000);
 			String[] searchValues = readAllDataForAColumn(ResearchDataSheetFilePath, "ThemeSearch1" ,0,false).split("<break>");
 		for(String searchValue : searchValues) {
-//			for(int i =0; i <=30; i++) {
+
 			String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"ThemeSearch1",excelLabel.Variable_Name, searchValue, excelLabel.Name);
 		    log(LogStatus.PASS, "WOrking for " + varibale, YesNo.Yes);
 		    
@@ -1297,7 +1296,7 @@ public class Theme extends BaseLib {
 			sa.assertTrue(false, "Team Member has not been Created: " + member1 + " with Role: " + role1 + " of Theme: "
 					+ themeName);
 		}
-		if (theme.createTeamMember(false, themeTabName, themeName, projectName, true, themeName, member2, role2,
+		if (theme.createTeamMember(true, themeTabName, themeName, projectName, true, themeName, member2, role2,
 				title2, true, teamMemberNavigation.Action_Button, true, false, null)) {
 			log(LogStatus.INFO,
 					"Team Member has been Created: " + member2 + " with Role: " + role2 + " of Theme: " + themeName,
@@ -1448,17 +1447,17 @@ public class Theme extends BaseLib {
 			log(LogStatus.INFO,
 					"Team Member has been Created: " + member1 + " with Role: " + role1 + " of Theme: " + themeName,
 					YesNo.No);
-//			CommonLib.refresh(driver);
-//			if (theme.checkDescriptionAndTeamMember(themeDescription, member1, false)) {
-//				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
-//						YesNo.No);
-//
-//			} else {
-//				log(LogStatus.ERROR,
-//						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
-//				sa.assertTrue(false,
-//						"-----Theme " + themeName + " description and Team Member Value not verified------");
-//			}
+			CommonLib.refresh(driver);
+			if (theme.checkDescriptionAndTeamMember(themeDescription, member1, false)) {
+				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
+						YesNo.No);
+
+			} else {
+				log(LogStatus.ERROR,
+						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
+				sa.assertTrue(false,
+						"-----Theme " + themeName + " description and Team Member Value not verified------");
+			}
 
 		} else {
 			log(LogStatus.ERROR,
@@ -1472,17 +1471,17 @@ public class Theme extends BaseLib {
 			log(LogStatus.INFO,
 					"Team Member has been Created: " + member2 + " with Role: " + role2 + " of Theme: " + themeName,
 					YesNo.No);
-//			CommonLib.refresh(driver);
-//			if (theme.checkDescriptionAndTeamMember(themeDescription, member2, false)) {
-//				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
-//						YesNo.No);
-//
-//			} else {
-//				log(LogStatus.ERROR,
-//						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
-//				sa.assertTrue(false,
-//						"-----Theme " + themeName + " description and Team Member Value not verified------");
-//			}
+			CommonLib.refresh(driver);
+			if (theme.checkDescriptionAndTeamMember(themeDescription, member2, false)) {
+				log(LogStatus.INFO, "-----Verified Theme " + themeName + " description and Team Member Value------",
+						YesNo.No);
+
+			} else {
+				log(LogStatus.ERROR,
+						"-----Theme " + themeName + " description and Team Member Value not verified------", YesNo.No);
+				sa.assertTrue(false,
+						"-----Theme " + themeName + " description and Team Member Value not verified------");
+			}
 
 		} else {
 			log(LogStatus.ERROR,
@@ -2137,25 +2136,25 @@ public class Theme extends BaseLib {
 		String TabName1 = "";
 		String[][] EntityOrAccounts = { { "New Record Company", "XYZ", null } };
 
-//		for (String[] accounts : EntityOrAccounts) {
-//			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
-//				log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
-//				value = accounts[0];
-//				type = accounts[1];
-//				if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
-//					log(LogStatus.INFO, "successfully Created Account/Entity : " + value + " of record type : " + type,
-//							YesNo.No);
-//				} else {
-//					sa.assertTrue(false, "Not Able to Create Account/Entity : " + value + " of record type : " + type);
-//					log(LogStatus.SKIP, "Not Able to Create Account/Entity : " + value + " of record type : " + type,
-//							YesNo.Yes);
-//				}
-//
-//			} else {
-//				sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.Object1Tab);
-//				log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.Object1Tab, YesNo.Yes);
-//			}
-//		}
+		for (String[] accounts : EntityOrAccounts) {
+			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
+				log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
+				value = accounts[0];
+				type = accounts[1];
+				if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
+					log(LogStatus.INFO, "successfully Created Account/Entity : " + value + " of record type : " + type,
+							YesNo.No);
+				} else {
+					sa.assertTrue(false, "Not Able to Create Account/Entity : " + value + " of record type : " + type);
+					log(LogStatus.SKIP, "Not Able to Create Account/Entity : " + value + " of record type : " + type,
+							YesNo.Yes);
+				}
+
+			} else {
+				sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.Object1Tab);
+				log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.Object1Tab, YesNo.Yes);
+			}
+		}
 		
 		String themeName = ThemeName1;
 		String themeTabName = "Themes";
@@ -2995,28 +2994,28 @@ public class Theme extends BaseLib {
 		
 		
 		
-//		if (home.clickOnSetUpLink(environment, Mode.Classic.toString())) {
-//				String[] splitedEmailTemplateName = removeNumbersFromString(EmailthemeTemplate2_TemplateName);
-//				EmailthemeTemplate2_TemplateName = splitedEmailTemplateName[0] + lp.generateRandomNumber();
-//				if (emailtemplate.createCustomEmailTemplateHTML(environment, Mode.Classic.toString(),
-//						EmailthemeTemplate1_FolderName, EmailTemplateType.HTML, EmailthemeTemplate2_TemplateName,
-//						EmailthemeTemplate2_TemplateDescription, EmailthemeTemplate2_Subject, EmailthemeTemplate2_Body)) {
-//					appLog.info("EMail Template is created :" + EmailthemeTemplate2_TemplateName);
-//
-//					ExcelUtils.writeData(AcuityDataSheetFilePath, EmailthemeTemplate2_TemplateName, "CustomEmailFolder",
-//							excelLabel.Variable_Name, "EmailTemplate2", excelLabel.Email_Template_Name);
-//
-//				} else {
-//					appLog.error("EMail Template is not created :" + EmailthemeTemplate2_TemplateName);
-//					sa.assertTrue(false, "EMail Template is not created :" + EmailthemeTemplate2_TemplateName);
-//					log(LogStatus.ERROR, "EMail Template is not created :" + EmailthemeTemplate2_TemplateName, YesNo.Yes);
-//				}
-//		} else {
-//			appLog.error("Not able to clicked on setup link so cannot create Email Folder And Template");
-//			sa.assertTrue(false, "Not able to clicked on setup link so cannot create Email Folder And Template");
-//			log(LogStatus.ERROR, "Not able to clicked on setup link so cannot create Email Folder And Template",
-//					YesNo.Yes);
-//		}
+		if (home.clickOnSetUpLink(environment, Mode.Classic.toString())) {
+				String[] splitedEmailTemplateName = removeNumbersFromString(EmailthemeTemplate2_TemplateName);
+				EmailthemeTemplate2_TemplateName = splitedEmailTemplateName[0] + lp.generateRandomNumber();
+				if (emailtemplate.createCustomEmailTemplateHTML(environment, Mode.Classic.toString(),
+						EmailthemeTemplate1_FolderName, EmailTemplateType.HTML, EmailthemeTemplate2_TemplateName,
+						EmailthemeTemplate2_TemplateDescription, EmailthemeTemplate2_Subject, EmailthemeTemplate2_Body)) {
+					appLog.info("EMail Template is created :" + EmailthemeTemplate2_TemplateName);
+
+					ExcelUtils.writeData(AcuityDataSheetFilePath, EmailthemeTemplate2_TemplateName, "CustomEmailFolder",
+							excelLabel.Variable_Name, "EmailTemplate2", excelLabel.Email_Template_Name);
+
+				} else {
+					appLog.error("EMail Template is not created :" + EmailthemeTemplate2_TemplateName);
+					sa.assertTrue(false, "EMail Template is not created :" + EmailthemeTemplate2_TemplateName);
+					log(LogStatus.ERROR, "EMail Template is not created :" + EmailthemeTemplate2_TemplateName, YesNo.Yes);
+				}
+		} else {
+			appLog.error("Not able to clicked on setup link so cannot create Email Folder And Template");
+			sa.assertTrue(false, "Not able to clicked on setup link so cannot create Email Folder And Template");
+			log(LogStatus.ERROR, "Not able to clicked on setup link so cannot create Email Folder And Template",
+					YesNo.Yes);
+		}
 		
 		if (home.clickOnSetUpLink(environment, Mode.Classic.toString())) {
 			
@@ -3133,7 +3132,7 @@ public class Theme extends BaseLib {
 									log(LogStatus.INFO, "Clicked on email contact check box", YesNo.No);
 									if (CommonLib.click(driver, tp.themeEmailNextbtn1(30), "theme Email Next btn1", action.BOOLEAN)) {
 										log(LogStatus.INFO, "Clicked on theme Email Next btn1", YesNo.No);
-										if(tp.selectthemeEmailTemplateFromEmailContact(EmailthemeTemplate1_FolderName,"aaaa")) {
+										if(tp.selectthemeEmailTemplateFromEmailContact(EmailthemeTemplate1_FolderName,EmailthemeTemplate1_TemplateName)) {
 											log(LogStatus.INFO, "email folder is present and email name is not present", YesNo.No);
 										} else {
 											log(LogStatus.ERROR, "email folder is present and email name is present", YesNo.Yes);
@@ -3307,8 +3306,11 @@ public void THSTc030_VerifytheSortinginEmailPageforEachcolumn (String projectNam
 		if (click(driver, tp.themeEmailcontactname(30), "Name",
 				action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Click on theme Email contact name header", YesNo.No);
+			if (click(driver, tp.themeEmailcontactname(30), "Name",
+					action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Click on theme Email contact name header", YesNo.No);
 		List<WebElement> ele = tp.themeemailcontactname(10);
-		if (CommonLib.checkSorting(driver, SortOrder.Assecending, ele)) {
+		if (CommonLib.checkSorting(driver, SortOrder.Decending, ele)) {
 			log(LogStatus.PASS, "-----------Deal Column is in Descending Order By Default  --------------",
 					YesNo.No);
 			sa.assertTrue(true, "-----------Deal Column is in Descending Order By Default --------------");
@@ -3317,6 +3319,10 @@ public void THSTc030_VerifytheSortinginEmailPageforEachcolumn (String projectNam
 					YesNo.Yes);
 			sa.assertTrue(false,
 					"-----------Deal Column is not in Descending Order By Default  --------------");
+		}
+		} else {
+			log(LogStatus.ERROR, "Not able to Click on theme Email contact name header", YesNo.Yes);
+			sa.assertTrue(false, "Not able to Click on theme Email contact name header");
 		}
 		} else {
 			log(LogStatus.ERROR, "Not able to Click on theme Email contact name header", YesNo.Yes);
@@ -3524,7 +3530,7 @@ public void THSTc031_VerifytheUIofSendEmailpageWhenUserSelectsContactsandClickso
 	
 	try {
 		text = email.getEMailContent(gmailUserName, gmailPassword, crmUser1EmailID, TC_Contact1EmailID,
-				"Capital Call Notice");
+				"PE theme Email Subject Text");
 	} catch (InterruptedException e) {
 		// TODO Auto-generated catch block
 		sa.assertTrue(false, "Email Template is not verified from email : " + gmailUserName);
@@ -4074,6 +4080,9 @@ public void THSTc034_VerifytheUIForMaxCharacterinContactNameandFirmname(String p
 															if (CommonLib.click(driver, tp.themeEmailBCCcheckbox(30),
 																	"theme Email BCC check box", action.BOOLEAN)) {
 																log(LogStatus.INFO, "Clicked on theme Email BCC check box", YesNo.No);
+																if (CommonLib.click(driver, tp.themeEmailMySignaturecheckbox(30),
+																		"theme Email My Signature check box", action.BOOLEAN)) {
+																	log(LogStatus.INFO, "Clicked on theme Email My Signature check box", YesNo.No);
 																if (CommonLib.click(driver, tp.themeEmailSendbtn1(30),
 																		"theme Email Send btn1", action.BOOLEAN)) {
 																	log(LogStatus.INFO, "Clicked on theme Email Send btn1", YesNo.No);
@@ -4104,6 +4113,12 @@ public void THSTc034_VerifytheUIForMaxCharacterinContactNameandFirmname(String p
 																			YesNo.Yes);
 																	sa.assertTrue(false,
 																			"Not able to Clicked on theme Email Send btn1");
+																}
+																} else {
+																	log(LogStatus.ERROR, "Not able to Clicked on theme Email My Signature check box",
+																			YesNo.Yes);
+																	sa.assertTrue(false,
+																			"Not able to Clicked on theme Email BCC check box");
 																}
 															} else {
 																log(LogStatus.ERROR, "Not able to Clicked on theme Email BCC check box",

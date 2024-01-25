@@ -512,6 +512,12 @@ public class ThemePage extends BasePageBusinessLayer {
 		return FindElement(driver, path, "themeEmailBCCcheckbox", action.BOOLEAN, timeOut);
 	}
 	
+	public WebElement themeEmailMySignaturecheckbox( int timeOut) {
+
+		String path = "//span[@part='input-checkbox']//input[@name='Signature']";
+		return FindElement(driver, path, "themeEmailMySignaturecheckbox", action.BOOLEAN, timeOut);
+	}
+	
 	@FindBy(xpath = "(//button[text()='Send'])[1]")
 	private WebElement themeEmailSendbtn1;
 
